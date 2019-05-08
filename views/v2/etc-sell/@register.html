@@ -250,7 +250,7 @@
                     $spinner.hide(); // spinner
                     return;
                 }
-
+    
                 var reader = new FileReader();
                 var image  = new Image();
     
@@ -270,13 +270,11 @@
                         //     return;
                         // }
     
-                        
                         sel_files.push({
                             "name": "img_id_"+index,
                             "value": f
                         });
-                        console.log("f: ", f);
-
+    
                         //var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\" id=\"img_id_"+index+"\"><img src=\"" + _file.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
                         
                         var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
@@ -288,38 +286,10 @@
                                                 
                         $(".imgs_wrap").append(html);
 
-                        var fileType = f.type;
-                        var resultImg = loadImage(
-                            _file.target.result, //fileOrBlobOrUrl,
-                            function (img, data) {
-                                console.log("Exif data: ", data.exif); // requires exif extension
-
-                                
-                                // 이미지 업로드 실행은 여기서
-                                img.toBlob(function(blob){
-                                    var createdFile = new File([blob], "img_id_"+index);
-                                    /*
-                                    sel_files.push({
-                                        "name": "img_id_"+index,
-                                        "value": f
-                                    });
-                                    */
-                                   console.log("blob:", blob)
-                                   console.log(createdFile)
-                                   console.log(data)
-                                }, fileType);
-
-                                //$("#fullImg").html(img)
-                            },
-                            { maxWidth: 900, orientation: true }
-                        );
-                    
-                        console.log(resultImg)
-
                         // 풀이미지 썸네일 로직 추가
                         if(index === 0) {
-                            //var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
-                            //$("#fullImg").html(img1th);
+                            var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
+                            $("#fullImg").html(img1th);
                         }
 
                         index++;
@@ -334,7 +304,7 @@
 
             //console.log(filesArr[0])
         }
-
+    
         function deleteImageAction(index) {
             console.log("index : "+index);
             var findIndex = -1;

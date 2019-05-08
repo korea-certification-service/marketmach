@@ -195,7 +195,7 @@
 /* 이미지 업로드 부분 */
 .input_wrap{text-align: right;}
 .input_wrap input[type=file] {display: none;}
-.imgs_wrap .thumbnail_box{position: relative; display: inline-block;width: 100px;height: 50px;margin: 0 10px;}
+.imgs_wrap .thumbnail_box{position: relative; display: inline-block;width: 100px;height: 50px;margin: 10px; text-align: center; background-color: #000000;}
 .imgs_wrap .thumbnail_box .img_view_area{height: 50px; overflow: hidden;}
 .imgs_wrap .thumbnail_box a{position: absolute; right: 0; bottom: 0; display: inline-block; width: 20px; height: 20px; border: 1px solid #000; background: url(/static/img/sub/ico_img_del.png) 50% 50% no-repeat; background-size: 80% 80%;}
 .imgs_wrap img{
