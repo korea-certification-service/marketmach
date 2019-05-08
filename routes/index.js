@@ -152,6 +152,10 @@ router.get('/agreement', function (req, res, next) {
         req.session.tid = req.query.tid;
     }
 
+    if(req.query.recommander != undefined) {
+        req.session.recommander = req.query.recommander;
+    }
+
     let data = {
         title: 'Bitweb agreement', 
         country: dbconfig.country, 
@@ -178,6 +182,7 @@ router.get('/signup', function (req, res, next) {
         commId: req.session.commid,
         foreigner: req.session.foreigner,
         total_mach: dbconfig.bonus.signup,
+        recommander: req.session.recommander,
         pushMarketing: false
     };
 

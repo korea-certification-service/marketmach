@@ -249,6 +249,19 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
     });
 });
 
+router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, next) {
+    res.render('v2/myPage/myvoucher', {
+        title: 'Bitweb user grade',
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        userTag: req.session.userTag,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        arrDepth:[6,2]
+    });
+});
+
 router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, next) {
     res.render('v2/myPage/mygrade', {
         title: 'Bitweb user grade',
@@ -258,7 +271,7 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
         authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,
-        arrDepth:[6,2]
+        arrDepth:[6,3]
     });
 });
 

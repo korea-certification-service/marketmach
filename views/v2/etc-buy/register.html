@@ -64,7 +64,7 @@
                                 <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력" maxlength="50"></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>거래가격(MACH)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
@@ -73,16 +73,16 @@
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <th>거래가격(캐시)</th>
+                            <tr>
+                                <th>거래가격(캐쉬)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="text" class="form-control w80p" id="point" placeholder="거래 가격 입력.">
-                                        <em class="fc2">CASH</em>
+                                        <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력.">
+                                        <em class="fc2">Point</em>
                                     </div>
-                                    <p class="fcrd">※ 1CASH = 1원</p>
+                                    <p class="fcrd">※ 1Point = 1KRW</p>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
                                 <th>상세정보</th>
                                 <td>
@@ -197,10 +197,10 @@
                 alert('거래제목을 입력하세요.');
                 return false;
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
-                alert('거래 가격을 입력하세요.');
+                alert('거래 가격(MACH)을 입력하세요.');
                 return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+            } else if (($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
+                alert('거래 가격(캐쉬)을 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
@@ -231,12 +231,12 @@
             } else {
                 data["price"] = 0;
             }
-            // if ("<%= usePoint %>" == "Y" && country == "KR") {
-            //     data["point"]=$("#point").val();
-            // }else{
-            //     data["point"]=0;
-            // }
-            data["point"]=0;
+            if ("<%= usePoint %>" == "Y") {
+                data["point"]=$("#point").val();
+            }else{
+                data["point"]=0;
+            }
+            //data["point"]=0;
 
             if(country=="CN"){
                 data["china_region1"]=$("#region1").val();
