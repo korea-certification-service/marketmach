@@ -1,0 +1,4696 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Bitweb API
+  contact:
+    email: kay@daiblab.com
+host: 'localhost:3000'
+schemes:
+  - http
+paths:
+  /v1/users:
+    post:
+      tags:
+        - users
+      summary: Added user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: UserReq
+          required: true
+          schema:
+            $ref: '#/definitions/UserReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/users/{userId}':
+    get:
+      tags:
+        - users
+      summary: Get user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - users
+      summary: Modified user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: userId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: UserReq
+          required: true
+          schema:
+            $ref: '#/definitions/UserReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - users
+      summary: Delete user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/DeleteRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/users/info/{userTag}':
+    get:
+      tags:
+        - users
+      summary: Get user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: path
+          description: 사용자의 user tag
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/users/info/{userTag}/{loginToken}':
+    get:
+      tags:
+        - users
+      summary: Get user info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: path
+          description: 사용자의 user tag
+          required: true
+          type: string
+        - name: loginToken
+          in: path
+          description: 로그인시 발급된 login token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/users/userTag/{userTag}':
+    get:
+      tags:
+        - users
+      summary: user id 중복 체크를 위한 api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: path
+          description: web ui에서 user id 값
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              userTag:
+                type: string
+        '403':
+          description: user id가 이미 존재 할때 반환
+          schema:
+            $ref: '#/definitions/ErrorRes'
+  '/v1/users/email/{email}':
+    get:
+      tags:
+        - users
+      summary: user email 중복 체크를 위한 api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: path
+          description: web ui에서 email 값
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+        '403':
+          description: user email이 이미 존재 할때 반환
+          schema:
+            $ref: '#/definitions/ErrorRes'
+  /v1/users/login:
+    post:
+      tags:
+        - users
+      summary: login을 위한 api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: UserLoginReq
+          required: true
+          schema:
+            $ref: '#/definitions/UserLoginReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              userTag:
+                type: string
+              userId:
+                type: string
+              active:
+                type: string
+                description: 이메일 인증 여부
+        '403':
+          description: userTag 혹은 passward가 틀렸을때
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '500':
+          description: Internal Server Error
+  /v1/users/bank/validation:
+    post:
+      tags:
+        - users
+      summary: validation of bank account
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: BankValidationReq
+          required: true
+          schema:
+            $ref: '#/definitions/BankValidationReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/BankValidationRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/users/adultAgreement/{agreementId}':
+    put:
+      tags:
+        - users
+      summary: validation of adult agreement
+      description: 게임 아이템의 경우 19세 이상만 사용 가능하므로 성인 인증을 거친다. 성공 시 teenager를 false로 처리한다.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: agreementId
+          in: path
+          description: user agreement id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/AgreementRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/points:
+    post:
+      tags:
+        - points
+      summary: Added point info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: PointReq
+          required: true
+          schema:
+            $ref: '#/definitions/PointReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/points/{pointId}':
+    get:
+      tags:
+        - points
+      summary: Get point info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: pointId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - points
+      summary: Modified point info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: pointId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: PointReq
+          required: true
+          schema:
+            $ref: '#/definitions/PointReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/points/{pointId}/trade':
+    post:
+      tags:
+        - points
+      summary: update point price when trade
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: pointId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: PointTradeReq
+          required: true
+          schema:
+            $ref: '#/definitions/PointTradeReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/points/{pointId}/bank':
+    post:
+      tags:
+        - points
+      summary: 'create deposit, withdraw at point history'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: pointId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: PointBankReq
+          required: true
+          schema:
+            $ref: '#/definitions/PointBankReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/points/historys/{historyId}':
+    get:
+      tags:
+        - pointHistorys
+      summary: Get point history info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: historyId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointHistoryRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/point/historys/search/{userId}/{type}':
+    get:
+      tags:
+        - pointHistorys
+      summary: Get point historys info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: type
+          in: path
+          description: deposit/withdraw
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 10)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PointBankHistoryRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/notifications/email/auth:
+    post:
+      tags:
+        - notifications
+      summary: 이메일 인증을 위한 api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: EmailAuthReq
+          required: true
+          schema:
+            $ref: '#/definitions/EmailAuthReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+        '403':
+          description: userId가 조회가 안되었때 반환
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - notifications
+      summary: 이메일 인증 확인코드을 위한 api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: EmailAuthReq
+          required: true
+          schema:
+            $ref: '#/definitions/EmailAuthCheckReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+        '403':
+          description: userId가 조회가 안되었때 반환
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '500':
+          description: Internal Server Error
+  /v1/coins:
+    post:
+      tags:
+        - coins
+      summary: Added coin info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: CoinReq
+          required: true
+          schema:
+            $ref: '#/definitions/CoinReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/{coinId}':
+    get:
+      tags:
+        - coins
+      summary: Get coin info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - coins
+      summary: Modified coin info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: CoinReq
+          required: true
+          schema:
+            $ref: '#/definitions/CoinReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/{coinId}/deposit/coinTypes/{coinType}':
+    put:
+      tags:
+        - coins
+      summary: '(ether, btc, mach)의 coinType에 따른 입금 요청 api'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: coinType
+          in: path
+          description: 'ether, btc, mach'
+          required: true
+          type: string
+        - in: body
+          name: CoinTypeReq
+          required: true
+          schema:
+            $ref: '#/definitions/CoinTypeReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/{coinId}/withdraw/coinTypes/{coinType}':
+    put:
+      tags:
+        - coins
+      summary: '(ether, btc, mach)의 coinType에 따른 출금 요청 api'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: coinType
+          in: path
+          description: 'ether, btc, mach'
+          required: true
+          type: string
+        - in: body
+          name: CoinTypeReq
+          required: true
+          schema:
+            $ref: '#/definitions/CoinTypeReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/{coinId}/deposit/historys':
+    get:
+      tags:
+        - coins
+      summary: Get coin history info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 5)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinDepositHistorysInfoRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/{coinId}/withdraw/historys':
+    get:
+      tags:
+        - coins
+      summary: Get coin history info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 5)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinWithdrawHistorysInfoRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/historys/{historyId}/deposit/coinTypes/{coinType}':
+    get:
+      tags:
+        - coinHistorys
+      summary: Get coin history info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: historyId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: coinType
+          in: path
+          description: 'ether, mach, btc'
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinDepositHistoryRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/coins/historys/{historyId}/withdraw/coinTypes/{coinType}':
+    get:
+      tags:
+        - coinHistorys
+      summary: Get coin history info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: historyId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: coinType
+          in: path
+          description: 'ether, mach, btc'
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CoinWithdrawHistoryRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/items:
+    post:
+      tags:
+        - items
+      summary: Added item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: ItemReq
+          required: true
+          schema:
+            $ref: '#/definitions/ItemReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    get:
+      tags:
+        - items
+      summary: get items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: category
+          in: query
+          description: game | etc
+          required: true
+          type: string
+        - name: trade_type
+          in: query
+          description: buy | sell
+          required: true
+          type: string
+        - name: game_name
+          in: query
+          description: '게임명에 대한 fullname (type:game일경우만)'
+          required: false
+          type: string
+        - name: game_server
+          in: query
+          description: '게임서버에 대한 fullname (type:game일경우만)'
+          required: false
+          type: string
+        - name: type
+          in: query
+          description: item | gameMoney
+          required: false
+          type: string
+        - name: title
+          in: query
+          description: 아이템 이름
+          required: false
+          type: string
+        - name: userTag
+          in: query
+          description: 챗봇에서 조회 시 검색을 요청하는 사용자 ID
+          required: false
+          type: string
+        - name: primeService
+          in: query
+          description: 프라임 서비스 여부 (Y/N)
+          required: false
+          type: string
+        - name: productType1
+          in: query
+          description: 대카테고리
+          required: false
+          type: string
+        - name: productType2
+          in: query
+          description: 소카테고리
+          required: false
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 20)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemAllRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/{itemId}':
+    get:
+      tags:
+        - items
+      summary: Get item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - items
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: ItemReq
+          required: true
+          schema:
+            $ref: '#/definitions/ItemReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - items
+      summary: Delete item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/DeleteRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/{itemId}/total_mach':
+    put:
+      tags:
+        - items
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: body
+          name: ItemReq
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateMachReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/check/{coinType}/{itemId}':
+    get:
+      tags:
+        - items
+      summary: Get item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: coinType
+          in: path
+          description: coin / point
+          required: true
+          type: string
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/checkTotalCoinRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/tradeType/{tradeType}':
+    get:
+      tags:
+        - items
+      summary: Get item info by tradeType
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradeType
+          in: path
+          description: buy | sell
+          required: true
+          type: string
+        - name: category
+          in: query
+          description: game | etc
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 20)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/users/{userTag}':
+    get:
+      tags:
+        - items
+      summary: Get user trade item list
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: path
+          description: 사용자의 로그인 아이디
+          required: true
+          type: string
+        - name: category
+          in: query
+          description: game | etc
+          required: true
+          type: string
+        - name: tradeType
+          in: query
+          description: buy | sell
+          required: false
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 10)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/games:
+    get:
+      tags:
+        - games
+      summary: Get games all info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/GameAllRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/games/{gameName}':
+    get:
+      tags:
+        - games
+      summary: Get game servers info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: gameName
+          in: path
+          description: game full name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/GameRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/games/{gameName}/cn':
+    get:
+      tags:
+        - games
+      summary: Get china games info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: gameName
+          in: path
+          description: game full name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/GameCnRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/{itemId}/images':
+    post:
+      tags:
+        - items
+      summary: Added item image info
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: itemId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - in: formData
+          name: image
+          required: true
+          description: file to upload
+          type: file
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemImageRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/items/trade/{userId}':
+    get:
+      tags:
+        - items
+      summary: search trade by user id
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          type: string
+        - name: tradeType
+          in: query
+          description: vtr/point
+          required: false
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 10)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/vtrs:
+    post:
+      tags:
+        - vtrs
+      summary: Added vtr info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: VtrReq
+          required: true
+          description: itemId is required
+          schema:
+            $ref: '#/definitions/VtrReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/vtrs/chatbot:
+    post:
+      tags:
+        - vtrs
+      summary: Added vtr info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: VtrReq
+          required: true
+          description: itemId is required
+          schema:
+            $ref: '#/definitions/VtrChatbotReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/{vtrId}':
+    get:
+      tags:
+        - vtrs
+      summary: Get vtr info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: vtrId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/{vtrId}/trade/{tradeType}':
+    put:
+      tags:
+        - vtrs
+      summary: update trade status
+      description: |-
+        거래상태에서 해당 물건을 보냈을때/받았을때 사용하는 거래 api입니다
+         tradeType에 따라 status를 true로 변경 시킵니다.
+         buy일 경우 거래금액만큼 구매자의 total_mach 금액이 줄어들고, sell일 경우 판매자의 total_mach이 증가합니다.
+         둘다 true가 되면 자동으로 completed가 true로 반환하게 됩니다.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: vtrId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: tradeType
+          in: path
+          description: 'buy, sell'
+          required: true
+          type: string
+        - in: body
+          name: VtrTradeReq
+          required: true
+          schema:
+            $ref: '#/definitions/VtrTradeReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/chatbot/{vtrId}/trade/{tradeType}':
+    put:
+      tags:
+        - vtrs
+      summary: update trade status
+      description: |-
+        거래상태에서 해당 물건을 보냈을때/받았을때 사용하는 거래 api입니다
+         tradeType에 따라 status를 true로 변경 시킵니다.
+         buy일 경우 거래금액만큼 구매자의 total_mach 금액이 줄어들고, sell일 경우 판매자의 total_mach이 증가합니다.
+         둘다 true가 되면 자동으로 completed가 true로 반환하게 됩니다.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: vtrId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+        - name: tradeType
+          in: path
+          description: 'buy, sell, confirm'
+          required: true
+          type: string
+        - in: body
+          name: VtrTradeReq
+          required: true
+          schema:
+            $ref: '#/definitions/VtrTradeChatbotReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/user/{userId}':
+    get:
+      tags:
+        - vtrs
+      summary: get trade items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 10)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/chatbot/cancel/{vtrId}/{userId}':
+    delete:
+      tags:
+        - vtrs
+      summary: cancel trade items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: vtrId
+          in: path
+          description: 거래 ID(auto id)
+          required: true
+          type: string
+        - name: userId
+          in: path
+          description: 요청한 사용자의 ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrDeleteRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/vtrs/buynow':
+    post:
+      tags:
+        - vtrs
+      summary: Added vtr info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: VtrReq
+          required: true
+          description: itemId is required
+          schema:
+            $ref: '#/definitions/VtrChatbotReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/VtrRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /v1/tradePoints:
+    post:
+      tags:
+        - tradePoints
+      summary: 포인트 거래 생성 및 point history 생성
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: TradePointReq
+          required: true
+          schema:
+            $ref: '#/definitions/TradePointReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TradePointRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/tradePoints/{tradePointId}/trade/{tradeType}':
+    put:
+      tags:
+        - tradePoints
+      summary: 포인트 거래 상태 변경
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradePointId
+          in: path
+          description: tradePoint Id
+          required: true
+          type: string
+        - name: tradeType
+          in: path
+          description: buy | sell
+          required: true
+          type: string
+        - in: body
+          name: TradePointStatusReq
+          required: true
+          schema:
+            $ref: '#/definitions/TradePointStatusReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TradePointStatusRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/tradePoints/{tradePointId}':
+    get:
+      tags:
+        - tradePoints
+      summary: Delete trade Point
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradePointId
+          in: path
+          description: trade point id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TradePointRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - tradePoints
+      summary: Delete trade Point
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradePointId
+          in: path
+          description: Get auto id in mongodb
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/DeleteRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/tradePoints/user/{userId}':
+    get:
+      tags:
+        - tradePoints
+      summary: get trade items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          type: string
+        - name: pageIdx
+          in: query
+          description: '시작페이지(default: 0)'
+          required: false
+          type: string
+        - name: perPage
+          in: query
+          description: '페이지당(default: 10)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TradePointRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/charts/currency/{type}/{limit}':
+    get:
+      tags:
+        - charts
+      summary: get pick currency per trade center
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: type
+          in: path
+          description: BTC/ETH/MACH/etc
+          required: true
+          type: string
+        - name: limit
+          in: path
+          description: '1'
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ChartsRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/charts/currency/{type}/{country}':
+    post:
+      tags:
+        - charts
+      summary: get pick currency per trade center
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: type
+          in: path
+          description: BTC/ETH/MACH/etc
+          required: true
+          type: string
+        - name: country
+          in: path
+          description: KR/CN/JP/EN/DEV
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ChartsRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/sms/vtr/{country}/{userTag}/{itemId}':
+    get:
+      tags:
+        - sms
+      summary: send sms
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: country
+          in: path
+          description: KR/CN/JP/EN
+          required: true
+          type: string
+        - name: userTag
+          in: path
+          description: 거래 요청하는 사용자의 user Tag
+          required: true
+          type: string
+        - name: itemId
+          in: path
+          description: item ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/smsRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/sms/vtr/notification/{country}/{itemId}/{userTag}':
+    get:
+      tags:
+        - sms
+      summary: send sms
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: country
+          in: path
+          description: KR/CN/JP/EN
+          required: true
+          type: string
+        - name: itemId
+          in: path
+          description: item ID
+          required: true
+          type: string
+        - name: userTag
+          in: path
+          description: 문자를 요청하는 사용자의 user Tag
+          required: true
+          type: string
+
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/smsRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/faq/list':
+    get:
+      tags:
+        - faq
+      summary: search faqs
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: title
+          in: query
+          description: 제목 및 내용 검색
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/faqListRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/faq/detail/{faqId}':
+    get:
+      tags:
+        - faq
+      summary: search faqs
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: faqId
+          in: path
+          description: faq ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/faqRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/list':
+    get:
+      tags:
+        - community
+      summary: search faqs
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: title
+          in: query
+          description: 제목 및 내용 검색
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityListRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/detail/{communityId}':
+    get:
+      tags:
+        - community
+      summary: search faqs
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: communityId
+          in: path
+          description: community ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/detail/{communityId}/{recommandYn}':
+    put:
+      tags:
+        - community
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: communityId
+          in: path
+          description: reply ID
+          required: true
+          type: string
+        - name: recommandYn
+          in: path
+          description: 추천 여부(Y/N)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/reply':
+    post:
+      tags:
+        - community
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: ReplyReq
+          required: true
+          schema:
+            $ref: '#/definitions/CreateReplyReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/reply/{replyId}':
+    put:
+      tags:
+        - community
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: replyId
+          in: path
+          description: reply ID
+          required: true
+          type: string
+        - in: body
+          name: ReplyReq
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateReplyReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - community
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: replyId
+          in: path
+          description: reply ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/community/reply/{replyId}/{recommandYn}':
+      put:
+        tags:
+          - community
+        summary: Modified item info
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters:
+          - name: Content-Type
+            in: header
+            required: false
+            type: string
+          - name: replyId
+            in: path
+            description: reply ID
+            required: true
+            type: string
+          - name: recommandYn
+            in: path
+            description: 추천 여부(Y/N)
+            required: true
+            type: string
+        responses:
+          '200':
+            description: successful operation
+            schema:
+              $ref: '#/definitions/communityRes'
+          '400':
+            description: Bad Request
+            schema:
+              $ref: '#/definitions/ErrorRes'
+          '401':
+            description: Unauthorized
+          '404':
+            description: Not Found
+          '405':
+            description: Method Not Allowed
+          '500':
+            description: Internal Server Error
+  '/v1/businessContact':
+    post:
+      tags:
+        - business Contact
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: contactReq
+          required: true
+          schema:
+            $ref: '#/definitions/businessContactReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/notice/list':
+    get:
+      tags:
+        - notice
+      summary: search notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: title
+          in: query
+          description: 제목 및 내용 검색
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/noticeListRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/notice/detail/{noticeId}':
+    get:
+      tags:
+        - notice
+      summary: search detail notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: noticeId
+          in: path
+          description: notice ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/noticeRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/customerCenter/list':
+    get:
+      tags:
+        - Customer Center
+      summary: search notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: title
+          in: query
+          description: 제목 및 내용 검색
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customerCenterListRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/cuetomerCenter/detail/{customerCenterId}':
+    get:
+      tags:
+        - Customer Center
+      summary: search detail notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: customerCenterId
+          in: path
+          description: Customer Center ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customerCenterRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/cuetomerCenter':
+    post:
+      tags:
+        - Customer Center
+      summary: Modified item info
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: contactReq
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCustomerCenterReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/communityRes'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorRes'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/cuetomerCenter/{customerCenterId}':
+    put:
+      tags:
+        - Customer Center
+      summary: search detail notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: customerCenterId
+          in: path
+          description: Customer Center ID
+          required: true
+          type: string
+        - in: body
+          name: contactReq
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateCustomerCenterReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customerCenterRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Customer Center
+      summary: search detail notice
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: customerCenterId
+          in: path
+          description: Customer Center ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customerCenterRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  '/v1/events':
+    post:
+      tags:
+        - Events
+      summary: 이벤트 진행 시 저장
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: eventReq
+          required: true
+          schema:
+            $ref: '#/definitions/CreateEventReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/eventRes'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+definitions:
+  DeleteRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 확인 코드
+      responseMsg:
+        type: string
+        description: 응답 메시지
+  ErrorRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 실패 코드
+      responseMsg:
+        type: string
+        description: 실패 이유
+  CreateEventReq: 
+    type: object
+    properties:
+      coinId:
+        type: string
+      type:
+        type: string
+      userTag:
+        type: string
+      mach:
+        type: string
+  CreateReplyReq:
+    type: object
+    properties:
+      communityId:
+        type: string
+      content:
+        type: string
+      reqDate:
+        type: string
+      reporter:
+        type: string
+      recommandCount:
+        type: integer
+      nottobeCount:
+        type: integer
+  UpdateReplyReq:
+    type: object
+    properties:
+      content:
+        type: string
+  businessContactReq:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      title:
+        type: string
+      content:
+        type: string
+  CreateCustomerCenterReq:
+    type: object
+    properties:
+      'type':
+        type: integer
+      title:
+        type: string
+      content:
+        type: string
+      answerEmail:
+        type: boolean
+      answerSMS:
+        type: boolean
+      reqDate:
+        type: string
+      reporter:
+        type: string
+      recommandCount:
+        type: integer
+      nottobeCount:
+        type: integer
+  UpdateCustomerCenterReq:
+    type: object
+    properties:
+      'type':
+        type: integer
+      title:
+        type: string
+      content:
+        type: string
+      answerEmail:
+        type: boolean
+      answerSMS:
+        type: boolean
+  UserReq:
+    type: object
+    properties:
+      email:
+        type: string
+      userTag:
+        type: string
+        description: web ui에서 user id 값
+      userName:
+        type: string
+        description: web ui에서 user name 값
+      country:
+        type: string
+        description: '한국:kr, 중국:cn'
+      phone:
+        type: string
+      password:
+        type: string
+      agreements:
+        type: object
+        properties:
+          use:
+            type: boolean
+            description: 약관 동의서
+          teenager:
+            type: boolean
+            description: 미성년자 확인
+          privacy:
+            type: boolean
+            description: 개인정보 동의서
+  UserLoginReq:
+    type: object
+    properties:
+      userTag:
+        type: string
+        description: web ui에서 user id 값
+      password:
+        type: string
+        description: 비밀번호
+  UserRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          email:
+            type: string
+          userTag:
+            type: string
+            description: 프론트에서 user id
+          country:
+            type: string
+            description: '한국:kr, 중국:cn'
+          active:
+            type: boolean
+            description: '이메일 인증에 대한 활성계정:true, 비활성계정:false'
+          phone:
+            type: string
+          mail_auth_code:
+            type: string
+            description: email 인증요청시 email-server에서 보내는 랜덤한 6자리수
+          password:
+            type: string
+          coinId:
+            type: string
+          pointId:
+            type: string
+          agreementId:
+            type: string
+  PointReq:
+    type: object
+    properties:
+      userId:
+        type: string
+      bank_account_type:
+        type: string
+        description: '계좌은행 ex.신한은행, 기업은행'
+      bank_account:
+        type: string
+        description: 계좌번호
+  PointRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          userId:
+            type: string
+          bank_account_type:
+            type: string
+            description: '계좌은행 ex.신한은행, 기업은행'
+          bank_account:
+            type: string
+            description: 계좌번호
+          total_point:
+            type: number
+          historys:
+            type: array
+            description: 거래 이력들 - 자동생성
+            items:
+              type: string
+          withdraw_historys:
+            type: array
+            description: 입출력 이력들 - 자동생성
+            items:
+              type: string
+  PointTradeReq:
+    type: object
+    properties:
+      point:
+        type: number
+      trade_type:
+        type: string
+        description: 'buy, sell'
+      from_userId:
+        type: string
+        description: 보낸 이
+      to_userId:
+        type: string
+        description: 받는 이
+  PointBankReq:
+    type: object
+    properties:
+      point:
+        type: number
+        description: 받을 point
+      price:
+        type: number
+        description: 결제금액
+      type:
+        type: string
+        description: 'deposit, withdraw'
+      imp_uid:
+        type: string
+        description: 결제 성공시 iamport 고유아이디
+      imp_apply_num:
+        type: string
+        description: 카드 승인 번호
+      status:
+        type: number
+        description: '입출금 상태(0: 입출금 대기/ 1:입출금 완료)'
+  PointHistoryRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          pointId:
+            type: string
+          itemId:
+            type: string
+          status:
+            type: boolean
+            description: 'false:거래완료 이전, true:거래완료'
+          regDate:
+            type: string
+            description: instance가 만들어 졌을때 시간
+          completeDate:
+            type: string
+            description: 거래완료 되었을때 시간
+          point:
+            type: number
+            description: 구입한 가격
+          trade_type:
+            type: string
+            description: 'buy, sell'
+          from_userId:
+            type: string
+            description: 보낸 이
+          to_userId:
+            type: string
+            description: 받는 이
+          regIp:
+            type: string
+  PointBankHistoryRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          type:
+            type: string
+            description: deposit/withdraw
+          imp_uid:
+            type: string
+          point:
+            type: number
+            description: Point 수량
+          price:
+            type: number
+            description: Point 가격
+          regDate:
+            type: string
+            description: 입금 시간
+  UpdateMachReq:
+    type: object
+    properties:
+      mach:
+        type: number
+  CoinReq:
+    type: object
+    properties:
+      userId:
+        type: string
+      mach_address:
+        type: string
+      btc_address:
+        type: string
+      ether_address:
+        type: string
+  CoinTypeReq:
+    type: object
+    properties:
+      price:
+        type: number
+        description: 'mach를 btc, ether, mach로 환산된 금액 (유저가 받아갈 금액)'
+      mach:
+        type: number
+        description: 출금 요청할 mach
+      address:
+        type: string
+        description: user address
+  CoinRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          userId:
+            type: string
+          mach_address:
+            type: string
+          btc_address:
+            type: string
+          ether_address:
+            type: string
+          total_mach:
+            type: number
+          ether_historys:
+            type: array
+            description: ether를 mach로 교환 이력 리스트 - 자동생성
+            items:
+              type: string
+          btc_historys:
+            type: array
+            description: btc를 mach로 교환 이력 리스트 - 자동생성
+            items:
+              type: string
+  CoinDepositHistorysInfoRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: mongodb auto id
+            coinId:
+              type: string
+            price:
+              type: number
+            completedPrice:
+              type: number
+              description: 외부api에서 입금이 확인된 금액 (실제로 반영된 금액)
+            mach:
+              type: number
+            status:
+              type: boolean
+              description: 'false:거래완료 이전, true:거래완료'
+            regDate:
+              type: string
+              description: history가 만들어 졌을때 시간
+            completeDate:
+              type: string
+              description: 거래완료 되었을때 시간
+            type:
+              type: string
+              description: 'ether, mach, btc'
+  CoinWithdrawHistorysInfoRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: mongodb auto id
+            coinId:
+              type: string
+            price:
+              type: number
+            completedPrice:
+              type: number
+              description: 외부api에서 입금이 확인된 금액 (실제로 반영된 금액)
+            mach:
+              type: number
+            status:
+              type: boolean
+              description: 'false:거래완료 이전, true:거래완료'
+            regDate:
+              type: string
+              description: history가 만들어 졌을때 시간
+            completeDate:
+              type: string
+              description: 거래완료 되었을때 시간
+            type:
+              type: string
+              description: 'ether, mach, btc'
+            address:
+              type: string
+              description: 사용자 주소
+            transaction:
+              type: string
+              description: 출금 처리 된 후 받는 transaction
+  CoinDepositHistoryRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          coinId:
+            type: string
+          status:
+            type: boolean
+            description: 'false:거래완료 이전, true:거래완료'
+          regDate:
+            type: string
+            description: instance가 만들어 졌을때 시간
+          completeDate:
+            type: string
+            description: 거래완료 되었을때 시간
+          price:
+            type: number
+            description: 구입한 가격
+          completedPrice:
+            type: number
+            description: 외부api에서 입금이 확인된 금액 (실제로 반영된 금액)
+          mach:
+            type: string
+  CoinWithdrawHistoryRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          coinId:
+            type: string
+          status:
+            type: boolean
+            description: 'false:거래완료 이전, true:거래완료'
+          regDate:
+            type: string
+            description: instance가 만들어 졌을때 시간
+          completeDate:
+            type: string
+            description: 거래완료 되었을때 시간
+          price:
+            type: number
+            description: 구입한 가격
+          completedPrice:
+            type: number
+            description: 외부api에서 입금이 확인된 금액 (실제로 반영된 금액)
+          mach:
+            type: string
+          address:
+            type: string
+            description: 사용자 주소
+          transaction:
+            type: string
+            description: 출금 처리 된 후 받는 transaction
+  ItemReq:
+    type: object
+    properties:
+      userTag:
+        type: string
+      type:
+        type: string
+        description: 'item, gameMoney '
+      trade_type:
+        type: string
+        description: 'buy, sell'
+      category:
+        type: string
+        description: 'game , etc'
+      game_name:
+        type: string
+      game_server:
+        type: string
+      name:
+        type: string
+        description: 아이템이름
+      title:
+        type: string
+        description: 아이템 등록시 타이틀
+      desc:
+        type: string
+        description: 아이템 등록시 설명
+      price:
+        type: number
+        description: 거래물건의 개당 가격
+      point:
+        type: number
+      count:
+        type: number
+        description: 거래물건의 갯수
+      minCount:
+        type: number
+        description: 최소금액
+      maxCount:
+        type: number
+        description: 최대금액
+      game_character:
+        type: string
+        description: 캐릭터명
+      status:
+        type: number
+        description: '0: 거래등록 1:vtr거래중 2:point 거래중 3:거래완료'
+  ItemAllRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: integer
+        description: 현재 페이지
+      perPage:
+        type: integer
+        description: 한 페이지에 보여주는 양
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: mongodb auto id
+            userTag:
+              type: string
+            type:
+              type: string
+              description: 'item, gameMoney '
+            trade_type:
+              type: string
+              description: 'buy, sell'
+            category:
+              type: string
+              description: game
+            game_name:
+              type: string
+            game_server:
+              type: string
+            name:
+              type: string
+              description: 아이템 이름
+            title:
+              type: string
+              description: 아이템 등록시 타이틀
+            desc:
+              type: string
+              description: 아이템 등록시 설명
+            price:
+              type: number
+              description: 거래물건의 개당 가격
+            point:
+              type: number
+            count:
+              type: number
+              description: 거래물건의 갯수
+            minCount:
+              type: number
+              description: 최소금액
+            maxCount:
+              type: number
+              description: 최대금액
+            game_character:
+              type: string
+              description: 캐릭터명
+            status:
+              type: number
+              description: '0: 거래등록 1:vtr거래중 2:point 거래중 3:거래완료'
+            total_price:
+              type: number
+            total_point:
+              type: number
+            regDate:
+              type: string
+            modifyDate:
+              type: string
+            tradeDate:
+              type: string
+            images:
+              type: object
+              description: 이미지가 있을경우 반환
+              properties:
+                _id:
+                  type: string
+                  description: mongodb auto id
+                path:
+                  type: string
+                  description: s3에 생성된 링크
+                bucket:
+                  type: string
+                  description: s3에 저장 되는 위치
+                key:
+                  type: string
+                  description: s3에서 생성된 이름
+                origin_name:
+                  type: string
+                  description: 이미지 원본 이름
+                size:
+                  type: number
+                  description: 이미지 크기
+                mimetype:
+                  type: string
+                  description: 이미지 타입
+                regDate:
+                  type: string
+  ItemRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: string
+        description: default=0 해당 페이지
+      perPage:
+        type: string
+        description: '페이지당(default: 10)'
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          userTag:
+            type: string
+          type:
+            type: string
+            description: 'item, gameMoney '
+          trade_type:
+            type: string
+            description: 'buy, sell'
+          category:
+            type: string
+            description: game
+          game_name:
+            type: string
+          game_server:
+            type: string
+          name:
+            type: string
+            description: 아이템 이름
+          title:
+            type: string
+            description: 아이템 등록시 타이틀
+          desc:
+            type: string
+            description: 아이템 등록시 설명
+          price:
+            type: number
+            description: 거래물건의 개당 가격
+          point:
+            type: number
+          count:
+            type: number
+            description: 거래물건의 갯수
+          minCount:
+            type: number
+            description: 최소금액
+          maxCount:
+            type: number
+            description: 최대금액
+          game_character:
+            type: string
+            description: 캐릭터명
+          status:
+            type: number
+            description: '0: 거래등록 1:vtr거래중 2:point 거래중 3:거래완료'
+          total_price:
+            type: number
+          total_point:
+            type: number
+          regDate:
+            type: string
+          modifyDate:
+            type: string
+          tradeDate:
+            type: string
+          images:
+            type: object
+            description: 이미지가 있을경우 반환
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              path:
+                type: string
+                description: s3에 생성된 링크
+              bucket:
+                type: string
+                description: s3에 저장 되는 위치
+              key:
+                type: string
+                description: s3에서 생성된 이름
+              origin_name:
+                type: string
+                description: 이미지 원본 이름
+              size:
+                type: number
+                description: 이미지 크기
+              mimetype:
+                type: string
+                description: 이미지 타입
+              regDate:
+                type: string
+  GameAllRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: mongodb auto id
+            game_name:
+              type: string
+              description: 게임명 ex. 리니지
+            servers:
+              type: array
+              description: '게임서버 리스트 ex. 쥬섭, 기타 ..'
+              items:
+                type: string
+  GameRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          game_name:
+            type: string
+            description: 게임명 ex. 리니지
+          servers:
+            type: array
+            description: '게임서버 리스트 ex. 쥬섭, 기타 ..'
+            items:
+              type: string
+  GameCnRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          game_id:
+            type: string
+            description: 사이트 5173의 사용 아이디
+          game_name:
+            type: string
+            description: 게임명
+          region1:
+            type: array
+            description: region1 리스트
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+  GameServerRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          servers:
+            type: array
+            items:
+              type: string
+  VtrReq:
+    type: object
+    properties:
+      mach:
+        type: number
+        description: 거래가 확정된 금액
+      itemId:
+        type: string
+        description: required
+      from_userId:
+        type: string
+        description: 아이템기준 보낸 이
+      to_userId:
+        type: string
+        description: 아이템기준 받는 이
+  VtrChatbotReq:
+    type: object
+    properties:
+      country:
+        type: string
+        description: KR/CN/JP/EN
+      mach:
+        type: number
+        description: 거래가 확정된 금액
+      itemId:
+        type: string
+        description: required
+      from_userId:
+        type: string
+        description: 아이템기준 보낸 이
+      to_userId:
+        type: string
+        description: 아이템기준 받는 이
+  VtrTradeReq:
+    type: object
+    properties:
+      status:
+        type: boolean
+        description: 'tradeType에 대한 status (ex.구매/판매 완료 : true)'
+  VtrTradeChatbotReq:
+    type: object
+    properties:
+      country:
+        type: string
+        description: KR/CN/JP/EN
+      status:
+        type: boolean
+        description: 'tradeType에 대한 status (ex.구매 완료/판매 완료/구매 확정 : true)'
+  VtrRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          mach:
+            type: number
+            description: 거래 확정된 마하 가격
+          buy_status:
+            type: boolean
+            description: '구매완료 : true'
+          sell_status:
+            type: boolean
+            description: '판매완료 : true'
+          confirm_status:
+            type: boolean
+            description: '구매확정 : true'
+          completed:
+            type: boolean
+            description: '거래완료 : true'
+          from_userId:
+            type: string
+            description: 보낸 이
+          to_userId:
+            type: string
+            description: 받는 이
+          regDate:
+            type: string
+          completed_date:
+            type: string
+          completed_buy_date:
+            type: string
+          completed_sell_date:
+            type: string
+          completed_confirm_date:
+            type: string
+          item:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              userId:
+                type: string
+              type:
+                type: string
+                description: 'item, product '
+              trade_type:
+                type: string
+                description: 'buy, sell'
+              category:
+                type: string
+                description: game
+              game_name:
+                type: string
+              game_server:
+                type: string
+              name:
+                type: string
+                description: 아이템 이름
+              title:
+                type: string
+                description: 아이템 등록시 타이틀
+              desc:
+                type: string
+                description: 아이템 등록시 설명
+              price:
+                type: number
+                description: 거래물건의 개당 가격
+              count:
+                type: number
+                description: 거래물건의 갯수
+              minCount:
+                type: number
+                description: 최소금액
+              maxCount:
+                type: number
+                description: 최대금액
+              game_character:
+                type: string
+                description: 캐릭터명
+              status:
+                type: number
+                description: '거래등록= 0, 거래중= 1, 거래완료= 2'
+              total_price:
+                type: number
+              regDate:
+                type: string
+              modifyDate:
+                type: string
+              tradeDate:
+                type: string
+  VtrDeleteRes: 
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          code:
+            type: number
+            description: 성공/실패 여부 값 (1-성공, 0-실패)
+          msg:
+            type: string
+            description: 성공/실패 관련 메시지
+  ItemImageRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          path:
+            type: string
+            description: s3에 생성된 링크
+          bucket:
+            type: string
+            description: s3에 저장 되는 위치
+          key:
+            type: string
+            description: s3에서 생성된 이름
+          origin_name:
+            type: string
+            description: 이미지 원본 이름
+          size:
+            type: number
+            description: 이미지 크기
+          mimetype:
+            type: string
+            description: 이미지 타입
+          regDate:
+            type: string
+  EmailAuthReq:
+    type: object
+    properties:
+      userId:
+        type: string
+        description: mongodb auto id
+      to:
+        type: string
+        description: 유저의 이메일 주소 ex) kay@daiblab.com
+  EmailAuthCheckReq:
+    type: object
+    properties:
+      userId:
+        type: string
+        description: mongodb auto id
+      mail_auth_code:
+        type: string
+        description: 유저가 이메일에서 받은 인증코드를 입력한 6자리 값
+  TradePointReq:
+    type: object
+    properties:
+      itemId:
+        type: string
+        description: item id
+      from_userId:
+        type: string
+        description: 아이템을 보내는 사람의 Tag(팝니다 경우 등독자의 ID 기입)
+      to_userId:
+        type: string
+        description: 아이템을 받는 사람 Tag(삽니다 경우 등록자의 ID 기입)
+      point:
+        type: number
+        description: 포인트 가격
+      trade:
+        type: string
+        description: buy/sell
+  TradePointRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          point:
+            type: number
+          pointId:
+            type: string
+            description: point id
+          regDate:
+            type: string
+            description: 등록일
+          completeDate:
+            type: string
+            description: 거래완료일
+          status:
+            type: number
+            description: 거래 최종 상태
+          from_userId:
+            type: string
+            description: 아이템을 보내는 사람
+          to_userId:
+            type: string
+            description: 아이템을 받는 사람
+  TradePointStatusReq:
+    type: object
+    properties:
+      status:
+        type: boolean
+        description: true로 처리
+  TradePointStatusRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          userTag:
+            type: string
+          type:
+            type: string
+            description: 'item, gameMoney'
+          trade_type:
+            type: string
+            description: 'buy, sell'
+          category:
+            type: string
+            description: game
+          game_name:
+            type: string
+          game_server:
+            type: string
+          name:
+            type: string
+            description: 아이템 이름
+          title:
+            type: string
+            description: 아이템 등록시 타이틀
+          desc:
+            type: string
+            description: 아이템 등록시 설명
+          price:
+            type: number
+            description: 거래물건의 개당 가격
+          point:
+            type: number
+          count:
+            type: number
+            description: 거래물건의 갯수
+          game_character:
+            type: string
+            description: 캐릭터명
+          status:
+            type: number
+            description: '거래등록= 0, VTR 거래중= 1, Point 거래중 = 2, 거래완료 = 3'
+          total_price:
+            type: number
+          total_point:
+            type: number
+          regDate:
+            type: string
+  ChartsRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          type:
+            type: string
+            description: BTC/ETH/MACH
+          data:
+            type: object
+            description: res data 참조
+          regDate:
+            type: string
+  checkTotalCoinRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          type:
+            type: string
+            description: BTC/ETH/MACH
+          data:
+            type: object
+            properties:
+              check_total_coin:
+                type: boolean
+                description: true / false
+  BankValidationReq:
+    type: object
+    properties:
+      bankAccountType:
+        type: string
+        description: 은행 코드
+      bankAccount:
+        type: string
+        description: 은행 계좌 번호
+      birthday:
+        type: string
+        description: 계좌주의 생년월일
+  BankValidationRes:
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          hdlAgtOrgCode:
+            type: string
+            description: 은행 코드
+          api_tran_id:
+            type: string
+            description: api 처리 ID
+          rsp_code:
+            type: string
+            description: 금융 플랫폼에서 처리한 처리 결과
+          rsp_message:
+            type: string
+            description: 금융 플랫폼에서 처리한 처리 msg
+          api_tran_dtm:
+            type: string
+            description: 금융 플랫폼에서 처리한 처리 시간
+          bank_tran_id:
+            type: string
+            description: 은행 transaction ID
+          bank_tran_date:
+            type: string
+            description: 은행 transaction 처리 날짜
+          bank_rsp_code:
+            type: string
+            description: 은행 transaction 처리 결과
+          bank_rsp_message:
+            type: string
+            description: 은행 transaction 처리 msg
+          bank_code_std:
+            type: string
+            description: 은행 code
+          bank_code_sub:
+            type: string
+            description: 은행 sub code
+          bank_name:
+            type: string
+            description: 은행명
+          account_num:
+            type: string
+            description: 은행 계좌 번호
+          account_holder_info_type:
+            type: string
+            description: 계좌 소유주 타입
+          account_holder_info:
+            type: string
+            description: 계좌 소유주 생년월일
+          account_holder_name:
+            type: string
+            description: 계좌 소유주 이
+  AgreementRes:
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          use:
+            type: boolean
+            description: 약관 동의서
+          teenager:
+            type: boolean
+            description: 미성년자 확인
+          privacy:
+            type: boolean
+            description: 개인정보 동의서
+  smsRes:
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          userTag:
+            type: string
+          type:
+            type: string
+            description: 'item, gameMoney '
+          trade_type:
+            type: string
+            description: 'buy, sell'
+          category:
+            type: string
+            description: game
+          game_name:
+            type: string
+          game_server:
+            type: string
+          name:
+            type: string
+            description: 아이템 이름
+          title:
+            type: string
+            description: 아이템 등록시 타이틀
+          desc:
+            type: string
+            description: 아이템 등록시 설명
+          price:
+            type: number
+            description: 거래물건의 개당 가격
+          point:
+            type: number
+          count:
+            type: number
+            description: 거래물건의 갯수
+          minCount:
+            type: number
+            description: 최소금액
+          maxCount:
+            type: number
+            description: 최대금액
+          game_character:
+            type: string
+            description: 캐릭터명
+          status:
+            type: number
+            description: '0: 거래등록 1:vtr거래중 2:point 거래중 3:거래완료'
+          total_price:
+            type: number
+          total_point:
+            type: number
+          regDate:
+            type: string
+          modifyDate:
+            type: string
+          tradeDate:
+            type: string
+          images:
+            type: object
+            description: 이미지가 있을경우 반환
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              path:
+                type: string
+                description: s3에 생성된 링크
+              bucket:
+                type: string
+                description: s3에 저장 되는 위치
+              key:
+                type: string
+                description: s3에서 생성된 이름
+              origin_name:
+                type: string
+                description: 이미지 원본 이름
+              size:
+                type: number
+                description: 이미지 크기
+              mimetype:
+                type: string
+                description: 이미지 타입
+              regDate:
+                type: string
+  faqListRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: string
+        description: default=0 해당 페이지
+      perPage:
+        type: string
+        description: '페이지당(default: 20)'
+      data:
+        type: object
+        properties:
+          count:
+            type: integer
+            description: 조회 개수
+          list:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              category:
+                type: string
+              title:
+                type: string
+              content:
+                type: string
+              regDate:
+                type: string
+  faqRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          category:
+            type: string
+          title:
+            type: string
+          content:
+            type: string
+          regDate:
+            type: string
+  communityListRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: string
+        description: default=0 해당 페이지
+      perPage:
+        type: string
+        description: '페이지당(default: 20)'
+      data:
+        type: object
+        properties:
+          count:
+            type: integer
+            description: 조회 개수
+          list:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              type:
+                type: string
+                description: movie/board
+              title:
+                type: string
+              content:
+                type: string
+              regDate:
+                type: string
+              reporter:
+                type: string
+              count:
+                type: integer
+              recommandCount:
+                type: integer
+              nottobeCount:
+                type: integer
+  communityRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          type:
+            type: string
+            description: movie/board
+          title:
+            type: string
+          content:
+            type: string
+          regDate:
+            type: string
+          reporter:
+            type: string
+          count:
+            type: integer
+          recommandCount:
+            type: integer
+          nottobeCount:
+            type: integer
+          replyCount:
+            type: integer
+          reply:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              communityId:
+                type: string
+                description: movie/board
+              content:
+                type: string
+              regDate:
+                type: string
+              reporter:
+                type: string
+              count:
+                type: integer
+              recommandCount:
+                type: integer
+              nottobeCount:
+                type: integer
+  noticeListRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: string
+        description: default=0 해당 페이지
+      perPage:
+        type: string
+        description: '페이지당(default: 20)'
+      data:
+        type: object
+        properties:
+          count:
+            type: integer
+            description: 조회 개수
+          list:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              title:
+                type: string
+              content:
+                type: string
+              regDate:
+                type: string
+              worker:
+                type: string
+  noticeRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          title:
+            type: string
+          content:
+            type: string
+          regDate:
+            type: string
+          worker:
+            type: string
+  customerCenterListRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      pageIdx:
+        type: string
+        description: default=0 해당 페이지
+      perPage:
+        type: string
+        description: '페이지당(default: 20)'
+      data:
+        type: object
+        properties:
+          count:
+            type: integer
+            description: 조회 개수
+          list:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              title:
+                type: string
+              content:
+                type: string
+              answerEmail:
+                type: boolean
+              answerSMS:
+                type: boolean
+              regDate:
+                type: string
+              reporter:
+                type: string
+              images:
+                type: object
+                description: 이미지가 있을경우 반환
+                properties:
+                  _id:
+                    type: string
+                    description: mongodb auto id
+                  path:
+                    type: string
+                    description: s3에 생성된 링크
+                  bucket:
+                    type: string
+                    description: s3에 저장 되는 위치
+                  key:
+                    type: string
+                    description: s3에서 생성된 이름
+                  origin_name:
+                    type: string
+                    description: 이미지 원본 이름
+                  size:
+                    type: number
+                    description: 이미지 크기
+                  mimetype:
+                    type: string
+                    description: 이미지 타입
+                  regDate:
+                    type: string
+  customerCenterRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          title:
+            type: string
+          content:
+            type: string
+          answerEmail:
+            type: boolean
+          answerSMS:
+            type: boolean
+          regDate:
+            type: string
+          reporter:
+            type: string
+          images:
+            type: object
+            description: 이미지가 있을경우 반환
+            properties:
+              _id:
+                type: string
+                description: mongodb auto id
+              path:
+                type: string
+                description: s3에 생성된 링크
+              bucket:
+                type: string
+                description: s3에 저장 되는 위치
+              key:
+                type: string
+                description: s3에서 생성된 이름
+              origin_name:
+                type: string
+                description: 이미지 원본 이름
+              size:
+                type: number
+                description: 이미지 크기
+              mimetype:
+                type: string
+                description: 이미지 타입
+              regDate:
+                type: string
+  eventRes:
+    type: object
+    properties:
+      responseStatus:
+        type: integer
+        description: 성공여부
+      responseMsg:
+        type: string
+        description: 응답 메시지
+      data:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: mongodb auto id
+          coinId:
+            type: string
+          type:
+            type: string
+          userTag:
+            type: string
+          mach:
+            type: number
+          status:
+            type: boolean
+          regDate:
+            type: string
+          
