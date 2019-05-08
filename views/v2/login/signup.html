@@ -13,7 +13,10 @@
             $("#username").text("<%=username%>");
             $("#phone").text("<%=phone%>");
             $("#birth").val("<%=birth%>");
-            $("#recommander").val("<%=recommander%>");
+            if("<%=recommander%>" != "") {
+                $("#recommander").val("<%=recommander%>");
+                $("#recommander").prop("readonly", true)
+            }
             
             $('#checkUserTag').on('click',function(){
                 checkUserTag();
