@@ -37,6 +37,9 @@
         });
 
         function happyomoneyLogin() {
+            alert('준비중입니다.');
+            return;
+
             var loginInfo = {
                 'authType':'ID',
                 "authValue":$('#happymoneyId').val(),
@@ -173,8 +176,6 @@
                     };
                     url = "/v1/points/happymoney/payment";
                     method = "POST";
-                    alert('준비중입니다.');
-                    return;
                 }
 
                 console.log(data);
