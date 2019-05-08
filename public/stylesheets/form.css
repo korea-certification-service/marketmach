@@ -1,0 +1,92 @@
+.login-form,
+.register-form {
+    margin-top: 20%;
+}
+
+.form-title {
+    text-align: center;
+    font-size: x-large;
+    background: #5f9ea0;
+}
+
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+@include box-sizing(border-box);
+}
+
+form[role=login],
+form[role=register],
+form[role=userinfo] {
+    color: #5d5d5d;
+    background: #1b334d;
+    padding: 20px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+form[role=login] img,
+form[role=register] img,
+form[role=userinfo] img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 35px;
+}
+
+form[role=login] input,
+form[role=login] button {
+    font-size: 18px;
+    margin: 16px 0;
+    background: #346A96;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+}
+
+form[role=register] input,
+form[role=register] button {
+    font-size: 14px;
+    margin: 16px 0;
+    background: #346A96;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+}
+
+form[role=userinfo] input,
+form[role=userinfo] button {
+    background: #346A96;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+}
+
+form[role=login] .forgot-login {
+    display: inline-block;
+}
+
+form[role=login] .sign-up {
+    float: right;
+    display: inline-block;
+}
+
+.form-links {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 50px;
+}
+
+.form-links a {
+    color: #fff;
+}
+
+.form-control::-webkit-input-placeholder,
+.form-control:-ms-input-placeholder {
+    color: #f4f4f4;
+}
+.form-control::placeholder {
+    color: #f4f4f4;
+    opacity: 1;
+}

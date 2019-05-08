@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+    <script>
+        var game_name = "<%= game_name %>";
+        var game_server = "<%= game_server %>";
+        var trade_type = "<%= trade_type %>";
+        var type = "<%= type %>";
+        var title = "<%= title %>";
+        var category = "<%= category %>";
+        var pageIdx = 0;
+        var status = "<%= status %>";
+
+        $(document).ready(function () {
+            resetSearchFilter(".search_filter");
+            
+            $("#list").html('');
+            loadGameList();
+            search();
+            
+            $('#btn_search').click(function() {
+                $("#list").html('');
+                pageIdx = 0;
+                type = $('[name=item_type]:checked').val();
+                title = $('#item_title').val();
+                status = $('[name=status]:checked').val();
+
+                search();
+            });
+
+            $('#item_title').on("keydown", function(e) {
+                if(e.keyCode === 13){
+                    $('#btn_search').trigger('click');
+                }
+            });
+
+            $('#more_search').click(function() {
+                pageIdx++;
+                search();
+            });
+
+            $("#game-name").on('change', function() {
+                game_name = $("#game-name option:selected").val();
+                game_server = "";
+                selectServer();
+
+                if($(this).val() !== ""){
+                    $("#titName").text($(this).val());
+                } else {
+                    $("#titName").text("모든 게임");
+                }
+                $('#btn_search').trigger('click');                
+            });
+
+            $("#game-server").on('change', function() {
+                game_server = $("#game-server option:selected").val();
+
+                if($(this).val() !== ""){
+                    $("#titServer").text($(this).val());
+                } else {
+                    $("#titServer").text("모든 서버");
+                }
+                $('#btn_search').trigger('click');                
+            });
+
+            $("input[name='item_type'], input[name='status']").on('change', function() {
+                $('#btn_search').trigger('click');
+            });
+
+            $('#register').on('click',function() {
+                location.href = '/buys/register';
+            });
+        });
+
+        function loadGameList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/games"
+            }).done(function (success) {
+                var strDOM = '<option value="">모든 게임</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
+                }
+
+                $("#game-name").append(strDOM);
+
+                $("#game-name").selectpicker('refresh');
+                setTimeout(function(){
+                    selectServer();
+                });
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function selectServer() {
+            if ($("#game-name option").val() != null) {
+                $("#game-server option").remove();
+            }
+            
+            if (game_name == "") {
+                renderServerSelect({"servers":[]});
+                return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/games/" + game_name
+            }).done(function (success) {
+                renderServerSelect(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function renderServerSelect(data) {
+            var strDOM = '<option value="">모든 서버</option>';
+
+            for (var i = 0; i < data.servers.length; i++) {
+                strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
+            }
+            $("#game-server").append(strDOM);
+            $("#game-server").selectpicker('refresh');
+        }
+
+        function search() {
+            if(category == "") category = "game";
+            if(trade_type == "") trade_type = "buy";
+            if(pageIdx == "") pageIdx = 0;
+
+            var query = "/v1/items?category=" + category + "&trade_type=" + trade_type + "&pageIdx=" + pageIdx;
+            if (game_name != "") {
+                query += "&game_name=" + encodeURIComponent(game_name);
+            }
+
+            if (game_server != "") {
+                query += "&game_server=" + encodeURIComponent(game_server);
+            } 
+
+            if(type != "") {
+                query += "&type=" + type;
+            }
+
+            if(status != "") {
+                query += "&status=" + status;
+            }
+
+            if(title != "" && title != "undefined") {
+                query += "&title=" + encodeURIComponent(title);
+            }
+
+            $.ajax({
+                method: "GET",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                url: query
+            }).done(function (success) {
+                console.log(success.data);
+                if (success.data.count != 0) {
+                    pageIdx = success.pageIdx;
+                    createData(success.data.list);
+                } else {
+                    if(pageIdx == 0) {
+                        $("#list").html("<tr><td colspan='5'>검색 결과를 찾을 수 없습니다.</td></tr>")
+                    }
+                }
+
+                if(success.data.count < 20) {
+                    $('#more_search').hide();
+                } else {
+                    $('#more_search').show();
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function createData(data) {
+            var strDOM = '';
+            for (var i = 0; i < data.length; i++) {
+
+                var itemId = data[i]._id;
+                var regDate = data[i].regDate.substring(2, 10);
+                var item_game_server = data[i].game_name + '<br>' + data[i].game_server;
+                var title = data[i].title;
+                var price = numberWithCommas(data[i].price);
+                var point = numberWithCommas(data[i].point);
+                var status = getStatus(data[i].status);
+                var item_type = getItemType(data[i].type);
+                var trade_type = replaceType(data[i].trade_type);
+
+                strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
+                                '<td>'+item_game_server+'</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd '+item_type.className+'">'+ item_type.text +'</span>' + 
+                                    ' <div class="ellipse"> &nbsp;' + title + 
+                                    '</div>' + 
+                                    '<span class="ico_photo">사진</span>' + 
+                                '</td>' + 
+                                '<td>'+ price +' MACH</td>' + 
+                                '<td>' + 
+                                    '<span class="'+status.className+'">'+status.text+'</span>' + 
+                                '</td>' + 
+                                '<td>'+regDate+'</td>' + 
+                            '</tr>';
+            }
+
+            $("#list").append(strDOM);
+        }
+
+        function detail(id) {
+            location.href="/buys/detail/" + id;
+        }
+    </script>
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- list page-->
+            <section class="board_sec c_style_buy">
+                <div class="board_tit cf">
+                    <h1>게임아이템 삽니다<span><em id="titName">모든 게임</em> > <em id="titServer">모든 서버</em></span></h1>
+                    <button class="btn btn-success" id="register">구매등록</button>
+                </div>
+                <div class="search_filter">
+                    <ul class="">
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">게임/서버</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <select class="selectpicker" id="game-name" data-live-search="true">
+                                </select>
+                                <select class="selectpicker" id="game-server" data-live-search="true">
+                                </select>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">상품유형</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <input type="radio" name="item_type" id="all" value="" checked><label for="all">전체</label>
+                                <input type="radio" name="item_type" id="item" value="item"><label for="item">아이템</label>
+                                <input type="radio" name="item_type" id="gameMoney" value="gameMoney"><label for="gameMoney">게임머니</label>
+                                <input type="radio" name="item_type" id="etc" value="etc"><label for="etc">기타</label>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <input type="radio" name="status" id="all" value="" checked><label for="all">전체</label>
+                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">거래가능</label>
+                                <input type="radio" name="status" id="trading" value="101"><label for="trading">거래중</label>
+                                <input type="radio" name="status" id="trade_complete" value="104"><label for="trade_complete">거래완료</label>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <div class="col-sm-10 col-xs-12">
+                                <div class="w100p-120px">
+                                    <input type="text" class="form-control" id="item_title">
+                                </div>
+                                <div class="mob_100p_tar">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                </div>
+                            </div>
+                        </li>                        
+                    </ul>
+                </div>
+
+                <div class="table_wrap table-responsive">
+                    <table class="table_list has_game_icon table">
+                        <colgroup class="colgroup_buy_list">
+                            <col class="col5_1">
+                            <col class="col5_2">
+                            <col class="col5_3">
+                            <col class="col5_4">
+                            <col class="col5_5">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>게임>서버</th>
+                                <th>제목</th>
+                                <th>거래가격</th>
+                                <th>거래상태</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list">
+                        </tbody>
+                    </table>                 
+                </div>
+                <div class="btn_align_c">
+                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                </div>
+            </section>
+            <!--// list page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

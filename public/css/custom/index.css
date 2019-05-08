@@ -1,0 +1,54 @@
+#buy-game-list{
+    min-height:370px;
+}
+#sell-game-list{
+    min-height:370px;
+}
+#etc-list{
+    min-height:465px;
+}
+
+#buy-title, #sell-title{
+    width:220px;
+    display:-webkit-inline-flex;
+}
+
+/*.hero-search-form{*/
+    /*margin-top:0px;*/
+/*}*/
+@media (max-width:414px){
+    #buy-game-list{
+        min-height:200px;
+    }
+    #sell-game-list{
+        min-height:200px;
+    }
+    #etc-list{
+        min-height:200px;
+    }
+    .hero-search-form{
+    margin-top:40px;
+    }
+}
+@media (min-width: 992px) {
+    .col-lg-6 {
+        flex: 0 0 47.5%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 768px) {
+    #buy-game-select {
+        width: 200px
+    }
+
+    #sell-game-select {
+        width: 200px
+    }
+}
+
+.dorne-btn:hover, .dorne-btn:focus {
+    background-color: #271491;
+}
+
+

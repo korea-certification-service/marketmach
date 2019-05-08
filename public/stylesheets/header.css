@@ -1,0 +1,98 @@
+.header {
+    background: #002346;
+    padding: 5px;
+}
+
+.header-logo {
+    background: url(/image/mach_logo.png) no-repeat;
+    width: 150px;
+    height: 50px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+a{
+    font-family: NotoSansCJKkr;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+
+.header-menu {
+    float: right;
+    display: inline-block;
+}
+
+.header-menu > a{
+    margin-left: 10px;
+}
+
+.header-menu > a > span {
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .header-title {
+        display: none;
+    }
+}
+
+.drop-down {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
+}
+
+.drop-down select {
+    display: none;
+}
+
+.drop-down .select-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    margin-top: 20px;
+    padding: 0;
+    background-color: #595959;
+    width: 100px;
+}
+
+.drop-down .select-list li {
+    display: none;
+    list-style: none;
+}
+
+.drop-down .select-list li span {
+    display: inline-block;
+    min-height: 40px;
+    min-width: 280px;
+    width: 100%;
+    padding: 5px 15px 5px 35px;
+    background-color: #595959;
+    background-position: left 10px center;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    text-align: left;
+    color: #FFF;
+    opacity: 0.7;
+    box-sizing: border-box;
+}
+
+.drop-down .select-list li span:hover,
+.drop-down .select-list li span:focus {
+    opacity: 1;
+}
+
+.logout-content {
+    display: none;
+}
+
+#content{
+    padding-top:5%;
+}

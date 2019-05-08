@@ -1,0 +1,54 @@
+.form-title {
+    text-align: center;
+    font-size: x-large;
+    background: #346A96;
+    padding: 5px 10px 5px 10px;
+}
+
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+@include box-sizing(border-box);
+}
+
+form[role=register] {
+    color: #5d5d5d;
+    /*background: #1b334d;*/
+    padding: 20px;
+}
+
+form[role=register] input{
+    font-size: 14px;
+    margin: 5px 0;
+    background: #ffffff;
+    border: solid 1px #b2b2b2;
+    border-radius: 0;
+    height:3em;
+}
+form[role=register] button{
+    background:#416f94;
+    border-color:#416f94;
+}
+
+.form-links {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 50px;
+}
+
+.form-links a {
+    color: #fff;
+}
+
+.form-control::-webkit-input-placeholder,
+.form-control:-ms-input-placeholder {
+    color: #ababab;
+}
+.form-control::placeholder {
+    color: #ababab;
+    opacity: 1;
+}

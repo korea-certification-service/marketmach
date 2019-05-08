@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/bootstrap/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/account/depositPoint.css" rel="stylesheet">
+</head>
+
+<body class="background2">
+<input type="hidden" id="callbackResult" value="">
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 withdraw-container">
+            <span class="login100-form-title p-b-32 text-white"><img
+                    src="/img/icon-img/ic-coin.png">&nbsp;&nbsp;<%= __('page.deposit.point.bigTitle') %></span>
+
+            <span class="offset-1 text-white"><%= __('page.deposit.point.title1') %></span>
+            <div class="col-10 offset-1 px-0">
+                <div class="d-sm-flex align-items-center wow form-inline text-white card-panel-item">
+                    <div class="col-2 py-2 px-2 mr-0">
+                        <div class="date-map-area">
+                            <img src="/img/icon-img/ic-coin.png">
+                        </div>
+                    </div>
+                    <div class="col-2 m-0 p-0">
+                        <span>POINT</span>
+                    </div>
+                    <div class="col-8">
+                        <span class="card-panel-item-cost float-right"><span id="point"></span> Point</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 offset-1 px-0 mt-4">
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.deposit.point.title3') %>
+                </div>
+                <select class="custom-select" name="payMethod" onchange="selectPayMethod()">
+                    <option value="notSelected"><%= __('page.deposit.point.title3FirstOption') %></option>
+                    <option value="happyMoney"><%= __('page.deposit.point.title3SecondOption') %></option>
+                    <option value="phone"><%= __('page.deposit.point.title3ThirdOption') %></option>
+                    <option value="vbank"><%= __('page.deposit.point.title3FourthOption') %></option>
+                </select>
+            </div>
+            <form id="reqForm" method="post" target="TheWindow">
+                <div class="col-10 offset-1 px-0 mt-4" id="depositPoint" style="display: none;">
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.deposit.point.title2') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="number" name="point" min="0">
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                    <button class="login100-form-btn" onclick="submitPointWithdraw()">
+                        <%= __('common.buttons.button24')%>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script src="/javascript/util.js"></script>
+<!-- Sweet Alert-->
+<script src="/alert/sweetalert.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+    let pointId, bankAccount, bankAccountType, totalPoint, email, popup;
+
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+
+        countryValidation();
+        loadAccount();
+    });
+
+    function countryValidation() {
+        let country = "<%= country %>";
+        console.log(country);
+        if (country != "KR") {
+            swal({
+                text: "<%= __('common.errorMessage.pageError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            }).then(() => {
+                location.href = '/';
+            });
+            return false;
+        }
+    }
+
+    function loadAccount() {
+        console.log("id : ", "<%= id %>");
+        let url = "/v1/users/" + "<%= id %>";
+
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function (success) {
+            console.log(success);
+            email = success.data.email;
+            pointId = success.data.pointId;
+            let url = "/v1/points/" + pointId;
+
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                console.log(success);
+                if (success.data.bank_account != null) {
+                    bankAccount = success.data.bank_account;
+                    $("input[name=account]").val(success.data.bank_account);
+                }
+                if (success.data.bank_account_type != null) {
+                    bankAccountType = success.data.bank_account_type;
+                }
+                if (success.data.total_point == null) {
+                    $("#point").text(0);
+                    totalPoint = 0;
+                } else {
+                    $("#point").text(numberWithCommas(success.data.total_point));
+                    totalPoint = success.data.total_point;
+                }
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            })
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+    }
+
+
+    function selectPayMethod() {
+        if ($("select[name=payMethod] option:selected").val() == "notSelected") {
+            $("#depositPoint").css("display", "none");
+            $("input[name=point]").val("");
+        } else if ($("select[name=payMethod] option:selected").val() == "happyMoney") {
+            $("#depositPoint").css("display", "");
+        } else if ($("select[name=payMethod] option:selected").val() == "phone") {
+            $("#depositPoint").css("display", "");
+        } else if ($("select[name=payMethod] option:selected").val() == "vbank") {
+            $("#depositPoint").css("display", "");
+
+        }
+    }
+
+    function submitPointWithdraw() {
+        event.preventDefault();
+        let point = $("input[name=point]").val();
+
+        if ($("#depositPoint").css("display") != "none") {
+            if (point >= 1000) {
+                if ($("select[name=payMethod] option:selected").val() == "happyMoney") {
+                    //iamport("happymoney", point);
+                    // window.open("<%= danal_url%>/Danal/happymoney/Start.php?");
+                    $('#reqForm').attr('action',"<%= danal_url%>/happymoney/Start.php?");
+                } else if ($("select[name=payMethod] option:selected").val() == "phone") {
+
+                    //iamport("phone", point);
+                    // window.open("<%= danal_url%>/Danal/Teledit/Mobile/Ready.php");
+                    $('#reqForm').attr('action',"<%= danal_url%>/Teledit/Mobile/Ready.php");
+                } else if ($("select[name=payMethod] option:selected").val() == "vbank") {
+                    //iamport("vbank", point);
+                    $('#reqForm').attr('action',"<%= danal_url%>/vaccount/Ready.php");
+                }
+
+                popup = window.open('', 'TheWindow');
+                $('#reqForm').submit();
+                chk_popup();
+            } else {
+                swal({
+                    text: "<%= __('page.deposit.point.alert1') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            }
+        } else {
+            swal({
+                text: "<%= __('page.deposit.point.alert2') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        }
+    }
+
+    function chk_popup() {
+        if(typeof(popup)=='undefined' || popup.closed) {
+            alert('결제가 종료되었습니다.');
+        } else {
+            setTimeout("chk_popup();",1000);
+        }
+    }
+
+    window.addEventListener('message', function(event) {
+        if(event.origin.indexOf('http://52.78.144.116') > -1){
+            /* 전달받은 event.data 를 가지고 원하는 추가 액션 수행 */
+            updatePoint();
+        }
+    });
+
+    function iamport(payMethod, point) {
+        var IMP = window.IMP; // 생략가능
+        IMP.init('iamport'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        IMP.request_pay({
+            pg: 'danal', // version 1.1.0부터 지원.
+            pay_method: payMethod,
+            merchant_uid: 'merchant_' + new Date().getTime(),
+            name: 'Point 입금',
+            amount: point,
+            buyer_email: email,
+            buyer_name: '',
+            buyer_tel: '',
+            buyer_addr: '',
+            buyer_postcode: '',
+            // m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+        }, function (rsp) {
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.';
+                // msg += '고유ID : ' + rsp.imp_uid;
+                // msg += '상점 거래ID : ' + rsp.merchant_uid;
+                // msg += '결제 금액 : ' + rsp.paid_amount;
+                // msg += '카드 승인번호 : ' + rsp.apply_num;
+                updatePoint(point);
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '\n 에러내용 : ' + rsp.error_msg;
+            }
+            swal({
+                text: msg,
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            })
+        });
+    }
+
+    function updatePoint() {
+        let userId = "<%= id %>";
+
+        let params = {
+            "type": "deposit",
+            //"imp_uid": rsp.imp_uid,
+            "userId": userId,
+            "point": $("input[name=point]").val(),
+            "price": $("input[name=point]").val(),
+            "status": 0,
+            "kind": $("select[name=payMethod] option:selected").val()
+        }
+
+        $.ajax({
+            method: "PUT",
+            url: "/v1/points/user/" + userId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(params),
+        }).done(function (success) {
+            console.log(success);
+            window.location = "/accounts/token";
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+    }
+</script>
+</body>
+</html>

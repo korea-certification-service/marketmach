@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/bootstrap/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/etc-buy/register.css" rel="stylesheet">
+
+</head>
+
+<body class="background">
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 register-container">
+            <span class="login100-form-title p-b-32 text-white"><img
+                    src="/img/icon-img/ic-write.png">&nbsp;&nbsp;<%= __('page.buy.etc.modify.bigTitle1') %></span>
+            <div class="col-10 offset-1 px-0 mt-4">
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.buy.etc.modify.title1') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="title" id="title" maxlength="30" placeholder="<%= __('page.buy.etc.modify.placeholder.placeholder1') %>">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="form-inline">
+                    <% if(useBlockchain=="Y"){ %>
+                    <div class="txt1 col-6 p-b-11 text-white pl-0 mach-account">
+                        <%= __('page.buy.etc.modify.title2') %>
+                    </div>
+                    <% } if(usePoint=="Y" && country=="KR"){ %>
+                    <div class="txt1 col-6 p-b-11 text-white pl-0">
+                        <%= __('page.buy.etc.modify.title3') %>
+                    </div>
+                    <% } %>
+                </div>
+                <div class="form-inline">
+                    <% if(useBlockchain=="Y"){ %>
+                    <div class="wrap-input100 col-6 validate-input m-b-12 px-0 mach-account">
+                        <input class="input100 text-white" type="number" name="price" id="price" min="0" placeholder="<%= __('page.buy.etc.modify.placeholder.placeholder2') %>">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <% } if(usePoint=="Y" && country=="KR"){ %>
+                    <div class="wrap-input100 col-6 validate-input m-b-12 px-0">
+                        <input class="input100 text-white" type="number" name="point" id="point" min="0" placeholder="<%= __('page.buy.etc.modify.placeholder.placeholder3') %>">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <% } %>
+                </div>
+                <div class="form-inline">
+                    <% if(useBlockchain=="Y"){ %>
+                    <div class="mach-account col-6 txt1 p-b-6 alert-text">
+                        <%= __('page.buy.game.detail.info2') %>
+                    </div>
+                    <% } if(usePoint=="Y" && country=="KR"){ %>
+                    <div class="col-6 txt1 p-b-6 alert-text">
+                        <%= __('page.buy.game.detail.info3') %>
+                    </div>
+                    <% } %>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.buy.etc.modify.title4') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <textarea class="input100 textarea-custom" id="desc" placeholder="<%= __('page.buy.etc.modify.placeholder.placeholder4') %>"></textarea>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.buy.etc.modify.title5') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="keywords" id="keywords" maxlength="120" placeholder="<%= __('page.buy.etc.modify.placeholder.placeholder5') %>">
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                <button class="login100-form-btn" id="btnSubmit" onclick="submit()">
+                    <%= __('common.buttons.button4') %>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<!-- Bootstrap-select -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select.min.css">
+<script src="/js/bootstrap/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+
+        loadData();
+
+        $("#price").on("keydown", function(e){
+            /* e(지수), .(소수점) -(마이너스) 예외처리 */
+            if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 189){
+                return false;
+            }
+        });
+    });
+
+
+    function loadData() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/items/" + "<%= id%>"
+        }).done(function (success) {
+            // console.log("success : ",success);
+            let userTag = "<%= userTag %>";
+
+            $("#title").val(success.data.title);
+            $("#price").val(success.data.price);
+            $("#point").val(success.data.point);
+            $("#desc").val(success.data.desc);
+            $("#keywords").val(success.data.item_tag);
+
+            if(userTag != success.data.userTag) {
+                $('#btnSubmit').css('display','none');
+            }
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+
+    function submit() {
+        let country = "<%= country %>";
+        if ($("#title").val() == "") {
+            swal({
+                text: "<%= __('page.buy.etc.modify.validation.alert1') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("#price").val() == ""|| $("#price").val() == "0") {
+            swal({
+                text: "<%= __('page.buy.etc.modify.validation.alert2') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0")) {
+            swal({
+                text: "<%= __('page.buy.etc.modify.validation.alert3') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("#desc").val() == "") {
+            swal({
+                text: "<%= __('page.buy.etc.modify.validation.alert4') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("#keywords").val() == "") {
+            swal({
+                text: "<%= __('page.buy.etc.modify.validation.alert5') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        }
+
+        let data = {
+            "count": 1
+        };
+        if ("<%= useBlockchain %>" == "Y") {
+            data["price"] = $("#price").val();
+        } else {
+            data["price"] = 0;
+        }
+        if ("<%= usePoint %>" == "Y" && country == "KR") {
+            data["point"] = $("#point").val();
+        } else {
+            data["point"] = 0;
+        }
+        if (title != $("#title").val()) {
+            data["title"] = $("#title").val();
+        }
+        if (desc != $("#desc").val()) {
+            data["desc"] = $("#desc").val();
+        }
+        if (keywords != $("#keywords").val()) {
+            data["item_tag"] = $("#keywords").val();
+        }
+
+        // console.log($("#ex_filename")[0].files[0]);
+        // console.log("data : ",data);
+        // console.log("<%= id%>");
+
+        $.ajax({
+            method: "PUT",
+            url: "/v1/items/" + "<%= id %>",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                $("#btnSubmit").attr('disabled', true);
+                $("#btnSubmit").text("<%= __('common.buttons.button22') %>");
+            }
+        }).done(function (success) {
+            console.log(success);
+            location.href = '/etc-buys'
+
+        }).fail(function (fail) {
+            $('#btnSubmit').attr('disabled', false);
+            $('#btnSubmit').text("<%= __('common.buttons.button3') %>");
+
+            swal({
+                text: "<%= __('common.errorMessage.saveError') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+        })
+    }
+</script>
+</body>
+</html>

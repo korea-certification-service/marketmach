@@ -1,0 +1,301 @@
+{
+  "common": {
+    "buttons": {
+      "button1": "VTR 거래시작",
+      "button2": "POINT 거래시작",
+      "button3": "등록",
+      "button4": "수정",
+      "button5": "삭제",
+      "button6": "목록으로",
+      "button7": "Search",
+      "button8": "입금요청",
+      "button9": "출금요청",
+      "button10": "확인",
+      "button11": "인증",
+      "button12": "저장",
+      "button13": "Login",
+      "button14": "Register",
+      "button15": "Find ID",
+      "button16": "Find Password",
+      "button17": "다음으로",
+      "button18": "회원가입"
+
+    },
+    "selectbox": ["한국","중국"],
+    "status": ["구매 요청", "판매 요청", "VTR 거래 중", "POINT 거래 중", "구매자 구매 완료", "판매자 판매 완료", "거래완료"]
+  },
+  "menu": {
+    "gameItem": {
+      "title": "게임아이템",
+      "subMenu": {
+        "title1": "삽니다 리스트",
+        "title2": "팝니다 리스트",
+        "title3": "삽니다 등록",
+        "title4": "팝니다 등록"
+      }
+    },
+    "etc": {
+      "title": "기타거래",
+      "subMenu": {
+        "title1": "삽니다 리스트",
+        "title2": "팝니다 리스트",
+        "title3": "삽니다 등록",
+        "title4": "팝니다 등록"
+      }
+    },
+    "myWallet": {
+      "title": "나의 지갑",
+      "subMenu": {
+        "title1": "My Tokens",
+        "title2": "Mach 입금",
+        "title3": "Mach 출금",
+        "title4": "Point 입금",
+        "title5": "Point 출금"
+      }
+    },
+    "myPage": {
+      "title": "My Page",
+      "subMenu": {
+        "title1": "나의 정보",
+        "title2": "나의 구매 내역",
+        "title3": "나의 판매 내역"
+      }
+    }
+  },
+  "search": {
+    "BuyTab": {
+      "title": "BUY",
+      "gameNameFirstOption":"게임명",
+      "ServerFirstOption":"서버명",
+      "TypeFirstOption":"Type",
+      "SearchPlaceholder": "Search"
+    },
+    "SellTab": {
+      "title": "BUY",
+      "gameNameFirstOption":"게임명",
+      "ServerFirstOption":"서버명",
+      "TypeFirstOption":"Type",
+      "SearchPlaceholder": "Search"
+    }
+  },
+  "page": {
+    "login": {
+      "bigTitle": "로그인",
+      "title1": "ID",
+      "title2": "PASSWORD",
+      "title2Checkbox": "Remember Me"
+    },
+    "agreement": {
+      "bigTitle": "회원가입",
+      "title1": "회원가입약관",
+      "title1Checkbox": "회원가입약관의 내용에 동의합니다.",
+      "title2": "개인정보처리방침 안내",
+      "title2Checkbox": "개인정보처리방침 내용에 동의합니다.",
+      "validation": {
+        "error1": "약관에 동의해 주세요."
+      }
+    },
+    "register": {
+      "bigTitle": "회원가입",
+      "title1": "ID",
+      "title2": "USER NAME",
+      "title3": "E-MAIL",
+      "title4": "PASSWORD",
+      "title5": "CONFIRM PASSWORD",
+      "title6": "거래국가",
+      "title6FirstOption":"국가선택",
+      "validation": {
+        "error1": "ID를 입력하세요",
+        "error2": "문자,숫자 조합으로 6~20자리를 사용해야 합니다.",
+        "error3": "비밀번호가 일치하지 않습니다."
+      }
+    },
+    "findId": {
+      "bigTitle": "아이디 찾기",
+      "title1": "E-MAIL"
+    },
+    "findPassword": {
+      "bigTitle": "패스워드 찾기",
+      "title1": "ID",
+      "title2": "E-MAIL"
+    },
+    "main": {
+      "bigTitle": "MACH Exchange",
+      "subTitle": "세계 최초의 가상화폐 게임 거래소",
+      "mainContent1": {
+        "title": "게임 거래 현황",
+        "subtitle1": "Buy",
+        "subtitle2": "Sell"
+      },
+      "mainContent2": {
+        "title": "기타 거래 현황",
+        "subtitle1": "거래"
+      },
+      "validation": {
+        "error1": "거래 가능한 계좌가 없습니다."
+      }
+    },
+    "buy": {
+      "game": {
+        "list": {},
+        "detail": {
+          "title1": "구매제목",
+          "title2": "ID",
+          "title3": "작성자",
+          "title4": "게임 캐릭터",
+          "title5": "Type",
+          "title6": "거래상태",
+          "title7": "구매가격",
+          "title8": "상세설명"
+        },
+        "add": {
+          "bigTitle1": "구매 등록",
+          "title1": "게임명/서버",
+          "gameNameFirstOption": "게임명",
+          "serverFirstOption": "서버",
+          "title2": "Type",
+          "title3": "구매제목",
+          "title4": "게임 캐릭터",
+          "title5": "MACH 가격",
+          "title6": "POINT 가격",
+          "title7": "상세설명"
+        }
+      },
+      "etc": {
+        "list": {},
+        "detail": {
+          "title1": "구매제목",
+          "title2": "ID",
+          "title3": "작성자",
+          "title4": "거래상태",
+          "title5": "구매가격",
+          "title6": "상세설명"
+        },
+        "add": {
+          "bigTitle1": "구매 등록",
+          "title1": "기타",
+          "title2": "구매제목",
+          "title3": "MACH 가격",
+          "title4": "POINT 가격",
+          "title5": "상세설명"
+        }
+      }
+    },
+
+    "sell": {
+      "game": {
+        "list": {},
+        "detail": {
+          "title1": "판매제목",
+          "title2": "ID",
+          "title3": "작성자",
+          "title4": "게임 캐릭터",
+          "title5": "Type",
+          "title6": "거래상태",
+          "title7": "판매가격",
+          "title8": "상세설명"
+        },
+        "add": {
+          "bigTitle1": "판매 등록",
+          "title1": "게임명/서버",
+          "gameNameFirstOption": "게임명",
+          "serverFirstOption": "서버",
+          "title2": "Type",
+          "title3": "판매제목",
+          "title4": "게임 캐릭터",
+          "title5": "MACH 가격",
+          "title6": "POINT 가격"
+        }
+      },
+      "etc": {
+        "list": {},
+        "detail": {
+          "title1": "판매제목",
+          "title2": "ID",
+          "title3": "작성자",
+          "title4": "거래상태",
+          "title5": "판매가격",
+          "title6": "상세설명"
+        },
+        "add": {
+          "bigTitle1": "판매 등록",
+          "title1": "기타",
+          "title2": "판매제목",
+          "title3": "MACH 가격",
+          "title4": "POINT 가격",
+          "title5": "상세설명"
+        }
+      }
+    },
+    "myTokens": {
+      "bigTitle": "나의 코인 정보",
+      "subTitle1": "Amount",
+      "tabs": {
+       "title1": "MACH 입금",
+       "title2": "MACH 출금",
+       "title3": "POINT 입금",
+       "listTitle": "모바일 소액 결제",
+       "title4": "POINT 출금"
+      }
+    },
+    "deposit": {
+      "mach": {
+        "bigTitle": "MACH 입금",
+        "title1": "Amount",
+        "title2": "MACH 수량",
+        "title3": "입금 할 코인",
+        "title3FirstOption": "코인 선택",
+        "title4": "계산기"
+      },
+      "point": {
+        "bigTitle": "POINT 입금",
+        "title1": "Amount",
+        "title2": "MACH 수량",
+        "title3": "입금 할 코인",
+        "title4": "계산"
+      }
+    },
+    "withdraw": {
+      "mach": {
+        "bigTitle": "MACH 출금",
+        "title1": "Amount",
+        "title2": "MACH 수량",
+        "title3": "출금 할 코인",
+        "title3FirstOption": "코인 선택",
+        "title4": "계산기",
+        "title5": "Wallet Address"
+      },
+      "point": {
+        "bigTitle": "POINT 출금",
+        "title1": "Amount",
+        "title2": "POINT 수량",
+        "title3": "계좌 번호",
+        "title3label": "계좌 이체 시 은행에 관계없이 1000원의 수수료가 발생합니다."
+      }
+    },
+    "myInfo": {
+      "bigTitle": "나의 정보",
+      "title1": "ID",
+      "title2": "USER NAME",
+      "title3": "E-MAIL",
+      "title4": "PASSWORD",
+      "title5": "CONFIRM PASSWORD",
+      "title6": "MOBILE",
+      "title7": "BTC WALLET ADDRESS",
+      "title8": "ETC WALLET ADDRESS",
+      "title9": "MACH WALLET ADDRESS",
+      "title10": "계좌등록",
+      "title10FirstOption": "은행선택"
+    },
+    "myBuyList": {
+      "bigTitle": "나의 구매 내역"
+    },
+    "mySellList": {
+      "bigTitle": "나의 매 내역"
+    }
+  },
+  "footer": {
+    "title1": "이용약관",
+    "title2": "개인정보취급방침"
+  }
+}

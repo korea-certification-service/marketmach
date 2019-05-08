@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var pointId = "<%=pointId%>";
+        var total_mach = 0;
+        var output_total_mach = 0;
+        var total_point = 0;
+        var price = 0;
+        var fee = parseFloat("<%=fee%>");
+        //환율
+        var rate = 1000;
+        
+        $(document).ready(function() {
+            $('[name=amount]').on('keyup',function(e) {
+                if($('[name=amount]').val() != "") {
+                    $('#total_amount').text(total_point + parseInt($('[name=amount]').val()));
+                    calculate();
+                }
+            })
+
+            //환율 조회
+            $.get('https://api.manana.kr/exchange/rate.json?base=KRW&code=USD', function(data) {                
+                rate = Math.round(data[0].rate);
+                //console.log(rate);
+            });
+
+            $('[name=amount]').on("keydown", function(e){
+                /* e(지수), .(소수점) -(마이너스) 예외처리 */
+                if(e.keyCode == 69 || e.keyCode == 189){
+                    return false;
+                }
+            });
+
+            /*
+            var $body = $("body");
+            var $dim = $(".dim_all_area");
+            */
+            $("#confirmWithdraw").on("click", function() {
+                reqWithdraw();
+            });
+
+            getPoint();
+            getCoin();
+            getExchangeHistory('withdraw');
+        });
+
+        function getPoint() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/points/" + pointId
+            }).done(function (success) {
+                if (success.data.total_point != null) {
+                    total_point = success.data.total_point;
+                    $("#point").html(numberWithCommas(success.data.total_point) + "<span>Point</span>");
+                    $("#my_amount_point").text(numberWithCommas(success.data.total_point));
+                    $("#total_amount_point").text(numberWithCommas(success.data.total_point));
+                } else {
+                    $("#point").html("0<span>MACH</span>");
+                    $("#my_amount").text("0");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                if (success.data.total_mach != null) {
+                    total_mach = success.data.total_mach;
+                    output_total_mach = success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach;
+                    //$("#mach").html(numberWithCommas(success.data.total_mach) + "(출금 가능 : "+numberWithCommas(output_total_mach)+")<span>MACH</span>");
+                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                    $("#withdrawable").html("출금 가능 : <br class='mob_br'>"+numberWithCommas(output_total_mach)+ "<span>MACH</span>");
+                    $("#my_amount_mach").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
+                    $("#total_amount_mach").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
+                } else {
+                    $("#mach").html("0<span>MACH</span>");
+                    $("#my_amount").text("0");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getExchangeHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/exchange/history/" + coinId + "/" + trade_type,
+            }).done(function (success) {
+                console.log(success.data);
+                var historys = success.data;
+                var result = ""
+                if(historys.length == 0) {
+                    result = "<tr><td colspan='2'>내역이 존재하지 않습니다.</td></tr>";
+                }
+
+                for(var i=0;i<historys.length;i++) {
+                    var amount = numberWithCommas(historys[i].amount);
+                    var currencyCode = historys[i].currencyCode;
+                    var mach = numberWithCommas(historys[i].mach);
+                    var regDate = historys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc3">'+mach+'<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>Point</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var coin = Number($("input[name=amount]").val());
+            var fee_amount = coin * fee;            
+            var data;
+            price = parseInt(((coin - fee_amount) * rate).toFixed());
+            data = coin + " MACH * " + rate + " 원 = " + price + " Point ("+ (fee*100) + "% 교환 수수료 발생)";
+            $("#calculate").text(data);
+            $("#withdraw_amount").html(coin+"<span>MACH</span>");
+            $("#exchange_amount").html(price+"<span>Point</span>");
+            $("#minus_amount_mach").text(coin);
+            $("#plus_amount_point").text(price);
+            $("#total_amount_point").text(numberWithCommas(total_point + price));
+            $("#total_amount_mach").text(numberWithCommas(output_total_mach - coin));
+        }
+
+        function reqWithdraw() {   
+            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0") {
+                alert("MACH 금액을 입력하세요.");
+                return;
+            }
+                
+            var confirmYn = confirm("교환 하시겠습니까?");
+            if(confirmYn) {      
+                var data = {
+                    "userId": userId,
+                    "amount": Number($("input[name=amount]").val()),
+                    "extType":"MACH",
+                    "rate": rate
+                };
+
+                console.log(data);
+                
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/exchange/withdraw",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    console.log(success.data);
+                    alert(success.data.msg);
+                    if(success.data.code == "Success") {
+                        location.href = "/mypages/point/exchange/withdraw"
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">포인트 관리 <span>MACH -> 포인트 교환</span></h1>
+                        <div class="point_box">
+                            <div class="pb_inner cf">
+                                <div class="paint_point">
+                                    <em>P</em>
+                                </div>
+                                <div class="lft_box inner_box">
+                                    <em>나의 포인트 잔액</em>
+                                    <p class="fc3" id="point"></p>
+                                </div>
+                                <div class="rgh_box inner_box">
+                                    <em>나의 지갑 잔액</em>
+                                    <p class="fc3" id="mach"></p>
+                                    <strong id="withdrawable"></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">교환하기</h2>
+                        <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="withdraw_amount">0<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>Point</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>                                     
+                                    <tr>
+                                        <th>금액</th>
+                                        <td>
+                                            <input type="number" class="form-control" name="amount" min="0" value="0" placeholder="금액 입력">
+                                            <br class="mob_br"><span class="fcrd">※ 아이템 및 자산 거래가 완료된 MACH 금액만 교환 가능</span>
+                                        </td>
+                                    </tr>                  
+                                    <tr>
+                                        <th>자동계산</th>
+                                        <td><em id="calculate">0 MACH = 0 Point</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap mb50">
+                            <h2 class="tit_mypage dot_tit">나의 지갑 정보</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>나의 지갑 잔액</th>
+                                        <td><span id="my_amount_mach">0</span> MACH</td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico plus">-</em> <span id="minus_amount_mach">0</span> MACH
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 후 나의 지갑 잔액</th>
+                                        <td><span id="total_amount_mach">0</span> MACH</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>                          
+                        </div>
+
+                        <div class="table_wrap mb50">
+                            <h2 class="tit_mypage dot_tit">나의 포인트 정보</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>나의 포인트 잔액</th>
+                                        <td><span id="my_amount_point">0</span> Point</td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico minus">+</em> <span id="plus_amount_point">0</span> Point
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 후 나의 포인트 잔액</th>
+                                        <td><span id="total_amount_point">0</span> Point</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>   
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmWithdraw">교환</button>
+                            </div>                         
+                        </div>
+                        
+                        <h2 class="tit_mypage dot_tit">교환 내역</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>금액</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>

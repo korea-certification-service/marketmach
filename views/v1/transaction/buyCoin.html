@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+
+    <title>Mach Exchange</title>
+
+    <!-- 부트스트랩 -->
+    <link href="/bootstrap_css/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/buyCoin.css" rel="stylesheet">
+
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+    <script src="/chart/Chart.js"></script>
+
+    <script>
+        var data = [{
+            "date":"24-Apr-07",
+            "close":"77.24"
+        },{
+            "date":"25-Apr-07",
+            "close":"69.24"
+        },{
+            "date":"26-Apr-07",
+            "close":"90.24"
+        },{
+            "date":"27-Apr-07",
+            "close":"63.24"
+        },{
+            "date":"28-Apr-07",
+            "close":"99.24"
+        }
+        ];
+
+        // 250x250 의 <svg id="graphWrap"></svg> 를 div.graph 에 추가
+        $(document).ready(function() {
+            $('#header').load('/header');
+            $('#menu').load('/menu');
+            $('#footer').load('/footer');
+            //renderChartJs();
+        });
+
+
+        function renderChartJs() {
+            var ctx1 = document.getElementById("chart_div1").getContext('2d');
+            var ctx2 = document.getElementById("chart_div2").getContext('2d');
+
+            var labels = data.map(function(e){
+                return e.date;
+            });
+            var values = data.map(function(e){
+                return e.close;
+            });
+
+            var myChart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var myChart1 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        function buyGTC() {
+            alert('구매 신청이 완료되었습니다. \n 요청하신 Token은 9/1일 일괄 전송할 예정입니다.');
+            location.href = '/transaction';
+        }
+
+        function myTransaction() {
+            location.href = '/transaction';
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="header"></div>
+<div id="menu"></div>
+<div id="content">
+    <div class="row" id="buy-coin-container">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <main role="buyCoin">
+                <div class="container">
+                    <!--<div class="trans-graph">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-6">-->
+                                <!--<div class="card mb-6 shadow-sm">-->
+                                    <!--<canvas id="chart_div1"></canvas>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-6">-->
+                                <!--<div class="card mb-6 shadow-sm">-->
+                                    <!--<canvas id="chart_div2"></canvas>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="trans-sell-status">
+                        <div class="label-title">
+                            MACH 구매
+                        </div>
+                        <div class="label-content">
+                            <div class="row">
+                                <div class="col-md-3">ETH 보유 개수</div>
+                                <div class="col-md-9">
+                                    1000ETH
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">BTC 보유 개수</div>
+                                <div class="col-md-9">
+                                    100BTC
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">MACH 구매 수량</div>
+                                <div class="col-md-9">
+                                    <input class="form-control form-control-sm" type="number" style="width:100px;display:inline-block; margin-right: 5px;" placeholder="1000" id="countMach">MACH
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    사용할 Token
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control form-control-sm" id="tokenType">
+                                        <option value="BTC">BTC</option>
+                                        <option value="ETH" selected>ETH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    계산기
+                                </div>
+                                <div class="col-md-9">
+                                    <span class="calculator">$1 X 10ETH = 1000 MACH</span>
+                                </div>
+                            </div>
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-3">보낼 주소</div>-->
+                                <!--<div class="col-md-9">-->
+                                    <!--<input class="form-control form-control-sm" type="text" style="display:inline-block; margin-right: 5px;" placeholder="Your Wallet Address" id="address">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="btn-align">
+                                <button type="submit" class="btn btn-primary btn-sm btn-width-middle" onclick="javascript:buyGTC()">구매</button>
+                                <button class="btn btn-primary btn-sm btn-width-middle" onclick="javascript:myTransaction();">나의 토큰 정보</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">지갑관리 <span>나의 코인 정보</span></h1>
+                        <div class="bitberry_switch_box">
+                            <div class="bitberry_switch">
+                                <img class="" src="/static/img/sub/logo_bitberry.png" alt="">
+                                <p>ON</p>
+                            </div>
+                            <em>나의지갑 잔액</em>
+                            <p class="fc3">100 <span>MACH</span></p>
+                        </div>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1">MACH 입금</button>
+                            <button class="btn btn_in_view2">MACH 출금</button>
+                        </div>
+
+                        <div class="tab_board cf">
+                            <li><a href="">MACH 입금 내역</a></li>
+                            <li class="on"><a href="">MACH 출금 내역</a></li>
+                        </div>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>지갑</th>
+                                        <th>출금액</th>
+                                        <th>처리상태</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
+                                        </td>
+                                        <td>출금대기</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>         
+                                    <tr>
+                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
+                                        </td>
+                                        <td>출금완료</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>         
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">지갑관리 <span>나의 코인 정보</span></h1>
+                        <div class="bitberry_switch_box">
+                            <div class="bitberry_switch">
+                                 <!-- 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 -->
+                                <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                <p>OFF</p>
+                            </div>
+                            <em>나의지갑 잔액</em>
+                            <p class="fc3">100 <span>MACH</span></p>
+                        </div>
+
+                        <h2 class="tit_mypage">입금하기</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3">25<span>ETH</span></em><span class="arw_txt">>>></span><em class="fc2">100<span>MACH</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>MACH 금액</th>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="금액 입력">
+                                            <br class="mob_br"><span class="fcrd">※입금을 원하는 MACH 코인 금액</span>
+                                        </td>
+                                    </tr>              
+                                    <tr>
+                                        <th>코인선택</th>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="코인선택">
+                                            <br class="mob_br"><span class="fcrd">※MACH 코인으로 입금할 코인선택</span>
+                                        </td>
+                                    </tr>              
+                                    <tr>
+                                        <th>자동계산</th>
+                                        <td><em>8 MACH = 8.00000000 MACH</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap">
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">결제정보</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                           
+                                    <tr>
+                                        <th>나의 지갑 잔액</th>
+                                        <td>1,000 MACH</td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico plus">+</em> 1,000 MACH
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 후 나의 지갑 잔액</th>
+                                        <td>0 MACH</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button id="confirmDeposit" class="btn btn_in_view1">비트베리 입금요청</button>
+                            </div>                        
+                        </div>
+
+                        <!-- 모달창 -->
+                        <div class="dim_all_area" style="display: none">
+                            <article class="modal_bitberry_deposit">
+                                <div class="tar">
+                                    <button id="btnmCloseModal" class="btn">X</button>
+                                </div>
+                                <h1>비트베리 입금요청</h1>
+                                <p>비트베리 앱에서 입금승인요청후<br>아래의 확인 버튼을 눌러주세요.</p>
+                                <button id="" class="btn btn-danger">확인</button>
+                            </article>
+                        </div>
+                        <script>
+                        /*
+                        var $body = $("body");
+                        var $dim = $(".dim_all_area");
+                        $("#confirmDeposit").on("click", function() {
+                            $dim.show();
+                            $body.css("position", "fixed");
+                        });
+                        */
+                        _PopupUI.openAfterClick();
+
+                        /*
+                        $("#btnmCloseModal").on("click", function() {
+                            $dim.hide();
+                            $body.css("position", "initial");
+                        });
+                        */
+                        _PopupUI.closeAfterClick();
+
+                        </script>    
+
+                        <h2 class="tit_mypage">비트베리 입금 내역</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>입금액</th>
+                                        <th>처리상태</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc3">25<span>ETH</span></em><span class="arw_txt">>>></span><em class="fc2">100<span>MACH</span></em>
+                                        </td>
+                                        <td>입금대기</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>         
+                                    <tr>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc3">25<span>ETH</span></em><span class="arw_txt">>>></span><em class="fc2">100<span>MACH</span></em>
+                                        </td>
+                                        <td>입금완료</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>         
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">지갑관리 <span>비트베리 연결</span></h1>
+                        <hr class="hr_mypage">
+                        <h2 class="tit_mypage">비트베리 연결</h2>
+                        <div class="coin_certification">
+                            <dl class="cf">
+                                <dt class="fc2">인증번호</dt>
+                                <dd>
+                                    <em class="fcrd">1234-1234</em>
+                                    <!-- <button class="btn btn_in_view2">인증번호 보기</button> -->
+                                </dd>
+                            </dl>
+                        </div>
+                        <ul class="highligh_list fcrd">
+                            <li>※ 화면의 인증번호를 BITBERRY(비트베리)에 입력하여 MACH 거래소와 연결하세요.</li>
+                            <li>※ 비트베리APP에 인증번호 등록 후 아래 (비트베리 연결 완료) 버튼을 클릭해 주세요.</li>
+                        </ul>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1">비트베리 연결 완료</button>
+                        </div> 
+                        <h2 class="tit_mypage">비트베리 안내</h2>
+                        <ul class="bitberry_info cf">
+                            <li><img src="/static/img/sub/logo_bitberry.png" alt=""></li>
+                            <li><a href="" class="btn btn-success">비트베리 안내</a></li>
+                        </ul>
+                    </section>
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">지갑관리 <span>비트베리 연결</span></h1>
+                        <hr class="hr_mypage">
+                        <h2 class="tit_mypage">비트베리 연결</h2>
+                        <div class="coin_certification mb50">
+                            <dl class="cf">
+                                <dt class=""><img src="/static/img/sub/logo_bitberry.png" alt=""></dt>
+                                <dd>
+                                    <strong class="fc2">비트베리와<br>나의 지갑이<br>연결되어 있습니다.</strong>
+                                </dd>
+                            </dl>
+                        </div> 
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1">비트베리 연결 해제</button>
+                        </div>                   
+                    </section>
+               
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

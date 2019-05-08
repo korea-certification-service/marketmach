@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/etc-sell/list.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="header_area" id="header">
+</header>
+
+<section class="dorne-welcome-area bg-img bg-overlay bg-main2">
+    <div class="container h-100 top-padding">
+        <div class="row h-100 align-items-center justify-content-center">
+            <div class="col-12 col-md-12">
+                <!--<div class="hero-content">-->
+                    <!--<h2><%= __('page.main.bigTitle') %></h2>-->
+                    <!--<h4><%= __('page.main.subTitle') %></h4>-->
+                <!--</div>-->
+                <!-- Hero Search Form -->
+                <div class="hero-search-form">
+                    <!-- Tabs -->
+                    <div class="nav nav-tabs" id="heroTab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-events-tab" data-toggle="tab"
+                           onclick="location.href='/etc-sells'" role="tab"
+                           aria-controls="nav-events" aria-selected="true"><%= __('search.SellTab.title') %></a>
+                        <a class="nav-item nav-link" id="nav-places-tab" data-toggle="tab"
+                           onclick="location.href='/etc-buys'"
+                           role="tab" aria-controls="nav-places" aria-selected="false"><%= __('search.BuyTab.title')
+                            %></a>
+                    </div>
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active form-inline" id="nav-events" role="tabpanel"
+                             aria-labelledby="nav-events-tab">
+                            <input type="text" class="form-control col-xl-9 col-md-9 col-sm-3 mr-2 mb-2"
+                                   id="sell-title"
+                                   placeholder="<%= __('search.SellTab.SearchPlaceholder') %>">
+                            <button type="button" class="btn dorne-btn" onclick="search()"><i
+                                    class="fa fa-search pr-2"
+                                    aria-hidden="true"></i> <%= __('search.SellTab.SearchPlaceholder') %>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--</section>-->
+
+<!--<section class="dorne-features-events-area bg-img bg-overlay-9 section-padding-0-50 background">-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12 my-3 text-white">
+                    <span><i class="fa fa-rocket" aria-hidden="true"></i> <span id="game-name"></span><span
+                            id="game-arrow"></span><span id="game-server"></span></span>
+                </div>
+                <div id="list-container">
+                </div>
+                <div class="page"></div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script src="/javascript/util.js"></script>
+<!-- Bootstrap-select -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select.min.css">
+<script src="/js/bootstrap/bootstrap-select.min.js"></script>
+<script>
+    var pageIdx;
+
+    $(document).ready(function () {
+            $(".header_area").load("/header");
+            $(".dorne-footer-area").load("/footer");
+            $(".page").load("/page");
+
+            let trade_type = "<%= trade_type %>";
+            let title = "<%= title %>";
+            let category = "<%= category %>";
+            pageIdx = Number("<%= pageIdx %>");
+
+            if (trade_type == "") {
+                $.ajax({
+                    method: "GET",
+                    url: "/v1/items/tradeType/sell?category=etc&pageIdx=" + pageIdx,
+                }).done(function (success) {
+                    if (success.data.count != 0) {
+                        createData(success.data.list);
+                        createPaging(success.data.count);
+                    } else {
+                        let strDOM = '<div class="text-center text-white card-panel" id="hasNoItem">' + "<%= __('page.sell.etc.list.info1') %>" + '</div>';
+                        $("#list-container").append(strDOM);
+                        $(".page").css("display", "none");
+                    }
+                    fnMove();
+                }).fail(function (fail) {
+                    swal({
+                        text: "<%= __('common.errorMessage.serverError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                })
+            } else {
+                let query = "?category=" + category + "&trade_type=" + trade_type + "&title=" + title + "&pageIdx=" + pageIdx;
+                $.ajax({
+                    method: "GET",
+                    url: "/v1/items" + query,
+                }).done(function (success) {
+                    if (success.data.count != 0) {
+                        pageIdx = success.pageIdx;
+                        createData(success.data.list);
+                        createPaging(success.data.count);
+                    } else {
+                        let strDOM = '<div class="text-center text-white card-panel" id="hasNoItem">' + "<%= __('page.sell.game.list.info1') %>" + '</div>';
+                        $("#list-container").append(strDOM);
+                        $(".page").css("display", "none");
+                    }
+                    $("#sell-title").val(title);
+                    fnMove();
+                }).fail(function (fail) {
+                    swal({
+                        text: "<%= __('common.errorMessage.serverError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                })
+            }
+            $("#sell-title").keydown(function (key) {
+                if (key.keyCode == 13) {
+                    search()
+                }
+            });
+
+        }
+    );
+
+
+    function createData(data) {
+        let strDOM = '';
+        for (let i = 0; i < data.length; i++) {
+
+            let itemId = data[i]._id;
+            let regDate = data[i].regDate;
+            regDate = regDate.substring(2, 10);
+            let title = data[i].title;
+            let price = numberWithCommas(data[i].price);
+            let point = numberWithCommas(data[i].point);
+            let status = data[i].status;
+
+            strDOM += '<div class="col-12 px-0" onclick="updateClicked(\'' + itemId + '\');">\n' +
+                '                    <div class="single-feature-events-area d-sm-flex align-items-center wow form-inline text-white card-panel-item">\n' +
+                '                        <div class="col-2 py-2 px-2 mr-0">\n' +
+                '                            <div class="date-map-area">\n' +
+                '                                <div class="d-flex justify-content-center mb-1 card-panel-item-sell">' + regDate + '\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                                    <div class="col-2 py-2 mr-0">\n' +
+                '                                        <div class="date-map-area">\n';
+            if (status == "0") {
+                status = "<%= __('page.myDealHistory.tabs.vtr.title1') %>" + '<br>' + "<%= __('page.myRegisterHistory.tabs.etc.title2') %>";
+                strDOM += '        <div class="d-flex justify-content-center mb-1 card-panel-item-status-register text-center">' + status + '</div>\n';
+            } else if (status == "1" || status == "2" || status == "3") {
+                status = "<%= __('page.myDealHistory.tabs.vtr.title4') %>" + '<br>' + "<%= __('page.myDealHistory.tabs.vtr.title4FirstOption') %>";
+                strDOM += '        <div class="d-flex justify-content-center mb-1 card-panel-item-status-vrt text-center">' + status + '</div>\n';
+            } else if (status == "101") {
+                status = "<%= __('page.myDealHistory.tabs.point.title4') %>" + '<br>' + "<%= __('page.myDealHistory.tabs.point.title4FirstOption') %>";
+                strDOM += '        <div class="d-flex justify-content-center mb-1 card-panel-item-status-vrt text-center">' + status + '</div>\n';
+            } else {
+                status = "<%= __('page.myDealHistory.tabs.vtr.title1') %>" + '<br>' + "<%= __('page.myDealHistory.tabs.vtr.title5') %>";
+                strDOM += '        <div class="d-flex justify-content-center mb-1 card-panel-item-status-completed text-center">' + status + '</div>\n';
+            }
+            strDOM += '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                        <div class="d-flex justify-content-center col-6 m-0 p-0">\n' +
+                '                            <span>' + title + '</span>\n' +
+                '                        </div>\n' +
+                '                        <div class="d-flex justify-content-center col-2">\n';
+            if ("<%=useBlockchain%>" == "Y") {
+                strDOM += '                            <span class="card-panel-item-cost"><span>' + price + '</span> MACH</span>\n';
+            } else {
+                strDOM += '                            <span class="card-panel-item-cost"><span>' + point + '</span>원</span>\n';
+            }
+            strDOM += '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>'
+        }
+        $("#list-container").append(strDOM);
+    }
+
+    function createPaging(count) {
+        let category = "<%= category %>";
+        let trade_type = "<%= trade_type %>";
+        let title = "<%= title %>";
+
+        let strDOM = '';
+        let page = count / 20;
+        let query = '';
+        if (trade_type == "") {
+            query = "?category=etc&pageIdx=";
+            if (pageIdx % 5 == 0) {
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 5; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 1) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 4; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 2) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 3; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 3) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 3) + '">' + Number(pageIdx - 2) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                if (page > 1) {
+                    strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + 1) + '">' + Number(pageIdx + 2) + '</a></li>';
+                }
+            } else if (pageIdx % 5 == 4) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 4) + '">' + Number(pageIdx - 3) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 3) + '">' + Number(pageIdx - 2) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+            }
+            $(".page-first").before(strDOM)
+
+        } else {
+            query = "?category=" + category + "&trade_type=" + trade_type + "&title=" + title + "&pageIdx=";
+            if (pageIdx % 5 == 0) {
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 5; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 1) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 4; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 2) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                for (let i = 1; i < 3; i++) {
+                    if (page > i) {
+                        strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + i) + '">' + Number(pageIdx + i + 1) + '</a></li>';
+                    }
+                }
+            } else if (pageIdx % 5 == 3) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 3) + '">' + Number(pageIdx - 2) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+                if (page > 1) {
+                    strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx + 1) + '">' + Number(pageIdx + 2) + '</a></li>';
+                }
+            } else if (pageIdx % 5 == 4) {
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 4) + '">' + Number(pageIdx - 3) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 3) + '">' + Number(pageIdx - 2) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 2) + '">' + Number(pageIdx - 1) + '</a></li>';
+                strDOM += '<li class="page-item"><a class="page-link" href="/etc-sells' + query + Number(pageIdx - 1) + '">' + Number(pageIdx) + '</a></li>';
+                strDOM += '<li class="page-item active"><a class="page-link" href="/etc-sells' + query + Number(pageIdx) + '">' + Number(pageIdx + 1) + '</a></li>';
+            }
+            $(".page-first").before(strDOM)
+
+        }
+
+    }
+
+    function search() {
+        if ($("#sell-title").val().indexOf(",") != "-1") {
+            swal({
+                text: "<%= __('search.validation.alert4') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+            return false;
+        }
+        let trade_type = "sell";
+        let title = $("#sell-title").val();
+        let category = "etc";
+        let query = "?category=" + category + "&trade_type=" + trade_type + "&title=" + title + "&pageIdx=" + 0;
+
+        $.ajax({
+            method: "GET",
+            url: "/v1/items" + query,
+        }).done(function (success) {
+            pageIdx = success.pageIdx;
+            location.href = '/etc-sells' + query;
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+
+    function nextPage() {
+        let category = "<%= category %>";
+        let trade_type = "<%= trade_type %>";
+        let title = "<%= title %>";
+        pageIdx = pageIdx + 1;
+
+        let query;
+        if (trade_type == "") {
+            query = "?category=etc&pageIdx=" + pageIdx;
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/tradeType/sell" + query,
+            }).done(function (success) {
+                if (success.data.count != 0) {
+                    location.href = '/etc-sells' + query;
+                } else {
+                    pageIdx = pageIdx - 1;
+                    swal({
+                        text: "<%= __('common.pagination.nextPageAlert') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                }
+            }).fail(function (fail) {
+                pageIdx = pageIdx - 1;
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            })
+        } else {
+            query = "?category=" + category + "&trade_type=" + trade_type + "&title=" + title + "&pageIdx=" + pageIdx;
+            $.ajax({
+                method: "GET",
+                url: "/v1/items" + query,
+            }).done(function (success) {
+                if (success.data.count != 0) {
+                    location.href = '/etc-sells' + query;
+                } else {
+                    pageIdx = pageIdx - 1;
+                    swal({
+                        text: "<%= __('common.pagination.nextPageAlert') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                }
+            }).fail(function (fail) {
+                pageIdx = pageIdx - 1;
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            })
+        }
+
+
+    }
+
+    function prevPage() {
+        let category = "<%= category %>";
+        let trade_type = "<%= trade_type %>";
+        let title = "<%= title %>";
+        pageIdx = pageIdx - 1;
+
+        let query;
+        if (trade_type == "") {
+            if (pageIdx >= 0) {
+                query = "?category=etc&pageIdx=" + pageIdx;
+
+                $.ajax({
+                    method: "GET",
+                    url: "/v1/items/tradeType/sell" + query,
+                }).done(function (success) {
+                    if (success.data.count != 0) {
+                        location.href = '/etc-sells' + query;
+                    } else {
+                        pageIdx = pageIdx + 1;
+                        swal({
+                            text: "<%= __('common.pagination.nextPageAlert') %>",
+                            button: "<%= __('common.buttons.button10') %>"
+                        });
+                    }
+                }).fail(function (fail) {
+                    pageIdx = pageIdx + 1;
+                    swal({
+                        text: "<%= __('common.errorMessage.serverError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                })
+            } else {
+                pageIdx = pageIdx + 1;
+                swal({
+                    text: "<%= __('common.pagination.prevPageAlert') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            }
+        } else {
+            if (pageIdx >= 0) {
+                query = "?category=" + category + "&trade_type=" + trade_type + "&title=" + title + "&pageIdx=" + pageIdx;
+                $.ajax({
+                    method: "GET",
+                    url: "/v1/items" + query,
+                }).done(function (success) {
+                    if (success.data.count != 0) {
+                        location.href = '/etc-sells' + query;
+                    } else {
+                        pageIdx = pageIdx + 1;
+                        swal({
+                            text: "<%= __('common.pagination.nextPageAlert') %>",
+                            button: "<%= __('common.buttons.button10') %>"
+                        });
+                    }
+                }).fail(function (fail) {
+                    pageIdx = pageIdx + 1;
+                    swal({
+                        text: "<%= __('common.errorMessage.serverError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                })
+            } else {
+                pageIdx = pageIdx + 1;
+                swal({
+                    text: "<%= __('common.pagination.prevPageAlert') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            }
+        }
+    }
+
+    function updateClicked(itemId) {
+        $.ajax({
+            method: "PUT",
+            url: "/v1/items/" + itemId + "/clicked",
+        }).done(function (success) {
+            location.href = '/etc-sells/detail/' + itemId
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.saveError') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+
+        })
+    }
+</script>
+</body>
+
+</html>

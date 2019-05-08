@@ -1,0 +1,39 @@
+#buy-coin-container {
+    margin-top: 20%;
+}
+
+.btn-width-small {
+    min-width: 90px;
+}
+
+.btn-width-middle {
+    min-width:100px;
+}
+
+.form-group-btn {
+    margin-top: 0.5rem;
+}
+
+.btn-align {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-align button{
+    background: #346A96;
+}
+
+.label-title {
+    width: 100%;
+    background: #346A96;
+    padding: 10px;
+}
+
+.label-content {
+    padding: 10px;
+    background: #1b334d;
+}
+
+.label-content .row {
+    padding-bottom: 10px;
+}

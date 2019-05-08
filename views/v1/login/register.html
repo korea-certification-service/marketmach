@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+
+    <link href="/css/custom/login/register.css" rel="stylesheet">
+
+    <script src="/blockchain/web3.min.js"></script>
+    <script src="/blockchain/truffle-contract.js"></script>
+</head>
+<body class="background3">
+<header class="header_area" id="header">
+</header>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+					<span class="login100-form-title p-b-32 text-white">
+						<i class="fa fa-user"></i>&nbsp;&nbsp;<%= __('page.agreement.bigTitle') %>
+					</span>
+            <div id="part1">
+                <span class="txt1 p-b-11 text-white">
+						<%= __('page.agreement.title1') %>
+				</span>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <textarea rows="5" readonly style="color:white;padding:10px;"><%= __('page.agreement.title1Content') %>
+                    </textarea>
+                </div>
+                <div class="flex-sb-m w-full p-b-48">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox">
+                        <label class="label-checkbox100 text-white" for="ckb1">
+                            <%= __('page.agreement.title1Checkbox') %>
+                        </label>
+                    </div>
+
+                </div>
+                <span class="txt1 p-b-11 text-white">
+						<%= __('page.agreement.title2') %>
+					</span>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <textarea rows="5" readonly style="color:white;padding:10px;"><%= __('page.agreement.title2Content') %>
+                    </textarea>
+                </div>
+
+                <div class="flex-sb-m w-full p-b-48">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb2" type="checkbox">
+                        <label class="label-checkbox100 text-white" for="ckb2">
+                            <%= __('page.agreement.title2Checkbox') %>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-center container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="btnNext()">
+                        <%= __('common.buttons.button17') %>
+                    </button>
+                </div>
+            </div>
+
+            <div id="part2" class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title1') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="text" name="id" placeholder="<%= __('page.register.title1Placeholder') %>"
+                               onblur="validCheck('id')">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="txt1 p-b-11 text-danger float-right" id="idValidation"><%= __('page.register.validation.error3') %></div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title2') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="text" id="username" name="username" readonly placeholder="<%= __('page.register.title2Placeholder') %>">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title3') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="email" name="email" placeholder="<%= __('page.register.title3Placeholder') %>"
+                               onblur="validCheck('email')">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="txt1 p-b-11 text-danger float-right" id="emailValidation"><%= __('page.register.validation.error4') %></div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        생년월일
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="text" id="birth" name="birth" readonly placeholder="">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        추천인 ID
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12">
+                        <input class="input100 text-white" type="text" id="recommander" name="recommander" placeholder="추천인코드">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title4') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="password" name="password" placeholder="<%= __('page.register.title4Placeholder') %>"
+                               onkeyup="validCheck('password')">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="txt1 p-b-11 text-danger float-right" id="pwdValidation"><%= __('page.register.validation.error1') %>
+                    </div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title5') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12">
+                        <input class="input100 text-white" type="password" name="passwordConfirm" placeholder="<%= __('page.register.title5Placeholder') %>"
+                               onkeyup="validCheck('passwordConfirm')">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="txt1 p-b-11 text-danger float-right" id="pwdConfirmValidation"><%= __('page.register.validation.error2') %></div>
+                    <br>
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.register.title6') %>
+                    </div>
+                    <div class="form-inline">
+                        <div class="wrap-input100 validate-input col-lg-4 col-md-4 col-sm-12 px-0 blank2">
+                            <select class="custom-select" name="countryCode" id="countryCode" onchange="validCheck('phone')">
+                            </select>
+                        </div>
+                        <div class="wrap-input100 validate-input col-lg-8 col-md-8 col-sm-12">
+                            <input class="input100 text-white" type="text" id="phone" name="phone" readonly placeholder="<%= __('page.register.title6Placeholder') %>"
+                                   onkeydown="validCheck('phone')" onblur="validCheck('phone')">
+                            <span class="focus-input100"></span>
+                        </div>
+                    </div>
+                    <div class="txt1 p-b-11 text-danger float-right" id="phoneValidation"><%= __('page.register.validation.error5') %></div>
+                </div>
+
+                <div class="d-flex justify-content-center container-login100-form-btn mt-5 mb-5">
+                    <button class="login100-form-btn" onclick="register()">
+                        <%= __('common.buttons.button18') %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script src="/javascript/util.js"></script>
+<script src="https://auth.mobilians.co.kr/js/ext/ext_inc_comm.js"></script>
+<script>
+    let popup;
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+        $("#part2").hide();
+        $("#idValidation").css("display", "none");
+        $("#emailValidation").css("display", "none");
+        $("#pwdValidation").css("display", "none");
+        $("#pwdConfirmValidation").css("display", "none");
+        $("#phoneValidation").css("display", "none");
+        getCountryCodes();
+
+        if("<%=authPhone%>" == "Y") {
+            $("#username").val("<%=username%>");
+            $("#phone").val("<%=phone%>");
+            $("#birth").val("<%=birth%>");
+
+            $("#part2").show();
+            $("#part1").hide();
+            $("input[name=id]").focus();
+        }
+    });
+
+    function getCountryCodes() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/countryCodes",
+            contentType: "application/json; charset=utf-8",
+        }).done(function (success) {
+            renderHTML(success.data);
+
+            setTimeout(function() {
+                let country = "<%=country%>";
+                let code = "+82";
+                if(country == "CN") {
+                    code = "+86";
+                } else if(country == "JP") {
+                    code = "+81";
+                }
+
+                $('#countryCode').val(code);
+            },100)
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('page.findId.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function renderHTML(data) {
+        let result = '';
+        for(var i in data) {
+            result += "<option value='"+data[i].country_code+"'>" + data[i].country_kr + "</option>";
+        }
+        $('[name=countryCode]').html(result);
+    }
+
+    function btnNext() {
+        if ($("input:checkbox[id=ckb1]").is(":checked") == true && $("input:checkbox[id=ckb2]").is(":checked") == true) {
+            //TO-DO : 휴대폰 인증
+            payRequest();
+            // $("#part2").show();
+            // $("#part1").hide();
+            // $("input[name=id]").focus();
+        } else if($("input:checkbox[id=ckb1]").is(":checked") == true && $("input:checkbox[id=ckb2]").is(":checked") == false){
+            swal({
+                text: "<%= __('page.agreement.validation.error2') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        } else if($("input:checkbox[id=ckb1]").is(":checked") == false && $("input:checkbox[id=ckb2]").is(":checked") == true) {
+            swal({
+                text: "<%= __('page.agreement.validation.error1') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        }  else if($("input:checkbox[id=ckb1]").is(":checked") == false && $("input:checkbox[id=ckb2]").is(":checked") == false) {
+            swal({
+                text: "<%= __('page.agreement.validation.error1') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        }
+    }
+
+    function validCheck(validType) {
+        let pwd = $("input[name=password]").val();
+        let pwdConfirm = $("input[name=passwordConfirm]").val();
+        switch (validType) {
+
+            case "id":
+                if($("input[name=id]").val() != "") {
+                    let valid = checkStrNum($("input[name=id]").val());
+                    if(!valid) {
+                        $('#idValidation').html("<%= __('page.register.validation.error1') %>");
+                        $("#idValidation").css("display", "");
+                        return;
+                    }
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '/v1/users/userTag/' + $("input[name=id]").val(),
+                    }).done(function (success) {
+                        console.log("success : ", success);
+                        $("#idValidation").css("display", "none");
+                    }).fail(function (fail) {
+                        if (fail.status == 403) {
+                            $('#idValidation').html("<%= __('page.register.validation.error3') %>");
+                            $("#idValidation").css("display", "");
+                        }
+                    });
+                }
+                break;
+
+            case "email":
+                if($("input[name=email]").val() != "") {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/v1/users/email/' + $("input[name=email]").val(),
+                    }).done(function (success) {
+                        console.log("success : ", success);
+                        $("#emailValidation").css("display", "none");
+                    }).fail(function (fail) {
+                        if (fail.status == 403) {
+                            $("#emailValidation").css("display", "");
+                        }
+                    });
+                }
+                break;
+
+            case "password":
+                let reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+
+                if (!reg_pwd.test(pwd)) {
+                    $("#pwdValidation").css("display", "");
+                    return false;
+                } else {
+                    $("#pwdValidation").css("display", "none");
+                    return true;
+                }
+            case "passwordConfirm":
+                if (pwd != pwdConfirm) {
+                    $("#pwdConfirmValidation").css("display", "");
+                    return false;
+                } else {
+                    $("#pwdConfirmValidation").css("display", "none");
+                    return true;
+                }
+            case "phone":
+                let phone = $("input[name=phone]").val();
+                let mobileRegExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+                if($('#countryCode').val() != "+82") {
+                    mobileRegExp = /^\d{3}-?\d{3,4}-?\d{4}$/;
+                }
+
+                if(phone == "") {
+                    $("#phoneValidation").css("display", "");
+                    return false;
+                } else if(!mobileRegExp.test(phone)) {
+                    $("#phoneValidation").css("display", "");
+                    return false;
+                } else {
+                    $("#phoneValidation").css("display", "none");
+                    return true;
+                }
+        }
+    }
+
+    function register() {
+        let emailChk = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+        if ($("#idValidation").css("display") != "none" || $("input[name=id]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert1') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=id]").focus();
+            });
+
+            return false;
+        } else if ($("input[name=username]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert2') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=username]").focus();
+            });
+            return false;
+        } else if ($("#emailValidation").css("display") != "none" || $("input[name=email]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert3') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=email]").focus();
+            });
+            return false;
+        } else if (emailChk.test($("input[name=email]").val()) == false) {
+            swal({
+                text: "<%= __('page.register.validation.alert4') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=email]").focus();
+            });
+            return false;
+        } else if ($("#pwdValidation").css("display") != "none" || $("input[name=password]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert5') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=password]").focus();
+            });
+            return false;
+        } else if ($("#pwdConfirmValidation").css("display") != "none" || $("input[name=passwordConfirm]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert6') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=passwordConfirm]").focus();
+            });
+            return false;
+        } else if ($("#phoneValidation").css("display") != "none" || $("input[name=phone]").val() == "") {
+            swal({
+                text: "<%= __('page.register.validation.alert7') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(() => {
+                $("input[name=phone]").focus();
+            });
+            return false;
+        }
+
+        let signUpForm = {
+            "userTag": $("input[name=id]").val(),
+            "password": $('input[name=password]').val(),
+            "email": $("input[name=email]").val(),
+            "userName": $("input[name=username]").val(),
+            "countryCode" : $("#countryCode").val(),
+            "phone": $("input[name=phone]").val(),
+            "agreements": {
+                "use": "true",
+                "teenager": "true",
+                "privacy": "true"
+            },
+            "coins": {
+                "total_mach": 5
+            }
+        };
+
+        if($('#recommander').val() != "") {
+            signUpForm['recommander'] = $('#recommander').val();
+        }
+
+        $('.login100-form-btn').text('처리중');
+        $('.login100-form-btn').prop('disabled', true);
+
+        $.ajax({
+            method: "POST",
+            url: "/v1/users",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(signUpForm)
+        })
+            .done(function (success) {
+                let data = {
+                    "userId": success["data"]["_id"],
+                    "to": success["data"]["email"]
+                };
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/notifications/email/auth",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    location.href = '/signupSuccess';
+                }).fail(function (fail) {
+                    swal({
+                        text: "<%= __('page.register.serverError1')%>",
+                        button: "<%= __('common.buttons.button10')%>"
+                    });
+
+                    $('.login100-form-btn').text("<%= __('common.buttons.button13') %>");
+                    $('.login100-form-btn').prop('disabled', false);
+                })
+            })
+            .fail(function (fail) {
+                swal({
+                    text: "<%= __('page.register.serverError2')%>",
+                    button: "<%= __('common.buttons.button10')%>"
+                });
+
+                $('.login100-form-btn').text("<%= __('common.buttons.button13') %>");
+                $('.login100-form-btn').prop('disabled', false);
+            });
+    }
+
+    function payRequest(){
+        popup = window.open("/reg/auth/start","PAY_WIN","width=480,height=570,toolbar=no,menubar=no,scrollbars=no,resizable=yes");
+        let interval = window.setInterval(function() {
+            try {
+                //console.log("popup : ", popup);
+                if (popup == null || popup.closed) {
+                    window.clearInterval(interval);
+                    location.href = '/signup';
+                }
+            }
+            catch (e) {
+            }
+        }, 1000);
+    }
+</script>
+</body>
+</html>

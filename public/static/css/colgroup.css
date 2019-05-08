@@ -1,0 +1,145 @@
+@charset "utf-8";
+/*
+* KCS: http://www.onlykcs.com/
+* since: 20190411
+* Author: Jongmin Kim
+****************** Notice ******************
+* 다국어 웹사이트 + 반응형이기 때문에 colgroup 분리
+* 기본적인 colgroup과 다르게 적용해야 할 때 아래에서 overriding 해서 사용
+* <주석 표기 방식> 1dpetha명 - 2depth명 : 공통 클래스명
+*/
+
+/********** 판매등록 **********/
+/*** 판매등록 - 게임아이템 : .table_view .col2_1 ***/
+.table .colgroup_sell_register .col2_1{}
+.table .colgroup_sell_register .col2_2{}
+/*** 판매등록 - 자산거래 : .table_view .col2_1 ***/
+.table .colgroup_etc-sell_register .col2_1{}
+.table .colgroup_etc-sell_register .col2_2{}
+
+
+/********** 구매등록 **********/
+/*** 구매등록 - 게임아이템 : .table_view .col2_1 ***/
+.table .colgroup_buy_register .col2_1{}
+/*** 구매등록 - 자산거래 : .table_view .col2_1 ***/
+.table .colgroup_etc-buy_register .col2_1{}
+
+
+/********** 게임아이템 **********/
+/*** 게임아이템 - 팝니다 ***/
+/* list : .table_list .col5_1 */
+.table .colgroup_sell_list .col5_1{}
+/* view : .table_view .col2_1 */
+.table .colgroup_sell_view .col2_1{}
+/* modify : .table_view .col2_1 */
+.table .colgroup_sell_modify .col2_1{}
+/* vtr : .table_view .col2_1 */
+.table .colgroup_sell_vtr .col2_1{}
+/* 바로구매 : .table_view .col2_1 */
+.table .colgroup_sell_buynow .col2_1{}
+
+/*** 게임아이템 - 삽니다 ***/
+/* list : .table_list .col5_1 */
+.table .colgroup_buy_list .col5_1{}
+/* view : .table_view .col2_1 */
+.table .colgroup_buy_detail .col2_1{}
+/* modify: .table_view .col2_1 */
+.table .colgroup_buy_modify .col2_1{}
+/* vtr : .table_view .col2_1 */
+.table .colgroup_buy_vtr .col2_1{}
+
+
+/********** 자산거래 **********/
+/*** 자산거래 - 팝니다 ***/
+/* view : .table_view .col2_1 */
+.table .colgroup_etc-sell_view .col2_1{}
+/* modify: .table_view .col2_1 */
+.table .colgroup_etc-sell_modify .col2_1{}
+/* vtr : .table_view .col2_1 */
+.table .colgroup_etc-sells_vtr .col2_1{}
+/* 바로구매 : .table_view .col2_1 */
+.table .colgroup_etc-sell_buynow .col2_1{}
+
+/*** 자산거래 - 삽니다 ***/
+/* list : .table_list .col5_1 */
+.table .colgroup_etc-buy_list .col5_1{}
+/* view : .table_view .col2_1 */
+.table .colgroup_etc-buy_view .col2_1{}
+/* modify: .table_view .col2_1 */
+.table .colgroup_etc-buys_modify .col2_1{}
+/* vtr : .table_view .col2_1 */
+.table .colgroup_etc-buys_vtr .col2_1{}
+
+/********** 환전소 **********/
+
+
+/********** 커뮤니티 **********/
+/* list */
+.table .colgroup_community_list .col4_1{width: 80px;}
+.table .colgroup_community_list .col4_2{}
+.table .colgroup_community_list .col4_3{width: 100px;}
+.table .colgroup_community_list .col4_4{width: 100px;}
+/* view */
+
+/********** 회원가입 **********/
+/* 회원정보 입력 : .table_view .col2_1 */
+.table .colgroup_signup .col2_1{width: 130px;}
+
+/********** 고객센터 **********/
+/*** 공지사항 ***/
+.table .colgroup_support_notice .col3_1{width: 100px;}
+.table .colgroup_support_notice .col3_2{}
+.table .colgroup_support_notice .col3_3{width: 100px;}
+/***  거래 이의관리 거래 이의내역 ***/
+.table .colgroup_dispute .col3_1{}
+.table .colgroup_dispute .col3_2{width: 50px;}
+.table .colgroup_dispute .col3_3{width: 90px;}
+/*** 1:1문의 ***/
+.table .colgroup_myInquiry{}
+.table .colgroup_myInquiry .col4_1{width: 100px;}
+.table .colgroup_myInquiry .col4_2{}
+.table .colgroup_myInquiry .col4_3{width: 60px;}
+.table .colgroup_myInquiry .col4_4{width: 100px;}
+
+/********** 나의 페이지 **********/
+/*** 메인 ***/
+.table .colgroup_mypage .col3_1{width: 100px;}
+/*** 판매관리: .table_list .col5_1 ***/
+.table .colgroup_myselllist .col5_1{}
+/*** 구매관리: .table_list .col5_1 ***/
+.table .colgroup_mybuylist .col5_1{}
+/*** 취소관리: .table_list .col5_1 ***/
+.table .colgroup_mycancellist .col5_1{}
+/*** 지갑관리 - 나의지갑정보 ***/
+.table .colgroup_walletinfo .col4_1{width: 60px;}
+.table .colgroup_walletinfo .col4_2{}
+.table .colgroup_walletinfo .col4_3{width: 80px;}
+.table .colgroup_walletinfo .col4_4{width: 150px;}
+/*** 지갑관리 - MACH 입금 / MACH 출금 ***/
+/* 입금하기 / 출금하기 => 공통 */
+.table_account .col2_1{width: 130px;}
+.table_account .col2_2{}
+/* 비트베리 입금 내역 / 비트베리 출금 내역 => 공통 */
+.table_wallet .col3_1{}
+.table_wallet .col3_2{width: 100px;}
+.table_wallet .col3_3{width: 100px;}
+/*** 회원정보관리 ***/
+/* 회원정보수정: .table_view .col2_1 */
+.table .colgroup_myinfo .col2_1{}
+
+/********** Mobile MarkUp CSS **********/
+@media (max-width: 1199px){
+
+}
+
+@media (max-width: 992px){
+
+}
+
+@media (max-width: 767px){
+
+}
+
+@media (max-width: 576px){
+    .table .colgroup_mypage .col3_1{width: 80px;}
+}

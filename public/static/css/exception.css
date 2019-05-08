@@ -1,0 +1,106 @@
+@charset "utf-8";
+/*
+* KCS: http://www.onlykcs.com/
+* since: 20190409 
+* Author: Jongmin Kim
+*/
+
+/********** 에러 페이지 **********/
+.error_sec_wrap{position: absolute; top: 50%; margin-top: -200px; width: 100%;}
+.error_sec{max-width: 640px; height: 400px; margin: auto; border: 4px dotted #dbdbdb;}
+.error_sec h1{margin-bottom: 15px; padding-top: 50px; text-align: center; font-size: 24px; color: #1e2560;}
+.error_sec p{margin-bottom: 30px; text-align: center; font-size: 16px;}
+.error_sec .box1{text-align: center; margin-bottom: 20px;}
+.error_sec .box1 img{width: 100%; max-width: 100px;}
+.error_sec .box2{text-align: center;}
+.error_sec .box2 .btn{font-weight: bold;}
+/********** 로그인 페이지 **********/
+.login_wrap{max-width: 460px; margin: auto;}
+.login_head{padding-top: 50px;}
+.login_head h1{margin: 0 auto 30px; width: 160px; text-align: center;}
+.login_body .btn_login{margin: 22px 0 15px 0; width: 100%; height: 65px; line-height: 65px; background-color: #0d0943; font-size: 22px; color: #fff;}
+.login_foot .btn_auth{text-align: center; margin-top: 50px;}
+.login_foot .btn_auth > img {height: 60px;}
+.login_ipt{margin-bottom: 20px; padding: 0 5px; width: 100%;height: 48px; box-sizing: border-box; text-align: left; font-size: 16px; color: #1f2152; border: 1px solid #d7dbe3;}
+
+/********** 회원가입 / 회원정보 찾기 공통 **********/
+/*** header */
+.header.member_header{}
+.header.member_header h1{float: left; padding-left: 20px;}
+.header.member_header h1 a{display: block;}
+.header.member_header h1 a img{height: 30px;}
+.header.member_header .top_menu{height: auto; padding: 30px 0 20px; border-right: none; border-left: none;}
+.header.member_header .top_menu li:nth-child(3) a{border-right: none;}
+/*** content common ***/
+.member_content{min-height: calc(100% - 353px);}
+/*** 회원가입 ***/
+.join_sec{margin: auto; padding-top: 50px; max-width: 700px;}
+.join_sec > h1{margin-bottom: 8px; font-size: 18px; font-weight: bold; color: #000039;}
+.join_sec > h1:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
+.join_sec .join_box{margin-bottom: 5px; border: 1px solid #000;}
+.join_sec .join_box > dt{padding: 10px; background-color: #eee;}
+.join_sec .join_box > dd{padding: 10px 20px;}
+.join_sec .join_box > dd li{margin-bottom: 15px;}
+.join_sec .join_box > dd li .flt_box{font-weight: bold;}
+.join_sec .join_box > dd li .flt_box label em{color: red;}
+.join_sec .join_box > dd li .flt_box label span{color: #777777;}
+.join_sec .join_box > dd li .flt_box h2{margin-bottom: 3px;}
+.join_sec .join_box > dd li .flt_box:nth-child(1){float: left;}
+.join_sec .join_box > dd li .flt_box:nth-child(2){float: right;}
+.join_sec .join_box > dd li .btn_go_detail{font-size: 13px; border: 1px solid #dbdbdb;}
+.join_sec .p_join:nth-of-type(1){margin-top: 5px;}
+.join_sec .p_join:nth-of-type(2){margin-top: 5px;}
+.join_sec .p_join:last-of-type{margin: 5px 0 30px;}
+/* 약관동의 및 실명확인 */
+.agreeBox{}
+.agreeBox label{cursor: pointer;}
+/* 이미 가입된 회원 */
+.join_sec .existence_box{padding: 30px; text-align: center; border: 3px solid orange;}
+.join_sec .existence_box li{text-align: center;}
+.join_sec .existence_box li:first-child{margin-bottom: 15px;}
+/* 정보입력 */
+.join_sec .table{border-top: 2px solid #000;}
+.join_sec .table th{border-right: none;}
+.join_sec .table td{border-right: none;}
+.join_sec .table .th_colspan2{font-size: 18px; color: #666666; border-bottom: 2px solid #000;}
+/* 가입완료 */
+.join_sec .cmn_fjb{padding: 20px 0 40px; text-align: center;}
+.join_sec .finish_join_box1{margin-bottom: 50px; background-color: #eee; border-top: 2px solid #000;}
+.join_sec .finish_join_box2{margin-top: 50px; background-color: #fff1c7;}
+.join_sec .finish_join_box2 .btn{margin-bottom: 20px;}
+.join_sec .cmn_fjb dt{margin-bottom: 10px; font-size: 18px;}
+/*** 회원정보 찾기 ***/
+.find_info_sec{margin: auto; padding-top: 50px; max-width: 700px;}
+.find_info_sec .tab_find_info{width: 50%;}
+.find_info_sec .tab_find_info li{float: left; width: 50%; height: 38px; line-height: 38px; text-align: center; border: 1px solid #dbdbdb;}
+.find_info_sec .tab_find_info li.on{border: 1px solid #1e2560; background-color: #1e2560; color: #ffffff;}
+.find_info_sec .tab_find_info li.on a h1{ color: #ffffff;}
+.find_info_sec .tab_find_info li a{display: block; color: #555;}
+.find_info_sec .tab_find_info li a h1{line-height: 40px; text-align: center;}
+.find_info_sec .find_info_box{padding: 40px 0; border: 2px solid #1e2560;}
+.find_info_sec .find_info_box .align_c{margin: auto; max-width: 500px;}
+.find_info_sec .find_info_box hr{margin: 30px 0; border-top:2px solid #cbcbcb;}
+.find_info_sec .find_info_box h2{margin-bottom: 20px; font-size: 18px; text-align: center; }
+.find_info_sec .find_info_box p{}
+.find_info_sec .find_info_box .table{margin-top: 20px;}
+.find_info_sec .find_info_box .table th{border: none;}
+.find_info_sec .find_info_box .table td{border: none;}
+
+/********** Mobile MarkUp CSS **********/
+@media (max-width: 1199px){
+
+}
+@media (max-width: 992px){
+
+}
+@media (max-width: 767px){
+    .header.member_header{display: block;}
+    
+    .find_info_sec .tab_find_info li a{font-size: 12px;}
+    .find_info_sec .tab_find_info li a h1{font-size: 12px;}
+    .find_info_sec .find_info_box{padding: 30px 15px;}
+}
+@media (max-width: 576px){
+    .header.member_header h1{width: 100%;}
+    .join_sec .join_box > dd li .flt_box:nth-child(1){margin-bottom: 5px; width: 100%;}
+}

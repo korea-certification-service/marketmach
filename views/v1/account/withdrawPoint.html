@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/bootstrap/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/account/withdrawPoint.css" rel="stylesheet">
+</head>
+
+<body class="background2">
+
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 withdraw-container">
+            <span class="login100-form-title p-b-32 text-white"><img
+                    src="/img/icon-img/ic-coin.png">&nbsp;&nbsp;<%= __('page.withdraw.point.bigTitle') %></span>
+
+            <span class="offset-1 text-white"><%= __('page.withdraw.point.title1') %></span>
+            <div class="col-10 offset-1 px-0">
+                <div class="d-sm-flex align-items-center wow form-inline text-white card-panel-item">
+                    <div class="col-2 py-2 px-2 mr-0">
+                        <div class="date-map-area">
+                            <img src="/img/icon-img/ic-coin.png">
+                        </div>
+                    </div>
+                    <div class="col-2 m-0 p-0">
+                        <span>POINT</span>
+                    </div>
+                    <div class="col-8">
+                        <span class="card-panel-item-cost float-right"><span id="point"></span> Point</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 offset-1 px-0 mt-4">
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.withdraw.point.title2') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12"
+                     data-validate="Username is required">
+                    <input class="input100 text-white" type="number" name="point" min="0">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.withdraw.point.title3') %>
+                </div>
+                <div class="form-inline">
+                    <div class="wrap-input100 col-lg-4 col-md-4 col-sm-12 validate-input m-b-12 px-0 blank2">
+                        <select class="custom-select" id="bankAccountType" name="bankAccountType" disabled>
+                            <option value="" selected><%= __('page.myInfo.title10FirstOption') %></option>
+                            <option value="002">KB국민은행</option>
+                            <option value="098">SC제일은행</option>
+                            <option value="098">경남은행</option>
+                            <option value="098">광주은행</option>
+                            <option value="098">기업은행</option>
+                            <option value="농협">농협</option>
+                            <option value="대구은행">대구은행</option>
+                            <option value="부산은행">부산은행</option>
+                            <option value="산업은행">산업은행</option>
+                            <option value="새마을금고">새마을금고</option>
+                            <option value="수협">수협</option>
+                            <option value="신한은행">신한은행</option>
+                            <option value="신협">신협</option>
+                            <option value="우리은행">우리은행</option>
+                            <option value="우체국">우체국</option>
+                            <option value="전북은행">전북은행</option>
+                            <option value="카카오뱅크">카카오뱅크</option>
+                            <option value="케이뱅크">케이뱅크</option>
+                            <option value="KEB하나은행">KEB하나은행</option>
+                            <option value="한국씨티은">한국씨티은행</option>
+                        </select>
+                    </div>
+                    <div class="form-inline wrap-input100 col-lg-8 col-md-8 col-sm-12 validate-input m-b-12 px-0">
+                        <input class="input100 text-white col-12" type="text" name="account" readonly>
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+
+                <div class="alert-text"><%= __('page.withdraw.point.title3label') %></div>
+            </div>
+            <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                <button class="login100-form-btn" onclick="submitPointWithdraw()">
+                    <%= __('common.buttons.button9')%>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<!-- Sweet Alert-->
+<script src="/alert/sweetalert.min.js"></script>
+<script src="/javascript/util.js"></script>
+<script>
+    let pointId, bankAccount, bankAccountType, totalPoint;
+    let userName;
+
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+
+        countryValidation();
+        loadAccount();
+    });
+
+    function countryValidation() {
+        let country = "<%= country %>";
+        console.log(country);
+        if (country != "KR") {
+            swal({
+                text: "<%= __('common.errorMessage.pageError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            }).then(() => {
+                location.href = '/';
+            });
+            return false;
+        }
+    }
+
+    function loadAccount() {
+        console.log("id : ", "<%= id %>");
+        let url = "/v1/users/" + "<%= id %>";
+
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function (success) {
+            pointId = success.data.pointId;
+            userName = success.data.userName;
+            let url = "/v1/points/" + pointId;
+
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                console.log(success);
+                if (success.data.bank_account != null) {
+                    bankAccount = success.data.bank_account;
+                    $("input[name=account]").val(success.data.bank_account);
+                }
+                if (success.data.bank_account_type != null) {
+                    bankAccountType = success.data.bank_account_type;
+                    $("select[name=bankAccountType]").val(bankAccountType).attr("selected", "selected");
+                }
+                if (success.data.total_point == null) {
+                    $("#point").text(0);
+                    totalPoint = 0;
+                } else {
+                    $("#point").text(numberWithCommas(success.data.total_point));
+                    totalPoint = success.data.total_point;
+                }
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            })
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+    }
+
+
+    function submitPointWithdraw() {
+        let pointInput = $("input[name=point]").val();
+
+        if (bankAccount == null || bankAccountType == null || bankAccount == "" || bankAccountType == "") {
+            swal({
+                text: "<%= __('page.withdraw.point.alert5') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            }).then(() => {
+                location.href = '/myPages/myInfo';
+            });
+            return false;
+        } else if (pointInput == "" || pointInput <= 0) {
+            swal({
+                text: "<%= __('page.withdraw.point.alert2') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        } else if (pointInput < 2000) {
+            swal({
+                text: "<%= __('page.withdraw.point.alert3') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        } else if (totalPoint < 2000) {
+            swal({
+                text: "<%= __('page.withdraw.point.alert4') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        } else if (totalPoint < pointInput) {
+            swal({
+                text: "<%= __('page.withdraw.point.alert6') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        }
+
+        let pointUrl = "/v1/points/" + pointId + "/bank";
+        let pointBankReq = {
+            "point": Number(pointInput),
+            "price": Number(pointInput - 1000),
+            "type": "withdraw",
+            "userName": userName,
+            "status": 0,
+            "bankAccountType": bankAccountType,
+            "bankAccount": bankAccount
+        };
+
+        console.log("url : ", pointUrl);
+        console.log(pointBankReq);
+
+        $.ajax({
+            method: "POST",
+            url: pointUrl,
+            data: pointBankReq
+        }).done(function (success) {
+            console.log(success);
+
+            if(success.responseStatus == 403) {
+                swal({
+                    text: "<%= __('page.withdraw.point.alert7') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                }).then(() => {
+                    location.href = "/accounts/token";
+                });
+            } else {
+                swal({
+                    text: "<%= __('page.withdraw.point.alert1') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                }).then(() => {
+                    location.href = "/accounts/token";
+                });
+            }
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="icon" href="img/core-img/favicon.ico">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+    <link href="/css/custom/policy/policy.css" rel="stylesheet">
+
+    <style>
+        .limiter {
+            color: white;
+        }
+        .wrap-login100 {
+            margin-top:10%;
+            width:1000px;
+        }
+    </style>
+</head>
+
+<body class="background">
+<header class="header_area" id="header">
+    <div class="row h-100">
+        <div class="col-12 h-100">
+            <nav class="h-100 navbar navbar-expand-lg">
+                <a class="header-logo mr-5" onclick="location.href = '/main';"></a>
+            </nav>
+        </div>
+    </div>
+</header>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-20 p-r-20 p-t-20 p-b-20">
+            <textarea class="textarea-custom" style="overflow: hidden;" rows="4" readonly><%= __('page.notsupport.content').replace(/\r\n/g, '<br>') %></textarea>
+        </div>
+    </div>
+</div>
+<footer class="dorne-footer-area text-white">
+    <div>
+    <span><%= __('footer.title3') %></span>
+    <br>
+    <span><%= __('footer.title4') %></span>
+    <br>
+    <%= __('footer.title5') %>
+    <br>
+    <%= __('footer.title6') %>
+    </div>
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script>
+    $(document).ready(function () {
+        //$(".header_area").load("/header");
+        //$(".dorne-footer-area").load("/footer");
+    });
+</script>
+</body>
+</html>

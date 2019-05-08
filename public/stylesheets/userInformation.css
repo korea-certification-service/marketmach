@@ -1,0 +1,72 @@
+.userinfo-form {
+    margin-top: 10%;
+}
+
+.form-title {
+    text-align: center;
+    font-size: x-large;
+    background: #346A96;
+}
+
+form[role=userinfo] {
+    color: #5d5d5d;
+    background: #1b334d;
+    padding: 20px;
+}
+
+form[role=userinfo] img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 35px;
+}
+
+form[role=userinfo] input,
+form[role=userinfo] select,
+form[role=userinfo] button {
+    background: #346A96;
+    border: 1px solid #0cbae6;
+    border-radius: 0;
+}
+.form-title {
+    padding: 10px;
+}
+
+.form-links {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 50px;
+}
+
+.form-links a {
+    color: #fff;
+}
+
+.form-control::-webkit-input-placeholder,
+.form-control:-ms-input-placeholder {
+    color: #f4f4f4;
+}
+.form-control::placeholder {
+    color: #f4f4f4;
+    opacity: 1;
+}
+
+.label-content .row {
+    padding-bottom: 10px;
+}
+
+.btn-width-small {
+    min-width: 90px;
+}
+
+.btn-width-middle {
+    min-width:100px;
+}
+
+.btn-align {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-align button{
+    background: #346A96;
+}

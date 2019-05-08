@@ -1,0 +1,223 @@
+<!--<link href="/stylesheets/header.css" rel="stylesheet">-->
+<script src="/alert/sweetalert.min.js"></script>
+<script src="/javascript/util.js"></script>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-12 h-100">
+            <nav class="h-100 navbar navbar-expand-lg">
+                <a class="header-logo mr-5" onclick="location.href = '/main';"></a>
+                <button class="navbar-toggler" id="btn-menu" type="button" data-toggle="collapse" data-target="#dorneNav"
+                        aria-controls="dorneNav" aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="fa fa-bars"></span></button>
+                <!-- Nav -->
+                <div class="collapse navbar-collapse" id="dorneNav">
+                    <ul class="navbar-nav mr-auto" id="dorneMenu">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= __('menu.gameItem.title') %> <i
+                                    class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/sells"><%= __('menu.gameItem.subMenu.title2') %></a>
+                                <a class="dropdown-item" href="/buys"><%= __('menu.gameItem.subMenu.title1') %></a>
+                                <a class="dropdown-item" href="/sells/register"><%= __('menu.gameItem.subMenu.title4') %></a>
+                                <a class="dropdown-item" href="/buys/register"><%= __('menu.gameItem.subMenu.title3') %></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= __('menu.etc.title') %> <i
+                                    class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <a class="dropdown-item" href="/etc-sells"><%= __('menu.etc.subMenu.title2') %></a>
+                                <a class="dropdown-item" href="/etc-buys"><%= __('menu.etc.subMenu.title1') %></a>
+                                <a class="dropdown-item" href="/etc-sells/register"><%= __('menu.etc.subMenu.title4') %></a>
+                                <a class="dropdown-item" href="/etc-buys/register"><%= __('menu.etc.subMenu.title3') %></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= __('menu.myWallet.title') %> <i
+                                    class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <a class="dropdown-item" href="/accounts/token"><%= __('menu.myWallet.subMenu.title1') %></a>
+                                <% if(useBlockchain=="Y"){ %>
+                                <a class="dropdown-item" href="/accounts/deposit"><%= __('menu.myWallet.subMenu.title2') %></a>
+                                <a class="dropdown-item" href="/accounts/withdraw"><%= __('menu.myWallet.subMenu.title3') %></a>
+                                <% } if(usePoint=="Y" && country=="KR"){ %>
+                                <a class="dropdown-item" href="/accounts/depositPoint"><%= __('menu.myWallet.subMenu.title4') %></a>
+                                <a class="dropdown-item" href="/accounts/withdrawPoint"><%= __('menu.myWallet.subMenu.title5') %></a>
+                                <% } %>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= __('menu.myPage.title') %> <i
+                                    class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <a class="dropdown-item" href="/myPages/myInfo"><%= __('menu.myPage.subMenu.title1') %></a>
+                                <a class="dropdown-item" href="/myPages/myRegisterHistory"><%= __('menu.myPage.subMenu.title2') %></a>
+                                <a class="dropdown-item" href="/myPages/myDealHistory"><%= __('menu.myPage.subMenu.title3') %></a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://tokensales.marketmach.com" target="_blank" role="button"><%= __('menu.solution.title') %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/faq" role="button"><%= __('menu.faq.title') %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://mymach.io" target="_blank" role="button"><%= __('menu.mymachio.title') %></a>
+                        </li>
+                    </ul>
+                    <!-- Search btn -->
+                    <!--<div class="dorne-search-btn">-->
+                    <!--<a id="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>-->
+                    <!--</div>-->
+                    <!-- Signin btn -->
+                    <% if(userTag != undefined) {%>
+                    <div class="dorne-signin-btn header-user-info">
+                        Hi, <%= userTag%>
+                    </div>
+                    <% } %>
+                    <div class="dorne-signin-btn header-icons">
+                        <a id="chatbot" href="javascript:openCSChatBot();" title="Mach CS Bot">
+                            <!--<i style="font-size: 1.5em;" class="fa fa-android"></i>&nbsp;</a>-->
+                            <img src="/image/bot.png">
+                        </a>
+                    </div>
+                    <div class="dorne-signin-btn header-icons">
+                        <a id="signIn" href="/login"><i style="font-size: 1.5em" class="fa fa-user"></i>&nbsp;</a>
+                        <a id="signOut" href="/logout" class="logout-content">
+                            <i style="font-size: 1.5em" class="fa fa-sign-out"></i><span class="header-title">&nbsp;</span>
+                        </a>
+                    </div>
+                    <div class="dorne-signin-btn">
+                        <ul class="navbar-nav mr-auto" id="country">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= __('menu.language.title') %><i
+                                        class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/KR"><%= __('menu.language.country1') %></a>
+                                    <!--<a class="dropdown-item" href="/CN"><%= __('menu.language.country2') %></a>-->
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Add listings btn -->
+                    <!--<div class="dorne-add-listings-btn">-->
+                    <!--<a href="#" class="btn dorne-btn">+ Add Listings</a>-->
+                    <!--</div>-->
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#chatbot").css("display","none");
+        $("#signIn").css("display","none");
+        $("#signOut").css("display","none");
+
+        if("<%= userId %>".length!=0 ){
+            $("#chatbot").css("display","");
+            $("#signIn").css("display","none");
+            $("#signOut").css("display","");
+        }else{
+            $("#chatbot").css("display","none");
+            $("#signIn").css("display","");
+            $("#signOut").css("display","none");
+        }
+
+        if(isIos()) {
+            $(document).on('touchend', function( e ){
+                if(!$(e.target).hasClass('nav-link') && !$(e.target).hasClass('dropdown-item')) {
+                    if ($('#btn-menu').attr('aria-expanded') == "true") {
+                        $('#dorneNav').collapse('hide');
+                    }
+                }
+            });
+        } else {
+            $(document).on('mouseup', function( e ){
+                if(!$(e.target).hasClass('nav-link') && !$(e.target).hasClass('dropdown-item')) {
+                    if ($('#btn-menu').attr('aria-expanded') == "true") {
+                        $('#dorneNav').collapse('hide');
+                    }
+                }
+            });
+        }
+
+        // $("#btn-menu").click(function(){
+        //     if( !$("#dorneNav").is(":visible") ) {
+        //         $("#dorneNav").show();
+        //     }
+        // });
+
+
+    })
+
+    function isNotInMyArea( $targetObj )
+    {
+        var isIn = true;
+        var $objArr = Array();
+        var opts = {
+            left: 99999, right: 0, top: 99999, bottom: 0
+        }
+
+        if( $targetObj )
+        {
+            if( $targetObj.length == 1 ) {
+                $objArr.push( $targetObj );
+            } else {
+                $objArr = $targetObj;
+            }
+
+            $.each($objArr, function(i, $obj){
+                var obj_position = $obj.offset();
+                obj_position.right = parseInt( obj_position.left ) + ( $obj.width() );
+                obj_position.bottom = parseInt( obj_position.top ) + parseInt( $obj.height() );
+
+                if( obj_position.left < opts.left ) opts.left = obj_position.left;
+                if( obj_position.right > opts.right ) opts.right = obj_position.right;
+                if( obj_position.top < opts.top ) opts.top = obj_position.top;
+                if( obj_position.bottom > opts.bottom ) opts.bottom = obj_position.bottom;
+            });
+
+            if( ( opts.left <= event.pageX && event.pageX <= opts.right )
+                && ( opts.top <= event.pageY && event.pageY <= opts.bottom ) )
+            {
+                isIn = false;
+            }
+        }
+
+        return isIn;
+    }
+
+    function openCSChatBot() {
+        let cookie_data = document.cookie;
+        console.log(cookie_data);
+        let start = cookie_data.indexOf("orange__F");
+        var cValue = '';
+        if(start != -1){
+            start += "orange__F".length;
+            var end = cookie_data.indexOf(';', start);
+            if(end == -1) end = cookie_data.length;
+            cValue = cookie_data.substring(start, end);
+            let req_url = "<%= chatbot_url%>" + "?cmod=cs&orange__F" + cValue;
+            if (isMobile()) {
+                window.open(req_url, "CSChatBot");
+            } else {
+                window.open(req_url, "CSChatBot", 'toolbar=no,\n' +
+                    '                                    location=no,\n' +
+                    '                                    status=no,\n' +
+                    '                                    menubar=no,\n' +
+                    '                                    scrollbars=no,\n' +
+                    '                                    resizable=no,\n' +
+                    '                                    width=520,\n' +
+                    '                                    height=850');
+            }
+        } else {
+            location.href = "/logout";
+        }
+    }
+</script>

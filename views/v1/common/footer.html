@@ -1,0 +1,36 @@
+<footer class="text-white">
+    <ul class="nav justify-content-end mt-3">
+        <li class="nav-item">
+            <a class="nav-link active" href="/policy"><%= __('footer.title1')%></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/private"><%= __('footer.title2')%></a>
+        </li>
+        <% if(country=="KR"){ %>
+        <li class="nav-item">
+            <a class="nav-link" href="/teenager"><%= __('footer.title7')%></a>
+        </li>
+        <% } %>
+    </ul>
+    <div>
+        <span><%= __('footer.title3') %></span>
+        <br>
+        <span><%= __('footer.title4') %></span>
+        <br>
+        <%= __('footer.title5') %>
+        <br>
+        <%= __('footer.title6') %>
+    </div>
+    <div class="support-icon">
+        <table>
+            <tr>
+                <td>
+                    <div class="support-icon-kb"></div>
+                </td>
+                <td>
+                    <!--<div class="support-icon-korea-auth-service"></div>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</footer>

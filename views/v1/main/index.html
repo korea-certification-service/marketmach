@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MACH Exchange">
+    <meta property="og:description" content="세계 최초 AI 챗봇 기반 P2P 자산 거래소, 게임 아이템, 자산 등 거래">
+    <!--<meta property="og:image" content="http://www.marketmach.com/myimage.jpg">-->
+    <meta property="og:url" content="https://www.marketmach.com">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+    <link href="/css/custom/index.css" rel="stylesheet">
+</head>
+<body>
+<header class="header_area" id="header">
+</header>
+
+<div class="cms-notification">
+
+</div>
+
+<section class="dorne-welcome-area bg-img bg-overlay bg-main">
+    <div class="container h-100 top-padding">
+        <div class="row h-100 align-items-center justify-content-center">
+            <div class="col-12 col-md-12">
+                <!--<div class="hero-content">-->
+                    <!--<h2><%= __('page.main.bigTitle') %></h2>-->
+                    <!--<h4><%= __('page.main.subTitle') %></h4>-->
+                <!--</div>-->
+                <div class="hero-search-form">
+                    <!-- Tabs -->
+                    <div class="nav nav-tabs" id="heroTab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-events-tab" data-toggle="tab" role="tab" href="#nav-events"
+                           aria-controls="nav-events" aria-selected="false"><%= __('search.SellTab.title') %></a>
+                        <a class="nav-item nav-link" id="nav-places-tab" data-toggle="tab" href="#nav-places"
+                           role="tab" aria-controls="nav-places" aria-selected="true"><%= __('search.BuyTab.title')
+                            %> </a>
+                    </div>
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active align-center" id="nav-events" role="tabpanel"
+                             aria-labelledby="nav-events-tab">
+                            <form>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true"
+                                        id="sell-game-select" onchange="selectServer('sell')">
+                                    <option value="nameNotSelected"><%= __('search.SellTab.gameNameFirstOption') %>
+                                    </option>
+                                </select>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true"
+                                        id="sell-game-server-select">
+                                    <option value="serverNotSelected"><%= __('search.SellTab.ServerFirstOption') %>
+                                    </option>
+                                </select>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true" id="sell-type">
+                                    <option value="typeNotSelected"><%= __('search.SellTab.TypeFirstOption') %></option>
+                                    <option value="item"><%= __('search.SellTab.TypeSecondOption') %></option>
+                                    <option value="gameMoney"><%= __('search.SellTab.TypeThirdOption') %></option>
+                                </select>
+                                <input type="text" class="form-control col-xl-3 col-md-3 col-sm-3 mr-2 mb-2"
+                                       id="sell-title"
+                                       placeholder="<%= __('search.SellTab.SearchPlaceholder') %>">
+                                <button type="button" class="btn dorne-btn" onclick="search('sell')"><i
+                                        class="fa fa-search pr-2"
+                                        aria-hidden="true"></i> Search
+                                </button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade align-center" id="nav-places" role="tabpanel"
+                             aria-labelledby="nav-places-tab">
+                            <form>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true"
+                                        id="buy-game-select" onchange="selectServer('buy')">
+                                    <option value="nameNotSelected"><%= __('search.BuyTab.gameNameFirstOption') %>
+                                    </option>
+                                </select>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true"
+                                        id="buy-game-server-select">
+                                    <option value="serverNotSelected"><%= __('search.BuyTab.ServerFirstOption') %>
+                                    </option>
+                                </select>
+                                <select class="selectpicker show-tick mr-2 mb-2" data-live-search="true" id="buy-type">
+                                    <option value="typeNotSelected"><%= __('search.BuyTab.TypeFirstOption') %></option>
+                                    <option value="item"><%= __('search.BuyTab.TypeSecondOption') %></option>
+                                    <option value="gameMoney"><%= __('search.BuyTab.TypeThirdOption') %></option>
+                                </select>
+                                <input type="text" class="form-control mr-2 mb-2"
+                                       id="buy-title"
+                                       placeholder="<%= __('search.BuyTab.SearchPlaceholder') %>">
+                                <button type="button" class="btn dorne-btn" onclick="search('buy')"><i
+                                        class="fa fa-search pr-2"
+                                        aria-hidden="true"></i> Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+<!--</section>-->
+
+
+<!--<section class="dorne-features-events-area bg-img bg-overlay-9 section-padding-0-50 background">-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mb-5">
+                    <span></span>
+                    <h4><%= __('page.main.mainContent1.title') %></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 card-panel pb-3" style="margin-right:5%">
+                <div class="col-12 my-3 text-white">
+                    <span><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent1.subtitle2') %></span>
+                    <span><a href="/sells"><i class="fa fa-plus float-right">&nbsp;<%= __('page.main.link') %></i></a></span>
+                </div>
+                <div id="sell-game-list"></div>
+            </div>
+            <div class="col-12 col-lg-6 card-panel">
+                <div class="col-12 my-3 text-white">
+                    <span><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent1.subtitle1') %></span>
+                    <span><a href="/buys"><i class="fa fa-plus float-right">&nbsp;<%= __('page.main.link') %></i></a></span>
+                </div>
+
+                <div id="buy-game-list"></div>
+            </div>
+
+        </div>
+    </div>
+    <br><br><br>
+    <!-- 기타 거래 리스트-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mb-5">
+                    <span></span>
+                    <h4><%= __('page.main.mainContent2.title') %></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 card-panel pb-3" style="margin-right:5%">
+                <div class="col-12 my-3 text-white">
+                    <span><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent1.subtitle2') %></span>
+                    <span><a href="/etc-sells"><i class="fa fa-plus float-right">&nbsp;<%= __('page.main.link') %></i></a></span>
+                </div>
+                <div id="etc-sell-list"></div>
+            </div>
+            <div class="col-12 col-lg-6 card-panel">
+                <div class="col-12 my-3 text-white">
+                    <span><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent1.subtitle1') %></span>
+                    <span><a href="/etc-buys"><i class="fa fa-plus float-right">&nbsp;<%= __('page.main.link') %></i></a></span>
+                </div>
+
+                <div id="etc-buy-list"></div>
+
+            </div>
+        </div>
+    </div>
+    <!--<br><br><br>-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-12">-->
+                <!--<div class="section-heading text-center mb-5">-->
+                    <!--<span></span>-->
+                    <!--<h4><%= __('page.main.mainContent4.title') %></h4>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<div class="col-12">-->
+                <!--<iframe src="https://tokensales.marketmach.com" style="width:100%; height: 800px;"></iframe>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <br><br><br>
+    <% if(useBlockchain=="Y"){ %>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mb-5">
+                    <span></span>
+                    <h4><%= __('page.main.mainContent3.title') %></h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 px-0 hero-search-form">
+            <!-- Tabs -->
+            <div class="nav nav-tabs" id="machTab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-btc-tab" data-toggle="tab" href="#nav-btc" onclick="return setCoinType('BTC');"
+                   role="tab" aria-controls="nav-btc" aria-selected="true"><%=
+                    __('page.main.mainContent3.subtitle1') %></a>
+                <a class="nav-item nav-link" id="nav-eth-tab" data-toggle="tab" href="#nav-eth" role="tab" onclick="return setCoinType('ETH');"
+                   aria-controls="nav-eth" aria-selected="false"><%=
+                    __('page.main.mainContent3.subtitle2') %></a>
+                <a class="nav-item nav-link" id="nav-xrp-tab" data-toggle="tab" href="#nav-xrp" role="tab" onclick="return setCoinType('XRP');"
+                   aria-controls="nav-xrp" aria-selected="false"><%=
+                    __('page.main.mainContent3.subtitle3') %></a>
+                <a class="nav-item nav-link" id="nav-ltc-tab" data-toggle="tab" href="#nav-ltc" role="tab" onclick="return setCoinType('LTC');"
+                   aria-controls="nav-ltc" aria-selected="false"><%=
+                    __('page.main.mainContent3.subtitle4') %></a>
+                <a class="nav-item nav-link" id="nav-eos-tab" data-toggle="tab" href="#nav-eos" role="tab" onclick="return setCoinType('EOS');"
+                   aria-controls="nav-eos" aria-selected="false"><%=
+                    __('page.main.mainContent3.subtitle5') %></a>
+            </div>
+            <!-- Tabs Content -->
+            <div class="tab-content" id="nav-tabContent-mach">
+                <div class="tab-pane fade show active" id="nav-btc" role="tabpanel"
+                     aria-labelledby="nav-btc-tab">
+                    <div class="row">
+                        <div class="col-12 card-panel card-panel2 pb-4">
+                            <!--<div class="col-12 my-3 text-white">-->
+                            <!--<span><i class="fa fa-money" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent3.subtitle1') %></span>-->
+                            <!--</div>-->
+
+                            <canvas id="btc-chart" width="400" height="150"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-eth" role="tabpanel" aria-labelledby="nav-eth-tab">
+                    <div class="row">
+                        <div class="col-12 card-panel card-panel2 pb-4">
+                            <!--<div class="col-12 my-3 text-white">-->
+                            <!--<span><i class="fa fa-money" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent3.subtitle2') %></span>-->
+                            <!--</div>-->
+
+                            <canvas id="eth-chart" width="400" height="150"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-xrp" role="tabpanel" aria-labelledby="nav-xrp-tab">
+                    <div class="row">
+                        <div class="col-12 card-panel card-panel2 pb-4">
+                            <!--<div class="col-12 my-3 text-white">-->
+                            <!--<span><i class="fa fa-money" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent3.subtitle2') %></span>-->
+                            <!--</div>-->
+
+                            <canvas id="xrp-chart" width="400" height="150"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-ltc" role="tabpanel" aria-labelledby="nav-ltc-tab">
+                    <div class="row">
+                        <div class="col-12 card-panel card-panel2 pb-4">
+                            <!--<div class="col-12 my-3 text-white">-->
+                            <!--<span><i class="fa fa-money" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent3.subtitle2') %></span>-->
+                            <!--</div>-->
+
+                            <canvas id="ltc-chart" width="400" height="150"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-eos" role="tabpanel" aria-labelledby="nav-eos-tab">
+                    <div class="row">
+                        <div class="col-12 card-panel card-panel2 pb-4">
+                            <!--<div class="col-12 my-3 text-white">-->
+                            <!--<span><i class="fa fa-money" aria-hidden="true"></i>&nbsp;<%= __('page.main.mainContent3.subtitle2') %></span>-->
+                            <!--</div>-->
+
+                            <canvas id="eos-chart" width="400" height="150"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span style="color:#ffffff;"><%= __('page.main.chartRefContent') %></span><a
+                    href="javascript:window.open('https://www.binance.com/en/')">https://www.binance.com/en/</a>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <% } %>
+</section>
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<!-- Bootstrap-select -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select.min.css">
+<script src="/js/bootstrap/bootstrap-select.min.js"></script>
+<script src="/chart/dist/Chart.js"></script>
+<script src="/javascript/util.js"></script>
+<script>
+    let myChart;
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+        if("<%=useBlockchain%>"=="Y") {
+            loadChartData('BTC');
+        }
+        loadGameList();
+
+        // loadBuyList();
+        // loadSellList();
+        // loadEtcBuyList();
+        // loadEtcSellList();
+        loadItemsAll();
+
+        $("#buy-title").keydown(function(key){
+            if(key.keyCode==13){
+                search('buy')
+            }
+        });
+        $("#sell-title").keydown(function(key){
+            if(key.keyCode==13){
+                search('sell')
+            }
+        });
+    });
+
+
+    function loadGameList() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/games"
+        }).done(function (success) {
+            let strDOM = '';
+            for (let i = 0; i < success.data.length; i++) {
+                strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
+            }
+
+            $("#buy-game-select").append(strDOM);
+            $("#sell-game-select").append(strDOM);
+
+            $("#buy-game-select").selectpicker('refresh');
+            $("#sell-game-select").selectpicker('refresh');
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function selectServer(tapName) {
+        let gameServer;
+        if (tapName == "buy") {
+            if ($("#buy-game-server-select option").val() != null) {
+                $("#buy-game-server-select option").remove();
+            }
+            gameServer = $("#buy-game-select option:selected").val();
+
+
+        } else {
+            if ($("#sell-game-server-select option").val() != null) {
+                $("#sell-game-server-select option").remove();
+            }
+            gameServer = $("#sell-game-select option:selected").val();
+        }
+
+        if (gameServer == "nameNotSelected") {
+            return false;
+        }
+
+        $.ajax({
+            method: "GET",
+            url: "/v1/games/" + gameServer
+        }).done(function (success) {
+            renderServerSelect(tapName, success);
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function renderServerSelect(tabName, data) {
+        let strDOM = '';
+
+        for (let i = 0; i < data.data.servers.length; i++) {
+            strDOM += '<option value="' + data.data.servers[i] + '">' + data.data.servers[i] + '</option>'
+        }
+        if (tabName == "buy") {
+            $("#buy-game-server-select").append(strDOM);
+            $("#buy-game-server-select").selectpicker('refresh');
+        } else {
+            $("#sell-game-server-select").append(strDOM);
+            $("#sell-game-server-select").selectpicker('refresh');
+        }
+    }
+
+    function search(tabName) {
+        if (tabName == "buy") {
+            var game_name = $("#buy-game-select option:selected").val();
+            if (!searchValidation(game_name)) {
+                return false;
+            }
+            var game_server = $("#buy-game-server-select option:selected").val();
+            if (!searchValidation(game_server)) {
+                return false;
+            }
+            var type = $("#buy-type option:selected").val();
+            if (!searchValidation(type)) {
+                return false;
+            }
+
+            if ($("#buy-title").val().indexOf(",")!="-1"){
+                swal({
+                    text: "<%= __('search.validation.alert4') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+                return false;
+            }
+
+            var trade_type = tabName;
+            var title = $("#buy-title").val();
+
+            let query = "?category=game" + "&game_name=" + game_name + "&game_server=" + game_server + "&trade_type=" + trade_type + "&type=" + type + "&title=" + title + "&pageIdx=0";
+            location.href = '/buys' + query;
+
+        } else if (tabName == "sell") {
+            var game_name = $("#sell-game-select option:selected").val();
+            if (!searchValidation(game_name)) {
+                return false;
+            }
+            var game_server = $("#sell-game-server-select option:selected").val();
+            if (!searchValidation(game_server)) {
+                return false;
+            }
+            var type = $("#sell-type option:selected").val();
+            if (!searchValidation(type)) {
+                return false;
+            }
+            if ($("#sell-title").val().indexOf(",")!="-1"){
+                swal({
+                    text: "<%= __('search.validation.alert4') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+                return false;
+            }
+            var trade_type = tabName;
+            var title = $("#sell-title").val();
+
+            let query = "?category=game" + "&game_name=" + game_name + "&game_server=" + game_server + "&trade_type=" + trade_type + "&type=" + type + "&title=" + title + "&pageIdx=0";
+            location.href = '/sells' + query;
+        }
+
+    }
+
+    function searchValidation(data) {
+        if (data == "nameNotSelected") {
+            swal({
+                text: "<%= __('search.validation.alert1') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+            return false;
+        } else if (data == "serverNotSelected") {
+            swal({
+                text: "<%= __('search.validation.alert2') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+            return false;
+        } else if (data == "typeNotSelected") {
+            swal({
+                text: "<%= __('search.validation.alert3') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+            return false;
+        }
+        return true;
+    }
+
+    function loadItemsAll() {
+        let url = "/v1/items/all";
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function (success) {
+            let strDOM = '';
+            let game_buys = success.data.game_buys;
+            let game_sells = success.data.game_sells;
+            let etc_buys = success.data.etc_buys;
+            let etc_sells = success.data.etc_sells;
+            let cms = success.data.cms;
+
+            if (game_buys.length != 0) {
+                for (let i = 0; i < game_buys.length; i++) {
+                    strDOM += ' <div class="col-12" onclick="location.href=\'/buys/detail/' + game_buys[i]._id + '\'">\n' +
+                        '                    <div class="single-feature-events-area d-sm-flex align-items-center wow form-inline text-white card-panel-item">\n' +
+                        '                        <div class="col-4 py-2 px-2 mr-0">\n' +
+                        '                            <div class="date-map-area">\n' +
+                        '                                <div class="d-flex justify-content-center mb-1 card-panel-item-top">' + game_buys[i].game_name + '\n' +
+                        '                                </div>\n' +
+                        '                                <div class="d-flex justify-content-center card-panel-item-bottom">' + game_buys[i].game_server + '\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-6 m-0 p-0">\n' +
+                        '                            <span>' + game_buys[i].title + '</span>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-2">\n';
+                    if("<%=useBlockchain%>" == "Y") {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(game_buys[i].total_price) + '</span> MACH</span>\n';
+                    } else {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(game_buys[i].total_point) + '</span>원</span>\n';
+                    }
+                    strDOM += '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+                }
+
+                $("#buy-game-list").append(strDOM);
+            } else {
+                strDOM += '<div class="text-white text-center">' + "<%= __('page.main.info1') %>" + '</div>';
+                $("#buy-game-list").append(strDOM);
+            }
+
+
+            strDOM = '';
+            if (game_sells.length != 0) {
+                for (let i = 0; i < game_sells.length; i++) {
+                    strDOM += ' <div class="col-12" onclick="location.href=\'/sells/detail/' + game_sells[i]._id + '\'">\n' +
+                        '                    <div class="single-feature-events-area d-sm-flex align-items-center wow form-inline text-white card-panel-item">\n' +
+                        '                        <div class="col-4 py-2 px-2 mr-0">\n' +
+                        '                            <div class="date-map-area">\n' +
+                        '                                <div class="d-flex justify-content-center mb-1 card-panel-item-top">' + game_sells[i].game_name + '\n' +
+                        '                                </div>\n' +
+                        '                                <div class="d-flex justify-content-center card-panel-item-bottom">' + game_sells[i].game_server + '\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-6 m-0 p-0">\n' +
+                        '                            <span>' + game_sells[i].title + '</span>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-2">\n';
+                    if("<%=useBlockchain%>" == "Y") {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(game_sells[i].total_price) + '</span> MACH</span>\n';
+                    } else {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(game_sells[i].total_point) + '</span>원</span>\n';
+                    }
+                    strDOM += '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+                }
+
+                $("#sell-game-list").append(strDOM);
+            } else {
+                strDOM += '<div class="text-white text-center">' + "<%= __('page.main.info1') %>" + '</div>';
+                $("#sell-game-list").append(strDOM);
+            }
+
+
+            strDOM = '';
+            if (etc_buys.length != 0) {
+                for (let i = 0; i < etc_buys.length; i++) {
+                    strDOM += ' <div class="col-12" onclick="location.href=\'/etc-buys/detail/' + etc_buys[i]._id + '\'">\n' +
+                        '                    <div class="single-feature-events-area d-sm-flex align-items-center wow form-inline text-white card-panel-item">\n' +
+                        '                        <div class="col-2 py-2 px-2 mr-0">\n' +
+                        '                            <div class="date-map-area">\n' +
+                        '                                <div class="d-flex justify-content-center card-panel-item-buy">' + etc_buys[i].trade_type + '\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-8 m-0 p-0">\n' +
+                        '                            <span>' + etc_buys[i].title + '</span>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-2">\n';
+                    if("<%=useBlockchain%>" == "Y") {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(etc_buys[i].total_price) + '</span> MACH</span>\n';
+                    } else {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(etc_buys[i].total_point) + '</span>원</span>\n';
+                    }
+                    strDOM +=    '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+                }
+
+                $("#etc-buy-list").append(strDOM);
+            } else {
+                strDOM += '<div class="text-white text-center">' + "<%= __('page.main.info1') %>" + '</div>';
+                $("#etc-buy-list").append(strDOM);
+            }
+
+
+            strDOM = '';
+            if (etc_sells.length != 0) {
+                for (let i = 0; i < etc_sells.length; i++) {
+                    strDOM += ' <div class="col-12" onclick="location.href=\'/etc-sells/detail/' + etc_sells[i]._id + '\'">\n' +
+                        '                    <div class="single-feature-events-area d-sm-flex align-items-center wow form-inline text-white card-panel-item">\n' +
+                        '                        <div class="col-2 py-2 px-2 mr-0">\n' +
+                        '                            <div class="date-map-area">\n' +
+                        '                                <div class="d-flex justify-content-center card-panel-item-sell">' + etc_sells[i].trade_type + '\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-8 m-0 p-0">\n' +
+                        '                            <span>' + etc_sells[i].title + '</span>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="d-flex justify-content-center col-2">\n';
+                    if("<%=useBlockchain%>" == "Y") {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(etc_sells[i].total_price) + '</span> MACH</span>\n';
+                    } else {
+                        strDOM += '                            <span class="card-panel-item-cost"><span>' + numberWithCommas(etc_sells[i].total_point) + '</span>원</span>\n';
+                    }
+                    strDOM += '                       </div>\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+                }
+
+                $("#etc-sell-list").append(strDOM);
+            } else {
+                strDOM += '<div class="text-white text-center">' + "<%= __('page.main.info1') %>" + '</div>';
+                $("#etc-sell-list").append(strDOM);
+            }
+
+            if(cms != null && cms.length > 0) {
+                for(var i=0; i<cms.length; i++) {
+                    let popup_id = 'popup_div' + cms[i]._id;
+                    var result = getCookie(popup_id);
+                    if (result != 'end') {
+                        strDOM = '<div class="popup_div" id="'+popup_id+'">' +
+                            '<div class="popup_title">'+ cms[i].title + '</div>' +
+                            '<div class="popup_content">'+ cms[i].content + '</div>' +
+                            '<div class="popup_footer">' +
+                            '<label for=""check'+cms[i]._id+'""><input type="checkbox" id="check'+cms[i]._id+'">오늘 하루 보지 않기</label>' +
+                            '<button class="btn btn-primary" onclick="closePopup(\'' + cms[i]._id +'\')">확인</button>'
+                        '</div>' +
+                        '</div>';
+                        $('.cms-notification').append(strDOM);
+                    }
+                }
+            }
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function closePopup(id) {
+        if($('#check'+id).prop('checked')) {
+            setCookie('popup_div' + id, "end" , 1);
+        }
+        $('#popup_div' + id).css('display','none');
+    }
+
+    function setCookie(cname, value, expire) {
+        let todayValue = new Date();
+        // 오늘 날짜를 변수에 저장
+        todayValue.setDate(todayValue.getDate() + expire);
+        document.cookie = cname + "=" + encodeURI(value) + "; expires=" + todayValue.toGMTString() + "; path=/;";
+    }
+
+    function getCookie(name) {
+        let cookieName = name + "=";
+        let x = 0;
+        let lastChrCookie;
+        console.log(document.cookie);
+        while ( x <= document.cookie.length ) {
+            let y = (x+cookieName.length);
+            if ( document.cookie.substring( x, y ) == cookieName) {
+                if ((lastChrCookie=document.cookie.indexOf(";", y)) == -1)
+                    lastChrCookie = document.cookie.length;
+                return decodeURI(document.cookie.substring(y, lastChrCookie));
+            }
+            x = document.cookie.indexOf(" ", x ) + 1;
+            if ( x == 0 )
+                break;
+        }
+        return "";
+    }
+
+
+    function loadChart(data, type) {
+        let chartTotalData = data;
+        let chartBinanceData = new Array();
+        let regDate = new Array();
+
+        for (let i = 0; i < chartTotalData.data.length; i++) {
+            chartBinanceData[i] = chartTotalData.data[i].data.binance.usd_price;
+            regDate[i] = chartTotalData.data[i].regDate.substring(11, 16);
+        }
+
+        if (type == "BTC") {
+            var btc = document.getElementById("btc-chart");
+            var btchart = new Chart(btc, {
+                type: 'line',
+                data: {
+                    // labels: ["Red", "Blue", "Yellow"],
+                    labels: regDate,
+                    datasets: [{
+                        label: 'BTC',
+                        data: chartBinanceData,
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    animation: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                // stepSize:100
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'USD',
+                                fontColor: "white"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                if (label) {
+                                    label += ': $';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            });
+        } else if (type == "ETH") {
+            var eth = document.getElementById("eth-chart");
+            var ethChart = new Chart(eth, {
+                type: 'line',
+                data: {
+                    labels: regDate,
+                    datasets: [{
+                        label: 'ETH',
+                        data: chartBinanceData,
+                        backgroundColor: [
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    animation: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                // beginAtZero: true
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'USD',
+                                fontColor: "white"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                if (label) {
+                                    label += ': $ ';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            });
+        } else if (type == "XRP") {
+            var xrp = document.getElementById("xrp-chart");
+            var xrpChart = new Chart(xrp, {
+                type: 'line',
+                data: {
+                    labels: regDate,
+                    datasets: [{
+                        label: 'XRP',
+                        data: chartBinanceData,
+                        backgroundColor: [
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    animation: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                // beginAtZero: true
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'USD',
+                                fontColor: "white"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                if (label) {
+                                    label += ': $ ';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            });
+        } else if (type == "LTC") {
+            var ltc = document.getElementById("ltc-chart");
+            var ltcChart = new Chart(ltc, {
+                type: 'line',
+                data: {
+                    labels: regDate,
+                    datasets: [{
+                        label: 'LTC',
+                        data: chartBinanceData,
+                        backgroundColor: [
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    animation: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                // beginAtZero: true
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'USD',
+                                fontColor: "white"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                if (label) {
+                                    label += ': $ ';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            });
+        } else if (type == "EOS") {
+            var eos = document.getElementById("eos-chart");
+            var eosChart = new Chart(eos, {
+                type: 'line',
+                data: {
+                    labels: regDate,
+                    datasets: [{
+                        label: 'EOS',
+                        data: chartBinanceData,
+                        backgroundColor: [
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    animation: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                // beginAtZero: true
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'USD',
+                                fontColor: "white"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                if (label) {
+                                    label += ': $ ';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function loadChartData(coinType) {
+        let url, url2;
+        if (!checkUseableOS()) {
+            url = "/v1/charts/currency/"+ coinType +"/10";
+        } else {
+            url = "/v1/charts/currency/"+ coinType +"/30";
+        }
+        let chart = function () {
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                loadChart(success, coinType);
+            }).fail(function (fail) {
+                // swal({
+                //     text: "<%= __('common.errorMessage.serverError') %>",
+                //     button: "<%= __('common.buttons.button10') %>"
+                // });
+            });
+        };
+        if(myChart != undefined) {
+            clearInterval(myChart);
+        }
+        chart();
+        myChart = setInterval(chart, 1000 * 60);
+        console.log(myChart);
+    }
+
+    function checkUseableOS() {
+        var agent = navigator.userAgent;
+        var result = true;
+
+        if (agent.match(/Android/i) != null ||
+            agent.match(/BlackBerry/i) != null ||
+            agent.match(/iPhone|iPad|iPod/i) != null ||
+            agent.match(/Opera Mini/i) != null ||
+            agent.match(/IEMobile/i) != null) {
+            result = false;
+        }
+
+        return result;
+    }
+
+    function setCoinType(coinType) {
+        loadChartData(coinType);
+    }
+</script>
+</body>
+</html>

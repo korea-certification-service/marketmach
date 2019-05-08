@@ -1,0 +1,161 @@
+.wrap-login100 {
+    width: 1000px;
+}
+
+.custom-select {
+    width: 100%;
+    height: 55px;
+}
+
+.mach-account {
+    margin-right: 4%;
+}
+
+.textarea-custom {
+    height: 150px;
+    padding:1em;
+}
+
+/* boostrap-select custom */
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+    width:inherit!important;
+}
+
+/* file upload custom */
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #3c1491;
+    cursor: pointer;
+    border-radius: .25em;
+}
+
+/* named upload */
+.filebox .upload-name {
+    height:55px;
+    color:white;
+    display: inline-block;
+    padding: .5em .75em; /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #0d0943;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+@media (min-width: 320px) and (max-width: 374px) {
+    .limiter {
+        margin-top: 37%;
+    }
+
+    .register-container {
+        padding: 10px 0 10px 0;
+    }
+
+    .mach-account {
+        margin-right: 0;
+    }
+
+    /* bootstrap */
+    .offset-1 {
+        margin-left: 2.5%;
+    }
+
+    .col-10 {
+        max-width: 95%;
+    }
+
+    .input100 {
+        padding: 0 10px 0 10px;
+        font-size: 0.8em
+    }
+}
+
+@media (min-width: 375px) and (max-width: 410px) {
+    .limiter {
+        margin-top: 33%;
+    }
+
+    .register-container {
+        padding: 10px 0 10px 0;
+    }
+
+    .mach-account {
+        margin-right: 0;
+    }
+
+    /* bootstrap */
+    .offset-1 {
+        margin-left: 2.5%;
+    }
+
+    .col-10 {
+        max-width: 95%;
+    }
+
+    .input100 {
+        padding: 0 10px 0 10px;
+        font-size: 0.8em
+    }
+}
+
+@media (min-width: 411px) and (max-width: 767px) {
+    .limiter {
+        margin-top: 30%;
+    }
+
+    .register-container {
+        padding: 10px 0 10px 0;
+    }
+
+    .mach-account {
+        margin-right: 0;
+    }
+
+    /* bootstrap */
+    .offset-1 {
+        margin-left: 2.5%;
+    }
+
+    .col-10 {
+        max-width: 95%;
+    }
+
+    .input100 {
+        padding: 0 10px 0 10px;
+        font-size: 0.8em
+    }
+
+}
+
+@media (max-height: 1334px)and (min-width: 768px) {
+    .limiter {
+        margin-top: 15%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-6 {
+        flex: 0 0 48%;
+        max-width: 50%;
+    }
+}

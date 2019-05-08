@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/bootstrap/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/account/deposit.css" rel="stylesheet">
+</head>
+
+<body class="background2">
+
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 deposit-container">
+            <span class="login100-form-title p-b-32 text-white"><img
+                    src="/img/icon-img/ic-coin.png">&nbsp;&nbsp;<%= __('page.deposit.mach.bigTitle') %></span>
+
+
+            <div id="panel-1">
+                <span class="offset-1 text-white"><%= __('page.deposit.mach.title1') %></span>
+                <div class="col-10 offset-1 px-0">
+                    <div class="d-sm-flex align-items-center wow form-inline text-white card-panel-item">
+                        <div class="col-2 py-2 px-2 mr-0">
+                            <div class="date-map-area">
+                                <img src="/img/icon-img/ic-coin.png">
+                            </div>
+                        </div>
+                        <div class="col-2 m-0 p-0">
+                            <span>MACH(MACH)</span>
+                        </div>
+                        <div class="col-8">
+                            <span class="card-panel-item-cost float-right"><span id="mach"></span> MACH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 offset-1 px-0 mt-4">
+                    <div class="form-inline">
+                        <div class="txt1 col-6 p-b-11 text-white pl-0 mach-account">
+                            <%= __('page.deposit.mach.title2') %>
+                        </div>
+
+                        <div class="txt1 col-6 p-b-11 text-white pl-0">
+                            <%= __('page.deposit.mach.title3') %>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="wrap-input100 col-6 validate-input m-b-12 px-0 mach-account">
+                            <input class="input100 text-white" type="number" name="mach" min="0" onchange="calculate()">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 col-6 validate-input m-b-12 px-0">
+                            <select class="custom-select" name="coin" onchange="calculate()">
+                                <option value="coinNotSelected" selected><%= __('page.deposit.mach.title3FirstOption')
+                                    %>
+                                </option>
+                                <option value="btc">BTC</option>
+                                <option value="ether">ETH</option>
+                                <option value="mach">MACH</option>
+                                <option value="happymoney">해피머니 상품권</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="txt1 p-b-11 text-white">
+                        <%= __('page.deposit.mach.title4') %>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-12"
+                         data-validate="Username is required">
+                        <input class="input100 text-white" type="text" name="calculate" readonly>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="txt1 p-b-11 alert-text" id="fees" style="display: none">
+                        <%= __('page.deposit.mach.info3') %>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                    <button class="login100-form-btn" onclick="submitDeposit()">
+                        <%= __('common.buttons.button8') %>
+                    </button>
+                </div>
+            </div>
+
+
+            <div id="panel-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 px-0">
+                    <table class="table item-table text-white">
+                        <tr>
+                            <td width="100" class="item-table-title"><%= __('page.deposit.mach.title5') %></td>
+                            <td colspan="2" width="200" id="depositCoin"></td>
+                        </tr>
+                        <tr>
+                            <td width="100" class="item-table-title"><%= __('page.deposit.mach.title6') %></td>
+                            <td width="300"><span id="depositPrice"></span> <span id="unit"></span></td>
+                            <td width="50"><i onclick="copyToClipboard('#depositPrice')" class="hov-pointer fa fa-clone"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="item-table-title"><%= __('page.deposit.mach.title8') %></td>
+                            <td id="address"></td>
+                            <td><i onclick="copyToClipboard('#address')" class="hov-pointer fa fa-clone"></i></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div class="text-white align-center">
+                        <div id="info1"><%= __('page.deposit.mach.info1') %></div>
+                        <div id="info2"><%= __('page.deposit.mach.info2') %></div>
+                    </div>
+                    <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                        <button class="login100-form-btn" onclick="location.href='/accounts/token'">
+                            <%= __('common.buttons.button10') %>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script src="/javascript/util.js"></script>
+<script>
+    let coinId, price;
+
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+
+        $("#panel-2").css("display", "none");
+        console.log("hi : ", "<%= id %>");
+
+        loadCoinData();
+    });
+
+    function loadCoinData() {
+        let url = "/v1/users/" + "<%= id %>";
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function (success) {
+            console.log(success);
+            coinId = success.data.coinId;
+            let url = "/v1/coins/" + coinId;
+
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                console.log(success);
+
+                if (success.data.total_mach == null) {
+                    $("#mach").text(0);
+                } else {
+                    $("#mach").text(numberWithCommas(success.data.total_mach));
+                }
+
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            })
+
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+
+    }
+
+    function calculate() {
+        let mach = Number($("input[name=mach]").val());
+        let coin = $("select[name=coin] option:selected").val();
+        let data;
+        if (coin == "btc") {
+            let url = "/v1/charts/currency/BTC/1";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                console.log(success);
+                let btcPrice = Number(success.data[0].data.binance.usd_price);
+                console.log(btcPrice);
+                price = ((mach / btcPrice) + (mach / btcPrice) * 0.008).toFixed(8);
+                data = mach + " MACH / $" + btcPrice + " + 0.8% = " + price + " BTC";
+                $("#fees").css("display", "");
+                $("input[name=calculate]").val(data);
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            });
+        } else if (coin == "ether") {
+            let url = "/v1/charts/currency/ETH/1";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                console.log(success);
+                let ethPrice = Number(success.data[0].data.binance.usd_price);
+                console.log(ethPrice);
+                price = ((mach / ethPrice) + (mach / ethPrice) * 0.008).toFixed(8);
+                data = mach + " MACH / $" + ethPrice + " + 0.8% = " + price + " ETH";
+                $("#fees").css("display", "");
+                $("input[name=calculate]").val(data);
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            });
+
+        } else if (coin == "mach") {
+            price = mach.toFixed(8);
+            data = mach + " MACH = " + price + " MACH";
+            $("#fees").css("display", "none");
+            $("input[name=calculate]").val(data);
+        }
+
+    }
+
+
+    function btnNext() {
+        $("#panel-1").css("display", "none");
+        $("#panel-2").css("display", "");
+
+        console.log("coinId : ", coinId);
+        let coin = $("select[name=coin] option:selected").val();
+
+        $("#depositCoin").text(coin.toUpperCase());
+        $("#depositPrice").text(price);
+        $("#unit").text(coin.toUpperCase());
+
+        if (coin == "btc") {
+            $("#address").text("<%= btcAddress %>");
+        } else if (coin == "ether") {
+            $("#address").text("<%= etherAddress %>");
+        } else if (coin == "mach") {
+            $("#address").text("<%= machAddress %>");
+        }
+        // $("#depositMach").text($("input[name=mach]").val());
+    }
+
+
+    function submitDeposit() {
+        let coinType = $("select[name=coin] option:selected").val();
+        if ($("input[name=mach]").val() == "" || $("input[name=mach]").val() <= 0) {
+            swal({
+                text: "<%= __('page.deposit.mach.alert2') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        } else if (coinType == "coinNotSelected") {
+            swal({
+                text: "<%= __('page.deposit.mach.alert1') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        } else if(coinType == "happymoney") {
+            swal({
+                text: "해피머니 상품권은 곧 오픈될 예정입니다.",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+            return false;
+        }
+
+
+        let url = "/v1/coins/" + coinId;
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function (success) {
+            console.log("loadAddress : ", success);
+            let address;
+            if (coinType == "btc") {
+                if (success.data.btc_address == null || success.data.btc_address == "") {
+                    swal({
+                        text: "<%= __('page.deposit.mach.alert3') %>",
+                        button: "<%= __('common.buttons.button10') %>",
+                        className:"swal-modal2"
+                    }).then(() => {
+                        location.href = '/myPages/myInfo';
+                    });
+                    return false;
+                } else {
+                    address = success.data.btc_address;
+                }
+            } else if (coinType == "ether") {
+                if (success.data.ether_address == null || success.data.ether_address == "") {
+                    swal({
+                        text: "<%= __('page.deposit.mach.alert4') %>",
+                        button: "<%= __('common.buttons.button10') %>",
+                        className:"swal-modal2"
+                    }).then(() => {
+                        location.href = '/myPages/myInfo';
+                    });
+                    return false;
+                } else {
+                    address = success.data.ether_address;
+                }
+
+            } else if (coinType == "mach") {
+                if (success.data.mach_address == null || success.data.mach_address == "") {
+                    swal({
+                        text: "<%= __('page.deposit.mach.alert5') %>",
+                        button: "<%= __('common.buttons.button10') %>",
+                        className:"swal-modal2"
+                    }).then(() => {
+                        location.href = '/myPages/myInfo';
+                    });
+                    return false;
+                } else {
+                    address = success.data.mach_address;
+                }
+            }
+
+            let url = "/v1/coins/" + coinId + "/deposit/coinTypes/" + coinType;
+            let coinTypeReq = {
+                "price": price,
+                "mach": $("input[name=mach]").val(),
+                "address": address
+            };
+            console.log("url ; ", url);
+            console.log("coinTypeReq : ", coinTypeReq);
+
+            $.ajax({
+                method: "PUT",
+                url: url,
+                data: coinTypeReq,
+            }).done(function (success) {
+                console.log(success);
+                btnNext();
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>",
+                    className:"swal-modal2"
+                });
+            })
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>",
+                className:"swal-modal2"
+            });
+        })
+
+
+    }
+
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+</script>
+</body>
+</html>

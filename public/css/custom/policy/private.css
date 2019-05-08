@@ -1,0 +1,30 @@
+.textarea-custom {
+    width: 100%;
+    background-color: #0d0943;
+    color: white;
+    padding: 10px;
+
+}
+@media (min-width: 320px) and (max-width: 374px) {
+    .wrap-login100{
+        margin-top:150px!important;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 410px) {
+    .wrap-login100{
+        margin-top:150px!important;
+    }
+}
+
+@media (min-width: 411px) and (max-width: 767px) {
+    .wrap-login100{
+        margin-top:150px!important;
+    }
+}
+
+@media (max-height: 1034px)and (min-width: 768px) {
+    .wrap-login100{
+        margin-top:160px!important;
+    }
+}

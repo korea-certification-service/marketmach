@@ -1,0 +1,30 @@
+@media (min-width: 320px) and (max-width: 374px) {
+    .limiter{
+        margin-top:20%
+    }
+    .background{
+        background-size: auto;
+    }
+}
+@media (min-width: 375px) and (max-width: 410px) {
+    .limiter{
+        margin-top:15%
+    }
+    .background{
+        background-size: auto;
+    }
+}
+@media (min-width:411px) and (max-width:767px){
+    .limiter{
+        margin-top:10%
+    }
+    .background{
+        background-size: auto;
+    }
+}
+.wrap-login100{
+    width:1000px;
+}
+.limiter{
+    color:white;
+}

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/bootstrap/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/myPage/myInfo.css" rel="stylesheet">
+</head>
+
+<body class="background3">
+
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 myInfo-container">
+            <span class="login100-form-title p-b-32 text-white"><img
+                    src="/img/icon-img/ic-write.png">&nbsp;&nbsp;<%= __('page.myInfo.bigTitle') %></span>
+
+            <div class="col-10 offset-1 px-0 mt-4">
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title1') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="id" readonly>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title2') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="username">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title3') %>
+                </div>
+                <div class="form-inline wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white col-9" type="email" name="email" onblur="validCheck('email')">
+                    <span class="focus-input100"></span>
+                    <!--<div class="col-3 btn-check">-->
+                    <!--<button class="col-12 btn btn-custom text-white"><%= __('common.buttons.button11') %></button>-->
+                    <!--</div>-->
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="emailValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error1') %>
+                </div>
+                <br>
+                <div class="form-inline">
+                    <div class="txt1 col-6 p-b-11 text-white pl-0 mach-account blank">
+                        <%= __('page.myInfo.title4') %>
+                    </div>
+                    <div class="txt1 col-6 p-b-11 text-white pl-0">
+                        <%= __('page.myInfo.title5') %>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="wrap-input100 col-6 validate-input m-b-12 px-0 blank">
+                        <input class="input100 text-white" type="password" name="password"
+                               onkeyup="validCheck('password')">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 col-6 validate-input m-b-12 px-0">
+                        <input class="input100 text-white" type="password" name="passwordConfirm"
+                               onkeyup="validCheck('passwordConfirm')">
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="pwdValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error2') %>
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="pwdConfirmValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error3')
+                    %>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title6') %>
+                </div>
+                <div class="form-inline">
+                    <div class="wrap-input100 validate-input col-lg-4 col-md-4 col-sm-12 px-0 blank2">
+                        <select class="custom-select" id="countryCode" name="countryCode">
+                        </select>
+                    </div>
+                    <div class="wrap-input100 validate-input col-lg-8 col-md-8 col-sm-12">
+                        <input class="input100 text-white" type="tel" name="phone" onkeydown="phoneValidation()" placeholder="<%= __('page.myInfo.placeholder.placeholder1') %>">
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="txt1 p-b-11 alert-text">
+                    <%= __('page.myInfo.info1') %>
+                </div>
+                <!--<div class="txt1 p-b-11 text-white">-->
+                <!--<%= __('page.myInfo.title11') %>-->
+                <!--</div>-->
+                <!--<div class="wrap-input100 col-lg-12 col-md-12 col-sm-12 validate-input m-b-12 px-0 blank2">-->
+                <!--<select class="custom-select" id="country" name="country" disabled>-->
+                <!--<option value="KR" id="kr"><%= __('common.selectNation1') %></option>-->
+                <!--<option value="CN" id="cn"><%= __('common.selectNation2') %></option>-->
+                <!--<option value="DEV" id="dev">DEV</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <% if(useBlockchain=="Y"){ %>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title7') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="btcWalletAddr"
+                           onkeyup="checkAddress('btc', this.value);">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="btcAddressValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error4') %>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title8') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="etcWalletAddr"
+                           onkeyup="checkAddress('ether', this.value);">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="ethAddressValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error4') %>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title9') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="machWalletAddr"
+                           onkeyup="checkAddress('mach', this.value);">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="txt1 p-b-11 text-danger" id="machAddressValidation" style="display:none"><%=
+                    __('page.myInfo.validation.error4') %>
+                </div>
+                <% } if(usePoint=="Y" && country=="KR"){ %>
+                <div class="form-inline">
+                    <div class="txt1 col-12 p-b-11 text-white pl-0">
+                        <%= __('page.myInfo.title10') %>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="wrap-input100 col-lg-4 col-md-4 col-sm-12 validate-input m-b-12 px-0 blank2">
+                        <select class="custom-select" id="bankAccountType" name="bankAccountType" disabled>
+                            <option value="" selected><%= __('page.myInfo.title10FirstOption') %></option>
+                            <option value="KB국민은행">KB국민은행</option>
+                            <option value="SC제일은행">SC제일은행</option>
+                            <option value="경남은행">경남은행</option>
+                            <option value="광주은행">광주은행</option>
+                            <option value="기업은행">기업은행</option>
+                            <option value="농협">농협</option>
+                            <option value="대구은행">대구은행</option>
+                            <option value="부산은행">부산은행</option>
+                            <option value="산업은행">산업은행</option>
+                            <option value="새마을금고">새마을금고</option>
+                            <option value="수협">수협</option>
+                            <option value="신한은행">신한은행</option>
+                            <option value="신협">신협</option>
+                            <option value="우리은행">우리은행</option>
+                            <option value="우체국">우체국</option>
+                            <option value="전북은행">전북은행</option>
+                            <option value="카카오뱅크">카카오뱅크</option>
+                            <option value="케이뱅크">케이뱅크</option>
+                            <option value="KEB하나은행">KEB하나은행</option>
+                            <option value="한국씨티은">한국씨티은행</option>
+                        </select>
+                    </div>
+                    <div class="form-inline wrap-input100 col-lg-8 col-md-8 col-sm-12 validate-input m-b-12 px-0">
+                        <input class="input100 text-white col-9" type="text" name="bankAccount" readonly>
+                        <span class="focus-input100"></span>
+                        <div class="col-3 btn-check">
+                            <!--<button class="col-12 btn btn-custom text-white" data-toggle="modal" data-target="#bankModal"><%= __('common.buttons.button11') %>-->
+                            <!--</button>-->
+                            <button class="col-12 btn btn-custom text-white" onclick="alertMessage()"><%=
+                                __('common.buttons.button11') %>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <div class="d-flex justify-content-center container-login100-form-btn mt-4">
+                <button class="login100-form-btn mr-2" onclick="submit()">
+                    <%= __('common.buttons.button12') %>
+                </button>
+                <button class="login100-form-btn" onclick="withdraw()">
+                    <%= __('common.buttons.button20') %>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="bankModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-inline">
+                    <div class="txt1 col-12 p-b-11 text-white pl-0">
+                        <%= __('page.myInfo.title10') %>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="wrap-input100 col-lg-4 col-md-4 col-sm-12 validate-input m-b-12 px-0 blank2">
+                        <select class="custom-select" name="bankAccountType2">
+                            <option value="notSelected" selected><%= __('page.myInfo.title10FirstOption') %></option>
+                            <option value="KB국민은행">KB국민은행</option>
+                            <option value="SC제일은행">SC제일은행</option>
+                            <option value="경남은행">경남은행</option>
+                            <option value="광주은행">광주은행</option>
+                            <option value="기업은행">기업은행</option>
+                            <option value="농협">농협</option>
+                            <option value="대구은행">대구은행</option>
+                            <option value="부산은행">부산은행</option>
+                            <option value="산업은행">산업은행</option>
+                            <option value="새마을금고">새마을금고</option>
+                            <option value="수협">수협</option>
+                            <option value="신한은행">신한은행</option>
+                            <option value="신협">신협</option>
+                            <option value="우리은행">우리은행</option>
+                            <option value="우체국">우체국</option>
+                            <option value="전북은행">전북은행</option>
+                            <option value="카카오뱅크">카카오뱅크</option>
+                            <option value="케이뱅크">케이뱅크</option>
+                            <option value="KEB하나은행">KEB하나은행</option>
+                            <option value="한국씨티은">한국씨티은행</option>
+                        </select>
+                    </div>
+                    <div class="form-inline wrap-input100 col-lg-8 col-md-8 col-sm-12 validate-input m-b-12 px-0">
+                        <input class="input100 text-white col-12" type="text" name="bankAccount2">
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="txt1 p-b-11 text-white">
+                    <%= __('page.myInfo.title12') %>
+                </div>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <input class="input100 text-white" type="text" name="birth">
+                    <span class="focus-input100"></span>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-custom text-white" onclick="bankValidation()"><%=
+                    __('common.buttons.button10') %>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script src="/blockchain/web3.min.js"></script>
+<script src="/blockchain/truffle-contract.js"></script>
+<script>
+    let userId, userTag, userName, email, countryCode, phone, btcWalletAddr, etcWalletAddr, machWalletAddr, bankAccount,
+        bankAccountType, country, total_mach;
+
+    let pointId, coinId;
+
+    let web3;
+
+    let btcValidedAddress = true;
+    let ethValidedAddress = true;
+    let machValidedAddress = true;
+
+    $(document).ready(function () {
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            const provider = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/0c938ce8db2547fdbb12f73b5d500aca0c938ce8db2547fdbb12f73b5d500aca"));
+            web3 = new Web3(provider);
+        }
+
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+
+        $("#emailValidation").css("display", "none");
+        $("#btcAddressValidation").css("display", "none");
+        $("#ethAddressValidation").css("display", "none");
+        $("#machAddressValidation").css("display", "none");
+        $("#pwdValidation").css("display", "none");
+        $("#pwdConfirmValidation").css("display", "none");
+        getCountryCodes();
+    });
+
+    function getCountryCodes() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/countryCodes",
+            contentType: "application/json; charset=utf-8",
+        }).done(function (success) {
+            renderHTML(success.data);
+            loadData();
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('page.findId.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function renderHTML(data) {
+        let result = '';
+        for(var i in data) {
+            result += "<option value='"+data[i].country_code+"'>" + data[i].country_kr + "</option>";
+        }
+        $('[name=countryCode]').html(result);
+    }
+
+    function loadData() {
+        let id = "<%= id %>";
+        $.ajax({
+            method: "GET",
+            url: "/v1/users/" + id
+        }).done(function (success) {
+            console.log(success);
+
+            userId = success.data._id;
+            userTag = success.data.userTag;
+            userName = success.data.userName;
+            email = success.data.email;
+            country = success.data.country;
+
+            coinId = success.data.coinId;
+            pointId = success.data.pointId;
+            countryCode = success.data.countryCode;
+
+            console.log("_id : ", userId);
+            console.log("coinId : ", coinId);
+            console.log("pointId : ", pointId);
+
+            $("input[name=id]").val(userTag);
+            $("input[name=username]").val(userName);
+            $("input[name=email]").val(email);
+            setTimeout(function() {
+                $('#countryCode').val(countryCode);
+            }, 100);
+
+            if (country == "KR") {
+                $("#kr").attr("selected", "selected");
+            } else if (country == "CN") {
+                $("#cn").attr("selected", "selected");
+            } else {
+                $("#dev").attr("selected", "selected");
+            }
+
+            if (success.data.phone != undefined) {
+                phone = success.data.phone;
+                $("input[name=phone]").val(phone);
+            } else {
+                phone = "";
+            }
+
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                console.log(success);
+                total_mach = success.data.total_mach;
+                if (success.data.btc_address != undefined) {
+                    btcWalletAddr = success.data.btc_address;
+                    $("input[name=btcWalletAddr]").val(btcWalletAddr);
+                } else {
+                    btcWalletAddr = "";
+                }
+
+                if (success.data.ether_address != undefined) {
+                    etcWalletAddr = success.data.ether_address;
+                    $("input[name=etcWalletAddr]").val(etcWalletAddr);
+                } else {
+                    etcWalletAddr = "";
+                }
+
+                if (success.data.mach_address != undefined) {
+                    machWalletAddr = success.data.mach_address;
+                    $("input[name=machWalletAddr]").val(machWalletAddr);
+                } else {
+                    machWalletAddr = "";
+                }
+
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            });
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/points/" + pointId
+            }).done(function (success) {
+                console.log(success);
+
+                if (success.data.bank_account != undefined) {
+                    bankAccount = success.data.bank_account;
+                    $("input[name=bankAccount]").val(bankAccount);
+                } else {
+                    bankAccount = "";
+                }
+
+                if (success.data.bank_account_type != undefined) {
+                    bankAccountType = success.data.bank_account_type;
+                    $("select[name=bankAccountType]").val(bankAccountType).attr("selected", "selected");
+                } else {
+                    bankAccountType = "";
+                }
+
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            });
+
+        }).fail(function (fail) {
+            swal({
+                text: "<%= __('common.errorMessage.serverError') %>",
+                button: "<%= __('common.buttons.button10') %>"
+            });
+        })
+    }
+
+    function validCheck(validType) {
+        let pwd = $("input[name=password]").val();
+        let pwdConfirm = $("input[name=passwordConfirm]").val();
+
+        switch (validType) {
+
+            case "email":
+                if (email != $("input[name=email]").val()) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/v1/users/email/' + $("input[name=email]").val(),
+                    }).done(function (success) {
+                        console.log("success : ", success);
+                        $("#emailValidation").css("display", "none");
+                    }).fail(function (fail) {
+                        if (fail.status == 403) {
+                            $("#emailValidation").css("display", "");
+                        }
+                    });
+                } else {
+                    $("#emailValidation").css("display", "none");
+                }
+                break;
+
+            case "password":
+                let reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+
+                if (pwd.length == 0) {
+                    $("#pwdValidation").css("display", "none");
+                    return false;
+                } else if (!reg_pwd.test(pwd)) {
+                    $("#pwdValidation").css("display", "");
+                    return false;
+                } else {
+                    $("#pwdValidation").css("display", "none");
+                    return false;
+                }
+
+            case "passwordConfirm":
+                if (pwd != pwdConfirm) {
+                    $("#pwdConfirmValidation").css("display", "");
+                    return false;
+                } else {
+                    $("#pwdConfirmValidation").css("display", "none");
+                    return true;
+                }
+        }
+    }
+
+    function phoneValidation() {
+        let str = $("input[name=phone]").val().replace(/\-/g, '');
+        $("input[name=phone]").val(str);
+    }
+
+    function bankValidation() {
+        if ($("select[name=bankAccountType2] option:selected").val() == "notSelected") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert8') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("input[name=bankAccount2]").val() == "") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert9') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("input[name=birth]").val() == "") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert10') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        }
+
+
+        let url = "/v1/users/bank/validation";
+        let data = {
+            "bankAccountType": $("select[name=bankAccountType2] option:selected").val(),
+            "bankAccount": $("input[name=bankAccount2]").val(),
+            "birthday": $("input[name=birth]").val()
+        };
+
+        console.log(data);
+        // $.ajax({
+        //     method:"GET",
+        //     url:url,
+        //     data:data
+        // }).done(function (success){
+        //     console.log(success);
+        // }).fail(function (fail){
+        //     swal({
+        //         text: "<%= __('common.errorMessage.serverError') %>",
+        //         button: "<%= __('common.buttons.button10') %>"
+        //     });
+        // })
+    }
+
+    function submit() {
+        let emailChk = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+        let mobileRegExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+        if($('#countryCode').val() != "+82") {
+            mobileRegExp = /^\d{3}-?\d{3,4}-?\d{4}$/;
+        }
+
+        if ($("input[name=username]").val() == "") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert1') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if ($("#emailValidation").css("display") != "none" || $("input[name=email]").val() == "") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert2') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            });
+            return false;
+        } else if (emailChk.test($("input[name=email]").val()) == false) {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert3') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                $("input[name=email]").focus();
+            });
+            return false;
+        } else if ($("#pwdValidation").css("display") != "none") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert4') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                $("input[name=password]").focus();
+            });
+            return false;
+        } else if ($("#pwdConfirmValidation").css("display") != "none") {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert5') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                $("input[name=passwordConfirm]").focus();
+            });
+            return false;
+        } else if ($("input[name=password]").val() != $("input[name=passwordConfirm]").val()) {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert6') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                $("input[name=passwordConfirm]").focus();
+            });
+            return false;
+        } else if (!btcValidedAddress || !ethValidedAddress || !machValidedAddress) {
+            //메시지 출력
+            swal({
+                text: "<%= __('page.myInfo.validation.alert7') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                if (!btcValidedAddress) $("input[name=btcWalletAddr]").focus();
+                if (!ethValidedAddress) $("input[name=etcWalletAddr]").focus();
+                if (!machValidedAddress) $("input[name=machWalletAddr]").focus();
+            });
+            return false;
+        } else if(!mobileRegExp.test($("input[name=phone]").val())) {
+            swal({
+                text: "<%= __('page.myInfo.validation.alert13') %>",
+                button: "<%= __('common.buttons.button10')%>"
+            }).then(()=>{
+                $("input[name=phone]").focus();
+            });
+            return false;
+        }
+        let userReq = {};
+        let pointReq = {
+            "userId": userId
+        };
+        let coinReq = {
+            "userId": userId
+        };
+
+
+        if (userName != $("input[name=username]").val()) {
+            userReq["userName"] = $("input[name=username]").val();
+        }
+
+        if (email != $("input[name=email]").val()) {
+            userReq["email"] = $("input[name=email]").val();
+            userReq["active"] = "false";
+        }
+
+        if ($("input[name=password]").val().length > 5) {
+            userReq["password"] = $("input[name=password]").val();
+        }
+
+        if (countryCode != $("#countryCode").val()) {
+            userReq["countryCode"] = $("#countryCode").val();
+        }
+
+        if (phone != $("input[name=phone]").val()) {
+            userReq["phone"] = $("input[name=phone]").val();
+        }
+
+        // if (country != $("select[name=country]").val()) {
+        //     userReq["country"] = $("select[name=country]").val();
+        // }
+
+        if("<%=useBlockchain%>" == "Y") {
+            if (btcWalletAddr != $("input[name=btcWalletAddr]").val()) {
+                coinReq["btc_address"] = $("input[name=btcWalletAddr]").val();
+            }
+
+            if (etcWalletAddr != $("input[name=etcWalletAddr]").val()) {
+                coinReq["ether_address"] = $("input[name=etcWalletAddr]").val();
+            }
+
+            if (machWalletAddr != $("input[name=machWalletAddr]").val()) {
+                coinReq["mach_address"] = $("input[name=machWalletAddr]").val();
+            }
+        }
+
+        if (bankAccount != $("input[name=bankAccount]").val()) {
+            pointReq["bank_account"] = $("input[name=bankAccount]").val();
+        }
+
+
+        if (bankAccountType != $("select[name=bankAccountType]").val()) {
+            pointReq["bank_account_type"] = $("select[name=bankAccountType]").val();
+        }
+
+
+        if (Object.keys(userReq).length > 0) {
+            $.ajax({
+                method: "PUT",
+                url: "/v1/users/" + userId,
+                data: userReq
+            }).done(function (success) {
+                console.log("user change : ", success);
+
+                if (userReq.email != undefined) {
+                    let data = {
+                        "userId": userId,
+                        "to": $("input[name=email]").val()
+                    };
+                    console.log("갱신 이메일 : ", data);
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/notifications/email/auth",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        console.log("이메일 전송 완료 : ", success);
+                    }).fail(function (fail) {
+                        swal({
+                            text: "<%= __('common.errorMessage.serverError') %>",
+                            button: "<%= __('common.buttons.button10') %>"
+                        });
+                    })
+
+                }
+
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            })
+        }
+
+        if (Object.keys(pointReq).length > 0) {
+            $.ajax({
+                method: "PUT",
+                url: "/v1/points/" + pointId,
+                data: pointReq
+            }).done(function (success) {
+                console.log("pointReq : ", success);
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            })
+        }
+
+        if (Object.keys(coinReq).length > 0) {
+            $.ajax({
+                method: "PUT",
+                url: "/v1/coins/" + coinId,
+                data: coinReq
+            }).done(function (success) {
+                console.log("coinReq : ", success);
+            }).fail(function (fail) {
+                swal({
+                    text: "<%= __('common.errorMessage.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            })
+        }
+        swal("<%= __('page.myInfo.validation.alert11') %>",{
+            button: "<%= __('common.buttons.button10') %>"
+        }).then((value)=>{
+            location.href = "/myPages/myInfo"
+        });
+    }
+
+    function withdraw() {
+        if(total_mach > 0) {
+            swal("<%= __('page.myInfo.validation.alert12') %>",{
+                button: "<%= __('common.buttons.button10') %>"
+            }).then((value)=>{
+                location.href = "/accounts/withdraw"
+            });
+            return;
+        }
+
+        swal("<%= __('page.sell.game.detail.validation.alert1') %>", {
+            buttons: {
+                next2: "<%= __('common.buttons.button23') %>",
+                next: "<%= __('common.buttons.button10') %>",
+            }
+        }).then((value) => {
+            if (value == "next2") {
+                return false;
+            } else if (value == "next" && status != 0) {
+                swal({
+                    text: "<%= __('page.sell.game.detail.validation.alert2') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+
+            } else {
+                let id = "<%= id %>";
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/users/" + id
+                }).done(function (success) {
+                    location.href = "/logout"
+                }).fail(function (fail) {
+                    swal({
+                        text: "<%= __('common.errorMessage.deleteError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                });
+
+            }
+
+        })
+    }
+
+    function checkAddress(coinType, address) {
+        if (coinType == 'ether') {
+            if (address != "") {
+                if (!web3.isAddress(address)) {
+                    //alert('Invaild Wallet Address. Please re-enter it.');
+                    console.log('Invaild Wallet Address.');
+                    ethValidedAddress = false;
+                    $("#ethAddressValidation").css("display", "");
+                    return;
+                } else {
+                    ethValidedAddress = true;
+                    $("#ethAddressValidation").css("display", "none");
+                }
+            } else {
+                ethValidedAddress = true;
+                $("#ethAddressValidation").css("display", "none");
+            }
+        } else if (coinType == 'btc') {
+            //btc 주소 조회 ajax call
+            // 유효하지 않는 경우 btcValidedAddress = true; 처리
+            if (address != "") {
+                btcValidedAddress = false;
+                $.ajax({
+                    method: "GET",
+                    url: "/v1/users/btcAddress/" + address
+                }).done(function (success) {
+                    if (success.data) {
+                        btcValidedAddress = true;
+                        $("#btcAddressValidation").css("display", "none");
+                    } else {
+                        btcValidedAddress = false;
+                        $("#btcAddressValidation").css("display", "");
+                    }
+                }).fail(function (fail) {
+                    swal({
+                        text: "<%= __('common.errorMessage.serverError') %>",
+                        button: "<%= __('common.buttons.button10') %>"
+                    });
+                });
+            }else if(address==""){
+                $("#btcAddressValidation").css("display","none");
+                btcValidedAddress=true;
+            }
+
+        } else if (coinType == 'mach') {
+            if (address != "") {
+                if (!web3.isAddress(address)) {
+                    //alert('Invaild Wallet Address. Please re-enter it.');
+                    console.log('Invaild Wallet Address.');
+                    machValidedAddress = false;
+                    $("#machAddressValidation").css("display", "");
+                    return;
+                } else {
+                    machValidedAddress = true;
+                    $("#machAddressValidation").css("display", "none");
+                }
+            } else {
+                machValidedAddress = true;
+                $("#machAddressValidation").css("display", "none");
+            }
+        }
+    }
+
+    function alertMessage() {
+        swal({
+            text: "준비중입니다.",
+            button: "<%= __('common.buttons.button10') %>"
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var pointId = "<%=pointId%>";
+        var total_point = 0;
+        var price = 0;
+        var fee = "<%=fee%>";
+        
+        $(document).ready(function() {
+            $('#amount').on('keyup',function(e) {
+                if($('#amount').val() != "") {
+                    calculate();
+                }
+            })
+
+            $('#amount').on("keydown", function(e){
+                /* e(지수), .(소수점) -(마이너스) 예외처리 */
+                if(e.keyCode == 69 || e.keyCode == 189){
+                    return false;
+                }
+            });
+            
+            $("#confirmWithdraw").on("click", function() {
+                reqWithdraw();
+            });
+
+            getPoint();
+            getPointHistory('withdraw');
+        });
+
+        function getPoint() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/points/" + pointId
+            }).done(function (success) {
+                if (success.data.total_point != null) {
+                    total_point = success.data.total_point;
+                    $("#point").html(numberWithCommas(success.data.total_point) + "<span>Point</span>");
+                    $("#my_amount").text(numberWithCommas(success.data.total_point));
+                    $("#total_amount").text(numberWithCommas(success.data.total_point));
+                } else {
+                    $("#point").html("0<span>Point</span>");
+                    $("#my_amount").text("0");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getPointHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/point/historys/" + pointId + "/" + trade_type
+            }).done(function (success) {
+                //console.log(success.data);
+                var pointHistorys = success.data;
+                var result = ""
+                if(pointHistorys.length == 0) {
+                    result = "<tr><td colspan='2'>내역이 존재하지 않습니다.</td></tr>";
+                }
+
+                for(var i=0;i<pointHistorys.length;i++) {
+                    var amount = numberWithCommas(pointHistorys[i].amount);
+                    var currencyCode = pointHistorys[i].amountCurrency;
+                    var point = numberWithCommas(pointHistorys[i].point);
+                    var status = pointHistorys[i].status == true ? '출금 완료' : '출금 대기';
+                    var regDate = pointHistorys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc3">'+point+'<span>Point</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var point = Number($("#amount").val());
+            var fee_amount = parseInt((point * fee).toFixed());            
+            var data;
+            price = point - fee_amount;
+            data = point + " Point = " + price + " KRW ("+(fee * 100)+"% 수수료 차감)";
+            $("#calculate").text(data);
+            $("#withdraw_amount").html(point+"<span>Point</span>");
+            $("#exchange_amount").html(price+"<span>KRW</span>");
+            $("#minus_amount").text(numberWithCommas(point));
+            $("#total_amount").text(numberWithCommas(total_point - point));
+        }
+
+        function reqWithdraw() {  
+            // alert("준비중입니다.");
+            // return;
+
+            if($("#withdrawType").val() == "") {
+                alert("출금 방법을 선택하세요.");
+                return;
+            }
+
+            if($("#bank_account_type").val() == "") {
+                alert("이체 은행을 선택하세요.");
+                return;
+            }
+
+            if($("#bank_account").val() == "") {
+                alert("계좌 번호를 입력 하세요.");
+                return;
+            }
+
+            if($("#amount").val() == "") {
+                alert("출금 금액을 입력하세요.");
+                return;
+            }
+
+            if($("#amount").val() > 100000) {
+                alert("출금 금액은 100,000KRW 까지만 가능합니다.");
+                return;
+            }
+
+            var confirmYn = confirm("출금을 요청 하시겠습니까?");
+            if(confirmYn) {
+                var data = {
+                    "userId": userId,
+                    "amount": Number($("#amount").val()),
+                    "extType":$("#withdrawType").val(),
+                    "type":"withdraw",
+                    "amountCurrency":"KRW",
+                    "bankAccountType": $("#bank_account_type").val(),
+                    "bankAccount": $("#bank_account").val()
+                };
+
+                console.log(data);
+
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/points/" + pointId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    console.log(success.data);
+                    alert(success.data.msg);
+                    if(success.data.code == "Success") {
+                        location.href = "/mypages/point/withdraw";
+                    } 
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">포인트관리 <span>포인트 출금</span></h1>
+                        <div class="point_box">
+                            <div class="pb_inner cf">
+                                <div class="paint_point">
+                                    <em>P</em>
+                                </div>
+                                <div class="pb_center">
+                                    <div>
+                                        <em>나의 포인트 잔액</em>
+                                        <p class="fc3" id="point">0 <span>Point</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">출금하기</h2>
+                        <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="withdraw_amount">0<span>Point</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>KRW</span></em>                                        
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>출금 방법</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" id="withdrawType">
+                                                <!-- <option value="coinNotSelected">코인선택</option> -->
+                                                    <option value="bank_account" selected>계좌 이체</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ 출금할 포인트 선택(1Point = 1KRW)</span>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th>이체 은행</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" id="bank_account_type">
+                                                    <option value="">선택</option>
+                                                    <option value="KB국민은행">KB국민은행</option>
+                                                    <option value="SC제일은행">SC제일은행</option>
+                                                    <option value="경남은행">경남은행</option>
+                                                    <option value="광주은행">광주은행</option>
+                                                    <option value="기업은행">기업은행</option>
+                                                    <option value="농협">농협</option>
+                                                    <option value="대구은행">대구은행</option>
+                                                    <option value="부산은행">부산은행</option>
+                                                    <option value="산업은행">산업은행</option>
+                                                    <option value="새마을금고">새마을금고</option>
+                                                    <option value="수협">수협</option>
+                                                    <option value="신한은행">신한은행</option>
+                                                    <option value="신협">신협</option>
+                                                    <option value="우리은행">우리은행</option>
+                                                    <option value="우체국">우체국</option>
+                                                    <option value="전북은행">전북은행</option>
+                                                    <option value="카카오뱅크">카카오뱅크</option>
+                                                    <option value="케이뱅크">케이뱅크</option>
+                                                    <option value="KEB하나은행">KEB하나은행</option>
+                                                    <option value="한국씨티은행">한국씨티은행</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ 이체 은행 선택</span>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th>계좌 번호</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <input type="text" class="form-control" id="bank_account" min="0" value="" placeholder="계좌번호 입력">
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ 계좌 번호 입력</span>
+                                        </td>
+                                    </tr> 
+                                    <tr>
+                                        <th>출금 금액</th>
+                                        <td>
+                                            <input type="number" class="form-control" id="amount" min="0" value="0" placeholder="금액 입력">
+                                            <br class="mob_br"><span class="fcrd">※ 출금을 원하는 포인트 금액</span>
+                                        </td>
+                                    </tr>                  
+                                    <tr>
+                                        <th>자동계산</th>
+                                        <td><em id="calculate">0 Point = 0 KRW</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap">
+                            <h2 class="tit_mypage dot_tit">결제정보</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>나의 포인트 잔액</th>
+                                        <td><span id="my_amount">0</span> Point</td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico minus">-</em> <span id="minus_amount">0</span> Point
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 후 나의 포인트 잔액</th>
+                                        <td><span id="total_amount">0</span> Point</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmWithdraw">출금요청</button>
+                            </div>                            
+                        </div>
+                        <h2 class="tit_mypage">포인트 출금 내역</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>출금액</th>
+                                        <th>처리상태</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>

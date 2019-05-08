@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Album example for Bootstrap</title>
+
+      <!-- 부트스트랩 -->
+      <link href="/bootstrap_css/bootstrap.css" rel="stylesheet">
+      <link href="/stylesheets/style.css" rel="stylesheet">
+
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+      <script src="/chart/Chart.js"></script>
+
+    <script>
+        var data = [{
+            "date":"24-Apr-07",
+            "close":"77.24"
+        },{
+            "date":"25-Apr-07",
+            "close":"69.24"
+        },{
+            "date":"26-Apr-07",
+            "close":"90.24"
+        },{
+            "date":"27-Apr-07",
+            "close":"63.24"
+        },{
+            "date":"28-Apr-07",
+            "close":"99.24"
+        }
+        ];
+
+        // 250x250 의 <svg id="graphWrap"></svg> 를 div.graph 에 추가
+        $(document).ready(function() {
+            //renderD3Chart();
+            renderChartJs();
+        });
+
+        function renderD3Chart() {
+            var w = 500, h = 500;
+            d3.select(".graph")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .attr("id", "graphWrap");
+            var svg = d3.select("#graphWrap"),
+                margin = {top: 20, right: 20, bottom: 30, left: 50},
+                width = w - margin.left - margin.right,
+                height = h - margin.top - margin.bottom,
+                g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var parseTime = d3.timeParse("%d-%b-%y");
+
+            var x = d3.scaleTime()
+                .rangeRound([0, width]);
+
+            var y = d3.scaleLinear()
+                .rangeRound([height, 0]);
+
+            var area = d3.line()
+                .x(function(d) { return x(parseTime(d.date)); })
+                .y(function(d) { return y(d.close); })
+                .curve(d3.curveMonotoneX);
+
+            x.domain(d3.extent(data, function (d) {
+                return parseTime(d.date);
+            }));
+            y.domain([0, d3.max(data, function (d) {
+                return d.close;
+            })]);
+            //area.y0(y(0));
+
+            g.append("path")
+                .datum(data)
+                .attr("class", "line")
+                .attr("d", area);
+
+            g.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            g.append("g")
+                .call(d3.axisLeft(y))
+                .append("text")
+                .attr("fill", "#000")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", "0.71em")
+                .attr("text-anchor", "end")
+                .text("Price ($)");
+        }
+
+        function renderChartJs() {
+            var ctx1 = document.getElementById("chart_div1").getContext('2d');
+            var ctx2 = document.getElementById("chart_div2").getContext('2d');
+
+            var labels = data.map(function(e){
+                return e.date;
+            });
+            var values = data.map(function(e){
+                return e.close;
+            });
+
+            var myChart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var myChart1 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    </script>
+  </head>
+
+  <body>
+
+  <header>
+      <a href="#">BitWeb</a>
+  </header>
+
+    <main role="main">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          GTC Image
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="card mb-6 shadow-sm">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+            <div class="col-md-6">
+              <div class="card mb-6 shadow-sm">
+                  <canvas id="chart_div1"></canvas>
+              </div>
+            </div>
+          </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-6 shadow-sm">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-6 shadow-sm">
+                        <canvas id="chart_div2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-white">
+      <div class="container">
+        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+        <p>getting started guide.</p>
+      </div>
+    </footer>
+
+  </body>
+</html>

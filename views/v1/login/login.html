@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/login/login.css" rel="stylesheet">
+</head>
+
+<body class="background3">
+<header class="header_area" id="header">
+</header>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+            <div class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-32 text-white">
+						<i class="fa fa-user"></i>&nbsp;&nbsp;<%= __('page.login.bigTitle') %>
+					</span>
+
+                <span class="txt1 p-b-11 text-white">
+						<%= __('page.login.title1') %>
+					</span>
+                <div class="wrap-input100 validate-input m-b-36" data-validate="Username is required">
+                    <input class="input100" type="text" name="id" id="userId">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span class="txt1 p-b-11 text-white">
+						<%= __('page.login.title2') %>
+					</span>
+                <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
+                    <input class="input100" type="password" name="password" id="password" onkeyup="enterkey()">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <!--<div class="flex-sb-m w-full p-b-48">-->
+                    <!--<div class="contact100-form-checkbox">-->
+                        <!--<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">-->
+                        <!--<label class="label-checkbox100 text-white" for="ckb1">-->
+                            <!--<%= __('page.login.title2Checkbox') %>-->
+                        <!--</label>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <div class="d-flex justify-content-center container-login100-form-btn mb-5">
+                    <button class="login100-form-btn" onclick="login()">
+                        <%= __('common.buttons.button13') %>
+                    </button>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline text-center">
+                    <a class="col-lg-4 col-md-4 col-sm-12 text-white mb-1" href="/signup"><%= __('common.buttons.button14') %></a>
+                    <a href="/findId" class="col-lg-4 col-md-4 col-sm-12 text-white mb-1"><%= __('common.buttons.button15') %></a>
+                    <a href="/findPassword" class="col-lg-4 col-md-4 col-sm-12 text-white"><%= __('common.buttons.button16') %></a>
+                </div>
+                <!--<div class="d-flex justify-content-center col-12" style="text-align: center;">-->
+                <!--<a class="col-4 text-white" href="/signup">Register</a>|<a href="/findId" class="col-4 text-white">Find ID</a>|<a href="/findPassword" class="col-4 text-white">Find Password</a>-->
+                <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+    });
+
+    function login() {
+        let id = $("#userId").val();
+        let password = $("#password").val();
+        let data = {
+            "userTag": id,
+            "password": password
+            // "country": $('[name=country]').val()
+        };
+
+        if($("input:checkbox[name='remember-me']").is(":checked")==true){
+            console.log("됨")
+            data["remember"]=true;
+        }else{
+            data["remember"]=false;
+        }
+
+        console.log("data : ",data);
+        $.ajax({
+            method: "POST",
+            url: "/v1/users/login",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data)
+
+        }).done(function (success) {
+            location.href='/';
+        }).fail(function (fail) {
+            if (fail.status == 403) {
+                swal({
+                    text: "<%= __('page.login.alert2') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            } else {
+                swal({
+                    text: "<%= __('page.login.serverError') %>",
+                    button: "<%= __('common.buttons.button10') %>"
+                });
+            }
+
+        })
+    }
+
+    function enterkey(){
+        if(window.event.keyCode==13){
+            login();
+        }
+    }
+</script>
+</body>
+</html>

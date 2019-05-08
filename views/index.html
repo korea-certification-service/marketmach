@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Mach Exchange</title>
+
+    <!-- 부트스트랩 -->
+    <link href="/bootstrap_css/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+    <script src="/chart/Chart.js"></script>
+
+    <script>
+        var data = [{
+            "date":"24-Apr-07",
+            "close":"77.24"
+        },{
+            "date":"25-Apr-07",
+            "close":"69.24"
+        },{
+            "date":"26-Apr-07",
+            "close":"90.24"
+        },{
+            "date":"27-Apr-07",
+            "close":"63.24"
+        },{
+            "date":"28-Apr-07",
+            "close":"99.24"
+        }
+        ];
+
+        // 250x250 의 <svg id="graphWrap"></svg> 를 div.graph 에 추가
+        $(document).ready(function() {
+            $('#header').load('/header');
+            $('#search').load('/search');
+            $('#footer').load('/footer');
+            renderChartJs();
+        });
+
+
+        function renderChartJs() {
+            var ctx1 = document.getElementById("chart_div1").getContext('2d');
+            var ctx2 = document.getElementById("chart_div2").getContext('2d');
+
+            var labels = data.map(function(e){
+                return e.date;
+            });
+            var values = data.map(function(e){
+                return e.close;
+            });
+
+            var myChart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var myChart1 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        fill: false,
+                        //backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255,99,132,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="header"></div>
+<div id="search"></div>
+<main role="main">
+    <img class="main-img" src="image/gt_image.png">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6 shadow-sm">
+                    <table class="table table-striped table-blue-black">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-6 shadow-sm">
+                    <canvas id="chart_div1"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6 shadow-sm">
+                    <table class="table table-striped table-blue-black">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-6 shadow-sm">
+                    <canvas id="chart_div2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="footer"></div>
+
+</body>
+</html>

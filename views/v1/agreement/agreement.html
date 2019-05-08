@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mach Exchange</title>
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/stylesheets/header.css" rel="stylesheet">
+    <link href="/css/others/util.css" rel="stylesheet">
+    <link href="/css/others/main.css" rel="stylesheet">
+    <link href="/css/others/icon-font.min.css" rel="stylesheet">
+    <link href="/css/custom/common.css" rel="stylesheet">
+
+    <link href="/css/custom/agreement/agreement.css" rel="stylesheet">
+
+    <script src="/blockchain/web3.min.js"></script>
+    <script src="/blockchain/truffle-contract.js"></script>
+</head>
+<body class="background3">
+<header class="header_area" id="header">
+</header>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+					<span class="login100-form-title p-b-32 text-white">
+						<i class="fa fa-user"></i>&nbsp;&nbsp;<%= __('page.adult.bigTitle') %>
+					</span>
+            <div id="part1">
+                <span class="txt1 p-b-11 text-white">
+						<%= __('page.adult.title1') %>
+					</span>
+                <div class="wrap-input100 validate-input m-b-12">
+                    <textarea rows="10" readonly style="color:white;padding:10px;"><%= __('page.adult.title1Content') %>
+                    </textarea>
+                </div>
+
+                <div class="flex-sb-m w-full p-b-48">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb2" type="checkbox">
+                        <label class="label-checkbox100 text-white" for="ckb2">
+                            <%= __('page.adult.title1Checkbox') %>
+                        </label>
+                    </div>
+
+                </div>
+                <form id="reqForm" method="post" target="TheWindow">
+                <div class="d-flex justify-content-center container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="validateAdult()">
+                        <%= __('common.buttons.button30') %>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="dorne-footer-area">
+</footer>
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap-4 js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/others/plugins.js"></script>
+<!-- Active JS -->
+<script src="/js/active.js"></script>
+<script>
+    var popup;
+
+    $(document).ready(function () {
+        $(".header_area").load("/header");
+        $(".dorne-footer-area").load("/footer");
+        $("#part2").hide();
+
+    });
+
+    function validateAdult() {
+        event.preventDefault();
+        console.log("준비중");
+        if(!$('#ckb2').prop('checked')) {
+            alert("성인 인증 내용 동의에 체크해 주세여.");
+            return;
+        }
+
+        $('#reqForm').attr('action',"<%= danal_url%>/UAS/Web/Ready.php");
+        popup = window.open('', 'TheWindow');
+        $('#reqForm').submit();
+        chk_popup();
+    }
+
+    function chk_popup() {
+        if(typeof(popup)=='undefined' || popup.closed) {
+            alert('인증이 취소 되었습니다.');
+        } else {
+            setTimeout("chk_popup();",1000);
+        }
+    }
+
+    window.addEventListener('message', function(event) {
+        if(event.origin.indexOf('http://52.78.144.116') > -1){
+            /* 전달받은 event.data 를 가지고 원하는 추가 액션 수행 */
+            //updatePoint();
+            alert("완료");
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+#list-container{
+    min-height:545px;
+}
+#hasNoItem{
+    min-height:600px;
+    padding-top:100px;
+}
+.form-inline .form-control{
+    width:100%!important
+}
+@media (max-width:414px){
+    #list-container{
+        min-height:500px;
+    }
+    #hasNoItem{
+        min-height:400px;
+        padding-top:50px;
+    }
+    .dorne-welcome-area{
+        height:745px;
+    }
+}
