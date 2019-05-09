@@ -391,9 +391,9 @@ router.post('/happymoney/balance', function(req, res, next) {
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create());
         } else {
-            console.log('error = ', error);
+            console.log('error = ', response.statusCode);
             bitwebResponse.code = 500;
-            bitwebResponse.message = error;
+            bitwebResponse.message = response;
             res.status(500).send(bitwebResponse.create())
         }
     });
