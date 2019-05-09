@@ -276,7 +276,106 @@
             console.log("fileUploadAction");
             $("#input_imgs").trigger('click');
         }
+
+        function handleImgFileSelect(e) {
+            var $spinner = $("#ajaxSpiner");
+            $spinner.show(); // spinner
+            var pos = $("#spinnerTarget").offset().top - 100;
+            $("html, body").animate({
+                "scrollTop":pos
+            },0);
+
+            // 이미지 정보들을 초기화
+            sel_files = [];
+            $(".imgs_wrap").empty();
     
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+    
+            if(filesArr.length > 5){
+                alert('이미지 업로드는 5개까지 가능합니다.');
+                $spinner.hide(); // spinner
+                return;
+            }
+    
+            var index = 0;
+            filesArr.forEach(function(f, idx) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    $spinner.hide(); // spinner
+                    return;
+                }
+
+                var reader = new FileReader();
+                var image  = new Image();
+    
+                reader.readAsDataURL(f);
+                reader.onload = function(_file) {
+                    image.src    = _file.target.result;
+                    image.onload = function() {
+                        var w = this.width,
+                            h = this.height,
+                            t = f.type,                           // ext only: // file.type.split('/')[1],
+                            n = f.name,
+                            s = ~~(f.size / 1024) + 'KB';
+
+                        var fileType = f.type;
+                        var fileExte = f.name.split(".")[1];
+                        var resultImg = loadImage(
+                            _file.target.result, //fileOrBlobOrUrl,
+                            function (img, data) {
+                                console.log("data: ", img, data); // requires exif extension
+                                
+                                // 이미지 업로드 실행
+                                img.toBlob(function(blob){
+                                    var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+                                    
+                                    sel_files.push({
+                                        "name": "img_id_"+index,
+                                        "value": createdFile
+                                    });
+                                    
+                                   //console.log(createdFile)
+                                });
+       
+                                var thumnail = new Image();
+                                    thumnail.id = "pic"
+                                    thumnail.src = img.toDataURL();
+
+                                // 풀이미지 썸네일 로직 추가
+                                if(idx === 0) {
+                                    document.getElementById("fullImg").appendChild(thumnail);
+                                }
+
+                                var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
+                                    html += '<div class="img_view_area">';
+                                    html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
+                                    html += '</div>';
+                                    html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                                    html += '</div>';
+                                                        
+                                $(".imgs_wrap").append(html);
+                                
+                            },
+                            { maxWidth: 900, orientation: true }
+                        );
+                    
+                        console.log("resultImg:", resultImg)
+
+                        index++;
+
+                        if(filesArr.length === index) {
+                            $spinner.hide(); // spinner
+                        }
+                    }
+                }
+
+            });
+
+            //console.log(filesArr[0])
+        }
+
+/* 기존 로직임, 파일업로드 구현후 삭제할것  
         function handleImgFileSelect(e) {
     
             // 이미지 정보들을 초기화
@@ -347,7 +446,8 @@
 
             //console.log(filesArr[0])
         }
-    
+
+*/    
         function deleteImageAction(index) {
             console.log("index : "+index);
             var findIndex = -1;
