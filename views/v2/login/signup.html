@@ -184,6 +184,7 @@
                     });
                 } else {
                     alert(success.data.msg);
+                    $('#signup').prop('disabled', false);
                 }
             })
             .fail(function (fail) {
