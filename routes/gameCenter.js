@@ -8,6 +8,7 @@ var controllerUsers = require('../controllers/users');
 var controllerGameCenter = require('../controllers/gameCenter');
 
 router.post('/login', function (req, res, next) {
+    let head = JSON.parse(req.headers.head);
     let body = JSON.parse(req.body.body);
 
     if (body.UserID != null && body.UserPW != null) {
@@ -15,6 +16,10 @@ router.post('/login', function (req, res, next) {
         let country = dbconfig.country;
         let userID = body.UserID;
         let ingameCoin = body.IngameCoin;
+        let lastStageLevel = body.LastStageLevel;
+        let isLastStage = body.IsLastStage;
+        let userRecordInfo = body.StagePlayInfoList;
+        let service = body.service;
         let resSessionToken = util.makeToken();
         let checkmd5 = req.body.check;
         
@@ -52,6 +57,18 @@ router.post('/login', function (req, res, next) {
                             let updateData = {"gameCenterId": gameCenter._doc._id, "sessionToken": resSessionToken};
                             controllerUsers.updateByUserTag(country, userID, updateData)
                                 .then(() => {
+                                    if(parseInt(head.Cn) > 2) {
+                                        let recordInfo = {
+                                            "gameCenterId": gameCenter._doc._id,
+                                            "service": service,
+                                            "lastStageLevel": lastStageLevel,
+                                            "isLastStage": isLastStage,
+                                            "userRecordInfo": userRecordInfo
+                                        }
+
+                                        controllerGameCenter.updateRecord(country, recordInfo);
+                                    }
+
                                     let result = {
                                         "ConnectStatus": 200,
                                         "UserID": user._doc.userTag,
@@ -74,6 +91,18 @@ router.post('/login', function (req, res, next) {
                             let updateData = {"sessionToken": resSessionToken};
                             controllerUsers.updateByUserTag(country, userID, updateData)
                                 .then(() => {
+                                    if(parseInt(head.Cn) > 2) {
+                                        let recordInfo = {
+                                            "gameCenterId": gameCenter._doc._id,
+                                            "service": head.Service,
+                                            "lastStageLevel": lastStageLevel,
+                                            "isLastStage": isLastStage,
+                                            "userRecordInfo": userRecordInfo
+                                        }
+
+                                        controllerGameCenter.updateRecord(country, recordInfo);
+                                    }
+
                                     let result = {
                                         "ConnectStatus": 200,
                                         "UserID": user._doc.userTag,

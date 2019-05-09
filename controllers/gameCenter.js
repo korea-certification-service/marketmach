@@ -49,7 +49,20 @@ function addHistory(country, data) {
     })
 }
 
+function updateRecord(country, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.updateRecord(data))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 exports.add = add;
 exports.getByUserId = getByUserId;
 exports.update = update;
 exports.addHistory = addHistory;
+exports.updateRecord = updateRecord;

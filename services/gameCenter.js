@@ -1,5 +1,6 @@
 var GameCenter = require('../libs/gameCenter');
 var GameCenterHistory = require('../libs/gameCenterHistorys');
+var GameCenterRecord = require('../libs/gameCenterRecords');
 
 function add(data) {
     return new Promise((resolve, reject) => {
@@ -69,7 +70,59 @@ function addHistory(data) {
     })
 }
 
+function updateRecord(data) {
+    return new Promise((resolve, reject) => {
+        GameCenterRecord.findOneAndUpdate(
+        {
+            "service": data.service
+        },
+        {
+            $set: data
+        },
+        {upsert: false, new: true},
+        function (err, result) {
+            if (err) {
+                console.error(err)
+                reject(err)
+            }
+
+            if(result == null) {
+                var gameCenterRecord = new GameCenterRecord(data)
+                gameCenterRecord.save(function (err, result) {
+                    if (err) {
+                        reject(err);
+                        return;
+                    } else {
+                        console.log('add done: ' + result)
+                        resolve(result)
+                        return;
+                    }
+                })
+            }
+            
+            console.log('updateRecord done: ' + result)
+            resolve(result)
+        })
+    })
+}
+
+function addRecord(data) {
+    return new Promise((resolve, reject) => {
+        console.log(data)
+        var gameCenter = new GameCenter(data)
+        gameCenter.save(function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log('add done: ' + result)
+                resolve(result)
+            }
+        })
+    })
+}
+
 exports.add = add;
 exports.getByUserId = getByUserId;
 exports.update = update;
 exports.addHistory = addHistory;
+exports.updateRecord = updateRecord;
