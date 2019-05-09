@@ -333,9 +333,12 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 .primezone_sec > h1{padding: 20px 0; font-size: 18px; text-align: center; }
 .primezone_sec > h1 .crown{display: inline-block; width: 60px; height: 27px; background: url(/static/img/main/ico_prime.png) 50% 100% no-repeat; background-size: 36px 20px;}
 .primezone_sec > h1 button{float: right;}
-.primezone_sec .slick_primezone{padding-bottom: 50px;}
-.primezone_sec .slick_primezone .card_ui{margin: auto;width: 246px;height: 150px;background: #fff;}
+.primezone_sec .slick_primezone{padding-bottom: 50px; text-align: center;}
+.primezone_sec .slick_primezone .img_monkey{text-align: center; margin-bottom: -10px; width: 44px;}
+.primezone_sec .slick_primezone .card_ui{margin: auto;width: 246px;height: 150px;background: #fff; text-align: left;}
 .primezone_sec .slick_primezone .card_ui dt{float: left; height: 100%; padding-top: 35px; width:30px; text-align:center; font-size: 16px;  }
+.primezone_sec .slick_primezone .card_ui dt.bgc1{}
+.primezone_sec .slick_primezone .card_ui dt.bgc3{}
 .primezone_sec .slick_primezone .card_ui dd{float: left;height: 100%;}
 .primezone_sec .slick_primezone .card_ui dd > a{display: block;}
 .primezone_sec .slick_primezone .card_ui dd li{margin: 4px;}
@@ -534,7 +537,7 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
     .primezone_sec{min-height: 210px;}
     .primezone_sec > h1{padding: 15px 0;}
     .primezone_sec .primezone_arrow > div{top: 95px;}
-    .primezone_sec .slick_primezone{padding-bottom: 0;}
+    .primezone_sec .slick_primezone{padding-bottom: 10px;}
     .primezone_sec .slick_primezone .card_ui{height: 130px;}
     .primezone_sec .slick_primezone .card_ui dt{padding-top: 25px;}
     .primezone_sec .slick_primezone .card_ui dd li:nth-child(1) strong{font-size: 20px;}

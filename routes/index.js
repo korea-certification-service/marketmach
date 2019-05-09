@@ -54,6 +54,17 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
     // });
 });
 
+router.get('/nodev_index', function (req, res, next) {
+    res.render('v2/main/nodev_index', {
+        title: 'Bitweb Main',
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain
+    });
+});
+
 router.get('/main', function (req, res, next) {
     // console.log("session => ",req.session);
     // console.log("cookei => ",req.cookies);
