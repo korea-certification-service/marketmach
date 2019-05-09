@@ -8,7 +8,7 @@ var controllerUsers = require('../controllers/users');
 var controllerGameCenter = require('../controllers/gameCenter');
 
 router.post('/login', function (req, res, next) {
-    let head = JSON.parse(req.headers.head);
+    let head = JSON.parse(req.body.head);
     let body = JSON.parse(req.body.body);
 
     if (body.UserID != null && body.UserPW != null) {
