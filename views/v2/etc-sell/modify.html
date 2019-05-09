@@ -142,7 +142,12 @@
         var itemGameServer;
     
         $(document).ready(function() {
-            $("#input_imgs").on("change", handleImgFileSelect);
+            var agent = navigator.userAgent.toLowerCase();
+            if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+                $("#input_imgs").on("change", handleImgFileSelectForIE);
+            } else {
+                $("#input_imgs").on("change", handleImgFileSelect);
+            }
 
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
@@ -375,8 +380,7 @@
             //console.log(filesArr[0])
         }
 
-/* 기존 로직임, 파일업로드 구현후 삭제할것  
-        function handleImgFileSelect(e) {
+        function handleImgFileSelectForIE(e) {
     
             // 이미지 정보들을 초기화
             sel_files = [];
@@ -446,8 +450,7 @@
 
             //console.log(filesArr[0])
         }
-
-*/    
+   
         function deleteImageAction(index) {
             console.log("index : "+index);
             var findIndex = -1;
