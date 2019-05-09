@@ -93,16 +93,6 @@
                                         <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
                                         <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
                                         <input type="file" id="input_imgs" multiple/>
-
-                                        <input type="text">
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지1</button>
-                                        <input type="text">
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지2</button>
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지3</button>
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지4</button>
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지5</button>
-                                        <input type="file" id="input_imgs" multiple/>
-
                                     </div>
                                 </td>
                             </tr>
@@ -231,17 +221,7 @@
             console.log("fileUploadAction");
             $("#input_imgs").trigger('click');
         }
-
-        function handleImgFileSelect(e) {
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
-
-
-
-        }
-
-/*    
+    
         function handleImgFileSelect(e) {
             var $spinner = $("#ajaxSpiner");
             $spinner.show(); // spinner
@@ -376,7 +356,6 @@
             //console.log(filesArr[0])
         }
 
-*/
         function deleteImageAction(index) {
             console.log("index : "+index);
             var findIndex = -1;

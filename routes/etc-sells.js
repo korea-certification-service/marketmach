@@ -100,4 +100,15 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
     }
 });
 
+router.get('/registers', sessionChecker.sessionChecker2, function (req, res, next) {
+    // res.render('etc-sell/register', {title: 'Bitweb Main', userTag: req.session.userTag, country:req.session.country,
+    //     usePoint:dbconfig.usePoint,
+    //     useBlockchain:dbconfig.useBlockchain});
+    res.render('v2/etc-sell/test_register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
+        userTag: req.session.userTag, country:req.session.country,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain});
+});
+
 module.exports = router;
