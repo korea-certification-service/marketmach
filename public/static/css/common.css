@@ -276,9 +276,10 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 .visual_wrap .visual_sec .slick_visual .slick-arrow{display: none !important; z-index:1; position: absolute; bottom: 30px; left: 50%; width: 20px; height: 40px; text-indent: -99999px;}
 .visual_wrap .visual_sec .slick_visual .slick-prev{margin-left: -500px; background: url() 50% 50% no-repeat;}
 .visual_wrap .visual_sec .slick_visual .slick-next{margin-left: 500px; background: url() 50% 50% no-repeat;}
-.visual_wrap .visual_sec .slick_visual .slick-dots{position: absolute; z-index: 2; bottom: 0; left: 50%; margin-bottom: 20px; margin-left: -50px; width: 150px;  text-align: center;}
+.visual_wrap .visual_sec .slick_visual .slick-dots{position: absolute; z-index: 2; bottom: 15px; left: 50%; margin-left: -75px; width: 150px;  text-align: center;}
 .visual_wrap .visual_sec .slick_visual .slick-dots li{display: inline-block;}
-.visual_wrap .visual_sec .slick_visual .slick-dots li button{margin-right: 10px; width: 20px; height: 20px; background-color: #fff; border-radius: 50% 50%; border:none; text-indent: -99999px; border: 1px solid #000;}
+.visual_wrap .visual_sec .slick_visual .slick-dots li button{margin-left: 10px; width: 20px; height: 20px; background-color: #fff; border-radius: 50% 50%; border:none; text-indent: -99999px; border: 1px solid #000;}
+.visual_wrap .visual_sec .slick_visual .slick-dots li:first-child button{margin-left: 0;}
 .visual_wrap .visual_sec .slick_visual .slick-dots li.slick-active button{background-color: red;}
 /* fadein / out시 a태그 클릭 중복되지 않게 */
 .visual_wrap .visual_sec .slick_visual .slick-slide{visibility: hidden;}
@@ -533,6 +534,7 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
     .visual_wrap .visual_sec .slick_visual .slick-list .slick-track .slick-slide img{max-width: 100%; width: 100%;}
     .visual_wrap .visual_sec .slick_visual .pc_img{display: none;}
     .visual_wrap .visual_sec .slick_visual .mob_img{display: block;}
+    .visual_wrap .visual_sec .slick_visual .slick-dots{bottom: 5px;}
     /* primezone */
     .primezone_sec{min-height: 210px;}
     .primezone_sec > h1{padding: 15px 0;}

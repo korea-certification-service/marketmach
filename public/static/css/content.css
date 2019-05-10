@@ -203,6 +203,11 @@
     max-width: initial;
     /* transform: translateX(-33.33%); */
 }
+/* 이미지 업로드 : 로직 변경 */
+.btn_img_upload_wrap{font-size: 0;}
+.btn_img_upload_wrap input[type=file] {display: none;}
+.btn_img_upload_wrap .btn{margin: 10px; width: 100px; font-size: 12px; background-color: #dbdbdb;}
+
 /* 테이블 내부 dim처리: 서비스 준비 중입니다. */
 .preparation_dim{position: relative;}
 .preparation_dim > article{position: absolute;  left: 0; display: block; clear: both; width: 100%; background-color: rgba(0, 0, 0, 0.7);}
