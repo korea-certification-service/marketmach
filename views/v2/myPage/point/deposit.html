@@ -60,7 +60,7 @@
                 }
 
                 payKey = success.data.result.payKey;
-                $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + '원');
+                $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + 'Happy Cash');
                 $(".hideBeforeLogin").show();
             }).fail(function (fail) {
                 console.log(fail);
@@ -125,8 +125,9 @@
             fee = $('#depositType').val() == 'bank_account' ? "<%=fee%>" : "<%=happyMoneyFee%>";
             var fee_amount = parseInt((point * fee).toFixed());            
             var data;
+            var strFee = $("#depositType").val() == "happymoney" ? "("+(fee * 100)+"% 전환 수수료 차감)" : "";
             price = point - fee_amount;
-            data = point + " KRW = " + price + " Point";
+            data = point + " KRW = " + price + " Point " + strFee;
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
             $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>KRW</span>");
             $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
@@ -331,11 +332,11 @@
                                                     <div class="dib_220">
                                                         <select class="custom-select" id="happymoneyAmount">
                                                             <option value="">금액 선택</option>
-                                                            <option value="5000" >5000KRW</option>
-                                                            <option value="10000" >10000KRW</option>
-                                                            <option value="30000" >30000KRW</option>
-                                                            <option value="50000" >50000KRW</option>
-                                                            <option value="100000" >100000KRW</option>
+                                                            <option value="5000" >5000 Happy Cash</option>
+                                                            <option value="10000" >10000 Happy Cash</option>
+                                                            <option value="30000" >30000 Happy Cash</option>
+                                                            <option value="50000" >50000 Happy Cash</option>
+                                                            <option value="100000" >100000 Happy Cash</option>
                                                         </select>
                                                     </div>
                                                     <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액</span>
@@ -343,7 +344,7 @@
                                             </tr>                  
                                             <tr class="hideBeforeLogin">
                                                 <th>자동계산</th>
-                                                <td><em id="happymoneyCalculate">0 KRW = 0 Point</em></td>
+                                                <td><em id="happymoneyCalculate">0 Happy Cash = 0 Point</em></td>
                                             </tr>    
                                         </tbody>
                                     </table>
