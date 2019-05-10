@@ -126,7 +126,7 @@
             var fee_amount = parseInt((point * fee).toFixed());            
             var data;
             price = point - fee_amount;
-            data = point + " KRW = " + price + " Point ("+(fee * 100)+"% VAT 포함 차감)";
+            data = point + " KRW = " + price + " Point";
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
             $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>KRW</span>");
             $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
