@@ -96,7 +96,7 @@
                                             <input type="file" id="input_imgs" multiple/>
                                         </div>
                                         <ul class="highligh_list fcrd">
-                                            <li>※ 이미지 업로드 수정 시 기존 업로드한 이미지를 지우고 새로 업로드 해 주시기 바랍니다.</li>
+                                            <li>※ 이미지 업로드 수정 시 기존 업로드한 이미지 포함하여 다시 업로드 하셔야 적용됩니다.</li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -349,7 +349,7 @@
 
                                 // 풀이미지 썸네일 로직 추가
                                 if(idx === 0) {
-                                    document.getElementById("fullImg").appendChild(thumnail);
+                                    $("#fullImg").empty().append(thumnail);
                                 }
 
                                 var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
@@ -471,11 +471,6 @@
             // 풀이미지 썸네일 로직 추가
             var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
             $("#fullImg").html(img1th)
-        }
-
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
         }
 
         function submit() {
