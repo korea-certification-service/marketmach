@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{max-width: 300px}
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="../../../public/static/js/load-image.all.min.js"></script>
+</head>
+<body>
+    <div id="view"></div>
+    <input type="file" name="" id="img">
+    <script>
+    document.getElementById("img").addEventListener("change", function(e) {
+        //console.log(e);
+
+        readURL(this)
+
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                //$('#blah').attr('src', e.target.result);
+                //console.log(e.target.result)
+                
+                //var imgTag = document.createElement("img");
+                //imgTag.setAttribute("src", e.target.result);
+                //document.getElementById("view").appendChild(imgTag)
+
+
+                var resultImg = loadImage(
+                    e.target.result, //fileOrBlobOrUrl,
+                    function (img, data) {
+                        //document.body.appendChild(img);
+                        //console.log("Original image head: ", data.imageHead);
+                        console.log("Exif data: ", data.exif); // requires exif extension
+                        //console.log("IPTC data: ", data.iptc); // requires iptc extension
+
+                        // 적용된 이미지 보이는 로직이 여기 있어야 함
+                        document.getElementById("view").appendChild(img)
+                    },
+                    { maxWidth: 300, canvas: true, pixelRatio: window.devicePixelRatio,orientation: true }
+                );
+               
+                console.log(resultImg)
+                //document.getElementById("view").appendChild(resultImg)
+
+
+            }// end onload
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    </script>
+</body>
+</html>

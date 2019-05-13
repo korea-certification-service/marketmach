@@ -35,14 +35,25 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
 
     console.log('connection IP : ', ip);
 
-    res.render('v2/main/index', {
-        title: 'Bitweb Main',
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain
-    });
+    if(dbconfig.country == "KR") {
+        res.render('v2/main/index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    } else {
+        res.render('v2_en/main/index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    }
 
     // res.render('v2/error/coming_soon', {
     //     title: 'Bitweb Main',
@@ -55,14 +66,25 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
 });
 
 router.get('/nodev_index', function (req, res, next) {
-    res.render('v2/main/nodev_index', {
-        title: 'Bitweb Main',
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain
-    });
+    if(dbconfig.country == "KR") {
+        res.render('v2/main/nodev_index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    } else {
+        res.render('v2_en/main/nodev_index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    }
 });
 
 router.get('/main', function (req, res, next) {
@@ -87,14 +109,25 @@ router.get('/main', function (req, res, next) {
 
      console.log('connection IP : ', ip);
 
-    res.render('v2/main/index', {
-        title: 'Bitweb Main',
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain
-    });
+     if(dbconfig.country == "KR") {
+        res.render('v2/main/index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    } else {
+        res.render('v2_en/main/index', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    }
 
     // res.render('v2/error/coming_soon', {
     //     title: 'Bitweb Main',
@@ -107,19 +140,31 @@ router.get('/main', function (req, res, next) {
 });
 
 router.get('/currency', function (req, res, next) {
-    //res.render('login/findId', {title: 'Bitweb Find ID'});
-    res.render('v2/main/currency', {title: 'Currency',
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain
-    });
+    if(dbconfig.country =="KR") {
+        res.render('v2/main/currency', {title: 'Currency',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    } else {
+        res.render('v2_en/main/currency', {title: 'Currency',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
+    }
 });
 
 router.get('/login', sessionChecker.sessionChecker, function (req, res, next) {
-    //res.render('login/login', {title: 'Bitweb Main'});
-    res.render('v2/login/login', {title: 'Bitweb Main'});
+    if(dbconfig.country =="KR") {
+        res.render('v2/login/login', {title: 'Bitweb Main'});
+    } else {
+        res.render('v2_en/login/login', {title: 'Bitweb Main'});
+    }
 });
 
 router.get('/logout', function (req, res, next) {
@@ -149,13 +194,19 @@ router.get('/page',function(req,res,next){
 });
 
 router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
-    //res.render('login/findId', {title: 'Bitweb Find ID'});
-    res.render('v2/find/findId', {title: 'Bitweb Find ID'});
+    if(dbconfig.country =="KR") {
+        res.render('v2/find/findId', {title: 'Bitweb Find ID'});
+    } else {
+        res.render('v2_en/find/findId', {title: 'Bitweb Find ID'});
+    }
 });
 
 router.get('/findPassword', sessionChecker.sessionChecker, function (req, res, next) {
-    //res.render('login/findPassword', {title: 'Bitweb Find Password'});
-    res.render('v2/find/findPassword', {title: 'Bitweb Find Password'});
+    if(dbconfig.country =="KR") {
+        res.render('v2/find/findPassword', {title: 'Bitweb Find Password'});
+    } else {
+        res.render('v2_en/find/findPassword', {title: 'Bitweb Find Password'});
+    }
 });
 
 router.get('/agreement', function (req, res, next) {
@@ -176,7 +227,11 @@ router.get('/agreement', function (req, res, next) {
         birth: ""
     };    
     
-    res.render('v2/login/agreement', data);
+    if(dbconfig.country =="KR") {
+        res.render('v2/login/agreement', data);
+    } else {
+        res.render('v2_en/login/agreement', data);
+    }
 });
 
 router.get('/signup', function (req, res, next) {
@@ -208,11 +263,19 @@ router.get('/signup', function (req, res, next) {
         controllerUsers.getByPhone(data.country, data.phone) 
         .then((user) => {
             if(user == null) {
-                res.render('v2/login/signup', data);
+                if(dbconfig.country =="KR") {
+                    res.render('v2/login/signup', data);
+                } else {
+                    res.render('v2_en/login/signup', data);
+                }
             } else {
                 data['userTag'] = user._doc.userTag;
                 data['regDate'] = user._doc.regDate;
-                res.render('v2/login/existUser', data);
+                if(dbconfig.country =="KR") {
+                    res.render('v2/login/existUser', data);
+                } else {
+                    res.render('v2_en/login/existUser', data);
+                }
             }
         }).catch((err) => {
             console.error('err=>', err)
@@ -249,9 +312,17 @@ router.get('/findResult', function (req, res, next) {
                 data['regDate'] = user._doc.regDate;
                 
                 if(req.query.type == "findId") {
-                    res.render('v2/login/existUser', data);
+                    if(dbconfig.country =="KR") {
+                        res.render('v2/login/existUser', data);
+                    } else {
+                        res.render('v2_en/login/existUser', data);
+                    }
                 } else {
-                    res.render('v2/find/changePassword', data);
+                    if(dbconfig.country =="KR") {
+                        res.render('v2/find/changePassword', data);
+                    } else {
+                        res.render('v2_en/find/changePassword', data);
+                    }
                 }
             }
         }).catch((err) => {
@@ -274,7 +345,11 @@ router.get('/existUser', function (req, res, next) {
         .then(user => {
             data['userTag'] = user._doc.userTag;
             data['regDate'] = user._doc.regDate;
-            res.render('v2/login/existUser', data);
+            if(dbconfig.country =="KR") {
+                res.render('v2/login/existUser', data);
+            } else {
+                res.render('v2_en/login/existUser', data);
+            }
         }).catch((err) => {
             console.error('err=>', err)
             bitwebResponse.code = 500;
@@ -294,7 +369,11 @@ router.get('/changePassword', function (req, res, next) {
         .then(user => {
             data['userTag'] = user._doc.userTag;
             data['regDate'] = user._doc.regDate;
-            res.render('v2/login/existUser', data);
+            if(dbconfig.country =="KR") {
+                res.render('v2/login/existUser', data);
+            } else {
+                res.render('v2_en/login/existUser', data);
+            }
         }).catch((err) => {
             console.error('err=>', err)
             bitwebResponse.code = 500;
@@ -304,12 +383,19 @@ router.get('/changePassword', function (req, res, next) {
 });
 
 router.get('/noResult', function (req, res, next) {
-    res.render('v2/find/noResult', {title: 'Bitweb find no result'});
+    if(dbconfig.country =="KR") {
+        res.render('v2/find/noResult', {title: 'Bitweb find no result'});
+    } else{
+        res.render('v2_en/find/noResult', {title: 'Bitweb find no result'});
+    }
 });
 
 router.get("/signupSuccess", sessionChecker.registerSuccessChecker, function (req, res, next) {
-    // res.render('login/registerSuccess', {title: 'Bitweb sign up success'});
-    res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
+    if(dbconfig.country =="KR") {
+        res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
+    } else {
+        res.render('v2_en/login/signupSuccess', {title: 'Bitweb sign up success'});
+    }
 });
 
 router.get("/emailAuth", sessionChecker.emailAuthChecker, function (req, res, next) {
@@ -337,25 +423,47 @@ router.get("/google05041e1a347ce656.html", function (req, res, next) {
 });
 
 router.get('/room', function (req, res, next) {
-    res.render('v2/common/vtr', {
-        title: 'Bitweb VTR',
-        roomToken: req.query.roomToken,
-        itemId: req.query.itemId,
-        user_id: req.query.user_id,
-        vtrTempId: req.query.vtrTempId,
-        chatbot_vtr_url: dbconfig.chatbot_vtr_url
-    });
+    if(dbconfig.country =="KR") {
+        res.render('v2/common/vtr', {
+            title: 'Bitweb VTR',
+            roomToken: req.query.roomToken,
+            itemId: req.query.itemId,
+            user_id: req.query.user_id,
+            vtrTempId: req.query.vtrTempId,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+        });
+    } else {
+        res.render('v2_en/common/vtr', {
+            title: 'Bitweb VTR',
+            roomToken: req.query.roomToken,
+            itemId: req.query.itemId,
+            user_id: req.query.user_id,
+            vtrTempId: req.query.vtrTempId,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+        });
+    }
 });
 
 router.get('/sms/room', function (req, res, next) {
-    res.render('v2/common/vtr_for_sms', {
-        title: 'Bitweb VTR',
-        roomToken: req.query.roomToken,
-        itemId: req.query.itemId,
-        user_id: req.query.user_id,
-        vtrTempId: req.query.vtrTempId,
-        chatbot_vtr_url: dbconfig.chatbot_vtr_url
-    });
+    if(dbconfig.country =="KR") {
+        res.render('v2/common/vtr_for_sms', {
+            title: 'Bitweb VTR',
+            roomToken: req.query.roomToken,
+            itemId: req.query.itemId,
+            user_id: req.query.user_id,
+            vtrTempId: req.query.vtrTempId,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+        });
+    } else {
+        res.render('v2_en/common/vtr_for_sms', {
+            title: 'Bitweb VTR',
+            roomToken: req.query.roomToken,
+            itemId: req.query.itemId,
+            user_id: req.query.user_id,
+            vtrTempId: req.query.vtrTempId,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+        });
+    }
 });
 
 router.get('/chatbot/login', function (req, res, next) {

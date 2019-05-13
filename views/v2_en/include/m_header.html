@@ -1,0 +1,243 @@
+<script>
+    var coinId = "<%=coinId%>";
+    var userId = "<%=userId%>";   
+    var authPhone = "<%=authPhone%>";
+    var game_name;
+        
+    $(document).ready(function(){
+        if("<%=userId%>"=="") {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+            $('.beforeLoginBox').css('display','block');
+            $('.afterLoginBox').css('display','none');
+        } else {
+            $('.menu_login').css('display', 'none');
+            $('.menu_logout').css('display', 'inline-block');
+            $('.beforeLoginBox').css('display','none');
+            $('.afterLoginBox').css('display','block');
+
+            getCoinMain();
+            getItemCountMain();
+        }
+
+        $("#gotoUserInfo").on('click', function(){
+            location.href = '/myPages/user/checkPassword';
+        })
+    });
+
+    function getCoinMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/coins/" + coinId
+        }).done(function (success) {
+            if (success.data.total_mach != null) {
+                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
+            } else {
+                $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function getItemCountMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/vtrs/count/user/" + userId
+        }).done(function (success) {
+            //console.log(success.data);
+            var total_sell = success.data.game_sell + success.data.etc_sell;
+            var total_buy = success.data.game_buy + success.data.etc_buy;
+
+            $(".total_sell").html("<a href='/myPages/sell/list'>" + total_sell + "<span>건</span></a>");
+            $(".total_buy").html("<a href='/myPages/buy/list'>" + total_buy + "<span>건</span></a>");
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+</script>
+    <header class="mob_header">
+        <!-- 모바일 검색영역 -->
+        <section class="mob_sch_sec">
+            <ul class="mob_top_menu cf">
+                <li><a href="javascript:loginChecker()"><img src="/static/img/main/bot_head.png" alt="MACH bot"></a></li>
+                <li><h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1></li>
+                <li>
+                    <button id="btnHamburger" class="menu-trigger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </li>
+            </ul>
+            <div class="search_bar cf">
+                <input type="text" class="ipt_search_bar" id="m_search_item_name">
+                <input type="button" class="btn_search bgc1" id="m_main_search" value="검색">
+            </div>              
+        </section>
+        <!-- 모바일 네비게이션 -->
+        <nav class="mob_nav">
+            <div class="mob_fixiable">
+                <button class="btnMobMenu btn_mob_menu bgc1">등록</button>
+            </div>
+            <div class="mob_dep1_menu">
+                <div class="scroll_area">
+                    <table class="tb_menu">
+                        <tbody>
+                            <tr>
+                                <th><button class="btnMobMenu btn_mob_menu">게임아이템</button></th>
+                                <th><button class="btnMobMenu btn_mob_menu">자산거래</button></th>
+                                <th><a href="https://tokensales.marketmach.com" target="_blank">환전소</a></th>
+                                <th><a href="/community/board">게임소식</a></th>  
+                                <th><a href="javascript:alert('준비중입니다');">커뮤니티</a></th>  
+                                <th></th>  
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mob_dep2_menu"> 
+                <dl class="lft_menu">
+                    <dt class="fc2">판매등록</dt>
+                    <dd>
+                        <a href="/sells/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">자산거래</a>
+                    </dd>
+                    <dt class="fc2">구매등록</dt>
+                    <dd>
+                        <a href="/buys/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="/etc-buys/register" class="bgc2 mob_rnd_btn">자산거래</a>
+                    </dd>
+                </dl>
+                <dl class="rgh_menu">
+                    <dd>
+                        <a href="/sells?category=game&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
+                        <a href="/buys?category=game&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
+                    </dd>
+                </dl>                
+                <dl class="rgh_menu">
+                    <dd>
+                        <a href="/etc-sells?category=etc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
+                        <a href="/etc-buys?category=etc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
+                    </dd>
+                </dl>                
+            </div>
+        </nav>
+
+        <div id="bgDim" class="bg_dim">
+            <!-- 햄버거 세부메뉴 -->
+            <nav class="hamburger_menu">            
+                <div class="m_nav_head cf">
+                    <ul class="cf">
+                        <li><img src="/static/img/main/ico_korea.png" alt="한국"></li>
+                        <li><button class="btn_lang">한국</button></li>
+                        <li><a href="/myPages/user/voucher" class="btn btn-success recomandation">추천URL</a></li>
+                        <li>
+                            <button id="btnCloseMobSideMenu" class="menu-trigger on">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="m_nav_body">
+                    <ul class="ul_dep1">
+                        <li>
+                            <a href="/mypages/list" class="btn_1depth">나의 페이지</a>
+                            <!-- 로그인 전 -->
+                            <div class="dep2 beforeLoginBox">
+                                <ul class="mob_mypage">
+                                    <li class="top_area cf">
+                                        <ul class="cf link_login_info">
+                                            <li>
+                                                <a href="/login" class="btn bgc3 w100p">로그인</a>
+                                            </li>
+                                            <li class="cf">
+                                                <a href="/findId" class="fll">아이디·비밀번호 찾기</a>
+                                                <a href="/agreement" class="flr">회원가입</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="mdl_area">
+                                        <em>마켓마하가 궁금하세요?</em>
+                                        <a href="https://youtu.be/9H1FE8xyvME" target="_blank" class="btn bgc2 w100p">마켓마하 소개</a>
+                                    </li>
+                                </ul>
+                            </div> 
+                            <!-- 로그인 후 -->
+                            <div style="display: none" class="dep2 afterLoginBox">
+                                <ul class="mob_mypage">
+                                    <li class="top_area cf">
+                                        <div>
+                                            <em>판매진행중</em>
+                                            <p class="fc2 total_sell">0<span>건</span></p>
+                                        </div>
+                                        <div>
+                                            <em>구매진행중</em>
+                                            <p class="fc2 total_buy">0<span>건</span></p>
+                                        </div>
+                                    </li>
+                                    <li class="mdl_area">
+                                        <em>나의지갑 잔액</em>
+                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                    </li>
+                                </ul>
+                                <dl class="block_menu cf">
+                                    <dt>게임아이템</dt>
+                                    <dd><a href="/sells/register">판매등록</a></dd>
+                                    <dd><a href="/buys/register">구매등록</a></dd>
+                                    <dd><a href="/sells?category=game&trade_type=sell">팝니다</a></dd>
+                                    <dd><a href="/buys?category=game&trade_type=buy">삽니다</a></dd>
+                                </dl>                    
+                                <dl class="block_menu cf">
+                                    <dt>자산거래</dt>
+                                    <dd><a href="/etc-sells/register">판매등록</a></dd>
+                                    <dd><a href="/etc-buys/register">구매등록</a></dd>
+                                    <dd><a href="/etc-sells?category=etc&trade_type=sell">팝니다</a></dd>
+                                    <dd><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></dd>
+                                </dl>                    
+                            </div>
+                        </li>
+                        <li><a href="/supports/info" class="btn_1depth">고객센터</a></li>
+                        <li><a href="/howto/trade/vtr" class="btn_1depth">이용안내</a></li>
+                        <li>
+                            <dl class="available_coin cf">
+                                <dt>마켓마하 상장 코인</dt>
+                                <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
+                                <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
+                                <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            </dl>
+                            <dl class="available_coin cf">
+                                <dt>마켓마하 상장 게임</dt>
+                                <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH" title="몽키 클래시 사가"></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            </dl>
+                        </li>
+                        <li class="li_logout"><a href="/logout" class="menu_logout btn bggr1">로그아웃</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <script>
+    var userId = "<%=userId%>";  
+    if("<%=userId%>"!="") {
+        $('.menu_logout').show();
+    } else {
+        $('.menu_logout').hide();
+    }
+    </script>

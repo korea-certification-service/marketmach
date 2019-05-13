@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        $(document).ready(function() {
+            getNotices();
+        });
+
+        function getNotices() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/notices/list?perPage=5",
+            }).done(function (success) {
+                console.log(success.data);
+                if (success.data.count != 0) {
+                    setNotices(success.data.list);
+                } else {
+                    var strDOM = '<div class="text-center text-white card-panel" id="hasNoItem">' + "<%= __('page.faq.list.info1') %>" + '</div>';
+                    $("#list-container").append(strDOM);
+                    $(".page").css("display", "none");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setNotices(data) {
+            var result="";
+            if(data.length == 0) {
+                result = '<tr><td colspan="3">공지사항 내역이 없습니다.</td></tr>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var type = data[i].type;
+                var title = data[i].title;
+                var regDate = data[i].regDate.substring(2, 10);
+
+                result+= '<tr>' +
+                            '<td>'+type+'</td>' +
+                            '<td class="tal">' +
+                                '<div class="ellipse" style="width: 100%"><a href="javascript:showDetail(\''+id+'\')">' + title +
+                                '</a></div>' +
+                            '</td>' +
+                            '<td>'+ regDate +'</td>' +
+                        '</tr>';
+            }
+            $('#notice_list').html(result);
+        }
+
+        function showDetail(id) {
+            location.href="/supports/notice/detail?noticeId=" + id;
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">고객센터</h1>
+                        <div class="support_main_info cf">
+                            <div class="lft_area">
+                                <div class="inner_area">
+                                    <h2>거래 이의신청</h2>
+                                    <p>거래에 문제가 있으시면 이용하세요.</p>
+                                    <a class="btn bgc1" href="/supports/opposition/register">거래 이의신청</a>
+                                    <a class="btn bgc2" href="/supports/opposition/list">거래 이의내역</a>
+                                </div>
+                            </div>
+                            <div class="rgh_area">
+                                <div class="inner_area">
+                                    <h2>1:1 문의</h2>
+                                    <p>이용중에 궁금한게 있으시면 이용하세요.</p>
+                                    <a class="btn bgc4" href="/supports/private/register">문의하기</a>
+                                    <a class="btn bgc3" href="/supports/private/list">나의 문의내역</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_support dot_tit">공지사항 <a class="add_circle_outline" href="/supports/notice"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <div class="table_wrap table-responsive mb_lrg">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>분류</th>
+                                        <th>제목</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="notice_list">
+                                    <!-- <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>          -->
+                                </tbody>
+                            </table>
+                        </div>                        
+                        
+                        <h2 class="tit_support dot_tit">진행중인 이벤트 <a class="add_circle_outline" href="/supports/event"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <div class="event_list_area">
+                            <!-- <p class="fcrd tac">진행중인 이벤트가 없습니다.</p> -->
+                            <p><a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a></p>
+                        </div>
+                    </section>
+                    <!--// support -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

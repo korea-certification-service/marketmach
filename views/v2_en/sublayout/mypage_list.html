@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">나의 정보</h1>
+                        <div class="mypage_main_info cf">
+                            <div class="lft_area">
+                                <p>
+                                    홍길동 님의 회원등급은<br>
+                                    <em class="fcrd">일반</em> 등급입니다.
+                                </p>
+                                <a class="btn btn-success" href="">등급별 혜택보기</a>
+                            </div>
+                            <div class="rgh_area">
+                                <em>나의지갑 잔액</em>
+                                <p>100 <span>MACH</span></p>
+                                <button class="btn bgc2">MACH입금</button>
+                                <button class="btn bgc2">MACH출금</button>
+                            </div>
+                        </div>
+                        <div class="mypage_main_trade">
+                            <div class="table_wrap">
+                                <h1 class="tit_mypage">거래현황</h1>
+                                <table class="table_status_3n table">
+                                    <colgroup>
+                                        <col class="col3_1">
+                                        <col class="col3_2">
+                                        <col class="col3_3">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="fc2">게임아이템</th>
+                                            <td>
+                                                판매거래중
+                                                <span class="fc2">
+                                                    <em>1</em>건
+                                                </span>
+                                            </td>
+                                            <td>
+                                                구매거래중
+                                                <span class="fc3">
+                                                    <em>1</em>건
+                                                </span>
+                                            </td>
+                                        </tr>         
+                                        <tr>
+                                            <th class="fc2">자산거래</th>
+                                            <td>
+                                                판매거래중
+                                                <span class="fc2">
+                                                    <em>1</em>건
+                                                </span>
+                                            </td>
+                                            <td>
+                                                구매거래중
+                                                <span class="fc3">
+                                                    <em>1</em>건
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <!--// mypage -->
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">판매관리</h1>
+                        <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">거래유형</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="" id=""><label for="">게임아이템</label>
+                                        <input type="radio" name="" id=""><label for="">자산거래</label>
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="" id=""><label for="">전체</label><br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">거래등록</label><br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">입금대기</label><br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">구매확정</label><br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">판매완료</label><br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">거래완료</label>
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </li>
+                                <li class="tar">
+                                    <input type="button" class="btn btn-primary" value="검색">
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="table_wrap table-responsive">
+                            <h2 class="tit_mypage">게임아이템</h2>
+                            <table class="table_list table">
+                                <colgroup>
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>게임>서버</th>
+                                        <th>제목</th>
+                                        <th>거래가격</th>
+                                        <th>거래상태</th>
+                                        <th>등록일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>블레이드앤소울>이확</td>
+                                        <td>
+                                            <span class="btn_cmm_bd ico_item">아이템</span>
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.
+                                            </div>
+                                            <span class="ico_photo">사진</span>
+                                        </td>
+                                        <td>2001.5 MACH</td>
+                                        <td>
+                                            <span class="btn_cmm_bd ico_item">거래가능</span>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="colspan_for_btn">
+                                            <button class="btn bggr2">판매완료</button>
+                                            <button class="btn bggr1">판매취소(환불)</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>블레이드앤소울>이확</td>
+                                        <td>
+                                            <span class="btn_cmm_bd ico_money">게임머니</span>
+                                            <div class="ellipse">
+                                                금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.금 팝니다.
+                                            </div>
+                                            <span class="ico_photo">사진</span>
+                                        </td>
+                                        <td>2001.5 MACH</td>
+                                        <td>
+                                            <span class="btn_cmm_bd ico_item">거래가능</span>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="colspan_for_btn">
+                                            <button class="btn bggr2">이의신청</button>
+                                            <button class="btn bggr1">판매취소(환불)</button>
+                                        </td>
+                                    </tr>                                
+                                </tbody>
+                            </table>                 
+                        </div>
+                        <div class="paging_wrap">
+                            <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+   
+   </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

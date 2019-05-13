@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        var checkUserTagYn = false;
+        var checkEmailYn = false;
+        var total_mach = "<%=total_mach%>";
+
+        $(document).ready(function() {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+            $("#username").text("<%=username%>");
+            $("#phone").text("<%=phone%>");
+            $("#birth").val("<%=birth%>");
+            if("<%=recommander%>" != "") {
+                $("#recommander").val("<%=recommander%>");
+                $("#recommander").prop("readonly", true)
+            }
+            
+            $('#checkUserTag').on('click',function(){
+                checkUserTag();
+            });
+            $('#checkEmail').on('click',function(){
+                checkEmail();
+            });
+            $('#signup').on('click',function(){
+                signup();
+            });
+        });
+
+        function checkUserTag() {
+            if($("input[name=id]").val() == "") {
+                alert("아이디를 입력하세요.");
+                return;
+            }
+
+            var valid = checkStrNum($("input[name=id]").val());
+            if(!valid) {
+                alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/v1/users/userTag/' + $("input[name=id]").val(),
+            }).done(function (success) {
+                //console.log("success : ", success);
+                checkUserTagYn = true;
+                alert('사용 가능한 아이디입니다.');
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    alert('이미 사용중인 아이디입니다.');
+                }
+            });
+        }
+
+        function checkEmail() {
+            if($("input[name=email]").val() == "") {
+                alert("이메일을 입력하세요.");
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/v1/users/email/' + $("input[name=email]").val(),
+            }).done(function (success) {                
+                console.log("success : ", success);
+                checkEmailYn = true;
+                alert('사용 가능한 이메일입니다.');
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    alert('이미 사용중인 이메일입니다.');
+                }
+            });
+        }
+
+        function signup() {
+            if($("input[name=passwordConfirm]").val() == "") {
+                alert("입력하신 패스워드를 다시 입력하세요.");
+                return;
+            }
+
+            if($("input[name=password]").val() != $("input[name=passwordConfirm]").val()) {
+                alert("패스워드가 일치하지 않습니다.\n다시 입력하세요.");
+                return;
+            }
+
+            if(!checkUserTagYn) {
+                alert("아이디를 중복확인 하세요.");
+                return;
+            }
+
+            if(!checkEmailYn) {
+                alert("이메일을 중복확인 하세요.");
+                return;
+            }
+
+            var birth = "<%=birth%>";
+            var year = birth.substr(0,4);
+            var month = birth.substr(4,2);
+            var day = birth.substr(6,2);
+            var diffAge = checkAdult(new Date(year,month,day).toString(), new Date().toString());
+            //console.log(diffAge);
+            
+            var signUpForm = {
+                "userTag": $("input[name=id]").val(),
+                "password": $('input[name=password]').val(),
+                "email": $("input[name=email]").val(),
+                "userName": $("#username").text(),
+                "countryCode" : "+82",
+                "phone": $("#phone").text(),
+                "birth": $("#birth").val(),
+                "sex": "<%=sex%>",
+                "commId": "<%=commId%>",
+                "foreigner": "<%=foreigner%>",
+                "agreements": {
+                    "use": "true",
+                    "teenager": "true",
+                    "privacy": "true",
+                    "pushTrade":"true",
+                    "pushMarketing": "false",
+                    "authPhone": "true"
+                },
+                "coins": {
+                    "total_mach": total_mach
+                }
+            };
+            
+            if(diffAge < 19) {
+                signUpForm.agreements.teenager = "false";
+            }
+
+            if("<%=pushMarketing%>" == "true") {
+                signUpForm.agreements.pushMarketing = "true";
+            }
+
+            if($('#recommander').val() != "") {
+                signUpForm['recommander'] = $('#recommander').val();
+            }
+
+            $('#signup').prop('disabled', true);
+
+            //console.log(signUpForm);
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/users/validation",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(signUpForm)
+            })
+            .done(function (success) {
+                if(success.data.result) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/users",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(signUpForm)
+                    })
+                    .done(function (success) {
+                        var data = {
+                            "userId": success["data"]["_id"],
+                            "to": success["data"]["email"]
+                        };
+                        // $.ajax({
+                        //     method: "POST",
+                        //     url: "/v1/notifications/email/auth",
+                        //     contentType: "application/json; charset=utf-8",
+                        //     dataType: "json",
+                        //     data: JSON.stringify(data)
+                        // }).done(function (success) {
+                        //     location.href = '/signupSuccess';
+                        // }).fail(function (fail) {
+                        //     console.log(fail);
+                        //     $('#signup').prop('disabled', false);
+                        // })
+                        location.href = '/signupSuccess';
+                    })
+                    .fail(function (fail) {
+                        console.log(fail);
+                        $('#signup').prop('disabled', false);
+                    });
+                } else {
+                    alert(success.data.msg);
+                    $('#signup').prop('disabled', false);
+                }
+            })
+            .fail(function (fail) {
+                console.log(fail);
+                $('#signup').prop('disabled', false);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>정보입력 <em class="fcor">(필수)</em></h1>
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_signup">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <td>
+                                    <input type="hidden" id="birth"/>
+                                    <span id="username">홍길동</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>아이디</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" name="id" placeholder="아이디는 6~20자 영문or영문+숫자 조합 사용">
+                                        <button class="btn btn-info" id="checkUserTag">중복확인</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호</th>
+                                <td><input type="password" class="form-control" name="password" placeholder="새로운 비밀번호 입력 *8~16자의 영문+숫자 or 특수문자 사용"></td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호 확인</th>
+                                <td><input type="password" class="form-control" placeholder="" name="passwordConfirm"></td>
+                            </tr>
+                            <tr>
+                                <th>연락처(휴대폰)</th>
+                                <td>
+                                    <em id="phone">010-1234-1234</em>
+                                    <p>※ 연락처 변경은 가입 후 나의페이지-나의정보에서 가능합니다.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" name="email" placeholder="example@mymach.asia">
+                                        <button class="btn btn-info" id="checkEmail">중복확인</button>
+                                    </div>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="fcgr1" colspan="2"><br>선택</th>
+                            </tr>
+                            <tr>
+                                <th>추천인</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" id="recommander" placeholder="user ID. ex)mymachUser">
+                                    </div> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="signup">회원가입</button>
+                </div>                    
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body> 

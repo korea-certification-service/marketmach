@@ -8,19 +8,35 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/use', function (req, res, next) {
-    res.render('v2/agreements/use', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    if(dbconfig.country == "KR") {
+        res.render('v2/agreements/use', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    } else {
+        res.render('v2_en/agreements/use', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    }
 });
 
 router.get('/private', function (req, res, next) {
-    res.render('v2/agreements/private', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    if(dbconfig.country == "KR") {
+        res.render('v2/agreements/private', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    } else {
+        res.render('v2_en/agreements/private', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    }
 });
 
 router.get('/teenager', function (req, res, next) {
-    res.render('v2/agreements/teenager', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    if(dbconfig.country == "KR") {
+        res.render('v2/agreements/teenager', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    } else {
+        res.render('v2_en/agreements/teenager', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    }
 });
 
 router.get('/marketing', function (req, res, next) {
-    res.render('v2/agreements/marketing', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    if(dbconfig.country == "KR") {
+        res.render('v2/agreements/marketing', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    } else {
+        res.render('v2_en/agreements/marketing', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone});
+    }
 });
 
 

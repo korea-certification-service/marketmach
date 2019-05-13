@@ -5,22 +5,41 @@ const communityController = require('../controllers/community');
 const BitwebResponse = require('../utils/BitwebResponse');
 
 router.get('/board', function (req, res, next) {
-    res.render('v2/community/list', {title: 'Bitweb Main', 
-    userId: req.session.userId,
-    coinId: req.session.coinId,
-    authPhone: req.session.authPhone,
-    type: req.query.type,
-    title: req.query.title,
-    pageIdx: req.query.pageIdx});
+    if(dbconfig.country == "KR") {
+        res.render('v2/community/list', {title: 'Bitweb Main', 
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        authPhone: req.session.authPhone,
+        type: req.query.type,
+        title: req.query.title,
+        pageIdx: req.query.pageIdx});
+    } else {
+        res.render('v2_en/community/list', {title: 'Bitweb Main', 
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        authPhone: req.session.authPhone,
+        type: req.query.type,
+        title: req.query.title,
+        pageIdx: req.query.pageIdx});
+    }
 });
 
 router.get('/board/detail/:communityId', function (req, res, next) {
-    res.render('v2/community/view', {title: 'Bitweb Main',
-    userId: req.session.userId,
-    coinId: req.session.coinId,
-    communityId: req.params.communityId,
-    userTag: req.session.userTag,
-    authPhone: req.session.authPhone,});
+    if(dbconfig.country == "KR") {
+        res.render('v2/community/view', {title: 'Bitweb Main',
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        communityId: req.params.communityId,
+        userTag: req.session.userTag,
+        authPhone: req.session.authPhone});
+    } else {
+        res.render('v2_en/community/view', {title: 'Bitweb Main',
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        communityId: req.params.communityId,
+        userTag: req.session.userTag,
+        authPhone: req.session.authPhone});
+    }
 });
 
 // router.get('/movie', function (req, res, next) {

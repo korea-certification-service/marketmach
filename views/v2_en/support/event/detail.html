@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var eventId = "<%=eventId%>";
+        $(document).ready(function() {
+            $('.board_detail').css('display','none');
+            showDetail();
+        });
+
+        function showDetail() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/events/detail/" + eventId,
+            }).done(function (success) {
+                console.log(success.data);
+                $("#title").text(success.data.title);
+                $("#content").html(success.data.content);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support" id="title">이벤트</h1>
+                        <div class="tac" id="content">
+                        
+                        </div>
+                        <div class="tar">
+                            <button class="btn btn_go_list" onclick="history.back();">목록</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>

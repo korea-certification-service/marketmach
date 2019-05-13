@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var noticeId = "<%=noticeId%>";
+        $(document).ready(function() {
+            $('.board_detail').css('display','none');
+            showDetail();
+        });
+
+        function showDetail() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/notices/detail/" + noticeId,
+            }).done(function (success) {
+                console.log(success.data);
+
+                $("#regDate").text(success.data.regDate.substring(2, 10));
+                $("#title").text(success.data.title);
+                $("#content").html(replaceDesc(success.data.content));
+
+                $('.board_detail').css('display','block');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec board_detail">
+                        <h1 class="tit_support">공지사항</h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">날짜</th>
+                                        <td><span id="regDate">2019-03-26</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">제목</th>
+                                        <td><span id="title">점검 2019년 3월 30일 Mach거래소 오픈!!</span></td>
+                                    </tr>
+                                    <tr class="merge_th">
+                                        <th class="fc2">내용</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="support_notice_content" id="content">
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tar">
+                            <a href="javascript:history.back(-1);" class="btn btn-default">목록</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>
