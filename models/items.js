@@ -21,6 +21,7 @@ var itemsSchema = new Schema({
     title: String,
     desc: String,
     price: Number,
+    currency: String,
     point: Number,
     count: Number,
     minCount: Number,

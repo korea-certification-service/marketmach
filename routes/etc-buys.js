@@ -50,14 +50,19 @@ router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, ne
 });
 
 router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
-    // res.render('etc-buy/register', {title: 'Bitweb Main', userTag: req.session.userTag, country:req.session.country,
-    //     usePoint:dbconfig.usePoint,
-    //     useBlockchain:dbconfig.useBlockchain});
-    res.render('v2/etc-buy/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
+    if(dbconfig.country == "KR") {
+        res.render('v2/etc-buy/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
+            userTag: req.session.userTag, country:req.session.country,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain});
+    } else {
+        res.render('v2_en/etc-buy/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
         userTag: req.session.userTag, country:req.session.country,
         authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain});
+    }
 });
 
 router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, next) {

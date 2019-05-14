@@ -63,8 +63,12 @@
                                 <td><span class="item_character"></span></td>
                             </tr>
                             <tr>
-                                <th>거래 가격</th>
+                                <th>거래 가격(MACH)</th>
                                 <td><p class="txt_price"></p></td>
+                            </tr>
+                            <tr>
+                                <th>거래 가격(Currency)</th>
+                                <td><p class="txt_price txt_point"></p></td>
                             </tr>
                             <tr class="mrg_cell trForDel">
                                 <td colspan="2">
@@ -212,6 +216,7 @@
                 //console.log(success);
                 
                 itemId = success.data._id;
+                var currencyType = success.data.currency == undefined ? "" : success.data.currency;
                 var regDate = success.data.regDate;
                 var item_game_server = success.data.game_name + ' > ' + success.data.game_server;
                 var title = success.data.title;
@@ -250,6 +255,7 @@
                 $(".item_type").addClass(item_type.className);
                 $(".item_id").text(itemId);
                 $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_point").html(point + "<span>"+currencyType+"</span>");
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);
                 $(".item_phone").text(item_phone);

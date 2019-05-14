@@ -66,7 +66,7 @@
                                     <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
                                 </tr>
                                 <tr>
-                                    <th>거래가격</th>
+                                    <th>거래가격(MACH)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
                                             <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
@@ -75,16 +75,17 @@
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>거래가격(캐시)</th>
+                                <tr>
+                                    <th>거래가격(Currency)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="text" class="form-control w80p" id="point" placeholder="거래 가격 입력.">
-                                            <em class="fc2">CASH</em>
+                                            <select id="currencyType" class="selectpicker" data-live-search="true"></select>
+                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <em class="fc2" id="currencyName"></em>
+                                            <p class="fcrd">※ 직거래를 원하시는 경우 입력하세요.</p>
                                         </div>
-                                        <p class="fcrd">※ 1CASH = 1원</p>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
                                     <th>상세정보</th>
                                     <td>
@@ -116,6 +117,7 @@
         var sel_files = [];
         var itemGameName;
         var itemGameServer;
+        var currencyType;
     
         $(document).ready(function() {
             $('.selectpicker').selectpicker({
@@ -131,6 +133,10 @@
             //     itemGameServer = "";
             //     selectServer();
             // })
+
+            $("#currencyType").on('change', function() {
+                $("#currencyName").text($("#currencyType").val());
+            });
             
             getData();
         });
@@ -147,6 +153,7 @@
                 var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
                 itemGameName = success.data.category1;
                 //itemGameServer = success.data.category2;
+                currencyType = success.data.currency == undefined ? "" : success.data.currency;
                 var title = success.data.title;
                 var price = success.data.price;
                 var point = success.data.point;
@@ -160,8 +167,10 @@
                 $("#price").val(price);
                 $("#point").val(point);
                 $("#desc").text(desc);
+                $("#currencyName").text(currencyType);
                 
                 loadGameList();
+                loadCurrencyList();
                 // setTimeout(function(){
                 //     selectServer();
                 // });
@@ -222,6 +231,25 @@
             $("#game-server").selectpicker('refresh');
         }
 
+        function loadCurrencyList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/countryCodes"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].currency + '">' + success.data[i].country_en + '</option>'
+                }
+
+                $("#currencyType").html(strDOM);
+                $("#currencyType").selectpicker('refresh');
+                $("#currencyType").val(currencyType).attr("selected", "selected");
+                $("#currencyType").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
         function submit() {
             var country = "<%= country %>";
             if ($("#item-game-name option:selected").val() == "false") {
@@ -263,12 +291,19 @@
             } else {
                 data["price"] = 0;
             }
-            // if ("<%= usePoint %>" == "Y" && country == "KR") {
-            //     data["point"]=$("#point").val();
-            // }else{
-            //     data["point"]=0;
-            // }
-            data["point"]=0;
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]=$("#currencyType").val();
+                data["point"]=$("#point").val();
+            }else{
+                if($("#currencyType").val() == "") {
+                    data["currency"]="";
+                    data["point"]=0;
+                } else {
+                    data["currency"]=$("#currencyType").val();
+                    data["point"]=$("#point").val();
+                }
+            }
 
             if(country=="CN"){
                 data["china_region1"]=$("#region1").val();

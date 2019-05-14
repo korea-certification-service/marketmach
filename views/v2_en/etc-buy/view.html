@@ -61,8 +61,12 @@
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>거래가격(MACH)</th>
                                 <td><p class="txt_price"><span></span></p></td>
+                            </tr>
+                            <tr>
+                                <th>거래가격(Currency)</th>
+                                <td><p class="txt_price txt_point"><span></span></p></td>
                             </tr>
                             <tr class="mrg_cell trForBtn">
                                 <td colspan="2">
@@ -186,6 +190,7 @@
                 itemId = success.data._id;
                 roomToken = success.data.roomToken;
                 vtrTempId = success.data.vtrTempId;
+                var currencyType = success.data.currency == undefined ? "" : success.data.currency;
                 var regDate = success.data.regDate;
                 var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
                 var title = success.data.title;
@@ -202,6 +207,7 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
                 $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_point").html(point + "<span>"+currencyType+"</span>");
                 $(".item_desc").html(desc);
                 $(".item_status").addClass(status.className).text(((success.data.status > 0 && success.data.status < 4)||success.data.status == 50 ||success.data.status == 5) && (success.data.vtr_btn_active) ? status.text+ ' - ' + status.detail : status.text);             
                 $(".user_tag").text(success.data.userTag);
