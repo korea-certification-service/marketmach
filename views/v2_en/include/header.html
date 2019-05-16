@@ -89,7 +89,7 @@
 
     function searchMain(tabName) {
         if($("#search_item_name").val() == "" && $("#m_search_item_name").val() == "") {
-            alert("게임명/서버명을 입력하세여.\r\n예)로스트아크 이그하람");
+            alert("Search");
             return;
         }
 
@@ -109,28 +109,28 @@
     }
 
     function goExchange() {
-        alert("현재 VISA/MASTER 카드 결재 기능을 작업 중에 있습니다. \n 마하 코인 구매를 원하시면 비트코인 또는 이더리움 등의 암호화폐를 이용하여 구매하시기 바랍니다.");
+        //alert("현재 VISA/MASTER 카드 결재 기능을 작업 중에 있습니다. \n 마하 코인 구매를 원하시면 비트코인 또는 이더리움 등의 암호화폐를 이용하여 구매하시기 바랍니다.");
         window.open("https://tokensales.marketmach.com","exchange");
     }
 
 </script>
         <header class="header">
             <div class="top_menu cf">
-                <span><a href="" class="lang lang_kr">한국어</a></span>
+                <span><a href="" class="lang lang_kr">Korean</a></span>
                 <ul class="menu_list cf">
-                    <li><a href="/howto/trade/vtr">이용안내</a></li>
-                    <li><a href="/supports/info">고객센터</a></li>
-                    <li><a href="/myPages/list">나의 페이지</a></li>
-                    <li><a class="menu_login" href="/login">로그인</a></li>
-                    <li><a class="menu_logout" href="/logout">로그아웃</a></li>
-                    <li class="bgc2"><a href="">캐시거래소</a></li>
+                    <li><a href="/howto/trade/vtr">User Guide</a></li>
+                    <li><a href="/supports/info">Help</a></li>
+                    <li><a href="/myPages/list">My Page</a></li>
+                    <li><a class="menu_login" href="/login">Sign in</a></li>
+                    <li><a class="menu_logout" href="/logout">Sign out</a></li>
+                    <li class="bgc2"><a href="">Game Station</a></li>
                 </ul>
             </div>
             <section class="sch_sec cf">
                 <h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
                 <div class="search_bar cf">
-                    <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="게임명과 서버명 입력  ex)로스트아크 이그하람">
-                    <input type="button" class="btn_search bgc1" id="main_search" value="검색">
+                    <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="Search">
+                    <input type="button" class="btn_search bgc1" id="main_search" value="Search">
                 </div>
                 <div class="chatbot jumpBot">
                     <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
@@ -168,7 +168,7 @@
                             <li><a href="/etc-buys?category=etc&trade_type=buy">Purchase</a></li>
                         </ul>                         
                     <li><a href="javascript:goExchange();" class="fcbk">Buy MACH</a></li>
-                    <li><a href="/community/board" class="fcbk">News</a></li>
+                    <li><a href="/community/board" class="fcbk">Game News</a></li>
                     <li><a href="https://open.kakao.com/o/gD3UkX4" class="fcbk">Community</a></li>
                 </ul>
                 <ul class="r_menu cf">
@@ -179,19 +179,19 @@
                             <div class="beforeLoginBox">
                                 <ul>
                                     <li class="top_area cf">
-                                        <button class="btn bgc3" onclick="location.href='/login';">로그인</button>
+                                        <button class="btn bgc3" onclick="location.href='/login';">Sign in</button>
                                         <ul class="cf link_login_info">
-                                            <li><a href="/findId">아이디·비밀번호 찾기</a></li>
-                                            <li><a href="/agreement">회원가입</a></li>
+                                            <li><a href="/findId">Find ID/Password</a></li>
+                                            <li><a href="/agreement">Sign up</a></li>
                                         </ul>
                                     </li>
                                     <li class="mdl_area">
-                                        <p>마켓마하가 궁금하세요?</p>
-                                        <a class="btn bgc2" href="https://mymach.io" target="_blank">마켓마하 소개</a>
+                                        <p>Curious about Market MACH?</p>
+                                        <a class="btn bgc2" href="https://mymach.io" target="_blank">About Market MACH</a>
                                     </li>
                                     <li class="btm_area">
                                         <dl class="available_coin cf">
-                                            <dt>마켓마하 상장코인</dt>
+                                            <dt>Market MACH Coins</dt>
                                             <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="마하코인" title="마하코인"></a></dd>
                                             <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
                                             <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
@@ -202,7 +202,7 @@
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                         </dl>
                                         <dl class="available_coin cf">
-                                            <dt>마켓마하 상장 게임</dt>
+                                            <dt>Market MACH Games</dt>
                                             <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
@@ -224,23 +224,23 @@
                                 <ul>
                                     <li class="top_area cf">
                                         <div>
-                                            <em>판매진행중</em>
+                                            <em>On Sales</em>
                                             <p class="total_sell">0<span>건</span></p>
                                         </div>
                                         <div>
-                                            <em>구매진행중</em>
+                                            <em>Puchasing</em>
                                             <p class="total_buy">0<span>건</span></p>
                                         </div>
                                     </li>
                                     <li class="mdl_area">
-                                        <em>나의 지갑 잔액</em>
+                                        <em>My Wallet Balance</em>
                                         <p class="total_mach">100<span>MACH</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                        <button class="btn bgc2" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Deposit MACH</button>
+                                        <button class="btn bgc2" onclick="location.href='/myPages/wallet/withdraw';">Withdraw MACH</button>
                                     </li>
                                     <li class="btm_area">
                                         <dl class="available_coin cf">
-                                            <dt>마켓마하 상장코인</dt>
+                                            <dt>Market MACH Coins</dt>
                                             <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
                                             <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
                                             <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
@@ -251,7 +251,7 @@
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                         </dl>
                                         <dl class="available_coin cf">
-                                            <dt>마켓마하 상장 게임</dt>
+                                            <dt>Market MACH Games</dt>
                                             <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>

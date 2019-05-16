@@ -202,7 +202,7 @@
                 var regDate = data[i].regDate;
                 
                 result += '<div class="bd_area">' +
-                        '<h1 class="assets_tit">자산거래<a class="add_circle_outline" href="/etc-sells?category=etc&trade_type=sell"><i class="material-icons">add_circle_outline</i></a></h1>' +
+                        '<h1 class="assets_tit">Asset<a class="add_circle_outline" href="/etc-sells?category=etc&trade_type=sell"><i class="material-icons">add_circle_outline</i></a></h1>' +
                         '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
                             '<img src="'+image_src+'" alt="">' +
                         '</div>' +
@@ -338,7 +338,7 @@
 
         <section class="btm_visual_sec cf">
             <div class="flow_box">
-                <h1 class="cf"><i class="material-icons">trending_up</i><span>COIN 시세</span></h1>
+                <h1 class="cf"><i class="material-icons">trending_up</i><span>COIN Market</span></h1>
             </div>
             <div class="flow_box cf">
                 <div class="coin_quotes_arrow">
@@ -400,17 +400,17 @@
                 <section class="item_trade_sec col-lg-8">
                     <h1 class="blind">게임아이템 판매와 구매 게시판 리스트</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btn_show_list on">게임아이템 판매</button>
+                        <button class="btn_show_list on">Sale Game Items</button>
                         <a class="add_circle_outline" href="/sells?category=game&trade_type=sell"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_sell table-responsive">              
                         <table class="table">
                             <thead>
                                 <tr class="active">
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Categoty</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="sell_list">                               
@@ -418,17 +418,17 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btn_show_list">게임아이템 구매</button>
+                        <button class="btn_show_list">Buy Game Items</button>
                         <a class="add_circle_outline" href="/buys?category=game&trade_type=buy"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_buy table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Categoty</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="buy_list">
@@ -455,7 +455,7 @@
                 <section class="media_sec col-lg-12">
                     <div class="bd_area">
                         <h1 class="media_tit fc2">
-                            동영상
+                            Video
                             <!-- <a class="add_circle_outline" href=""><i class="material-icons">add_circle_outline</i></a> -->
                         </h1>
                         <div class="media_img_wrap cf">
@@ -466,7 +466,7 @@
                 <!-- 게임뉴스 -->
                 <section class="gamenews_sec col-lg-4">
                     <div class="bd_area">
-                        <h1 class="gamenews_tit fc2">게임뉴스<a class="plus_link" href="">더보기</a></h1>
+                        <h1 class="gamenews_tit fc2">Game News<a class="plus_link" href="">More</a></h1>
                         <ul id='community_boards'>
                         </ul>
                     </div>
@@ -506,7 +506,7 @@
         </div>
         <div class="ci_area">
             <div class=""><a href="http://www.kipo.go.kr​" target="_blank"><img src="/static/img/main/footer_ci_01.png" alt="특허청"></a></div>
-            <div class=""><a href="http://www.ftc.go.kr" target="_blank"><img src="/static/img/main/footer_ci_02.png" alt="공정거래위원회"></a></div>
+            <div class=""><a href="http://www.ftc.go.kr" target="_blank"><img src="/static/img/main/footer_ci_02.png" alt="공정가위원회"></a></div>
             <div class=""><a href="https://www.kisa.or.kr" target="_blank"><img src="/static/img/main/footer_ci_03.png" alt="한국인터넷진흥원"></a></div>
             <div class=""><a href="https://okbfex.kbstar.com/quics?page=oescrow" target="_blank"><img src="/static/img/main/footer_ci_04.png" alt="KB에스크로"></a></div>
             <div class=""><a href="https://thecheat.co.kr" target="_blank"><img src="/static/img/main/footer_ci_05.png" alt="더치트"></a></div>
@@ -528,9 +528,9 @@
     <div class="dim_all_area" style="display: none">
         <article class="modal_bitberry_deposit">
             <br>
-            <h1>휴대폰 인증 필요</h1>
-            <p>[나의 페이지->회원정보수정]에서 휴대폰 인증을 하시기 바랍니다.</p>
-            <button id="gotoUserInfo" class="btn btn-danger">확인</button>
+            <h1>Need to auth phone</h1>
+            <p>Need to auth phone [My Page->My Account].</p>
+            <button id="gotoUserInfo" class="btn btn-danger">OK</button>
         </article>
     </div>
     <% include ../include/footer.html %>
