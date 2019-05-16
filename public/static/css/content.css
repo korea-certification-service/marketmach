@@ -133,6 +133,9 @@
 .photo_list li .img_list_box .step2:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: #ffc107; border-radius: 50% 50%;}
 .photo_list li .img_list_box .step3{}
 .photo_list li .img_list_box .step3:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: red; border-radius: 50% 50%;}
+.photo_list li .img_list_box .ico_special{position: absolute; top: 5px; right: 10px; display: block;}
+.photo_list li .img_list_box .ico_timekill{width: 56px; height: 45px; background: url("/static/img/sub/ico_prime_item1.png") 50% 50% no-repeat;}
+.photo_list li .img_list_box .ico_prime{width: 48px; height: 50px; background: url("/static/img/sub/ico_prime_item2.png") 50% 50% no-repeat;}
 .photo_list li .img_list_box dl{padding: 5px;}
 .photo_list li .img_list_box dt{margin: 5px 0 10px 0;}
 .photo_list li .img_list_box dd{}

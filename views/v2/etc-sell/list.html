@@ -187,13 +187,22 @@
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
                 var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                var userTag = data[i].userTag;
+                var tradingFlag = "";
+                if(userTag === "machprime") {
+                    tradingFlag = '<div class="ico_special ico_timekill"></div>';
+                    // prime 상품의 경우: <div class="ico_special ico_prime"></div>
+                } else {
+                    tradingFlag = '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>';
+                }
 
                 if(i % 4 == 0) strDOM += '<li class="row">';
 
                 strDOM += '<div class="col-md-3 col-sm-6 col-xs-12">' + 
                                 '<div class="img_list_box"><div class="photo_frame">' + 
                                     '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>' + 
-                                    '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>' + 
+                                    // '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>' + 
+                                    tradingFlag +
                                     '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_url+'" alt=""></a>' + 
                                     '</div><dl>' + 
                                         '<dt>' + 
