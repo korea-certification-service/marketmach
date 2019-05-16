@@ -138,10 +138,14 @@
 .photo_list li .img_list_box .ico_prime{width: 48px; height: 50px; background: url("/static/img/sub/ico_prime_item2.png") 50% 50% no-repeat;}
 .photo_list li .img_list_box dl{padding: 5px;}
 .photo_list li .img_list_box dt{margin: 5px 0 10px 0;}
+.photo_list li .img_list_box .dt_tit a{font-size: 16px; color: #28a745;}
 .photo_list li .img_list_box dd{}
 .photo_list li .img_list_box dd .money_txt{float: left; font-size: 16px; font-weight: bold; color: #1e2560;}
 .photo_list li .img_list_box dd .money_txt span{margin-left: 5px; font-size: 10px;}
 .photo_list li .img_list_box dd .time_txt{float: right; font-weight: bold; color: #777;}
+.photo_list li .img_list_box dd .price_txt{text-align: left; font-size: 14px; font-weight: bold; color: #1e2560;}
+.photo_list li .img_list_box dd .price_txt span{font-size: 12px;}
+.photo_list li .img_list_box dd .line_through_txt{text-align: right; font-weight: bold; color: #777; text-decoration: line-through;}
 
 /* 상품정보 보기 */
 .table_view{table-layout: fixed; border-bottom: 1px solid #dee2e6;}
@@ -484,6 +488,26 @@
 .community_sec .hasYoutube iframe,
 .community_sec .hasYoutube object,
 .community_sec .hasYoutube embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+
+/* BtoC 상세 물품 */
+.item_images_area{}
+.item_images_area .lft_img{float: left; width: 45%;}
+.item_images_area .rgh_txt{float: right; width: 55%; padding-left: 20px; box-sizing: border-box;}
+.item_images_area .rgh_txt .iia_title{font-size: 24px;}
+.item_images_area .rgh_txt .iia_money{display: block; font-size: 14px; text-decoration: line-through;}
+.item_images_area .rgh_txt .iia_price{display: block; font-size: 20px;}
+.item_images_area .rgh_txt .iia_delivery{display: block; font-size: 18px;}
+.item_images_area .rgh_txt .iia_option{font-size: 16px;}
+
+.item_images_area .rgh_txt .like_select_box{border: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .btn_slt{width: 100%; height: 40px; text-align: left;background-color: transparent; border: none;}
+.item_images_area .rgh_txt .like_select_box .btn_slt em{margin-left: 10px;}
+.item_images_area .rgh_txt .like_select_box .btn_slt span{float: right; margin-right: 10px;}
+.item_images_area .rgh_txt .like_select_box .slt_sec{border-top: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .slt_sec ul{max-height: 180px; overflow: scroll;}
+.item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; cursor: pointer; border-top: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .slt_sec li:first-child{border-top: none;}
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 

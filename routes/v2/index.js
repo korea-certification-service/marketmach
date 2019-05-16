@@ -325,6 +325,26 @@ router.get('/community/detail' , function(req, res, next) {
         title: 'Bitweb Sub'});
 });
 
+// btoc
+router.get('/sub/btoc_list', function (req, res, next) {
+    res.render('v2/sublayout/btoc_list', {
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        authPhone: req.session.authPhone,
+        title: 'Bitweb Sub'});
+});
+router.get('/sub/btoc_view', function (req, res, next) {
+    res.render('v2/sublayout/btoc_view', {
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        authPhone: req.session.authPhone,
+        title: 'Bitweb Sub'});
+});
+
 // 테스트용 퍼블
 router.get('/temp/test' , function(req, res, next) {
     res.render('v2/temp/test', {
