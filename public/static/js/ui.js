@@ -414,7 +414,7 @@ var _SelectUI = {
                 closeList();
                 alert("결제수단부터 선택해주세요.");
                 return;
-            } 
+            }
             
             // css
             if (!isOpen) {
@@ -430,16 +430,19 @@ var _SelectUI = {
                 var li = ul.querySelectorAll("li");
                 for (var i = 0; i < li.length; i++) {
                     li[i].addEventListener("click", function(e) {
-                        console.log(e.target.innerText, e.target.textcontent);
+                        // if(paymentMethod.value === "") {
+                        //     alert("결제수단이 올바르지 않습니다.")
+                        //     return;
+                        // }
                         
-                        if(paymentMethod.value === "") {
-                            alert("결제수단이 올바르지 않습니다.")
-                            return;
-                        } else {
-                            
+                        selectedList.firstElementChild.querySelector(".itemTitle").innerText = this.querySelector(".productName").innerText;
+                        
+                        if(paymentMethod.value === "mach") {
+                            selectedList.firstElementChild.querySelector(".itemPrice").innerText = this.querySelector(".priceMach").innerText;
+                        } else if(paymentMethod.value === "point") {
+                            selectedList.firstElementChild.querySelector(".itemPrice").innerText = this.querySelector(".pricePoint").innerText;
                         }
-                        
-                        selectedList.firstElementChild.querySelector(".itemTit").innerText = e.target.innerText;
+
                         closeList();
                     });
                 }
@@ -475,6 +478,23 @@ var _SelectUI = {
             isOpen = false;
             ul.style.display="none";
         }
+    },
+    numberUtil: function() {
+        // 숫자만 입력가능 하게
+        // 100이상 입력 못하게
+        var itemLength = document.querySelectorAll(".itemLength");
+        for (var i = 0; i < itemLength.length; i++) {
+            itemLength[i].addEventListener("keypress", function() {
+                if (numCheck(this.value)) {
+                    alert("정수")
+                } else {
+                    alert("정수아님")
+                }
+            });
+        }
+        // - 기능
+        
+        // + 기능
     }
 }
 /*

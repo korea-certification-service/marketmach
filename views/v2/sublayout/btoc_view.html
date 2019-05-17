@@ -44,12 +44,12 @@
                             <button id="btnSelected" class="btn_slt"><em>선택</em><span>▼</span></button>
                             <div class="slt_sec">
                                 <ul id="sltList">
-                                    <li>가영크림 <span class="priceMach">1MACH</span><span class="pricePoint">(11point)</span></li>
-                                    <li>나영크림 <span class="priceMach">2MACH</span><span class="pricePoint">(22point)</span></li>
-                                    <li>다영크림 <span class="priceMach">3MACH</span><span class="pricePoint">(33point)</span></li>
-                                    <li>마영크림 <span class="priceMach">4MACH</span><span class="pricePoint">(44point)</span></li>
-                                    <li>바영크림 <span class="priceMach">5MACH</span><span class="pricePoint">(55point)</span></li>
-                                    <li>사영크림 <span class="priceMach">6MACH</span><span class="pricePoint">(66point)</span></li>
+                                    <li><span class="productName">가영크림</span> <span class="priceMach">1MACH</span><span class="pricePoint">11point</span></li>
+                                    <li><span class="productName">나영크림</span> <span class="priceMach">2MACH</span><span class="pricePoint">22point</span></li>
+                                    <li><span class="productName">다영크림</span> <span class="priceMach">3MACH</span><span class="pricePoint">33point</span></li>
+                                    <li><span class="productName">마영크림</span> <span class="priceMach">4MACH</span><span class="pricePoint">44point</span></li>
+                                    <li><span class="productName">바영크림</span> <span class="priceMach">5MACH</span><span class="pricePoint">55point</span></li>
+                                    <li><span class="productName">사영크림</span> <span class="priceMach">6MACH</span><span class="pricePoint">66point</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -61,11 +61,14 @@
                     <div class="selected_item">
                         <ul id="selectedList">
                             <li class="cf">
-                                <span class="itemTit item_tit">
+                                <span class="itemTitle item_title">
+                                </span>
+                                &nbsp;
+                                <span class="itemPrice item_price">
                                 </span>
                                 <span class="item_calc">
                                     <button class="btn_calc" id="btnCalc">-</button>
-                                    <input type="text" id="itemLength" value="0">
+                                    <input type="text" class="itemLength item_length" maxlength="3" value="0">
                                     <button class="btn_calc">+</button>
                                 </span>
                             </li>
@@ -73,7 +76,7 @@
                     </div>
 
                     <h2 class="">주소</h2>
-                    <input type="text" class="form-control" id="" placeholder="거래 제목 입력">
+                    <input type="text" class="form-control" id="" placeholder="">
                     <div class="btn_buy_sec">
                         <button class="btn" id="">구매</button>
                     </div>
@@ -89,7 +92,8 @@
 
     <script>
     var opt = {btn:"btnSelected", ul:"sltList", selectedList: "selectedList"}
-    //_SelectUI.actSelectBox(opt, function(){});
+    _SelectUI.actSelectBox(opt, function(){});
+    _SelectUI.numberUtil();
     </script>
 
     <% include ../include/footer.html %>

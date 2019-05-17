@@ -323,3 +323,11 @@ function openVtrInfo() {
         window.open("/static/html/vtrInfo.html", "VtrInfo", "toolbar=yes,scrollbars=yes,resizable=no,top=0,left=50%,width=800,height=1100");
     }
 }
+
+function numCheck(obj){
+    var num_check=/^[0-9]*$/;
+       if(!num_check.test(obj)){
+       return false;
+    }
+   return true;
+}

@@ -512,8 +512,11 @@
 .item_select_area h2{font-size: 16px;}
 .item_select_area .selected_item{margin-bottom: 20px;}
 .item_select_area .selected_item li{height: 30px;}
-.item_select_area .selected_item li .item_tit{float: left;}
+.item_select_area .selected_item li .item_title{float: left;}
 .item_select_area .selected_item li .item_calc{float: right;}
+.item_select_area .selected_item li .item_calc *{vertical-align: middle;}
+.item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 20px;}
+.item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px;}
 .item_select_area .btn_buy_sec{margin-top: 30px; text-align: right;}
 .item_select_area .btn_buy_sec .btn{max-width: 200px; width: 50%; background-color: #28a745; color: #ffffff; font-weight: bold;}
 /********** Mobile MarkUp CSS **********/
