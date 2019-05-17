@@ -69,7 +69,24 @@ function buy(data) {
     })
 }
 
+function timeKillBuy(data) {
+    return new Promise((resolve, reject) => {
+        Timekill.find(
+            data
+        )
+        .exec(function (err, faqs) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            console.log('timeKillBuy done: ' + faqs)
+            resolve(faqs)
+        })
+    })
+}
+
 exports.search = search
 exports.getById = getById
 exports.count = count;
 exports.buy = buy;
+exports.timeKillBuy = timeKillBuy;
