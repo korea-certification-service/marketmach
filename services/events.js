@@ -1,4 +1,5 @@
 var Event = require('../libs/events');
+var Timekill = require('../libs/timekills');
 
 function count (data, option) {
     return new Promise((resolve, reject) => {
@@ -54,6 +55,21 @@ function getById (id) {
     })
 }
 
+function buy(data) {
+    return new Promise((resolve, reject) => {
+        var timekill = new Timekill(data)
+        timekill.save(function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log('buy done: ' + result)
+                resolve(result)
+            }
+        })
+    })
+}
+
 exports.search = search
 exports.getById = getById
 exports.count = count;
+exports.buy = buy;
