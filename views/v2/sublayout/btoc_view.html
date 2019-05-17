@@ -33,18 +33,23 @@
                         <span class="iia_money">45000원</span>
                         <em class="iia_price">30MACH (35000Point)</em>
                         <em class="iia_delivery">무료배송</em>
+                        <h3 class="iia_option">결제 수단 선택</h3>
+                        <select id="paymentMethod">
+                            <option value="">선택</option>
+                            <option value="mach">MACH</option>
+                            <option value="point">Point</option>
+                        </select>
                         <h3 class="iia_option">구매옵션</h3>
-
                         <div class="like_select_box">
-                            <button id="" class="btn_slt"><em>선택</em><span>▼</span></button>
+                            <button id="btnSelected" class="btn_slt"><em>선택</em><span>▼</span></button>
                             <div class="slt_sec">
-                                <ul>
-                                    <li>가영크림 10MACH (10000point) </li>
-                                    <li>나영크림 10MACH (10000point) </li>
-                                    <li>다영크림 10MACH (10000point) </li>
-                                    <li>마영크림 10MACH (10000point) </li>
-                                    <li>바영크림 10MACH (10000point) </li>
-                                    <li>사영크림 10MACH (10000point) </li>
+                                <ul id="sltList">
+                                    <li>가영크림 <span class="priceMach">1MACH</span><span class="pricePoint">(11point)</span></li>
+                                    <li>나영크림 <span class="priceMach">2MACH</span><span class="pricePoint">(22point)</span></li>
+                                    <li>다영크림 <span class="priceMach">3MACH</span><span class="pricePoint">(33point)</span></li>
+                                    <li>마영크림 <span class="priceMach">4MACH</span><span class="pricePoint">(44point)</span></li>
+                                    <li>바영크림 <span class="priceMach">5MACH</span><span class="pricePoint">(55point)</span></li>
+                                    <li>사영크림 <span class="priceMach">6MACH</span><span class="pricePoint">(66point)</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -52,12 +57,26 @@
 
                 </div>
                 <div class="item_select_area">
-                    <h2>선택한 항목</h2>
+                    <h2 class="">선택한 항목</h2>
                     <div class="selected_item">
-
+                        <ul id="selectedList">
+                            <li class="cf">
+                                <span class="itemTit item_tit">
+                                </span>
+                                <span class="item_calc">
+                                    <button class="btn_calc" id="btnCalc">-</button>
+                                    <input type="text" id="itemLength" value="0">
+                                    <button class="btn_calc">+</button>
+                                </span>
+                            </li>
+                        </ul>
                     </div>
-                    <h2>주소</h2>
+
+                    <h2 class="">주소</h2>
                     <input type="text" class="form-control" id="" placeholder="거래 제목 입력">
+                    <div class="btn_buy_sec">
+                        <button class="btn" id="">구매</button>
+                    </div>
                 </div>
                 <div class="item_detail_area">
                     <img src="" alt="">
@@ -67,6 +86,11 @@
         </div>
     </div>
     <!--// content_wrap -->
+
+    <script>
+    var opt = {btn:"btnSelected", ul:"sltList", selectedList: "selectedList"}
+    //_SelectUI.actSelectBox(opt, function(){});
+    </script>
 
     <% include ../include/footer.html %>
 </div>

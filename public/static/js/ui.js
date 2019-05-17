@@ -343,7 +343,7 @@ var SubUI = {
                 }
             });
         }
-    },
+    }
 }
 SubUI.init();
 
@@ -393,6 +393,90 @@ var _PopupUI = {
     }
 }
 
+
+var _SelectUI = {
+    actSelectBox: function(opt, callback){
+        var btn = document.querySelector("#"+opt.btn);
+        var ul = document.querySelector("#"+opt.ul);
+        var selectedList = document.querySelector("#"+opt.selectedList);
+        var paymentMethod = document.querySelector("#paymentMethod");
+        var isOpen = false;
+
+        paymentMethod.addEventListener("change", function() {
+            if(paymentMethod.value === "") {
+                closeList();
+                alert("결제수단을 선택해주세요.");
+            } 
+        });
+
+        btn.addEventListener("click", function() {
+            if(paymentMethod.value === "") {
+                closeList();
+                alert("결제수단부터 선택해주세요.");
+                return;
+            } 
+            
+            // css
+            if (!isOpen) {
+                ul.style.display="block";
+                hideText(paymentMethod.value);
+            } else {
+                ul.style.display="none";
+            }
+            isOpen = !isOpen;
+            
+            // logic
+            if (isOpen) {
+                var li = ul.querySelectorAll("li");
+                for (var i = 0; i < li.length; i++) {
+                    li[i].addEventListener("click", function(e) {
+                        console.log(e.target.innerText, e.target.textcontent);
+                        
+                        if(paymentMethod.value === "") {
+                            alert("결제수단이 올바르지 않습니다.")
+                            return;
+                        } else {
+                            
+                        }
+                        
+                        selectedList.firstElementChild.querySelector(".itemTit").innerText = e.target.innerText;
+                        closeList();
+                    });
+                }
+            }
+
+            // callback
+            if(callback) callback();
+        });
+
+        function hideText(txt) {
+            var mach = document.querySelectorAll(".priceMach");
+            var point = document.querySelectorAll(".pricePoint");
+
+            
+            if(txt === "mach") {
+                console.log(txt)
+                for (var j = 0; j < mach.length; j++) {
+                    mach[j].style.display = "inline";
+                    point[j].style.display = "none";
+                }
+            } else if(txt === "point"){
+                for (var k = 0; k < mach.length; k++) {
+                    mach[k].style.display = "none";
+                    point[k].style.display = "inline";
+                }
+            } else {
+                alert("결제수단을 마하와 포인트중 선택해주세요")
+            }
+
+        }
+
+        function closeList() {
+            isOpen = false;
+            ul.style.display="none";
+        }
+    }
+}
 /*
 * All script is copyLeft 2019 By Jongmin Kim,
 * if you need anything, feel free to contact me. (ds2lvg@gmail.com)
