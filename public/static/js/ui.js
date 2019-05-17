@@ -480,21 +480,38 @@ var _SelectUI = {
         }
     },
     numberUtil: function() {
-        // 숫자만 입력가능 하게
-        // 100이상 입력 못하게
         var itemLength = document.querySelectorAll(".itemLength");
+        var btnMinus = document.querySelectorAll(".btnMinus");
+        var btnPlus = document.querySelectorAll(".btnPlus");
         for (var i = 0; i < itemLength.length; i++) {
-            itemLength[i].addEventListener("keypress", function() {
-                if (numCheck(this.value)) {
-                    alert("정수")
-                } else {
-                    alert("정수아님")
+            itemLength[i].addEventListener("focusout", function() {
+                if(!numCheck(this.value)){
+                    this.value = "1";
+                    alert("주문 수량은 숫자만 가능합니다");
+                }
+                if(this.value > 100) {
+                    alert("최대 주문 수량은 100개 입니다");
+                    this.value = "1";
                 }
             });
+
+            var num;
+            btnMinus[i].addEventListener("click", function(e) {
+                //console.log(e.target.nextSibling.nextSibling.value);
+                //e.target.nextSibling.nextSibling.value += 1;
+                num = parseInt(e.target.nextSibling.nextSibling.value);
+                num -= 1;
+                e.target.nextSibling.nextSibling.value = num;
+            });
+            
+            btnPlus[i].addEventListener("click", function(e) {
+                //console.log(e.target.previousSibling.previousSibling.value);
+                //e.target.previousSibling.previousSibling.value -= 1;
+                num = parseInt(e.target.previousSibling.previousSibling.value);
+                num -= 1;
+                e.target.nextSibling.nextSibling.value = num;
+            });
         }
-        // - 기능
-        
-        // + 기능
     }
 }
 /*
