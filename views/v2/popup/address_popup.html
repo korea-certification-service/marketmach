@@ -54,19 +54,21 @@ function isMobile() {
 
 function init(){
     var url = location.href;
-    var confmKey = "U01TX0FVVEgyMDE5MDUyMDIwNDQxMzEwODc0MzE="; //승인키
+    var confmKey = "";
     var resultType = "4"; // 도로명주소 검색결과 화면 출력유형, 1 : 도로명, 2 : 도로명+지번, 3 : 도로명+상세건물명, 4 : 도로명+지번+상세건물명
     var inputYn= "<%=inputYn%>";
     if(inputYn != "Y"){
+        if (isMobile()) {
+            confmKey = "U01TX0FVVEgyMDE5MDUyMTE1MzgyNDEwODc0NDY="; // Mobile승인키
+            document.form.action="http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do"; //모바일 웹인 경우, 인터넷망
+        } else {
+            confmKey = "U01TX0FVVEgyMDE5MDUyMDIwNDQxMzEwODc0MzE="; // PC 승인키
+            document.form.action="http://www.juso.go.kr/addrlink/addrLinkUrl.do"; // 인터넷망
+        }
         document.form.confmKey.value = confmKey;
         document.form.returnUrl.value = url;
         document.form.resultType.value = resultType; // resultType항목 추가(2016.10.06)
         
-        if (isMobile()) {
-            document.form.action="http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do"; //모바일 웹인 경우, 인터넷망
-        } else {
-            document.form.action="http://www.juso.go.kr/addrlink/addrLinkUrl.do"; // 인터넷망
-        }
         
         document.form.submit();
     }else{
