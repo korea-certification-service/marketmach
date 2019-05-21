@@ -20,6 +20,11 @@ let state = "RAMDOM_STATE";
 let redirectURI = encodeURI("http://localhost:3000/v2/naverLoginCallback");
 let api_url = "";
 
+var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 router.get('/login', function (req, res, next) {
     res.render('v2/login/login', {title: 'Bitweb Main'});
 });
@@ -344,6 +349,33 @@ router.get('/sub/btoc_view', function (req, res, next) {
         authPhone: req.session.authPhone,
         title: 'Bitweb Sub'});
 });
+
+// 도로명주소 팝업 테스트
+router.get('/popup/address_popup', function (req, res, next) {
+    // get은 단순히 공공주소 url로 redirect하기 위함
+    console.log("get req.body:", req.body);
+    res.render('v2/popup/address_popup', {
+        req: req,
+        title: 'get 도로명 주소'});
+});
+router.post('/popup/address_popup', function (req, res, next) {
+    console.log("post req.body:", req.body);
+    res.render('v2/popup/address_popup', {
+        req: req,
+        // inputYn: req.body.inputYn, 
+        // roadFullAddr: req.body.roadFullAddr, 
+        // roadAddrPart1: req.body.roadAddrPart1, 
+        // roadAddrPart2: req.body.roadAddrPart2, 
+        // engAddr: req.body.engAddr, 
+        // jibunAddr: req.body,jibunAddr,
+        // zipNo: req.body.zipNo, 
+        // addrDetail: req.body.addrDetail, 
+        // admCd: req.body.admCd,
+        // rnMgtSn: req.body.rnMgtSn,
+        // bdMgtSn: req.body.bdMgtSn,
+        title: 'post 도로명 주소'});
+});
+
 
 // 테스트용 퍼블
 router.get('/temp/test' , function(req, res, next) {

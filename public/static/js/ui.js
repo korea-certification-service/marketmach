@@ -498,18 +498,24 @@ var _SelectUI = {
             var num;
             btnMinus[i].addEventListener("click", function(e) {
                 //console.log(e.target.nextSibling.nextSibling.value);
-                //e.target.nextSibling.nextSibling.value += 1;
+                //e.target.nextSibling.nextSibling.value -= 1;
                 num = parseInt(e.target.nextSibling.nextSibling.value);
-                num -= 1;
-                e.target.nextSibling.nextSibling.value = num;
+                if(num > 1) {
+                    num -= 1;
+                    e.target.nextSibling.nextSibling.value = num;
+                }
             });
             
             btnPlus[i].addEventListener("click", function(e) {
                 //console.log(e.target.previousSibling.previousSibling.value);
-                //e.target.previousSibling.previousSibling.value -= 1;
+                //e.target.previousSibling.previousSibling.value += 1;
                 num = parseInt(e.target.previousSibling.previousSibling.value);
-                num -= 1;
-                e.target.nextSibling.nextSibling.value = num;
+                if(num < 100) {
+                    num += 1;
+                    e.target.previousSibling.previousSibling.value = num;
+                } else {
+                    alert("100개이상 구매가 불가능한 상품입니다.");
+                }
             });
         }
     }
