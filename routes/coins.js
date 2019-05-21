@@ -921,7 +921,8 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                 .then(user => {
                     controllerCoins.getByCoinId(country, user._doc.coinId)
                     .then(coin => {
-                        if(coin._doc.output_total_mach < req.body.mach) {
+                        let output_total_mach = coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach;
+                        if(output_total_mach < req.body.mach) {
                             bitwebResponse.code = 200;
                             bitwebResponse.message = {
                                 "code": "E001",
@@ -977,7 +978,7 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                             .then(coin => {
                                                 let update_data = {
                                                     "total_mach": coin._doc.total_mach - mach,
-                                                    "output_total_mach": coin._doc.output_total_mach - mach
+                                                    "output_total_mach": output_total_mach - mach
                                                 };
                                                 
                                                 controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
