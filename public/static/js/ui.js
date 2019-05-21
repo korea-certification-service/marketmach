@@ -436,7 +436,8 @@ var _SelectUI = {
                         // }
                         
                         selectedList.firstElementChild.querySelector(".itemTitle").innerText = this.querySelector(".productName").innerText;
-                        
+                        selectedList.firstElementChild.querySelector(".item_calc").style.display = "block";
+
                         if(paymentMethod.value === "mach") {
                             selectedList.firstElementChild.querySelector(".itemPrice").innerText = this.querySelector(".priceMach").innerText;
                         } else if(paymentMethod.value === "point") {

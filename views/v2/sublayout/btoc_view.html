@@ -48,14 +48,16 @@
                     <div class="rgh_txt">
                         <h2 class="iia_title">BTS 핸드크림</h2>
                         <span class="iia_money">45000원</span>
-                        <em class="iia_price">30MACH (35000Point)</em>
+                        <em class="iia_price">30MACH / 35000Point</em>
                         <em class="iia_delivery">무료배송</em>
-                        <h3 class="iia_option">결제 수단 선택</h3>
-                        <select id="paymentMethod">
-                            <option value="">선택</option>
-                            <option value="mach">MACH</option>
-                            <option value="point">Point</option>
-                        </select>
+                        <div class="choice_method">
+                            <h3 class="iia_option dib">결제 수단 선택</h3>
+                            <select id="paymentMethod">
+                                <option value="">선택</option>
+                                <option value="mach">MACH</option>
+                                <option value="point">Point</option>
+                            </select>
+                        </div>
                         <h3 class="iia_option">구매옵션</h3>
                         <div class="like_select_box">
                             <button id="btnSelected" class="btn_slt"><em>선택</em><span>▼</span></button>
@@ -74,7 +76,7 @@
 
                 </div>
                 <div class="item_select_area">
-                    <h2 class="">선택한 항목</h2>
+                    <h2 class="btoc_data_tit">선택한 항목</h2>
                     <div class="selected_item">
                         <ul id="selectedList">
                             <li class="cf">
@@ -92,39 +94,51 @@
                         </ul>
                     </div>
 
-                    <h2 class="">주소</h2>
-                    <input type="text" class="form-control" id="" placeholder="">
-                    <div class="btn_buy_sec">
-                        <button class="btn" id="">구매</button>
-                    </div>
+                    <h2 class="btoc_data_tit">받으실 분 정보</h2>
+                    <ul>
+                        <li>
+                            <strong>이름</strong>
+                            <input type="text" id="" class="form-control">
+                        </li>
+                        <li>
+                            <strong>전화번호</strong>
+                            <input type="text" id="" class="form-control">
+                        </li>
+                    </ul>
+
+                    <h2 class="btoc_data_tit">주소</h2>
                     <form name="form" id="form" method="post">
-                        <table >
-                            <colgroup>
-                                <col style="width:20%"><col>
+                        <table class="table_view table">
+                            <colgroup class="colgroup_btoc">
+                                <col class="col2_1">
+                                <col class="col2_2">
                             </colgroup>
                             <tbody>
                                 <tr>
                                     <th>우편번호</th>
                                     <td>
                                         <input type="hidden" id="confmKey" name="confmKey" value=""  >
-                                        <input type="text" id="zipNo" name="zipNo" readonly style="width:100px">
-                                        <input type="button"  value="주소검색" onclick="goPopup();">
+                                        <input type="text" id="zipNo" name="zipNo" class="zip_no form-control" readonly >
+                                        <input type="button"  value="주소검색" onclick="goPopup();" class="btn btn-primary">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>도로명주소</th>
-                                    <td><input type="text" id="roadAddrPart1" style="width:85%"></td>
+                                    <td><input type="text" id="roadAddrPart1" class="form-control" readonly></td>
                                 </tr>
                                 <tr>
                                     <th>상세주소</th>
                                     <td>
-                                        <input type="text" id="addrDetail" style="width:40%" value="">
-                                        <input type="text" id="roadAddrPart2"  style="width:40%" value="">
+                                        <input type="text" id="addrDetail" class="form-control" value="">
+                                        <input type="text" id="roadAddrPart2" class="form-control" value="">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </form>
+                    <div class="btn_buy_sec">
+                        <button class="btn" id="">구매</button>
+                    </div>
                 </div>
                 <div class="item_detail_area">
                     <img src="" alt="">

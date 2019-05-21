@@ -493,10 +493,11 @@
 .item_images_area{margin: 30px 0;}
 .item_images_area .lft_img{float: left; width: 45%;}
 .item_images_area .rgh_txt{float: right; width: 55%; padding-left: 20px; box-sizing: border-box;}
-.item_images_area .rgh_txt .iia_title{font-size: 24px;}
+.item_images_area .rgh_txt .iia_title{margin-bottom: 15px; padding: 15px 0; border-bottom: 1px solid #dbdbdb; font-size: 24px;}
 .item_images_area .rgh_txt .iia_money{display: block; font-size: 14px; text-decoration: line-through;}
-.item_images_area .rgh_txt .iia_price{display: block; font-size: 20px;}
-.item_images_area .rgh_txt .iia_delivery{display: block; font-size: 18px;}
+.item_images_area .rgh_txt .iia_price{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; display: block; font-size: 20px;}
+.item_images_area .rgh_txt .iia_delivery{margin-bottom: 10px; display: block; font-size: 18px;}
+.item_images_area .rgh_txt .choice_method{margin-bottom: 10px;}
 .item_images_area .rgh_txt .iia_option{font-size: 16px;}
 
 .item_images_area .rgh_txt .like_select_box{border: 1px solid #000;}
@@ -505,20 +506,26 @@
 .item_images_area .rgh_txt .like_select_box .btn_slt span{float: right; margin-right: 10px;}
 .item_images_area .rgh_txt .like_select_box .slt_sec{border-top: 1px solid #000;}
 .item_images_area .rgh_txt .like_select_box .slt_sec ul{display: none; max-height: 180px; overflow: scroll;}
-.item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; cursor: pointer; border-top: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; font-weight: bold; cursor: pointer; border-top: 1px solid #000;}
 .item_images_area .rgh_txt .like_select_box .slt_sec li:first-child{border-top: none;}
 
 .item_select_area{}
-.item_select_area h2{font-size: 16px;}
+.item_select_area .btoc_data_tit{margin-bottom: 10px; font-size: 16px;}
 .item_select_area .selected_item{margin-bottom: 20px;}
-.item_select_area .selected_item li{height: 30px;}
+.item_select_area .selected_item > ul{padding: 15px 10px; border: 1px solid #000;}
+.item_select_area .selected_item li{height: 30px; font-size: 16px; font-weight: bold;}
 .item_select_area .selected_item li .item_title{float: left;}
-.item_select_area .selected_item li .item_calc{float: right; font-size: 0;}
+.item_select_area .selected_item li .item_price{}
+.item_select_area .selected_item li .item_calc{display: none; float: right; font-size: 0;}
 .item_select_area .selected_item li .item_calc *{vertical-align: middle;}
 .item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 12px; background-color: transparent; font-weight: bold; border: 1px solid #dcdcdc;}
 .item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px; font-size: 16px; text-align: center; border: none; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc;}
 .item_select_area .btn_buy_sec{margin-top: 30px; text-align: right;}
 .item_select_area .btn_buy_sec .btn{max-width: 200px; width: 50%; background-color: #28a745; color: #ffffff; font-weight: bold;}
+.item_select_area .table_adr_info{width: 100%;}
+.item_select_area .table_adr_info .zip_no{width: 100px;}
+.item_select_area .table_adr_info{}
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
