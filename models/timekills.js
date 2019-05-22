@@ -10,6 +10,7 @@ var timekillsSchema = new Schema({
     amount: Number,
     price: Number,
     total_price: Number,
+    postcode: String,
     address: String,
     regDate: String
 });
