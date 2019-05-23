@@ -93,9 +93,9 @@ function buy(country, data) {
                             total_amount += timekill[i]._doc.amount;
                         }
 
-                        if(total_amount > 1) {
+                        if(total_amount > 100) {
                             let result = {
-                                "result": false,
+                                "successYn": false,
                                 "code":"E002",
                                 "msg": "해당 상품이 모두 구매 완료 되었습니다. 다음 기회를 이용하세요."
                             }
@@ -105,14 +105,14 @@ function buy(country, data) {
                             bitwebUsers.getUserByTag(data.userTag)
                                 .then((user) => {
                                     data['countryCode']=user._doc.countryCode;
-                                    data['phone']=user._doc.phone;
+                                    data['phone']= (data.phone == undefined ? user._doc.phone : data.phone);
                                     if(data.currencyType == "MACH") {
                                         bitwebCoins.getCoinById(user._doc.coinId)
                                             .then((coin) => {
                                                 // 구매 요청 금액 보다 코인 개수가 적으면 에러 처리
                                                 if(coin._doc.total_mach < data.total_price) {
                                                     let result = {
-                                                        "result": false,
+                                                        "successYn": false,
                                                         "code":"E001",
                                                         "msg": "보유 코인이 구매 요청 코인보다 적습니다. 코인 입금 후 다시 요청하세요."
                                                     }
