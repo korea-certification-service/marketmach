@@ -192,6 +192,7 @@
             method: "GET",
             url: "/v1/users/" + "<%= userId %>"
         }).done(function (success) {
+            //console.log(success.data);
             reqData.userTag = success.data.userTag;
         }).fail(function (fail) {
             console.log(fail);
@@ -220,9 +221,9 @@
     function purchaseItem() {
         if(validateInfo()) {
             reqData.product      = $(".itemTitle").text();
-            reqData.currencyType = $("#paymentMethod").val();
-            reqData.amount       = $(".itemLength").val();
-            reqData.price        = $(".itemPrice").text();
+            reqData.currencyType = $("#paymentMethod").val().toUpperCase();
+            reqData.amount       = parseInt($(".itemLength").val());
+            reqData.price        = parseInt($(".itemPrice").text().replace(/[^0-9]/g,""));
             reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
             reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
     
