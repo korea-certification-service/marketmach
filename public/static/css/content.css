@@ -502,14 +502,14 @@
 .item_images_area .rgh_txt .choice_method{margin-bottom: 10px;}
 .item_images_area .rgh_txt .iia_option{margin-bottom: 6px; font-size: 16px;}
 
-.item_images_area .rgh_txt .like_select_box{}
+.item_images_area .rgh_txt .like_select_box{position: relative;}
 .item_images_area .rgh_txt .like_select_box .btn_slt{width: 100%; height: 40px; text-align: left;background-color: transparent;border: 2px solid #e3e3e3; cursor: pointer;}
 .item_images_area .rgh_txt .like_select_box .btn_slt em{margin-left: 10px;}
 .item_images_area .rgh_txt .like_select_box .btn_slt span{float: right; margin-right: 10px;}
-.item_images_area .rgh_txt .like_select_box .slt_sec{border: 1px solid #78afd6; border-top: none;}
+.item_images_area .rgh_txt .like_select_box .slt_sec{position: absolute; width: 100%; background-color: #ffffff; border: 1px solid #78afd6; border-top: none;}
 .item_images_area .rgh_txt .like_select_box .slt_sec ul{display: none; max-height: 180px; overflow: scroll;}
 .item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; font-weight: bold; cursor: pointer; font-size: 16px;}
-.item_images_area .rgh_txt .like_select_box .slt_sec li:first-child{border-top: none;}
+.item_images_area .rgh_txt .like_select_box .slt_sec li:hover{background-color: #006ab5; color: #ffffff;}
 
 .item_select_area{}
 .item_select_area .btoc_data_tit{margin-bottom: 10px; font-size: 16px;}

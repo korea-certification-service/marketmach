@@ -41,6 +41,7 @@ var oppositionRouter = require('./routes/oppositions');
 var personalRouter = require('./routes/personals');
 var gameCenterRouter = require('./routes/gameCenter');
 var exchangeRouter = require('./routes/exchange');
+var shoppingRouter = require('./routes/shopping');
 
 var app = express();
 
@@ -149,6 +150,7 @@ app.use('/notices',noticeRouter);
 app.use('/customerCenter', customerCenterRouter);
 app.use('/supports', supportsRouter);
 app.use('/howto', howtoRouter);
+app.use('/shopping', shoppingRouter); // btoc shopping
 
 
 //backend API
