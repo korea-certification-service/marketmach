@@ -204,7 +204,10 @@
 
             $.ajax({
                 method: "GET",
-                url: "/v1/categories/" + gameName
+                url: "/v1/categories/" + gameName,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
             }).done(function (success) {
                 renderServerSelect(success.data);
             }).fail(function (fail) {

@@ -79,11 +79,9 @@
                     <div class="selected_item">
                         <ul id="selectedList">
                             <li class="cf">
-                                <span class="itemTitle item_title">
-                                </span>
+                                <span class="itemTitle item_title"></span>
                                 &nbsp;
-                                <span class="itemPrice item_price">
-                                </span>
+                                <span class="itemPrice item_price"></span>
                                 <span class="item_calc">
                                     <button class="btnMinus btn_calc">－</button>
                                     <input type="text" class="itemLength item_length" maxlength="3" value="1">
@@ -102,16 +100,16 @@
                         <tbody>
                             <tr>
                                 <th>수령인</th>
-                                <td><input type="text" id="" class="form-control" maxlength="10"></td>
+                                <td><input type="text" id="receiver" class="form-control" maxlength="10"></td>
                             </tr>
                             <tr>
                                 <th>연락처</th>
                                 <td>
-                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                    <input type="text" id="phoneNum1" class="w100 form-control" maxlength="3">
                                     <span> - </span>
-                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                    <input type="text" id="phoneNum2" class="w100 form-control" maxlength="4">
                                     <span> - </span>
-                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                    <input type="text" id="phoneNum3" class="w100 form-control" maxlength="4">
                                 </td>
                             </tr>
                         </tbody>
@@ -146,11 +144,11 @@
                         </table>
                     </form>
                     <div class="btn_buy_sec">
-                        <button class="btn" id="">구매하기</button>
+                        <button class="btn" onclick="purchaseItem();">구매하기</button>
                     </div>
-                </div>
-                <div class="item_detail_area">
-                    <img src="" alt="">
+                    <div class="item_detail_area">
+                        <img src="/static/img/event/bts_detail.jpg" alt="상품설명">
+                    </div>
                 </div>
             </section>
             <!--// list page-->
@@ -164,6 +162,8 @@
         // callback
     });
     _SelectUI.numberUtil();
+
+    getUserInfo();
 
     // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
     //document.domain = "http://192.168.0.10:3000";
@@ -185,18 +185,62 @@
         document.form.zipNo.value = zipNo;
     }
 
-    // API call
+    var reqData = {};
 
-    // 
-    function buy() {
+    function getUserInfo() {
         $.ajax({
             method: "GET",
-            url: "/v1/events/buy"
+            url: "/v1/users/" + "<%= userId %>"
         }).done(function (success) {
-            renderServerSelect(success.data);
+            reqData.userTag = success.data.userTag;
         }).fail(function (fail) {
             console.log(fail);
         });
+    }
+
+    function validateInfo() {
+        var state = false;
+
+        if ($(".itemTitle").text() === "") {
+            alert("구매하실 제품을 선택하세요.");
+        } else if ($("#receiver").val() === "") {
+            alert("수령인 성함을 입력하세요.");
+        } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
+            alert("수령인 연락처를 입력하세요.");
+        } else if ($("#zipNo").val() === "" ) {
+            alert("제품을 받으실 주소를 입력하세요."); 
+        } else {
+            state = true;
+        }
+
+        return state;
+    }
+    
+    // API call
+    function purchaseItem() {
+        if(validateInfo()) {
+            reqData.product      = $(".itemTitle").text();
+            reqData.currencyType = $("#paymentMethod").val();
+            reqData.amount       = $(".itemLength").val();
+            reqData.price        = $(".itemPrice").text();
+            reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
+            reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
+    
+            console.log("reqData: ", reqData);
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/events/buy",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData)
+            }).done(function (success) {
+                console.log(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
     }
     </script>
 

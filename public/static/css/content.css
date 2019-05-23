@@ -523,7 +523,7 @@
 .item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 12px; background-color: transparent; font-weight: bold; border: 1px solid #dcdcdc;}
 .item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px; font-size: 16px; text-align: center; border: none; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc;}
 .item_select_area .btn_buy_sec{margin-top: 30px; text-align: right;}
-.item_select_area .btn_buy_sec .btn{width: 100px; background-color: #000039; color: #ffffff; font-weight: bold;}
+.item_select_area .btn_buy_sec .btn{width: 140px; height: 40px; font-size: 16px; background-color: #000039; color: #ffffff; font-weight: bold;}
 .item_select_area .tit_delivery{margin-bottom: 50px; padding-top: 20px; border-top: 2px solid #000; font-size: 20px;}
 .item_select_area .table_btoc {width: 100%;}
 .item_select_area .table_btoc th{height: 50px; color: #888;}
@@ -531,7 +531,7 @@
 .item_select_area .table_btoc td{}
 .item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
 .item_select_area .table_btoc .w100{width: 100px;}
-
+.item_select_area .item_detail_area{margin-top: 30px; text-align: center;}
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
