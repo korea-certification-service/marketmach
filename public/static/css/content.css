@@ -492,39 +492,45 @@
 /* BtoC 상세 물품 */
 .item_images_area{margin: 30px 0;}
 .item_images_area .lft_img{float: left; width: 45%;}
-.item_images_area .rgh_txt{float: right; width: 55%; padding-left: 20px; box-sizing: border-box;}
-.item_images_area .rgh_txt .iia_title{margin-bottom: 15px; padding: 15px 0; border-bottom: 1px solid #dbdbdb; font-size: 24px;}
-.item_images_area .rgh_txt .iia_money{display: block; font-size: 14px; text-decoration: line-through;}
-.item_images_area .rgh_txt .iia_price{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; display: block; font-size: 20px;}
-.item_images_area .rgh_txt .iia_delivery{margin-bottom: 10px; display: block; font-size: 18px;}
+.item_images_area .rgh_txt{float: right; width: 55%; padding-left: 60px; box-sizing: border-box;}
+.item_images_area .rgh_txt .iia_title{margin-bottom: 18px; font-size: 22px;}
+.item_images_area .rgh_txt .iia_sub_title{font-size: 18px;}
+.item_images_area .rgh_txt .iia_delivery{margin-bottom: 15px; display: block; font-size: 16px; text-decoration: underline;}
+.item_images_area .rgh_txt .iia_money{display: inline-block; font-size: 16px; text-decoration: line-through; color: #888888;}
+.item_images_area .rgh_txt .iia_percent{display: inline-block; font-size: 24px;}
+.item_images_area .rgh_txt .iia_price{margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3; display: block; font-size: 24px; font-weight: 500; color: #0a73b8;}
 .item_images_area .rgh_txt .choice_method{margin-bottom: 10px;}
-.item_images_area .rgh_txt .iia_option{font-size: 16px;}
+.item_images_area .rgh_txt .iia_option{margin-bottom: 6px; font-size: 16px;}
 
-.item_images_area .rgh_txt .like_select_box{border: 1px solid #000;}
-.item_images_area .rgh_txt .like_select_box .btn_slt{width: 100%; height: 40px; text-align: left;background-color: transparent; border: none; cursor: pointer;}
+.item_images_area .rgh_txt .like_select_box{}
+.item_images_area .rgh_txt .like_select_box .btn_slt{width: 100%; height: 40px; text-align: left;background-color: transparent;border: 2px solid #e3e3e3; cursor: pointer;}
 .item_images_area .rgh_txt .like_select_box .btn_slt em{margin-left: 10px;}
 .item_images_area .rgh_txt .like_select_box .btn_slt span{float: right; margin-right: 10px;}
-.item_images_area .rgh_txt .like_select_box .slt_sec{border-top: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .slt_sec{border: 1px solid #78afd6; border-top: none;}
 .item_images_area .rgh_txt .like_select_box .slt_sec ul{display: none; max-height: 180px; overflow: scroll;}
-.item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; font-weight: bold; cursor: pointer; border-top: 1px solid #000;}
+.item_images_area .rgh_txt .like_select_box .slt_sec li{padding-left: 10px; height: 40px; line-height: 40px; font-weight: bold; cursor: pointer; font-size: 16px;}
 .item_images_area .rgh_txt .like_select_box .slt_sec li:first-child{border-top: none;}
 
 .item_select_area{}
 .item_select_area .btoc_data_tit{margin-bottom: 10px; font-size: 16px;}
-.item_select_area .selected_item{margin-bottom: 20px;}
-.item_select_area .selected_item > ul{padding: 15px 10px; border: 1px solid #000;}
+.item_select_area .selected_item{margin-bottom: 60px;}
+.item_select_area .selected_item > ul{padding: 15px 10px; border:2px solid #ececec;}
 .item_select_area .selected_item li{height: 30px; font-size: 16px; font-weight: bold;}
-.item_select_area .selected_item li .item_title{float: left;}
-.item_select_area .selected_item li .item_price{}
+.item_select_area .selected_item li .item_title{float: left; font-size: 19px; font-weight: 500; color: #1e2560;}
+.item_select_area .selected_item li .item_price{font-size: 19px; font-weight: 500; color: #1e2560;}
 .item_select_area .selected_item li .item_calc{display: none; float: right; font-size: 0;}
 .item_select_area .selected_item li .item_calc *{vertical-align: middle;}
 .item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 12px; background-color: transparent; font-weight: bold; border: 1px solid #dcdcdc;}
 .item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px; font-size: 16px; text-align: center; border: none; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc;}
 .item_select_area .btn_buy_sec{margin-top: 30px; text-align: right;}
-.item_select_area .btn_buy_sec .btn{max-width: 200px; width: 50%; background-color: #28a745; color: #ffffff; font-weight: bold;}
-.item_select_area .table_adr_info{width: 100%;}
-.item_select_area .table_adr_info .zip_no{width: 100px;}
-.item_select_area .table_adr_info{}
+.item_select_area .btn_buy_sec .btn{width: 100px; background-color: #000039; color: #ffffff; font-weight: bold;}
+.item_select_area .tit_delivery{margin-bottom: 50px; padding-top: 20px; border-top: 2px solid #000; font-size: 20px;}
+.item_select_area .table_btoc {width: 100%;}
+.item_select_area .table_btoc th{height: 50px; color: #888;}
+.item_select_area .table_btoc .align_top{vertical-align: top; padding-top: 10px;}
+.item_select_area .table_btoc td{}
+.item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
+.item_select_area .table_btoc .w100{width: 100px;}
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){

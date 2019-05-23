@@ -47,11 +47,11 @@
                     </div>
                     <div class="rgh_txt">
                         <h2 class="iia_title">BTS 핸드크림</h2>
-                        <span class="iia_money">45000원</span>
-                        <em class="iia_price">30MACH / 35000Point</em>
                         <em class="iia_delivery">무료배송</em>
+                        <span class="iia_money">45000원</span> <span class="iia_percent">22%</span>
+                        <em class="iia_price">30MACH / 35000Point</em>
                         <div class="choice_method">
-                            <h3 class="iia_option dib">결제 수단 선택</h3>
+                            <h3 class="iia_option dib">결제 수단</h3>
                             <select id="paymentMethod">
                                 <option value="">선택</option>
                                 <option value="mach">MACH</option>
@@ -73,7 +73,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="item_select_area">
                     <h2 class="btoc_data_tit">선택한 항목</h2>
@@ -94,21 +93,31 @@
                         </ul>
                     </div>
 
-                    <h2 class="btoc_data_tit">받으실 분 정보</h2>
-                    <ul>
-                        <li>
-                            <strong>이름</strong>
-                            <input type="text" id="" class="form-control">
-                        </li>
-                        <li>
-                            <strong>전화번호</strong>
-                            <input type="text" id="" class="form-control">
-                        </li>
-                    </ul>
-
-                    <h2 class="btoc_data_tit">주소</h2>
+                    <h2 class="tit_delivery">배송정보</h2>
+                    <table class="table_btoc">
+                        <colgroup class="colgroup_btoc">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>수령인</th>
+                                <td><input type="text" id="" class="form-control" maxlength="10"></td>
+                            </tr>
+                            <tr>
+                                <th>연락처</th>
+                                <td>
+                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                    <span> - </span>
+                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                    <span> - </span>
+                                    <input type="text" id="" class="w100 form-control" maxlength="3">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <form name="form" id="form" method="post">
-                        <table class="table_view table">
+                        <table class="table_btoc">
                             <colgroup class="colgroup_btoc">
                                 <col class="col2_1">
                                 <col class="col2_2">
@@ -118,8 +127,8 @@
                                     <th>우편번호</th>
                                     <td>
                                         <input type="hidden" id="confmKey" name="confmKey" value=""  >
-                                        <input type="text" id="zipNo" name="zipNo" class="zip_no form-control" readonly >
-                                        <input type="button"  value="주소검색" onclick="goPopup();" class="btn btn-primary">
+                                        <input type="text" id="zipNo" name="zipNo" class="w100 form-control" readonly >
+                                        <input type="button"  value="주소검색" onclick="goPopup();" class="btn btn-default">
                                     </td>
                                 </tr>
                                 <tr>
@@ -127,9 +136,9 @@
                                     <td><input type="text" id="roadAddrPart1" class="form-control" readonly></td>
                                 </tr>
                                 <tr>
-                                    <th>상세주소</th>
+                                    <th class="align_top">상세주소</th>
                                     <td>
-                                        <input type="text" id="addrDetail" class="form-control" value="">
+                                        <input type="text" id="addrDetail" class="addr_detail form-control" value="">
                                         <input type="text" id="roadAddrPart2" class="form-control" value="">
                                     </td>
                                 </tr>
@@ -137,7 +146,7 @@
                         </table>
                     </form>
                     <div class="btn_buy_sec">
-                        <button class="btn" id="">구매</button>
+                        <button class="btn" id="">구매하기</button>
                     </div>
                 </div>
                 <div class="item_detail_area">
@@ -151,11 +160,11 @@
 
     <script>
     var opt = {btn:"btnSelected", ul:"sltList", selectedList: "selectedList"}
-    _SelectUI.actSelectBox(opt, function(){});
+    _SelectUI.actSelectBox(opt, function(){
+        // callback
+    });
     _SelectUI.numberUtil();
-    </script>
 
-    <script language="javascript">
     // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
     //document.domain = "http://192.168.0.10:3000";
     
@@ -174,6 +183,20 @@
         document.form.roadAddrPart2.value = roadAddrPart2;
         document.form.addrDetail.value = addrDetail;
         document.form.zipNo.value = zipNo;
+    }
+
+    // API call
+
+    // 
+    function buy() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/events/buy"
+        }).done(function (success) {
+            renderServerSelect(success.data);
+        }).fail(function (fail) {
+            console.log(fail);
+        });
     }
     </script>
 

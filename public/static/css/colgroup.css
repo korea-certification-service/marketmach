@@ -127,6 +127,9 @@
 /* 회원정보수정: .table_view .col2_1 */
 .table .colgroup_myinfo .col2_1{}
 
+/*** btoc ***/
+.table_btoc .col2_1{width: 158px;}
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
