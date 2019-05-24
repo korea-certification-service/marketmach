@@ -371,6 +371,36 @@ function updateStatus(country, req) {
                                                                 
                                                                                     bitwebCoinHistorys.createCoinHistory(data10);
 
+                                                                                    bitwebVtrs.updateVtrById(vtrId, data)
+                                                                                        .then((result) => {
+                                                                                            let itemId = result._doc.item._id;
+                                                                                            // let body = {"status": 3}
+                                                                                            //ui-ux 개편 시 오픈
+                                                                                            let body = {"status": 4}
+                                                                                            bitwebItems.updateItemById(itemId, body)
+                                                                                                .then((item) => {
+                                                                                                    let body3 = {
+                                                                                                        "type": "withdraw",
+                                                                                                        "itemId": result._doc.item._id,
+                                                                                                        "vtr": result,
+                                                                                                        "mach": mach,
+                                                                                                        "reqUser":result._doc.from_userId,
+                                                                                                        "regDate": util.formatDate(new Date().toString())
+                                                                                                    };
+                                                                                                    
+                                                                                                    bitwebVtrs.createEscrow(body3)
+                                                                                                        .then(() => {
+                                                                                                            console.log('result=>', result);
+                                                                                                            resolve(result);
+                                                                                                        }).catch((err) => {
+                                                                                                        console.log('err=>', err)
+                                                                                                        reject(err)
+                                                                                                    })
+                                                                                                });
+                                                                                        }).catch((err) => {
+                                                                                        console.log('err=>', err)
+                                                                                        reject(err)
+                                                                                    })
                                                                                 }).catch((err) => {
                                                                                 console.log('err=>', err)
                                                                             })
@@ -381,44 +411,44 @@ function updateStatus(country, req) {
                                                             }).catch((err) => {
                                                             console.log('err=>', err)
                                                         })
-                                                    }
-
-                                                    bitwebCoins.updateTotalCoin(country, coinId, mach_json)
-                                                        .then(() => {
-                                                            bitwebVtrs.updateVtrById(vtrId, data)
-                                                                .then((result) => {
-                                                                    let itemId = result._doc.item._id;
-                                                                    // let body = {"status": 3}
-                                                                    //ui-ux 개편 시 오픈
-                                                                    let body = {"status": 4}
-                                                                    bitwebItems.updateItemById(itemId, body)
-                                                                        .then((item) => {
-                                                                            let body3 = {
-                                                                                "type": "withdraw",
-                                                                                "itemId": result._doc.item._id,
-                                                                                "vtr": result,
-                                                                                "mach": mach,
-                                                                                "reqUser":result._doc.from_userId,
-                                                                                "regDate": util.formatDate(new Date().toString())
-                                                                            };
-                                                                            
-                                                                            bitwebVtrs.createEscrow(body3)
-                                                                                .then(() => {
-                                                                                    console.log('result=>', result);
-                                                                                    resolve(result);
-                                                                                }).catch((err) => {
-                                                                                console.log('err=>', err)
-                                                                                reject(err)
-                                                                            })
-                                                                        });
-                                                                }).catch((err) => {
-                                                                console.log('err=>', err)
-                                                                reject(err)
-                                                            })
-                                                        }).catch((err) => {
-                                                        console.log('err=>', err)
-                                                        reject(err)
-                                                    })
+                                                    } else {
+                                                        bitwebCoins.updateTotalCoin(country, coinId, mach_json)
+                                                            .then(() => {
+                                                                bitwebVtrs.updateVtrById(vtrId, data)
+                                                                    .then((result) => {
+                                                                        let itemId = result._doc.item._id;
+                                                                        // let body = {"status": 3}
+                                                                        //ui-ux 개편 시 오픈
+                                                                        let body = {"status": 4}
+                                                                        bitwebItems.updateItemById(itemId, body)
+                                                                            .then((item) => {
+                                                                                let body3 = {
+                                                                                    "type": "withdraw",
+                                                                                    "itemId": result._doc.item._id,
+                                                                                    "vtr": result,
+                                                                                    "mach": mach,
+                                                                                    "reqUser":result._doc.from_userId,
+                                                                                    "regDate": util.formatDate(new Date().toString())
+                                                                                };
+                                                                                
+                                                                                bitwebVtrs.createEscrow(body3)
+                                                                                    .then(() => {
+                                                                                        console.log('result=>', result);
+                                                                                        resolve(result);
+                                                                                    }).catch((err) => {
+                                                                                    console.log('err=>', err)
+                                                                                    reject(err)
+                                                                                })
+                                                                            });
+                                                                    }).catch((err) => {
+                                                                    console.log('err=>', err)
+                                                                    reject(err)
+                                                                })
+                                                            }).catch((err) => {
+                                                            console.log('err=>', err)
+                                                            reject(err)
+                                                        })
+                                                    }  
                                                 }).catch((err) => {
                                                 console.log('err=>', err)
                                                 reject(err)

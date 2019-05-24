@@ -544,8 +544,8 @@ router.post('/buynow', function (req, res, next) {
                                                     } else {
                                                         let data = {
                                                             "roomToken":util.makeToken(),
-                                                            "buyer_id": targetUserTag,
-                                                            "seller_id": fromUserTag,
+                                                            "buyer_id": fromUserTag,
+                                                            "seller_id": targetUserTag,
                                                             "cmod": "deal",
                                                             "country":dbconfig.country,
                                                             "item": item
