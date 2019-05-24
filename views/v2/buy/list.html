@@ -197,6 +197,11 @@
                 var status = getStatus(data[i].status);
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
+                
+                var money = point + 'Point';
+                if("<%= useBlockchain %>" == "Y") {
+                    money = price + 'MACH';
+                }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
                                 '<td>'+item_game_server+'</td>' + 
@@ -206,7 +211,7 @@
                                     '</div>' + 
                                     '<span class="ico_photo">사진</span>' + 
                                 '</td>' + 
-                                '<td>'+ price +' MACH</td>' + 
+                                '<td>'+ money + '</td>' + 
                                 '<td>' + 
                                     '<span class="'+status.className+'">'+status.text+'</span>' + 
                                 '</td>' + 

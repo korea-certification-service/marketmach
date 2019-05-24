@@ -65,6 +65,7 @@
                                     <th>거래제목</th>
                                     <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
                                 </tr>
+                                <%if(useBlockchain == 'Y') {%>
                                 <tr>
                                     <th>거래가격</th>
                                     <td>
@@ -75,16 +76,17 @@
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>거래가격(캐시)</th>
+                                <%} if(usePoint == 'Y') {%>
+                                <tr>
+                                    <th>거래가격(Point)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="text" class="form-control w80p" id="point" placeholder="거래 가격 입력.">
-                                            <em class="fc2">CASH</em>
+                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <em class="fc2" id="currencyName"></em>
                                         </div>
-                                        <p class="fcrd">※ 1CASH = 1원</p>
                                     </td>
-                                </tr> -->
+                                </tr>
+                                <%}%>
                                 <tr>
                                     <th>상세정보</th>
                                     <td>
@@ -157,8 +159,12 @@
                 
                 $("[name=item_type]").filter('[value='+success.data.delivery_type+']').prop('checked', true);
                 $("#title").val(title);
-                $("#price").val(price);
-                $("#point").val(point);
+                if("<%=useBlockchain%>" == 'Y') {
+                    $("#price").val(price);
+                } 
+                if("<%=usePoint%>" == 'Y') {
+                    $("#point").val(point);
+                }
                 $("#desc").text(desc);
                 
                 loadGameList();
@@ -261,14 +267,15 @@
             if ("<%= useBlockchain %>" == "Y") {
                 data["price"] = $("#price").val();
             } else {
-                data["price"] = 0;
+                // data["price"] = 0;
             }
-            // if ("<%= usePoint %>" == "Y" && country == "KR") {
-            //     data["point"]=$("#point").val();
-            // }else{
-            //     data["point"]=0;
-            // }
-            data["point"]=0;
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                // data["currency"]="POINT";
+                // data["point"]=0;
+            }
 
             if(country=="CN"){
                 data["china_region1"]=$("#region1").val();

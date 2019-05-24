@@ -84,6 +84,10 @@
                     var point = numberWithCommas(buyList[i].item.point);
                     var status = "취소완료";
                     var refund = buyList[i].refund == true ? "(환불)" : "";
+                    var money = point + ' Point';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + ' MACH';
+                    }
                     
                     result += '<tr>' + 
                                 '<td>'+category+'</td>' + 
@@ -92,7 +96,7 @@
                                     '<div class="ellipse">' + title +
                                     '</div>' + 
                                 '</td>' + 
-                                '<td>'+price+' MACH</td>' + 
+                                '<td>'+money+'</td>' + 
                                 '<td>' + 
                                     '<span class="btn_cmm_bd ico_item">'+status + '<br>' + refund + '</span>' + 
                                 '</td>' + 

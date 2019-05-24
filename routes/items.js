@@ -733,7 +733,9 @@ router.put('/:itemId', function (req, res, next) {
         let data = {}
 
         data = req.body;
-        data['total_price'] = req.body.price * req.body.count;
+        if(req.body.price != undefined) {
+            data['total_price'] = req.body.price * req.body.count;
+        }
         data['total_point'] = req.body.point * req.body.count;
         data['modifyDate'] = util.formatDate(new Date().toLocaleString('ko-KR'))
 

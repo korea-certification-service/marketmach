@@ -66,26 +66,28 @@
                                 <th>거래제목</th>
                                 <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력" maxlength="50"></td>
                             </tr>
+                            <%if(useBlockchain == 'Y') {%>
                             <tr>
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
                                         <em class="fc2">MACH</em>
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <th>거래가격(캐시)</th>
+                            <%} if(usePoint == 'Y') {%>
+                            <tr>
+                                <th>거래가격(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="text" class="form-control w80p" id="point" placeholder="거래 가격 입력.">
-                                        <em class="fc2">CASH</em>
+                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <em class="fc2" id="currencyName"></em>
                                     </div>
-                                    <p class="fcrd">※ 1CASH = 1원</p>
                                 </td>
-                            </tr> -->
+                            </tr>
+                            <%}%>
                             <tr>
                                 <th>구매자 캐릭터명</th>
                                 <td><input type="text" class="form-control" id="game_character" placeholder="물품을 전달 받으실 본인의 캐릭터명 입력"></td>
@@ -244,11 +246,14 @@
             } else {
                 data["price"] = 0;
             }
-            // if ("<%= usePoint %>" == "Y" && country == "KR") {
-            //     data["point"]=$("#point").val();
-            // }else{
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                data["currency"]="POINT";
                 data["point"]=0;
-            // }
+            }
 
             if(country=="CN"){
                 data["china_region1"]=$("#region1").val();
