@@ -277,7 +277,7 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 .visual_wrap .visual_sec .slick_visual .slick-arrow{display: none !important; z-index:1; position: absolute; bottom: 30px; left: 50%; width: 20px; height: 40px; text-indent: -99999px;}
 .visual_wrap .visual_sec .slick_visual .slick-prev{margin-left: -500px; background: url() 50% 50% no-repeat;}
 .visual_wrap .visual_sec .slick_visual .slick-next{margin-left: 500px; background: url() 50% 50% no-repeat;}
-.visual_wrap .visual_sec .slick_visual .slick-dots{position: absolute; z-index: 2; bottom: 15px; left: 50%; margin-left: -75px; width: 150px;  text-align: center;}
+.visual_wrap .visual_sec .slick_visual .slick-dots{position: absolute; z-index: 2; bottom: 15px; left: 50%; margin-left: -120px; width: 240px;  text-align: center;}
 .visual_wrap .visual_sec .slick_visual .slick-dots li{display: inline-block;}
 .visual_wrap .visual_sec .slick_visual .slick-dots li button{margin-left: 10px; width: 20px; height: 20px; background-color: #fff; border-radius: 50% 50%; border:none; text-indent: -99999px; border: 1px solid #000;}
 .visual_wrap .visual_sec .slick_visual .slick-dots li:first-child button{margin-left: 0;}

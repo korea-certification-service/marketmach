@@ -219,7 +219,6 @@
                 dataType: "json",
                 data: JSON.stringify(reqData)
             }).done(function (success) {
-                console.log(success.data);
                 if(success.data.successYn){
                     var msg = "정상적으로 구매가 완료되었습니다.\n\n";
                         msg += "구매하신 제품명: " + reqData.product + "\n";
