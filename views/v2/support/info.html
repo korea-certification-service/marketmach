@@ -5,6 +5,7 @@
     <script>
         $(document).ready(function() {
             getNotices();
+            getEvents();
         });
 
         function getNotices() {
@@ -51,6 +52,34 @@
 
         function showDetail(id) {
             location.href="/supports/notice/detail?noticeId=" + id;
+        }
+
+        function getEvents() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/events/list/now",
+            }).done(function (success) {
+                console.log(success.data);
+                setEvents(success.data.list);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setEvents(data) {
+            var strDOM="";
+            if(data.length == 0) {
+                strDOM = '<li class="fcrd tac">진행중인 이벤트가 없습니다.</li>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                strDOM += '<li class="cf">';
+                strDOM += '<a href="/supports/event/detail/'+ data[i]._id +'">'+data[i].title+'</a>';
+                strDOM += '<span>' + data[i].regDate.substring(2, 10) + '</span>';
+                strDOM += '</li>';
+            }
+
+            $('#eventList').append(strDOM);
         }
     </script>
 </head>
@@ -125,8 +154,17 @@
                         
                         <h2 class="tit_support dot_tit">진행중인 이벤트 <a class="add_circle_outline" href="/supports/event"><i class="material-icons">add_circle_outline</i></a></h2>
                         <div class="event_list_area">
-                            <!-- <p class="fcrd tac">진행중인 이벤트가 없습니다.</p> -->
-                            <p><a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a></p>
+                            <!-- <p><a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a></p> -->
+                            <ul id="eventList">
+                                <!-- <li class="cf">
+                                    <a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a>
+                                    <span>19/05/24</span>
+                                </li>
+                                <li class="cf">
+                                    <a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a>
+                                    <span>19/05/24</span>
+                                </li> -->
+                            </ul>
                         </div>
                     </section>
                     <!--// support -->

@@ -6,7 +6,8 @@
 */
 
 /********** main **********/
-
+.header .nav > .l_menu > li > button{font-size: 14px;}
+.header .nav > .r_menu > li .beforeLoginBox .mdl_area p{font-size: 13px;}
 /**********  **********/
 
 /********** Mobile MarkUp CSS **********/

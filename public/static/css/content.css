@@ -396,6 +396,10 @@
 /* 진행중인 이벤트 */
 .event_list_area{border-top: 2px solid #c1c1c1;}
 .event_list_area > p{padding: 20px 0;}
+.event_list_area li{margin-top: 15px;}
+.event_list_area li:first-child{margin-top: 30px;}
+.event_list_area li a{float: left; padding-left: 10px;}
+.event_list_area li span{float: right; padding-right: 10px;}
 .event_list_wrap{margin-top: 30px;}
 .event_list_wrap .img_list_box{}
 .event_list_wrap .img_list_box .photo_frame{text-align: center; height: 200px; overflow: hidden; background-color: #000000;}
