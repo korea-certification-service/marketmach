@@ -418,8 +418,8 @@ router.get("/naveraf72822281097f80bf131c58b3c9abdb.html", function (req, res, ne
     res.render('naveraf72822281097f80bf131c58b3c9abdb', {title: 'private'});
 });
 
-router.get("/google05041e1a347ce656.html", function (req, res, next) {
-    res.render('google05041e1a347ce656', {title: 'private'});
+router.get("/google2def744eaae3698d.html", function (req, res, next) {
+    res.render('google2def744eaae3698d', {title: 'private'});
 });
 
 router.get('/room', function (req, res, next) {
