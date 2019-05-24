@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var timekillsSchema = new Schema({
     product: String,
     userTag: String,
+    receiver: String,
     countryCode: String,
     phone: String,
     currencyType: String,
