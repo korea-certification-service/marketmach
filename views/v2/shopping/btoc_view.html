@@ -209,6 +209,7 @@
             reqData.price        = parseInt($(".itemPrice").text().replace(/[^0-9]/g,""));
             reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
             reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
+            reqData.receiver     = $("#receiver").val();
             //console.log("reqData: ", reqData);
 
             $.ajax({
@@ -220,7 +221,15 @@
             }).done(function (success) {
                 console.log(success.data);
                 if(success.data.successYn){
-                    alert("정상적으로 구매가 완료되었습니다.");
+                    var msg = "정상적으로 구매가 완료되었습니다.\n\n";
+                        msg += "구매하신 제품명: " + reqData.product + "\n";
+                        msg += "구매하신 수량: " + reqData.amount + "\n";
+                        msg += "받으실분 성함: " + reqData.receiver + "\n";
+                        msg += "받으실분 연락처: " + reqData.phone + "\n";
+                        msg += "받으실분 주소: " + reqData.address + "\n\n";
+                        msg += "입력하신 정보가 잘못되었다면 1:1문의하기를 이용해주세요.";
+                    alert(msg);
+                    window.location.href = "/main"
                 } else {
                     alert(success.data.msg);
                 }
