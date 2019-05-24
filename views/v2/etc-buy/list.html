@@ -184,6 +184,11 @@
                 var status = getStatus(data[i].status);
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type, "buy");
                 var trade_type = replaceType(data[i].trade_type);
+               
+                var money = point + 'Point';
+                if("<%= useBlockchain %>" == "Y") {
+                    money = price + 'MACH';
+                }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
                                 '<td>'+etc_category+'</td>' + 
@@ -192,7 +197,7 @@
                                     '<div class="ellipse"> ' + title + 
                                     '</div>' + 
                                 '</td>' + 
-                                '<td>'+ price +' MACH</td>' + 
+                                '<td>'+ money +'</td>' + 
                                 '<td>' + 
                                     '<span class="'+status.className+'">'+status.text+'</span>' + 
                                 '</td>' + 

@@ -195,6 +195,11 @@
                 } else {
                     tradingFlag = '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>';
                 }
+                
+                var money = point + '<span>Point</span>';
+                if("<%= useBlockchain %>" == "Y") {
+                    money = price + '<span>MACH</span>';
+                }
 
                 if(i % 4 == 0) strDOM += '<li class="row">';
 
@@ -209,7 +214,7 @@
                                             '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">'+title+'</a></div>' + 
                                         '</dt>' + 
                                         '<dd class="cf">' + 
-                                            '<div class="money_txt">'+price+'<span>MACH</span></div>' + 
+                                            '<div class="money_txt">'+money+'</div>' + 
                                             '<div class="time_txt">'+regDate+'</div>  ' + 
                                         '</dd>' + 
                                     '</dl>' + 

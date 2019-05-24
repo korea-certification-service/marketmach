@@ -57,10 +57,17 @@
                                 <th>거래상태</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
+                            <%if(useBlockchain == 'Y') {%>
                             <tr>
-                                <th>거래 가격</th>
-                                <td><p class="txt_price"></p></td>
+                                <th>거래가격</th>
+                                <td><p class="txt_price"><span></span></p></td>
                             </tr>
+                            <%}if(usePoint == 'Y') {%>
+                            <tr>
+                                <th>거래가격(Point)</th>
+                                <td><p class="txt_point"><span></span></p></td>
+                            </tr>
+                            <%}%>
                             <tr class="mrg_cell trForDel">
                                 <td colspan="2">
                                     <div id="fullImg"></div>
@@ -240,7 +247,12 @@
                 $(".item_title").text(title);
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
-                $(".txt_price").html(price + "<span>MACH</span>");
+                if("<%=useBlockchain%>" == 'Y') {
+                    $(".txt_price").html(price + "<span>MACH</span>");
+                }
+                if("<%=usePoint%>" == 'Y') { 
+                    $(".txt_point").html(point + "<span>Point</span>");
+                }
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);
                 $(".item_phone").text(item_phone);
