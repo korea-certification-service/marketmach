@@ -325,10 +325,12 @@ function updateStatus(country, req) {
                                                 .then(coin => {
                                                     let user_mach = coin.total_mach;
                                                     user_mach = user_mach + mach;
-                                                    let mach_json = {"total_mach": user_mach, "output_total_mach":mach}
+                                                    let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
+                                                    let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach};
+                                                    console.log('escrow go to mach : ', mach_json);
                                                     if(coin._doc.firstVtr == undefined) {
+                                                        mach_json['firstVtr'] = true;
                                                         if(dbconfig.bonus.firstVtr > 0) {
-                                                            mach_json['firstVtr'] = true;
                                                             mach_json.total_mach += dbconfig.bonus.firstVtr;
 
                                                             let data10 = {
@@ -354,7 +356,7 @@ function updateStatus(country, req) {
                                                                     .then(to_coin => {
                                                                         let to_user_mach = to_coin.total_mach;
                                                                         to_user_mach = to_user_mach + dbconfig.bonus.firstVtr;
-                                                                        let to_mach_json = {"total_mach": user_mach, "output_total_mach":mach, "firstVtr": true}
+                                                                        let to_mach_json = {"total_mach": to_user_mach, "firstVtr": true}
                                                                         if(to_coin._doc.firstVtr == undefined) {
                                                                             bitwebCoins.updateTotalCoin(country, to_coinId, to_mach_json)
                                                                                 .then(() => {
@@ -584,7 +586,8 @@ function updateStatusByItemId(country, req) {
                                         .then(coin => {
                                             let user_mach = coin.total_mach;
                                             user_mach = user_mach + mach;
-                                            let mach_json = {"total_mach": user_mach, "output_total_mach":mach}
+                                            let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
+                                            let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach}
                                             // VTR 첫 거래 이벤트 진행 시 주석 풀기(바로 구매 진행 여부는 확인 후 결정)
                                             // if(coin._doc.firstVtr == undefined) {
                                             //     if(dbconfig.bonus.firstVtr > 0) {
