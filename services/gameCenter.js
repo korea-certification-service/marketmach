@@ -74,6 +74,7 @@ function updateRecord(data) {
     return new Promise((resolve, reject) => {
         GameCenterRecord.findOneAndUpdate(
         {
+            "gameCenterId":data.gameCenterId,
             "service": data.service
         },
         {
