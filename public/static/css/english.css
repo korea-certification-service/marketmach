@@ -8,6 +8,7 @@
 /********** main **********/
 .header .nav > .l_menu > li > button{font-size: 14px;}
 .header .nav > .l_menu > li:nth-child(2) > button{margin-left: 7px;}
+.header .nav > .c_menu > li{width: 20%;}
 .header .nav > .r_menu > li .beforeLoginBox .mdl_area p{font-size: 13px;}
 .header .nav > .r_menu > li .floating_info_box .btn{font-size: 11px;}
 
