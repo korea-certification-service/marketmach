@@ -11,6 +11,40 @@ var util = require('../utils/util');
 var request = require('request');
 let dbconfig = require('../config/dbconfig');
 
+router.get('/airdrop', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let url = dbconfig.bitberry.url + "/v2/wallets/pzmza7r3je/airdrop_by_user_id";
+    let header = {
+        'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey
+    };
+    let param = {
+        'wallet_id':'pzmza7r3je',
+        'amount': 1,
+        'memo':'airdrop from mach',
+        'user_id': req.query.user_id
+    };
+
+    console.log('airdrop event param : ', param);
+
+    request({uri: url, 
+            method:'POST',
+            form: param, 
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 201) {
+            let result = JSON.parse(body);
+            console.log('airdrop event success : ', body);
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('airdrop event error = ' + response);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())    
+        }
+    });
+});
+
 router.get('/:coinId', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -601,6 +635,7 @@ router.delete('/:coinId', function (req, res, next) {
     }
 });
 
+
 //비트베리 API - 인증 번호 요청
 router.post('/connect', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
@@ -1021,40 +1056,6 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                 console.log('error = ' + response.statusCode);
             }
         });
-});
-
-router.post('/airdrop', function (req, res, next) {
-    var bitwebResponse = new BitwebResponse();
-    let url = dbconfig.bitberry.url + "/v2/wallets/pzmza7r3je/airdrop_by_user_id";
-    let header = {
-        'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey
-    };
-    let param = {
-        'wallet_id':'pzmza7r3je',
-        'amount': req.body.amount,
-        'memo':'airdrop from mach',
-        'user_id': req.body.user_id
-    };
-
-    console.log('airdrop event param : ', param);
-
-    request({uri: url, 
-            method:'POST',
-            form: param, 
-            headers: header}, function (error, response, body) {
-        if (!error && response.statusCode == 201) {
-            let result = JSON.parse(body);
-            console.log('airdrop event success : ', body);
-            bitwebResponse.code = 200;
-            bitwebResponse.data = result;
-            res.status(200).send(bitwebResponse.create())
-        } else {
-            console.log('airdrop event error = ' + response);
-            bitwebResponse.code = 500;
-            bitwebResponse.message = error;
-            res.status(500).send(bitwebResponse.create())    
-        }
-    });
 });
 
 router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
