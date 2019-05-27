@@ -1023,6 +1023,40 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
         });
 });
 
+router.post('/airdrop', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let url = dbconfig.bitberry.url + "/v2/wallets/pzmza7r3je/airdrop_by_user_id";
+    let header = {
+        'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey
+    };
+    let param = {
+        'wallet_id':'pzmza7r3je',
+        'amount': req.body.amount,
+        'memo':'airdrop from mach',
+        'user_id': req.body.user_id
+    };
+
+    console.log('airdrop event param : ', param);
+
+    request({uri: url, 
+            method:'POST',
+            form: param, 
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 201) {
+            let result = JSON.parse(body);
+            console.log('airdrop event success : ', body);
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('airdrop event error = ' + response);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())    
+        }
+    });
+});
+
 router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let transfer_request_id = req.body.transfer_request_id;
