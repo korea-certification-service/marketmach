@@ -430,14 +430,14 @@
             var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
             console.log('준비중');
             if(confirms) {
-                // $.ajax({
-                //     method: "DELETE",
-                //     url: "/v1/tradePoints/cancel/"+tradePointId+"/" + userTag
-                // }).done(function (success) {
-                //     location.href = '/etc-sells/detail/' + itemId;
-                // }).fail(function (fail) {
-                //     console.log(fail);
-                // });
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                }).done(function (success) {
+                    location.href = '/etc-sells/detail/' + itemId;
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
             }
         }
 

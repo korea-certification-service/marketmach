@@ -72,10 +72,21 @@ function getByItemId (id) {
 
 function getTradePointByIdAndUserId (id, userId) {
     return new Promise((resolve, reject) => {
-        TradePoints.findOne({
+        // let mongoose = require('mongoose');
+        // let Schema = mongoose.Schema;
+        // let ObjectId = Schema.Types.ObjectId;
+        let search = {
             "_id":id,
             $or: [{"from_userId": userId}, {"to_userId": userId}]
-        })
+        };
+
+        if(userId == "") {
+            search = {
+                "_id":id
+            };
+        }
+
+        TradePoints.findOne(search)
             .exec(function(err, tradePoint) {
                     if (err) {
                         console.error(err)
