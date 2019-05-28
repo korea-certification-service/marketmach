@@ -309,7 +309,6 @@ function updateStatus(country, req) {
                                         }).catch((err) => {
                                         console.log('err=>', err)
                                     });
-                                    resolve(result)
                                 }
 
                                 if (result.buy_status == true && result.sell_status == true && tradeType == "confirm") {

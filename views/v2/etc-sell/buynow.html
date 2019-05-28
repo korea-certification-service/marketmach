@@ -130,40 +130,74 @@
                 </ul>              
 
                 <!-- 결제정보 -->
-                <div class="table_wrap">
-                    <table class="table_payment_info table">
-                        <colgroup class="colgroup_etc-sell_buynow">
-                            <col class="col50p">
-                            <col class="col50p">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th colspan="2"><span class="dot_tit">결제정보</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>                           
-                            <tr>
-                                <th>나의 지갑 잔액</th>
-                                <td><span class="item_user_price"></span></td>
-                            </tr>
-                            <tr>
-                                <th>거래가격</th>
-                                <td><span class="item_price"></span></td>
-                            </tr>
-                            <tr>
-                                <th>결제 후 나의 지갑 잔액(예상)</th>
-                                <td><span class="user_price_balance"></span></td>
-                            </tr>                        
-                        </tbody>
-                    </table>
-                </div>
+                <%if(useBlockchain == 'Y') {%>
+                    <div class="table_wrap">
+                        <table class="table_payment_info table">
+                            <colgroup class="colgroup_etc-sell_buynow">
+                                <col class="col50p">
+                                <col class="col50p">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>나의 지갑 잔액</th>
+                                    <td><span class="item_user_price"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격</th>
+                                    <td><span class="item_price"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>결제 후 나의 지갑 잔액(예상)</th>
+                                    <td><span class="user_price_balance"></span></td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                    </div>
+                <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
+                    <div class="table_wrap">
+                        <table class="table_payment_info table">
+                            <colgroup class="colgroup_etc-sell_buynow">
+                                <col class="col50p">
+                                <col class="col50p">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>나의 포인트 잔액</th>
+                                    <td><span class="item_user_price_point"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격</th>
+                                    <td><span class="item_price_point"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>결제 후 나의 포인트 잔액(예상)</th>
+                                    <td><span class="user_price_balance_point"></span></td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                    </div>
+                <%}%>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
                     <li>※ 나의 지갑 잔액(MACH)이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
                     <li>※ [MACH 입금] 버튼 또는 [나의페이지-지갑관리]에서 MACH를 입금하실 수 있습니다.</li>
                 </ul>  
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1">결제하기</button>
+                    <%if(useBlockchain == 'Y') {%>
+                        <button class="btn btn_in_view1" id="buynow">결제하기</button>
+                    <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
+                        <button class="btn btn_in_view1" id="pointBuynow">결제하기</button>
+                    <%}%>
                 </div>             
             </section>
             <!--// view page-->
@@ -181,6 +215,7 @@
         var itemId = "<%= id %>";
         var from_userTag;
         var mach;
+        var point;
     
         $(document).ready(function() {
             //$("#input_imgs").on("change", handleImgFileSelect);
@@ -190,13 +225,22 @@
                 $("#fullImg > img").attr("src", src);
             });
 
-            $(".btn_in_view1").on('click', function() {
+            $("#buynow").on('click', function() {
                 if($('#buyer_game_character').val() == "") {
                     alert("구매자 캐릭터명을 입력하십시오.");
                     return;
                 }
 
                 buynow();
+            });
+
+            $("#pointBuynow").on('click', function() {
+                if($('#buyer_game_character').val() == "") {
+                    alert("구매자 캐릭터명을 입력하십시오.");
+                    return;
+                }
+
+                pointBuynow();
             });
 
             getData();
@@ -214,10 +258,13 @@
                 var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
                 var title = success.data.title;
                 mach = success.data.price;
+                point = success.data.point;
                 var total_mach = success.data.total_mach;
+                var total_point = success.data.total_point;
                 var price = numberWithCommas(mach);
                 var item_user_price = numberWithCommas(total_mach);
-                var point = numberWithCommas(success.data.point);
+                var item_user_price_point = numberWithCommas(total_point);
+                var point_txt = numberWithCommas(success.data.point);
                 var status = getStatus(success.data.status);
                 var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type);
                 var trade_type = replaceType(success.data.trade_type);
@@ -251,7 +298,7 @@
                     $(".txt_price").html(price + "<span>MACH</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
-                    $(".txt_point").html(point + "<span>Point</span>");
+                    $(".txt_point").html(point_txt + "<span>Point</span>");
                 }
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);
@@ -259,6 +306,9 @@
                 $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
                 $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
                 $(".user_price_balance").html(numberWithCommas(total_mach - mach) + "<span class='fzsm'>MACH</span>");
+                $(".item_user_price_point").html(item_user_price_point + "<span class='fzsm'>Point</span>");
+                $(".item_price_point").html("<em class='em_calc_ico minus'>-</em>" + point_txt + "<span class='fzsm'>Point</span>");
+                $(".user_price_balance_point").html(numberWithCommas(total_point - point) + "<span class='fzsm'>Point</span>");
                 $(".item_status").addClass(status.className).addClass(status.className).text(status.text);
             }).fail(function (fail) {
                 console.log(fail);
@@ -278,6 +328,35 @@
                 $.ajax({
                     method: "POST",
                     url: "/v1/vtrs/buynow",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(params),
+                }).done(function (success) {
+                    if(success.data.code == undefined) {
+                        alert('거래가 시작되었습니다.\r 연락처 표시 버튼을 클릭하여 연락하시기 바랍니다.');
+                        location.href = "/etc-sells/detail/"+itemId
+                    } else {
+                        alert(success.data.msg);
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                })
+            }
+        }
+
+        function pointBuynow() {
+            var confirmYn = confirm("바로구매 후 판매자와 구매자간 휴대폰 연락을 통해서 거래하시기 바랍니다. \r VTR을 사용하지 않고 개인간 거래 시 거래소에서는 책임을 지지 않습니다.\r 거래를 시작하시겠습니까?");
+            if(confirmYn) {
+                var params = {
+                    "itemId": itemId,
+                    "from_userId": from_userTag,
+                    "to_userId": userTag,
+                    "point": point
+                };
+                //console.log(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/tradePoints/buynow",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     data: JSON.stringify(params),

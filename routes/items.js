@@ -3,6 +3,7 @@ var router = express.Router();
 var controllerItems = require('../controllers/items')
 var controllerUsers = require('../controllers/users');
 var controllerCoins = require('../controllers/coins');
+var controllerPoints = require('../controllers/points');
 var controllerCoinHistorys = require('../controllers/coinHistorys');
 var controllerCommunity = require('../controllers/community');
 var BitwebResponse = require('../utils/BitwebResponse')
@@ -472,13 +473,22 @@ router.get('/service/:itemId', function (req, res, next) {
                     .then(user => {
                         controllerCoins.getByCoinId(country, user._doc.coinId)  
                             .then(coin => {
-                                let result = item;
-                                result['_doc']['phone'] = user._doc.phone;
-                                result['_doc']['total_mach'] = coin._doc.total_mach;
+                                controllerPoints.getByPointId(country, user._doc.pointId)
+                                    .then(point => {
+                                        let result = item;
+                                        result['_doc']['phone'] = user._doc.phone;
+                                        result['_doc']['total_mach'] = coin._doc.total_mach;
+                                        result['_doc']['total_point'] = point._doc.total_point;
 
-                                bitwebResponse.code = 200;
-                                bitwebResponse.data = result;
-                                res.status(200).send(bitwebResponse.create())
+                                        bitwebResponse.code = 200;
+                                        bitwebResponse.data = result;
+                                        res.status(200).send(bitwebResponse.create())
+                                    }).catch((err) => {
+                                    console.error('err=>', err)
+                                    bitwebResponse.code = 500;
+                                    bitwebResponse.message = err;
+                                    res.status(500).send(bitwebResponse.create())
+                                })
                             }).catch((err) => {
                             console.error('err=>', err)
                             bitwebResponse.code = 500;
@@ -736,7 +746,9 @@ router.put('/:itemId', function (req, res, next) {
         if(req.body.price != undefined) {
             data['total_price'] = req.body.price * req.body.count;
         }
-        data['total_point'] = req.body.point * req.body.count;
+        if(req.body.point != undefined) {
+            data['total_point'] = req.body.point * req.body.count;
+        }
         data['modifyDate'] = util.formatDate(new Date().toLocaleString('ko-KR'))
 
         controllerItems.updateById(country, itemId, data)

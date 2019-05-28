@@ -54,6 +54,22 @@ function getTradePointById (id) {
     })
 }
 
+function getByItemId (id) {
+    return new Promise((resolve, reject) => {
+        TradePoints.findOne(
+            {"item._id": id},
+            function(err, tradePoint) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                console.log('getByItemId done: ' + tradePoint)
+                resolve(tradePoint)
+            }
+        )
+    })
+}
+
 function getTradePointByIdAndUserId (id, userId) {
     return new Promise((resolve, reject) => {
         TradePoints.findOne({
@@ -171,3 +187,4 @@ exports.updateTradePointById = updateTradePointById;
 exports.updateTradePointHistoryId = updateTradePointHistoryId;
 exports.deleteTradePointById = deleteTradePointById;
 exports.getItemIdsByUserId = getItemIdsByUserId;
+exports.getByItemId = getByItemId;
