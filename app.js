@@ -124,6 +124,9 @@ app.use('/webfonts', express.static(__dirname + '/node_modules/@fortawesome/font
 
 app.use('/blockchain', express.static(__dirname + '/blockchain')); // redirect JS jQuery
 
+// roboto
+app.use("/robots.txt",express.static(__dirname+'/public/static/robots.txt'));
+
 //language
 app.get('/KR',function(req,res){
     //res.cookie('lang','bitweb_ko');
