@@ -73,7 +73,7 @@ function getItemType(value) {
         };
     } else if(value == "gameMoney") {
         return {
-            'text':'GameMoney',
+            'text':'Money',
             'icon':'게임머니',
             'className': 'ico_money'
         };
@@ -95,11 +95,11 @@ function getStatus(value) {
             'detail': '거래가능'
         };
     } else if((value >= 1 && value <= 3) || (value >= 101 && value <= 103)) {
-        var detail = "거래요청";
+        var detail = "Transaction Request"; // 거래요청
         if(value == 2 || value == 102) {
-            detail = "구매확인";
+            detail = "Purchase Confirmation"; // 구매확인
         } else if(value == 3 || value == 103) {
-            detail = "판매완료";
+            detail = "Sales Complete"; // 판매완료
         } 
         return {
             'text': 'Trading',
@@ -108,11 +108,11 @@ function getStatus(value) {
             'detail': detail
         };
     } else if(value == 4 || value == 6 || value == 7 || value == 104 || value == 106 || value == 107) {
-        var detail = "거래완료";
+        var detail = "Transaction Complete"; // 거래완료 
         if(value == 6 || value == 106) {
-            detail = "거래완료(관리자)";
+            detail = "Transaction Complete(admin)"; // 거래완료(관리자)
         } else if(value == 7 || value == 107) {
-            detail = "거래완료(시스템)";
+            detail = "Transaction Complete(system)"; // 거래완료(시스템)
         } 
         return {
             'text': 'Complete',
@@ -126,14 +126,14 @@ function getStatus(value) {
             'text': 'Complete',
             'number': 3,
             'className': 'done',
-            'detail': '이의재기'
+            'detail': 'Disputes' // 이의재기
         };
     } else if(value == 50) {
         return {
             'text': 'Trading',
             'number': 2,
             'className': 'doing',
-            'detail': '대화중'
+            'detail': 'Talking' // 대화중
         };
     }
 }

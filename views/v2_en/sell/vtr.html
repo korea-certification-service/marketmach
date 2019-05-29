@@ -19,7 +19,7 @@
             <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_sell">
                 <div class="board_tit cf">
-                    <h1>게임아이템 팝니다<span>VTR 거래신청</span></h1>
+                    <h1>Sell Game Items <span>VTR Transaction</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -32,41 +32,41 @@
                         <thead>
                             <tr>
                                 <th colspan="2">
-                                    <span class="dot_tit">거래 정보</span>
+                                    <span class="dot_tit">Listing Details</span>
                                     <span class="posting_date"></span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>     
                             <tr>
-                                <th>거래 번호</th>
+                                <th>Transaction No.</th>
                                 <td><span class="item_id"></span></td>
                             </tr>                      
                             <tr>
-                                <th>게임>서버</th>
+                                <th>Game > Server</th>
                                 <td><span class="item_game_server"></span><span class="item_type"></span></td>
                             </tr>
                             <tr>
-                                <th>거래 제목</th>
+                                <th>Title</th>
                                 <td>
                                     <div class="ellipse item_title">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>거래상태</th>
+                                <th>Status</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>캐릭터명</th>
+                                <th>Character's Name</th>
                                 <td><span class="item_character"></span></td>
                             </tr>
                             <tr>
-                                <th>거래 가격(MACH)</th>
+                                <th>Price(MACH)</th>
                                 <td><p class="txt_price"></p></td>
                             </tr>
                             <tr>
-                                <th>거래 가격(Currency)</th>
+                                <th>Price(Currency)</th>
                                 <td><p class="txt_price txt_point"></p></td>
                             </tr>
                             <tr class="mrg_cell trForDel">
@@ -75,24 +75,16 @@
                                 </td>
                             </tr>
                             <tr class="trForDel">
-                                <th>상품이미지</th>
+                                <th>Image</th>
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
-                                            <!--
-                                            <div class="thumbnail_box">
-                                                <div class="img_view_area">
-                                                    <img src="/static/img/main/main_visual02.jpg">
-                                                </div>
-                                                <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
-                                            </div>
-                                            -->
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>상세정보</th>
+                                <th>Description</th>
                                 <td>
                                     <span class="item_desc">
                                     </span>
@@ -113,27 +105,26 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><em class="dot_tit">내 정보 입력</em></th>
+                                <th colspan="2"><em class="dot_tit">My Contacts</em></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>연락처</th>
+                                <th>Phone</th>
                                 <td><span class="item_phone"></span></td>
                             </tr>
                             <tr>
-                                <th>구매자 캐릭터명</th>
-                                <td><input type="text" class="form-control" id="buyer_game_character" placeholder="물품을 전달 받으실 본인의 캐릭터명 입력"></td>
+                                <th>Character's Name</th>
+                                <td><input type="text" class="form-control" id="buyer_game_character" placeholder="Please enter your game character's name to trade the item."></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <ul class="highligh_list fcrd">
-                    <li>※ 입력하신 정보는 구매확정 시 구매자에게 전달됩니다.</li>
-                    <li>※ 입력하신 정보의 오 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
+                    <li>※ The information you enter will be passed on to your trading partner upon confirmation of purchase.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
                 </ul>              
                 <!--// 내 정보 입력 -->
-
                 <!-- 회색테이블 -->
                 <div class="table_wrap">
                     <table class="grey_table table_view table">
@@ -143,24 +134,24 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><em class="dot_tit">내 지갑정보</em></th>
+                                <th colspan="2"><em class="dot_tit">My Wallet</em></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>나의 지갑 잔액</th>
+                                <th>My Wallet Balance</th>
                                 <td><p class="item_user_price"></p></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <ul class="highligh_list fcrd">
-                    <li>※ 나의 지갑 잔액(MACH)이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [MACH 입금] 버튼 또는 [나의페이지-지갑관리]에서 MACH를 입금하실 수 있습니다.</li>
+                    <li>※ You can not pay if your wallet balance(MACH) is less than the transaction price.</li>
+                    <li>※ You can deposit MACH from [MACH Deposit] button or [My Page - My Wallet].</li>
                 </ul>
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view2" onclick="openVtrInfo()">VTR 안내</button>
-                    <button class="btn btn_in_view1" id="btnSubmit">VTR 입장하기</button>
+                    <button class="btn btn_in_view2" onclick="openVtrInfo()">About VTR</button>
+                    <button class="btn btn_in_view1" id="btnSubmit">Enter VTR</button>
                 </div>
                 <!--// 회색테이블 -->
             </section>
@@ -236,7 +227,7 @@
                 }
                 
                 $(".view_emphasis").text(item_type.text);
-                $(".posting_date").text("등록일 : " + regDate);
+                $(".posting_date").text("Date : " + regDate);
                 $(".item_title").text(title);
                 $(".item_game_server").text(item_game_server);
                 $(".item_type").addClass(item_type.className);
@@ -258,7 +249,7 @@
 
         function openVTR() {
             if($("#buyer_game_character").val() == "") {
-                alert('구매자 캐릭터명을 입력하십시오.');
+                alert("Please enter your game character's name to trade the item.");
                 return;
             }
 

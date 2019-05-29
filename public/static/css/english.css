@@ -19,6 +19,11 @@
 .table .colgroup_dispute .col3_2{width: 65px;}
 .support_sec .table_view .col2_1{width: 110px;}
 
+/**********  hide button **********/
+/*
+#regVTR{display: none !important;}
+*/
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
