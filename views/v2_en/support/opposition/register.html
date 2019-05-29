@@ -41,7 +41,7 @@
             }).done(function (success) {
                 //console.log(success.data);
                 items = success.data; 
-                var strDOM = '<option value="">선택하세요</option>';
+                var strDOM = '<option value="">Select</option>';
                 for (var i = 0; i < items.length; i++) {
                     strDOM += '<option value="' + items[i]._id + '">' + items[i].title + ' - ' + items[i]._id + '</option>'
                 }
@@ -70,7 +70,7 @@
             var filesArr = Array.prototype.slice.call(files);
     
             if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
+                alert('Up to 5 image files can be uploaded.');
                 return;
             }
 
@@ -80,7 +80,7 @@
             var index = 0;
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    alert("Only image files can be uploaded.");
                     return;
                 }
     
@@ -161,17 +161,17 @@
             var content = $('#content').val();
             
             if ($("#opposition_item_name option:selected").val() == "") {
-                alert('거래 검색을 선택하세요.');
+                alert('Please select transaction');
                 return;
             }
 
             if(title == "") {
-                alert('이의 제목을 입력하세요.');
+                alert('Please enter a title.');
                 return;
             }
 
             if(content == "") {
-                alert('이의 내용을 입력하세요.');
+                alert('Please enter a content.');
                 return;
             }
 
@@ -204,14 +204,14 @@
         }
 
         function submitAction(id) {
-            console.log("업로드 파일 갯수 : "+sel_files.length);
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
                 images.append(name, sel_files[i].value);
             }
-            console.log(images);
+            //console.log(images);
             //ajax 처리
             $.ajax({
                 method: "POST",
@@ -220,7 +220,7 @@
                 contentType: false,
                 data: images
             }).done(function (success) {
-                console.log(success);
+                //console.log(success);
                 location.href = '/supports/opposition/list';
             }).fail(function (fail) {
                 console.log('실패',fail);
@@ -247,7 +247,7 @@
                 <div class="sub_content">
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">거래 이의관리 <span>이의신청</span></h1>                    
+                        <h1 class="tit_support">Disputes <span>Post</span></h1>                    
                         <div class="table_wrap table-responsive">
                             <table class="table_view table">
                                 <colgroup>
@@ -256,26 +256,26 @@
                                 </colgroup>
                                 <tbody>                           
                                     <tr>
-                                        <th class="fc2">거래검색</th>
+                                        <th class="fc2">Transaction</th>
                                         <td>
                                             <select class="selectpicker" id="opposition_item_name" data-live-search="true">
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">거래번호</th>
+                                        <th class="fc2">No.</th>
                                         <td id="itemId"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">거래제목</th>
+                                        <th class="fc2">Subject</th>
                                         <td id="itemTitle"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">제목</th>
+                                        <th class="fc2">Title</th>
                                         <td><input type="text" id="title" class="form-control"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">문의내용</th>
+                                        <th class="fc2">Content</th>
                                         <td>
                                             <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
                                         </td>
@@ -286,13 +286,13 @@
                                                 <!-- <img src="/static/img/main/main_visual02.jpg"> -->
                                             </div>
                                             <div class="input_wrap">
-                                                <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
+                                                <button class="btn btn-primary" onclick="fileUploadAction();">Select IMG</button>
                                                 <input type="file" id="input_imgs" multiple="">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="trForDel">
-                                        <th class="fc2">첨부 이미지</th>
+                                        <th class="fc2">Image</th>
                                         <td>
                                             <div class="product_img_list">
                                                 <div class="imgs_wrap">
@@ -313,7 +313,7 @@
                         </div>
 
                         <div class="btn_align_c">
-                            <button class="btn btn_in_view1" id="addOpposition">이의신청</button>
+                            <button class="btn btn_in_view1" id="addOpposition">write</button>
                         </div>
                     </section>
                 </div>

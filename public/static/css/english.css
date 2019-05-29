@@ -15,7 +15,9 @@
 .primezone_sec .slick_primezone .card_ui dt{ font-size: 14px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc1{line-height: 1.5; padding-top: 20px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc3{line-height: 1.2; padding-top: 8px;}
-/**********  **********/
+/**********  sub **********/
+.table .colgroup_dispute .col3_2{width: 65px;}
+.support_sec .table_view .col2_1{width: 110px;}
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){

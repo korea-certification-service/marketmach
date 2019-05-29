@@ -155,12 +155,12 @@
             var content = $('#content').val();
             
             if(title == "") {
-                alert('제목을 입력하세요.');
+                alert('Please enter a title.');
                 return;
             }
 
             if(content == "") {
-                alert('문의 내용을 입력하세요.');
+                alert('Please enter a content.');
                 return;
             }
 
@@ -235,7 +235,7 @@
                 <div class="sub_content">
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">1:1문의 <span>문의 내용 수정</span></h1>                    
+                        <h1 class="tit_support">1:1 Inquiry <span>Modify</span></h1>                    
                         <div class="table_wrap table-responsive">
                             <table class="table_view table">
                                 <colgroup>
@@ -244,30 +244,30 @@
                                 </colgroup>
                                 <tbody>                           
                                     <tr>
-                                        <th class="fc2">유형</th>
+                                        <th class="fc2">Categoty</th>
                                         <td>
                                             <div class="form-inline radio_wrap">
                                                 <div class="form-group">
-                                                    <input type="radio" name="type" id="type0" value="0" checked><label for="type0">사이트 이용문의</label>
+                                                    <input type="radio" name="type" id="type0" value="0" checked><label for="type0">How to Use</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="radio" name="type" id="type1" value="1"><label for="type1">본인확인 및 인증 문의</label>
+                                                    <input type="radio" name="type" id="type1" value="1"><label for="type1">Certification</label>
                                                 </div>  
                                                 <div class="form-group">
-                                                    <input type="radio" name="type" id="type2" value="2"><label for="type2">이벤트 문의</label>
+                                                    <input type="radio" name="type" id="type2" value="2"><label for="type2">Event</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="radio" name="type" id="type3" value="3"><label for="type3">기타 문의</label>
+                                                    <input type="radio" name="type" id="type3" value="3"><label for="type3">ETC</label>
                                                 </div>                                                
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">제목</th>
+                                        <th class="fc2">Title</th>
                                         <td><input type="text" id="title" class="form-control"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">문의내용</th>
+                                        <th class="fc2">Content</th>
                                         <td>
                                             <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
                                         </td>
@@ -278,13 +278,13 @@
                                                 <!-- <img src="/static/img/main/main_visual02.jpg"> -->
                                             </div>
                                             <div class="input_wrap">
-                                                <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
+                                                <button class="btn btn-primary" onclick="fileUploadAction();">Select IMG</button>
                                                 <input type="file" id="input_imgs" multiple="">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="trForDel">
-                                        <th class="fc2">첨부 이미지</th>
+                                        <th class="fc2">Image</th>
                                         <td>
                                             <div class="product_img_list">
                                                 <div class="imgs_wrap">
@@ -305,7 +305,7 @@
                         </div>
 
                         <div class="btn_align_c">
-                            <button class="btn btn_in_view1" id="modifyPersonal">확인</button>
+                            <button class="btn btn_in_view1" id="modifyPersonal">modify</button>
                         </div>
                     </section>
                 </div>

@@ -24,7 +24,7 @@
         function setNotices(data) {
             var result="";
             if(data.length == 0) {
-                result = '<tr><td colspan="3">공지사항 내역이 없습니다.</td></tr>';
+                result = '<tr><td colspan="3">No exists</td></tr>';
             }
 
             for(var i=0; i<data.length; i++) {
@@ -80,7 +80,7 @@
                 <div class="sub_content">
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">공지사항</h1>
+                        <h1 class="tit_support">Notice</h1>
                         <!-- <div class="search_filter">
                             <ul class="">
                                 <li class="row">
@@ -115,9 +115,9 @@
                                 </colgroup>
                                 <thead>
                                     <tr>  
-                                        <th>분류</th>
-                                        <th>제목</th>
-                                        <th>날짜</th>
+                                        <th>Categoty</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="notice_list">

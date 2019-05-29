@@ -65,7 +65,7 @@
             var filesArr = Array.prototype.slice.call(files);
     
             if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
+                alert('Up to 5 image files can be uploaded.');
                 return;
             }
 
@@ -75,7 +75,7 @@
             var index = 0;
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    alert("Only image files can be uploaded.");
                     return;
                 }
     
@@ -156,17 +156,17 @@
             var content = $('#content').val();
             
             if ($("#opposition_item_name option:selected").val() == "") {
-                alert('거래 검색을 선택하세요.');
+                alert('Please select transaction.');
                 return;
             }
 
             if(title == "") {
-                alert('이의 제목을 입력하세요.');
+                alert('Please enter a title.');
                 return;
             }
 
             if(content == "") {
-                alert('이의 내용을 입력하세요.');
+                alert('Please enter a content.');
                 return;
             }
 
@@ -241,7 +241,7 @@
                 <div class="sub_content">
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">거래 이의관리 <span>이의 내용 수정</span></h1>                    
+                        <h1 class="tit_support">Disputes <span>Modify</span></h1>                    
                         <div class="table_wrap table-responsive">
                             <table class="table_view table">
                                 <colgroup>
@@ -250,19 +250,19 @@
                                 </colgroup>
                                 <tbody>                           
                                     <tr>
-                                        <th class="fc2">거래번호</th>
+                                        <th class="fc2">Transaction No</th>
                                         <td id="itemId"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">거래제목</th>
+                                        <th class="fc2">Subject</th>
                                         <td id="itemTitle"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">제목</th>
+                                        <th class="fc2">Title</th>
                                         <td><input type="text" id="title" class="form-control"></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">문의내용</th>
+                                        <th class="fc2">Content</th>
                                         <td>
                                             <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
                                         </td>
@@ -273,13 +273,13 @@
                                                 <!-- <img src="/static/img/main/main_visual02.jpg"> -->
                                             </div>
                                             <div class="input_wrap">
-                                                <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
+                                                <button class="btn btn-primary" onclick="fileUploadAction();">Select IMG</button>
                                                 <input type="file" id="input_imgs" multiple="">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="trForDel">
-                                        <th class="fc2">첨부 이미지</th>
+                                        <th class="fc2">Image</th>
                                         <td>
                                             <div class="product_img_list">
                                                 <div class="imgs_wrap">
@@ -300,7 +300,7 @@
                         </div>
 
                         <div class="btn_align_c">
-                            <button class="btn btn_in_view1" id="modifyOpposition">저장</button>
+                            <button class="btn btn_in_view1" id="modifyOpposition">write</button>
                         </div>
                     </section>
                 </div>
