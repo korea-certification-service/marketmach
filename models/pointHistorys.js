@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var pointHistorysSchema = new Schema({
+    type: String,
     extType: String,
     pointId: String,
     category: String,          
