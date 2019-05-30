@@ -6,13 +6,15 @@ var pointHistorysSchema = new Schema({
     extType: String,
     pointId: String,
     category: String,          
-    status: String,
+    status: Boolean,
     currencyCode: String,
     amountCurrency: String,
     amount: Number,
     point: Number,
     fee: Number,
-    regDate: String  
+    bankAccountType: String,
+    bankAccount: String,
+    regDate: String
 });
 
 module.exports = pointHistorysSchema;
