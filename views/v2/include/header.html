@@ -168,8 +168,10 @@
                             <li><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></li>
                         </ul>  
                     </li>                       
+                    <%if(useBlockchain == 'Y') {%>
                     <li><a href="/shopping/view" class="fcbk">한정 이벤트</a></li>
                     <li><a href="javascript:goExchange();" class="fcbk">환전소</a></li>
+                    <%}%>
                     <li><a href="/community/board" class="fcbk">게임소식</a></li>
                     <li><a href="https://open.kakao.com/o/gD3UkX4" target="_blank" class="fcbk">커뮤니티</a></li>
                 </ul>
@@ -192,6 +194,7 @@
                                         <a class="btn bgc2" href="https://mymach.io" target="_blank">마켓마하 소개</a>
                                     </li>
                                     <li class="btm_area">
+                                        <%if(useBlockchain == 'Y') {%>
                                         <dl class="available_coin cf">
                                             <dt>마켓마하 상장코인</dt>
                                             <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="마하코인" title="마하코인"></a></dd>
@@ -203,6 +206,7 @@
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                         </dl>
+                                        <%}%>
                                         <dl class="available_coin cf">
                                             <dt>마켓마하 상장 게임</dt>
                                             <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
@@ -236,9 +240,15 @@
                                     </li>
                                     <li class="mdl_area">
                                         <em>나의 지갑 잔액</em>
-                                        <p class="total_mach">100<span>MACH</span></p>
+                                        <%if(useBlockchain == 'Y') {%>
+                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                        <button class="btn bgc2" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                        <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
+                                            <p class="fc2 total_point">100 <span>Point</span></p>
+                                            <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
+                                            <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
+                                        <%}%>
                                     </li>
                                     <li class="btm_area">
                                         <dl class="available_coin cf">

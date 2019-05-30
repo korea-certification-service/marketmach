@@ -9,6 +9,7 @@ router.get('/board', function (req, res, next) {
         res.render('v2/community/list', {title: 'Bitweb Main', 
         userId: req.session.userId,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
         authPhone: req.session.authPhone,
         type: req.query.type,
         title: req.query.title,
@@ -17,6 +18,7 @@ router.get('/board', function (req, res, next) {
         res.render('v2_en/community/list', {title: 'Bitweb Main', 
         userId: req.session.userId,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
         authPhone: req.session.authPhone,
         type: req.query.type,
         title: req.query.title,
@@ -29,6 +31,7 @@ router.get('/board/detail/:communityId', function (req, res, next) {
         res.render('v2/community/view', {title: 'Bitweb Main',
         userId: req.session.userId,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
         communityId: req.params.communityId,
         userTag: req.session.userTag,
         authPhone: req.session.authPhone});
@@ -36,6 +39,7 @@ router.get('/board/detail/:communityId', function (req, res, next) {
         res.render('v2_en/community/view', {title: 'Bitweb Main',
         userId: req.session.userId,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
         communityId: req.params.communityId,
         userTag: req.session.userTag,
         authPhone: req.session.authPhone});
