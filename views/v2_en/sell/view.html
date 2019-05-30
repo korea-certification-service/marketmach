@@ -315,7 +315,7 @@
         }
 
         function removeItem() {
-            var confirms = confirm('정말로 삭제하시겠습니까?');
+            var confirms = confirm('Do you want to Delete?');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
@@ -349,7 +349,7 @@
         }
 
         function cancelItem() {
-            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+            var confirms = confirm('Do you want to cancel a transaction?');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
