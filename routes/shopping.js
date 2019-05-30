@@ -14,6 +14,7 @@ router.get('/view', sessionChecker.sessionChecker2, function (req, res, next) {
             title: 'Bitweb Shopping',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             userName: req.session.userName,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,

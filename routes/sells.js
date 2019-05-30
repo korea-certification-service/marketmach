@@ -12,6 +12,7 @@ router.get('/', sessionChecker.adultChecker, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/sell/list', {
             userId: req.session.userId, coinId: req.session.coinId,
+            pointId: req.session.pointId,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
             , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             usePoint:dbconfig.usePoint,
@@ -21,6 +22,7 @@ router.get('/', sessionChecker.adultChecker, function (req, res, next) {
     } else {
         res.render('v2_en/sell/list', {
             userId: req.session.userId, coinId: req.session.coinId,
+            pointId: req.session.pointId,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
             , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             usePoint:dbconfig.usePoint,
@@ -34,14 +36,14 @@ router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next)
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
 
     } else {
         res.render('v2_en/sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
+        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,
         authPhone: req.session.authPhone,
         useBlockchain:dbconfig.useBlockchain});
@@ -52,13 +54,13 @@ router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next)
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
     } else {
         res.render('v2_en/sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
@@ -68,13 +70,13 @@ router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next)
 router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
     } else {
         res.render('v2_en/sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
+        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,
         authPhone: req.session.authPhone,
         useBlockchain:dbconfig.useBlockchain});
@@ -85,13 +87,13 @@ router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next)
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
     } else {
         res.render('v2_en/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
+        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,
         authPhone: req.session.authPhone,
         useBlockchain:dbconfig.useBlockchain});
@@ -102,13 +104,13 @@ router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,
+            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain});
     } else {
         res.render('v2_en/sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
+        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,
         authPhone: req.session.authPhone,
         useBlockchain:dbconfig.useBlockchain});
@@ -128,13 +130,13 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
                 userTag = result._doc.userTag;
                 if(dbconfig.country == "KR") {
                     res.render('v2/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-                        userTag:userTag, country: country,
+                        userTag:userTag, country: country,pointId: req.session.pointId,
                         authPhone: req.session.authPhone,
                         usePoint:dbconfig.usePoint,
                         useBlockchain:dbconfig.useBlockchain});
                 } else {
                     res.render('v2_en/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-                    userTag:userTag, country: country,
+                    userTag:userTag, country: country,pointId: req.session.pointId,
                     authPhone: req.session.authPhone,
                     usePoint:dbconfig.usePoint,
                     useBlockchain:dbconfig.useBlockchain});

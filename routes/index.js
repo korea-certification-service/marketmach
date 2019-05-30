@@ -40,6 +40,7 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -49,6 +50,7 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -71,6 +73,7 @@ router.get('/nodev_index', function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -80,6 +83,7 @@ router.get('/nodev_index', function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -114,6 +118,7 @@ router.get('/main', function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -123,6 +128,7 @@ router.get('/main', function (req, res, next) {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -144,6 +150,7 @@ router.get('/currency', function (req, res, next) {
         res.render('v2/main/currency', {title: 'Currency',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -152,6 +159,7 @@ router.get('/currency', function (req, res, next) {
         res.render('v2_en/main/currency', {title: 'Currency',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain
@@ -179,6 +187,7 @@ router.get('/header', function (req, res, next) {
         userId: req.session.userId,
         userTag: req.session.userTag,
         country: dbconfig.country,
+        pointId: req.session.pointId,
         chatbot_url: dbconfig.chatbot_url,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,

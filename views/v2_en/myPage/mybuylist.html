@@ -19,11 +19,11 @@
             getItemList();
             
             if(category == "game") {
-                $('#myItemTitle').text("게임 아이템");
-                $('#table_category').text('게임>서버')
+                $('#myItemTitle').text("Game Item");
+                $('#table_category').text('Game / Server')
             } else {
-                $('#myItemTitle').text("자산거래");
-                $('#table_category').text('카테고리')
+                $('#myItemTitle').text("Asset Trading");
+                $('#table_category').text('Categoty')
             }
             $("#"+category).prop('checked', true);
             setItemStatus(status);
@@ -32,11 +32,11 @@
             $("input[name=category]").on('click', function() {
                 category = $("[name=category]:checked").val();
                 if(category == "game") {
-                    $('#myItemTitle').text("게임 아이템");
-                    $('#table_category').text('게임>서버')
+                    $('#myItemTitle').text("Game Item");
+                    $('#table_category').text('Game / Server')
                 } else {
-                    $('#myItemTitle').text("자산거래");
-                    $('#table_category').text('카테고리')
+                    $('#myItemTitle').text("Asset Trading");
+                    $('#table_category').text('Categoty')
                 }
                 getItemList();
             });
@@ -87,7 +87,7 @@
                 var buyList = success.data.list;
                 var result = "";
                 if(buyList.length == 0) {
-                    result = "<tr><td colspan='5'>검색 결과가 없습니다.</td><tr>";
+                    result = "<tr><td colspan='5'>No exist</td><tr>";
                 }
                 for(var i=0; i< buyList.length; i++) {
                     var itemId = buyList[i]._id;
@@ -121,7 +121,7 @@
                                 '<td>' + 
                                     '<span class="btn_cmm_bd '+item_type.className+'">'+item_type.text+'</span>';
                                     if(buyList[i].images.length != 0) {
-                                        result +=          '<span class="ico_photo">사진</span>';
+                                        result +=          '<span class="ico_photo">Photo</span>';
                                     }
                     result +=       '<div class="ellipse">' + title +
                                     '</div>' + 
@@ -130,7 +130,7 @@
                                     '<span>' + price + ' MACH</span>' + 
                                     '<div class="btn_adjust">';
                                     if(buyList[i].status ==2 || buyList[i].status ==3) {
-                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="showPhone(\''+itemId+'\');">연락처 표시</button>';
+                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="showPhone(\''+itemId+'\');">View Contact</button>';
                                     } 
                     result +=   '</td>' + 
                                 '<td>' + 
@@ -139,17 +139,17 @@
                                     if(buyList[i].status < 4) {
                                         if(buyList[i].status ==1) {
                                             if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                                result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="buyComplete(\''+itemId+'\');">구매확인</button>';
+                                                result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="buyComplete(\''+itemId+'\');">Confirm Purchase</button>';
                                             }
                                         } else if(buyList[i].status ==2) {
                                             if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                                result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="sellComplete(\''+itemId+'\');">판매완료</button>';
+                                                result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="sellComplete(\''+itemId+'\');">Complete Sales</button>';
                                             }
                                         } else if(buyList[i].status ==3){
                                             if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                                result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">거래완료</button>';
+                                                result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">Complete Transaction</button>';
                                             } else {    
-                                                result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                                result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Transcation(refund)</button>';
                                             }
                                         }
                                     }
@@ -160,16 +160,16 @@
                                     '<div class="btn_adjust">';
                                     if(buyList[i].status < 4) {
                                         if(buyList[i].status ==1) {
-                                            result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소</button>';    
+                                            result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Transcation</button>';    
                                         } else if(buyList[i].status ==2) {
                                             if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                                result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                                result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Transcation(refund)</button>';
                                             }
                                         } else if(buyList[i].status ==3){
-                                            result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                            result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                         }
                                     }else if(buyList[i].status == 5) {
-                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     }
                                 result +='</div></td>' + 
                             '</tr>'; 
@@ -194,7 +194,7 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('구매 확인 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -207,7 +207,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
+                    alert('Buyer confirmed purchase.\rPlease wait for the seller to complete the sale.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -218,7 +218,7 @@
 
         function sellComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('판매 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -231,7 +231,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매확정이 완료되면 거래가 완료됩니다.');
+                    alert("The seller finished the sale.\rOnce the buyer's purchase is finalized, the transaction is complete.");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -241,7 +241,7 @@
 
         function tradeComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('거래 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -254,7 +254,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('거래가 완료되었습니다.');
+                    alert('The transaction is complete.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -264,13 +264,13 @@
 
         function cancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    alert("거래가 취소되었습니다.");
+                    alert("Transaction canceled.");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -324,35 +324,35 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">구매관리</h1>
+                        <h1 class="tit_mypage">My Purchase</h1>
                         <div class="search_filter">
                             <ul class="">
                                 <li class="row">
-                                    <h2 class="col-sm-2 col-xs-12">거래유형</h2>
+                                    <h2 class="col-sm-2 col-xs-12">Goods Type</h2>
                                     <div class="check_filter col-sm-10 col-xs-12">
-                                        <input type="radio" name="category" id="game" value="game" checked><label for="game">게임아이템</label>
-                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">자산거래</label>
+                                        <input type="radio" name="category" id="game" value="game" checked><label for="game">Game Item</label>
+                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">Asset Trading</label>
                                     </div>
                                 </li>
                                 <li class="row">
-                                    <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                                    <h2 class="col-sm-2 col-xs-12">Transaction<br>Status</h2>
                                     <div class="check_filter col-sm-10 col-xs-12">
-                                        <input type="radio" name="status" id="all" value=""><label for="all">전체</label><br class="mob_br">
-                                        <input type="radio" name="status" id="regist" value="0"><label for="regist">거래가능</label><br class="mob_br">
-                                        <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">거래요청</label><br class="mob_br">
-                                        <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">구매확인</label><br class="mob_br">
-                                        <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">판매완료</label><br class="mob_br">
-                                        <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">거래완료</label>
+                                        <input type="radio" name="status" id="all" value=""><label for="all">All</label><br class="mob_br">
+                                        <input type="radio" name="status" id="regist" value="0"><label for="regist">Available</label><br class="mob_br">
+                                        <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Request</label><br class="mob_br">
+                                        <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Purchase Confirm</label><br class="mob_br">
+                                        <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Complete Sales</label><br class="mob_br">
+                                        <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">Complete Transaction</label>
                                     </div>
                                 </li>
                                 <li class="row">
-                                    <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                                    <h2 class="col-sm-2 col-xs-12">Title</h2>
                                     <div class="check_filter col-sm-10 col-xs-12">
                                         <div class="w100p-120px">
                                             <input type="text" class="form-control" id="title">
                                         </div>
                                         <div class="mob_100p_tar">
-                                            <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                            <input type="button" class="btn btn-primary" id="btn_search" value="search">
                                         </div>
                                     </div>
                                 </li>
@@ -371,11 +371,11 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th><span id="table_category">게임>서버</span></th>
-                                        <th>제목</th>
-                                        <th>거래가격</th>
-                                        <th>거래상태</th>
-                                        <th>등록일</th>
+                                        <th><span id="table_category">Game / Server</span></th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="buy_list">
@@ -403,10 +403,10 @@
                         <div class="dim_all_area" style="display: none">
                             <article class="modal_bitberry_deposit">
                                 <button id="btnmCloseModal" class="btn">X</button>
-                                <h1>연락처 표시</h1>
-                                <p>구매자 연락처 : <span id="toPhone"></span></p>
-                                <p>판매자 연락처 : <span id="fromPhone"></span></p>
-                                <button id="checkok" class="btn btn-danger">확인</button>
+                                <h1>View Contact</h1>
+                                <p>Phone of seller : <span id="toPhone"></span></p>
+                                <p>Phone of buyer : <span id="fromPhone"></span></p>
+                                <button id="checkok" class="btn btn-danger">Confirm</button>
                             </article>
                         </div>
                     </section>

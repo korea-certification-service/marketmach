@@ -48,7 +48,7 @@
                 var coinHistorys = success.data;
                 var result = ""
                 if(coinHistorys.length == 0) {
-                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='4'>No exist.</td></tr>";
                 }
 
                 for(var i=0;i<coinHistorys.length;i++) {
@@ -103,7 +103,7 @@
 
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">지갑관리 <span>나의 지갑 정보</span></h1>
+                        <h1 class="tit_mypage">My Wallet <span>information</span></h1>
                         <div class="bitberry_switch_box">
                             <div class="bitberry_switch">
                                 <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
@@ -112,17 +112,17 @@
                                     <p>OFF</p>
                                 </a>
                             </div>
-                            <em>나의지갑 잔액</em>
+                            <em>MY Wallet Balance</em>
                             <p class="fc3" id="mach">100 <span>MACH</span></p>
                         </div>
                         <div class="btn_align_c mb50">
-                            <button class="btn bgc1" id="deposit">MACH 입금</button>
-                            <button class="btn bgc3" id="withdraw">MACH 출금</button>
+                            <button class="btn bgc1" id="deposit">Deposit MACH</button>
+                            <button class="btn bgc3" id="withdraw">Withdraw MACH</button>
                         </div>
 
                         <div class="tab_board cf">
-                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('deposit');">입금 내역</a></li>
-                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">출금 내역</a></li>
+                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('deposit');">Deposit Statement</a></li>
+                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">Withdrawal Statement</a></li>
                         </div>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
@@ -134,10 +134,10 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>지갑</th>
-                                        <th>내역</th>
-                                        <th>처리상태</th>
-                                        <th>일자</th>
+                                        <th>Wallet</th>
+                                        <th>Statement</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">
