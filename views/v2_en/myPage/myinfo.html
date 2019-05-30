@@ -118,7 +118,7 @@
 
         function checkEmail() {
             if($("#email").val() == "") {
-                alert("이메일을 입력하세요.");
+                alert("input your e-mail.");
                 return;
             }
 
@@ -128,10 +128,10 @@
             }).done(function (success) {                
                 //console.log("success : ", success);
                 checkEmailYn = true;
-                alert('사용 가능한 이메일입니다.');
+                alert('Email available.');
             }).fail(function (fail) {
                 if (fail.status == 403) {
-                    alert('이미 사용중인 이메일입니다.');
+                    alert('This email is already in use.');
                 } else {
                     console.log(fail);
                 }
@@ -185,7 +185,7 @@
                     console.log(fail);
                 })
             } else {
-                alert("변경할 내용이 없습니다.");
+                alert("Nothing to change.");
             }
         }
 
@@ -193,16 +193,16 @@
             var emailChk = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
         
             if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
-                alert("입력하신 패스워드를 다시 입력하세요.");
+                alert("Please enter the password again.");
                 return false;
             } else if($("#password").val() != $("#passwordConfirm").val()) {
-                alert("패스워드가 일치하지 않습니다.\n다시 입력하세요.");
+                alert("Your password is incorrect.\nPlease enter a password.");
                 return false;
             } else if(!checkEmailYn) {
-                alert("이메일을 중복확인 하세요.");
+                alert("Please confirm your e-mail duplication.");
                 return false;
             } else if (emailChk.test($("#email").val()) == false) {
-                alert("이메일을 확인 하세요.");
+                alert("Please confirm your e-mail.");
                 return false;
             } 
 
@@ -216,7 +216,7 @@
             //     return;
             // }
         
-            var confirmYn = confirm('정말로 탈퇴하시겠습니까?');
+            var confirmYn = confirm('Do you really want to close your account?');
             if(confirmYn) {
                 if(bitberry_token != undefined && bitberry_token != "") {
                     $.ajax({
@@ -267,7 +267,7 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">회원정보관리 <span>회원정보수정</span></h1>
+                        <h1 class="tit_mypage">My Account <span>Edit Account Information</span></h1>
                         <hr class="hr_mypage">
                         <div class="table_wrap table-responsive">
                             <table class="table_view table">
@@ -277,55 +277,55 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th class="fc2">이름</th>
+                                        <th class="fc2">name</th>
                                         <td><em id="username"></em></td>
                                     </tr>         
                                     <tr>
-                                        <th class="fc2">아이디</th>
+                                        <th class="fc2">ID</th>
                                         <td><em id="userTag"></em></td>
                                     </tr>         
                                     <tr>
-                                        <th class="fc2">비밀번호</th>
-                                        <td><input type="password" autocomplete="new-password" class="form-control" id="password" placeholder="새로운 비밀번호 입력 *8~16자의 영문+숫자 or 특수문자 사용"></td>
+                                        <th class="fc2">Password</th>
+                                        <td><input type="password" autocomplete="new-password" class="form-control" id="password" placeholder="Please a new password using 8 to 16 alphbetic characters or special characters."></td>
                                     </tr>         
                                     <tr>
-                                        <th class="fc2">비밀번호 확인</th>
+                                        <th class="fc2">Password confirm</th>
                                         <td><input type="password" autocomplete="new-password" class="form-control" id="passwordConfirm" placeholder=""></td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">연락처(휴대폰)</th>
+                                        <th class="fc2">Contact (Cell Phone)</th>
                                         <td>
                                             <em class="w100p-120px" id="phone"></em>
                                             <br class="mob_br">
-                                            <button class="btn btn-default" id="authPhone">연락처 변경</button>
+                                            <button class="btn btn-default" id="authPhone">Change Contact</button>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="fc2">이메일</th>
+                                        <th class="fc2">E-mail</th>
                                         <td>
                                             <div class="w100p-120px">
                                                 <input type="text" class="form-control" id="email" placeholder="example@mymach.asia">
                                             </div>
                                             <br class="mob_br">
-                                            <button class="btn btn-default" id="checkEmail">중복확인</button>
+                                            <button class="btn btn-default" id="checkEmail">Confirm Duplication</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="btn_align_c">
-                            <button class="btn btn_in_view1" id="modifyUser">변경하기</button>
+                            <button class="btn btn_in_view1" id="modifyUser">Save Changes</button>
                         </div>
 
                         <div class="deactivate_member">
                             <hr class="hr_mypage">
-                            <h3 class="fcgr1">회원탈퇴 </h3>
+                            <h3 class="fcgr1">Close Account </h3>
                             <div class="tar">
-                                <button class="btn btn-default" id="withdraw">회원탈퇴</button>
+                                <button class="btn btn-default" id="withdraw">Close Account</button>
                             </div>
                             <ul class="fcgr1">
-                                <li>※ 회원탈퇴 시 마켓마하의 회원정보 / 거래내역 / VTR기록이 삭제되고 모든 혜택이 소멸합니다.</li>
-                                <li>※ 회원탈퇴 후 재가입시 기존 회원정보는 복구되지 않습니다.</li>
+                                <li>※ Once you close your account, all your information including MarketMACH account information, transaction statement, VTR record will be deleted and all the benefits will be expired.</li>
+                                <li>※ Any your infomation cannot be restored though you sign up again after closing your account.</li>
                             </ul>
                         </div>
                     </section>
