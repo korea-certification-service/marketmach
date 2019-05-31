@@ -303,6 +303,9 @@
                 $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
                 $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
                 $(".user_price_balance").html(numberWithCommas(total_mach - mach) + "<span class='fzsm'>MACH</span>");
+                $(".item_user_price_point").html(item_user_price_point + "<span class='fzsm'>Point</span>");
+                $(".item_price_point").html("<em class='em_calc_ico minus'>-</em>" + point_txt + "<span class='fzsm'>Point</span>");
+                $(".user_price_balance_point").html(numberWithCommas(total_point - point) + "<span class='fzsm'>Point</span>");
                 $(".item_status").addClass(status.className).text(status.text);
                 $(".item_character").text(game_character);
             }).fail(function (fail) {
