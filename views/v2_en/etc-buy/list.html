@@ -53,7 +53,7 @@
                 category1 = $("#game-name option:selected").val();
                 
                 if (category1 === "") { 
-                    $("#category1").text("전체");
+                    $("#category1").text("All");
                 } else {
                     $("#category1").text(category1);
                 }
@@ -79,7 +79,7 @@
                 method: "GET",
                 url: "/v1/categories"
             }).done(function (success) {
-                var strDOM = '<option value="">전체</option>';
+                var strDOM = '<option value="">All</option>';
                 for (var i = 0; i < success.data.length; i++) {
                     strDOM += '<option value="' + success.data[i].category1 + '">' + success.data[i].category1 + '</option>'
                 }
@@ -114,7 +114,7 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">선택하세요</option>';
+            var strDOM = '<option value="">Please select</option>';
 
             for (var i = 0; i < data.gategory2.length; i++) {
                 strDOM += '<option value="' + data.gategory2[i] + '">' + data.gategory2[i] + '</option>'
@@ -157,7 +157,7 @@
                     createData(success.data.list);
                 } else {
                     if(pageIdx == 0) {
-                        $("#list").html("<tr><td colspan='5'>검색 결과를 찾을 수 없습니다.</td></tr>")
+                        $("#list").html("<tr><td colspan='5'>No exist.</td></tr>")
                     }
                 }
 
@@ -213,13 +213,13 @@
             <!-- list page-->
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>자산거래 삽니다<span><span id="category1">전체</span></span></h1>
-                    <button class="btn btn-success" id="register">구매등록</button>
+                    <h1>Buy Assets<span><span id="category1">All</span></span></h1>
+                    <button class="btn btn-success" id="register">Register to Buy</button>
                 </div>
                 <div class="search_filter">
                     <ul class="">
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">카테고리</h2>
+                            <h2 class="col-sm-2 col-xs-12">Categoty</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
                                 <select class="selectpicker" id="game-name" data-live-search="true">
                                 </select>
@@ -228,30 +228,30 @@
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품유형</h2>
+                            <h2 class="col-sm-2 col-xs-12">Delivery Type</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="item_type" id="all" value="" checked><label for="all">전체</label>
-                                <input type="radio" name="item_type" id="direct" value="direct"><label for="direct">직거래</label>
-                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">택배 거래</label>
+                                <input type="radio" name="item_type" id="all" value="" checked><label for="all">All</label>
+                                <input type="radio" name="item_type" id="direct" value="direct"><label for="direct">Direct Deal</label>
+                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Courier Transaction</label>
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                            <h2 class="col-sm-2 col-xs-12">Transaction Status </h2>
                             <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
-                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">거래가능</label>
-                                <input type="radio" name="status" id="trading" value="1"><label for="trading">거래중</label>
-                                <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">거래완료</label>
+                                <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">All</label>
+                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">Available</label>
+                                <input type="radio" name="status" id="trading" value="1"><label for="trading">Trading</label>
+                                <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">Complete</label>
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <h2 class="col-sm-2 col-xs-12">Title</h2>
                             <div class="col-sm-10 col-xs-12">
                                 <div class="w100p-120px">
                                     <input type="text" class="form-control" id="item_title">
                                 </div>
                                 <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="search">
                                 </div>
                             </div>
                         </li>                        
@@ -269,11 +269,11 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>카테고리</th>
-                                <th>제목</th>
-                                <th>거래가격</th>
-                                <th>거래상태</th>
-                                <th>등록일</th>
+                                <th>Categoty</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="list">
@@ -281,7 +281,7 @@
                     </table>                 
                 </div>
                 <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                    <button class="btn btn_more_list" id="more_search">20 more</button>
                 </div>
             </section>
             <!--// list page-->
