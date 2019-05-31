@@ -18,6 +18,7 @@
             $('.afterLoginBox').css('display','block');
 
             getCoinMain();
+            getPointMain();
             getItemCountMain();
         }
 
@@ -35,6 +36,21 @@
                 $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
             } else {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function getPointMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/points/" + pointId
+        }).done(function (success) {
+            if (success.data.total_point != null) {
+                $(".total_point").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
+            } else {
+                $(".total_point").html("<a href='/myPages/wallet/info'>0<span>Point</span></a>");
             }
         }).fail(function (fail) {
             console.log(fail);
@@ -180,16 +196,17 @@
                                             <p class="fc2 total_buy">0<span>건</span></p>
                                         </div>
                                     </li>
-                                    <li class="mdl_area">
-                                        <em>나의지갑 잔액</em>
+                                    <li class="mdl_area">                                        
                                         <%if(useBlockchain == 'Y') {%>
+                                        <em>나의지갑 잔액</em>
                                         <p class="fc2 total_mach">100 <span>MACH</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
                                         <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
-                                            <p class="fc2 total_mach">100 <span>Point</span></p>
-                                            <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
-                                            <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
+                                        <em>나의 포인트 잔액</em>
+                                        <p class="fc2 total_point">100 <span>Point</span></p>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
                                         <%}%>
                                     </li>
                                 </ul>
