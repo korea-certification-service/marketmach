@@ -31,7 +31,7 @@
 
         function checkUserTag() {
             if($("input[name=id]").val() == "") {
-                alert("아이디를 입력하세요.");
+                alert("enter your id");
                 return;
             }
 
@@ -87,12 +87,12 @@
             }
 
             if(!checkUserTagYn) {
-                alert("아이디를 중복확인 하세요.");
+                alert("Check your ID");
                 return;
             }
 
             if(!checkEmailYn) {
-                alert("이메일을 중복확인 하세요.");
+                alert("Check your email");
                 return;
             }
 
@@ -204,7 +204,7 @@
         <div class="sub_container container">
             <!-- join_sec page-->
             <section class="join_sec">
-                <h1>정보입력 <em class="fcor">(필수)</em></h1>
+                <h1>Member Infomation <em class="fcor">(Required)</em></h1>
                 <div class="table_wrap table-responsive">
                     <table class="table_view table">
                         <colgroup class="colgroup_signup">
@@ -213,50 +213,54 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th>이름</th>
+                                <th>Name</th>
                                 <td>
                                     <input type="hidden" id="birth"/>
-                                    <span id="username">홍길동</span>
+                                    <span id="username"></span>
                                 </td>
                             </tr>
                             <tr>
-                                <th>아이디</th>
+                                <th>ID</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="text" class="form-control w80p" name="id" placeholder="아이디는 6~20자 영문or영문+숫자 조합 사용">
-                                        <button class="btn btn-info" id="checkUserTag">중복확인</button>
+                                        <input type="text" class="form-control w80p" name="id" placeholder="6~20자 영문or영문+숫자 조합 사용">
+                                        <button class="btn btn-info" id="checkUserTag">check</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>비밀번호</th>
-                                <td><input type="password" class="form-control" name="password" placeholder="새로운 비밀번호 입력 *8~16자의 영문+숫자 or 특수문자 사용"></td>
+                                <th>Password</th>
+                                <td><input type="password" class="form-control" name="password" placeholder="8~16자의 영문+숫자 or 특수문자 사용"></td>
                             </tr>
                             <tr>
-                                <th>비밀번호 확인</th>
+                                <th>Password(confirm)</th>
                                 <td><input type="password" class="form-control" placeholder="" name="passwordConfirm"></td>
                             </tr>
                             <tr>
-                                <th>연락처(휴대폰)</th>
+                                <th>Phone</th>
                                 <td>
-                                    <em id="phone">010-1234-1234</em>
-                                    <p>※ 연락처 변경은 가입 후 나의페이지-나의정보에서 가능합니다.</p>
+                                    <div class="no_w100p_wrap">
+                                        <select id="" class="form-control" style="width:100px">
+                                            <option value="">country code</option>
+                                        </select>
+                                        <input type="text" class="form-control w80p" name="" placeholder="">
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>이메일</th>
+                                <th>email</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <input type="text" class="form-control w80p" name="email" placeholder="example@mymach.asia">
-                                        <button class="btn btn-info" id="checkEmail">중복확인</button>
+                                        <button class="btn btn-info" id="checkEmail">check</button>
                                     </div>                                
                                 </td>
                             </tr>
                             <tr>
-                                <th class="fcgr1" colspan="2"><br>선택</th>
+                                <th class="fcgr1" colspan="2"><br>Optional</th>
                             </tr>
                             <tr>
-                                <th>추천인</th>
+                                <th>Recomander</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <input type="text" class="form-control w80p" id="recommander" placeholder="user ID. ex)mymachUser">
@@ -267,7 +271,7 @@
                     </table>
                 </div> 
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="signup">회원가입</button>
+                    <button class="btn btn_in_view1" id="signup">sign up</button>
                 </div>                    
             </section>
             <!--// join_sec page-->
