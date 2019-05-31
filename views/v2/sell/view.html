@@ -81,15 +81,21 @@
                                         <%if(useBlockchain == 'Y') {%>
                                             <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
                                             <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청</button>
+                                            <button class="btn item_view btn_in_view2" id="buynow">바로구매</button>
+                                            <button class="btn item_view btn_in_view5" id="buyComplete">구매확인</button>
+                                            <button class="btn item_view btn_in_view7" id="sellComplete">판매완료</button>
+                                            <button class="btn item_view btn_in_view8" id="cancel">거래취소</button>
+                                            <button class="btn item_view btn_in_view9" id="confirm">거래완료</button>
+                                            <button class="btn item_view btn_in_view6" id="showPhone">연락처 표시</button>
+                                        <%} if(usePoint == 'Y' && useBlockchain == 'N') {%>
+                                            <button class="btn item_view btn_in_view2" id="pointBuynow">바로구매</button>
+                                            <button class="btn item_view btn_in_view7" id="pointSellComplete">판매완료</button>
+                                            <button class="btn item_view btn_in_view8" id="pointCancel">거래취소</button>
+                                            <button class="btn item_view btn_in_view9" id="pointConfirm">거래완료</button>
+                                            <button class="btn item_view btn_in_view6" id="pointShowPhone">연락처 표시</button>
                                         <%}%>
-                                        <button class="btn item_view btn_in_view2" id="buynow">바로구매</button>
                                         <button class="btn item_view btn_in_view3" id="modify">수정</button>
                                         <button class="btn item_view btn_in_view4" id="remove">삭제</button>
-                                        <button class="btn item_view btn_in_view5" id="buyComplete">구매확인</button>
-                                        <button class="btn item_view btn_in_view6" id="showPhone">연락처 표시</button>
-                                        <button class="btn item_view btn_in_view7" id="sellComplete">판매완료</button>
-                                        <button class="btn item_view btn_in_view8" id="cancel">거래취소</button>
-                                        <button class="btn item_view btn_in_view9" id="confirm">거래완료</button>
                                         <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
                                     </div>
                                     <div class="tac">
@@ -181,7 +187,7 @@
                 location.href="/sells/vtr/" + itemId;
             });
 
-            $('#buynow').on('click', function() {
+            $('#buynow, #pointBuynow').on('click', function() {
                 buynow();
             });
 
@@ -193,8 +199,16 @@
                 cancelItem();
             });
 
+            $('#pointCancel').on('click', function() {
+                pointCancelItem();
+            });
+
             $('#confirm').on('click', function() {
                 confirmItem();
+            });
+
+            $('#pointConfirm').on('click', function() {
+                pointConfirmItem();
             });
 
             $('#opposition').on('click', function() {
@@ -213,8 +227,16 @@
                 sellComplete();
             });
 
+            $('#pointSellComplete').on('click', function() {
+                pointSellComplete();
+            });
+
             $('#showPhone').on('click', function() {
                 showPhone(itemId);
+            });
+        
+            $('#pointShowPhone').on('click', function() {
+                pointShowPhone(itemId);
             });
 
             $("#btnmCloseModal, #checkok").on("click", function() {
@@ -380,6 +402,21 @@
             }
         }
 
+        function pointCancelItem() {
+            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+            console.log('준비중');
+            if(confirms) {
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                }).done(function (success) {
+                    location.href = '/etc-sells/detail/' + itemId;
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+
         function buyComplete() {
             var confirms = confirm('구매 확인 하시겠습니까?');
             if(confirms) {
@@ -424,6 +461,28 @@
             }
         }
 
+        function pointSellComplete() {
+            var confirms = confirm('판매 완료 하시겠습니까?');
+            if(confirms) {
+                var data = {
+                    "status": true
+                }
+                
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                    location.href = '/etc-sells/detail/' + itemId;
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+
         function confirmItem() {
             var confirms = confirm('거래 완료 하시겠습니까?');
             if(confirms) {
@@ -444,6 +503,26 @@
             }
         }
 
+        function pointConfirmItem() {
+            var confirms = confirm('거래 완료 하시겠습니까?');
+            if(confirms) {
+                var data = {
+                    "status": true
+                }
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    location.href = '/etc-sells/detail/' + itemId;
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+
         function oppositionItem() {
             // console.log('준비중');
             // alert('준비중입니다.');
@@ -454,6 +533,24 @@
             $.ajax({
                 method: "GET",
                 url: "/v1/vtrs/item/" + itemId
+            }).done(function (success) {
+                console.log(success.data);
+                var $body = $("body");
+                var $dim = $(".dim_all_area");
+                $dim.show();
+                $("#btnmCloseModal").focus();
+                $body.css("position", "fixed");
+                $("#fromPhone").text(success.data.seller_phone);
+                $("#toPhone").text(success.data.buyer_phone);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function pointShowPhone(itemId) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/tradePoints/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
                 var $body = $("body");
