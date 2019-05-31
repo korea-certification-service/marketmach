@@ -20,7 +20,7 @@
 .table .colgroup_dispute .col3_2{width: 65px;}
 .support_sec .table_view .col2_1{width: 110px;}
 .sub_lft_menu > .depth1 > li > a{font-size: 14px;}
-
+.content_tab_depth1 li{width: 33.33%;}
 /**********  hide button **********/
 /*
 #regVTR{display: none !important;}
