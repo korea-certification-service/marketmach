@@ -11,6 +11,8 @@ router.get('/board', function (req, res, next) {
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
         type: req.query.type,
         title: req.query.title,
         pageIdx: req.query.pageIdx});
@@ -20,6 +22,8 @@ router.get('/board', function (req, res, next) {
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
         type: req.query.type,
         title: req.query.title,
         pageIdx: req.query.pageIdx});
@@ -32,6 +36,8 @@ router.get('/board/detail/:communityId', function (req, res, next) {
         userId: req.session.userId,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
         communityId: req.params.communityId,
         userTag: req.session.userTag,
         authPhone: req.session.authPhone});
@@ -40,6 +46,8 @@ router.get('/board/detail/:communityId', function (req, res, next) {
         userId: req.session.userId,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
         communityId: req.params.communityId,
         userTag: req.session.userTag,
         authPhone: req.session.authPhone});
