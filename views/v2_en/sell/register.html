@@ -51,26 +51,26 @@
                                 <td>
                                     <div class="form-inline radio_wrap">
                                         <div class="form-group">
-                                            <input type="radio" name="item_type" id="item" value="item" checked><label for="item">아이템</label>
+                                            <input type="radio" name="item_type" id="item" value="item" checked><label for="item">Item</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="radio" name="item_type" id="gameMoney" value="gameMoney"><label for="gameMoney">게임머니</label>
+                                            <input type="radio" name="item_type" id="gameMoney" value="gameMoney"><label for="gameMoney">Game Money</label>
                                         </div>  
                                         <div class="form-group">
-                                            <input type="radio" name="item_type" id="etc" value="etc"><label for="etc">기타</label>
+                                            <input type="radio" name="item_type" id="etc" value="etc"><label for="etc">ETC</label>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Title</th>
-                                <td><input type="text" class="form-control" id="title" placeholder="" maxlength="50"></td>
+                                <td><input type="text" class="form-control" id="title" placeholder="Please enter a Title" maxlength="50"></td>
                             </tr>
                             <tr>
                                 <th>Price(MACH)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="" onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="Please enter a transaction Price" onkeypress="return checkDecimal(event)">
                                         <em class="fc2">MACH</em>
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
@@ -81,9 +81,9 @@
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <select id="currencyType" class="selectpicker" data-live-search="true"></select>
-                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="" onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="Please enter a transaction Price" onkeypress="return checkDecimal(event)">
                                         <em class="fc2" id="currencyName"></em>
-                                        <p class="fcrd">※ 직거래를 원하시는 경우 입력하세요.</p>
+                                        <p class="fcrd">※ Please enter if you want a direct deal.</p>
                                     </div>
                                 </td>
                             </tr>

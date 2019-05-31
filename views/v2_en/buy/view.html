@@ -111,10 +111,10 @@
                 <div class="dim_all_area" style="display: none">
                     <article class="modal_bitberry_deposit">
                         <button id="btnmCloseModal" class="btn">X</button>
-                        <h1>연락처 표시</h1>
-                        <p>구매자 연락처 : <span id="toPhone"></span></p>
-                        <p>판매자 연락처 : <span id="fromPhone"></span></p>
-                        <button id="checkok" class="btn btn-danger">확인</button>
+                        <h1>View Contact</h1>
+                        <p>Phone of seller : <span id="toPhone"></span></p>
+                        <p>Phone of buyer : <span id="fromPhone"></span></p>
+                        <button id="checkok" class="btn btn-danger">Confirm</button>
                     </article>
                 </div>
             </section>
@@ -314,7 +314,7 @@
         }
 
         function buyComplete() {
-            var confirms = confirm('구매 확인 하시겠습니까?');
+            var confirms = confirm('Do you want to Purchase Confirmation?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -336,7 +336,7 @@
         }
 
         function sellComplete() {
-            var confirms = confirm('판매 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -358,7 +358,7 @@
         }
 
         function confirmItem() {
-            var confirms = confirm('거래 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true

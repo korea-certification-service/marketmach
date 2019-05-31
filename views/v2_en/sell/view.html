@@ -363,7 +363,7 @@
         }
 
         function buyComplete() {
-            var confirms = confirm('구매 확인 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -376,7 +376,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
+                    alert('Buyer confirmed purchase. \rPlease wait for the seller to complete the sale.');
                     location.href = '/sells/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);
@@ -385,7 +385,7 @@
         }
 
         function sellComplete() {
-            var confirms = confirm('판매 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -398,7 +398,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                    alert("The seller finished the sale.\rOnce the buyer's purchase is finalized,the transaction is complete.");
                     location.href = '/sells/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);
@@ -407,7 +407,7 @@
         }
 
         function confirmItem() {
-            var confirms = confirm('거래 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to submit?');
             if(confirms) {
                 var data = {
                     "status": true
