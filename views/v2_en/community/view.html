@@ -16,7 +16,7 @@
 
             $('#add_reply').on('click', function() {
                 if(userTag == "") {
-                    alert("댓글 작성을 위해 로그인이 필요합니다.");
+                    alert("You need to sign in to comment.");
                     location.href = "/login";
                 }
             });
@@ -53,7 +53,7 @@
         function getReply(replys) {
             var strDOM = "";
             if(replys.length == 0) {
-                $('.reply_list').html("<li>등록된 댓글이 없습니다.</li>");
+                $('.reply_list').html("<li>No exist.</li>");
                 return;
             }
 
@@ -68,8 +68,8 @@
                                         '</div>';
                 if(replys[i].reporter == userTag) {
                     strDOM +=   '<div class="item_btn" id="item_btn_'+replys[i]._id+'">' + 
-                                    '<button class="fc3" onclick="modifyReply(\''+replys[i]._id+'\')">수정</button>' + 
-                                    '<button class="fcrd" onclick="deleteReply(\''+replys[i]._id+'\')">삭제</button>' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+replys[i]._id+'\')">Edit</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+replys[i]._id+'\')">Delete</button>' + 
                                 '</div>'; 
                 }
                 strDOM +=        '</dt>' +
@@ -85,7 +85,7 @@
 
         function addReply() {
             if($('#add_reply').val() == "") {
-                alert('내용을 입력하세요.');
+                alert('Please enter your content.');
                 return;
             }
 
@@ -123,8 +123,8 @@
                                             '<span class="rep_date">'+reply.regDate+'</span>' + 
                                         '</div>';
                 strDOM +=   '<div class="item_btn" id="item_btn_'+reply._id+'">' + 
-                                    '<button class="fc3" onclick="modifyReply(\''+reply._id+'\')">수정</button>' + 
-                                    '<button class="fcrd" onclick="deleteReply(\''+reply._id+'\')">삭제</button>' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+reply._id+'\')">Edit</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+reply._id+'\')">Delete</button>' + 
                                 '</div>'; 
                 strDOM +=        '</dt>' +
                                     '<input type="hidden" id="hid_content'+reply._id+'" value="'+reply.content+'">' + 
@@ -147,7 +147,7 @@
 
         function modifyReply(id) {
             $('#modify_area' +id).html('<textarea id="modify_reply" class="form-control" maxlength="300" style="height: 80px">'+$('#hid_content'+id).val()+'</textarea>');
-            $('#modify_area' +id).append('<div class="item_btn"><button class="fc3" onclick="update(\''+id+'\')">저장</button><button class="fcrd" onclick="initContent(\''+id+'\')">취소</button></div>');
+            $('#modify_area' +id).append('<div class="item_btn"><button class="fc3" onclick="update(\''+id+'\')">저장</button><button class="fcrd" onclick="initContent(\''+id+'\')">Cancel</button></div>');
             $('#item_btn_'+id).hide();
         }
 
@@ -186,7 +186,7 @@
         }
 
         function deleteReply(id) {
-            var confirmYn = confirm('정말로 삭제하시겠습니까?');
+            var confirmYn = confirm('Do you want to delete?');
             if(confirmYn) {
                 console.log(id);
 
@@ -221,7 +221,7 @@
         <div class="sub_container container">
 
             <section class="community_sec">
-                <h1 class="tit_community">게임소식</span></h1>                    
+                <h1 class="tit_community">Game News</span></h1>                    
                 <div class="table_wrap table-responsive">
                     <table class="table_view table">
                         <colgroup>
@@ -244,14 +244,14 @@
                 <div class="tac">
                     <button class="btn_recommendation">
                         <dl>
-                            <dt><i class="material-icons">thumb_up</i>추천</dt>
+                            <dt><i class="material-icons">thumb_up</i>like</dt>
                             <dd>0</dd>
                         </dl>
                     </button>
                 </div>
                     
                 <div class="tar">
-                    <button class="btn btn_go_list" onclick="history.back();">목록</button>
+                    <button class="btn btn_go_list" onclick="history.back();">list</button>
                 </div>
 
                 <!-- 댓글 입력란 -->
@@ -260,7 +260,7 @@
                         <textarea name="" id="add_reply" class="form-control" maxlength="300" style="height: 80px"></textarea>
                     </div>
                     <div class="item_btn">
-                        <button class="btn bggr2" id="addReply">등록</button>
+                        <button class="btn bggr2" id="addReply">register</button>
                     </div>
                 </div>
 

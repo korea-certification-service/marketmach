@@ -31,7 +31,7 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><em class="dot_tit">Listing Det</em></th>
+                                <th colspan="2"><em class="dot_tit">Listing Details</em></th>
                             </tr>
                         </thead>
                         <tbody>                           
@@ -64,13 +64,13 @@
                             </tr>
                             <tr>
                                 <th>Title</th>
-                                <td><input type="text" class="form-control" id="title" placeholder="input title" maxlength="50"></td>
+                                <td><input type="text" class="form-control" id="title" placeholder="Please enter a Title" maxlength="50"></td>
                             </tr>
                             <tr>
                                 <th>Price(MACH)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="input price." onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="Please enter a transaction Price." onkeypress="return checkDecimal(event)">
                                         <em class="fc2">MACH</em>
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
@@ -81,7 +81,7 @@
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <select id="currencyType" class="selectpicker" data-live-search="true"></select>
-                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="input price" onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="Please enter a transaction price." onkeypress="return checkDecimal(event)">
                                         <em class="fc2" id="currencyName"></em>
                                         <p class="fcrd">※ Please input if you want a direct deal.</p>
                                     </div>

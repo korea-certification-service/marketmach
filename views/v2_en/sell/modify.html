@@ -66,13 +66,13 @@
                                 </tr>
                                 <tr>
                                     <th>Title</th>
-                                    <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
+                                    <td><input type="text" class="form-control" id="title" placeholder="Please enter the title"></td>
                                 </tr>
                                 <tr>
                                     <th>Price(MACH)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
+                                            <input type="number" class="form-control w80p" id="price" min="0" placeholder="Please enter a transaction price.">
                                             <em class="fc2">MACH</em>
                                         </div>
                                         <p class="fcrd">※ 1MACH = 1$</p>
@@ -83,7 +83,7 @@
                                     <td>
                                         <div class="no_w100p_wrap">
                                             <select id="currencyType" class="selectpicker" data-live-search="true"></select>
-                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="Please enter a transaction price." onkeypress="return checkDecimal(event)">
                                             <em class="fc2" id="currencyName"></em>
                                             <p class="fcrd">※ If you want to direct deal, input this.</p>
                                         </div>
@@ -323,14 +323,14 @@
             var filesArr = Array.prototype.slice.call(files);
     
             if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
+                alert('Up to 5 image files can be uploaded.');
                 return;
             }
     
             var index = 0;
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    alert("Only image files can be uploaded.");
                     return;
                 }
     
@@ -414,31 +414,31 @@
         function submit() {
             var country = "<%= country %>";
             if ($("#item-game-name option:selected").val() == "false") {
-                alert('게임명을 선택하세요.');
+                alert('Please select a Game');
                 return false;
             } else if ($("#game-server option:selected").val() == "") {
-                alert('서버명을 선택하세요.');
+                alert('Please select a Server');
                 return false;
             } else if ($("[name=item_type]:checked").val() == "") {
-                alert('상품유형을 선택하세요.');
+                alert('Please select a Category');
                 return false;
             } else if ($("#title").val() == "") {
-                alert('거래제목을 입력하세요.');
+                alert('Please enter a Title.');
                 return false;
             } else if ($("#seller_game_character").val() == "") {
-                alert('판매자 케릭터명을 입력하세요.');
+                alert("Please enter a Character's Name");
                 return false;
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
-                alert('거래 가격을 입력하세요.');
+                alert('Please enter a Price.');
                 return false;
             } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+                alert('Please enter a Price.');
                 return false;
             } else if ($("#desc").val() == "") {
-                alert('상세 정보를 입력하세요.');
+                alert('Please enter a Description.');
                 return false;
             } else if (country == "CN" && $("#region1").val() == "") {
-                alert('지역 1 입력');
+                alert('Please enter a Region');
                 return false;
             } 
             // else if (country == "CN" && $("#region2").val() == "") {
