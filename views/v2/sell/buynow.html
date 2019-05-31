@@ -168,8 +168,13 @@
                 </div>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
+                    <%if(useBlockchain == 'Y') {%>
                     <li>※ 나의 지갑 잔액(MACH)이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
                     <li>※ [MACH 입금] 버튼 또는 [나의페이지-지갑관리]에서 MACH를 입금하실 수 있습니다.</li>
+                    <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
+                    <li>※ 나의 포안트 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
+                    <li>※ [포인트 입금] 버튼 또는 [나의페이지-포인트관리]에서 Point 입금하실 수 있습니다.</li>
+                    <%}%>
                 </ul>   
                 <div class="btn_align_c">
                     <button class="btn btn_in_view1">결제하기</button>
