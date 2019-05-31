@@ -1,3 +1,18 @@
 @charset "utf-8";
-/*My Sales페이지 개행방지를 위한 폰트사이즈 조절*/
-.search_filter > ul > li h2{ font-size: 13px;}
+/*walletconnect페이지속 fc2클래스를 가진 태그 문자개행 방지*/
+.coin_certification dt { width: 155px; }
+
+/*input태그 옆 안내문 개행방지*/
+.table_account tbody td span {
+    font-size: 11px;
+}
+
+/*버튼내부 텍스트 개행방지*/
+.btn_align_c button {
+    max-width: 280px;
+}
+
+/*플러스 아이콘 가운데 정렬*/
+.em_calc_ico {
+    line-height: 22px;
+}
