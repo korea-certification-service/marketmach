@@ -340,7 +340,37 @@
                             $('#opposition').css('display','inline-block');
                         }
                     }  
-                } else if(success.data.status > 3) {
+                } else if((success.data.status > 100 && success.data.status < 104) || success.data.status == 50) {
+                    if(success.data.status == "101" || success.data.status == "50") {
+                        if(success.data.point_btn_active) {
+                            if(userTag != success.data.userTag && success.data.status != "50") {
+                                $('#pointBuyComplete').css('display','inline-block');  
+                            }
+                            $('#pointCancel').css('display','inline-block');
+                        } else {
+                            
+                        }
+                    }
+                    if(success.data.status == "102") {
+                        if(success.data.point_btn_active) {
+                            if(userTag == success.data.userTag) {
+                                $('#pointSellComplete').css('display','inline-block');
+                                $('#pointCancel').css('display','inline-block');
+                            }
+                            $('#pointShowPhone').css('display','inline-block');
+                        }
+                    } else if(success.data.status == "103") {
+                        if(success.data.point_btn_active) {
+                            if(userTag != success.data.userTag) {
+                                $('#pointConfirm').css('display','inline-block');
+                            } else {
+                                $('#pointCancel').css('display','inline-block');
+                            }
+                            $('#pointShowPhone').css('display','inline-block');
+                            $('#opposition').css('display','inline-block');
+                        }
+                    } 
+                } else if(success.data.status == 4 || success.data.status == 104) {
                     if(success.data.status == 5 && success.data.vtr_btn_active) {
                         $('#opposition').css('display','inline-block');
                     }
