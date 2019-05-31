@@ -139,33 +139,63 @@
                 </ul>              
 
                 <!-- 결제정보 -->
-                <div class="table_wrap">
-                    <table class="table_payment_info table">
-                        <colgroup class="colgroup_sell_buynow">
-                            <col class="col50p">
-                            <col class="col50p">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th colspan="2"><span class="dot_tit">결제정보</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>                           
-                            <tr>
-                                <th>나의 지갑 잔액</th>
-                                <td><span class="item_user_price"></span></td>
-                            </tr>
-                            <tr>
-                                <th>거래가격</th>
-                                <td><span class="item_price"></span></td>
-                            </tr>
-                            <tr>
-                                <th>결제 후 나의 지갑 잔액(예상)</th>
-                                <td><span class="user_price_balance"></span></td>
-                            </tr>                           
-                        </tbody>
-                    </table>
-                </div>
+                <%if(useBlockchain == 'Y') {%>
+                    <div class="table_wrap">
+                        <table class="table_payment_info table">
+                            <colgroup class="colgroup_etc-sell_buynow">
+                                <col class="col50p">
+                                <col class="col50p">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>나의 지갑 잔액</th>
+                                    <td><span class="item_user_price"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격</th>
+                                    <td><span class="item_price"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>결제 후 나의 지갑 잔액(예상)</th>
+                                    <td><span class="user_price_balance"></span></td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                    </div>
+                <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
+                    <div class="table_wrap">
+                        <table class="table_payment_info table">
+                            <colgroup class="colgroup_etc-sell_buynow">
+                                <col class="col50p">
+                                <col class="col50p">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>나의 포인트 잔액</th>
+                                    <td><span class="item_user_price_point"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격</th>
+                                    <td><span class="item_price_point"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>결제 후 나의 포인트 잔액(예상)</th>
+                                    <td><span class="user_price_balance_point"></span></td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                    </div>
+                <%}%>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
                     <%if(useBlockchain == 'Y') {%>
