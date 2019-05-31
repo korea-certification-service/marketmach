@@ -207,8 +207,12 @@
                     <%}%>
                 </ul>   
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1">결제하기</button>
-                </div>
+                    <%if(useBlockchain == 'Y') {%>
+                        <button class="btn btn_in_view1" id="buynow">결제하기</button>
+                    <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
+                        <button class="btn btn_in_view1" id="pointBuynow">결제하기</button>
+                    <%}%>
+                </div>  
             </section>
             <!--// view page-->
         </div>
@@ -225,6 +229,7 @@
         var itemId = "<%= id %>";
         var from_userTag;
         var mach;
+        var point;
     
         $(document).ready(function() {
             //$("#input_imgs").on("change", handleImgFileSelect);
@@ -243,6 +248,15 @@
                 buynow();
             });
 
+            $("#pointBuynow").on('click', function() {
+                if($('#buyer_game_character').val() == "") {
+                    alert("구매자 캐릭터명을 입력하십시오.");
+                    return;
+                }
+
+                pointBuynow();
+            });
+
             getData();
         });
 
@@ -258,12 +272,12 @@
                 var item_game_server = success.data.game_name + ' > ' + success.data.game_server;
                 var title = success.data.title;
                 mach = success.data.price;
+                point = success.data.point;
                 var total_mach = success.data.total_mach;
                 var total_point = success.data.total_point;
                 var price = numberWithCommas(mach);
                 var item_user_price = numberWithCommas(total_mach);
                 var item_user_price_point = numberWithCommas(total_point);
-                var point = numberWithCommas(success.data.point);
                 var point_txt = numberWithCommas(success.data.point);
                 var status = getStatus(success.data.status);
                 var item_type = getItemType(success.data.type);
@@ -330,6 +344,35 @@
                 $.ajax({
                     method: "POST",
                     url: "/v1/vtrs/buynow",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(params),
+                }).done(function (success) {
+                    if(success.data.code == undefined) {
+                        alert('거래가 시작되었습니다.\r 연락처 표시 버튼을 클릭하여 연락하시기 바랍니다.');
+                        location.href = "/sells/detail/"+itemId
+                    } else {
+                        alert(success.data.msg);
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                })
+            }
+        }
+
+        function pointBuynow() {
+            var confirmYn = confirm("바로구매 후 판매자와 구매자간 휴대폰 연락을 통해서 거래하시기 바랍니다. \r VTR을 사용하지 않고 개인간 거래 시 거래소에서는 책임을 지지 않습니다.\r 거래를 시작하시겠습니까?");
+            if(confirmYn) {
+                var params = {
+                    "itemId": itemId,
+                    "from_userId": from_userTag,
+                    "to_userId": userTag,
+                    "point": point
+                };
+                //console.log(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/tradePoints/buynow",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     data: JSON.stringify(params),
