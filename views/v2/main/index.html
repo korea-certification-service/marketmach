@@ -275,10 +275,11 @@
             <section class="visual_sec">
                 <h1 class="blind">메인 비주얼 이미지 영역</h1>
                 <div class="slick_visual">
+                    <%if(useBlockchain == 'Y') {%>  
                     <div class="visual_img">
                         <div class="visual_txt">
 
-                        </div>  
+                        </div>
                         <a href="/shopping/view">                                 
                             <div class="pc_img">
                                 <img src="/static/img/main/main_visual09.jpg" alt="">
@@ -353,7 +354,8 @@
                                 <img src="/static/img/mob/m_main_visual05.jpg" alt="">
                             </div>
                         </a>
-                    </div>                    
+                    </div>   
+                    <%}%>                 
                     <div class="visual_img">
                         <div class="visual_txt">
 
@@ -417,6 +419,7 @@
         <!--// bootstrap container -->
         <div class="container">
             <div class="w100p_banner row">
+                <%if(useBlockchain == 'Y') {%>
                 <div class="col-lg-12">
                     <a class="mob_hide" href="https://open.kakao.com/o/gD3UkX4" target="_blank">
                         <img src="/static/img/main/main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
@@ -425,6 +428,16 @@
                         <img src="/static/img/mob/mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                     </a>
                 </div>
+                <%} else if(usePoint == 'Y') {%>
+                <div class="col-lg-12">
+                    <a class="mob_hide" href="javascript:alert('준비중입니다.');" target="_blank">
+                        <img src="/static/img/point/main_content_banner_web.jpg" alt="마켓마하 오픈채팅 PC">
+                    </a>
+                    <a class="mob_show" href="javascript:alert('준비중입니다.');" target="_blank">
+                        <img src="/static/img/point/main_content_banner_web.jpg" alt="마켓마하 오픈채팅 PC">
+                    </a>
+                </div>
+                <%}%>
             </div>
             <!--
             <div class="row img_banner_tit">
@@ -442,7 +455,11 @@
             <div class="img_banner_sec row">
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/main/mach_link01.jpg" alt="MACH 게임"></a></div>
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/myPages/point/info"><img src="/static/img/main/mach_link02.jpg" alt="EVENT"></a></div>
+                <%if(useBlockchain == 'Y') {%>
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="https://tokensales.marketmach.com/login" target="_blank"><img src="/static/img/main/mach_link03.jpg" alt="MACH 구입하기"></a></div>
+                <%} else if(usePoint == 'Y') {%>
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="javascript:alert('준비중입니다.');"><img src="/static/img/point/banner_event.jpg" alt="Market MACH 이벤트"></a></div>
+                <%} %>
             </div>
             <div class="row">
                 <!-- 게임 아이템 판매/구매 -->
@@ -488,8 +505,9 @@
                 <!--// 게임 아이템 판매/구매 -->
                 <section class="assets_trade_sec col-lg-4">
                 </section>
-            </div>
+            </div>            
             <section class="w100p_banner row">
+                <%if(useBlockchain == 'Y') {%>
                 <div class="col-lg-12">
                     <a class="mob_hide" href="http://bitweb.co.kr/" target="_blank">
                         <img src="/static/img/main/main_content_banner03.jpg" alt="">
@@ -498,7 +516,9 @@
                         <img src="/static/img/mob/mob_main_banner03.jpg" alt="">
                     </a>
                 </div>
+                <%}%>
             </section>
+            <%if(useBlockchain == 'Y') {%>
             <div class="row">
                 <!-- 동영상 -->
                 <section class="media_sec col-lg-12">
@@ -543,6 +563,7 @@
                     </div>
                 </section>                   
             </div>
+            <%}%>
         </div>
         <!--// bootstrap container -->
     </div>
