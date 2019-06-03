@@ -38,6 +38,8 @@
                 $("#game_buy").text(success.data.game_buy);
                 $("#etc_sell").text(success.data.etc_sell);
                 $("#etc_buy").text(success.data.etc_buy);
+                $("#otc_sell").text(success.data.otc_sell);
+                $("#otc_buy").text(success.data.otc_buy);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -125,6 +127,25 @@
                                                     구매거래중
                                                     <span class="fc3">
                                                         <em id="etc_buy"></em>건
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="fc2">OTC거래</th>
+                                            <td>
+                                                <a href="/myPages/sell/list?category=otc">
+                                                    판매거래중
+                                                    <span class="fc2">
+                                                        <em id="otc_sell"></em>건
+                                                    </span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/myPages/buy/list?category=otc">
+                                                    구매거래중
+                                                    <span class="fc3">
+                                                        <em id="otc_buy"></em>건
                                                     </span>
                                                 </a>
                                             </td>

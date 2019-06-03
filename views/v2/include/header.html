@@ -118,6 +118,7 @@
             <div class="top_menu cf">
                 <span><a href="" class="lang lang_kr">한국어</a></span>
                 <ul class="menu_list cf">
+                    <li><a href="javascript:goExchange();">환전소</a></li> 
                     <li><a href="/howto/trade/vtr">이용안내</a></li>
                     <li><a href="/supports/info">고객센터</a></li>
                     <li><a href="/myPages/list">나의 페이지</a></li>
@@ -133,7 +134,9 @@
                     <input type="button" class="btn_search bgc1" id="main_search" value="검색">
                 </div>
                 <div class="chatbot jumpBot">
+                    <%if(useBlockchain == 'Y') {%>
                     <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
+                    <%}%>
                 </div>
             </section>
             <nav class="nav cf">
@@ -143,6 +146,9 @@
                         <ul class="depth2 cf">
                             <li><a href="/sells/register">게임아이템</a></li>
                             <li><a href="/etc-sells/register">자산거래</a></li>
+                            <%if(useBlockchain == 'Y') {%>  
+                            <li><a href="/otc-sells/register">OTC거래</a></li>
+                            <%}%>
                         </ul>
                     </li>
                     <li>
@@ -150,6 +156,9 @@
                         <ul class="depth2 cf">
                             <li><a href="/buys/register">게임아이템</a></li>
                             <li><a href="/etc-buys/register">자산거래</a></li>
+                            <%if(useBlockchain == 'Y') {%>  
+                            <li><a href="/otc-buys/register">OTC거래</a></li>
+                            <%}%>
                         </ul>                    
                     </li>
                 </ul>
@@ -167,10 +176,17 @@
                             <li><a href="/etc-sells?category=etc&trade_type=sell">팝니다</a></li>
                             <li><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></li>
                         </ul>  
-                    </li>                       
-                    <%if(useBlockchain == 'Y') {%>
+                    </li>    
+                    <%if(useBlockchain == 'Y') {%>  
+                    <li>
+                        <button class="hasDepth2">OTC거래</button>
+                        <ul class="depth2 cf">
+                            <li><a href="/otc-sells?category=otc&trade_type=sell">팝니다</a></li>
+                            <li><a href="/otc-buys?category=otc&trade_type=buy">삽니다</a></li>
+                        </ul>  
+                    </li>                  
                     <li><a href="/shopping/view" class="fcbk">한정 이벤트</a></li>
-                    <li><a href="javascript:goExchange();" class="fcbk">환전소</a></li>
+                    <!-- <li><a href="javascript:goExchange();" class="fcbk">환전소</a></li> -->
                     <%}%>
                     <li><a href="/community/board" class="fcbk">게임소식</a></li>
                     <%if(useBlockchain == 'Y') {%>

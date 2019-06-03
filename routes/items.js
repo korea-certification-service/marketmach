@@ -22,93 +22,85 @@ router.get('/', function (req, res, next) {
     let country = dbconfig.country;
     let category = req.query.category;
     let data = {}
-    if ((category == "game") || (category == "etc")) {
+    if (category == "game") {
 
-        if (category == "game") {
+        let game_name = req.query.game_name;
+        let game_server = req.query.game_server;
+        let type = req.query.type;
 
-            let game_name = req.query.game_name;
-            let game_server = req.query.game_server;
-            let type = req.query.type;
-
-            if (game_name != undefined) data['game_name'] = game_name;
-            if (game_server != undefined) data['game_server'] = game_server;
-            if (type != undefined) data['type'] = type;
-        }
-
-        let trade_type = req.query.trade_type;
-        let title = req.query.title;
-        let pageIdx = req.query.pageIdx;
-        let perPage = req.query.perPage;
-        let userTag = req.query.userTag;
-        let primeService = req.query.primeService;
-        let category1 = req.query.category1;
-        let category2 = req.query.category2;
-        let status = req.query.status;
-        let delivery_type = req.query.type;
-        if(status == "1") {
-            status = [1,2,3];
-        } else if (status == "4") {
-            status = [4,5,6,7];
-        } else if (status == "0") {
-            status = [0];
-        } else if(status == "101") {
-            status = [101,102,103];
-        } else if (status == "104") {
-            status = [104,105,106,107];
-        }
-
-        if (trade_type != undefined) data['trade_type'] = trade_type;
-        if (title != undefined) data['title'] = title;
-        if (pageIdx != undefined) data['pageIdx'] = parseInt(pageIdx);
-        if (perPage != undefined) data['perPage'] = parseInt(perPage);
-        if (userTag != undefined) data['userTag'] = userTag;
-        if (primeService != undefined) data['primeService'] = primeService;
-        if (category1 != undefined) data['category1'] = category1;
-        if (category2 != undefined) data['category2'] = category2;
-        if(status != undefined) data['status'] = status;
-        if(delivery_type != undefined) data['delivery_type'] = delivery_type;
-
-        data['category'] = category;
-        controllerItems.getItemCount(country, data)
-            .then((count) => {
-                controllerItems.getItemByRequired(country, data)
-                    .then(result => {
-                        let resultSet = {
-                            "count": count,
-                            "list": result
-                        }
-
-                        console.log('test=>', resultSet)
-                        bitwebResponse.code = 200;
-                        bitwebResponse.data = resultSet;
-
-                        let jsonResult = bitwebResponse.create();
-
-                        if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
-                        if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
-
-                        jsonResult['pageIdx'] = data.pageIdx;
-                        jsonResult['perPage'] = data.perPage;
-
-                        res.status(200).send(jsonResult)
-                    }).catch((err) => {
-                    console.error('err=>', err)
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = err;
-                    res.status(500).send(bitwebResponse.create())
-                })
-            }).catch((err) => {
-            console.error('err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
-    } else {
-        bitwebResponse.code = 400;
-        bitwebResponse.message = "Check category in query! (buy, sell)";
-        res.status(400).send(bitwebResponse.create())
+        if (game_name != undefined) data['game_name'] = game_name;
+        if (game_server != undefined) data['game_server'] = game_server;
+        if (type != undefined) data['type'] = type;
     }
 
+    let trade_type = req.query.trade_type;
+    let title = req.query.title;
+    let pageIdx = req.query.pageIdx;
+    let perPage = req.query.perPage;
+    let userTag = req.query.userTag;
+    let primeService = req.query.primeService;
+    let category1 = req.query.category1;
+    let category2 = req.query.category2;
+    let status = req.query.status;
+    let delivery_type = req.query.type;
+    if(status == "1") {
+        status = [1,2,3];
+    } else if (status == "4") {
+        status = [4,5,6,7];
+    } else if (status == "0") {
+        status = [0];
+    } else if(status == "101") {
+        status = [101,102,103];
+    } else if (status == "104") {
+        status = [104,105,106,107];
+    }
+
+    if (trade_type != undefined) data['trade_type'] = trade_type;
+    if (title != undefined) data['title'] = title;
+    if (pageIdx != undefined) data['pageIdx'] = parseInt(pageIdx);
+    if (perPage != undefined) data['perPage'] = parseInt(perPage);
+    if (userTag != undefined) data['userTag'] = userTag;
+    if (primeService != undefined) data['primeService'] = primeService;
+    if (category1 != undefined) data['category1'] = category1;
+    if (category2 != undefined) data['category2'] = category2;
+    if(status != undefined) data['status'] = status;
+    if(delivery_type != undefined) data['delivery_type'] = delivery_type;
+
+    data['category'] = category;
+    controllerItems.getItemCount(country, data)
+        .then((count) => {
+            controllerItems.getItemByRequired(country, data)
+                .then(result => {
+                    let resultSet = {
+                        "count": count,
+                        "list": result
+                    }
+
+                    console.log('test=>', resultSet)
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = resultSet;
+
+                    let jsonResult = bitwebResponse.create();
+
+                    if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
+                    if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
+
+                    jsonResult['pageIdx'] = data.pageIdx;
+                    jsonResult['perPage'] = data.perPage;
+
+                    res.status(200).send(jsonResult)
+                }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
 });
 
 router.get('/all', function (req, res, next) {

@@ -98,7 +98,7 @@
                     var category = buyList[i].game_name + '<br>' + buyList[i].game_server;
                     var item_type = getItemType(buyList[i].type);
                     var url = "/buys/detail/" + itemId;
-                    if(buyList[i].game_name == undefined) {
+                    if(buyList[i].category == "etc") {
                         category = buyList[i].category1  == undefined ? '-' : buyList[i].category1 + '<br>' + buyList[i].category2;
                         item_type = getDelivery(buyList[i].delivery_type == undefined ? "direct" : buyList[i].delivery_type);
                             
@@ -106,6 +106,14 @@
                             url = "/etc-sells/detail/" + itemId;
                         } else {
                             url = "/etc-buys/detail/" + itemId;
+                        }
+                    } else if(buyList[i].category == "otc") {
+                        category = 'OTC';
+                            
+                        if(buyList[i].trade_type == "sell") {
+                            url = "/otc-sells/detail/" + itemId;
+                        } else {
+                            url = "/otc-buys/detail/" + itemId;
                         }
                     } else {
                         if(buyList[i].trade_type == "sell") {
@@ -338,6 +346,7 @@
                                     <div class="check_filter col-sm-10 col-xs-12">
                                         <input type="radio" name="category" id="game" value="game" checked><label for="game">게임아이템</label>
                                         <input type="radio" name="category" id="etc" value="etc"><label for="etc">자산거래</label>
+                                        <input type="radio" name="category" id="otc" value="otc"><label for="otc">OTC거래</label>
                                     </div>
                                 </li>
                                 <li class="row">

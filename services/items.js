@@ -127,6 +127,39 @@ function getItemCount(data) {
                     // console.log('getItemByRequired done: ' + item)
                     resolve(item)
                 })
+        } else if (data['category'] == "otc") {
+            let otc_array_search = [
+                {"category": { $regex: data.category, $options: 'i' }},
+                {"trade_type": { $regex: data.trade_type, $options: 'i' }},
+                {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
+            ]
+
+            if (data['primeService'] != undefined && data['primeService'] == "Y") otc_array_search[0]['primeService'] = data['primeService']
+            if (data['status'] != undefined) otc_array_search[0]['status'] = data['status'];
+            
+            if (data['userTag'] != undefined) {
+                otc_array_search = [
+                    {"category": { $regex: data.category, $options: 'i' }},
+                    {"trade_type": { $regex: data.trade_type, $options: 'i' }},
+                    {"status": 0},
+                    {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
+                ]
+            }
+            Items.count(
+                {
+                    $and: otc_array_search
+                })
+                .limit(100)
+                .skip(data.pageIdx * data.perPage)
+                .sort({regDate:'desc'})
+                .exec(function (err, item) {
+                    if (err) {
+                        console.error(err)
+                        reject(err)
+                    }
+                    // console.log('getItemByRequired done: ' + item)
+                    resolve(item)
+                })
         }
 
     })
@@ -221,6 +254,42 @@ function getItemByRequired(data) {
             Items.find(
                 {
                     $and: etc_array_search
+                })
+                .limit(data.perPage)
+                .skip(data.pageIdx * data.perPage)
+                .sort({regDate:'desc'})
+                .exec(function (err, item) {
+                    if (err) {
+                        console.error(err)
+                        reject(err)
+                    }
+                    // console.log('getItemByRequired done: ' + item)
+                    resolve(item)
+                })
+        } else if (data['category'] == "otc") {
+            let otc_array_search = [
+                {"trade_type": { $regex: data.trade_type, $options: 'i' }},
+                {"category": { $regex: data.category, $options: 'i' }},
+                {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
+            ]
+
+            if (data['primeService'] != undefined && data['primeService'] == "Y") otc_array_search[0]['primeService'] = data['primeService']
+            if (data['status'] != undefined) otc_array_search[0]['status'] = data['status'];
+            
+            if (data['userTag'] != undefined) {
+                otc_array_search = [
+                    {"trade_type": { $regex: data.trade_type, $options: 'i' }},
+                    {"status": 0},
+                    {"userTag":{ $nin: [data.userTag] }},
+                    {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
+                ]
+            }
+
+            console.log('data=>', otc_array_search)
+
+            Items.find(
+                {
+                    $and: otc_array_search
                 })
                 .limit(data.perPage)
                 .skip(data.pageIdx * data.perPage)

@@ -8,9 +8,11 @@ var language = require('./utils/language');
 
 var indexRouter = require('./routes/index');
 var sellRouter = require('./routes/sells');
-var etcSellRouter = require('./routes/etc-sells');
 var buyRouter = require('./routes/buys');
+var etcSellRouter = require('./routes/etc-sells');
 var etcBuyRouter = require('./routes/etc-buys');
+var otcBuyRouter = require('./routes/otc-buys');
+var otcSellRouter = require('./routes/otc-sells');
 var usersRouter = require('./routes/users');
 var ethersRouter = require('./routes/ethers');
 var vtrsRouter = require('./routes/vtrs');
@@ -142,8 +144,10 @@ app.get('/CN',function(req,res){
 app.use('/', indexRouter);
 app.use('/sells', sellRouter);
 app.use('/etc-sells', etcSellRouter);
-app.use('/buys', buyRouter);
 app.use('/etc-buys', etcBuyRouter);
+app.use('/otc-buys', otcBuyRouter);
+app.use('/otc-sells', otcSellRouter);
+app.use('/buys', buyRouter);
 app.use('/sample', indexRouter);
 app.use('/accounts', accountsRouter);
 app.use('/myPages', myPageRouter);

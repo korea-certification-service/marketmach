@@ -86,18 +86,24 @@ router.get('/count/user/:userId', function (req, res, next) {
                 "game_buy": 0,
                 "game_sell": 0,
                 "etc_buy": 0,
-                "etc_sell": 0
+                "etc_sell": 0,
+                "otc_buy": 0,
+                "otc_sell": 0
             }
             for (var i in vtrs) {
                 if(vtrs[i]._doc.from_userId == userId) {
                     if(vtrs[i]._doc.item.category == "game") {
                         count_data.game_sell++;
+                    } if(vtrs[i]._doc.item.category == "otc") {
+                        count_data.otc_sell++;
                     } else {
                         count_data.etc_sell++;
                     }
                 } else {
                     if(vtrs[i]._doc.item.category == "game") {
                         count_data.game_buy++;
+                    } if(vtrs[i]._doc.item.category == "otc") {
+                        count_data.otc_buy++;
                     } else {
                         count_data.etc_buy++;
                     }
