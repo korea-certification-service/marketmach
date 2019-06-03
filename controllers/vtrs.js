@@ -196,6 +196,8 @@ function createByVtr(country, vtr) {
 
 function updateStatus(country, req) {
     return new Promise((resolve , reject) => {
+        let bitwebUsers = require('../controllers/users');
+        let bitwebCoins = require('../controllers/coins');
 
         var vtrId = req.params.vtrId;
         var tradeType = req.params.tradeType;
@@ -228,332 +230,32 @@ function updateStatus(country, req) {
                         } else {
                             bitwebVtrs.getVtrById(vtrId)
                                 .then(vtr => {
-                                    bitwebCoins.getByCoinId(country, coinId)
-                                        .then(coin => {
-                                            let user_mach = coin.total_mach;
-                                            user_mach = user_mach - vtr._doc.mach;
-                                            if (user_mach < 0) {
-                                                let msg = {
-                                                    "status": "fail",
-                                                    "code" : "E001",
-                                                    "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                };
-                                                resolve(msg);
-                                                return;
-                                            } else {
-                                                bitwebVtrs.updateVtrById(vtrId, data)
-                                                    .then((result) => {
-                                                        console.log('result=>', result);
-
-                                                        let mach = result.mach;
-                                                        let from_userId = result.from_userId;
-                                                        let to_userId = result.to_userId;
-
-                                                        let bitwebUsers = require('../controllers/users');
-                                                        let bitwebCoins = require('../controllers/coins');
-
-                                                        if (tradeType == "buy") {
-                                                            bitwebUsers.getById(country, to_userId)
-                                                                .then(user => {
-                                                                    let coinId = user.coinId;
-                                                                    bitwebCoins.getByCoinId(country, coinId)
-                                                                        .then(coin => {
-                                                                            let user_mach = coin.total_mach;
-                                                                            user_mach = user_mach - mach;
-                                                                            if (user_mach < 0) {
-                                                                                let msg = {
-                                                                                    "status": "fail",
-                                                                                    "code" : "E001",
-                                                                                    "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                                                };
-                                                                                resolve(msg);
-                                                                                return;
-                                                                            } else {
-                                                                                let mach_json = {"total_mach": user_mach}
-                                                                                bitwebCoins.updateTotalCoin(country, coinId, mach_json)
-                                                                                    .then(() => {
-                                                                                        // console.log('result=>', result);
-                                                                                        // resolve(result);
-
-                                                                                        //ui-ux 개편 시 오픈
-                                                                                        let itemId = result._doc.item._id;
-                                                                                        let body = {"status": 2}
-                                                                                        bitwebItems.updateItemById(itemId, body)
-                                                                                            .then((item) => {
-                                                                                                let body3 = {
-                                                                                                    "type": "deposit",
-                                                                                                    "itemId": result._doc.item._id,
-                                                                                                    "vtr": result,
-                                                                                                    "mach": mach,
-                                                                                                    "reqUser":result._doc.to_userId,
-                                                                                                    "regDate": util.formatDate(new Date().toString())
-                                                                                                };
-                                                                                                
-                                                                                                bitwebVtrs.createEscrow(body3)
-                                                                                                    .then(() => {
-                                                                                                        console.log('result=>', result);
-                                                                                                        resolve(result);
-                                                                                                    }).catch((err) => {
-                                                                                                    console.log('err=>', err)
-                                                                                                    reject(err)
-                                                                                                })
-                                                                                            }).catch((err) => {
-                                                                                            console.log('err=>', err)
-                                                                                            reject(err)
-                                                                                        });
-                                                                                    }).catch((err) => {
-                                                                                    console.log('err=>', err)
-                                                                                    reject(err)
-                                                                                });
-                                                                            }
-                                                                        })
-                                                                }).catch((err) => {
-                                                                console.log('err=>', err)
-                                                                reject(err)
-                                                            })
+                                    let mach = vtr._doc.mach;
+                                    let from_userId = vtr._doc.from_userId;
+                                    let to_userId = vtr._doc.to_userId;
+                                    bitwebUsers.getById(country, to_userId)
+                                        .then(user => {
+                                            let coinId = user.coinId;
+                                            bitwebCoins.getByCoinId(country, coinId)
+                                                .then(coin => {
+                                                    let to_user_mach = coin.total_mach;
+                                                    to_user_mach = to_user_mach - vtr._doc.mach;
+                                                    if (tradeType == "buy") {
+                                                        if (to_user_mach < 0) {
+                                                            let msg = {
+                                                                "status": "fail",
+                                                                "code" : "E001",
+                                                                "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                            };
+                                                            resolve(msg);
+                                                            return;
                                                         }
-
-                                                        if (tradeType == "sell") {
-                                                            //ui-ux 개편 시 오픈
-                                                            let itemId = result._doc.item._id;
-                                                            let body = {"status": 3}
-                                                            bitwebItems.updateItemById(itemId, body)
-                                                                .then((item) => {
-                                                                    console.log('result=>', result);
-                                                                    resolve(result);
-                                                                }).catch((err) => {
-                                                                console.log('err=>', err)
-                                                            });
-                                                        }
-
-                                                        if (result.buy_status == true && result.sell_status == true && tradeType == "confirm") {
-                                                            let data = {}
-                                                            data['completed'] = true;
-                                                            data['completed_date'] = util.formatDate(new Date().toString())
-                                                            //data['item']['status'] = 3;
-
-                                                            bitwebUsers.getById(country, from_userId)
-                                                                .then(user => {
-                                                                    let coinId = user.coinId;
-                                                                    bitwebCoins.getByCoinId(country, coinId)
-                                                                        .then(coin => {
-                                                                            let user_mach = coin.total_mach;
-                                                                            user_mach = user_mach + mach;
-                                                                            let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
-                                                                            let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach};
-                                                                            console.log('escrow go to mach : ', mach_json);
-                                                                            if(coin._doc.firstVtr == undefined) {
-                                                                                mach_json['firstVtr'] = true;
-                                                                                if(dbconfig.bonus.firstVtr > 0) {
-                                                                                    mach_json.total_mach += dbconfig.bonus.firstVtr;
-
-                                                                                    let data10 = {
-                                                                                        "extType":"mach",
-                                                                                        "coinId": user._doc.coinId,
-                                                                                        "category": "event-firstVtr",          
-                                                                                        "status": "success",
-                                                                                        "currencyCode": "MACH",
-                                                                                        "amount": dbconfig.bonus.firstVtr,
-                                                                                        "mach": dbconfig.bonus.firstVtr,
-                                                                                        "regDate": util.formatDate(new Date().toString())  
-                                                                                    }
-                                                                
-                                                                                    bitwebCoinHistorys.createCoinHistory(data10);
-                                                                                }
-                                                                            }
-
-                                                                            if(dbconfig.bonus.firstVtr > 0) {
-                                                                                bitwebUsers.getById(country, to_userId)
-                                                                                    .then(to_user => {
-                                                                                        let to_coinId = to_user.coinId;
-                                                                                        bitwebCoins.getByCoinId(country, to_coinId)
-                                                                                            .then(to_coin => {
-                                                                                                let to_user_mach = to_coin.total_mach;
-                                                                                                to_user_mach = to_user_mach + dbconfig.bonus.firstVtr;
-                                                                                                let to_mach_json = {"total_mach": to_user_mach, "firstVtr": true}
-                                                                                                if(to_coin._doc.firstVtr == undefined) {
-                                                                                                    bitwebCoins.updateTotalCoin(country, to_coinId, to_mach_json)
-                                                                                                        .then(() => {
-                                                                                                            let data10 = {
-                                                                                                                "extType":"mach",
-                                                                                                                "coinId": to_user._doc.coinId,
-                                                                                                                "category": "event-firstVtr",          
-                                                                                                                "status": "success",
-                                                                                                                "currencyCode": "MACH",
-                                                                                                                "amount": dbconfig.bonus.firstVtr,
-                                                                                                                "mach": dbconfig.bonus.firstVtr,
-                                                                                                                "regDate": util.formatDate(new Date().toString())  
-                                                                                                            }
-                                                                                        
-                                                                                                            bitwebCoinHistorys.createCoinHistory(data10);
-
-                                                                                                            bitwebVtrs.updateVtrById(vtrId, data)
-                                                                                                                .then((result) => {
-                                                                                                                    let itemId = result._doc.item._id;
-                                                                                                                    // let body = {"status": 3}
-                                                                                                                    //ui-ux 개편 시 오픈
-                                                                                                                    let body = {"status": 4}
-                                                                                                                    bitwebItems.updateItemById(itemId, body)
-                                                                                                                        .then((item) => {
-                                                                                                                            let body3 = {
-                                                                                                                                "type": "withdraw",
-                                                                                                                                "itemId": result._doc.item._id,
-                                                                                                                                "vtr": result,
-                                                                                                                                "mach": mach,
-                                                                                                                                "reqUser":result._doc.from_userId,
-                                                                                                                                "regDate": util.formatDate(new Date().toString())
-                                                                                                                            };
-                                                                                                                            
-                                                                                                                            bitwebVtrs.createEscrow(body3)
-                                                                                                                                .then(() => {
-                                                                                                                                    console.log('result=>', result);
-                                                                                                                                    resolve(result);
-                                                                                                                                }).catch((err) => {
-                                                                                                                                console.log('err=>', err)
-                                                                                                                                reject(err)
-                                                                                                                            })
-                                                                                                                        });
-                                                                                                                }).catch((err) => {
-                                                                                                                console.log('err=>', err)
-                                                                                                                reject(err)
-                                                                                                            })
-                                                                                                        }).catch((err) => {
-                                                                                                        console.log('err=>', err)
-                                                                                                    })
-                                                                                                }
-                                                                                            }).catch((err) => {
-                                                                                            console.log('err=>', err)
-                                                                                        })
-                                                                                    }).catch((err) => {
-                                                                                    console.log('err=>', err)
-                                                                                })
-                                                                            } else {
-                                                                                bitwebCoins.updateTotalCoin(country, coinId, mach_json)
-                                                                                    .then(() => {
-                                                                                        bitwebVtrs.updateVtrById(vtrId, data)
-                                                                                            .then((result) => {
-                                                                                                let itemId = result._doc.item._id;
-                                                                                                // let body = {"status": 3}
-                                                                                                //ui-ux 개편 시 오픈
-                                                                                                let body = {"status": 4}
-                                                                                                bitwebItems.updateItemById(itemId, body)
-                                                                                                    .then((item) => {
-                                                                                                        let body3 = {
-                                                                                                            "type": "withdraw",
-                                                                                                            "itemId": result._doc.item._id,
-                                                                                                            "vtr": result,
-                                                                                                            "mach": mach,
-                                                                                                            "reqUser":result._doc.from_userId,
-                                                                                                            "regDate": util.formatDate(new Date().toString())
-                                                                                                        };
-                                                                                                        
-                                                                                                        bitwebVtrs.createEscrow(body3)
-                                                                                                            .then(() => {
-                                                                                                                console.log('result=>', result);
-                                                                                                                resolve(result);
-                                                                                                            }).catch((err) => {
-                                                                                                            console.log('err=>', err)
-                                                                                                            reject(err)
-                                                                                                        })
-                                                                                                    });
-                                                                                            }).catch((err) => {
-                                                                                            console.log('err=>', err)
-                                                                                            reject(err)
-                                                                                        })
-                                                                                    }).catch((err) => {
-                                                                                    console.log('err=>', err)
-                                                                                    reject(err)
-                                                                                })
-                                                                            }  
-                                                                        }).catch((err) => {
-                                                                        console.log('err=>', err)
-                                                                        reject(err)
-                                                                    })
-                                                                }).catch((err) => {
-                                                                console.log('err=>', err)
-                                                                reject(err)
-                                                            })
-                                                        }
-                                                    }).catch((err) => {
-                                                    reject(err)
-                                                })
-                                            }
-                                        }).catch((err) => {
-                                        reject(err)
-                                    })
-                                }).catch((err) => {
-                                reject(err)
-                            })
-                        }
-                    })
-            })
-    })
-}
-
-function updateStatusByItemId(country, req) {
-    return new Promise((resolve , reject) => {
-
-        var itemId = req.params.itemId;
-        var tradeType = req.params.tradeType;
-        var category = req.body.category;
-        var data = {};
-
-        data[tradeType + '_status'] = req.body.status;
-        data['completed_' + tradeType + '_date'] = util.formatDate(new Date().toString());
-        if (tradeType == "sell") {
-            let currentDate = new Date().toString();
-            if(category == "game") {
-                data['auto_completed_confirm_date'] = util.calculateDate(currentDate, "D", 1);
-            } else {
-                data['auto_completed_confirm_date'] = util.calculateDate(currentDate, "D", 7);
-            }
-        }
-
-        db.connectDB(country)
-            .then(() => {
-                bitwebVtrs.getVtrById(vtrId)
-                    .then(vtr => {
-                        bitwebCoins.getByCoinId(country, coinId)
-                            .then(coin => {
-                                let user_mach = coin.total_mach;
-                                user_mach = user_mach - vtr._doc.mach;
-                                if (user_mach < 0) {
-                                    let msg = {
-                                        "status": "fail",
-                                        "code" : "E001",
-                                        "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                    };
-                                    resolve(msg);
-                                    return;
-                                } else {
-                                    bitwebVtrs.updateVtrByItemId(itemId, data)
-                                        .then((result) => {
-                                            console.log('result=>', result);
-
-                                            let mach = result.mach;
-                                            let from_userId = result.from_userId;
-                                            let to_userId = result.to_userId;
-
-                                            let bitwebUsers = require('../controllers/users');
-                                            let bitwebCoins = require('../controllers/coins');
-
-                                            if (tradeType == "buy") {
-                                                bitwebUsers.getById(country, to_userId)
-                                                    .then(user => {
-                                                        let coinId = user.coinId;
-                                                        bitwebCoins.getByCoinId(country, coinId)
-                                                            .then(coin => {
-                                                                let user_mach = coin.total_mach;
-                                                                user_mach = user_mach - mach;
-                                                                if (user_mach < 0) {
-                                                                    let msg = {
-                                                                        "code" : "E001",
-                                                                        "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                                    };
-                                                                    resolve(msg);
-                                                                    return;
-                                                                } else {
-                                                                    let mach_json = {"total_mach": user_mach}
+                                                    } else {
+                                                        bitwebVtrs.updateVtrById(vtrId, data)
+                                                            .then((result) => {
+                                                                console.log('result=>', result);
+                                                                if (tradeType == "buy") {
+                                                                    let mach_json = {"total_mach": to_user_mach}
                                                                     bitwebCoins.updateTotalCoin(country, coinId, mach_json)
                                                                         .then(() => {
                                                                             // console.log('result=>', result);
@@ -583,132 +285,398 @@ function updateStatusByItemId(country, req) {
                                                                                     })
                                                                                 }).catch((err) => {
                                                                                 console.log('err=>', err)
+                                                                                reject(err)
                                                                             });
+                                                                        }).catch((err) => {
+                                                                        console.log('err=>', err)
+                                                                        reject(err)
+                                                                    });
+                                                                }
+
+                                                                if (tradeType == "sell") {
+                                                                    //ui-ux 개편 시 오픈
+                                                                    let itemId = result._doc.item._id;
+                                                                    let body = {"status": 3}
+                                                                    bitwebItems.updateItemById(itemId, body)
+                                                                        .then((item) => {
+                                                                            console.log('result=>', result);
+                                                                            resolve(result);
                                                                         }).catch((err) => {
                                                                         console.log('err=>', err)
                                                                     });
                                                                 }
-                                                            })
-                                                    }).catch((err) => {
-                                                    console.log('err=>', err)
-                                                })
-                                            }
 
-                                            if (tradeType == "sell") {
-                                                //ui-ux 개편 시 오픈
-                                                let itemId = result._doc.item._id;
-                                                let body = {"status": 3}
-                                                bitwebItems.updateItemById(itemId, body)
-                                                    .then((item) => {
-                                                        console.log('result=>', result);
-                                                        resolve(result);
-                                                    }).catch((err) => {
-                                                    console.log('err=>', err)
-                                                });
-                                                resolve(result)
-                                            }
+                                                                if (result.buy_status == true && result.sell_status == true && tradeType == "confirm") {
+                                                                    let data = {}
+                                                                    data['completed'] = true;
+                                                                    data['completed_date'] = util.formatDate(new Date().toString())
+                                                                    //data['item']['status'] = 3;
 
-                                            if (result.buy_status == true && result.sell_status == true && tradeType == "confirm") {
-                                                let data = {}
-                                                data['completed'] = true;
-                                                data['completed_date'] = util.formatDate(new Date().toString())
-                                                //data['item']['status'] = 3;
+                                                                    bitwebUsers.getById(country, from_userId)
+                                                                        .then(user => {
+                                                                            let coinId = user.coinId;
+                                                                            bitwebCoins.getByCoinId(country, coinId)
+                                                                                .then(coin => {
+                                                                                    let user_mach = coin.total_mach;
+                                                                                    user_mach = user_mach + mach;
+                                                                                    let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
+                                                                                    let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach};
+                                                                                    console.log('escrow go to mach : ', mach_json);
+                                                                                    if(coin._doc.firstVtr == undefined) {
+                                                                                        mach_json['firstVtr'] = true;
+                                                                                        if(dbconfig.bonus.firstVtr > 0) {
+                                                                                            mach_json.total_mach += dbconfig.bonus.firstVtr;
 
-                                                bitwebUsers.getById(country, from_userId)
-                                                    .then(user => {
-                                                        let coinId = user.coinId;
-                                                        bitwebCoins.getByCoinId(country, coinId)
-                                                            .then(coin => {
-                                                                let user_mach = coin.total_mach;
-                                                                user_mach = user_mach + mach;
-                                                                let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
-                                                                let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach}
-                                                                // VTR 첫 거래 이벤트 진행 시 주석 풀기(바로 구매 진행 여부는 확인 후 결정)
-                                                                // if(coin._doc.firstVtr == undefined) {
-                                                                //     if(dbconfig.bonus.firstVtr > 0) {
-                                                                //         mach_json['firstVtr'] = true;
-                                                                //         mach_json.total_mach += dbconfig.bonus.firstVtr;
+                                                                                            let data10 = {
+                                                                                                "extType":"mach",
+                                                                                                "coinId": user._doc.coinId,
+                                                                                                "category": "event-firstVtr",          
+                                                                                                "status": "success",
+                                                                                                "currencyCode": "MACH",
+                                                                                                "amount": dbconfig.bonus.firstVtr,
+                                                                                                "mach": dbconfig.bonus.firstVtr,
+                                                                                                "regDate": util.formatDate(new Date().toString())  
+                                                                                            }
+                                                                        
+                                                                                            bitwebCoinHistorys.createCoinHistory(data10);
+                                                                                        }
+                                                                                    }
 
-                                                                //         let data10 = {
-                                                                //             "extType":"mach",
-                                                                //             "coinId": user._doc.coinId,
-                                                                //             "category": "event-firstVtr",          
-                                                                //             "status": "success",
-                                                                //             "currencyCode": "MACH",
-                                                                //             "amount": dbconfig.bonus.firstVtr,
-                                                                //             "mach": dbconfig.bonus.firstVtr,
-                                                                //             "regDate": util.formatDate(new Date().toString())  
-                                                                //         }
-                                                    
-                                                                //         bitwebCoinHistorys.createCoinHistory(data10);
-                                                                //     }
-                                                                // }
+                                                                                    if(dbconfig.bonus.firstVtr > 0) {
+                                                                                        bitwebUsers.getById(country, to_userId)
+                                                                                            .then(to_user => {
+                                                                                                let to_coinId = to_user.coinId;
+                                                                                                bitwebCoins.getByCoinId(country, to_coinId)
+                                                                                                    .then(to_coin => {
+                                                                                                        let to_user_mach = to_coin.total_mach;
+                                                                                                        to_user_mach = to_user_mach + dbconfig.bonus.firstVtr;
+                                                                                                        let to_mach_json = {"total_mach": to_user_mach, "firstVtr": true}
+                                                                                                        if(to_coin._doc.firstVtr == undefined) {
+                                                                                                            bitwebCoins.updateTotalCoin(country, to_coinId, to_mach_json)
+                                                                                                                .then(() => {
+                                                                                                                    let data10 = {
+                                                                                                                        "extType":"mach",
+                                                                                                                        "coinId": to_user._doc.coinId,
+                                                                                                                        "category": "event-firstVtr",          
+                                                                                                                        "status": "success",
+                                                                                                                        "currencyCode": "MACH",
+                                                                                                                        "amount": dbconfig.bonus.firstVtr,
+                                                                                                                        "mach": dbconfig.bonus.firstVtr,
+                                                                                                                        "regDate": util.formatDate(new Date().toString())  
+                                                                                                                    }
+                                                                                                
+                                                                                                                    bitwebCoinHistorys.createCoinHistory(data10);
 
-                                                                // if(dbconfig.bonus.firstVtr > 0) {
-                                                                //     bitwebUsers.getById(country, to_userId)
-                                                                //         .then(to_user => {
-                                                                //             let to_coinId = to_user.coinId;
-                                                                //             bitwebCoins.getByCoinId(country, to_coinId)
-                                                                //                 .then(to_coin => {
-                                                                //                     let to_user_mach = to_coin.total_mach;
-                                                                //                     to_user_mach = to_user_mach + dbconfig.bonus.firstVtr;
-                                                                //                     let to_mach_json = {"total_mach": user_mach, "firstVtr": true}
-                                                                //                     if(to_coin._doc.firstVtr == undefined) {
-                                                                //                         bitwebCoins.updateTotalCoin(country, to_coinId, to_mach_json)
-                                                                //                             .then(() => {
-                                                                //                                 let data10 = {
-                                                                //                                     "extType":"mach",
-                                                                //                                     "coinId": to_user._doc.coinId,
-                                                                //                                     "category": "event-firstVtr",          
-                                                                //                                     "status": "success",
-                                                                //                                     "currencyCode": "MACH",
-                                                                //                                     "amount": dbconfig.bonus.firstVtr,
-                                                                //                                     "mach": dbconfig.bonus.firstVtr,
-                                                                //                                     "regDate": util.formatDate(new Date().toString())  
-                                                                //                                 }
-                                                                            
-                                                                //                                 bitwebCoinHistorys.createCoinHistory(data10);
-
-                                                                //                             }).catch((err) => {
-                                                                //                             console.log('err=>', err)
-                                                                //                         })
-                                                                //                     }
-                                                                //                 }).catch((err) => {
-                                                                //                 console.log('err=>', err)
-                                                                //             })
-                                                                //         }).catch((err) => {
-                                                                //         console.log('err=>', err)
-                                                                //     })
-                                                                // }
-                                                                
-                                                                bitwebCoins.updateTotalCoin(country, coinId, mach_json)
-                                                                    .then(() => {
-                                                                        bitwebVtrs.updateVtrByItemId(itemId, data)
-                                                                            .then((result) => {
-                                                                                let itemId = result._doc.item._id;
-                                                                                // let body = {"status": 3}
-                                                                                //ui-ux 개편 시 오픈
-                                                                                let body = {"status": 4}
-                                                                                bitwebItems.updateItemById(itemId, body)
-                                                                                    .then((item) => {
-                                                                                        let body3 = {
-                                                                                            "type": "withdraw",
-                                                                                            "itemId": result._doc.item._id,
-                                                                                            "vtr": result,
-                                                                                            "mach": mach,
-                                                                                            "reqUser":result._doc.from_userId,
-                                                                                            "regDate": util.formatDate(new Date().toString())
-                                                                                        };
-                                                                                        
-                                                                                        bitwebVtrs.createEscrow(body3)
+                                                                                                                    bitwebVtrs.updateVtrById(vtrId, data)
+                                                                                                                        .then((result) => {
+                                                                                                                            let itemId = result._doc.item._id;
+                                                                                                                            // let body = {"status": 3}
+                                                                                                                            //ui-ux 개편 시 오픈
+                                                                                                                            let body = {"status": 4}
+                                                                                                                            bitwebItems.updateItemById(itemId, body)
+                                                                                                                                .then((item) => {
+                                                                                                                                    let body3 = {
+                                                                                                                                        "type": "withdraw",
+                                                                                                                                        "itemId": result._doc.item._id,
+                                                                                                                                        "vtr": result,
+                                                                                                                                        "mach": mach,
+                                                                                                                                        "reqUser":result._doc.from_userId,
+                                                                                                                                        "regDate": util.formatDate(new Date().toString())
+                                                                                                                                    };
+                                                                                                                                    
+                                                                                                                                    bitwebVtrs.createEscrow(body3)
+                                                                                                                                        .then(() => {
+                                                                                                                                            console.log('result=>', result);
+                                                                                                                                            resolve(result);
+                                                                                                                                        }).catch((err) => {
+                                                                                                                                        console.log('err=>', err)
+                                                                                                                                        reject(err)
+                                                                                                                                    })
+                                                                                                                                });
+                                                                                                                        }).catch((err) => {
+                                                                                                                        console.log('err=>', err)
+                                                                                                                        reject(err)
+                                                                                                                    })
+                                                                                                                }).catch((err) => {
+                                                                                                                console.log('err=>', err)
+                                                                                                            })
+                                                                                                        }
+                                                                                                    }).catch((err) => {
+                                                                                                    console.log('err=>', err)
+                                                                                                })
+                                                                                            }).catch((err) => {
+                                                                                            console.log('err=>', err)
+                                                                                        })
+                                                                                    } else {
+                                                                                        bitwebCoins.updateTotalCoin(country, coinId, mach_json)
                                                                                             .then(() => {
-                                                                                                console.log('result=>', result);
-                                                                                                resolve(result);
+                                                                                                bitwebVtrs.updateVtrById(vtrId, data)
+                                                                                                    .then((result) => {
+                                                                                                        let itemId = result._doc.item._id;
+                                                                                                        // let body = {"status": 3}
+                                                                                                        //ui-ux 개편 시 오픈
+                                                                                                        let body = {"status": 4}
+                                                                                                        bitwebItems.updateItemById(itemId, body)
+                                                                                                            .then((item) => {
+                                                                                                                let body3 = {
+                                                                                                                    "type": "withdraw",
+                                                                                                                    "itemId": result._doc.item._id,
+                                                                                                                    "vtr": result,
+                                                                                                                    "mach": mach,
+                                                                                                                    "reqUser":result._doc.from_userId,
+                                                                                                                    "regDate": util.formatDate(new Date().toString())
+                                                                                                                };
+                                                                                                                
+                                                                                                                bitwebVtrs.createEscrow(body3)
+                                                                                                                    .then(() => {
+                                                                                                                        console.log('result=>', result);
+                                                                                                                        resolve(result);
+                                                                                                                    }).catch((err) => {
+                                                                                                                    console.log('err=>', err)
+                                                                                                                    reject(err)
+                                                                                                                })
+                                                                                                            });
+                                                                                                    }).catch((err) => {
+                                                                                                    console.log('err=>', err)
+                                                                                                    reject(err)
+                                                                                                })
                                                                                             }).catch((err) => {
                                                                                             console.log('err=>', err)
                                                                                             reject(err)
                                                                                         })
-                                                                                    });
+                                                                                    }  
+                                                                                }).catch((err) => {
+                                                                                console.log('err=>', err)
+                                                                                reject(err)
+                                                                            })
+                                                                        }).catch((err) => {
+                                                                        console.log('err=>', err)
+                                                                        reject(err)
+                                                                    })
+                                                                }
+                                                            }).catch((err) => {
+                                                            reject(err)
+                                                        })
+                                                    }
+                                        }).catch((err) => {
+                                        reject(err)
+                                    })
+                                }).catch((err) => {
+                                reject(err)
+                            })
+                        }).catch((err) => {
+                        reject(err)
+                    })
+                }
+            })
+        })
+    })
+}
+
+function updateStatusByItemId(country, req) {
+    return new Promise((resolve , reject) => {
+        let bitwebUsers = require('../controllers/users');
+        let bitwebCoins = require('../controllers/coins');
+
+        var itemId = req.params.itemId;
+        var tradeType = req.params.tradeType;
+        var category = req.body.category;
+        var data = {};
+
+        data[tradeType + '_status'] = req.body.status;
+        data['completed_' + tradeType + '_date'] = util.formatDate(new Date().toString());
+        if (tradeType == "sell") {
+            let currentDate = new Date().toString();
+            if(category == "game") {
+                data['auto_completed_confirm_date'] = util.calculateDate(currentDate, "D", 1);
+            } else {
+                data['auto_completed_confirm_date'] = util.calculateDate(currentDate, "D", 7);
+            }
+        }
+
+        db.connectDB(country)
+            .then(() => {
+                bitwebVtrs.getByItemId(itemId)
+                    .then(vtr => {
+                        let mach = vtr._doc.mach;
+                        let from_userId = vtr._doc.from_userId;
+                        let to_userId = vtr._doc.to_userId;
+                        bitwebUsers.getById(country, to_userId)
+                            .then(user => {
+                                let coinId = user.coinId;
+                                bitwebCoins.getByCoinId(country, coinId)
+                                    .then(coin => {
+                                        let to_user_mach = coin.total_mach;
+                                        to_user_mach = to_user_mach - vtr._doc.mach;
+                                        if (tradeType == "buy") {
+                                            if (to_user_mach < 0) {
+                                                let msg = {
+                                                    "status": "fail",
+                                                    "code" : "E001",
+                                                    "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                };
+                                                resolve(msg);
+                                                return;
+                                            }
+                                        } else {
+                                            bitwebVtrs.updateVtrByItemId(itemId, data)
+                                                .then((result) => {
+                                                    console.log('result=>', result);
+                                                    if (tradeType == "buy") {
+                                                        let mach_json = {"total_mach": to_user_mach}
+                                                        bitwebCoins.updateTotalCoin(country, coinId, mach_json)
+                                                            .then(() => {
+                                                                // console.log('result=>', result);
+                                                                // resolve(result);
+
+                                                                //ui-ux 개편 시 오픈
+                                                                let itemId = result._doc.item._id;
+                                                                let body = {"status": 2}
+                                                                bitwebItems.updateItemById(itemId, body)
+                                                                    .then((item) => {
+                                                                        let body3 = {
+                                                                            "type": "deposit",
+                                                                            "itemId": result._doc.item._id,
+                                                                            "vtr": result,
+                                                                            "mach": mach,
+                                                                            "reqUser":result._doc.to_userId,
+                                                                            "regDate": util.formatDate(new Date().toString())
+                                                                        };
+                                                                        
+                                                                        bitwebVtrs.createEscrow(body3)
+                                                                            .then(() => {
+                                                                                console.log('result=>', result);
+                                                                                resolve(result);
+                                                                            }).catch((err) => {
+                                                                            console.log('err=>', err)
+                                                                            reject(err)
+                                                                        })
+                                                                    }).catch((err) => {
+                                                                    console.log('err=>', err)
+                                                                });
+                                                            }).catch((err) => {
+                                                            console.log('err=>', err)
+                                                        });
+                                                    }
+
+                                                    if (tradeType == "sell") {
+                                                        //ui-ux 개편 시 오픈
+                                                        let itemId = result._doc.item._id;
+                                                        let body = {"status": 3}
+                                                        bitwebItems.updateItemById(itemId, body)
+                                                            .then((item) => {
+                                                                console.log('result=>', result);
+                                                                resolve(result);
+                                                            }).catch((err) => {
+                                                            console.log('err=>', err)
+                                                        });
+                                                        resolve(result)
+                                                    }
+
+                                                    if (result.buy_status == true && result.sell_status == true && tradeType == "confirm") {
+                                                        let data = {}
+                                                        data['completed'] = true;
+                                                        data['completed_date'] = util.formatDate(new Date().toString())
+                                                        //data['item']['status'] = 3;
+
+                                                        bitwebUsers.getById(country, from_userId)
+                                                            .then(user => {
+                                                                let coinId = user.coinId;
+                                                                bitwebCoins.getByCoinId(country, coinId)
+                                                                    .then(coin => {
+                                                                        let user_mach = coin.total_mach;
+                                                                        user_mach = user_mach + mach;
+                                                                        let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
+                                                                        let mach_json = {"total_mach": user_mach, "output_total_mach":user_output_mach}
+                                                                        // VTR 첫 거래 이벤트 진행 시 주석 풀기(바로 구매 진행 여부는 확인 후 결정)
+                                                                        // if(coin._doc.firstVtr == undefined) {
+                                                                        //     if(dbconfig.bonus.firstVtr > 0) {
+                                                                        //         mach_json['firstVtr'] = true;
+                                                                        //         mach_json.total_mach += dbconfig.bonus.firstVtr;
+
+                                                                        //         let data10 = {
+                                                                        //             "extType":"mach",
+                                                                        //             "coinId": user._doc.coinId,
+                                                                        //             "category": "event-firstVtr",          
+                                                                        //             "status": "success",
+                                                                        //             "currencyCode": "MACH",
+                                                                        //             "amount": dbconfig.bonus.firstVtr,
+                                                                        //             "mach": dbconfig.bonus.firstVtr,
+                                                                        //             "regDate": util.formatDate(new Date().toString())  
+                                                                        //         }
+                                                            
+                                                                        //         bitwebCoinHistorys.createCoinHistory(data10);
+                                                                        //     }
+                                                                        // }
+
+                                                                        // if(dbconfig.bonus.firstVtr > 0) {
+                                                                        //     bitwebUsers.getById(country, to_userId)
+                                                                        //         .then(to_user => {
+                                                                        //             let to_coinId = to_user.coinId;
+                                                                        //             bitwebCoins.getByCoinId(country, to_coinId)
+                                                                        //                 .then(to_coin => {
+                                                                        //                     let to_user_mach = to_coin.total_mach;
+                                                                        //                     to_user_mach = to_user_mach + dbconfig.bonus.firstVtr;
+                                                                        //                     let to_mach_json = {"total_mach": user_mach, "firstVtr": true}
+                                                                        //                     if(to_coin._doc.firstVtr == undefined) {
+                                                                        //                         bitwebCoins.updateTotalCoin(country, to_coinId, to_mach_json)
+                                                                        //                             .then(() => {
+                                                                        //                                 let data10 = {
+                                                                        //                                     "extType":"mach",
+                                                                        //                                     "coinId": to_user._doc.coinId,
+                                                                        //                                     "category": "event-firstVtr",          
+                                                                        //                                     "status": "success",
+                                                                        //                                     "currencyCode": "MACH",
+                                                                        //                                     "amount": dbconfig.bonus.firstVtr,
+                                                                        //                                     "mach": dbconfig.bonus.firstVtr,
+                                                                        //                                     "regDate": util.formatDate(new Date().toString())  
+                                                                        //                                 }
+                                                                                    
+                                                                        //                                 bitwebCoinHistorys.createCoinHistory(data10);
+
+                                                                        //                             }).catch((err) => {
+                                                                        //                             console.log('err=>', err)
+                                                                        //                         })
+                                                                        //                     }
+                                                                        //                 }).catch((err) => {
+                                                                        //                 console.log('err=>', err)
+                                                                        //             })
+                                                                        //         }).catch((err) => {
+                                                                        //         console.log('err=>', err)
+                                                                        //     })
+                                                                        // }
+                                                                        
+                                                                        bitwebCoins.updateTotalCoin(country, coinId, mach_json)
+                                                                            .then(() => {
+                                                                                bitwebVtrs.updateVtrByItemId(itemId, data)
+                                                                                    .then((result) => {
+                                                                                        let itemId = result._doc.item._id;
+                                                                                        // let body = {"status": 3}
+                                                                                        //ui-ux 개편 시 오픈
+                                                                                        let body = {"status": 4}
+                                                                                        bitwebItems.updateItemById(itemId, body)
+                                                                                            .then((item) => {
+                                                                                                let body3 = {
+                                                                                                    "type": "withdraw",
+                                                                                                    "itemId": result._doc.item._id,
+                                                                                                    "vtr": result,
+                                                                                                    "mach": mach,
+                                                                                                    "reqUser":result._doc.from_userId,
+                                                                                                    "regDate": util.formatDate(new Date().toString())
+                                                                                                };
+                                                                                                
+                                                                                                bitwebVtrs.createEscrow(body3)
+                                                                                                    .then(() => {
+                                                                                                        console.log('result=>', result);
+                                                                                                        resolve(result);
+                                                                                                    }).catch((err) => {
+                                                                                                    console.log('err=>', err)
+                                                                                                    reject(err)
+                                                                                                })
+                                                                                            });
+                                                                                    }).catch((err) => {
+                                                                                    console.log('err=>', err)
+                                                                                })
                                                                             }).catch((err) => {
                                                                             console.log('err=>', err)
                                                                         })
@@ -718,17 +686,17 @@ function updateStatusByItemId(country, req) {
                                                             }).catch((err) => {
                                                             console.log('err=>', err)
                                                         })
-                                                    }).catch((err) => {
-                                                    console.log('err=>', err)
-                                                })
-                                            }
-                                        }).catch((err) => {
-                                        reject(err)
-                                    })
-                                }
+                                                    }
+                                                }).catch((err) => {
+                                                reject(err)
+                                            })
+                                        }
+                                    }).catch((err) => {
+                                    reject(err)
+                                })
                             }).catch((err) => {
-                            reject(err)
-                        })
+                            console.log('err=>', err)
+                        })           
                     }).catch((err) => {
                     reject(err)
                 })
