@@ -1,1 +1,27 @@
 @charset "utf-8";
+
+.sub_lft_menu .depth1 > .icon_align { text-align: center; }
+.sub_lft_menu .depth1 .icon_align a > .material-icons { margin-top: 6px; font-size: 30px; color: #aaa; }
+.sub_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
+
+.sub_content .gameStation_sec { padding-top: 30px; }
+.sub_content .gameStation_sec::after { content: ""; display: block; clear: both; }
+.sub_content .gameStation_sec > article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 3px solid #002060;}
+.sub_content .gameStation_sec > article:nth-of-type(odd) { margin-right: 20px; }
+
+.sub_content .gameStation_sec article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 3px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
+
+.sub_content .gameStation_sec article > .gameStation_contents { min-height: 355px; text-align: center;}
+.sub_content .gameStation_sec article .gameStation_contents > em { font-size: 18px; }
+.sub_content .gameStation_sec article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
+.sub_content .gameStation_sec article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
+.sub_content .gameStation_sec article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
+.sub_content .gameStation_sec article .gameStation_contents > button { display:inline-block; width: 350px; height: 60px; border: 3px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }
+
+.sub_content .gameStation_sec article > .gameStation_store { border-top: 2px solid #002060; padding: 15px; }
+.sub_content .gameStation_sec article .gameStation_store > a { display: inline-block; }
+.sub_content .gameStation_sec article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
+.sub_content .gameStation_sec article .gameStation_store a > .store_image { width: 170px; }
+
+.sub_content .gameStation_sec article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
+.sub_content .gameStation_sec article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
