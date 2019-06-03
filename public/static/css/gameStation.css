@@ -6,22 +6,35 @@
 
 .sub_content .gameStation_sec { padding-top: 30px; }
 .sub_content .gameStation_sec::after { content: ""; display: block; clear: both; }
-.sub_content .gameStation_sec > article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 3px solid #002060;}
-.sub_content .gameStation_sec > article:nth-of-type(odd) { margin-right: 20px; }
 
-.sub_content .gameStation_sec article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 3px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
+/*game station*/
+.sub_content .gameStation_sec > .gameStation_article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 2px solid #002060;}
+.sub_content .gameStation_sec > .gameStation_article:nth-of-type(odd) { margin-right: 20px; }
 
-.sub_content .gameStation_sec article > .gameStation_contents { min-height: 355px; text-align: center;}
-.sub_content .gameStation_sec article .gameStation_contents > em { font-size: 18px; }
-.sub_content .gameStation_sec article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
-.sub_content .gameStation_sec article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
-.sub_content .gameStation_sec article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
-.sub_content .gameStation_sec article .gameStation_contents > button { display:inline-block; width: 350px; height: 60px; border: 3px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }
+.sub_content .gameStation_sec .gameStation_article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 2px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
 
-.sub_content .gameStation_sec article > .gameStation_store { border-top: 2px solid #002060; padding: 15px; }
-.sub_content .gameStation_sec article .gameStation_store > a { display: inline-block; }
-.sub_content .gameStation_sec article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
-.sub_content .gameStation_sec article .gameStation_store a > .store_image { width: 170px; }
+.sub_content .gameStation_sec .gameStation_article > .gameStation_contents { min-height: 355px; text-align: center;}
+.sub_content .gameStation_sec .gameStation_article .gameStation_contents > em { font-size: 18px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_contents > a { display:inline-block; width: 350px; height: 60px; border: 2px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }
 
-.sub_content .gameStation_sec article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
-.sub_content .gameStation_sec article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
+.sub_content .gameStation_sec .gameStation_article > .gameStation_store { border-top: 2px solid #002060; padding: 15px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_store > a { display: inline-block; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
+.sub_content .gameStation_sec .gameStation_article .gameStation_store a > .store_image { width: 170px; }
+
+.sub_content .gameStation_sec .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
+.sub_content .gameStation_sec .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
+
+/*trade*/
+.sub_content .gameStation_sec .available_coin::after { content:""; display: block; clear: both; }
+.sub_content .gameStation_sec .available_coin dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; position: relative; padding: 8px; }
+.sub_content .gameStation_sec .available_coin dd a > img { height: 55px; }
+.sub_content .gameStation_sec .available_coin dd:nth-of-type(1) { border-left: 1px solid #aaa; }
+.sub_content .gameStation_sec .available_coin dd:nth-of-type(4) { border-left: 1px solid #aaa; border-bottom: 1px solid #aaa; }
+.sub_content .gameStation_sec .available_coin dd:nth-of-type(5) { border-bottom: 1px solid #aaa; }
+.sub_content .gameStation_sec .available_coin dd:nth-of-type(6) { border-bottom: 1px solid #aaa; }
+.sub_content .gameStation_sec .available_coin dd .noCursor { display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+/*mach adventure*/
