@@ -45,6 +45,7 @@ var gameCenterRouter = require('./routes/gameCenter');
 var exchangeRouter = require('./routes/exchange');
 var shoppingRouter = require('./routes/shopping');
 var testRouter = require('./routes/test');
+var gameStationRouter = require('./routes/gameStation');
 
 var app = express();
 
@@ -160,6 +161,7 @@ app.use('/supports', supportsRouter);
 app.use('/howto', howtoRouter);
 app.use('/shopping', shoppingRouter); // btoc shopping
 app.use('/test', testRouter); // only test module
+app.use('/gameStation', gameStationRouter); // only test module
 
 
 //backend API
