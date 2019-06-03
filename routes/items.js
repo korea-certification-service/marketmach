@@ -834,7 +834,7 @@ router.put('/updateStatus/:itemId', function (req, res, next) {
                                             if(item._doc.trade_type == "buy") {
                                                 from_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
                                                 to_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + req.body.user_id + '&vtrTempId=' + vtrTemp._doc._id;
-                                                output_res_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
+                                                output_res_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + req.body.user_id + '&vtrTempId=' + vtrTemp._doc._id;
                                             } else {
                                                 to_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + req.body.user_id + '&vtrTempId=' + vtrTemp._doc._id;
                                                 from_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
