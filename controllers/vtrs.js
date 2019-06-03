@@ -240,16 +240,14 @@ function updateStatus(country, req) {
                                                 .then(coin => {
                                                     let to_user_mach = coin.total_mach;
                                                     to_user_mach = to_user_mach - vtr._doc.mach;
-                                                    if (tradeType == "buy") {
-                                                        if (to_user_mach < 0) {
-                                                            let msg = {
-                                                                "status": "fail",
-                                                                "code" : "E001",
-                                                                "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                            };
-                                                            resolve(msg);
-                                                            return;
-                                                        }
+                                                    if (tradeType == "buy" && to_user_mach < 0) {
+                                                        let msg = {
+                                                            "status": "fail",
+                                                            "code" : "E001",
+                                                            "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                        };
+                                                        resolve(msg);
+                                                        return;
                                                     } else {
                                                         bitwebVtrs.updateVtrById(vtrId, data)
                                                             .then((result) => {
@@ -508,16 +506,14 @@ function updateStatusByItemId(country, req) {
                                     .then(coin => {
                                         let to_user_mach = coin.total_mach;
                                         to_user_mach = to_user_mach - vtr._doc.mach;
-                                        if (tradeType == "buy") {
-                                            if (to_user_mach < 0) {
-                                                let msg = {
-                                                    "status": "fail",
-                                                    "code" : "E001",
-                                                    "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                };
-                                                resolve(msg);
-                                                return;
-                                            }
+                                        if (tradeType == "buy" && to_user_mach < 0) {
+                                            let msg = {
+                                                "status": "fail",
+                                                "code" : "E001",
+                                                "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                            };
+                                            resolve(msg);
+                                            return;
                                         } else {
                                             bitwebVtrs.updateVtrByItemId(itemId, data)
                                                 .then((result) => {
