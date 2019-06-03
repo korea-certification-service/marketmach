@@ -36,6 +36,7 @@ router.get('/notice', function (req, res, next) {
             title: 'Bitweb Support',
             userId: req.session.userId,
             coinId: req.session.coinId,
+            pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
