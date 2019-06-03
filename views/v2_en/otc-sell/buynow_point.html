@@ -57,6 +57,20 @@
                                 <th>거래가격(Point)</th>
                                 <td><p class="txt_point"><span></span></p></td>
                             </tr>
+                            <tr class="mrg_cell trForDel">
+                                <td colspan="2">
+                                    <div id="fullImg"></div>
+                                </td>
+                            </tr>
+                            <tr class="trForDel">
+                                <th>상품이미지</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <th>상세정보</th>
                                 <td>
@@ -193,6 +207,21 @@
                 var desc = replaceDesc(success.data.desc);
                 var item_phone = success.data.phone;
                 from_userTag = success.data.userTag;
+                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+
+                if(success.data.images.length === 0) {
+                    $(".trForDel").remove();
+                }
+                
+                for(var i=0;i<success.data.images.length; i++) {
+                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                                html += '<div class="img_view_area">';
+                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                                html += '</div>';
+                                html += '</div>';
+                                                    
+                    $(".imgs_wrap").append(html);
+                }
                 
                 //console.log(delivery_type);      
                 $(".posting_date").text("등록일 : " + regDate);
@@ -200,6 +229,7 @@
                 $(".item_id").text(itemId);
                 $(".txt_point").html(point_txt + "<span>Point</span>");
                 $(".item_desc").html(desc);
+                $("#fullImg").html(img1th);
                 $(".item_phone").text(item_phone);
                 $(".item_user_price_point").html(item_user_price_point + "<span class='fzsm'>Point</span>");
                 $(".item_price_point").html("<em class='em_calc_ico minus'>-</em>" + point_txt + "<span class='fzsm'>Point</span>");

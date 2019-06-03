@@ -11,7 +11,7 @@
         function getNotices() {
             $.ajax({
                 method: "GET",
-                url: "/v1/notices/list?perPage=5",
+                url: "/v1/notices/list?perPage=20",
             }).done(function (success) {
                 console.log(success.data);
                 setNotices(success.data.list);

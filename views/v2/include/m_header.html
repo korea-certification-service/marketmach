@@ -106,6 +106,9 @@
                                 <th><button class="btnMobMenu btn_mob_menu">자산거래</button></th>                                
                                 <%if(useBlockchain == 'Y') {%>
                                 <th><button class="btnMobMenu btn_mob_menu">OTC거래</button></th>
+                                <%}%>
+                                <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th>
+                                <%if(useBlockchain == 'Y') {%>
                                 <th><a href="/shopping/view">한정 이벤트</a></th> 
                                 <%}%>
                                 <!-- <th><a href="/gameStation/" class="fcbk">게임스테이션</a></th> -->
@@ -124,7 +127,7 @@
                         <a href="/sells/register" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">자산거래</a>
                         <%if(useBlockchain == 'Y') {%>
-                        <a href="/otc-buys/register" class="bgc2 mob_rnd_btn">OTC거래</a>
+                        <a href="/otc-sells/register" class="bgc2 mob_rnd_btn">OTC거래</a>
                         <%}%>
                     </dd>
                     <dt class="fc2">구매등록</dt>
@@ -151,11 +154,20 @@
                 <dl class="rgh_menu">
                     <dd>
                         <%if(useBlockchain == 'Y') {%>
-                            <a href="/otc-sells?category=otc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
-                            <a href="/otc-buys?category=otc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
+                        <a href="/otc-sells?category=otc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
+                        <a href="/otc-buys?category=otc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
                         <%}%>
                     </dd>
                 </dl>               
+                <dl class="rgh_menu">
+                    <dd>
+                        <%if(useBlockchain == 'Y') {%>
+                        <a href="https://open.kakao.com/o/gD3UkX4" target="_blank" class="bgc2 mob_rnd_btn">카톡1</a>
+                        <a href="https://open.kakao.com/o/gLyYRupb" target="_blank" class="bgc2 mob_rnd_btn">카톡2</a>
+                        <a href="https://t.me/marketmach.com" target="_blank" class="bgc2 mob_rnd_btn">텔레그램1</a>
+                        <%}%>
+                    </dd>
+                </dl>
             </div>
         </nav>
 
