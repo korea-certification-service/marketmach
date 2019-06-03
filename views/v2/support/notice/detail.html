@@ -18,7 +18,7 @@
 
                 $("#regDate").text(success.data.regDate.substring(2, 10));
                 $("#title").text(success.data.title);
-                $("#content").html(replaceDesc(success.data.content));
+                $("#content").html(success.data.content);
 
                 $('.board_detail').css('display','block');
             }).fail(function (fail) {
