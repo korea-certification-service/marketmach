@@ -101,6 +101,25 @@ router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
+router.get('/buynow/point/:id', sessionChecker.adultChecker, function (req, res, next) {
+    let id = req.params.id;
+    if(dbconfig.country == "KR") {
+        res.render('v2/otc-sell/buynow_point', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
+            userTag: req.session.userTag, country:req.session.country,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain});
+    } else {
+        res.render('v2_en/otc-sell/buynow_point', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
+        userTag: req.session.userTag, country:req.session.country,
+        pointId: req.session.pointId,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain});
+    }
+});
+
 router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
