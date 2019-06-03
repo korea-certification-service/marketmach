@@ -830,10 +830,11 @@ router.put('/updateStatus/:itemId', function (req, res, next) {
                                     controllerItems.updateById(country, itemId, data)
                                         .then((result) => {
                                             //result._doc['resultUrl'] = reqFromUrl;
-                                            let from_req_url, to_req_url;
+                                            let from_req_url, to_req_url, output_res_url;
                                             if(item._doc.trade_type == "buy") {
                                                 from_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
                                                 to_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + req.body.user_id + '&vtrTempId=' + vtrTemp._doc._id;
+                                                output_res_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
                                             } else {
                                                 to_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + req.body.user_id + '&vtrTempId=' + vtrTemp._doc._id;
                                                 from_req_url = req.headers.origin + '/sms/room?roomToken='+req.body.roomToken+'&itemId=' + itemId + '&user_id=' + item._doc.userTag + '&vtrTempId=' + vtrTemp._doc._id;
@@ -849,7 +850,7 @@ router.put('/updateStatus/:itemId', function (req, res, next) {
                                                         smsController.sendSms(req, res, 'use')
                                                             .then(() => {
                                                                 bitwebResponse.code = 200;
-                                                                bitwebResponse.data = item._doc.trade_type == "buy" ? from_req_url.replace('/sms','') : to_req_url.replace('/sms','');
+                                                                bitwebResponse.data = item._doc.trade_type == "buy" ? output_res_url.replace('/sms','') : to_req_url.replace('/sms','');
                                                                 res.status(200).send(bitwebResponse.create())
                                                             });
                                                     });
