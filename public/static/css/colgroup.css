@@ -132,9 +132,9 @@
 
 /********** otc **********/
 .table .colgroup_otc-sells .col4_1{}
-.table .colgroup_otc-sells .col4_2{}
-.table .colgroup_otc-sells .col4_3{}
-.table .colgroup_otc-sells .col4_4{}
+.table .colgroup_otc-sells .col4_2{width: 110px;}
+.table .colgroup_otc-sells .col4_3{width: 120px;}
+.table .colgroup_otc-sells .col4_4{width: 120px;}
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){

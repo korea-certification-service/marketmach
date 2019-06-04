@@ -19,7 +19,7 @@
             <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>OTC거래 삽니다 <span>상세정보</span></h1>
+                    <h1>Buy by OTC <span>View</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -32,7 +32,7 @@
                         <thead>
                             <tr>
                                 <th colspan="2">
-                                    <em class="view_emphasis">아이템</em>  
+                                    <em class="view_emphasis"></em>  
                                     <span class="posting_date"></span>
                                 </th>
                             </tr>
@@ -45,46 +45,46 @@
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>거래번호</th>
+                                <th>Transaction No.</th>
                                 <td><span class="item_id"></span></td>
                             </tr>
                             <tr>
-                                <th>작성자</th>
+                                <th>Writer</th>
                                 <td><span class="user_tag"></span></td>
                             </tr>
                             <tr>
-                                <th>거래상태</th>
+                                <th>Status</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>Price(MACH)</th>
                                 <td><p class="txt_price"><span></span></p></td>
                             </tr>
                             <tr>
-                                <th>거래가격(Point)</th>
+                                <th>Price(Point)</th>
                                 <td><p class="txt_point"><span></span></p></td>
                             </tr>
                             <tr class="mrg_cell trForBtn">
                                 <td colspan="2">
                                     <div class="btn_align_c">
-                                        <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
-                                        <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청(MACH)</button>
-                                        <button class="btn item_view btn_in_view3" id="modify">수정</button>
-                                        <button class="btn item_view btn_in_view4" id="remove">삭제</button>
-                                        <button class="btn item_view btn_in_view5" id="buyComplete">구매확인</button>
-                                        <button class="btn item_view btn_in_view6" id="showPhone">연락처 표시</button>
-                                        <button class="btn item_view btn_in_view7" id="sellComplete">판매완료</button>
-                                        <button class="btn item_view btn_in_view8" id="cancel">거래취소</button>
-                                        <button class="btn item_view btn_in_view9" id="confirm">거래완료</button>
-                                        <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
+                                        <button class="btn item_view btn_in_view0" id="openVTR">Enter VTR</button>
+                                        <button class="btn item_view btn_in_view1" id="regVTR">VTR Transaction(MACH)</button>
+                                        <button class="btn item_view btn_in_view3" id="modify">Edit</button>
+                                        <button class="btn item_view btn_in_view4" id="remove">Delete</button>
+                                        <button class="btn item_view btn_in_view5" id="buyComplete">Purchase Confirmation</button>
+                                        <button class="btn item_view btn_in_view6" id="showPhone">View Contact</button>
+                                        <button class="btn item_view btn_in_view7" id="sellComplete">Sales Complete</button>
+                                        <button class="btn item_view btn_in_view8" id="cancel">Transaction Cancellation</button>
+                                        <button class="btn item_view btn_in_view9" id="confirm">Transaction Complete</button>
+                                        <button class="btn item_view btn_in_view10" id="opposition">Disputes</button>
                                     </div>
                                     <div class="tac">
-                                        <a href="javascript:openVtrInfo()">VTR 거래신청이란?</a>
+                                        <!-- <a href="javascript:openVtrInfo()">VTR 거래신청이란?</a> -->
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>상세정보</th>
+                                <th>Description</th>
                                 <td>
                                     <span class="item_desc">
                                     </span>
@@ -95,17 +95,17 @@
                 </div>
 
                 <div class="tar">
-                    <a href="/otc-buys?category=otc&trade_type=buy" class="btn btn_go_list">목록</a>
+                    <a href="/otc-buys?category=otc&trade_type=buy" class="btn btn_go_list">list</a>
                 </div>
                 
                 <!-- 모달창 -->
                 <div class="dim_all_area" style="display: none">
                     <article class="modal_bitberry_deposit">
                         <button id="btnmCloseModal" class="btn">X</button>
-                        <h1>연락처 표시</h1>
-                        <p>구매자 연락처 : <span id="toPhone"></span></p>
-                        <p>판매자 연락처 : <span id="fromPhone"></span></p>
-                        <button id="checkok" class="btn btn-danger">확인</button>
+                        <h1>Contact</h1>
+                        <p>Buyer : <span id="toPhone"></span></p>
+                        <p>Seller : <span id="fromPhone"></span></p>
+                        <button id="checkok" class="btn btn-danger">confirm</button>
                     </article>
                 </div>
                 <!--// 상품정보 : 이미지 업로드 UI 포함 -->
@@ -192,7 +192,7 @@
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
                 
-                $(".posting_date").text("등록일 : " + regDate);
+                $(".posting_date").text("Date : " + regDate);
                 $(".item_title").text(title);
                 $(".item_id").text(itemId);
                 $(".txt_price").html(price + "<span>MACH</span>");
@@ -252,7 +252,7 @@
         }
 
         function removeItem() {
-            var confirms = confirm('정말로 삭제하시겠습니까?');
+            var confirms = confirm('Do you want to Delete?');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
@@ -286,7 +286,7 @@
         }
 
         function cancelItem() {
-            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+            var confirms = confirm('Do you want to cancel a transaction?');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
@@ -300,7 +300,7 @@
         }
 
         function buyComplete() {
-            var confirms = confirm('구매 확인 하시겠습니까?');
+            var confirms = confirm('Do you want to Purchase Confirmation?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -322,7 +322,7 @@
         }
 
         function sellComplete() {
-            var confirms = confirm('판매 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to Transaction Complete?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -335,7 +335,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                    alert("The seller finished the sale.\n Once the buyer's purchase is finalized,the transaction is complete.");
                     location.href = '/otc-buys/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);
@@ -344,7 +344,7 @@
         }
 
         function confirmItem() {
-            var confirms = confirm('거래 완료 하시겠습니까?');
+            var confirms = confirm('Do you want to Transaction Complete?');
             if(confirms) {
                 var data = {
                     "status": true

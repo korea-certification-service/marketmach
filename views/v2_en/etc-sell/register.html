@@ -507,10 +507,10 @@
                 alert('Please enter a title.');
                 return false;
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
-                alert('Please enter a price.');
+                alert('Please enter a price(MACH).');
                 return false;
             } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('Please enter a price.');
+                alert('Please enter a price(Point).');
                 return false;
             } else if (sel_files.length == 0) {
                 alert('Please upload an image');
