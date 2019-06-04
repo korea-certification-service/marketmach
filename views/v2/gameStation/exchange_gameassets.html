@@ -25,7 +25,7 @@
                         <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;게임자산 -> MACH</span></h1>
                         <div class="mypage_main_info cf">
                             <div class="lft_area">
-                                <div class="gameStation_gametemplet">
+                                <div class="gst_gametemplet">
                                     <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
                                     <div class="coin_value">
                                         <em>보관중인 몽키코인</em>
@@ -83,7 +83,58 @@
                                     </tr>    
                                 </tbody>
                             </table>
-                        </div>                           
+                        </div>  
+                        <h2 class="tit_mypage dot_tit">결제정보</h2>
+                        <table class="table_payment_info table">
+                            <colgroup>
+                                <col class="col50p">
+                                <col class="col50p">
+                            </colgroup>
+                            <tbody>                           
+                                <tr>
+                                    <th>출금 가능 금액</th>
+                                    <td><span id="my_amount">0</span> MACH</td>
+                                </tr>
+                                <tr>
+                                    <th>출금 금액</th>
+                                    <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                        <em class="em_calc_ico minus">-</em> <span id="plus_amount">0</span> MACH
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>출금 후 출금 가능 금액</th>
+                                    <td><span id="total_amount">0</span> MACH</td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                        <div class="table_wrap mb50">
+                                <h2 class="tit_mypage dot_tit">결제정보</h2>
+                                <table class="table_payment_info table">
+                                    <colgroup>
+                                        <col class="col50p">
+                                        <col class="col50p">
+                                    </colgroup>
+                                    <tbody>                           
+                                        <tr>
+                                            <th>나의 지갑 잔액</th>
+                                            <td><span id="my_amount">0</span> MACH</td>
+                                        </tr>
+                                        <tr>
+                                            <th>입금 금액</th>
+                                            <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                                <em class="em_calc_ico plus">+</em> <span id="plus_amount">0</span> MACH
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>입금 후 나의 지갑 잔액</th>
+                                            <td><span id="total_amount">0</span> MACH</td>
+                                        </tr>                        
+                                    </tbody>
+                                </table>
+                                <div class="btn_align_c">
+                                    <button class="btn btn_in_view1" id="confirmDeposit">비트베리 입금요청</button>
+                                </div>                            
+                            </div>                                                                      
                     </section>
                     <!--// gameStation -->
                 </div>
