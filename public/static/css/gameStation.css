@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 .sub_lft_menu .depth1 > .icon_align { text-align: center; }
-.sub_lft_menu .depth1 .icon_align a > .material-icons { margin-top: 6px; font-size: 30px; color: #aaa; }
+.sub_lft_menu .depth1 .icon_align a > .material-icons { margin-top: 6px; font-size: 30px; color: #dcdcdc; }
 .sub_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
 
 .sub_content .gameStation_sec { padding-top: 30px; }
@@ -29,12 +29,31 @@
 .sub_content .gameStation_sec .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
 
 /*trade*/
+.sub_content .gameStation_sec .mypage_main_info > .lft_area {  }
+.sub_content .gameStation_sec .mypage_main_info > .rgh_area {  }
+
+
+.sub_content .gameStation_sec .available_coin { margin-bottom: 50px; }
 .sub_content .gameStation_sec .available_coin::after { content:""; display: block; clear: both; }
-.sub_content .gameStation_sec .available_coin dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; position: relative; padding: 8px; }
+.sub_content .gameStation_sec .available_coin dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; padding: 8px; }
 .sub_content .gameStation_sec .available_coin dd a > img { height: 55px; }
 .sub_content .gameStation_sec .available_coin dd:nth-of-type(1) { border-left: 1px solid #aaa; }
 .sub_content .gameStation_sec .available_coin dd:nth-of-type(4) { border-left: 1px solid #aaa; border-bottom: 1px solid #aaa; }
 .sub_content .gameStation_sec .available_coin dd:nth-of-type(5) { border-bottom: 1px solid #aaa; }
 .sub_content .gameStation_sec .available_coin dd:nth-of-type(6) { border-bottom: 1px solid #aaa; }
-.sub_content .gameStation_sec .available_coin dd .noCursor { display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.sub_content .gameStation_sec .available_coin dd a { display: inline-block; width: 100%; height: 100%; }
+.sub_content .gameStation_sec .available_coin dd a::after { content:""; display: block; clear: both; }
+.sub_content .gameStation_sec .available_coin dd a > img { float: left; margin-right: 30px; }
+.sub_content .gameStation_sec .available_coin dd a > .coin_value { float: left; }
+.sub_content .gameStation_sec .available_coin dd a .coin_value > em { color: #000; }
+.sub_content .gameStation_sec .available_coin dd a .coin_value > div { margin-top: 4px; }
+.sub_content .gameStation_sec .available_coin dd a .coin_value div::after { content:""; display: block; clear: both; }
+.sub_content .gameStation_sec .available_coin dd a .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
+.sub_content .gameStation_sec .available_coin dd a .coin_value div > p { float: left; }
+.sub_content .gameStation_sec .available_coin dd a .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
+
+.sub_content .gameStation_sec .available_coin dd .noCursor { display: inline-block; position: relative;  }
+.sub_content .gameStation_sec .available_coin dd .noCursor > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.sub_content .gameStation_sec .available_coin dd .noCursor > .material-icons { color: #dcdcdc; }
 /*mach adventure*/
