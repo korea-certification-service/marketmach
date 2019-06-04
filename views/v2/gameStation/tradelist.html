@@ -22,13 +22,10 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span> 교환내역 보기</span></h1>
+                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;교환내역 보기</span></h1>
                         <div class="mypage_main_info cf">
                             <div class="lft_area">
-                                <p>
-                                    <em id="username"></em> 님의 회원등급은<br>
-                                    <em id="" class="fcrd">일반</em> 등급입니다.
-                                </p>
+                                <em>게임스테이션 로고가 들어갈 자리</em>
                                 <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
                             </div>
                             <div class="rgh_area">
@@ -41,15 +38,19 @@
                             </div>
                         </div>
                         <dl class="available_coin cf">
-                            <dt>마켓마하 상장 게임</dt>
+                            <h1 class="tit_mypage">마켓마하 상장 게임</h1>
                             <dd>
                                 <a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5">
                                     <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
-                                    <em>보관중인 몽키코인</em>
-                                    <p>
-                                      <img src="" alt=""> 
-                                      <span>10,213</span> 
-                                    </p>
+                                    <div class="coin_value">
+                                        <em>보관중인 몽키코인</em>
+                                        <div>
+                                            <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
+                                            <p>
+                                                <span>10,213</span> 
+                                            </p>
+                                        </div>
+                                    </div>
                                 </a>
                             </dd>
                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
@@ -57,7 +58,63 @@
                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                        </dl>  
+                        </dl>
+                        <div class="btn_align_c mb50">
+                            <button class="btn bgc1" id="deposit">MACH 입금</button>
+                            <button class="btn bgc3" id="withdraw">MACH 출금</button>
+                        </div>
+                        <div>
+                            <div class="board_tit cf">
+                                <h1 class="tit_mypage">교환내역<span><span id="category1"></h1>
+                            </div>
+                            <div class="search_filter">
+                                <ul class="">
+                                    <li class="row">
+                                        <h2 class="col-sm-2 col-xs-12">교환유형</h2>
+                                        <div class="check_filter col-sm-10 col-xs-12">
+                                            <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
+                                            <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">게임자산 -> MACH</label>
+                                            <input type="radio" name="status" id="trading" value="1"><label for="trading">MACH -> 게임자산</label>
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <h2 class="col-sm-2 col-xs-12">게임검색</h2>
+                                        <div class="col-sm-10 col-xs-12">
+                                            <div class="w100p-120px">
+                                                <input type="text" class="form-control" id="item_title">
+                                            </div>
+                                            <div class="mob_100p_tar">
+                                                <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                            </div>
+                                        </div>
+                                    </li>                        
+                                </ul>
+                            </div>
+                
+                            <div class="table_wrap table-responsive">
+                                <table class="table_list has_etc_icon table">
+                                    <colgroup class="colgroup_etc-buy_list">
+                                        <col class="col4_1">
+                                        <col class="col4_2">
+                                        <col class="col4_3">
+                                        <col class="col4_4">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>게임</th>
+                                            <th>유형</th>
+                                            <th>내용</th>
+                                            <th>일시</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list">
+                                    </tbody>
+                                </table>                 
+                            </div>
+                            <div class="btn_align_c">
+                                <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                            </div>                            
+                        </div> 
                     </section>
                     <!--// gameStation -->
                 </div>
