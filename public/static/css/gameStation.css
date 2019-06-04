@@ -1,59 +1,67 @@
 @charset "utf-8";
+/*
+*.gameStation_... 최상위 섹션태그에 각페이지 요소별로 속성이 필요할때 해당페이지의 이름을 '_'다음에 작성하여 클래스명으로 이용 
+*.gst_... 모듈요소의 최상위 선택자 키워드
+*/
 
 .sub_lft_menu .depth1 > .icon_align { text-align: center; }
 .sub_lft_menu .depth1 .icon_align a > .material-icons { margin-top: 6px; font-size: 30px; color: #dcdcdc; }
 .sub_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
 
 .sub_content .gameStation_sec { padding-top: 30px; }
-.sub_content .gameStation_sec::after { content: ""; display: block; clear: both; }
-
-/*game station*/
-.sub_content .gameStation_sec > .gameStation_article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 2px solid #002060;}
-.sub_content .gameStation_sec > .gameStation_article:nth-of-type(odd) { margin-right: 20px; }
-
-.sub_content .gameStation_sec .gameStation_article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 2px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
-
-.sub_content .gameStation_sec .gameStation_article > .gameStation_contents { min-height: 355px; text-align: center;}
-.sub_content .gameStation_sec .gameStation_article .gameStation_contents > em { font-size: 18px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_contents > a { display:inline-block; width: 350px; height: 60px; border: 2px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }
-
-.sub_content .gameStation_sec .gameStation_article > .gameStation_store { border-top: 2px solid #002060; padding: 15px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_store > a { display: inline-block; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
-.sub_content .gameStation_sec .gameStation_article .gameStation_store a > .store_image { width: 170px; }
-
-.sub_content .gameStation_sec .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
-.sub_content .gameStation_sec .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
-
-/*trade*/
-.sub_content .gameStation_sec .mypage_main_info > .lft_area {  }
-.sub_content .gameStation_sec .mypage_main_info > .rgh_area {  }
 
 
-.sub_content .gameStation_sec .available_coin { margin-bottom: 50px; }
-.sub_content .gameStation_sec .available_coin::after { content:""; display: block; clear: both; }
-.sub_content .gameStation_sec .available_coin dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; padding: 8px; }
-.sub_content .gameStation_sec .available_coin dd a > img { height: 55px; }
-.sub_content .gameStation_sec .available_coin dd:nth-of-type(1) { border-left: 1px solid #aaa; }
-.sub_content .gameStation_sec .available_coin dd:nth-of-type(4) { border-left: 1px solid #aaa; border-bottom: 1px solid #aaa; }
-.sub_content .gameStation_sec .available_coin dd:nth-of-type(5) { border-bottom: 1px solid #aaa; }
-.sub_content .gameStation_sec .available_coin dd:nth-of-type(6) { border-bottom: 1px solid #aaa; }
+/*[모듈] 게임템플릿*/
+.gst_gametemplet::after { content:""; display: block; clear: both; }
+.gst_gametemplet > img { float: left; margin-right: 30px; height: 55px; }
+.gst_gametemplet > .coin_value { float: left; }
+.gst_gametemplet .coin_value > em { color: #000; }
+.gst_gametemplet .coin_value > div { margin-top: 4px; }
+.gst_gametemplet .coin_value div::after { content:""; display: block; clear: both; }
+.gst_gametemplet .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
+.gst_gametemplet .coin_value div > p { float: left; }
+.gst_gametemplet .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
 
-.sub_content .gameStation_sec .available_coin dd a { display: inline-block; width: 100%; height: 100%; }
-.sub_content .gameStation_sec .available_coin dd a::after { content:""; display: block; clear: both; }
-.sub_content .gameStation_sec .available_coin dd a > img { float: left; margin-right: 30px; }
-.sub_content .gameStation_sec .available_coin dd a > .coin_value { float: left; }
-.sub_content .gameStation_sec .available_coin dd a .coin_value > em { color: #000; }
-.sub_content .gameStation_sec .available_coin dd a .coin_value > div { margin-top: 4px; }
-.sub_content .gameStation_sec .available_coin dd a .coin_value div::after { content:""; display: block; clear: both; }
-.sub_content .gameStation_sec .available_coin dd a .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
-.sub_content .gameStation_sec .available_coin dd a .coin_value div > p { float: left; }
-.sub_content .gameStation_sec .available_coin dd a .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
+/*[모듈] 상장게임표*/
+.gst_gametable::after { content:""; display: block; clear: both; }
+.gst_gametable { margin-bottom: 50px; }
+.gst_gametable dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; padding: 8px; }
+.gst_gametable dd a { display: inline-block; width: 100%; height: 100%; }
+.gst_gametable dd a > img { height: 55px; }
+.gst_gametable dd:nth-of-type(1) { border-left: 1px solid #aaa; }
+.gst_gametable dd:nth-of-type(4) { border-left: 1px solid #aaa; border-bottom: 1px solid #aaa; }
+.gst_gametable dd:nth-of-type(5) { border-bottom: 1px solid #aaa; }
+.gst_gametable dd:nth-of-type(6) { border-bottom: 1px solid #aaa; }
+.gst_gametable dd .noCursor { display: inline-block; position: relative;  }
+.gst_gametable dd .noCursor > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.gst_gametable dd .noCursor > .material-icons { color: #dcdcdc; }
 
-.sub_content .gameStation_sec .available_coin dd .noCursor { display: inline-block; position: relative;  }
-.sub_content .gameStation_sec .available_coin dd .noCursor > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.sub_content .gameStation_sec .available_coin dd .noCursor > .material-icons { color: #dcdcdc; }
+/*[모듈] 교환자산 안내문구*/
+.gst_exchangeguide { height: 240px; position: relative; border-top: 2px solid #000039; }
+.gst_exchangeguide > p { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #000039; font-weight: bold; font-size: 24px; }
+.gst_exchangeguide p > em { color: red; }
+
+
+/*gamestation*/
+.gameStation_gamestation::after { content: ""; display: block; clear: both; }
+.gameStation_gamestation > .gameStation_article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 2px solid #002060;}
+.gameStation_gamestation > .gameStation_article:nth-of-type(odd) { margin-right: 20px; }
+
+.gameStation_gamestation .gameStation_article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 2px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
+
+.gameStation_gamestation .gameStation_article > .gameStation_contents { min-height: 355px; text-align: center;}
+.gameStation_gamestation .gameStation_article .gameStation_contents > em { font-size: 18px; }
+.gameStation_gamestation .gameStation_article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
+.gameStation_gamestation .gameStation_article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
+.gameStation_gamestation .gameStation_article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
+.gameStation_gamestation .gameStation_article .gameStation_contents > a { display:inline-block; width: 350px; height: 60px; border: 2px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }
+
+.gameStation_gamestation .gameStation_article > .gameStation_store { border-top: 2px solid #002060; padding: 15px; }
+.gameStation_gamestation .gameStation_article .gameStation_store > a { display: inline-block; }
+.gameStation_gamestation .gameStation_article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
+.gameStation_gamestation .gameStation_article .gameStation_store a > .store_image { width: 170px; }
+
+.gameStation_gamestation .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
+.gameStation_gamestation .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
+
 /*mach adventure*/

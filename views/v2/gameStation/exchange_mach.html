@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/gameStation_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- gameStation -->
+                    <section class="gameStation_sec mypage_sec">
+                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;교환내역 보기</span></h1>
+                        <div class="mypage_main_info cf">
+                            <div class="lft_area">
+                                <em>게임스테이션 로고가 들어갈 자리</em>
+                                <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
+                            </div>
+                            <div class="rgh_area">
+                                <a href="">
+                                    <em>나의지갑 잔액</em>
+                                    <p id="mach"><span>MACH</span></p>
+                                </a>
+                                <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
+                                <button class="btn bgc3" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                            </div>
+                        </div>
+                    </section>
+                    <!--// gameStation -->
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+
+    <% include ../include/footer.html %>
+</div>
+</body>
