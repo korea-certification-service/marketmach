@@ -135,10 +135,10 @@ router.get('/all', function (req, res, next) {
                                     data['category'] = "otc";
                                     data['trade_type'] = "buy";
                                     controllerItems.getItemByRequired(country, data)
-                                        .then(etc_buys => {
+                                        .then(otc_buys => {
                                             data['trade_type'] = "sell";
                                             controllerItems.getItemByRequired(country, data)
-                                                .then(etc_sells => {
+                                                .then(otc_sells => {
                                                     data['category'] = "game";
                                                     data['status'] = 0;
                                                     data['trade_type'] = "";
@@ -159,8 +159,8 @@ router.get('/all', function (req, res, next) {
                                                                                                 "game_sells" : game_sells,
                                                                                                 "etc_buys" : etc_buys,
                                                                                                 "etc_sells" : etc_sells,
-                                                                                                "otc_buys" : etc_buys,
-                                                                                                "otc_sells" : etc_sells,
+                                                                                                "otc_buys" : otc_buys,
+                                                                                                "otc_sells" : otc_sells,
                                                                                                 "primes": primes,
                                                                                                 "cms": cms,
                                                                                                 "boards": boards,
