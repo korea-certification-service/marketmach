@@ -465,22 +465,7 @@
 .community_sec .btn_recommendation dt{font-size: 14px;}
 .community_sec .btn_recommendation dt i{margin-right: 5px; font-size: 16px;}
 .community_sec .btn_recommendation dd{font-weight: bold; font-size: 20px;}
-.community_sec .reply_write{margin: 30px 0; display: flex;}
-.community_sec .reply_write .item_txt{width: 90%;}
-.community_sec .reply_write .item_btn{width: 10%; min-width:100px;}
-.community_sec .reply_write .item_btn .btn{width: 100%; height: 80px;}
-.community_sec .reply_list{padding: 20px 0; border-top: 2px solid #000; border-bottom: 2px solid #000;}
-.community_sec .reply_list > ul > li{padding: 10px 20px; border-top: 1px solid #000;}
-.community_sec .reply_list > ul > li:first-child{border-top: none;}
-.community_sec .reply_list li .material-icons{margin-right: 5px; font-size: 20px;}
-.community_sec .reply_list li .rep_name{margin-right: 5px;}
-.community_sec .reply_list li .rep_date{}
-.community_sec .reply_list li .rep_origin{margin-bottom: 25px;}
-.community_sec .reply_list li .rep_in_rep{padding-left: 20px;}
-.community_sec .reply_list li .rep_in_rep li{margin-top: 15px; padding: 10px; background-color: #f9f9f9; box-shadow: 3px 3px 6px rgba(133, 133, 133, 0.3)}
-.community_sec .reply_list li .rep_in_rep li:first-child{margin-top: 0;}
-.community_sec .reply_list li .rep_in_rep li .rep_repeat{}
-.community_sec .reply_list li .rep_in_rep li .rep_repeat i{color: #0a73b8;}
+
 .rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 5px;}
 .rep_common > dt .item_txt{width: 90%;}
 .rep_common > dt .item_txt i{color: #1e2560;}
