@@ -4,7 +4,7 @@ var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
 const dbconfig = require('../config/dbconfig')
 
-router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/', sessionChecker.adultChecker, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/list', {
             userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,
@@ -26,7 +26,7 @@ router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
     }
 });
 
-router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -45,7 +45,7 @@ router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
             userTag: req.session.userTag, country:req.session.country,
@@ -63,7 +63,7 @@ router.get('/register', sessionChecker.sessionChecker2, function (req, res, next
     }
 });
 
-router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/modify', {title: 'Bitweb Main',id: id, userId: req.session.userId, coinId: req.session.coinId,

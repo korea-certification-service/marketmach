@@ -82,7 +82,7 @@ router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/buynow/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/etc-sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -101,7 +101,7 @@ router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/etc-sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
