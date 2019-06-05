@@ -4,12 +4,11 @@
 *.gst_... 모듈요소의 최상위 선택자 키워드
 */
 
+/***게임스테이션 페이지의 기본css***/
 .sub_lft_menu .depth1 > .icon_align { text-align: center; }
 .sub_lft_menu .depth1 .icon_align a > .material-icons { margin-top: 6px; font-size: 30px; color: #dcdcdc; }
 .sub_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
-
 .sub_content .gameStation_sec { padding-top: 30px; }
-
 
 /*[모듈] 게임템플릿*/
 .gst_gametemplet::after { content:""; display: block; clear: both; }
@@ -42,7 +41,7 @@
 .gst_exchangeguide p > em { color: red; }
 
 
-/*gamestation*/
+/*gamestation.html*/
 .gameStation_gamestation::after { content: ""; display: block; clear: both; }
 .gameStation_gamestation > .gameStation_article { width: 405px; height: 480px; float: left; margin-bottom: 20px; border: 2px solid #002060;}
 .gameStation_gamestation > .gameStation_article:nth-of-type(odd) { margin-right: 20px; }
@@ -64,4 +63,16 @@
 .gameStation_gamestation .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
 .gameStation_gamestation .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
 
-/*mach adventure*/
+/*tradelist.html*/
+
+/*gameassetstomach.html*/
+
+/*exchange_gameassets.html*/
+
+/*machtogameassets.html*/
+
+/*exchange_mach.html*/
+
+/*machadventurelist.html*/
+
+/*infoboard.html*/
