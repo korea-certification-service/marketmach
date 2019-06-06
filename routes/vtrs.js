@@ -536,7 +536,7 @@ router.post('/buynow', function (req, res, next) {
                                             controllerCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
                                                     let user_mach = coin.total_mach;
-                                                    let user_output_mach = (coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach);
+                                                    let user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
                                                     if(user_mach >= user_output_mach) {
                                                         user_output_mach = (user_output_mach - req.body.mach < 0 ? 0 : user_output_mach - req.body.mach);
                                                     }

@@ -239,7 +239,7 @@ function updateStatus(country, req) {
                                             bitwebCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
                                                     let to_user_mach = coin.total_mach;
-                                                    let to_user_output_mach = (coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach);
+                                                    let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
                                                     if(to_user_mach >= to_user_output_mach) {
                                                         to_user_output_mach = (to_user_output_mach - req.body.mach < 0 ? 0 : to_user_output_mach - req.body.mach);
                                                     }
@@ -509,7 +509,7 @@ function updateStatusByItemId(country, req) {
                                 bitwebCoins.getByCoinId(country, coinId)
                                     .then(coin => {
                                         let to_user_mach = coin.total_mach;
-                                        let to_user_output_mach = (coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach);
+                                        let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
                                         if(to_user_mach >= to_user_output_mach) {
                                             to_user_output_mach = (to_user_output_mach - req.body.mach < 0 ? 0 : to_user_output_mach - req.body.mach);
                                         }
