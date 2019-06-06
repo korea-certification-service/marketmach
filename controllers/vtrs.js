@@ -241,7 +241,7 @@ function updateStatus(country, req) {
                                                     let to_user_mach = coin.total_mach;
                                                     let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
                                                     if(to_user_mach >= to_user_output_mach) {
-                                                        to_user_output_mach = (to_user_output_mach - req.body.mach < 0 ? 0 : to_user_output_mach - req.body.mach);
+                                                        to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
                                                     }
                                                     to_user_mach = to_user_mach - vtr._doc.mach;
                                                     if (tradeType == "buy" && to_user_mach < 0) {
@@ -511,7 +511,7 @@ function updateStatusByItemId(country, req) {
                                         let to_user_mach = coin.total_mach;
                                         let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
                                         if(to_user_mach >= to_user_output_mach) {
-                                            to_user_output_mach = (to_user_output_mach - req.body.mach < 0 ? 0 : to_user_output_mach - req.body.mach);
+                                            to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
                                         }
                                         to_user_mach = to_user_mach - vtr._doc.mach;
                                         if (tradeType == "buy" && to_user_mach < 0) {
