@@ -523,6 +523,11 @@
 .item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
 .item_select_area .table_btoc .w100{width: 100px;}
 .item_select_area .item_detail_area{margin-top: 30px; text-align: center;}
+
+/* OTC거래 */
+.otc_table td .ellipse{width: calc(100% - 30px)}
+.otc_table tbody td:first-child{text-align: left;}
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
