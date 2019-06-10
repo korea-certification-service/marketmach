@@ -645,7 +645,7 @@ router.post('/connect', function (req, res, next) {
         'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey,
         'Content-Type': 'application/json'
     };
-    let country = dbconfig.dountry;
+    let country = dbconfig.country;
     let userTag = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
     
     controllerUsers.getByUserTag(country, userTag)
