@@ -350,6 +350,12 @@ var SubUI = {
 }
 SubUI.init();
 
+// 임시로 VTR 거래신청 기능 막음
+$("#regVTR").click(function(){
+    alert("현재 기능개선중입니다.")
+    throw new Error('VTR 거래신청 기능 막음');
+});
+
 }, false); // end of DOMContentLoaded
 
 var _PopupUI = {
