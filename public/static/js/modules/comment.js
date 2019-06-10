@@ -1,8 +1,8 @@
 //var communityId = "<%= communityId %>";
 //var userTag = "<%= userTag %>";
-//var replyCount = 0;
+var replyCount = 0;
 $(document).ready(function() {
-    //getDetail();
+    getDetail();
 
     $('#addReply').on('click',function(){
         addReply();
@@ -19,26 +19,11 @@ $(document).ready(function() {
 function getDetail() {
     $.ajax({
         method: "GET",
-        url: "/community/detail/" + communityId,
+        url: "/v1/items/" + itemId + "/replys",
     }).done(function (success) {
         console.log(success.data);
-        var type = getCommunityType(success.data.type);
-        var title = success.data.title;
-        var reporter = success.data.reporter;
-        var regDate = success.data.regDate.substring(2, 10);
-        var content = success.data.type == 'movie' ? success.data.content : "<div>" + replaceDesc(success.data.content) + "</div>";
-        var movieUrl = success.data.movieUrl;
-        var replys = success.data.reply;
-        var image = success.data.images.length ==0 ? "" : "<div style='text-align: center;'><img style='align: center;' src='" + success.data.images[0].path + "'></div>";
-
-        $('#title').text(title);   
-        if(success.data.type == 'movie') {
-            $('#content').addClass("hasYoutube").html("<iframe width='100%' height='100%' src=\'" + movieUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>");   
-        } else {
-            $('#content').html(image + content);   
-        }
-        replyCount = replys.length;
-        getReply(replys);
+        replyCount = success.data.list.length;
+        getReply(success.data.list);
     }).fail(function (fail) {
         console.log(fail);
     })
@@ -84,7 +69,7 @@ function addReply() {
     }
 
     var data = {
-        "communityId": communityId,
+        "itemId": itemId,
         "content": $('#add_reply').val(),
         "count": 0,
         "reporter": userTag,
@@ -96,7 +81,7 @@ function addReply() {
 
     $.ajax({
         method: "POST",
-        url: "/v1/community/reply",
+        url: "/v1/items/reply",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(data),
@@ -154,7 +139,7 @@ function update(id) {
 
     $.ajax({
         method: "PUT",
-        url: "/v1/community/reply/" + id,
+        url: "/v1/items/reply/" + id,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(data),
@@ -186,13 +171,13 @@ function deleteReply(id) {
 
         $.ajax({
             method: "DELETE",
-            url: "/v1/community/reply/" + id,
+            url: "/v1/items/reply/" + id,
             beforeSend: function (xhr) {
                 $(".item_btn button").attr('disabled', true);
             }
         }).done(function (success) {
-            console.log(success);
-            location.href = '/community/board/detail/' + communityId;
+            console.log(success);            
+            location.reload();
             $(".item_btn button").attr('disabled', false);
         }).fail(function (fail) {
             $(".item_btn button").attr('disabled', false);

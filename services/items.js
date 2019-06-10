@@ -1,4 +1,5 @@
 var Items = require('../libs/items');
+let ReplyItems = require('../libs/replyItems');
 
 function createItem(data) {
     return new Promise((resolve, reject) => {
@@ -527,6 +528,91 @@ function getItemCountByUserTag(userTag) {
     });
 }
 
+function getReplies (itemId) {
+    return new Promise((resolve, reject) => {
+        ReplyItems.find(
+            {"itemId": itemId}
+        )
+            .sort({regDate:'desc'})
+            .exec(function (err, list) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                console.log('getReplies done: ' + list)
+                resolve(list)
+            })
+    })
+}
+
+function getReplyById(replyId) {
+    return new Promise((resolve, reject) => {
+        ReplyItems.findOne(
+            {"_id": replyId}
+        )
+            .sort({regDate:'desc'})
+            .exec(function (err, reply) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                console.log('getReplyById done: ' + reply)
+                resolve(reply)
+            })
+    })
+}
+
+function addReply (body) {
+    return new Promise((resolve, reject) => {
+        console.log(body)
+        var replyItems = new ReplyItems(body)
+        replyItems.save(function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log('addReply done: ' + result)
+                resolve(result)
+            }
+        })
+    })
+}
+
+function updateReply(replyId, body) {
+    return new Promise((resolve, reject) => {
+        ReplyItems.findOneAndUpdate(
+            {"_id": replyId
+            },
+            {$set: body
+            },
+            {upsert: false, new: true},
+            function(err, data) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                console.log('updateReply done:' + data);
+                resolve(data)
+            })
+    })
+}
+
+function deleteReply(replyId) {
+    return new Promise((resolve, reject) => {
+        ReplyItems.findByIdAndRemove(
+            replyId,
+            function(err, user) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                console.log('deleteReply done: ' + user)
+                resolve(user)
+            }
+        )
+    })
+}
+
+
 exports.createItem = createItem;
 exports.getItemAll = getItemAll;
 exports.getItemByRequired = getItemByRequired;
@@ -542,3 +628,8 @@ exports.getItemsByIds = getItemsByIds;
 exports.getItemCount = getItemCount;
 exports.getItemsCountByIds = getItemsCountByIds;
 exports.getItemCountByUserTag = getItemCountByUserTag;
+exports.getReplies = getReplies;
+exports.getReplyById = getReplyById;
+exports.addReply = addReply;
+exports.updateReply = updateReply;
+exports.deleteReply = deleteReply;

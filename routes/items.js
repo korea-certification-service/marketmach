@@ -1040,4 +1040,77 @@ router.put("/:itemId/clicked", function(req, res, next) {
     })
 });
 
+router.get('/:itemId/replys', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.getReply(country, req)
+        .then(list => {
+            let result = {
+                "list": list
+            };
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+
+            let jsonResult = bitwebResponse.create();
+            res.status(200).send(jsonResult);
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    });
+});
+
+router.post('/reply', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.addReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
+router.put('/reply/:replyId', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.modifyReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
+router.delete('/reply/:replyId', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.deleteReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
 module.exports = router;
