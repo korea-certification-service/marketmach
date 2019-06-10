@@ -536,10 +536,10 @@ router.post('/buynow', function (req, res, next) {
                                             controllerCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
                                                     let user_mach = coin.total_mach;
-                                                    let user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
-                                                    if(user_mach >= user_output_mach) {
-                                                        user_output_mach = (user_output_mach - req.body.mach < 0 ? 0 : user_output_mach - req.body.mach);
-                                                    }
+                                                    // let user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
+                                                    // if(user_mach >= user_output_mach) {
+                                                    //     user_output_mach = (user_output_mach - req.body.mach < 0 ? 0 : user_output_mach - req.body.mach);
+                                                    // }
                                                     user_mach = user_mach - req.body.mach;
                                                     if (user_mach < 0) {
                                                         let msg = {
@@ -571,7 +571,7 @@ router.post('/buynow', function (req, res, next) {
                                                                     .then(result => {       
                                                                         controllerItems.updateById(country, itemId, item)
                                                                             .then(data => {                        
-                                                                                let mach_json = {"total_mach": user_mach, "output_total_mach": user_output_mach};
+                                                                                let mach_json = {"total_mach": user_mach};
                                                                                 controllerCoins.updateTotalCoin(country, coinId, mach_json)
                                                                                     .then(() => {
                                                                                         let body3 = {
