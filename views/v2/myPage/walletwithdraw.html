@@ -19,7 +19,7 @@
 
             $('[name=amount]').on('keyup',function() {
                 if($('[name=amount]').val() != "") {
-                    $('#total_amount').text(output_total_mach - parseInt($('[name=amount]').val()));
+                    $('#total_amount').text(total_mach - parseInt($('[name=amount]').val()));
                     calculate();
                 }
             });
@@ -49,9 +49,9 @@
                     output_total_mach = success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach;
                     //$("#mach").html(numberWithCommas(success.data.total_mach) + "(출금 가능 : "+numberWithCommas(output_total_mach)+")<span>MACH</span>");
                     $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
-                    $("#withdrawable").html("출금 가능 : <br class='mob_br'>"+numberWithCommas(output_total_mach)+ "<span>MACH</span>");
-                    $("#my_amount").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
-                    $("#total_amount").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
+                    //$("#withdrawable").html("출금 가능 : <br class='mob_br'>"+numberWithCommas(output_total_mach)+ "<span>MACH</span>");
+                    $("#my_amount").text(numberWithCommas(success.data.total_mach == undefined ? 0 : success.data.total_mach));
+                    $("#total_amount").text(numberWithCommas(success.data.total_mach == undefined ? 0 : success.data.total_mach));
                 } else {
                     $("#mach").html("0<span>MACH</span>");
                     $("#my_amount").text("0");
@@ -227,7 +227,7 @@
                             </div>
                             <em>나의지갑 잔액</em>
                             <p class="fc3" id="mach"></p>
-                            <strong id="withdrawable"></strong>
+                            <!-- <strong id="withdrawable"></strong> -->
                         </div>
 
                         <h2 class="tit_mypage dot_tit">출금하기</h2>

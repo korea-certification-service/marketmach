@@ -185,6 +185,7 @@
 .btn.btn_more_list{width: 100%; max-width: 100%; border: 1px solid #dbdbdb;}
 /* 버튼: VTR 입장, VTR 거래신청, 바로구매, 수정, 삭제, 연락처 표시, 판매완료, 거래취소, 구매확정, 이의제기 */
 .btn.item_view{display: none;}
+.btn#regVTR{background-color: #d9ddff}
 .btn.btn_in_view0{background-color: #1e2560; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view1{background-color: #1e2560; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view2{background-color: #28a745; color: #ffffff; font-weight: bold; }
@@ -534,6 +535,9 @@
 .sch_sec .search_bar .textSearchBox_ctr { float: left; border-left: 1px solid #000039; display: none; }
 .sch_sec .search_bar .ctr01 { width: 100%; display: block; border: none; }
 
+/* OTC거래 */
+.otc_table td .ellipse{width: calc(100% - 30px)}
+.otc_table tbody td:first-child{text-align: left;}
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){

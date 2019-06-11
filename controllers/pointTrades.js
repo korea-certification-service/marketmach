@@ -203,16 +203,16 @@ function updateStatus(req) {
                                 return;
                             }
 
-                            bitwebUsers.getById(country, from_userId)
+                            bitwebUsers.getUserById(from_userId)
                                 .then(user => {
                                     let pointId = user._doc.pointId;
-                                    bitwebPoints.getByPointId(country, pointId)
+                                    bitwebPoints.getPointById(pointId)
                                         .then(points => {
                                             let user_point = points.total_point;
                                             let discountPoint =  parseInt(point * pointTax);
                                             user_point = user_point + (point - discountPoint);
                                             let point_json = {"total_point": user_point}
-                                            bitwebPoints.updateTotalPoint(country, pointId, point_json)
+                                            bitwebPoints.updatePointById(pointId, point_json)
                                             .then(() => {
                                                 bitwebPointTrades.updateTradePointById(tradePointId, data)
                                                     .then((result) => {

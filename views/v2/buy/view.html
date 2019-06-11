@@ -253,9 +253,9 @@
                     if(success.data.status == "2") {
                         if(success.data.vtr_btn_active) {
                             if(userTag != success.data.userTag) {
-                                $('#sellComplete').css('display','inline-block');
-                                $('#cancel').css('display','inline-block');
+                                $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
                     } else if(success.data.status == "3") {

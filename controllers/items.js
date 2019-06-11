@@ -379,6 +379,71 @@ function getItemCountByUserTag(country, userTag) {
     })
 }
 
+function getReply(country, req) {
+    return new Promise((resolve, reject) => {
+
+        var itemId = req.params.itemId;
+
+        db.connectDB(country)
+            .then(() => bitwebItems.getReplies(itemId))
+            .then((replies) => {
+                resolve(replies)
+            }).catch((err) => {
+                reject(err)
+            })
+    })
+}
+
+function addReply(country, req) {
+    return new Promise((resolve, reject) => {
+
+        let body = req.body;
+        body['regDate'] = util.formatDate(new Date().toString())
+
+        db.connectDB(country)
+            .then(() => bitwebItems.addReply(body))
+            .then((reply) => {
+                console.log('result=>', reply);
+                resolve(reply)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function modifyReply(country, req) {
+    return new Promise((resolve, reject) => {
+
+        let replyId = req.params.replyId;
+        let body = req.body;
+
+        db.connectDB(country)
+            .then(() => bitwebItems.updateReply(replyId, body))
+            .then((reply) => {
+                console.log('result=>', reply);
+                resolve(reply)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function deleteReply(country, req) {
+    return new Promise((resolve, reject) => {
+
+        let replyId = req.params.replyId;
+        
+        db.connectDB(country)
+            .then(() => bitwebItems.deleteReply(replyId))
+            .then((reply) => {
+                console.log('result=>', reply);
+                resolve(reply)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 exports.get = get;
 exports.getItemByRequired = getItemByRequired;
 exports.getItemByUserTag = getItemByUserTag;
@@ -398,3 +463,7 @@ exports.checkTotalPoint = checkTotalPoint;
 exports.getItemCount = getItemCount;
 exports.getItemsCountByIds = getItemsCountByIds;
 exports.getItemCountByUserTag = getItemCountByUserTag;
+exports.getReply = getReply;
+exports.addReply = addReply;
+exports.modifyReply = modifyReply;
+exports.deleteReply = deleteReply;

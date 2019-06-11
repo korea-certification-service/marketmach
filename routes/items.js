@@ -135,10 +135,10 @@ router.get('/all', function (req, res, next) {
                                     data['category'] = "otc";
                                     data['trade_type'] = "buy";
                                     controllerItems.getItemByRequired(country, data)
-                                        .then(etc_buys => {
+                                        .then(otc_buys => {
                                             data['trade_type'] = "sell";
                                             controllerItems.getItemByRequired(country, data)
-                                                .then(etc_sells => {
+                                                .then(otc_sells => {
                                                     data['category'] = "game";
                                                     data['status'] = 0;
                                                     data['trade_type'] = "";
@@ -159,8 +159,8 @@ router.get('/all', function (req, res, next) {
                                                                                                 "game_sells" : game_sells,
                                                                                                 "etc_buys" : etc_buys,
                                                                                                 "etc_sells" : etc_sells,
-                                                                                                "otc_buys" : etc_buys,
-                                                                                                "otc_sells" : etc_sells,
+                                                                                                "otc_buys" : otc_buys,
+                                                                                                "otc_sells" : otc_sells,
                                                                                                 "primes": primes,
                                                                                                 "cms": cms,
                                                                                                 "boards": boards,
@@ -1032,6 +1032,79 @@ router.put("/:itemId/clicked", function(req, res, next) {
                 bitwebResponse.message = err;
                 res.status(500).send(bitwebResponse.create())
             })
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
+router.get('/:itemId/replys', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.getReply(country, req)
+        .then(list => {
+            let result = {
+                "list": list
+            };
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+
+            let jsonResult = bitwebResponse.create();
+            res.status(200).send(jsonResult);
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    });
+});
+
+router.post('/reply', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.addReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
+router.put('/reply/:replyId', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.modifyReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
+router.delete('/reply/:replyId', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+
+    controllerItems.deleteReply(country, req)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
         }).catch((err) => {
         console.error('err=>', err)
         bitwebResponse.code = 500;

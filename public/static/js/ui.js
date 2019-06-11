@@ -16,7 +16,10 @@ var MainUi = {
         this.navHiddenMenu();
         this.showMobSideMenu();
         this.slickSlide();
-        this.showSiblingNode();
+        this.showSiblingNode({btn: ".btnGame", sec: ".secGame"});   // GAME
+        this.showSiblingNode({btn: ".btnOtc", sec: ".secOtc"});     // OTC
+        this.showSiblingNode({btn: ".btnNoti1", sec: ".secNoti1"}); // Notice
+        this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
     },
     
     floatHeader: function() {
@@ -290,18 +293,18 @@ var MainUi = {
             ]
         });
     },
-    // show tab UI(게임 아이템 판매/구매)
-    showSiblingNode: function() {
-        var target = document.querySelectorAll(".btn_show_list");
+    // show tab UI
+    showSiblingNode: function(_obj) {
+        var target = document.querySelectorAll(_obj.btn);
         for (var i=0, len=target.length; i < len; i++) {
             target[i].addEventListener("click", function(e) {
                 var eTarget = e.target.parentNode.nextElementSibling; // trade_list
                 //console.log(eTarget, eTarget.classList[0]);
                 if(eTarget.classList[0] === "trade_list"){
                     for(var j=0; j < len; j++){
-                        document.querySelectorAll(".item_trade_sec .trade_list")[j].style.display="none";
-                        document.querySelectorAll(".item_trade_sec > h2")[j].classList.remove("on");
-                        document.querySelectorAll(".item_trade_sec .btn_show_list")[j].classList.remove("on");
+                        document.querySelectorAll(_obj.sec + " .trade_list")[j].style.display="none";
+                        document.querySelectorAll(_obj.sec + " > h2")[j].classList.remove("on");
+                        document.querySelectorAll(_obj.sec + " "+_obj.btn)[j].classList.remove("on");
                     }
                     eTarget.style.display="block"; // trade_list
                     e.target.parentNode.classList.add("on"); // h2
@@ -346,6 +349,12 @@ var SubUI = {
     }
 }
 SubUI.init();
+
+// 임시로 VTR 거래신청 기능 막음
+$("#regVTR").click(function(){
+    alert("현재 기능개선중입니다.")
+    throw new Error('VTR 거래신청 기능 막음');
+});
 
 }, false); // end of DOMContentLoaded
 
