@@ -176,155 +176,93 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
     }
     
     var bitwebResponse = new BitwebResponse();
-    if(req.query.status < 5) {
-        controllerVtrs.getItemsByUserId(country, userId, option)
-            .then(vtrs => {
-                let itemIds = [];
-                let userTag = req.session.userTag;
-                for (var i in vtrs) {
-                    itemIds.push(vtrs[i].item._id);
-                }
-                
-                console.log("itemIds : ", itemIds);
-                var controllerItems = require('../controllers/items')
+    controllerVtrs.getItemsByUserId(country, userId, option)
+        .then(vtrs => {
+            controllerPointTrades.getItemsByUserId(country, userId, option)
+                .then(pointTrades => {
+                    let itemIds = [];
+                    let userTag = req.session.userTag;
+                    for (var i in vtrs) {
+                        itemIds.push(vtrs[i].item._id);
+                    }
 
-                let option2 = {
-                    pageIdx: 0,
-                    perPage: 20
-                }
+                    if(category == "otc") {
+                        for (var i in pointTrades) {
+                            itemIds.push(pointTrades[i].item._id);
+                        }
+                    }
+                    
+                    console.log("itemIds : ", itemIds);
+                    var controllerItems = require('../controllers/items')
 
-                if (pageIdx != undefined) option2['pageIdx'] = parseInt(pageIdx);
-                if (perPage != undefined) option2['perPage'] = parseInt(perPage);
-                
-                let params = {
-                    $or: [
-                        {$and: [
-                            {"_id": {$in: itemIds}},
-                            {"trade_type": { $regex: '', $options: 'i' }},
-                            {"category": { $regex: category, $options: 'i' }},
-                        ]},
-                        {$and: [
-                            { "userTag": userTag },
-                            {"trade_type": { $regex: trade_type, $options: 'i' }},
-                            {"category": { $regex: category, $options: 'i' }},
-                        ]}
-                    ]
-                }
+                    let option2 = {
+                        pageIdx: 0,
+                        perPage: 20
+                    }
 
-                if (status != undefined) {
-                    params['$or'][0]['$and'].push({'status': status});
-                    params['$or'][1]['$and'].push({'status': status});
-                }
-                if (item_title != undefined) {
-                    params['$or'][0]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
-                    params['$or'][1]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
-                }
+                    if (pageIdx != undefined) option2['pageIdx'] = parseInt(pageIdx);
+                    if (perPage != undefined) option2['perPage'] = parseInt(perPage);
+                    
+                    let params = {
+                        $or: [
+                            {$and: [
+                                {"_id": {$in: itemIds}},
+                                {"trade_type": { $regex: '', $options: 'i' }},
+                                {"category": { $regex: category, $options: 'i' }},
+                            ]},
+                            {$and: [
+                                { "userTag": userTag },
+                                {"trade_type": { $regex: trade_type, $options: 'i' }},
+                                {"category": { $regex: category, $options: 'i' }},
+                            ]}
+                        ]
+                    }
 
-
-                controllerItems.getItemsCountByIds(country, params) 
-                    .then(count => {
-                        controllerItems.getItemsByIds(country, params, option2)
-                            .then(list => {
-                                let result = {
-                                    "count": count,
-                                    "list": list
-                                }
-                                bitwebResponse.code = 200;
-                                bitwebResponse.data = result;
-                                res.status(200).send(bitwebResponse.create())
-                            }).catch((err) => {
-                            console.error('err=>', err)
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = err;
-                            res.status(500).send(bitwebResponse.create())
-                        })
-                    }).catch((err) => {
-                    console.error('err=>', err)
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = err;
-                    res.status(500).send(bitwebResponse.create())
-                })
-            }).catch((err) => {
-            console.error('err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
-    } else {
-        controllerPointTrades.getItemsByUserId(country, userId, option)
-            .then(vtrs => {
-                let itemIds = [];
-                let userTag = req.session.userTag;
-                for (var i in vtrs) {
-                    itemIds.push(vtrs[i].item._id);
-                }
-                
-                console.log("itemIds : ", itemIds);
-                var controllerItems = require('../controllers/items')
-
-                let option2 = {
-                    pageIdx: 0,
-                    perPage: 20
-                }
-
-                if (pageIdx != undefined) option2['pageIdx'] = parseInt(pageIdx);
-                if (perPage != undefined) option2['perPage'] = parseInt(perPage);
-                
-                let params = {
-                    $or: [
-                        {$and: [
-                            {"_id": {$in: itemIds}},
-                            {"trade_type": { $regex: '', $options: 'i' }},
-                            {"category": { $regex: category, $options: 'i' }},
-                        ]},
-                        {$and: [
-                            { "userTag": userTag },
-                            {"trade_type": { $regex: trade_type, $options: 'i' }},
-                            {"category": { $regex: category, $options: 'i' }},
-                        ]}
-                    ]
-                }
-
-                if (status != undefined) {
-                    params['$or'][0]['$and'].push({'status': status});
-                    params['$or'][1]['$and'].push({'status': status});
-                }
-                if (item_title != undefined) {
-                    params['$or'][0]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
-                    params['$or'][1]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
-                }
+                    if (status != undefined) {
+                        params['$or'][0]['$and'].push({'status': status});
+                        params['$or'][1]['$and'].push({'status': status});
+                    }
+                    if (item_title != undefined) {
+                        params['$or'][0]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
+                        params['$or'][1]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
+                    }
 
 
-                controllerItems.getItemsCountByIds(country, params) 
-                    .then(count => {
-                        controllerItems.getItemsByIds(country, params, option2)
-                            .then(list => {
-                                let result = {
-                                    "count": count,
-                                    "list": list
-                                }
-                                bitwebResponse.code = 200;
-                                bitwebResponse.data = result;
-                                res.status(200).send(bitwebResponse.create())
-                            }).catch((err) => {
-                            console.error('err=>', err)
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = err;
-                            res.status(500).send(bitwebResponse.create())
-                        })
-                    }).catch((err) => {
-                    console.error('err=>', err)
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = err;
-                    res.status(500).send(bitwebResponse.create())
-                })
-            }).catch((err) => {
-            console.error('err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
-    }
+                    controllerItems.getItemsCountByIds(country, params) 
+                        .then(count => {
+                            controllerItems.getItemsByIds(country, params, option2)
+                                .then(list => {
+                                    let result = {
+                                        "count": count,
+                                        "list": list
+                                    }
+                                    bitwebResponse.code = 200;
+                                    bitwebResponse.data = result;
+                                    res.status(200).send(bitwebResponse.create())
+                                }).catch((err) => {
+                                console.error('err=>', err)
+                                bitwebResponse.code = 500;
+                                bitwebResponse.message = err;
+                                res.status(500).send(bitwebResponse.create())
+                            })
+                        }).catch((err) => {
+                        console.error('err=>', err)
+                        bitwebResponse.code = 500;
+                        bitwebResponse.message = err;
+                        res.status(500).send(bitwebResponse.create())
+                    })
+                }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
 });
 
 router.get('/cancel/:userId', function (req, res, next) {
