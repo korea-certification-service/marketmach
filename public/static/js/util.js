@@ -123,10 +123,10 @@ function getStatus(value) {
     } else if(value == 5 || value == 105) {
         //return '이의재기';
         return {
-            'text': '거래완료',
+            'text': '이의제기',
             'number': 3,
             'className': 'done',
-            'detail': '이의재기'
+            'detail': '이의제기'
         };
     } else if(value == 50) {
         return {
