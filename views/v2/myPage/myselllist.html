@@ -13,6 +13,9 @@
         $(document).ready(function(){
             resetSearchFilter(".search_filter");
             $('#check_otc').hide();
+            if(category == "otc") {
+                $('#check_otc').show();
+            }
 
             if(category == "") {
                 category = "game";
