@@ -396,7 +396,7 @@ var _PopupUI = {
         var body = document.querySelector("#wrap");
         var dim = document.querySelector(".dim_all_area");
         dim.style.display = "none";
-        body.style.position = "initial";
+        body.style.position = "static";
 
         if(fnCallback !== undefined && typeof fnCallback === "function") fnCallback();   
     }
