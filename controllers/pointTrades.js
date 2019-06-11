@@ -38,6 +38,20 @@ function getByItemId(country, itemId) {
     })
 }
 
+function getItemsByUserId(country, userId, option) {
+    return new Promise((resolve, reject) => {
+
+        db.connectDB(country)
+            .then(() => bitwebPointTrades.getItemsByUserId(userId, option))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function getItemIdsByUserId(data) {
     return new Promise((resolve, reject) => {
         db.connectDB(data.country)
@@ -591,4 +605,4 @@ exports.updateStatus = updateStatus;
 exports.remove = remove;
 exports.getByItemId = getByItemId;
 exports.deleteByItemId = deleteByItemId;
-
+exports.getItemsByUserId = getItemsByUserId;

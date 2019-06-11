@@ -259,17 +259,25 @@ function checkAdult (start_date, to_date) {
 
 function setItemStatus(value) {
     if(value == "") {
-        $("#all").attr('checked', true);
+        $("#all").prop('checked', true);
     } else if(value == "0") {
-        $("#regist").attr('checked', true);
+        $("#regist").prop('checked', true);
     } else if(value == "1") {
-        $("#vtrStart").attr('checked', true);
+        $("#vtrStart").prop('checked', true);
     } else if(value == "2") {
-        $("#vtrBuy").attr('checked', true);
+        $("#vtrBuy").prop('checked', true);
     } else if(value == "3") {
-        $("#vtrSell").attr('checked', true);
+        $("#vtrSell").prop('checked', true);
     } else if(value == "4") {
-        $("#vtrConfirm").attr('checked', true);
+        $("#vtrConfirm").prop('checked', true);
+    } else if(value == "101") {
+        $("#pointStart").prop('checked', true);
+    } else if(value == "102") {
+        $("#pointBuy").prop('checked', true);
+    } else if(value == "103") {
+        $("#pointSell").prop('checked', true);
+    } else if(value == "104") {
+        $("#pointConfirm").prop('checked', true);
     }
 }
 

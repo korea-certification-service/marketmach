@@ -189,6 +189,23 @@ function deleteTradePointById (id) {
     })
 }
 
+function getItemsByUserId(userId,option) {
+    return new Promise((resolve, reject) => {
+        TradePoints.find(
+                option
+            )
+            .exec(function(err, tradePoint) {
+                if (err) {
+                    //console.error(err)
+                    reject(err)
+                }
+                //console.log('getItemsByUserId done: ' + vtrs)
+                resolve(tradePoint)
+            }
+        )
+    })
+}
+
 exports.createTradePoint = createTradePoint;
 exports.getTradePointById = getTradePointById;
 exports.getTradePointByIdAndUserId = getTradePointByIdAndUserId;
@@ -199,3 +216,4 @@ exports.updateTradePointHistoryId = updateTradePointHistoryId;
 exports.deleteTradePointById = deleteTradePointById;
 exports.getItemIdsByUserId = getItemIdsByUserId;
 exports.getByItemId = getByItemId;
+exports.getItemsByUserId = getItemsByUserId;

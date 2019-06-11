@@ -12,6 +12,7 @@
         
         $(document).ready(function(){
             resetSearchFilter(".search_filter");
+            $('#check_otc').hide();
 
             if(category == "") {
                 category = "game";
@@ -38,6 +39,13 @@
                     $('#myItemTitle').text("자산거래");
                     $('#table_category').text('카테고리')
                 }
+
+                if(category == "otc") {
+                    $('#check_otc').show();
+                } else {
+                    $('#check_otc').hide();
+                }
+                
                 getItemList();
             });
 
@@ -356,6 +364,13 @@
                                         <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">구매확인</label><br class="mob_br">
                                         <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">판매완료</label><br class="mob_br">
                                         <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">거래완료</label>
+                                    </div>
+                                    <h2 class="col-sm-2 col-xs-12"></h2>
+                                    <div class="check_filter col-sm-10 col-xs-12" id="check_otc">
+                                        <input type="radio" name="status" id="pointStart" value="101"><label for="pointStart">포인트-거래요청</label><br class="mob_br">
+                                        <input type="radio" name="status" id="pointBuy" value="102"><label for="pointBuy">포인트-구매확인</label><br class="mob_br">
+                                        <input type="radio" name="status" id="pointSell" value="103"><label for="pointSell">포인트-판매완료</label><br class="mob_br">
+                                        <input type="radio" name="status" id="pointConfirm" value="104"><label for="pointConfirm">포인트-거래완료</label>
                                     </div>
                                 </li>
                                 <li class="row">
