@@ -523,6 +523,18 @@
 .item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
 .item_select_area .table_btoc .w100{width: 100px;}
 .item_select_area .item_detail_area{margin-top: 30px; text-align: center;}
+
+/*텍스트 검색 가이드 박스*/
+.sch_sec .search_bar .textSearchBox::after { content:""; display:block; clear: both; }
+.sch_sec .search_bar .textSearchBox { width: 100%; min-height: 250px; border: 1px solid #000039; background-color: #fff; position: absolute; top: 50px; left: 0; z-index: 4; display: none; }
+
+.sch_sec .search_bar .show_textSearchBox { display: block; }
+.sch_sec .search_bar .show_textSearchBox_ctr { width: calc(100% / 3); min-height: 250px; display: block }
+
+.sch_sec .search_bar .textSearchBox_ctr { float: left; border-left: 1px solid #000039; display: none; }
+.sch_sec .search_bar .ctr01 { width: 100%; display: block; border: none; }
+
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 

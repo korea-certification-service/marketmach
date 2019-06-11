@@ -2,7 +2,7 @@
     var coinId = "<%=coinId%>";
     var userId = "<%=userId%>";   
     var game_name;
-        
+    
     $(document).ready(function(){
         $("#search_item_name, #m_search_item_name").keydown(function(key){
             if(key.keyCode==13){
@@ -15,6 +15,7 @@
         });
 
         if(game_name != undefined) {
+            
             if(isPc()) {
                 $('#search_item_name').val(game_name + ' ' + game_server);
             } else {
@@ -40,7 +41,8 @@
                 $("#game-server").selectpicker('refresh');
                 $("#list").html('');
                 searchMain('sell');
-            })
+            });
+            
         } else {
             searchMain('sell');
         }
@@ -130,8 +132,44 @@
             <section class="sch_sec cf">
                 <h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
                 <div class="search_bar cf">
-                    <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="게임명과 서버명 입력  ex)로스트아크 이그하람">
-                    <input type="button" class="btn_search bgc1" id="main_search" value="검색">
+                    <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="게임명과 서버명 입력  ex)로스트아크 이그하람" autocomplete=off>
+                    <input type="button" class="btn_search bgc1" id="main_search" value="검색" autocomplete=off>
+                    <div class="textSearchBox">
+                        <div class="textSearchBox_ctr ctr01">
+                            <ul class="select_assets">
+                                <li class="game sch_selec">게임자산</li>
+                                <li class="assets sch_selec">현물자산</li>
+                            </ul>
+                        </div>
+                        <div class="textSearchBox_ctr ctr02">
+                            <ul class="game_name">
+                                <li>리니지</li>
+                                <li>리니지2</li>
+                            </ul>
+                            <ul class="assets_category">
+                                <li>의류</li>
+                                <li>스포츠</li>
+                            </ul>
+                        </div>
+                        <div class="textSearchBox_ctr ctr03">
+                            <ul class="lineage">
+                                <li>판도라</li>
+                                <li>데포로쥬</li>
+                            </ul>
+                            <ul class="lineage2">
+                                <li>자켄</li>
+                                <li>말하는섬</li>
+                            </ul>
+                            <ul class="clothes">
+                                <li>상의</li>
+                                <li>하의</li>
+                            </ul>
+                            <ul class="sports">
+                                <li>축구</li>
+                                <li>야구</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="chatbot jumpBot">
                     <%if(useBlockchain == 'Y') {%>
