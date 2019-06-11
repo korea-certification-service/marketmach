@@ -14,12 +14,15 @@
 .module_comment .reply_list {padding: 20px 0; border-top: 2px solid #000; border-bottom: 2px solid #000;}
 .module_comment .reply_list > ul > li{padding: 10px 20px; border-top: 1px solid #000;}
 .module_comment .reply_list > ul > li:first-child{border-top: none;}
-.module_comment .reply_list ul > li {}
+.module_comment .reply_list li:hover {background-color: #FFF5D9;}
+.module_comment .reply_list li {padding: 15px;}
 
 .rep_common {text-align: left;}
-.rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 5px;}
+.rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 10px;}
 .rep_common > dt .item_txt{width: 90%;}
-.rep_common > dt .item_txt i{color: #1e2560;}
+.rep_common > dt .item_txt i{color: #1e2560;vertical-align: middle;}
+.rep_common > dt .item_txt .rep_name {margin-left:5px; margin-right:10px;font-size:16px;}
+.rep_common > dt .item_txt .rep_date {font-size:11px;color:#888;font-weight: normal;}
 .rep_common > dt .item_btn{width: 10%; min-width: 120px; text-align: center;}
 .rep_common > dt .item_btn button{width: 50px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
 .rep_common > dd{}
