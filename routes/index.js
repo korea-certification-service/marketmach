@@ -267,7 +267,7 @@ router.get('/signup', function (req, res, next) {
 
     if(data.phone == undefined) {
         res.redirect('/agreement');
-        //next();
+        next();
     } else {
         controllerUsers.getByPhone(data.country, data.phone) 
         .then((user) => {
