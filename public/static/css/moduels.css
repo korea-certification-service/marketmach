@@ -10,15 +10,53 @@
 .module_comment .reply_write .item_txt{width: 90%; margin-right: 10px;}
 .module_comment .reply_write .item_btn{width: 10%; min-width:100px;}
 .module_comment .reply_write .item_btn .btn{width: 100%; height: 80px;}
-.module_comment .reply_list{padding: 20px 0; border-top: 2px solid #000; border-bottom: 2px solid #000;}
+
+.rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 5px;}
+.rep_common > dt .item_txt{width: 90%;}
+.rep_common > dt .item_txt i{color: #1e2560;}
+.rep_common > dt .item_btn{width: 10%; min-width: 120px; text-align: center;}
+.rep_common > dt .item_btn button{width: 50px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
+.rep_common > dd{}
+.rep_common > dd .item_btn{margin-top: 5px; text-align: right;}
+.rep_common > dd .item_btn button{width: 50px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
+
+.module_comment .reply_list {padding: 20px 0; border-top: 2px solid #000; border-bottom: 2px solid #000;}
 .module_comment .reply_list > ul > li{padding: 10px 20px; border-top: 1px solid #000;}
 .module_comment .reply_list > ul > li:first-child{border-top: none;}
-.module_comment .reply_list li .material-icons{margin-right: 5px; font-size: 20px;}
-.module_comment .reply_list li .rep_name{margin-right: 5px;}
-.module_comment .reply_list li .rep_date{}
-.module_comment .reply_list li .rep_origin{margin-bottom: 25px;}
-.module_comment .reply_list li .rep_in_rep{padding-left: 20px;}
-.module_comment .reply_list li .rep_in_rep li{margin-top: 15px; padding: 10px; background-color: #f9f9f9; box-shadow: 3px 3px 6px rgba(133, 133, 133, 0.3)}
-.module_comment .reply_list li .rep_in_rep li:first-child{margin-top: 0;}
-.module_comment .reply_list li .rep_in_rep li .rep_repeat{}
-.module_comment .reply_list li .rep_in_rep li .rep_repeat i{color: #0a73b8;}
+.module_comment .reply_list ul > li {}
+
+.module_comment .reply_list .rep_common {text-align: left;}
+.module_comment .reply_list ul li .rep_common > dt {display: flex; display: -ms-flexbox; margin-bottom: 5px;}
+.module_comment .reply_list ul li .rep_common dt > .item_txt {width: 90%;}
+.module_comment .reply_list ul li .rep_common dt .item_txt > .material-icons {color: #1e2560;}
+.module_comment .reply_list ul li .rep_common dt .item_txt > .rep_name {margin-right: 5px;}
+.module_comment .reply_list ul li .rep_common dt .item_txt > .rep_date {}
+.module_comment .reply_list ul li .rep_common dt > .item_btn {width: 10%; min-width: 120px; text-align: center;}
+.module_comment .reply_list ul li .rep_common dt > .fc3 {}
+.module_comment .reply_list ul li .rep_common dt > .fcrd {}
+.module_comment .reply_list ul li .rep_common dd { }
+
+.module_comment .reply_list ul li > .rep_origin {margin-bottom: 25px;}
+.module_comment .reply_list ul li .rep_origin > dt {}
+.module_comment .reply_list ul li .rep_origin dt > .item_txt {}
+.module_comment .reply_list ul li .rep_origin dt .item_txt > .material-icons {}
+.module_comment .reply_list ul li .rep_origin dt .item_txt > .rep_name {}
+.module_comment .reply_list ul li .rep_origin dt .item_txt > .rep_date {}
+.module_comment .reply_list ul li .rep_origin dt > .item_btn {}
+.module_comment .reply_list ul li .rep_origin dt > .fc3 {}
+.module_comment .reply_list ul li .rep_origin dt > .fcrd {}
+.module_comment .reply_list ul li .rep_origin dd { }
+
+.module_comment .reply_list ul li > .rep_in_rep {padding-left: 20px;}
+.module_comment .reply_list ul li .rep_in_rep > li{margin-top: 15px; padding: 10px; background-color: #f9f9f9; box-shadow: 3px 3px 6px rgba(133, 133, 133, 0.3)}
+.module_comment .reply_list ul li .rep_in_rep > li:first-child{margin-top: 0;}
+.module_comment .reply_list ul li .rep_in_rep li > .rep_repeat {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat > dt {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt > .item_txt {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt .item_txt > .material-icons {color: #0a73b8;}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt .item_txt > .rep_name {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt .item_txt > .rep_date {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt > .item_btn {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt > .fc3 {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dt > .fcrd {}
+.module_comment .reply_list ul li .rep_in_rep li .rep_repeat dd { }

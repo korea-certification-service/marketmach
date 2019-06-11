@@ -466,15 +466,6 @@
 .community_sec .btn_recommendation dt{font-size: 14px;}
 .community_sec .btn_recommendation dt i{margin-right: 5px; font-size: 16px;}
 .community_sec .btn_recommendation dd{font-weight: bold; font-size: 20px;}
-
-.rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 5px;}
-.rep_common > dt .item_txt{width: 90%;}
-.rep_common > dt .item_txt i{color: #1e2560;}
-.rep_common > dt .item_btn{width: 10%; min-width: 120px; text-align: center;}
-.rep_common > dt .item_btn button{width: 50px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
-.rep_common > dd{}
-.rep_common > dd .item_btn{margin-top: 5px; text-align: right;}
-.rep_common > dd .item_btn button{width: 50px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
 .community_sec .hasYoutube{display: block;}
 .community_sec .hasYoutube {position: relative;padding-bottom: 56.25%;padding-top: 30px; height: 0; overflow: hidden;}
 .community_sec .hasYoutube iframe,
