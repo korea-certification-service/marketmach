@@ -84,6 +84,10 @@
                         category = buyList[i].item.category1  == undefined ? '-' : buyList[i].item.category1 + '>' + buyList[i].item.category2;
                         item_type = getDelivery(buyList[i].item.delivery_type == undefined ? "direct" : buyList[i].item.delivery_type);
                     }
+
+                    if(buyList[i].category == "otc") {
+                        category = buyList[i].category;
+                    }
                     
                     var title = buyList[i].item.title;
                     var price = numberWithCommas(buyList[i].item.price);
