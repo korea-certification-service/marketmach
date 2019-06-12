@@ -279,6 +279,7 @@ router.get('/signup', function (req, res, next) {
                     res.render('v2_en/login/signup', data);
                 }
             } else {
+                 data['id'] = user._doc._id;
                 data['userTag'] = user._doc.userTag;
                 data['regDate'] = user._doc.regDate;
                 if(req.query.type == "findId") {
