@@ -42,10 +42,17 @@
         function getCoinHistory(trade_type) {
             $.ajax({
                 method: "GET",
-                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type                
             }).done(function (success) {
                 //console.log(success.data);
+                //console.log(success.data);
                 var coinHistorys = success.data;
+                var resultColumn = "<tr>" + 
+                                "<th>거래</th>" + 
+                                "<th>내역</th>" + 
+                                "<th>처리상태</th>" + 
+                                "<th>일자</th>" + 
+                            "</tr>";
                 var result = ""
                 if(coinHistorys.length == 0) {
                     result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
@@ -68,15 +75,62 @@
                                 '</tr>';
                 }
 
+                
                 $('#wallet_historys').html(result);
 
                 if(trade_type == 'deposit') {
-                    $('#mach_sell').removeClass('on');
                     $('#mach_buy').addClass('on');
+                    $('#mach_sell').removeClass('on');
+                    $('#mach_escrow').removeClass('on');
                 } else {
                     $('#mach_buy').removeClass('on');
                     $('#mach_sell').addClass('on');
+                    $('#mach_escrow').removeClass('on');
                 }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/list"
+            }).done(function (success) {
+                var escrows = success.data.list;
+                var resultColumn = "<tr>" + 
+                                "<th>거래</th>" + 
+                                "<th>내역</th>" + 
+                                "<th>처리상태</th>" + 
+                                "<th>일자</th>" + 
+                            "</tr>";
+                var result = "";
+                if(escrows.length == 0) {
+                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
+                }
+
+                for(var i=0;i<escrows.length;i++) {
+                    var amount = numberWithCommas(escrows[i].mach == undefined ? escrows[i].point : escrows[i].mach);
+                    var currency_code = escrows[i].mach == undefined ? "Point" : "MACH";
+                    var type = getEscrowType(escrows[i].type);
+                    var regDate = escrows[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td>내부거래</td>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+type.text+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys_column').html(resultColumn);
+                $('#wallet_historys').html(result);
+
+                $('#mach_sell').removeClass('on');
+                $('#mach_buy').removeClass('on');
+                $('#mach_escrow').addClass('on');
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -123,6 +177,7 @@
                         <div class="tab_board cf">
                             <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('deposit');">입금 내역</a></li>
                             <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">출금 내역</a></li>
+                            <li id="mach_escrow"><a href="javascript:getEscrow();">에스크로 내역</a></li>
                         </div>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
@@ -132,7 +187,7 @@
                                     <col class="col4_3">
                                     <col class="col4_4">
                                 </colgroup>
-                                <thead>
+                                <thead id="wallet_historys_column">
                                     <tr>
                                         <th>지갑</th>
                                         <th>내역</th>
@@ -141,22 +196,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">
-                                    <!-- <tr>
-                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
-                                        <td class="td_exchange_coin">
-                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
-                                        </td>
-                                        <td>출금대기</td>
-                                        <td>2019-03-22 19:42</td>
-                                    </tr>         
-                                    <tr>
-                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
-                                        <td class="td_exchange_coin">
-                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
-                                        </td>
-                                        <td>출금완료</td>
-                                        <td>2019-03-22 19:42</td>
-                                    </tr>          -->
+                                    
                                 </tbody>
                             </table>
                         </div>

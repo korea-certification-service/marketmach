@@ -211,6 +211,30 @@ function getCommunityType(value) {
     }
 }
 
+function getEscrowType(value) {
+    if(value == "deposit") {
+        return {
+            'text':'에스크로 입금',
+            'className': 'icon0'
+        };
+    } else if(value == "withdraw") {
+        return {
+            'text':'에스크로 출금',
+            'className': 'icon1'
+        };
+    } else if(value == "deposit") {
+        return {
+            'text':'거래취소',
+            'className': 'icon2'
+        };
+    } else {
+        return {
+            'text':'-',
+            'className': 'icon2'
+        };
+    }
+}
+
 function checkStrNum(value) {
     //var idReg = /^[A-Za-z0-9]{6,20}$/g;
     var idReg =  /^[a-z]+[a-z0-9]{5,19}$/g;
