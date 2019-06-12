@@ -48,7 +48,7 @@
                 //console.log(success.data);
                 var coinHistorys = success.data;
                 var resultColumn = "<tr>" + 
-                                "<th>거래</th>" + 
+                                "<th>지갑</th>" + 
                                 "<th>내역</th>" + 
                                 "<th>처리상태</th>" + 
                                 "<th>일자</th>" + 
@@ -75,7 +75,7 @@
                                 '</tr>';
                 }
 
-                
+                $('#wallet_historys_column').html(resultColumn);
                 $('#wallet_historys').html(result);
 
                 if(trade_type == 'deposit') {
