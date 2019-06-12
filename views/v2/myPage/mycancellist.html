@@ -37,7 +37,7 @@
                     $('#myItemTitle').text("OTC");
                     $('#table_category').text('카테고리')
                 } else {
-                    $('#myItemTitle').text("자산");
+                    $('#myItemTitle').text("자산 거래");
                     $('#table_category').text('카테고리')
                 }
                 getItemList();
@@ -86,7 +86,7 @@
                     }
 
                     if(buyList[i].item.category == "otc") {
-                        category = buyList[i].item.category;
+                        category = "OTC";
                     }
                     
                     var title = buyList[i].item.title;
