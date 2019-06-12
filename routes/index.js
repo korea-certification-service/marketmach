@@ -638,6 +638,30 @@ router.post('/reg/auth/okurl', function (req, res, next) {
     });
 });
 
+router.post('/reg/auth/findPasswordOkurl', function (req, res, next) {
+    request({uri: "https://payment.marketmach.com/inicis/decode.php", 
+            method:'POST',
+            form: req.body, 
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            let result = JSON.parse(body);
+            console.log('success : ', body);
+            req.session.birth = result.Socialno;
+            req.session.name = result.Name;
+            req.session.phone = result.No;
+            req.session.sex = result.Sex;
+            req.session.commid = result.Commid;
+            req.session.foreigner = result.Foreigner;
+            req.session.authPhone = true;
+
+            res.render('v2/auth/findPassword_okurl', result);
+        } else {
+            res.status(response.statusCode).end();
+            console.log('error = ' + response.statusCode);
+        }
+    });
+});
+
 router.post('/modify/auth/okurl', function (req, res, next) {
     request({uri: "https://payment.marketmach.com/inicis/decode.php", 
             method:'POST',
