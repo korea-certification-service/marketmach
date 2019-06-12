@@ -279,21 +279,13 @@ router.get('/signup', function (req, res, next) {
                     res.render('v2_en/login/signup', data);
                 }
             } else {
-                 data['id'] = user._doc._id;
+                data['id'] = user._doc._id;
                 data['userTag'] = user._doc.userTag;
                 data['regDate'] = user._doc.regDate;
-                if(req.query.type == "findId") {
-                    if(dbconfig.country =="KR") {
-                        res.render('v2/login/existUser', data);
-                    } else {
-                        res.render('v2_en/login/existUser', data);
-                    }
+                if(dbconfig.country =="KR") {
+                    res.render('v2/login/existUser', data);
                 } else {
-                    if(dbconfig.country =="KR") {
-                        res.render('v2/find/changePassword', data);
-                    } else {
-                        res.render('v2_en/find/changePassword', data);
-                    }
+                    res.render('v2_en/login/existUser', data);
                 }
             }
         }).catch((err) => {
@@ -594,6 +586,19 @@ router.get('/reg/auth/start', function (req, res, next) {
         controllerAuthPhone.add(country, reqData);
     }
     res.render('v2/auth/start', {title: 'Bitweb Main', "okurl":dbconfig.inicis.url + dbconfig.inicis.auth.reg_auth_ok_url, "closeUrl":dbconfig.inicis.url + dbconfig.inicis.auth.closeUrl});
+});
+
+router.get('/reg/auth/find_password_start', function (req, res, next) {
+    if(dbconfig.country =="KR") {
+        //이니시스 휴대폰 인증 요청 카운트 저장
+        let country = dbconfig.country;
+        let reqData = {
+            "country": country,
+            "regDate": util.formatDate(new Date().toString())
+        }
+        controllerAuthPhone.add(country, reqData);
+    }
+    res.render('v2/auth/findPasswordStart', {title: 'Bitweb Main', "okurl":dbconfig.inicis.url + dbconfig.inicis.auth.findPasswordUrl, "closeUrl":dbconfig.inicis.url + dbconfig.inicis.auth.closeUrl});
 });
 
 router.get('/modify/auth/start', function (req, res, next) {
