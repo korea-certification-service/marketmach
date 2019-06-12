@@ -281,10 +281,18 @@ router.get('/signup', function (req, res, next) {
             } else {
                 data['userTag'] = user._doc.userTag;
                 data['regDate'] = user._doc.regDate;
-                if(dbconfig.country =="KR") {
-                    res.render('v2/login/existUser', data);
+                if(req.query.type == "findId") {
+                    if(dbconfig.country =="KR") {
+                        res.render('v2/login/existUser', data);
+                    } else {
+                        res.render('v2_en/login/existUser', data);
+                    }
                 } else {
-                    res.render('v2_en/login/existUser', data);
+                    if(dbconfig.country =="KR") {
+                        res.render('v2/find/changePassword', data);
+                    } else {
+                        res.render('v2_en/find/changePassword', data);
+                    }
                 }
             }
         }).catch((err) => {
