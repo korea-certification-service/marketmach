@@ -214,17 +214,17 @@ function getCommunityType(value) {
 function getEscrowType(value) {
     if(value == "deposit") {
         return {
-            'text':'에스크로 입금',
+            'text':'에스크로 출금',
             'className': 'icon0'
         };
     } else if(value == "withdraw") {
         return {
-            'text':'에스크로 출금',
+            'text':'에스크로 입금',
             'className': 'icon1'
         };
-    } else if(value == "deposit") {
+    } else if(value == "cancel") {
         return {
-            'text':'거래취소',
+            'text':'에스크로 취소',
             'className': 'icon2'
         };
     } else {
