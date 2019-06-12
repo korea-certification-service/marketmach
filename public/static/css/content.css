@@ -298,6 +298,7 @@
 .tab_board li.on{border: 2px solid #a8a8a8; border-bottom: none; background: #f6f6f6;}
 .tab_board li a {font-size: 16px; color: #888;}
 .tab_board li a{display: block; font-weight: bold; color: #1e2560;}
+.tab_board.ul_li3n li{width: 33.33%;}
 /* MACH 입금 내역 / MACH 출금 내역 */
 .table_wallet{min-width: 500px; table-layout: fixed;}
 .table_wallet thead th{text-align: center; color:#222;background:#f6f6f6;}
