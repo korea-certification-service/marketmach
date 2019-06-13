@@ -94,8 +94,13 @@
         </h1>
     </div>
     <div class="login_body">
+        <!--remove autocomplete-->
+        <input style="display:none" aria-hidden="true">
+        <input type="password" style="display:none" aria-hidden="true">
+        <!--remove autocomplete end-->
+
         <input class="login_ipt" type="text" name="id" id="userId" placeholder="아이디">
-        <input class="login_ipt" type="password" name="password" id="password" onkeyup="enterkey()" placeholder="비밀번호">
+        <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="비밀번호">
 
         <!--
             <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
