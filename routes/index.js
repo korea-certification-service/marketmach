@@ -273,11 +273,34 @@ router.get('/signup', function (req, res, next) {
         controllerUsers.getByPhone(data.country, data.phone) 
         .then((user) => {
             if(user == null) {
-                if(dbconfig.country =="KR") {
-                    res.render('v2/login/signup', data);
-                } else {
-                    res.render('v2_en/login/signup', data);
+                // 블랙리스트 명단에 있는지 체크
+                let condition = {
+                    "birth": data.birth,
+                    "userName": data.username,
+                    "phone": data.phone
                 }
+                controllerUsers.getBlackList(data.country, condition)
+                .then((blacklist) => {
+                    if(blacklist.length == 0) {
+                        if(dbconfig.country =="KR") {
+                            res.render('v2/login/signup', data);
+                        } else {
+                            res.render('v2_en/login/signup', data);
+                        }
+                    } else {
+                        if(dbconfig.country =="KR") {
+                            data['id'] = blacklist[0]._doc._id;
+                            data['phone'] = blacklist[0]._doc.phone;
+                            data['regDate'] = blacklist[0]._doc.regDate;
+                            res.render('v2/login/blacklist', data);
+                        } else {
+                            data['id'] = blacklist[0]._doc._id;
+                            data['email'] = blacklist[0]._doc.email;
+                            data['regDate'] = blacklist[0]._doc.regDate;
+                            res.render('v2_en/login/blacklist', data);
+                        }
+                    }
+                })
             } else {
                 data['id'] = user._doc._id;
                 data['userTag'] = user._doc.userTag;

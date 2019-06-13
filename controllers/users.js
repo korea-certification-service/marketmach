@@ -376,7 +376,32 @@ function createWithdrawUser(country, data) {
             reject(err)
         })
     })
+}
 
+function getWithdrawUser(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebUsers.getWithdrawUser(condition))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function getBlackList(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebUsers.getBlackList(condition))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
 }
 
 function getWithdrawByPhone(country, phone) {
@@ -416,3 +441,5 @@ exports.updateByUserTag = updateByUserTag;
 exports.getByPhone = getByPhone;
 exports.getWithdrawByPhone = getWithdrawByPhone;
 exports.getRecommanderCount = getRecommanderCount;
+exports.getWithdrawUser = getWithdrawUser;
+exports.getBlackList = getBlackList;

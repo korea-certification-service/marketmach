@@ -1,5 +1,6 @@
 var Users = require('../libs/users');
 var WithdrawUsers = require('../libs/withdrawUsers');
+var BlackLists = require('../libs/blackLists');
 
 function createUser (data) {
     return new Promise((resolve, reject) => {
@@ -298,6 +299,39 @@ function getWithdrawByPhone (phone) {
     })
 }
 
+function getWithdrawUser (condition) {
+    return new Promise((resolve, reject) => {
+        WithdrawUsers.find(condition)
+        .exec(
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                console.log('getWithdrawUser done: ' + user)
+                resolve(user)
+            }
+        )
+    })
+}
+
+function getBlackList (condition) {
+    return new Promise((resolve, reject) => {
+        BlackLists.find(condition)
+        .exec(
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                console.log('getBlackList done: ' + user)
+                resolve(user)
+            }
+        )
+    })
+}
+
+
 exports.createUser = createUser;
 exports.getUserById = getUserById;
 exports.getUserByIds = getUserByIds;
@@ -315,3 +349,5 @@ exports.updateByUserTag = updateByUserTag;
 exports.getByPhone = getByPhone;
 exports.getWithdrawByPhone = getWithdrawByPhone;
 exports.getRecommanderCount = getRecommanderCount;
+exports.getWithdrawUser = getWithdrawUser;
+exports.getBlackList = getBlackList;
