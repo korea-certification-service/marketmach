@@ -1,6 +1,6 @@
 var Users = require('../libs/users');
 var WithdrawUsers = require('../libs/withdrawUsers');
-var BlackLists = require('../libs/blackLists');
+var BlackLists = require('../libs/blacklists');
 
 function createUser (data) {
     return new Promise((resolve, reject) => {
