@@ -135,9 +135,28 @@ router.get('/userTag/:userTag', function (req, res, next) {
                     bitwebResponse.message = error;
                     res.status(403).send(bitwebResponse.create())
                 } else {
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = "ok";
-                    res.status(200).send(bitwebResponse.create())
+                    // 탈퇴 회원에도 중복 id가 있는지 체크
+                    let condition = {
+                        "userTag":userTag
+                    }
+                    controllerUsers.getWithdrawUser(country, condition)
+                    .then(withdrawUser => {
+                        if(withdrawUser.length == 0) {
+                            bitwebResponse.code = 200;
+                            bitwebResponse.data = "ok";
+                            res.status(200).send(bitwebResponse.create())
+                        } else {
+                            let error = "해당 id는 이미 사용중입니다."
+                            bitwebResponse.code = 403;
+                            bitwebResponse.message = error;
+                            res.status(403).send(bitwebResponse.create())
+                        }
+                    }).catch((err) => {
+                        // console.error('err=>', err)
+                        bitwebResponse.code = 500;
+                        bitwebResponse.message = err;
+                        res.status(500).send(bitwebResponse.create())
+                    })
                 }
 
             }).catch((err) => {
