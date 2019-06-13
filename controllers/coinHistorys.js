@@ -170,7 +170,19 @@ function create(req) {
             reject(err)
         })
     })
+}
 
+function createData(country, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoinHistorys.createCoinHistory(data))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
 }
 
 function createCoinHistoryByCoinId(country, coinId , req) {
@@ -470,6 +482,7 @@ exports.getWithdrawHistorys = getWithdrawHistorys;
 exports.getDeposit = getDeposit;
 exports.getWithdraw = getWithdraw;
 exports.create = create;
+exports.createData = createData;
 exports.createCoinHistoryByCoinId = createCoinHistoryByCoinId;
 exports.createCoinWithdrawHistoryByCoinId = createCoinWithdrawHistoryByCoinId;
 exports.update = update;

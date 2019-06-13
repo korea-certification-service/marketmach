@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var controllerVtrs = require('../controllers/vtrs');
+var controllerUsers = require('../controllers/users');
+var controllerCoins = require('../controllers/coins');
+var controllerCoinHistorys = require('../controllers/coinHistorys');
 var util = require('../utils/util');
 var dbconfig = require('../config/dbconfig');
 var BitwebResponse = require('../utils/BitwebResponse')
@@ -31,6 +34,57 @@ router.post('/vtrs/completedSell/list', function (req, res, next) {
         bitwebResponse.message = err;
         res.status(500).send(bitwebResponse.create())
     })
+
+});
+
+
+router.post('/marketmach/airdrop', function (req, res, next) {
+    let country = dbconfig.country;
+    let data = req.body;
+    
+    var bitwebResponse = new BitwebResponse();
+    controllerUsers.getByUserTag(country, data.userTag)
+    .then(user => {
+        let coinId = user._doc.coinId;        
+        controllerCoins.getByCoinId(country, coinId)
+        .then(coin => {
+            let reqData = {"total_mach": coin._doc.total_mach + data.airdropAmount}
+            controllerCoins.updateTotalCoin(country, coinId, reqData)
+            .then(updateCoin => {
+                let historyData = {
+                    "extType" : "mach",
+                    "coinId" : coinId,
+                    "category" : "event-airdrop",
+                    "status" : "success",
+                    "currencyCode" : "MACH",
+                    "amount" : data.airdropAmount,
+                    "mach" : data.airdropAmount,
+                    "regDate" : util.formatDate(new Date().toString())
+                };
+                controllerCoinHistorys.createData(country, historyData);
+                bitwebResponse.code = 200;
+                bitwebResponse.data = updateCoin;
+                let jsonResult = bitwebResponse.create();
+                res.status(200).send(jsonResult)
+            }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
+        }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
+    }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+    
 
 });
 
