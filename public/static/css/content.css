@@ -44,8 +44,8 @@
 .doing:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: #ffc107; border-radius: 50% 50%;}
 .done:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: red; border-radius: 50% 50%;}
 /* 아이템, 게임머니, 사진 */
-.ico_item{padding-left: 24px; background: url(/static/img/sub/ico_item.png) 4px 50% no-repeat; text-align: center;}
-.ico_money{padding-left: 24px; background: url(/static/img/sub/ico_money.png) 4px 50% no-repeat; text-align: center;}
+.ico_item{padding-left: 24px; background: url(/static/img/sub/ico_item.png) 4px 50% no-repeat; background-size: 16px 16px; text-align: center;}
+.ico_money{padding-left: 24px; background: url(/static/img/sub/ico_money.png) 4px 50% no-repeat; background-size: 16px 16px; text-align: center;}
 .ico_photo{display: inline-block; width: 20px; height: 20px; text-indent: -99999px; background: url(/static/img/sub/ico_photo.png) 50% 50% no-repeat; background-size: 20px 20px;}
 /* 직거래, 무료배송, 택배거래, 착불거래 */
 .ico_direct{background-color: #cfaff0; color: #fff;}
