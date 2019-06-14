@@ -65,7 +65,8 @@ router.post('/login', function (req, res, next) {
                                             "lastStageLevel": lastStageLevel,
                                             "isLastStage": isLastStage,
                                             "userRecordInfo": userRecordInfo,
-                                            "deviceId": deviceId
+                                            "deviceId": deviceId,
+                                            "cn":head.Cn
                                         }
 
                                         controllerGameCenter.updateRecord(country, recordInfo);
