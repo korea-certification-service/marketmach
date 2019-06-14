@@ -893,7 +893,7 @@ router.post('/wallets/:coinType/deposit', function (req, res, next) {
             let param = {
                 'amount': amount,
                 'order_id': coinType + "0000001", //프롣트에서 랜덤하게 생성?
-                'item_name': "마하 거래소 입금", //프론트에서 넘김 : mach 입금
+                'item_name': "MarketMACH 입금", //프론트에서 넘김 : mach 입금
                 'order_type': "charge", //프론트에서 넘김 : charge, withdraw,
                 //'completion_callback_url': req.body.completion_callback_url //callbackURL
             };

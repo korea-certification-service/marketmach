@@ -593,6 +593,42 @@ function deleteByItemId(country, itemId, userId) {
     })
 }
 
+function opposition(country, itemId) {
+    return new Promise((resolve, reject) => {
+        // let body = {"status": 3}
+        //ui-ux 개편 시 오픈
+        let body = {
+            "status": 105,
+            "item.status": 105,
+            "completed": false,
+            "opposition_date": util.formatDate(new Date().toString()),
+            "auto_completed_confirm_date": "opposition"
+        };
+
+        db.connectDB(country)
+            .then(() => {
+                bitwebPointTrades.updateTradePointByItemId(itemId, body)
+                    .then((result) => {
+                        bitwebItems.updateItemById(itemId, body)
+                            .then(() => {
+                                console.log('result=>', result);
+                                resolve(result);
+                            }).catch((err) => {
+                            console.log('err=>', err);
+                            reject(err);
+                        });
+                    }).catch((err) => {
+                    console.log('err=>', err);
+                    reject(err);
+                });
+            }).catch((err) => {
+            console.log('err=>', err);
+            reject(err);
+        });
+
+    });
+}
+
 exports.get = get;
 exports.getItemIdsByUserId = getItemIdsByUserId;
 exports.getTradePointById = getTradePointById;
@@ -606,3 +642,4 @@ exports.remove = remove;
 exports.getByItemId = getByItemId;
 exports.deleteByItemId = deleteByItemId;
 exports.getItemsByUserId = getItemsByUserId;
+exports.opposition = opposition;

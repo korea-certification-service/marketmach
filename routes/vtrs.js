@@ -586,7 +586,7 @@ router.post('/buynow', function (req, res, next) {
                                                     // if(user_mach >= user_output_mach) {
                                                     //     user_output_mach = (user_output_mach - req.body.mach < 0 ? 0 : user_output_mach - req.body.mach);
                                                     // }
-                                                    user_mach = user_mach - req.body.mach;
+                                                    user_mach = parseFloat((user_mach - req.body.mach).toFixed(8));
                                                     if (user_mach < 0) {
                                                         let msg = {
                                                             "status": "fail",

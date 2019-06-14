@@ -243,7 +243,7 @@ function updateStatus(country, req) {
                                                     // if(to_user_mach >= to_user_output_mach) {
                                                     //     to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
                                                     // }
-                                                    to_user_mach = to_user_mach - vtr._doc.mach;
+                                                    to_user_mach = parseFloat((to_user_mach - vtr._doc.mach).toFixed(8));
                                                     if (tradeType == "buy" && to_user_mach < 0) {
                                                         let msg = {
                                                             "status": "fail",
@@ -320,7 +320,7 @@ function updateStatus(country, req) {
                                                                             bitwebCoins.getByCoinId(country, coinId)
                                                                                 .then(coin => {
                                                                                     let user_mach = coin.total_mach;
-                                                                                    user_mach = user_mach + mach;
+                                                                                    user_mach = parseFloat((user_mach + mach).toFixed(8));
                                                                                     //let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
                                                                                     let mach_json = {"total_mach": user_mach};
                                                                                     console.log('escrow go to mach : ', mach_json);
@@ -513,7 +513,7 @@ function updateStatusByItemId(country, req) {
                                         // if(to_user_mach >= to_user_output_mach) {
                                         //     to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
                                         // }
-                                        to_user_mach = to_user_mach - vtr._doc.mach;
+                                        to_user_mach = parseFloat((to_user_mach - vtr._doc.mach).toFixed(8));
                                         if (tradeType == "buy" && to_user_mach < 0) {
                                             let msg = {
                                                 "status": "fail",
@@ -589,7 +589,7 @@ function updateStatusByItemId(country, req) {
                                                                 bitwebCoins.getByCoinId(country, coinId)
                                                                     .then(coin => {
                                                                         let user_mach = coin.total_mach;
-                                                                        user_mach = user_mach + mach;
+                                                                        user_mach = parseFloat((user_mach + mach).toFixed(8));
                                                                         //let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
                                                                         let mach_json = {"total_mach": user_mach}
                                                                         

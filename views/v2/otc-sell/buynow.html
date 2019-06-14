@@ -233,7 +233,7 @@
                 $(".item_phone").text(item_phone);
                 $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
                 $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
-                $(".user_price_balance").html(numberWithCommas(total_mach - mach) + "<span class='fzsm'>MACH</span>");
+                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>MACH</span>");
                 $(".item_status").addClass(status.className).addClass(status.className).text(status.text);
             }).fail(function (fail) {
                 console.log(fail);

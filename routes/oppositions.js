@@ -3,6 +3,7 @@ var router = express.Router();
 var BitwebResponse = require('../utils/BitwebResponse');
 var controllerOpposition = require('../controllers/oppositions');
 var controllerVtrs = require('../controllers/vtrs');
+var controllerpointTrades = require('../controllers/pointTrades');
 var controllerItem = require('../controllers/items');
 const dbconfig = require('../config/dbconfig');
 var util = require('../utils/util');
@@ -15,15 +16,23 @@ router.post('/', function (req, res, next) {
     controllerItem.getByItemId(country, itemId, "", "")
         .then(item => {
             req.body['item'] = item;
-            
             controllerOpposition.add(req)
                 .then(result => {
                     controllerVtrs.opposition(country, itemId)
-                        .then((result) => {
-                            let data = {}
-                            bitwebResponse.code = 200;
-                            bitwebResponse.data = result;
-                            res.status(200).send(bitwebResponse.create())
+                        .then((vtr) => {
+                            let result = vtr;
+                            controllerpointTrades.opposition(country, itemId)
+                            .then((pointTrade) => {
+                                if(pointTrade != null) result = pointTrade;
+                                bitwebResponse.code = 200;
+                                bitwebResponse.data = result;
+                                res.status(200).send(bitwebResponse.create())
+                            }).catch((err) => {
+                                console.error('err=>', err)
+                                bitwebResponse.code = 500;
+                                bitwebResponse.message = err;
+                                res.status(500).send(bitwebResponse.create())
+                            });
                         }).catch((err) => {
                         console.error('err=>', err)
                         bitwebResponse.code = 500;

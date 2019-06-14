@@ -152,6 +152,24 @@ function updateTradePointById(pointId, body) {
     })
 }
 
+function updateTradePointByItemId(itemId, body) {
+    return new Promise((resolve, reject) => {
+        TradePoints.findOneAndUpdate(
+            {"item._id": itemId
+            },
+            {$set: body
+            },
+            {upsert: false, new: true},
+            function(err, data) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                resolve(data)
+            })
+    })
+}
+
 function updateTradePointHistoryId(pointId, historyId) {
     return new Promise((resolve, reject) => {
 
@@ -217,3 +235,4 @@ exports.deleteTradePointById = deleteTradePointById;
 exports.getItemIdsByUserId = getItemIdsByUserId;
 exports.getByItemId = getByItemId;
 exports.getItemsByUserId = getItemsByUserId;
+exports.updateTradePointByItemId = updateTradePointByItemId;
