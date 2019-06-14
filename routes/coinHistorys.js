@@ -52,6 +52,10 @@ router.get('/:coinId/list', function (req, res, next) {
         "pageIdx": 10
     };
 
+    if(trade_type == "event") {
+        trade_type = ['deposit','event-signup','event-recommander','event-airdrop'];
+    }
+
     var bitwebResponse = new BitwebResponse();
 
     controllerCoinHistorys.getCoinHistoryExtByCoinId(country, coinId, trade_type, option)

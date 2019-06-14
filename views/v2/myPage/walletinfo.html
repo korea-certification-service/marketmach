@@ -21,7 +21,7 @@
             });
 
             getCoin();
-            getCoinHistory('deposit');
+            getCoinHistory('event');
         });
 
         function getCoin() {
@@ -49,28 +49,49 @@
                 var coinHistorys = success.data;
                 var resultColumn = "<tr>" + 
                                 "<th>지갑</th>" + 
+                                "<th>입금내용</th>" + 
                                 "<th>내역</th>" + 
                                 "<th>처리상태</th>" + 
                                 "<th>일자</th>" + 
                             "</tr>";
+                if(trade_type == "withdraw") {
+                    resultColumn = "<tr>" + 
+                                "<th>지갑</th>" + 
+                                "<th>출금내용</th>" + 
+                                "<th>내역</th>" + 
+                                "<th>처리상태</th>" + 
+                                "<th>일자</th>" + 
+                            "</tr>";
+                }
                 var result = ""
                 if(coinHistorys.length == 0) {
-                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='5'>내역이 존재하지 않습니다.</td></tr>";
                 }
 
                 for(var i=0;i<coinHistorys.length;i++) {
+                    var extType = coinHistorys[i].extType;
+                    var category = coinHistorys[i].category;
                     var amount = numberWithCommas(coinHistorys[i].amount);
                     var currency_code = coinHistorys[i].currencyCode;
                     var mach = numberWithCommas(coinHistorys[i].mach);
                     var status = coinHistorys[i].status;
                     var regDate = coinHistorys[i].regDate.substr(2);
 
-                    result += '<tr>' + 
-                                    '<td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>' + 
-                                    '<td class="td_exchange_coin">' + 
-                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em><span class="arw_txt">>>></span><em class="fc3">'+mach+'<span>MACH</span></em>' + 
-                                    '</td>' + 
-                                    '<td>'+status+'</td>' + 
+                    result += '<tr>';
+                        if(extType == "bitberry") {
+                            result += '<td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>';
+                            result += '<td>'+category+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
+                        } else {
+                            result += '<td>MACH</td>';
+                            result += '<td>'+category+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
+                        }
+                        result +=   '<td>'+status+'</td>' + 
                                     '<td>'+regDate+'</td>' + 
                                 '</tr>';
                 }
@@ -78,7 +99,7 @@
                 $('#wallet_historys_column').html(resultColumn);
                 $('#wallet_historys').html(result);
 
-                if(trade_type == 'deposit') {
+                if(trade_type == 'event') {
                     $('#mach_buy').addClass('on');
                     $('#mach_sell').removeClass('on');
                     $('#mach_escrow').removeClass('on');
@@ -100,13 +121,13 @@
                 var escrows = success.data.list;
                 var resultColumn = "<tr>" + 
                                 "<th>거래</th>" + 
-                                "<th>내역</th>" + 
+                                "<th colspan='2'>내역</th>" + 
                                 "<th>처리상태</th>" + 
                                 "<th>일자</th>" + 
                             "</tr>";
                 var result = "";
                 if(escrows.length == 0) {
-                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='5'>내역이 존재하지 않습니다.</td></tr>";
                 }
 
                 for(var i=0;i<escrows.length;i++) {
@@ -116,8 +137,8 @@
                     var regDate = escrows[i].regDate.substr(2);
 
                     result += '<tr>' + 
-                                    '<td>내부거래</td>' + 
-                                    '<td class="td_exchange_coin">' + 
+                                    '<td>내부거래</td>' +                                     
+                                    '<td colspan="2" class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+type.text+'</td>' + 
@@ -175,21 +196,23 @@
                         </div>
 
                         <ul class="tab_board ul_li3n cf">
-                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('deposit');">입금 내역</a></li>
+                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('event');">입금 내역</a></li>
                             <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">출금 내역</a></li>
                             <li id="mach_escrow"><a href="javascript:getEscrow();">에스크로 내역</a></li>
                         </ul>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup class="colgroup_walletinfo">
-                                    <col class="col4_1">
-                                    <col class="col4_2">
-                                    <col class="col4_3">
-                                    <col class="col4_4">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
                                 </colgroup>
                                 <thead id="wallet_historys_column">
                                     <tr>
                                         <th>지갑</th>
+                                        <th>처리내용</th>
                                         <th>내역</th>
                                         <th>처리상태</th>
                                         <th>일자</th>
