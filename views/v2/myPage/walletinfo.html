@@ -44,6 +44,9 @@
                 method: "GET",
                 url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type                
             }).done(function (success) {
+                var col = '<col class="col5_1"><col class="col5_2"><col class="col5_3"><col class="col5_4"><col class="col5_5">';
+                $('.colgroup_walletinfo').html(col);
+              
                 //console.log(success.data);
                 //console.log(success.data);
                 var coinHistorys = success.data;
@@ -85,7 +88,7 @@
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>';
                         } else {
-                            result += '<td>MACH</td>';
+                            result += '<td><img src="/static/img/symbol/symbol_mach.png" alt=""></td>';
                             result += '<td>'+category+'</td>';
                             result +=   '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
@@ -118,16 +121,19 @@
                 method: "GET",
                 url: "/v1/escrows/" + userId + "/list"
             }).done(function (success) {
+                var col = '<col class="col4_1"><col class="col4_2"><col class="col4_3"><col class="col4_4">';
+                $('.colgroup_walletinfo').html(col);
+
                 var escrows = success.data.list;
                 var resultColumn = "<tr>" + 
                                 "<th>거래</th>" + 
-                                "<th colspan='2'>내역</th>" + 
+                                "<th>내역</th>" + 
                                 "<th>처리상태</th>" + 
                                 "<th>일자</th>" + 
                             "</tr>";
                 var result = "";
                 if(escrows.length == 0) {
-                    result = "<tr><td colspan='5'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
                 }
 
                 for(var i=0;i<escrows.length;i++) {
@@ -138,7 +144,7 @@
 
                     result += '<tr>' + 
                                     '<td>내부거래</td>' +                                     
-                                    '<td colspan="2" class="td_exchange_coin">' + 
+                                    '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+type.text+'</td>' + 
@@ -148,7 +154,7 @@
 
                 $('#wallet_historys_column').html(resultColumn);
                 $('#wallet_historys').html(result);
-
+              
                 $('#mach_sell').removeClass('on');
                 $('#mach_buy').removeClass('on');
                 $('#mach_escrow').addClass('on');
@@ -203,11 +209,11 @@
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup class="colgroup_walletinfo">
-                                    <col class="col5_1">
+                                    <!-- <col class="col5_1">
                                     <col class="col5_2">
                                     <col class="col5_3">
                                     <col class="col5_4">
-                                    <col class="col5_5">
+                                    <col class="col5_5"> -->
                                 </colgroup>
                                 <thead id="wallet_historys_column">
                                     <tr>

@@ -111,8 +111,13 @@
 /*** 취소관리: .table_list .col5_1 ***/
 .table .colgroup_mycancellist .col5_1{}
 /*** 지갑관리 - 나의지갑정보 ***/
-.table .colgroup_walletinfo .col4_1{width: 60px;}
-.table .colgroup_walletinfo .col4_2{}
+.table .colgroup_walletinfo .col5_1{width: 80px;}
+.table .colgroup_walletinfo .col5_2{width: 110px;}
+.table .colgroup_walletinfo .col5_3{width: 370px;}
+.table .colgroup_walletinfo .col5_4{width: 80px;}
+.table .colgroup_walletinfo .col5_5{width: 150px;}
+.table .colgroup_walletinfo .col4_1{width: 100px;}
+.table .colgroup_walletinfo .col4_2{width: 510px;}
 .table .colgroup_walletinfo .col4_3{width: 80px;}
 .table .colgroup_walletinfo .col4_4{width: 150px;}
 /*** 지갑관리 - MACH 입금 / MACH 출금 ***/
@@ -152,4 +157,7 @@
 @media (max-width: 576px){
     .table .colgroup_mypage .col3_1{width: 80px;}
     .table .colgroup_otc-sells .col4_1{width: 200px;}
+
+    .table .colgroup_walletinfo .col5_3{width: 200px;}
+    .table .colgroup_walletinfo .col4_2{width: 200px;}
 }

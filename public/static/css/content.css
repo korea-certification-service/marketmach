@@ -288,6 +288,7 @@
 .bitberry_switch_box{position: relative;margin: 0 auto 30px; height: 150px; text-align: center; background: #f6f6f6; border-top: 3px solid #a8a8a8; border-bottom: 2px solid #dee2e6;}
 .bitberry_switch_box .bitberry_switch{position: absolute; top: 20px; left: 6%; width: 80px;}
 .bitberry_switch_box .bitberry_switch p{font-weight: bold; color: #333333;}
+.bitberry_switch_box .bitberry_switch a{display: block;}
 .bitberry_switch_box > em{display: block; margin-top: 30px; font-size: 18px;}
 .bitberry_switch_box > p{margin-top: 5px; font-size: 20px; font-weight: bold;}
 .bitberry_switch_box > p > span{font-size: 14px;}
@@ -574,6 +575,9 @@
     .mypage_sec .mypage_main_trade table td{font-size: 14px;}
     .point_box .pb_inner .inner_box em{font-size: 14px;}
     .point_box .pb_inner .inner_box p{font-size: 16px;}
+    /**/
+    .bitberry_switch_box{text-align: right; padding-right: 30px;}
+    .bitberry_switch_box .bitberry_switch{text-align: center;}
     /* 회원정보관리 */
     .coin_certification dt{width: 100%; float: none; text-align: left;}
     .coin_certification dd{float: none; text-align: center;}
