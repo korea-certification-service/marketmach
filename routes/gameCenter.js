@@ -20,6 +20,7 @@ router.post('/login', function (req, res, next) {
         let isLastStage = body.IsLastStage;
         let userRecordInfo = body.StagePlayInfoList;
         let service = body.service;
+        let deviceId = body.deviecId == undefined ? -99 : body.deviecId;
         let resSessionToken = util.makeToken();
         let checkmd5 = req.body.check;
         
@@ -63,7 +64,8 @@ router.post('/login', function (req, res, next) {
                                             "service": service,
                                             "lastStageLevel": lastStageLevel,
                                             "isLastStage": isLastStage,
-                                            "userRecordInfo": userRecordInfo
+                                            "userRecordInfo": userRecordInfo,
+                                            "deviceId": deviceId
                                         }
 
                                         controllerGameCenter.updateRecord(country, recordInfo);

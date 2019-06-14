@@ -6,7 +6,8 @@ var gameCenterRecordsSchema = new Schema({
     service: String,
     lastStageLevel: Number,
     isLastStage: Boolean,
-    userRecordInfo:[]
+    userRecordInfo:[],
+    deviceId: String
 });
 
 module.exports = gameCenterRecordsSchema;
