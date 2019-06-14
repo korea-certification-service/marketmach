@@ -14,6 +14,7 @@ var controllerCoins = require('../controllers/coins');
 var controllerAgreements = require('../controllers/agreements');
 var controllerPoints = require('../controllers/points');
 var controllerCoinHistorys = require('../controllers/coinHistorys');
+var controllerItems = require('../controllers/items');
 var CryptoJS = require("crypto-js");
 var md5 = require('md5');
 let networks = dbconfig.testnet.network == "testnet" ? bitcore.Networks.testnet : bitcore.Networks.mainnet;
@@ -772,6 +773,14 @@ router.delete('/:userId', function (req, res, next) {
         controllerUsers.getById(dbconfig.country, req.params.userId)
             .then(user => {
                 let withdrawUser = user._doc;
+                let condition = {
+                    "userTag":user._doc.userTag,
+                    "status": 0
+                }
+                let reqData = {
+                    "status": 999
+                }
+                controllerItems.updateItem(dbconfig.country, condition, reqData);
                 controllerUsers.createWithdrawUser(dbconfig.country, withdrawUser)
                     .then(() => {
                         controllerUsers.remove(req)

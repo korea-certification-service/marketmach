@@ -135,6 +135,13 @@ function getStatus(value) {
             'className': 'doing',
             'detail': '대화중'
         };
+    } else {
+        return {
+            'text': '거래불가',
+            'number': 3,
+            'className': 'done',
+            'detail': '거래불가'
+        };
     }
 }
 

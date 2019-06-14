@@ -474,6 +474,24 @@ function updateItemById(itemId, body) {
     })
 }
 
+function updateItem(condition, reqData) {
+    return new Promise((resolve, reject) => {
+        Items.updateMany(
+            condition,
+            {
+                $set: reqData
+            },
+            {upsert: false},
+            function (err, data) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                resolve(data)
+            })
+    })
+}
+
 function updateItemHistoryId(itemId, historyId) {
     return new Promise((resolve, reject) => {
 
@@ -633,3 +651,4 @@ exports.getReplyById = getReplyById;
 exports.addReply = addReply;
 exports.updateReply = updateReply;
 exports.deleteReply = deleteReply;
+exports.updateItem = updateItem;

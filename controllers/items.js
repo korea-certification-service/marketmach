@@ -379,6 +379,19 @@ function getItemCountByUserTag(country, userTag) {
     })
 }
 
+function updateItem(country, condition, reqData) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebItems.updateItem(condition, reqData))
+            .then((result) => {
+                console.log('result=>', result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function getReply(country, req) {
     return new Promise((resolve, reject) => {
 
@@ -467,3 +480,4 @@ exports.getReply = getReply;
 exports.addReply = addReply;
 exports.modifyReply = modifyReply;
 exports.deleteReply = deleteReply;
+exports.updateItem = updateItem;
