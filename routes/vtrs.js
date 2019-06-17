@@ -61,9 +61,19 @@ router.get('/item/:itemId', function (req, res, next) {
 
     controllerVtrs.getByItemId(country, itemId)
         .then(result => {
-            bitwebResponse.code = 200;
-            bitwebResponse.data = result;
-            res.status(200).send(bitwebResponse.create())
+            controllerVtrs.getTempByItemId(country, itemId)
+            .then(resultTemp => {
+                result._doc['buyer_id'] = resultTemp._doc.buyer_id;
+                result._doc['seller_id'] = resultTemp._doc.seller_id;
+                bitwebResponse.code = 200;
+                bitwebResponse.data = result;
+                res.status(200).send(bitwebResponse.create())
+            }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
         }).catch((err) => {
         console.error('err=>', err)
         bitwebResponse.code = 500;

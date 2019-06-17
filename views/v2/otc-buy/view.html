@@ -105,8 +105,8 @@
                     <article class="modal_bitberry_deposit">
                         <button id="btnmCloseModal" class="btn">X</button>
                         <h1>연락처 표시</h1>
-                        <p>구매자 연락처 : <span id="toPhone"></span></p>
-                        <p>판매자 연락처 : <span id="fromPhone"></span></p>
+                        <p>구매자 : <span id="to_userTag"></span> 연락처 : <span id="toPhone"></span></p>
+                        <p>판매자 : <span id="from_userTag"></span> 연락처 : <span id="fromPhone"></span></p>
                         <button id="checkok" class="btn btn-danger">확인</button>
                     </article>
                 </div>
@@ -381,7 +381,9 @@
                 var $dim = $(".dim_all_area");
                 $dim.show();
                 $body.css("position", "fixed");
+                $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
+                $("#from_userTag").text(success.data.seller_id);
                 $("#toPhone").text(success.data.buyer_phone);
             }).fail(function (fail) {
                 console.log(fail);
