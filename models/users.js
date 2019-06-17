@@ -26,6 +26,7 @@ var usersSchema = new Schema({
     extLoginType: String,
     recommander: String,
     bitberry_token: String,
+    bitberry_user_id: String,
     gameCenterId: ObjectId,
     sessionToken: String,
     birth: String,

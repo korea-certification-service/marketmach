@@ -694,7 +694,8 @@ router.post('/connected', function (req, res, next) {
             //users에 token 저장
             if(result != null) {
                 let data = {
-                    "bitberry_token": result.token
+                    "bitberry_token": result.token,
+                    "bitberry_user_id": result.bitberry_user_id
                 }
                 controllerUsers.updateByUserTag(country, userTag, data)
                     .then(() => {
@@ -1158,6 +1159,87 @@ router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
             res.status(500).send(bitwebResponse.create());
         }
     });
+});
+
+router.post('/bitberry/deposit/callback', function(req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let body = req.body;
+    let userTag = req.session.userTag;
+    console.log('bitberry deposit callback req body : ', body);
+    bitwebResponse.code = 200;
+    bitwebResponse.data = body;
+    res.status(200).send(bitwebResponse.create())
+    // if(req.session.userTag != undefined) {
+    //     let result = JSON.parse(body);
+    //     console.log('success : ', body);
+
+    //     controllerUsers.getByUserTag(country, userTag)
+    //         .then((user) => {
+    //             let option = {
+    //                 "category": category
+    //             }
+                
+    //             let amount = Math.abs(result.amount);
+    //             let mach = req.body.mach;
+                
+    //             let data = {
+    //                 "extType":"bitberry",
+    //                 "coinId": user._doc.coinId,
+    //                 "category": category,          
+    //                 "status": result.status,
+    //                 "currencyCode": result.currency_code,
+    //                 "amount": amount,
+    //                 "mach": mach,
+    //                 "regDate": util.formatDate(new Date().toString())  
+    //             }
+
+    //             controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
+    //                 .then(coinHistory => {
+    //                     controllerCoins.getByCoinId(country, user._doc.coinId)
+    //                         .then(coin => {
+    //                             let update_data = {};
+    //                             if(category == "deposit") {
+    //                                 update_data = {
+    //                                     "total_mach": coin._doc.total_mach + mach
+    //                                 }
+    //                             } else {
+    //                                 update_data = {
+    //                                     "total_mach": coin._doc.total_mach - mach
+    //                                 }
+    //                             }
+                                
+    //                             controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
+    //                                 .then(u_coin => {
+    //                                     bitwebResponse.code = 200;
+    //                                     bitwebResponse.data = u_coin;
+    //                                     res.status(200).send(bitwebResponse.create())
+    //                                 }).catch(err => {
+    //                                     bitwebResponse.code = 500;
+    //                                     bitwebResponse.message = err;
+    //                                     res.status(500).send(bitwebResponse.create());
+    //                                 });
+    //                         }) .catch(err => {
+    //                             bitwebResponse.code = 500;
+    //                             bitwebResponse.message = err;
+    //                             res.status(500).send(bitwebResponse.create());
+    //                         });
+    //                 }).catch(err => {
+    //                     bitwebResponse.code = 500;
+    //                     bitwebResponse.message = err;
+    //                     res.status(500).send(bitwebResponse.create());
+    //                 });
+    //         }).catch(err => {
+    //         bitwebResponse.code = 500;
+    //         bitwebResponse.message = err;
+    //         res.status(500).send(bitwebResponse.create());
+    //     });
+    // } else {
+    //     console.log('error => no user session ' + req);
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = "inital error";
+    //     res.status(500).send(bitwebResponse.create());
+    // }
 });
 
 module.exports = router;
