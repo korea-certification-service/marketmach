@@ -121,8 +121,8 @@
                 return;
             }
 
-            if($("#amount").val() > 100000) {
-                alert("출금 금액은 100,000KRW 까지만 가능합니다.");
+            if($("#amount").val() < 10000) {
+                alert("출금 금액은 최소 10,000KRW 부터 가능합니다.");
                 return;
             }
 

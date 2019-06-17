@@ -164,8 +164,8 @@
                 return;
             }
 
-            if($('[name=amount]').val() > 100) {
-                alert("출금 금액은 100MACH 까지만 가능합니다.");
+            if($('[name=amount]').val() < 1) {
+                alert("출금 금액은 최소 1MACH 부터 가능 합니다.");
                 return;
             }
 
