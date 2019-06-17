@@ -48,6 +48,9 @@
                 method: "GET",
                 url: "/v1/point/historys/" + pointId + "/" + trade_type
             }).done(function (success) {
+                var col = '<col class="col3_1"><col class="col3_2"><col class="col3_3">';
+                $('.colgroup_pointinfo').html(col);
+
                 //console.log(success.data);
                 var pointHistorys = success.data;
                 var result = ""
@@ -111,7 +114,7 @@
                 url: "/v1/escrows/" + userId + "/list/point"
             }).done(function (success) {
                 var col = '<col class="col4_1"><col class="col4_2"><col class="col4_3"><col class="col4_4">';
-                $('.colgroup_walletinfo').html(col);
+                $('.colgroup_pointinfo').html(col);
 
                 var escrows = success.data.list;
                 var resultColumn = "<tr>" + 
@@ -201,9 +204,9 @@
                         </ul>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
-                                <colgroup class="colgroup_walletinfo">
-                                    <col class="col3_1">
-                                    <!-- <col class="col3_2">
+                                <colgroup class="colgroup_pointinfo">
+                                    <!-- <col class="col3_1">
+                                    <col class="col3_2">
                                     <col class="col3_3"> -->
                                 </colgroup>
                                 <thead id="wallet_historys_column">
