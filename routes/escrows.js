@@ -4,11 +4,16 @@ let dbconfig = require('../config/dbconfig');
 let controllerEscrow = require('../controllers/escrows');
 var BitwebResponse = require('../utils/BitwebResponse');
 
-router.get('/:userId/list', function (req, res, next) {
+router.get('/:userId/list/:coinType', function (req, res, next) {
     let country = dbconfig.country;
     let condition = {
         "reqUser": req.params.userId
     }
+    let coinType = req.params.coinType;
+    
+    if(coinType == "mach") condition['mach'] = {$exists: true};
+    if(coinType == "point") condition['point'] = {$exists: true};
+
     let option = {
         "perPage": 0,
         "pageIdx": 10

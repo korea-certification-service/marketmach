@@ -119,7 +119,7 @@
         function getEscrow() {
             $.ajax({
                 method: "GET",
-                url: "/v1/escrows/" + userId + "/list"
+                url: "/v1/escrows/" + userId + "/list/mach"
             }).done(function (success) {
                 var col = '<col class="col4_1"><col class="col4_2"><col class="col4_3"><col class="col4_4">';
                 $('.colgroup_walletinfo').html(col);
