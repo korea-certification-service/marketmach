@@ -4,7 +4,7 @@ var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
 const dbconfig = require('../config/dbconfig')
 
-router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/', function (req, res, next) {
     // res.render('etc-buy/list', { category:req.query.category,  trade_type: req.query.trade_type, title: req.query.title, pageIdx: req.query.pageIdx,
     //     usePoint:dbconfig.usePoint,
     //     useBlockchain:dbconfig.useBlockchain

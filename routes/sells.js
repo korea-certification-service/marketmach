@@ -8,7 +8,7 @@ var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
 const dbconfig = require('../config/dbconfig')
 
-router.get('/', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/sell/list', {
             userId: req.session.userId, coinId: req.session.coinId,
