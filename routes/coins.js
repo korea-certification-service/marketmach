@@ -893,7 +893,7 @@ router.post('/wallets/:coinType/deposit', function (req, res, next) {
             url = dbconfig.bitberry.url + "/v2/wallets/" + walletId + '/transfer_requests/withdraw';
             let param = {
                 'amount': amount,
-                'order_id': coinType + "0000001", //프롣트에서 랜덤하게 생성?
+                'order_id': coinType + util.makeToken(), //프롣트에서 랜덤하게 생성?
                 'item_name': "MarketMACH 입금", //프론트에서 넘김 : mach 입금
                 'order_type': "charge", //프론트에서 넘김 : charge, withdraw,
                 //'completion_callback_url': req.body.completion_callback_url //callbackURL
@@ -914,8 +914,8 @@ router.post('/wallets/:coinType/deposit', function (req, res, next) {
                 } else {
                     bitwebResponse.code = 500;
                     bitwebResponse.message = error;
-                    res.status(500).send(bitwebResponse.create())
                     console.log('error = ' + response.statusCode);
+                    res.status(500).send(bitwebResponse.create())
                 }
             });
         } else {
