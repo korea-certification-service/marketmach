@@ -304,7 +304,8 @@
 .table_wallet{min-width: 500px; table-layout: fixed;}
 .table_wallet thead th{text-align: center; color:#222;background:#f6f6f6;}
 .table_wallet tbody td{text-align: center;}
-.table_wallet tbody td:first-child img{width: 35px;}
+.table_wallet tbody td:first-child img[alt="mach"]{width: 32px;}
+.table_wallet tbody td:first-child img[alt="bitberry"]{width: 51px;}
 .table_wallet .ellipse{display: inline-block; width: calc(100% - 100px); vertical-align: top;}
 .table_wallet .td_exchange_coin{}
 .table_wallet .td_exchange_coin em{font-size: 16px;}
