@@ -279,6 +279,19 @@ function updateStatus(country, req) {
                                                                                     
                                                                                     bitwebVtrs.createEscrow(body3)
                                                                                         .then(() => {
+                                                                                            //coin history 저장
+                                                                                            let coinData = {
+                                                                                                "extType" : "mach",
+                                                                                                "coinId" : coinId,
+                                                                                                "category" : "withdraw",
+                                                                                                "status" : "success",
+                                                                                                "currencyCode" : "MACH",
+                                                                                                "amount" : mach,
+                                                                                                "mach" : mach,
+                                                                                                "regDate" : util.formatDate(new Date().toString())
+                                                                                            }
+                                                                                            bitwebCoinHistorys.createCoinHistory(coinData);
+
                                                                                             console.log('result=>', result);
                                                                                             resolve(result);
                                                                                         }).catch((err) => {
@@ -431,6 +444,19 @@ function updateStatus(country, req) {
                                                                                                                 
                                                                                                                 bitwebVtrs.createEscrow(body3)
                                                                                                                     .then(() => {
+                                                                                                                         //coin history 저장
+                                                                                                                        let coinData = {
+                                                                                                                            "extType" : "mach",
+                                                                                                                            "coinId" : coinId,
+                                                                                                                            "category" : "deposit",
+                                                                                                                            "status" : "success",
+                                                                                                                            "currencyCode" : "MACH",
+                                                                                                                            "amount" : mach,
+                                                                                                                            "mach" : mach,
+                                                                                                                            "regDate" : util.formatDate(new Date().toString())
+                                                                                                                        }
+                                                                                                                        bitwebCoinHistorys.createCoinHistory(coinData);
+
                                                                                                                         console.log('result=>', result);
                                                                                                                         resolve(result);
                                                                                                                     }).catch((err) => {
@@ -549,6 +575,20 @@ function updateStatusByItemId(country, req) {
                                                                         
                                                                         bitwebVtrs.createEscrow(body3)
                                                                             .then(() => {
+
+                                                                                //coin history 저장
+                                                                                let coinData = {
+                                                                                    "extType" : "mach",
+                                                                                    "coinId" : coinId,
+                                                                                    "category" : "withdraw",
+                                                                                    "status" : "success",
+                                                                                    "currencyCode" : "MACH",
+                                                                                    "amount" : mach,
+                                                                                    "mach" : mach,
+                                                                                    "regDate" : util.formatDate(new Date().toString())
+                                                                                }
+                                                                                bitwebCoinHistorys.createCoinHistory(coinData);
+
                                                                                 console.log('result=>', result);
                                                                                 resolve(result);
                                                                             }).catch((err) => {
@@ -614,6 +654,19 @@ function updateStatusByItemId(country, req) {
                                                                                                 
                                                                                                 bitwebVtrs.createEscrow(body3)
                                                                                                     .then(() => {
+                                                                                                         //coin history 저장
+                                                                                                        let coinData = {
+                                                                                                            "extType" : "mach",
+                                                                                                            "coinId" : coinId,
+                                                                                                            "category" : "deposit",
+                                                                                                            "status" : "success",
+                                                                                                            "currencyCode" : "MACH",
+                                                                                                            "amount" : mach,
+                                                                                                            "mach" : mach,
+                                                                                                            "regDate" : util.formatDate(new Date().toString())
+                                                                                                        }
+                                                                                                        bitwebCoinHistorys.createCoinHistory(coinData);
+
                                                                                                         console.log('result=>', result);
                                                                                                         resolve(result);
                                                                                                     }).catch((err) => {
@@ -840,6 +893,20 @@ function deleteVtrs(country, vtrId, userId) {
 
                                                                 bitwebVtrs.createEscrow(body3)
                                                                     .then(() => {
+
+                                                                         //coin history 저장
+                                                                         let coinData = {
+                                                                            "extType" : "mach",
+                                                                            "coinId" : coinId,
+                                                                            "category" : "deposit",
+                                                                            "status" : "success",
+                                                                            "currencyCode" : "MACH",
+                                                                            "amount" : vtr._doc.item.total_price,
+                                                                            "mach" : vtr._doc.item.total_price,
+                                                                            "regDate" : util.formatDate(new Date().toString())
+                                                                        }
+                                                                        bitwebCoinHistorys.createCoinHistory(coinData);
+
                                                                         let result = {
                                                                             "code": 31,
                                                                             "msg": '판매자님이 거래를 취소 하였습니다.에스크로에 보관된 거래금액이 구매자님의 지갑으로 환불되었습니다.'
@@ -1005,6 +1072,19 @@ function deleteVtrsByItemId(country, itemId, userId) {
 
                                                                             bitwebVtrs.createEscrow(body3)
                                                                                 .then(() => {
+                                                                                    //coin history 저장
+                                                                                    let coinData = {
+                                                                                        "extType" : "mach",
+                                                                                        "coinId" : coinId,
+                                                                                        "category" : "deposit",
+                                                                                        "status" : "success",
+                                                                                        "currencyCode" : "MACH",
+                                                                                        "amount" : vtr._doc.item.total_price,
+                                                                                        "mach" : vtr._doc.item.total_price,
+                                                                                        "regDate" : util.formatDate(new Date().toString())
+                                                                                    }
+                                                                                    bitwebCoinHistorys.createCoinHistory(coinData);
+                                                                                    
                                                                                     console.log('cancel vtr : ', vtr);
                                                                                     // 거래 취소 시 페르소나 API 호출
                                                                                     let seller_userTag = vtrTemp._doc.seller_id;
