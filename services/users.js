@@ -92,6 +92,22 @@ function getUserByTag (userTag) {
     })
 }
 
+function getByUserInfo (condition) {
+    return new Promise((resolve, reject) => {
+        Users.findOne(
+            condition,
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                // console.log('getUserByTag done: ' + user)
+                resolve(user)
+            }
+        )
+    })
+}
+
 function getByUserTagAndLoginToken (userTag, loginToken) {
     return new Promise((resolve, reject) => {
         Users.findOne(
@@ -351,3 +367,4 @@ exports.getWithdrawByPhone = getWithdrawByPhone;
 exports.getRecommanderCount = getRecommanderCount;
 exports.getWithdrawUser = getWithdrawUser;
 exports.getBlackList = getBlackList;
+exports.getByUserInfo = getByUserInfo;

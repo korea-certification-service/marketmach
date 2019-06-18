@@ -78,6 +78,21 @@ function getByUserTag(country, userTag) {
     })
 }
 
+
+function getByUserInfo(country, condition) {
+    return new Promise((resolve, reject) => {
+
+        db.connectDB(country)
+            .then(() => bitwebUsers.getByUserInfo(condition))
+            .then((result) => {
+                // console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function getByUserTagAndLoginToken(country, userTag, loginToken) {
     return new Promise((resolve, reject) => {
 
@@ -443,3 +458,4 @@ exports.getWithdrawByPhone = getWithdrawByPhone;
 exports.getRecommanderCount = getRecommanderCount;
 exports.getWithdrawUser = getWithdrawUser;
 exports.getBlackList = getBlackList;
+exports.getByUserInfo = getByUserInfo;

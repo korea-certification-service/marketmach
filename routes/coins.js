@@ -1090,68 +1090,76 @@ router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
                 bitwebResponse.data = noData;
                 res.status(200).send(bitwebResponse.create())
                 return;
+            } else {
+                let result = {
+                    "code": "success",
+                    "msg": "입금 완료."
+                }
+                bitwebResponse.code = 200;
+                bitwebResponse.data = result;
+                res.status(200).send(bitwebResponse.create())
             }
             
-            controllerUsers.getByUserTag(country, userTag)
-                .then((user) => {
-                    let option = {
-                        "category": category
-                    }
+            // controllerUsers.getByUserTag(country, userTag)
+            //     .then((user) => {
+            //         let option = {
+            //             "category": category
+            //         }
                     
-                    let amount = Math.abs(result.amount);
-                    let mach = req.body.mach;
+            //         let amount = Math.abs(result.amount);
+            //         let mach = req.body.mach;
                     
-                    let data = {
-                        "extType":"bitberry",
-                        "coinId": user._doc.coinId,
-                        "category": category,          
-                        "status": result.status,
-                        "currencyCode": result.currency_code,
-                        "amount": amount,
-                        "mach": mach,
-                        "regDate": util.formatDate(new Date().toString())  
-                    }
+            //         let data = {
+            //             "extType":"bitberry",
+            //             "coinId": user._doc.coinId,
+            //             "category": category,          
+            //             "status": result.status,
+            //             "currencyCode": result.currency_code,
+            //             "amount": amount,
+            //             "mach": mach,
+            //             "regDate": util.formatDate(new Date().toString())  
+            //         }
 
-                    controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
-                        .then(coinHistory => {
-                            controllerCoins.getByCoinId(country, user._doc.coinId)
-                                .then(coin => {
-                                    let update_data = {};
-                                    if(category == "deposit") {
-                                        update_data = {
-                                            "total_mach": coin._doc.total_mach + mach
-                                        }
-                                    } else {
-                                        update_data = {
-                                            "total_mach": coin._doc.total_mach - mach
-                                        }
-                                    }
+            //         controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
+            //             .then(coinHistory => {
+            //                 controllerCoins.getByCoinId(country, user._doc.coinId)
+            //                     .then(coin => {
+            //                         let update_data = {};
+            //                         if(category == "deposit") {
+            //                             update_data = {
+            //                                 "total_mach": coin._doc.total_mach + mach
+            //                             }
+            //                         } else {
+            //                             update_data = {
+            //                                 "total_mach": coin._doc.total_mach - mach
+            //                             }
+            //                         }
                                     
-                                    controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
-                                        .then(u_coin => {
-                                            bitwebResponse.code = 200;
-                                            bitwebResponse.data = u_coin;
-                                            res.status(200).send(bitwebResponse.create())
-                                        }).catch(err => {
-                                            bitwebResponse.code = 500;
-                                            bitwebResponse.message = err;
-                                            res.status(500).send(bitwebResponse.create());
-                                        });
-                                }) .catch(err => {
-                                    bitwebResponse.code = 500;
-                                    bitwebResponse.message = err;
-                                    res.status(500).send(bitwebResponse.create());
-                                });
-                        }).catch(err => {
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = err;
-                            res.status(500).send(bitwebResponse.create());
-                        });
-                }).catch(err => {
-                bitwebResponse.code = 500;
-                bitwebResponse.message = err;
-                res.status(500).send(bitwebResponse.create());
-            });
+            //                         controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
+            //                             .then(u_coin => {
+            //                                 bitwebResponse.code = 200;
+            //                                 bitwebResponse.data = u_coin;
+            //                                 res.status(200).send(bitwebResponse.create())
+            //                             }).catch(err => {
+            //                                 bitwebResponse.code = 500;
+            //                                 bitwebResponse.message = err;
+            //                                 res.status(500).send(bitwebResponse.create());
+            //                             });
+            //                     }) .catch(err => {
+            //                         bitwebResponse.code = 500;
+            //                         bitwebResponse.message = err;
+            //                         res.status(500).send(bitwebResponse.create());
+            //                     });
+            //             }).catch(err => {
+            //                 bitwebResponse.code = 500;
+            //                 bitwebResponse.message = err;
+            //                 res.status(500).send(bitwebResponse.create());
+            //             });
+            //     }).catch(err => {
+            //     bitwebResponse.code = 500;
+            //     bitwebResponse.message = err;
+            //     res.status(500).send(bitwebResponse.create());
+            // });
         } else {
             console.log('error = ' + response.statusCode);
             bitwebResponse.code = 500;
@@ -1167,79 +1175,72 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
     let body = req.body;
     let userTag = req.session.userTag;
     console.log('bitberry deposit callback req body : ', body);
-    bitwebResponse.code = 200;
-    bitwebResponse.data = body;
-    res.status(200).send(bitwebResponse.create())
-    // if(req.session.userTag != undefined) {
-    //     let result = JSON.parse(body);
-    //     console.log('success : ', body);
 
-    //     controllerUsers.getByUserTag(country, userTag)
-    //         .then((user) => {
-    //             let option = {
-    //                 "category": category
-    //             }
+    if(req.session.userTag != undefined) {
+        let result = JSON.parse(body);
+        console.log('success : ', body);
+        let condition = {
+            "bitberry_user_id": result.from_user_id
+        }
+        controllerUsers.getByUserInfo(country, condition)
+            .then((user) => {
+                let option = {
+                    "category": result.category
+                }
                 
-    //             let amount = Math.abs(result.amount);
-    //             let mach = req.body.mach;
+                let amount = Math.abs(result.amount);
+                let mach = parseFloat(result.amount);
                 
-    //             let data = {
-    //                 "extType":"bitberry",
-    //                 "coinId": user._doc.coinId,
-    //                 "category": category,          
-    //                 "status": result.status,
-    //                 "currencyCode": result.currency_code,
-    //                 "amount": amount,
-    //                 "mach": mach,
-    //                 "regDate": util.formatDate(new Date().toString())  
-    //             }
+                let data = {
+                    "extType":"bitberry",
+                    "coinId": user._doc.coinId,
+                    "category": result.category,          
+                    "status": result.status,
+                    "currencyCode": result.currency_code,
+                    "amount": amount,
+                    "mach": mach,
+                    "regDate": util.formatDate(new Date().toString())  
+                }
 
-    //             controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
-    //                 .then(coinHistory => {
-    //                     controllerCoins.getByCoinId(country, user._doc.coinId)
-    //                         .then(coin => {
-    //                             let update_data = {};
-    //                             if(category == "deposit") {
-    //                                 update_data = {
-    //                                     "total_mach": coin._doc.total_mach + mach
-    //                                 }
-    //                             } else {
-    //                                 update_data = {
-    //                                     "total_mach": coin._doc.total_mach - mach
-    //                                 }
-    //                             }
+                controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
+                    .then(coinHistory => {
+                        controllerCoins.getByCoinId(country, user._doc.coinId)
+                            .then(coin => {
+                                let update_data = {
+                                    "total_mach": coin._doc.total_mach + mach
+                                }
                                 
-    //                             controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
-    //                                 .then(u_coin => {
-    //                                     bitwebResponse.code = 200;
-    //                                     bitwebResponse.data = u_coin;
-    //                                     res.status(200).send(bitwebResponse.create())
-    //                                 }).catch(err => {
-    //                                     bitwebResponse.code = 500;
-    //                                     bitwebResponse.message = err;
-    //                                     res.status(500).send(bitwebResponse.create());
-    //                                 });
-    //                         }) .catch(err => {
-    //                             bitwebResponse.code = 500;
-    //                             bitwebResponse.message = err;
-    //                             res.status(500).send(bitwebResponse.create());
-    //                         });
-    //                 }).catch(err => {
-    //                     bitwebResponse.code = 500;
-    //                     bitwebResponse.message = err;
-    //                     res.status(500).send(bitwebResponse.create());
-    //                 });
-    //         }).catch(err => {
-    //         bitwebResponse.code = 500;
-    //         bitwebResponse.message = err;
-    //         res.status(500).send(bitwebResponse.create());
-    //     });
-    // } else {
-    //     console.log('error => no user session ' + req);
-    //     bitwebResponse.code = 500;
-    //     bitwebResponse.message = "inital error";
-    //     res.status(500).send(bitwebResponse.create());
-    // }
+                                controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
+                                    .then(u_coin => {
+                                        bitwebResponse.code = 200;
+                                        bitwebResponse.data = u_coin;
+                                        res.status(200).send(bitwebResponse.create())
+                                    }).catch(err => {
+                                        bitwebResponse.code = 500;
+                                        bitwebResponse.message = err;
+                                        res.status(500).send(bitwebResponse.create());
+                                    });
+                            }) .catch(err => {
+                                bitwebResponse.code = 500;
+                                bitwebResponse.message = err;
+                                res.status(500).send(bitwebResponse.create());
+                            });
+                    }).catch(err => {
+                        bitwebResponse.code = 500;
+                        bitwebResponse.message = err;
+                        res.status(500).send(bitwebResponse.create());
+                    });
+            }).catch(err => {
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create());
+        });
+    } else {
+        console.log('error => no user session ' + req);
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "inital error";
+        res.status(500).send(bitwebResponse.create());
+    }
 });
 
 module.exports = router;

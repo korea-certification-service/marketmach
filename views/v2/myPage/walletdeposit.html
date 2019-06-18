@@ -231,7 +231,7 @@
                 data: JSON.stringify(data)
             }).done(function (success) {
                 //console.log(success.data);
-                if(success.data.code == undefined) {
+                if(success.data.code == "success") {
                     alert('MACH 입금이 정상적으로 처리되었습니다.');
                     // getCoin();
                     // getCoinHistory('deposit');
