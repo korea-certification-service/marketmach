@@ -609,14 +609,16 @@ function opposition(country, itemId) {
             .then(() => {
                 bitwebPointTrades.updateTradePointByItemId(itemId, body)
                     .then((result) => {
-                        bitwebItems.updateItemById(itemId, body)
-                            .then(() => {
-                                console.log('result=>', result);
-                                resolve(result);
-                            }).catch((err) => {
-                            console.log('err=>', err);
-                            reject(err);
-                        });
+                        if(result != null) {
+                            bitwebItems.updateItemById(itemId, body)
+                                .then(() => {
+                                    console.log('result=>', result);
+                                    resolve(result);
+                                }).catch((err) => {
+                                console.log('err=>', err);
+                                reject(err);
+                            });
+                        }
                     }).catch((err) => {
                     console.log('err=>', err);
                     reject(err);

@@ -216,7 +216,7 @@
             //     return;
             // }
         
-            var confirmYn = confirm('정말로 탈퇴하시겠습니까?');
+            var confirmYn = confirm('회원탈퇴하시면 지갑 잔액 및 포인트 잔액을 포함한 모든 정보가 삭제되고, 복구되지 않습니다. \n정말로 탈퇴하시겠습니까?');
             if(confirmYn) {
                 if(bitberry_token != undefined && bitberry_token != "") {
                     $.ajax({
@@ -324,8 +324,7 @@
                                 <button class="btn btn-default" id="withdraw">회원탈퇴</button>
                             </div>
                             <ul class="fcgr1">
-                                <li>※ 회원탈퇴 시 마켓마하의 회원정보 / 거래내역 / VTR기록이 삭제되고 모든 혜택이 소멸합니다.</li>
-                                <li>※ 회원탈퇴 시 나의 지갑 잔액에 존재하는 코인도 소멸됩니다. 비트베리에 출금 처리 후 회원탈퇴 하시기 바랍니다.</li>
+                                <li>※ 회원탈퇴 시 마켓마하의 회원정보/거래정보/지갑잔액/포인트잔액 등 모든 정보가 삭제되고 모든 혜택이 소멸합니다.</li>
                                 <li>※ 회원탈퇴 후 재가입시 기존 회원정보는 복구되지 않습니다.</li>
                             </ul>
                         </div>
