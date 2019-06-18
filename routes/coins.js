@@ -1176,7 +1176,7 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
     let userTag = req.session.userTag;
     console.log('bitberry deposit callback req body : ', body);
 
-    if(req.session.userTag != undefined) {
+    if(result.from_user_id != undefined) {
         let result = JSON.parse(body);
         console.log('success : ', body);
         let condition = {
