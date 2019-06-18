@@ -618,6 +618,9 @@ function opposition(country, itemId) {
                                 console.log('err=>', err);
                                 reject(err);
                             });
+                        } else {
+                            console.log('result=>', result);
+                            resolve(result);
                         }
                     }).catch((err) => {
                     console.log('err=>', err);
