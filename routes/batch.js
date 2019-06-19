@@ -45,39 +45,50 @@ router.post('/marketmach/airdrop', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     controllerUsers.getByUserTag(country, data.userTag)
     .then(user => {
-        let coinId = user._doc.coinId;        
-        controllerCoins.getByCoinId(country, coinId)
-        .then(coin => {
-            let reqData = {"total_mach": coin._doc.total_mach + data.airdropAmount}
-            controllerCoins.updateTotalCoin(country, coinId, reqData)
-            .then(updateCoin => {
-                let historyData = {
-                    "extType" : "mach",
-                    "coinId" : coinId,
-                    "category" : "event-airdrop",
-                    "status" : "success",
-                    "currencyCode" : "MACH",
-                    "amount" : data.airdropAmount,
-                    "mach" : data.airdropAmount,
-                    "regDate" : util.formatDate(new Date().toString())
-                };
-                controllerCoinHistorys.createData(country, historyData);
-                bitwebResponse.code = 200;
-                bitwebResponse.data = updateCoin;
-                let jsonResult = bitwebResponse.create();
-                res.status(200).send(jsonResult)
+        if(user != null) {
+            let coinId = user._doc.coinId;        
+            controllerCoins.getByCoinId(country, coinId)
+            .then(coin => {
+                let reqData = {"total_mach": coin._doc.total_mach + data.airdropAmount}
+                controllerCoins.updateTotalCoin(country, coinId, reqData)
+                .then(updateCoin => {
+                    let historyData = {
+                        "extType" : "mach",
+                        "coinId" : coinId,
+                        "category" : "event-airdrop",
+                        "status" : "success",
+                        "currencyCode" : "MACH",
+                        "amount" : data.airdropAmount,
+                        "mach" : data.airdropAmount,
+                        "regDate" : util.formatDate(new Date().toString())
+                    };
+                    controllerCoinHistorys.createData(country, historyData);
+                    bitwebResponse.code = 200;
+                    updateCoin._doc['successYn'] = true;
+                    bitwebResponse.data = updateCoin;
+                    let jsonResult = bitwebResponse.create();
+                    res.status(200).send(jsonResult)
+                }).catch((err) => {
+                    console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                })
             }).catch((err) => {
                 console.error('err=>', err)
                 bitwebResponse.code = 500;
                 bitwebResponse.message = err;
                 res.status(500).send(bitwebResponse.create())
             })
-        }).catch((err) => {
-            console.error('err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
+        } else {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "successYn": false,
+                "msg":"no exist user."
+            };
+            let jsonResult = bitwebResponse.create();
+            res.status(200).send(jsonResult)
+        }
     }).catch((err) => {
         console.error('err=>', err)
         bitwebResponse.code = 500;
