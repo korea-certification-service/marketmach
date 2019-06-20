@@ -108,6 +108,7 @@
                 var point = numberWithCommas(data[i].point);
                 var status = getStatus(data[i].status);
                 var trade_type = replaceType(data[i].trade_type);
+                var replyCount = data[i].replyCount;
                
                 var money = point + 'Point';
                 if("<%= useBlockchain %>" == "Y") {
@@ -117,6 +118,7 @@
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
                                 '<td>' + 
                                     '<div class="ellipse"> ' + title + 
+                                        '<span>('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 
