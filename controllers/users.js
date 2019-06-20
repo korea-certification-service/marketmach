@@ -5,6 +5,30 @@ var crypto = require('crypto');
 var util = require('../utils/util');
 const dbconfig = require('../config/dbconfig');
 
+function count(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebUsers.count(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+                reject(err)
+        })
+    })
+}
+
+function list(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebUsers.list(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+                reject(err)
+        })
+    })
+}
+
 function get(req) {
     return new Promise((resolve, reject) => {
 
@@ -433,6 +457,8 @@ function getWithdrawByPhone(country, phone) {
     })
 }
 
+exports.count = count;
+exports.list = list;
 exports.get = get;
 exports.getById = getById;
 exports.getByIds = getByIds;
