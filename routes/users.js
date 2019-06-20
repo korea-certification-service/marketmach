@@ -19,6 +19,39 @@ var CryptoJS = require("crypto-js");
 var md5 = require('md5');
 let networks = dbconfig.testnet.network == "testnet" ? bitcore.Networks.testnet : bitcore.Networks.mainnet;
 
+router.post('/list', function (req, res, next) {
+    let country = dbconfig.country;
+    let condition = {};
+    if(req.body.length > 0) {
+        condition = req.body;
+    }
+    let bitwebResponse = new BitwebResponse();
+    
+    controllerUsers.count(country, condition)
+    .then(count => {
+        controllerUsers.list(country, condition)
+        .then(users => {
+            let result = {
+                "count": count,
+                "list": users
+            }
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
+    }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
 router.get('/:userId', function (req, res, next) {
     // res.send('respond with a resource');
 
