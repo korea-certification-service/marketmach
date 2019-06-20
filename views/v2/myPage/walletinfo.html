@@ -21,6 +21,7 @@
             });
 
             getCoin();
+            getTotalEscrow();
             getCoinHistory('event');
         });
 
@@ -34,6 +35,19 @@
                 } else {
                     $("#mach").html("0<span>MACH</span>");
                 }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getTotalEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/total_escrow/mach"
+            }).done(function (success) {
+                //buy_total_escrow: 바로구매 에스크로 출금한 총 금액
+                //sell_total_escrow: 에스크로 거래 완료 시 받을 총 금액
+                console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
             });
