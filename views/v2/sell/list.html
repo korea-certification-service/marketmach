@@ -22,22 +22,26 @@
         var status = "<%= status %>";
 
         $(document).ready(function () {
-            resetSearchFilter(".search_filter");
+            //resetSearchFilter(".search_filter");
 
             $("#list").html('');
             loadGameList();
+            getSearchValue();
             search();
             
             $('#btn_search').click(function() {
+                getSearchValue();
+                search();
+            });
+            
+            function getSearchValue(){
                 $("#list").html('');
                 pageIdx = 0;
                 type = $('[name=item_type]:checked').val();
                 title = $('#item_title').val();
                 status = $('[name=status]:checked').val();
+            }
 
-                search();
-            });
-            
             $('#item_title').on("keydown", function(e) {
                 if(e.keyCode === 13){
                     $('#btn_search').trigger('click');

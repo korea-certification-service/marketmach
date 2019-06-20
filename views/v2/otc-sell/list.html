@@ -19,19 +19,23 @@
         var status = "<%= status %>";
 
         $(document).ready(function () {
-            resetSearchFilter(".search_filter");
+            //resetSearchFilter(".search_filter");
 
             $("#list").html('');
+            getSearchValue();
             search();
             
             $('#btn_search').click(function() {
+                getSearchValue();
+                search();
+            });
+
+            function getSearchValue(){
                 $("#list").html('');
                 pageIdx = 0;
                 title = $('#item_title').val();
                 status = $('[name=status]:checked').val();
-
-                search();
-            });
+            }
 
             $('#item_title').on("keydown", function(e) {
                 if(e.keyCode === 13){
