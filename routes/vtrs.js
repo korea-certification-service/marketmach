@@ -4,6 +4,7 @@ var controllerVtrs = require('../controllers/vtrs')
 var controllerPointTrades = require('../controllers/pointTrades')
 var controllerItems = require('../controllers/items')
 var controllerCoins = require('../controllers/coins')
+var controllerCoinHistorys = require('../controllers/coinHistorys')
 var BitwebResponse = require('../utils/BitwebResponse')
 var dbconfig = require('../config/dbconfig');
 const smsController = require('../controllers/sms')
@@ -644,6 +645,19 @@ router.post('/buynow', function (req, res, next) {
                                                                                                 //sms 전송
                                                                                                 smsController.sendBuynow(country, fromUserTag, targetUserTag)
                                                                                                 .then(() => {
+                                                                                                    //coin history 저장
+                                                                                                    let coinData = {
+                                                                                                        "extType" : "mach",
+                                                                                                        "coinId" : coinId,
+                                                                                                        "category" : "withdraw",
+                                                                                                        "status" : "success",
+                                                                                                        "currencyCode" : "MACH",
+                                                                                                        "amount" : req.body.mach,
+                                                                                                        "mach" : req.body.mach,
+                                                                                                        "regDate" : util.formatDate(new Date().toString())
+                                                                                                    }
+                                                                                                    controllerCoinHistorys.createData(country, coinData);
+
                                                                                                     //바로구매 후 페르소나에 동기와 요청
                                                                                                     let seller_userTag = req.params.userTag;
                                                                                                     if(result._doc.item.trade_type == 'sell') {

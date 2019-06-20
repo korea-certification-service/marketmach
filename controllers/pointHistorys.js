@@ -102,6 +102,20 @@ function createPointHistory(country, pointId, itemId, body) {
 
 }
 
+function createPointHistoryBody(country, body) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebPointHistorys.createPointHistory(body))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+
+}
+
 function update(req) {
     return new Promise((resolve , reject) => {
 
@@ -159,3 +173,4 @@ exports.updatePointHistoryStatusById = updatePointHistoryStatusById;
 exports.createPointHistory = createPointHistory
 exports.getByItemId = getByItemId;
 exports.getPointHistorys = getPointHistorys;
+exports.createPointHistoryBody = createPointHistoryBody;

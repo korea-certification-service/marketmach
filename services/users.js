@@ -2,6 +2,36 @@ var Users = require('../libs/users');
 var WithdrawUsers = require('../libs/withdrawUsers');
 var BlackLists = require('../libs/blacklists');
 
+function count (condition) {
+    return new Promise((resolve, reject) => {
+        Users.count(
+            condition,
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                resolve(user)
+            }
+        )
+    })
+}
+
+function list (condition) {
+    return new Promise((resolve, reject) => {
+        Users.find(
+            condition,
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                resolve(user)
+            }
+        )
+    })
+}
+
 function createUser (data) {
     return new Promise((resolve, reject) => {
         console.log(data)
@@ -347,7 +377,8 @@ function getBlackList (condition) {
     })
 }
 
-
+exports.count = count;
+exports.list = list;
 exports.createUser = createUser;
 exports.getUserById = getUserById;
 exports.getUserByIds = getUserByIds;

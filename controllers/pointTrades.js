@@ -246,6 +246,20 @@ function updateStatus(req) {
                                                                 
                                                                 bitwebVtrs.createEscrow(body3)
                                                                     .then(() => {
+                                                                        //point history 저장
+                                                                        let pointData = {
+                                                                            type: "deposit",
+                                                                            extType: "mach",
+                                                                            pointId: pointId,
+                                                                            status: true,
+                                                                            amountCurrency: "point",
+                                                                            amount: point,
+                                                                            point: point,
+                                                                            fee: discountPoint,
+                                                                            regDate: util.formatDate(new Date().toString())
+                                                                        }
+                                                                        bitwebPointHistorys.createPointHistory(pointData);
+
                                                                         console.log('result=>', result);
                                                                         resolve(result);
                                                                     }).catch((err) => {
@@ -358,6 +372,20 @@ function remove(req) {
                                                             .then(() => bitwebItems.updateItemById(itemId, body))
                                                             .then(() => bitwebPointHistorys.deletePointHistoryByItemId(itemId))
                                                             .then((result) => {
+                                                                //point history 저장
+                                                                let pointData = {
+                                                                    type: "deposit",
+                                                                    extType: "mach",
+                                                                    pointId: pointId,
+                                                                    status: true,
+                                                                    amountCurrency: "point",
+                                                                    amount: item._doc.total_point,
+                                                                    point: item._doc.total_point,
+                                                                    fee: 0,
+                                                                    regDate: util.formatDate(new Date().toString())
+                                                                }
+                                                                bitwebPointHistorys.createPointHistory(pointData);
+
                                                                 console.log('result=>', result);
                                                                 item['_doc']['resultType'] = 1;
                                                                 resolve(item)
@@ -501,6 +529,20 @@ function deleteByItemId(country, itemId, userId) {
 
                                                                             bitwebVtrs.createEscrow(body3)
                                                                                 .then(() => {
+                                                                                    //point history 저장
+                                                                                    let pointData = {
+                                                                                        type: "deposit",
+                                                                                        extType: "mach",
+                                                                                        pointId: pointId,
+                                                                                        status: true,
+                                                                                        amountCurrency: "point",
+                                                                                        amount: pointTrade._doc.item.total_point,
+                                                                                        point: pointTrade._doc.item.total_point,
+                                                                                        fee: 0,
+                                                                                        regDate: util.formatDate(new Date().toString())
+                                                                                    }
+                                                                                    bitwebPointHistorys.createPointHistory(pointData);
+                                                                                    
                                                                                     console.log('cancel pointTrade : ', pointTrade);                                                                                    
                                                                                     let result = {
                                                                                         "code": 31,

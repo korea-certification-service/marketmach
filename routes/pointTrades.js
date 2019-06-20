@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var controllerVtrs = require('../controllers/vtrs')
 var controllerPoints = require('../controllers/points')
+var controllerPointHistorys = require('../controllers/pointHistorys')
 var controllerTradePoints = require('../controllers/pointTrades');
 var BitwebResponse = require('../utils/BitwebResponse');
 var dbconfig = require('../config/dbconfig');
@@ -290,6 +291,20 @@ router.post('/buynow', function (req, res, next) {
 
                                                                                         controllerVtrs.createEscrow(country, body3)
                                                                                             .then(() => {
+                                                                                                //point history 저장
+                                                                                                let pointData = {
+                                                                                                    type: "withdraw",
+                                                                                                    extType: "mach",
+                                                                                                    pointId: pointId,
+                                                                                                    status: true,
+                                                                                                    amountCurrency: "point",
+                                                                                                    amount: req.body.point,
+                                                                                                    point: req.body.point,
+                                                                                                    fee: 0,
+                                                                                                    regDate: util.formatDate(new Date().toString())
+                                                                                                }
+                                                                                                controllerPointHistorys.createPointHistoryBody(country, pointData);
+
                                                                                                 //sms 전송
                                                                                                 smsController.sendBuynow(country, fromUserTag, targetUserTag)
                                                                                                 .then(() => {
