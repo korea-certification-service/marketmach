@@ -546,6 +546,22 @@ function getItemCountByUserTag(userTag) {
     });
 }
 
+function getReplys (itemIds) {
+    return new Promise((resolve, reject) => {
+        ReplyItems.find(
+            {"itemId": itemIds}
+        )
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            console.log('getReplies done: ' + list)
+            resolve(list)
+        })
+    })
+}
+
 function getReplies (itemId) {
     return new Promise((resolve, reject) => {
         ReplyItems.find(
@@ -652,3 +668,4 @@ exports.addReply = addReply;
 exports.updateReply = updateReply;
 exports.deleteReply = deleteReply;
 exports.updateItem = updateItem;
+exports.getReplys = getReplys;

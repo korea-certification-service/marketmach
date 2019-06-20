@@ -72,24 +72,45 @@ router.get('/', function (req, res, next) {
         .then((count) => {
             controllerItems.getItemByRequired(country, data)
                 .then(result => {
-                    let resultSet = {
-                        "count": count,
-                        "list": result
+                    let items = [];
+                    for(var i in result) {
+                        items.push(result[i]._doc._id);
                     }
+                    controllerItems.getReplys(country,items)
+                    .then(replys => {
+                        for(var i in result) {
+                            result[i]._doc['replyCount'] = 0;
+                            for(var j in replys) {
+                                if(result[i]._doc._id.toString() == replys[j]._doc.itemId) {
+                                    result[i]._doc['replyCount']++;
+                                }
+                            }
+                        }
 
-                    console.log('test=>', resultSet)
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = resultSet;
-
-                    let jsonResult = bitwebResponse.create();
-
-                    if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
-                    if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
-
-                    jsonResult['pageIdx'] = data.pageIdx;
-                    jsonResult['perPage'] = data.perPage;
-
-                    res.status(200).send(jsonResult)
+                        let resultSet = {
+                            "count": count,
+                            "list": result
+                        }
+    
+                        console.log('test=>', resultSet)
+                        bitwebResponse.code = 200;
+                        bitwebResponse.data = resultSet;
+    
+                        let jsonResult = bitwebResponse.create();
+    
+                        if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
+                        if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
+    
+                        jsonResult['pageIdx'] = data.pageIdx;
+                        jsonResult['perPage'] = data.perPage;
+    
+                        res.status(200).send(jsonResult);
+                    }).catch((err) => {
+                        console.error('err=>', err)
+                        bitwebResponse.code = 500;
+                        bitwebResponse.message = err;
+                        res.status(500).send(bitwebResponse.create())
+                    })
                 }).catch((err) => {
                 console.error('err=>', err)
                 bitwebResponse.code = 500;
