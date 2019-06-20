@@ -11,14 +11,14 @@
         var price = 0;
         var fee = parseFloat("<%=fee%>");
         //환율
-        var rate = 1000;
+        var rate = 0;
         
         $(document).ready(function() {
             $('[name=amount]').on('keyup',function(e) {
-                if($('[name=amount]').val() != "") {
+                // if($('[name=amount]').val() != "") {
                     $('#total_amount').text(total_point + parseInt($('[name=amount]').val()));
                     calculate();
-                }
+                // }
             })
 
             //환율 조회
@@ -39,6 +39,9 @@
             var $dim = $(".dim_all_area");
             */
             $("#confirmDeposit").on("click", function() {
+                if(rate == 0 ) {
+                    return alert("환율을 조회중입니다 잠시만 기다려주세요...");
+                }
                 reqDeposit();
             });
 
