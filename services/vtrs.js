@@ -420,6 +420,20 @@ function getCancels(params, data) {
     })
 }
 
+function getTradingItems(condition) {
+    return new Promise((resolve, reject) => {
+        Vtrs.find(condition)
+            .sort({regDate:'desc'})
+            .exec(function(err, cancels) {
+                if (err) {
+                    reject(err)
+                }
+                resolve(cancels)
+            })
+    })
+}
+
+
 exports.createVtr = createVtr;
 exports.createVtrTemp = createVtrTemp;
 exports.getVtrTemp = getVtrTemp;
@@ -444,3 +458,4 @@ exports.createCancelHistory = createCancelHistory;
 exports.getCountCancels = getCountCancels;
 exports.getCancels = getCancels;
 exports.getEscrow = getEscrow;
+exports.getTradingItems = getTradingItems;

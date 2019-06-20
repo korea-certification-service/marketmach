@@ -21,6 +21,7 @@
             });
 
             getCoin();
+            getTotalEscrow();
             getCoinHistory('event');
         });
 
@@ -34,6 +35,17 @@
                 } else {
                     $("#mach").html("0<span>MACH</span>");
                 }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getTotalEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/total_escrow/mach"
+            }).done(function (success) {
+                console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
             });
