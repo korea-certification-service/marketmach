@@ -532,11 +532,11 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     let result = !connection.write(JSON.stringify(reqData));
     if(result) {
         bitwebResponse.code = 200;
-        bitwebResponse.data = result1;
+        bitwebResponse.data = result;
         res.status(200).send(bitwebResponse.create())
     } else {
         bitwebResponse.code = 500;
-        bitwebResponse.message = err;
+        bitwebResponse.message = result;
         res.status(500).send(bitwebResponse.create())
     }
 });
