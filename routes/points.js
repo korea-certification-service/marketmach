@@ -517,10 +517,10 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
         "QueryGiftQty":1,
         "PinNo":cryptojs.TripleDES.encrypt("5746606380005303",dbconfig.happymoney.onlineId),
         "PinDate":cryptojs.TripleDES.encrypt("20190422",dbconfig.happymoney.onlineId),
-        "BranchCode": "",
+        "BranchCode": "0",
         "SalesDate": today.substr(0,7),
-        "PosNo": "",
-        "InputKind":""
+        "PosNo": "0",
+        "InputKind":"0"
 
     }
     //상품권 조회
