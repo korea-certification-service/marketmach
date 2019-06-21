@@ -432,7 +432,10 @@ router.post('/happymoney/payment', function(req, res, next) {
             
             if (!result.success) {
                 bitwebResponse.code = 200;
-                bitwebResponse.data = result.error;
+                bitwebResponse.data = {
+                    "code":"Fail",
+                    "msg":"해피캐시 결제 중 문제가 발생 하였습니다. 문제가 계속 발생될 경우 해피머니 관리자에 문의하시기 바랍니다."
+                };
                 res.status(200).send(bitwebResponse.create());
                 return;
             }
