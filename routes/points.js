@@ -428,9 +428,9 @@ router.post('/happymoney/payment', function(req, res, next) {
             json: true}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             let result = body;
-            console.log('success : ', result);
+            console.log('success : ', body);
             
-            if (!body.success) {
+            if (!result.success) {
                 bitwebResponse.code = 200;
                 bitwebResponse.data = result.error;
                 res.status(200).send(bitwebResponse.create());
@@ -440,10 +440,10 @@ router.post('/happymoney/payment', function(req, res, next) {
             // TO-DO : 해피캐쉬 결제 이후 DB에 저장할 것
             let country = dbconfig.country;
             let pointId = req.body.pointId;
-            result['pointId'] = req.body.pointId;
-            result['type'] = req.body.type;
-            result['extType'] = req.body.extType;
-            result['amountCurrency'] = req.body.amountCurrency;
+            result['result']['pointId'] = req.body.pointId;
+            result['result']['type'] = req.body.type;
+            result['result']['extType'] = req.body.extType;
+            result['result']['amountCurrency'] = req.body.amountCurrency;
 
             controllerPoints.updateHappymoneyPoint(country, pointId, result)
                 .then((result1) => {
