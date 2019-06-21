@@ -15,7 +15,7 @@
 .module_comment .reply_list > ul > li{padding: 10px 20px; border-top: 1px solid #000;}
 .module_comment .reply_list > ul > li:first-child{border-top: none;}
 .module_comment .reply_list li:hover {background-color: #FFF5D9;}
-.module_comment .reply_list li {padding: 15px;}
+.module_comment .reply_list li {padding: 15px; text-align: center; }
 
 .rep_common {text-align: left;}
 .rep_common > dt{display: flex; display: -ms-flexbox; margin-bottom: 10px;}
