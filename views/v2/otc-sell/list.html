@@ -113,6 +113,7 @@
                 var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
+                var replyCount = data[i].replyCount;
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
                     // prime 상품의 경우: <div class="ico_special ico_prime"></div>
@@ -132,6 +133,7 @@
                 }
                 
                 strDOM +=              '<div class="ellipse"> ' + title + 
+                                            '<span>('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 

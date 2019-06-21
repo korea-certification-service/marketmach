@@ -15,6 +15,21 @@ function createTradePoint (data) {
     })
 }
 
+function getTradingItems (condition) {
+    return new Promise((resolve, reject) => {
+        TradePoints.find(
+            condition,
+            function(err, tradePoint) {
+                if (err) {
+                    reject(err)
+                }
+                resolve(tradePoint)
+            }
+        )
+    })
+}
+
+
 function getItemIdsByUserId(data) {
     if (data['pageIdx'] == undefined) data['pageIdx'] = 0
     if (data['perPage'] == undefined) data['perPage'] = 10
@@ -224,6 +239,7 @@ function getItemsByUserId(userId,option) {
     })
 }
 
+exports.getTradingItems = getTradingItems;
 exports.createTradePoint = createTradePoint;
 exports.getTradePointById = getTradePointById;
 exports.getTradePointByIdAndUserId = getTradePointByIdAndUserId;

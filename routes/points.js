@@ -427,7 +427,7 @@ router.post('/happymoney/payment', function(req, res, next) {
             body: param,
             json: true}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            let result = body.result;
+            let result = body;
             console.log('success : ', result);
             
             if (!body.success) {

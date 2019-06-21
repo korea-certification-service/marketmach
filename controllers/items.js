@@ -392,6 +392,18 @@ function updateItem(country, condition, reqData) {
     })
 }
 
+function getReplys(country, itemIds) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebItems.getReplys(itemIds))
+            .then((replies) => {
+                resolve(replies)
+            }).catch((err) => {
+                reject(err)
+            })
+    })
+}
+
 function getReply(country, req) {
     return new Promise((resolve, reject) => {
 
@@ -481,3 +493,4 @@ exports.addReply = addReply;
 exports.modifyReply = modifyReply;
 exports.deleteReply = deleteReply;
 exports.updateItem = updateItem;
+exports.getReplys = getReplys;

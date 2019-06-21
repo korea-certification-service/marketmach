@@ -9,7 +9,8 @@
 
         $(document).ready(function() {
             if(bitberry_token != undefined && bitberry_token != "") {
-                $('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
             }
 
             $('#deposit').on('click', function(){
@@ -21,6 +22,7 @@
             });
 
             getCoin();
+            getTotalEscrow();
             getCoinHistory('event');
         });
 
@@ -31,9 +33,23 @@
             }).done(function (success) {
                 if (success.data.total_mach != null) {
                     $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                    $("#machTotal").text(success.data.total_mach);
                 } else {
                     $("#mach").html("0<span>MACH</span>");
                 }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getTotalEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/total_escrow/mach"
+            }).done(function (success) {
+                $("#machSell").text(success.data.sell_total_escrow);
+                $("#machBuy").text(success.data.buy_total_escrow);
+                console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -185,62 +201,68 @@
                     <!-- mypage -->
                     <section class="mypage_sec">
                         <h1 class="tit_mypage">지갑관리 <span>나의 지갑 정보</span></h1>
-                        <div class="bitberry_switch_box">
-                            <div class="bitberry_switch">
-                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
-                                <a href="/myPages/wallet/connect">
-                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
-                                    <p>OFF</p>
-                                </a>
+                        <!--
+                            <div class="bitberry_switch_box">
+                                <div class="bitberry_switch">
+                                    <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
+                                    <a href="/myPages/wallet/connect">
+                                        <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                        <p>OFF</p>
+                                    </a>
+                                </div>
+                                <em>나의지갑 잔액</em>
+                                <p class="fc3" id="mach">100 <span>MACH</span></p>
                             </div>
-                            <em>나의지갑 잔액</em>
-                            <p class="fc3" id="mach">100 <span>MACH</span></p>
+                        -->
+                            
+                        <div class="bitberry_grey_box">
+                            <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
                         </div>
+                        <h2 class="tit_mypage dot_tit">입출금현황 <span class="escrow_side_tit">* <img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> : 에스크로</span></h2>
+                        <div class="table_wrap">
+                            <!-- td_grey 빼면 회색 사라짐 -->
+                            <table class="table_total_escrow">
+                                <colgroup class="colgroup_total_escorw">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>코인</th>
+                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="first_tr">
+                                        <th>나의지갑잔액</th>
+                                        <td id="machTotal"></td>
+                                        <td class="td_grey"></td>
+                                        <td class="td_grey"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 입금예정</th>
+                                        <td id="machSell"></td>
+                                        <td class="td_grey"></td>
+                                        <td class="td_grey"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 출금액</th>
+                                        <td id="machBuy"></td>
+                                        <td class="td_grey"></td>
+                                        <td class="td_grey"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="btn_align_c mb50">
                             <button class="btn bgc1" id="deposit">MACH 입금</button>
                             <button class="btn bgc3" id="withdraw">MACH 출금</button>
                         </div>
-
-                        <!-- <div class="table_wrap table-responsive">
-                            <table class="table_wallet table">
-                                <colgroup class="colgroup_">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">코인</th>
-                                        <th>마하</th>
-                                        <th>비트코인</th>
-                                        <th>이더리움</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th colspan="2">나의지갑잔액</th>
-                                        <td>1111</td>
-                                        <td>2222</td>
-                                        <td>3333</td>
-                                    </tr>
-                                    <tr>
-                                        <th rowspan="2">에<br>스<br>크<br>로</th>
-                                        <th>입금예정</th>
-                                        <td>1111</td>
-                                        <td>2222</td>
-                                        <td>3333</td>
-                                    </tr>
-                                    <tr>
-                                        <th>출금액</th>
-                                        <td>1111</td>
-                                        <td>2222</td>
-                                        <td>3333</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div> -->
 
                         <ul class="tab_board ul_li3n cf">
                             <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('event');">입금 내역</a></li>

@@ -8,6 +8,18 @@ var bitwebUsers = require('../services/users');
 var bitwebItems = require('../services/items');
 var bitwebPointHistorys = require('../services/pointHistorys');
 
+function getTradingItems(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebPointTrades.getTradingItems(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function get(req) {
     return new Promise((resolve, reject) => {
 
@@ -676,6 +688,7 @@ function opposition(country, itemId) {
     });
 }
 
+exports.getTradingItems = getTradingItems;
 exports.get = get;
 exports.getItemIdsByUserId = getItemIdsByUserId;
 exports.getTradePointById = getTradePointById;

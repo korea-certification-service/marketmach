@@ -1280,6 +1280,18 @@ function getCancels(country, params, option) {
     })
 }
 
+function getTradingItems(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebVtrs.getTradingItems(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 exports.get = get;
 exports.getByVtrId = getByVtrId;
 exports.getItemIdsByUserId = getItemIdsByUserId;
@@ -1307,3 +1319,4 @@ exports.getItemsByUserId = getItemsByUserId;
 exports.createEscrow = createEscrow;
 exports.getCountCancels = getCountCancels; 
 exports.getCancels = getCancels; 
+exports.getTradingItems = getTradingItems;
