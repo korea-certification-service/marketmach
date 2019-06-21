@@ -501,9 +501,9 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
 
     //전문 test
     let today = util.formatDate2(new Date().toString());
-    let MerchantPwd = cryptojs.TripleDES.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId);
-    let PinNo = cryptojs.TripleDES.encrypt("5746606380005303",dbconfig.happymoney.onlineId);
-    let PinDate = cryptojs.TripleDES.encrypt("20190422",dbconfig.happymoney.onlineId)
+    let MerchantPwd = cryptojs.TripleDES.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId).toString();
+    let PinNo = cryptojs.TripleDES.encrypt("5746606380005303",dbconfig.happymoney.onlineId).toString();
+    let PinDate = cryptojs.TripleDES.encrypt("20190422",dbconfig.happymoney.onlineId).toString();
     
     let reqData = {
         "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
