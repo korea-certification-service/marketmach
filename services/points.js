@@ -15,6 +15,21 @@ function createPoint (data) {
     })
 }
 
+function list (condition) {
+    return new Promise((resolve, reject) => {
+        Points.find(
+            condition,
+            function(err, point) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                resolve(point)
+            }
+        )
+    })
+}
+
 function getPointById (id) {
     return new Promise((resolve, reject) => {
         Points.findOne(
@@ -142,6 +157,7 @@ function deletePointById (id) {
     })
 }
 
+exports.list = list;
 exports.createPoint = createPoint;
 exports.getPointById = getPointById;
 exports.getPointByIdAndPassword = getPointByIdAndPassword;
