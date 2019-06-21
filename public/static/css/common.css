@@ -119,7 +119,7 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 .header .nav > .l_menu > li > .depth2 > li{ line-height: 48px;}
 .header .nav > .l_menu > li > button{background: none; color: #ffffff; font-size: 15px; font-weight: bold; border: none;}
 .header .nav > .c_menu{float: left; width: calc(100% - 360px); border: 1px solid #c1c1c1;}
-.header .nav > .c_menu > li{position: relative; float: left; width: 16.33%; line-height: 48px; text-align: center;}
+.header .nav > .c_menu > li{position: relative; float: left; width: 20%; line-height: 48px; text-align: center;}
 .header .nav > .c_menu > li > button{background: none; color: #1e2560; font-size: 15px; font-weight: bold; border: none;}
 .header .nav > .c_menu > li > a{font-size: 15px; font-weight: bold;}
 .header .nav > .r_menu{float: left; width: 150px; position: relative; /*background: url(/static/img/main/ico_notice_bell.png) 8px 50% no-repeat;*/ background-size: 25px 32px;}

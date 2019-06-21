@@ -31,13 +31,42 @@ router.post('/list', function (req, res, next) {
     .then(count => {
         controllerUsers.list(country, condition)
         .then(users => {
-            let result = {
-                "count": count,
-                "list": users
-            }
-            bitwebResponse.code = 200;
-            bitwebResponse.data = result;
-            res.status(200).send(bitwebResponse.create())
+            controllerCoins.list(country,condition) 
+            .then(coins => {
+                controllerPoints.list(country, condition)
+                .then(points => {
+                    for(var i in users) {
+                        for(var j in coins) {
+                            if(users[i]._doc.coinId.toString() == coins[j]._doc._id.toString()) {
+                                users[i]._doc['coinInfo'] = coins[j];
+                            }
+                        }
+
+                        for(var k in points) {
+                            if(users[i]._doc.pointId.toString() == points[k]._doc._id.toString()) {
+                                users[i]._doc['pointInfo'] = points[k];
+                            }
+                        }
+                    }
+                    let result = {
+                        "count": count,
+                        "list": users
+                    }
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = result;
+                    res.status(200).send(bitwebResponse.create())
+                }).catch((err) => {
+                    console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                })
+            }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
         }).catch((err) => {
             console.error('err=>', err)
             bitwebResponse.code = 500;

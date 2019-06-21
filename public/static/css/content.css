@@ -285,6 +285,7 @@
 .paging_wrap li a.on{font-weight: bold; color: #0a73b8}
 
 /** 지갑관리 **/
+/* 이전 비트베리 스위치 박스 */
 .bitberry_switch_box{position: relative;margin: 0 auto 30px; height: 150px; text-align: center; background: #f6f6f6; border-top: 3px solid #a8a8a8; border-bottom: 2px solid #dee2e6;}
 .bitberry_switch_box .bitberry_switch{position: absolute; top: 20px; left: 6%; width: 80px;}
 .bitberry_switch_box .bitberry_switch p{font-weight: bold; color: #333333;}
@@ -294,6 +295,22 @@
 .bitberry_switch_box > p > span{font-size: 14px;}
 .bitberry_switch_box > strong{display: block; margin-top: 4px; font-size: 16px;}
 .bitberry_switch_box > strong > span{font-size: 12px;}
+/* 변경된 비트베리 스위치 박스 */
+.bitberry_grey_box{margin-bottom: 20px; padding: 8px 0; text-align: center; background: #f5f5f5;}
+.bitberry_grey_box > img{height: 20px;}
+.bitberry_grey_box > em{margin-left: 5px; font-weight: bold; vertical-align: sub;}
+.escrow_side_tit{float: right; font-size: 12px;color: #000000;}
+.escrow_side_tit img{width: 12px;}
+.table_total_escrow_wrap{position: relative;}
+.table_total_escrow_wrap::after{position: absolute; bottom: 0; right: 0; display: block; content: '오픈 예정입니다'; clear:both; width: 56%; height: 210px; line-height: 210px; font-size: 20px; text-align: center; color: #ffffff; background-color: rgba(0, 0, 0, 0.8);}
+.table_total_escrow{width: 100%; border: 1px solid #000038;}
+.table_total_escrow th{text-align: center; border: 1px solid #bfbfbf;}
+.table_total_escrow td{text-align: center; border: 1px solid #bfbfbf;}
+.table_total_escrow .td_grey{background: #bfbfbf !important;}
+.table_total_escrow thead th{height: 50px;  border-bottom: 5px solid #000038;}
+.table_total_escrow thead th img{width: 30px;}
+.table_total_escrow tbody td{height: 70px; }
+.table_total_escrow tbody .first_tr *{background-color: #e8f2fc; }
 .tab_board{}
 .tab_board li{float: left; width: 50%; height: 40px; line-height: 40px; text-align: center; border-bottom: 2px solid #a8a8a8;}
 .tab_board li.on{border: 2px solid #a8a8a8; border-bottom: none; background: #f6f6f6;}

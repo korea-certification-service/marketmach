@@ -120,6 +120,11 @@
 .table .colgroup_walletinfo .col4_2{width: 510px;}
 .table .colgroup_walletinfo .col4_3{width: 80px;}
 .table .colgroup_walletinfo .col4_4{width: 150px;}
+
+.colgroup_total_escorw .col4_1{width: 16%;}
+.colgroup_total_escorw .col4_2{width: 28%;}
+.colgroup_total_escorw .col4_3{width: 28%;}
+.colgroup_total_escorw .col4_4{width: 28%;}
 /*** 지갑관리 - MACH 입금 / MACH 출금 ***/
 /* 입금하기 / 출금하기 => 공통 */
 .table_account .col2_1{width: 130px;}

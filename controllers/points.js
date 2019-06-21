@@ -6,6 +6,18 @@ var bitwebFeeHistory = require('../services/feeHistorys');
 var dbconfig = require('../config/dbconfig');
 var util = require('../utils/util')
 
+function list(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebPoints.list(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+} 
+
 function get(req) {
     return new Promise((resolve, reject) => {
 
@@ -343,6 +355,7 @@ function updateHappymoneyPoint(country, id, body) {
     })
 }
 
+exports.list = list;
 exports.get = get;
 exports.getByPointId = getByPointId;
 exports.create = create;

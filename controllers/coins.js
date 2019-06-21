@@ -3,6 +3,18 @@ var db = require('../utils/db');
 var bitwebCoins = require('../services/coins');
 var util = require('../utils/util')
 
+function list(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoins.list(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+} 
+
 function get(req) {
     return new Promise((resolve, reject) => {
 
@@ -228,6 +240,7 @@ function remove(req) {
 
 }
 
+exports.list = list;
 exports.get = get;
 exports.getByCoinId = getByCoinId;
 exports.create = create;

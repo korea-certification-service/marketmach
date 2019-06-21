@@ -15,21 +15,20 @@ function createCoin (data) {
     })
 }
 
-// function getCoinById (id) {
-//     return new Promise((resolve, reject) => {
-//         Coins.findOne(
-//             {"_id": id},
-//             function(err, coin) {
-//                 if (err) {
-//                     console.error(err)
-//                     reject(err)
-//                 }
-//                 console.log('getCoinById done: ' + coin)
-//                 resolve(coin)
-//             }
-//         )
-//     })
-// }
+function list(condition) {
+    return new Promise((resolve, reject) => {
+        Coins.find(
+            condition,
+            function(err, coin) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                resolve(coin)
+            }
+        )
+    })
+}
 
 function getCoinById (id) {
     return new Promise((resolve, reject) => {
@@ -264,6 +263,7 @@ function deleteCoinById (id) {
     })
 }
 
+exports.list = list;
 exports.createCoin = createCoin;
 exports.getCoinById = getCoinById;
 exports.getCoinByIdAndPassword = getCoinByIdAndPassword;

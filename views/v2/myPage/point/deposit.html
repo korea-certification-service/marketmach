@@ -37,8 +37,8 @@
         });
 
         function happyomoneyLogin() {
-            alert('준비중입니다.');
-            return;
+            // alert('준비중입니다.');
+            // return;
 
             var loginInfo = {
                 'authType':'ID',
@@ -239,7 +239,7 @@
                             <div class="deposit_type_wrap">
                                 <select class="custom-select" id="depositType">
                                     <option value="bank_account" selected>계좌 이체</option>
-                                    <option value="happymoney">해피머니</option>
+                                    <option value="happymoney">해피캐시</option>
                                 </select>
                             </div>
                         </h2>
@@ -309,21 +309,22 @@
                                         <tbody>
                                             <tr>
                                                 <th>입금 방법</th>
-                                                <td><em>해피머니 포인트</em></td>
+                                                <td><em>해피캐시</em></td>
                                             </tr>  
                                             <tr>
                                                 <th>아이디</th>
                                                 <td><input type="text" id="happymoneyId" class="form-control" value=""></td>
                                             </tr>  
                                             <tr>
-                                                <th>비밀번호</th>
+                                                <th>결제비밀번호</th>
                                                 <td>
                                                     <input type="password" autocomplete="new-password" id="happymoneyPw" class="form-control" value="">
                                                     <input type="button" class="btn btn-success" id="happymoneyLogin" value="로그인">
+                                                    <br class="mob_br"><span class="fcrd">※결제 비말번호는 해피머니 사이트에서 발급받으세요.</span>
                                                 </td>
                                             </tr>  
                                             <tr class="hideBeforeLogin">
-                                                <th>해피머니 포인트</th>
+                                                <th>해피캐시 잔액</th>
                                                 <td><em id="happymoneyBalance"></em></td>
                                             </tr> 
                                             <tr class="hideBeforeLogin">
@@ -339,7 +340,7 @@
                                                             <option value="100000" >100000 Happy Cash</option>
                                                         </select>
                                                     </div>
-                                                    <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액</span>
+                                                    <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액(9.9% 결제 수수료 발생)</span>
                                                 </td>
                                             </tr>                  
                                             <tr class="hideBeforeLogin">
