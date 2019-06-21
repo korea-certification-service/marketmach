@@ -509,7 +509,7 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
         "FldCnt":"0017",
         "EncryptType": "TDES",
         "MerchantID": dbconfig.happymoney.onlineId,
-        "MerchantPwd": cryptojs.tripledes.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId),
+        "MerchantPwd": cryptojs.TripleDES.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId),
         "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
         "DealCallDate":today.substr(0,7),
         "DealCallTime": today.substr(8),
