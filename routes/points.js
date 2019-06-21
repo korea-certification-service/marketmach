@@ -1,4 +1,6 @@
 const express = require('express');
+const net = require('net');
+const cryptojs = require('crypto-js');
 const router = express.Router();
 const controllerPoints = require('../controllers/points')
 const controllerPointHistorys = require('../controllers/pointHistorys');
@@ -465,6 +467,75 @@ router.post('/happymoney/payment', function(req, res, next) {
             res.status(500).send(bitwebResponse.create())
         }
     });
+});
+
+router.post('/happymoney/pin/payment', function(req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    // pin 결제의 경우 socket 통신으로 처리한다.
+    let connection = net.connect({port: 9006, host:dbconfig.happymoney.pinIp}, function(){
+        console.log('********** happymoney pin connected **********');
+        console.log('   local = %s:%s', this.localAddress, this.localPort);
+        console.log('   remote = %s:%s', this.remoteAddress, this.remotePort);
+        
+        this.setTimeout(500);
+        this.setEncoding('utf8');
+
+        this.on('data', function(data) {
+            console.log(connName + " From Server: " + data.toString());
+            this.end();
+        });
+
+        this.on('end', function() {
+            console.log(connName + ' Client disconnected');
+        });
+        this.on('error', function(err) {
+            console.log('Socket Error: ', JSON.stringify(err));
+        });
+        this.on('timeout', function() {
+            console.log('Socket Timed Out');
+        });
+        this.on('close', function() {
+            console.log('Socket Closed');
+        });
+    });
+
+    //전문 test
+    let today = util.formatDate2(new Date().toString());
+    let reqData = {
+        "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
+        "DocDate": today,
+        "DocCode": "ON",
+        "DocCnt":"0001",
+        "FldCnt":"0017",
+        "EncryptType": "TDES",
+        "MerchantID": dbconfig.happymoney.onlineId,
+        "MerchantPwd": cryptojs.tripledes.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId),
+        "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
+        "DealCallDate":today.substr(0,7),
+        "DealCallTime": today.substr(8),
+        "QueryKind": "G2",
+        "QueryGiftQty":1,
+        "PinNo":cryptojs.tripledes.encrypt("5746606380005303",dbconfig.happymoney.onlineId),
+        "PinDate":cryptojs.tripledes.encrypt("20190422",dbconfig.happymoney.onlineId),
+        "BranchCode": "",
+        "SalesDate": today.substr(0,7),
+        "PosNo": "",
+        "InputKind":""
+
+    }
+    //상품권 조회
+    // let reqData = JSON.stringify(req.body);
+    
+    let result = !connection.write(JSON.stringify(reqData));
+    if(result) {
+        bitwebResponse.code = 200;
+        bitwebResponse.data = result1;
+        res.status(200).send(bitwebResponse.create())
+    } else {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    }
 });
 
 module.exports = router;
