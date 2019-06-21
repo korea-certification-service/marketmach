@@ -445,7 +445,7 @@ router.post('/happymoney/payment', function(req, res, next) {
             result['result']['extType'] = req.body.extType;
             result['result']['amountCurrency'] = req.body.amountCurrency;
 
-            controllerPoints.updateHappymoneyPoint(country, pointId, result)
+            controllerPoints.updateHappymoneyPoint(country, pointId, result.result)
                 .then((result1) => {
                     bitwebResponse.code = 200;
                     bitwebResponse.data = result1;
