@@ -689,8 +689,17 @@ router.post('/connected', function (req, res, next) {
     request({uri: url, 
             method:'GET',
             headers: header}, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode == 200) {            
             let result = JSON.parse(body);
+            if(result.status == "not_agreed") {
+                bitwebResponse.code = 200;
+                bitwebResponse.data = {
+                    "code":"E001",
+                    "msg": "비트베리 연동이 완료되지 않았습니다.\n 비트베리 엡에서 인증번호 등록 후 비트베리 연결 완료 버튼을 클릭하세요."
+                };
+                res.status(200).send(bitwebResponse.create());
+                return;
+            }
             console.log('success : ', body);
             //users에 token 저장
             if(result != null) {
