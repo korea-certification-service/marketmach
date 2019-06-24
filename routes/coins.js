@@ -4,6 +4,7 @@ var controllerCoins = require('../controllers/coins')
 var controllerCoinHistorys = require('../controllers/coinHistorys');
 var controllerEventHistorys = require('../controllers/events');
 var controllerUsers = require('../controllers/users');
+var controllerFeeHistorys = require('../controllers/feeHistorys');
 var BitwebResponse = require('../utils/BitwebResponse')
 var mqtt = require('../utils/mqtt');
 var unixtime = require('unix-timestamp');
@@ -879,16 +880,28 @@ router.post('/wallets/:coinType/deposit', function (req, res, next) {
 
             let walletId = result.items[findIndex].id;
             let amount = req.body.mach;
-            //시세 계산 해서 mach 넣기
+            //각 코인별로 출금
             if(result.items[findIndex].currency_code == "ETH") {
-                let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                amount = total_amount + fee_rate;
+                let fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.deposit).toFixed(8));
+                amount = parseFloat((amount - fee_rate).toFixed(8));
             } else if(result.items[findIndex].currency_code == "BTC") {
-                let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                amount = total_amount + fee_rate;
+                let fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.deposit).toFixed(8));
+                amount = parseFloat((amount - fee_rate).toFixed(8));
+            } else {
+                let fee_rate = parseFloat((amount * dbconfig.fee.coin.mach.deposit).toFixed(8));
+                amount = parseFloat((amount - fee_rate).toFixed(8));
             }
+            
+            //시세 계산 해서 mach 넣기
+            // if(result.items[findIndex].currency_code == "ETH") {
+            //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
+            //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
+            //     amount = total_amount + fee_rate;
+            // } else if(result.items[findIndex].currency_code == "BTC") {
+            //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
+            //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
+            //     amount = total_amount + fee_rate;
+            // }
             
             url = dbconfig.bitberry.url + "/v2/wallets/" + walletId + '/transfer_requests/withdraw';
             let param = {
@@ -957,8 +970,14 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                 .then(user => {
                     controllerCoins.getByCoinId(country, user._doc.coinId)
                     .then(coin => {
-                        let total_mach = coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach;
-                        if(total_mach < req.body.mach) {
+                        let total_price = coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach;
+                        if(result.items[findIndex].currency_code == "ETH") {
+                            total_price = coin._doc.total_ether == undefined ? 0 : coin._doc.total_ether;
+                        } else if(result.items[findIndex].currency_code == "BTC") {
+                            total_price = coin._doc.total_btc == undefined ? 0 : coin._doc.total_btc;
+                        }
+
+                        if(total_price < req.body.amount) {
                             bitwebResponse.code = 200;
                             bitwebResponse.message = {
                                 "code": "E001",
@@ -968,17 +987,28 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                             return;
                         }
 
-                        let amount = req.body.mach;
-                        //시세 계산 해서 mach 출금
+                        let amount = req.body.amount;
+                        let fee_rate = parseFloat((amount * dbconfig.fee.coin.mach.withdraw).toFixed(8));
+                        amount = parseFloat((amount - fee_rate).toFixed(8));
+                        //각 코인별로 출금
                         if(result.items[findIndex].currency_code == "ETH") {
-                            let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                            let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                            amount = total_amount - fee_rate;
+                            fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.withdraw).toFixed(8));
+                            amount = parseFloat((amount - fee_rate).toFixed(8));
                         } else if(result.items[findIndex].currency_code == "BTC") {
-                            let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                            let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                            amount = total_amount - fee_rate;
-                        }
+                            fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.withdraw).toFixed(8));
+                            amount = parseFloat((amount - fee_rate).toFixed(8));
+                        } 
+                        
+                        //시세 계산 해서 mach 출금
+                        // if(result.items[findIndex].currency_code == "ETH") {
+                        //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
+                        //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
+                        //     amount = total_amount - fee_rate;
+                        // } else if(result.items[findIndex].currency_code == "BTC") {
+                        //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
+                        //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
+                        //     amount = total_amount - fee_rate;
+                        // }
 
                         let param = {
                             'amount': amount,
@@ -1004,7 +1034,7 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                     "status": result.status,
                                     "currencyCode": result.currency_code,
                                     "amount": amount,
-                                    "mach": mach,
+                                    // "mach": mach,
                                     "regDate": util.formatDate(new Date().toString())  
                                 }
     
@@ -1013,12 +1043,32 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                         controllerCoins.getByCoinId(country, user._doc.coinId)
                                             .then(coin => {
                                                 let update_data = {
-                                                    "total_mach": coin._doc.total_mach - mach,
-                                                    //"output_total_mach": output_total_mach - mach
-                                                };
+                                                    "total_mach": parseFloat((coin._doc.total_mach - req.body.amount).toFixed(8))
+                                                }
+                                                if(result.currency_code == "BTC") {
+                                                    update_data = {
+                                                        "total_btc": parseFloat((coin._doc.total_btc - req.body.amount).toFixed(8))
+                                                    }
+                                                } else if(result.currency_code == "ETH") {
+                                                    update_data = {
+                                                        "total_ether":  parseFloat((coin._doc.total_ether - req.body.amount).toFixed(8))
+                                                    }
+                                                }
                                                 
                                                 controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
                                                     .then(u_coin => {
+                                                        if(coinType != "MACH") {
+                                                            let feePercentage = (coinType == "BTC" ? dbconfig.fee.coin.btc.withdraw : dbconfig.fee.coin.ether.withdraw) 
+                                                            let feeHistory = {
+                                                                userId: user._doc._id,
+                                                                currency: coinType,
+                                                                type: "withdraw",
+                                                                amount: fee_rate,
+                                                                fee: feePercentage,
+                                                                regDate: util.formatDate(new Date().toString())  
+                                                            }
+                                                            controllerFeeHistorys.add(country, feeHistory);
+                                                        }
                                                         bitwebResponse.code = 200;
                                                         bitwebResponse.data = u_coin;
                                                         res.status(200).send(bitwebResponse.create())
@@ -1198,7 +1248,7 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
                     "status": result.status,
                     "currencyCode": result.currency_code,
                     "amount": amount,
-                    "mach": mach,
+                    // "mach": mach,
                     "regDate": util.formatDate(new Date().toString())  
                 }
 
@@ -1207,7 +1257,16 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
                         controllerCoins.getByCoinId(country, user._doc.coinId)
                             .then(coin => {
                                 let update_data = {
-                                    "total_mach": coin._doc.total_mach + mach
+                                    "total_mach": parseFloat((coin._doc.total_mach + amount).toFixed(8))
+                                }
+                                if(result.currency_code == "BTC") {
+                                    update_data = {
+                                        "total_btc": parseFloat((coin._doc.total_btc + amount).toFixed(8))
+                                    }
+                                } else if(result.currency_code == "ETH") {
+                                    update_data = {
+                                        "total_ether":  parseFloat((coin._doc.total_ether + amount).toFixed(8))
+                                    }
                                 }
                                 
                                 controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)

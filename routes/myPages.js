@@ -219,7 +219,9 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
                 bitberry_token: req.session.bitberry_token,
-                fee: dbconfig.fee.coin.deposit,
+                btc_fee: dbconfig.fee.coin.btc.deposit,
+                ether_fee: dbconfig.fee.coin.ether.deposit,
+                mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 arrDepth:[4,2]
@@ -246,7 +248,9 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
                 bitberry_token: req.session.bitberry_token,
-                fee: dbconfig.fee.coin.deposit,
+                btc_fee: dbconfig.fee.coin.btc.deposit,
+                ether_fee: dbconfig.fee.coin.ether.deposit,
+                mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 arrDepth:[4,2]
@@ -278,7 +282,9 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
                 bitberry_token: req.session.bitberry_token,
-                fee: dbconfig.fee.coin.withdraw,
+                btc_fee: dbconfig.fee.coin.btc.withdraw,
+                ether_fee: dbconfig.fee.coin.ether.withdraw,
+                mach_fee: dbconfig.fee.coin.mach.withdraw,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 arrDepth:[4,3]
@@ -305,7 +311,9 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
                 bitberry_token: req.session.bitberry_token,
-                fee: dbconfig.fee.coin.withdraw,
+                btc_fee: dbconfig.fee.coin.btc.withdraw,
+                ether_fee: dbconfig.fee.coin.ether.withdraw,
+                mach_fee: dbconfig.fee.coin.mach.withdraw,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 arrDepth:[4,3]

@@ -6,10 +6,13 @@
         var userId = "<%=userId%>";
         var coinId = "<%=coinId%>";
         var bitberry_token = "<%=bitberry_token%>";
-        var total_mach = 0;
+        var total_price = 0;
         var output_total_mach = 0;
         var walletId;
-        var fee = "<%=fee%>";
+        var btc_fee = "<%=btc_fee%>";
+        var ether_fee = "<%=ether_fee%>";
+        var mach_fee = "<%=mach_fee%>";
+        var fee;
         var rate;
         
         $(document).ready(function() {
@@ -19,7 +22,7 @@
 
             $('[name=amount]').on('keyup',function() {
                 if($('[name=amount]').val() != "") {
-                    $('#total_amount').text(total_mach - parseInt($('[name=amount]').val()));
+                    $('#total_amount').text(total_price - parseInt($('[name=amount]').val()));
                     calculate();
                 }
             });
@@ -35,6 +38,13 @@
                 reqWithdraw();
             });
 
+            $("select[name=coin]").on('change', function() {
+                total_price = 0;
+                $('[name=amount]').val("0");
+                getCoin();
+                calculate();
+            })
+
             getCoin();
             getCoinHistory('withdraw');
         });
@@ -44,17 +54,40 @@
                 method: "GET",
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
-                if (success.data.total_mach != null) {
-                    total_mach = success.data.total_mach;
-                    output_total_mach = success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach;
-                    //$("#mach").html(numberWithCommas(success.data.total_mach) + "(출금 가능 : "+numberWithCommas(output_total_mach)+")<span>MACH</span>");
-                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
-                    //$("#withdrawable").html("출금 가능 : <br class='mob_br'>"+numberWithCommas(output_total_mach)+ "<span>MACH</span>");
-                    $("#my_amount").text(numberWithCommas(success.data.total_mach == undefined ? 0 : success.data.total_mach));
-                    $("#total_amount").text(numberWithCommas(success.data.total_mach == undefined ? 0 : success.data.total_mach));
+                var coin = $("select[name=coin] option:selected").val();
+                if(coin == "BTC") {
+                    if (success.data.total_btc != undefined) {
+                        total_price = success.data.total_btc == undefined ? 0 : success.data.total_btc;
+                        $("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_btc)  + "<span>BTC</span>");
+                        $("#total_amount").html(total_price + " BTC");
+                    } else {
+                        $("#mach").html("0<span>BTC</span>");
+                        $("#my_amount").html("0 BTC");
+                        $("#total_amount").html(total_price + " BTC");
+                    }
+                } else if(coin == "ETH") {
+                    if (success.data.total_ether != undefined) {
+                        total_price = success.data.total_ether == undefined ? 0 : success.data.total_ether;
+                        $("#mach").html(numberWithCommas(success.data.total_ether == undefined ? 0 : success.data.total_ether) + "<span>ETH</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_ether)  + "<span>ETH</span>");
+                        $("#total_amount").html(total_price + " ETH");
+                    } else {
+                        $("#mach").html("0<span>ETH</span>");
+                        $("#my_amount").html("0 ETH");
+                        $("#total_amount").html(total_price + " ETH");
+                    }
                 } else {
-                    $("#mach").html("0<span>MACH</span>");
-                    $("#my_amount").text("0");
+                    if (success.data.total_mach != undefined) {
+                        total_price = success.data.total_mach;
+                        $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
+                        $("#total_amount").html(total_price + " MACH");
+                    } else {
+                        $("#mach").html("0<span>MACH</span>");
+                        $("#my_amount").html("0 MACH");
+                        $("#total_amount").html(total_price + " MACH");
+                    }
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -76,13 +109,12 @@
                 for(var i=0;i<coinHistorys.length;i++) {
                     var amount = numberWithCommas(coinHistorys[i].amount);
                     var currencyCode = coinHistorys[i].currencyCode;
-                    var mach = numberWithCommas(coinHistorys[i].mach);
                     var status = coinHistorys[i].status;
                     var regDate = coinHistorys[i].regDate.substr(2);
 
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
-                                        '<em class="fc3">'+mach+'<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
+                                        '</span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+status+'</td>' + 
                                     '<td>'+regDate+'</td>' + 
@@ -101,49 +133,64 @@
             var price = 0;
             var data;
             if (coin == "BTC") {
-                var url = "/v1/charts/currency/BTC/1";
-                $.ajax({
-                    method: "GET",
-                    url: url
-                }).done(function (success) {
-                    //console.log(success);
-                    rate = Number(success.data[0].data.binance.usd_price);
-                    //console.log(rate);
-                    price = ((mach / rate) - ((mach / rate) * fee)).toFixed(8);
-                    data = mach + " MACH / $" + rate + " - "+(fee * 100)+"% = " + price + " BTC";
-                    $("#calculate").text(data);
-                    $("#Withdraw_amount").html(price+"<span>BTC</span>");
-                    $("#exchange_amount").html(mach+"<span>MACH</span>");
-                    $("#plus_amount").text(mach);
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            } else if (coin == "ETH") {
-                var url = "/v1/charts/currency/ETH/1";
-                $.ajax({
-                    method: "GET",
-                    url: url
-                }).done(function (success) {
-                    //console.log(success);
-                    rate = Number(success.data[0].data.binance.usd_price);
-                    console.log(rate);
-                    price = ((mach / rate) - ((mach / rate) * fee)).toFixed(8);
-                    data = mach + " MACH / $" + rate + " - "+(fee * 100)+"% = " + price + " ETH";
-                    $("#calculate").text(data);
-                    $("#Withdraw_amount").html(price+"<span>ETH</span>");
-                    $("#exchange_amount").html(mach+"<span>MACH</span>");
-                    $("#plus_amount").text(mach);
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
+                // var url = "/v1/charts/currency/BTC/1";
+                // $.ajax({
+                //     method: "GET",
+                //     url: url
+                // }).done(function (success) {
+                //     //console.log(success);
+                //     rate = Number(success.data[0].data.binance.usd_price);
+                //     //console.log(rate);
+                //     price = ((mach / rate) - ((mach / rate) * mach_fee)).toFixed(8);
+                //     data = mach + " MACH / $" + rate + " - "+(mach_fee * 100)+"% = " + price + " BTC";
+                //     $("#calculate").text(data);
+                //     $("#Withdraw_amount").html(price+"<span>BTC</span>");
+                //     $("#exchange_amount").html(mach+"<span>MACH</span>");
+                //     $("#plus_amount").text(mach);
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
 
+                price = parseFloat((mach - (mach * btc_fee)).toFixed(8));
+                data = mach + " BTC - "+(btc_fee * 100)+"% = " + price + " BTC  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " BTC");
+                $("#total_amount").html(parseFloat((total_price - mach).toFixed(8)) + " BTC");
+            } else if (coin == "ETH") {
+                // var url = "/v1/charts/currency/ETH/1";
+                // $.ajax({
+                //     method: "GET",
+                //     url: url
+                // }).done(function (success) {
+                //     //console.log(success);
+                //     rate = Number(success.data[0].data.binance.usd_price);
+                //     console.log(rate);
+                //     price = ((mach / rate) - ((mach / rate) * mach_fee)).toFixed(8);
+                //     data = mach + " MACH / $" + rate + " - "+(mach_fee * 100)+"% = " + price + " ETH";
+                //     $("#calculate").text(data);
+                //     $("#Withdraw_amount").html(price+"<span>ETH</span>");
+                //     $("#exchange_amount").html(mach+"<span>MACH</span>");
+                //     $("#plus_amount").text(mach);
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
+                price = parseFloat((mach - (mach * ether_fee)).toFixed(8));
+                data = mach + " ETH - "+(ether_fee * 100)+"% = " + price + " ETH  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ETH");
+                $("#total_amount").html(parseFloat((total_price - mach).toFixed(8)) + " ETH");
             } else if (coin == "MACH") {
-                price = mach.toFixed(8);
+                price = parseFloat(mach.toFixed(8));
                 data = mach + " MACH = " + price + " MACH";
-                $("#calculate").text(data);
+                $("#calculate").html(data);
                 $("#Withdraw_amount").html(mach+"<span>MACH</span>");
                 $("#exchange_amount").html(mach+"<span>MACH</span>");
-                $("#plus_amount").text(mach);
+                $("#plus_amount").html(mach + " MACH");
+                $("#total_amount").html(parseFloat((total_price - mach).toFixed(8)) + " MACH");
             }
         }
 
@@ -164,15 +211,13 @@
                 return;
             }
 
-            if($('[name=amount]').val() < 1) {
-                alert("출금 금액은 최소 1MACH 부터 가능 합니다.");
-                return;
-            }
+            // if($('[name=amount]').val() < 1) {
+            //     alert("출금 금액은 최소 1MACH 부터 가능 합니다.");
+            //     return;
+            // }
 
             var data = {
-                "mach": Number($("input[name=amount]").val()),
-                "fee": fee,
-                "rate": rate
+                "amount": Number($("input[name=amount]").val())
             };
 
             $.ajax({
@@ -250,8 +295,8 @@
                                         <td>
                                             <div class="dib_220">
                                                 <select class="custom-select" name="coin" onchange="calculate()">
-                                                    <!-- <option value="BTC">BTC</option>
-                                                    <option value="ETH">ETH</option> -->
+                                                    <option value="BTC">BTC</option>
+                                                    <option value="ETH">ETH</option>
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>
@@ -259,7 +304,7 @@
                                         </td>
                                     </tr>  
                                     <tr>
-                                        <th>MACH 금액</th>
+                                        <th>출금 금액</th>
                                         <td>
                                             <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
                                             <br class="mob_br"><span class="fcrd">※ 아이템 및 자산 거래가 완료된 MACH 금액만 출금 가능</span>
@@ -267,7 +312,7 @@
                                     </tr>                  
                                     <tr>
                                         <th>자동계산</th>
-                                        <td><em id="calculate">0 MACH = 0.00000000 MACH</em></td>
+                                        <td><em id="calculate">0 MACH = 0 MACH</em></td>
                                     </tr>    
                                 </tbody>
                             </table>
@@ -283,17 +328,17 @@
                                 <tbody>                           
                                     <tr>
                                         <th>출금 가능 금액</th>
-                                        <td><span id="my_amount">0</span> MACH</td>
+                                        <td><span id="my_amount">0</span></td>
                                     </tr>
                                     <tr>
                                         <th>출금 금액</th>
                                         <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
-                                            <em class="em_calc_ico minus">-</em> <span id="plus_amount">0</span> MACH
+                                            <em class="em_calc_ico minus">-</em> <span id="plus_amount">0 MACH</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>출금 후 출금 가능 금액</th>
-                                        <td><span id="total_amount">0</span> MACH</td>
+                                        <td><span id="total_amount">0</span></td>
                                     </tr>                        
                                 </tbody>
                             </table>

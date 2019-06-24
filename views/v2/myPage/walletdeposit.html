@@ -6,10 +6,12 @@
         var userId = "<%=userId%>";
         var coinId = "<%=coinId%>";
         var bitberry_token = "<%=bitberry_token%>";
-        var total_mach = 0;
+        var total_price = 0;
         var walletId;
         var transfer_request_id;
-        var fee = "<%=fee%>";
+        var btc_fee = parseFloat("<%=btc_fee%>");
+        var ether_fee = parseFloat("<%=ether_fee%>");
+        var mach_fee = parseFloat("<%=mach_fee%>");
         var rate;
         
         $(document).ready(function() {
@@ -19,7 +21,7 @@
 
             $('[name=amount]').on('keyup',function(e) {
                 if($('[name=amount]').val() != "") {
-                    $('#total_amount').text(total_mach + parseInt($('[name=amount]').val()));
+                    $('#total_amount').text(total_price + parseInt($('[name=amount]').val()));
                     calculate();
                 }
             })
@@ -51,6 +53,13 @@
                 resultDeposit();
             });
 
+            $("select[name=coin]").on('change', function() {
+                total_price = 0;
+                $('[name=amount]').val("0");
+                getCoin();
+                calculate();
+            })
+
             getCoin();
             getCoinHistory('deposit');
         });
@@ -60,14 +69,40 @@
                 method: "GET",
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
-                if (success.data.total_mach != null) {
-                    total_mach = success.data.total_mach;
-                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
-                    $("#my_amount").text(numberWithCommas(success.data.total_mach));
-                    $("#total_amount").text(total_mach);
+                var coin = $("select[name=coin] option:selected").val();
+                if(coin == "BTC") {
+                    if (success.data.total_btc != undefined) {
+                        total_price = success.data.total_btc == undefined ? 0 : success.data.total_btc;
+                        $("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_btc)  + "<span>BTC</span>");
+                        $("#total_amount").html(total_price + " BTC");
+                    } else {
+                        $("#mach").html("0<span>BTC</span>");
+                        $("#my_amount").html("0 BTC");
+                        $("#total_amount").html(total_price + " BTC");
+                    }
+                } else if(coin == "ETH") {
+                    if (success.data.total_ether != undefined) {
+                        total_price = success.data.total_ether == undefined ? 0 : success.data.total_ether;
+                        $("#mach").html(numberWithCommas(success.data.total_ether == undefined ? 0 : success.data.total_ether) + "<span>ETH</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_ether)  + "<span>ETH</span>");
+                        $("#total_amount").html(total_price + " ETH");
+                    } else {
+                        $("#mach").html("0<span>ETH</span>");
+                        $("#my_amount").html("0 ETH");
+                        $("#total_amount").html(total_price + " ETH");
+                    }
                 } else {
-                    $("#mach").html("0<span>MACH</span>");
-                    $("#my_amount").text("0");
+                    if (success.data.total_mach != undefined) {
+                        total_price = success.data.total_mach;
+                        $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                        $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
+                        $("#total_amount").html(total_price + " MACH");
+                    } else {
+                        $("#mach").html("0<span>MACH</span>");
+                        $("#my_amount").html("0 MACH");
+                        $("#total_amount").html(total_price + " MACH");
+                    }
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -114,49 +149,59 @@
             var price = 0;
             var data;
             if (coin == "BTC") {
-                var url = "/v1/charts/currency/BTC/1";
-                $.ajax({
-                    method: "GET",
-                    url: url
-                }).done(function (success) {
-                    //console.log(success);
-                    rate = Number(success.data[0].data.binance.usd_price);
-                    console.log(rate);
-                    price = ((mach / rate) + ((mach / rate) * fee)).toFixed(8);
-                    data = mach + " MACH / $" + rate + " + "+(fee * 100)+"% = " + price + " BTC";
-                    $("#calculate").text(data);
-                    $("#deposit_amount").html(price+"<span>BTC</span>");
-                    $("#exchange_amount").html(mach+"<span>MACH</span>");
-                    $("#plus_amount").text(mach);
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
+                // var url = "/v1/charts/currency/BTC/1";
+                // $.ajax({
+                //     method: "GET",
+                //     url: url
+                // }).done(function (success) {
+                //     //console.log(success);
+                //     rate = Number(success.data[0].data.binance.usd_price);
+                //     console.log(rate);
+                //     price = ((mach / rate) + ((mach / rate) * fee)).toFixed(8);
+                //     data = mach + " MACH / $" + rate + " + "+(fee * 100)+"% = " + price + " BTC";
+                //     $("#calculate").text(data);
+                //     $("#deposit_amount").html(price+"<span>BTC</span>");
+                //     $("#exchange_amount").html(mach+"<span>MACH</span>");
+                //     $("#plus_amount").text(mach);
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
+                price = parseFloat((mach - (mach * btc_fee)).toFixed(8));
+                $("#deposit_amount").html(price+'<span>'+coin+'</span>');
+                $("#exchange_amount").html(price+'<span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " BTC");
+                $("#total_amount").html(parseFloat((total_price + price).toFixed(8)) + " BTC");
             } else if (coin == "ETH") {
-                var url = "/v1/charts/currency/ETH/1";
-                $.ajax({
-                    method: "GET",
-                    url: url
-                }).done(function (success) {
-                    //console.log(success);
-                    rate = Number(success.data[0].data.binance.usd_price);
-                    console.log(rate);
-                    price = ((mach / rate) + ((mach / rate) * fee)).toFixed(8);
-                    data = mach + " MACH / $" + rate + " + "+(fee * 100)+"% = " + price + " ETH";
-                    $("#calculate").text(data);
-                    $("#deposit_amount").html(price+"<span>ETH</span>");
-                    $("#exchange_amount").html(mach+"<span>MACH</span>");
-                    $("#plus_amount").text(mach);
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-
+                // var url = "/v1/charts/currency/ETH/1";
+                // $.ajax({
+                //     method: "GET",
+                //     url: url
+                // }).done(function (success) {
+                //     //console.log(success);
+                //     rate = Number(success.data[0].data.binance.usd_price);
+                //     console.log(rate);
+                //     price = ((mach / rate) + ((mach / rate) * fee)).toFixed(8);
+                //     data = mach + " MACH / $" + rate + " + "+(fee * 100)+"% = " + price + " ETH";
+                //     $("#calculate").text(data);
+                //     $("#deposit_amount").html(price+"<span>ETH</span>");
+                //     $("#exchange_amount").html(mach+"<span>MACH</span>");
+                //     $("#plus_amount").text(mach);
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
+                price = parseFloat((mach - (mach * ether_fee)).toFixed(8));
+                $("#deposit_amount").html(price+'<span>'+coin+'</span>');
+                $("#exchange_amount").html(price+'<span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ETH");
+                $("#total_amount").html(parseFloat((total_price + price).toFixed(8)) + " ETH");
             } else if (coin == "MACH") {
-                price = mach.toFixed(8);
+                price = parseFloat(mach.toFixed(8));
                 data = mach + " MACH = " + price + " MACH";
                 $("#calculate").text(data);
                 $("#deposit_amount").html(mach+"<span>MACH</span>");
                 $("#exchange_amount").html(mach+"<span>MACH</span>");
-                $("#plus_amount").text(mach);
+                $("#plus_amount").html(mach + " MACH");
+                $("#total_amount").html(parseFloat((total_price + price).toFixed(8)) + " MACH");
             }
         }
 
@@ -177,9 +222,7 @@
             }
 
             var data = {
-                "mach": Number($("input[name=amount]").val()),
-                "fee": parseFloat(fee),
-                "rate": rate
+                "mach": Number($("input[name=amount]").val())
             };
 
             $.ajax({
@@ -218,9 +261,7 @@
 
             var data = {
                 "transfer_request_id": transfer_request_id,
-                "mach": Number($("input[name=amount]").val()),
-                "fee": parseFloat(fee),
-                "rate": rate
+                "mach": Number($("input[name=amount]").val())
             };
             
             $.ajax({
@@ -302,26 +343,26 @@
                                         <th>코인선택</th>
                                         <td>
                                             <div class="dib_220">
-                                                <select class="custom-select" name="coin" onchange="calculate()">
+                                                <select class="custom-select" name="coin">
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>
-                                            <br class="mob_br"><span class="fcrd">※MACH 코인으로 입금할 코인선택</span>
+                                            <br class="mob_br"><span class="fcrd">※입금할 코인선택</span>
                                         </td>
                                     </tr>  
                                     <tr>
-                                        <th>MACH 금액</th>
+                                        <th>입금 금액</th>
                                         <td>
                                             <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
-                                            <br class="mob_br"><span class="fcrd">※입금을 원하는 MACH 코인 금액</span>
+                                            <br class="mob_br"><span class="fcrd">※입금을 원하는 코인 금액</span>
                                         </td>
                                     </tr>                  
-                                    <tr>
+                                    <!-- <tr>
                                         <th>자동계산</th>
                                         <td><em id="calculate">0 MACH = 0.00000000 MACH</em></td>
-                                    </tr>    
+                                    </tr>     -->
                                 </tbody>
                             </table>
                         </div>
@@ -336,17 +377,17 @@
                                 <tbody>                           
                                     <tr>
                                         <th>나의 지갑 잔액</th>
-                                        <td><span id="my_amount">0</span> MACH</td>
+                                        <td><span id="my_amount">0</span></td>
                                     </tr>
                                     <tr>
                                         <th>입금 금액</th>
                                         <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
-                                            <em class="em_calc_ico plus">+</em> <span id="plus_amount">0</span> MACH
+                                            <em class="em_calc_ico plus">+</em> <span id="plus_amount">0 MACH</span> 
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>입금 후 나의 지갑 잔액</th>
-                                        <td><span id="total_amount">0</span> MACH</td>
+                                        <td><span id="total_amount">0</span></td>
                                     </tr>                        
                                 </tbody>
                             </table>
