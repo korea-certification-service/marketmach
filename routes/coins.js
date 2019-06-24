@@ -1260,12 +1260,14 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
                                     "total_mach": parseFloat((coin._doc.total_mach + amount).toFixed(8))
                                 }
                                 if(result.currency_code == "BTC") {
+                                    let total_btc = coin._doc.total_btc == undefined ? 0 :  coin._doc.total_btc;
                                     update_data = {
-                                        "total_btc": parseFloat((coin._doc.total_btc + amount).toFixed(8))
+                                        "total_btc": parseFloat((total_btc + amount).toFixed(8))
                                     }
                                 } else if(result.currency_code == "ETH") {
+                                    let total_ether = coin._doc.total_ether == undefined ? 0 :  coin._doc.total_ether;
                                     update_data = {
-                                        "total_ether":  parseFloat((coin._doc.total_ether + amount).toFixed(8))
+                                        "total_ether":  parseFloat((total_ether + amount).toFixed(8))
                                     }
                                 }
                                 
