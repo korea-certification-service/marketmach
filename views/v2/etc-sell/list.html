@@ -24,11 +24,14 @@
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
 
+            $(".srch_select").val("assets").attr("selected", "selected");
+            $("#search_item_name").val(title);
+            $(".form-control").val(title);
             $("#list").html('');
             loadGameList();
-            getSearchValue();
+            //getSearchValue();
             search();
-            
+            console.log(title);
             $('#btn_search').click(function() {
                 getSearchValue();
                 search();

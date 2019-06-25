@@ -59,14 +59,14 @@
 .srch_topWrap { position: relative; }
 .srch_topWrap::after { content:""; display: block; clear: both;}
 .srch_topWrap > * { float: left; }
-.srch_topWrap > .srch_select { display: block; padding: 5px; width: 90px; height: 50px; border: 3px solid #000039; border-right: none; color: #0a73b8; font-weight: 900; cursor: pointer; }
+.srch_topWrap > .srch_select { display: block; padding: 5px; width: 100px; height: 50px; border: 3px solid #000039; border-right: none; color: #0a73b8; font-weight: 900; cursor: pointer; }
 .srch_topWrap > .srch_input { display: block; width: calc(100% - 95px); height: 50px; padding: 5px; }
 .srch_topWrap > .srch_del { width: 40px; height: 40px; position: absolute; top: 50%; right: 56px; transform: translateY(-50%); cursor: pointer; display: none; }
 .srch_topWrap > .srch_del::before { display: block; content:""; width: 90%; height: 2px; background-color: #000; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
 .srch_topWrap > .srch_del::after { display: block; content:""; width: 90%; height: 2px; background-color: #000; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); }
 
 .srch_module {float: left; margin-top: 26px; width: calc(100% - 360px); position: relative; }
-.srch_module .ipt_search_bar{float: left; padding-left: 10px; width: calc(100% - 140px); height: 50px; border: 3px solid #000039; border-left: none;}
+.srch_module .ipt_search_bar{float: left; padding-left: 10px; width: calc(100% - 150px); height: 50px; border: 3px solid #000039; border-left: none;}
 .srch_module .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: #000039 url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 16.5px 15px; border:none;}
 
 .srch_bottomWrap { display: none; width: 100%; height: 300px; border: 2px solid #000039; position: absolute; top: 48px; z-index:9999; background-color: #fff; }

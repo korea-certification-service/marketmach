@@ -21,8 +21,11 @@
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
 
+            $(".srch_select").val("otc").attr("selected", "selected");
+            $("#search_item_name").val(title);
+            $(".form-control").val(title);
             $("#list").html('');
-            getSearchValue();
+            //getSearchValue();
             search();
             
             $('#btn_search').click(function() {

@@ -2,8 +2,15 @@
     var coinId = "<%=coinId%>";
     var userId = "<%=userId%>";   
     var game_name;
+    var selecValue = "games";
     
     $(document).ready(function(){
+
+        $(".srch_select").on("click", function(){
+            selecValue = $(this).val();
+            console.log(selecValue);
+        }); 
+
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
             if(key.keyCode==13){
                 _mainSearch(key.currentTarget);
@@ -25,7 +32,7 @@
         if(game_name != undefined) {
             
             if(isPc()) {
-                $('#search_item_name').val(game_name + ' ' + game_server);
+                $('#search_item_name').val(game_name + ' ' + game_server + ' ' + title);
             } else {
                 $('#m_search_item_name').val(game_name + ' ' + game_server);
             }
@@ -49,22 +56,24 @@
         ) {
 
             var games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
-            var srchBoxLeftClassName = $(".srch_box_left ul li")[0].classList[0];
+            if(selecValue == "games"){
+                var srchBoxLeftClassName = $(".srch_box_left ul li")[0].classList[0];
 
-            if( srchBoxLeftClassName == "game_width_server" ){
-                var searchValue = $(".srch_box_left ul li")[0].innerText.split(">");
-                var game_name = searchValue[0]
-                var game_server = searchValue[1]; 
-            } else {
-                game_name = games[0];
-                if(games.length == 2) {
-                    game_server  = games[1];
-                } else if(games.length == 3) {
-                    game_server  = games[1];
-                    title = games[2];
+                if( srchBoxLeftClassName == "game_width_server" ){
+                    var searchValue = $(".srch_box_left ul li")[0].innerText.split(">");
+                    var game_name = searchValue[0]
+                    var game_server = searchValue[1]; 
+                } else {
+                    game_name = games[0];
+                    if(games.length == 2) {
+                        game_server  = games[1];
+                    } else if(games.length == 3) {
+                        game_server  = games[1];
+                        title = games[2];
+                    }
                 }
             }
-
+            
             _doSearch(game_name, game_server, games);
             
         } else if( target.nodeName == 'LI' ) {
@@ -154,17 +163,41 @@
         // var game_server =  search_item_name.length == 1 ? "" : search_item_name[1];
         var type = "";
         var title = "";
+        var query;
 
         if( search_item_name != undefined ){
             if(search_item_name.length > 2) {
                 title = search_item_name[2];
             }
         }
-        console.log(game_name);
-        console.log(game_server);
-        console.log(title);
-        var query = "?category=" + category + "&game_name=" + encodeURIComponent(game_name) + "&game_server=" + encodeURIComponent(game_server) + "&trade_type=" + trade_type + "&type=" + type + "&title=" + encodeURIComponent(title) + "&pageIdx=0";
-        location.href = '/sells' + query;
+ 
+        if(selecValue == "games") {
+
+            query = "?category=" + category + 
+                    "&game_name=" + encodeURIComponent(game_name) + 
+                    "&game_server=" + encodeURIComponent(game_server) + 
+                    "&trade_type=" + trade_type + 
+                    "&type=" + type + 
+                    "&title=" + encodeURIComponent(title) + 
+                    "&pageIdx=0";
+
+            location.href = '/sells' + query;
+
+        } else if(selecValue == "assets") {
+
+            query = "?category=etc&trade_type=sell" + 
+                    "&title=" + search_item_name[0]
+
+            location.href = '/etc-sells' + query;
+
+        } else if(selecValue == "otc") {
+
+            query = "?category=otc&trade_type=sell" + 
+                    "&title=" + search_item_name[0]
+
+            location.href = '/otc-sells' + query;
+
+        }
     }
 
     function goExchange() {

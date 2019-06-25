@@ -41,11 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //[ 포커스 이벤트 ] : 셀렉트옵션에 해당하는 리스트들을 출력하고 검색가이드박스를 보여줌
     srchInput.addEventListener("focus", function(){
-        srchBoxWrap.style.display = "block";
-        if(showed){
-            showLeftList();
+        if(srchSelect.value == "games"){
+            srchBoxWrap.style.display = "block";
+            if(showed){
+                showLeftList();
+            }
+            showed = false;
         }
-        showed = false;
     });
 
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
@@ -211,6 +213,14 @@ document.addEventListener("DOMContentLoaded", function () {
     srchSelect.addEventListener("click",function(e){
         srchBoxWrap.style.display = "none";
         showed = true;
+        if(srchSelect.value == "games"){
+            srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
+        } else if(srchSelect.value == "assets"){
+            srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
+        } else if(srchSelect.value == "otc"){
+            srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
+        }
+        
     });
 
     //[ 클릭 이벤트 ] : 왼쪽 카테고리를 클릭하면 해당 카테고리에 맞는 리스트를 오른쪽에 추가
