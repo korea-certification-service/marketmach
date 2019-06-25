@@ -614,6 +614,8 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 
 /*** material-icons ***/
 /* Rules for sizing the icon. */
+.add_circle_outline { margin-left: 5px; }
+.add_circle_outline > .material-icons { position: relative; top: 6px; }
 .material-icons.md-16 { font-size: 16px; }
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
@@ -625,3 +627,14 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+/*메인페이지 공지사항박스 레이아웃 수정코드*/
+.secNoti1 table tbody div { max-width: 282px;overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}
+
+@media (max-width: 1199px) {
+    .secNoti1 table tbody div { max-width: 234px; }
+}
+@media (max-width: 992px) {
+    .secNoti1 table tbody div { max-width: 638px; }
+}
