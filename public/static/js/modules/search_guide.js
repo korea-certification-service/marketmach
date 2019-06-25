@@ -133,20 +133,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                     }
         
-                } else if( seletedValue == "assets" ) { //현물자산일때
+                } 
+                // else if( seletedValue == "assets" ) { //현물자산일때
         
-                    data.assets.forEach(function(el){
+                //     data.assets.forEach(function(el){
         
         
-                        if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
+                //         if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
         
-                            addList(el.category1, leftUl);
+                //             addList(el.category1, leftUl);
         
-                        }
+                //         }
         
-                    });
+                //     });
         
-                }
+                // }
     
                 if(  val == "" ){ //사용자가 텍스트를 모두 지웠을때
     
@@ -329,15 +330,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 addList(el.game_name, leftUl); //첫번째 인자값이 문자열
             
             });
-        } else if( seletedValue == "assets"  ) { //현물자산일때
+        } 
+        // else if( seletedValue == "assets"  ) { //현물자산일때
 
-            data.assets.forEach(function(el){
+        //     data.assets.forEach(function(el){
 
-                addList(el.category1, leftUl); //첫번째 인자값이 문자열
+        //         addList(el.category1, leftUl); //첫번째 인자값이 문자열
 
-            });
+        //     });
 
-        }
+        // }
 
         //첫번째 리스트에 클래스 추가
         if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
