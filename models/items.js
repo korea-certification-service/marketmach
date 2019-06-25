@@ -21,6 +21,7 @@ var itemsSchema = new Schema({
     title: String,
     desc: String,
     price: Number,
+    cryptoCurrencyCode: String,
     currency: String,
     point: Number,
     count: Number,

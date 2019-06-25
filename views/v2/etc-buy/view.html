@@ -204,6 +204,7 @@
                 var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type, "buy");
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 
                 $(".view_emphasis").text(delivery_type.text);
                 $(".posting_date").text("등록일 : " + regDate);
@@ -211,7 +212,7 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
                 if("<%=useBlockchain%>" == 'Y') {
-                    $(".txt_price").html(price + "<span>MACH</span>");
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
                     $(".txt_point").html(point + "<span>Point</span>");

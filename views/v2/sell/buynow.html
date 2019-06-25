@@ -230,6 +230,7 @@
         var from_userTag;
         var mach;
         var point;
+        var cryptoCurrencyCode = "MACH";
     
         $(document).ready(function() {
             //$("#input_imgs").on("change", handleImgFileSelect);
@@ -273,7 +274,6 @@
                 var title = success.data.title;
                 mach = success.data.price;
                 point = success.data.point;
-                var total_mach = success.data.total_mach;
                 var total_point = success.data.total_point;
                 var price = numberWithCommas(mach);
                 var item_user_price = numberWithCommas(total_mach);
@@ -287,6 +287,19 @@
                 var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
                 var item_phone = success.data.phone;
                 from_userTag = success.data.userTag;
+                cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                var item_user_price = numberWithCommas(success.data.total_coins.total_mach);
+                var total_mach = success.data.total_coins.total_mach;
+                if(cryptoCurrencyCode == "BTC") {
+                    var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ETH") {
+                    var coin_price = success.data.total_coins.total_ether == undefined ? 0 : success.data.total_coins.total_ether;
+                    item_user_price = numberWithCommas(success.data.total_coins.total_ether);
+                    total_mach = coin_price;
+                }
+
                 
                 if(success.data.images.length === 0) {
                     $(".trForDel").remove();
@@ -309,7 +322,7 @@
                 $(".item_type").addClass(item_type.className);
                 $(".item_id").text(itemId);
                 if("<%=useBlockchain%>" == 'Y') {
-                    $(".txt_price").html(price + "<span>MACH</span>");
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
                     $(".txt_point").html(point + "<span>Point</span>");
@@ -317,9 +330,9 @@
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);
                 $(".item_phone").text(item_phone);
-                $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
-                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
-                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>MACH</span>");
+                $(".item_user_price").html(item_user_price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".item_user_price_point").html(item_user_price_point + "<span class='fzsm'>Point</span>");
                 $(".item_price_point").html("<em class='em_calc_ico minus'>-</em>" + point_txt + "<span class='fzsm'>Point</span>");
                 $(".user_price_balance_point").html(numberWithCommas(total_point - point) + "<span class='fzsm'>Point</span>");
@@ -337,7 +350,8 @@
                     "itemId": itemId,
                     "from_userId": from_userTag,
                     "to_userId": userTag,
-                    "mach": mach,
+                    "cryptoCurrencyCode": cryptoCurrencyCode,
+                    "price": mach,
                     "target_game_character": $("#buyer_game_character").val()
                 };
                 console.log(params);

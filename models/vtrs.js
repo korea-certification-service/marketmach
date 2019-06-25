@@ -4,7 +4,7 @@ var Item = require('./items');
 var ObjectId = Schema.Types.ObjectId;
 
 var vtrsSchema = new Schema({
-    currencyCode: Number,
+    cryptoCurrencyCode: String,
     price: Number,
     mach: Number,
     buy_status: Boolean,

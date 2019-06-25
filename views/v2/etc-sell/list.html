@@ -198,6 +198,7 @@
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
 
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
@@ -208,7 +209,7 @@
                 
                 var money = point + '<span>Point</span>';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 if(i % 4 == 0) strDOM += '<li class="row">';

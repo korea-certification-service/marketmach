@@ -7,6 +7,7 @@ var coinHistorysSchema = new Schema({
     category: String,          
     status: String,
     currencyCode: String,
+    price: Number,
     amountCurrency: String,
     amount: Number,
     mach: Number,

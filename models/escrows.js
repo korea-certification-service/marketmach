@@ -8,6 +8,8 @@ var escrowsSchema = new Schema({
     itemId: String,
     vtr: Vtr,
     pointTrade: PointTrade,
+    cryptoCurrencyCode: String,
+    price: Number,
     mach: Number, 
     point: Number,
     reqUser: String,

@@ -172,9 +172,7 @@
                 var item_game_server = success.data.game_name + ' > ' + success.data.game_server;
                 var title = success.data.title;
                 mach = success.data.price;
-                total_mach = success.data.total_mach;
                 var price = numberWithCommas(mach);
-                var item_user_price = numberWithCommas(total_mach);
                 var point = numberWithCommas(success.data.point);
                 n_status = success.data.status;
                 var status = getStatus(success.data.status);
@@ -184,6 +182,18 @@
                 var game_character = success.data.game_character;
                 var item_phone = success.data.phone;
                 to_userTag = success.data.userTag;
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                total_mach = success.data.total_mach;
+                var item_user_price = numberWithCommas(total_mach);
+                if(cryptoCurrencyCode == "BTC") {
+                    var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ETH") {
+                    var coin_price = success.data.total_coins.total_ether == undefined ? 0 : success.data.total_coins.total_ether;
+                    item_user_price = numberWithCommas(success.data.total_coins.total_ether);
+                    total_mach = coin_price;
+                }
                 
                 $(".view_emphasis").text(item_type.text);
                 $(".posting_date").text("등록일 : " + regDate);
@@ -191,12 +201,12 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_type").addClass(item_type.className);
                 $(".item_id").text(itemId);
-                $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 $(".item_desc").html(desc);
                 $(".item_phone").text(item_phone);
-                $(".item_user_price").html(item_user_price + "<span>MACH</span>");
-                $(".item_price").text("-" + price + "MACH");
-                $(".user_price_balance").text(numberWithCommas(total_mach - mach) + "MACH");
+                $(".item_user_price").html(item_user_price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".item_status").text(status.text);
                 $(".item_character").text(game_character);
             }).fail(function (fail) {

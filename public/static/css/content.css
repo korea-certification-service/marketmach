@@ -35,6 +35,10 @@
 .no_w100p_wrap .w50p{width: 50%;}
 .no_w100p_wrap .w40p{width: 40%;}
 .no_w100p_wrap .w30p{width: 30%;}
+@media (min-width: 320px) and (max-width: 375px){
+    .no_w100p_wrap .w30p{width: 40%;}
+    .no_w100p_wrap .w60p{width: 50%;}
+}
 
 .em_calc_ico{display: inline-block; margin-right: 10px; width: 24px; height: 24px; line-height: 24px; font-size: 22px; border-radius: 50%; text-align: center; color: #ffffff;}
 .em_calc_ico.plus{background-color: #0a73b8;}

@@ -271,6 +271,7 @@
                 var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type);
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
                 
                 for(var i=0;i<success.data.images.length; i++) {
@@ -289,7 +290,7 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
                 if("<%=useBlockchain%>" == 'Y') {
-                    $(".txt_price").html(price + "<span>MACH</span>");
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
                     $(".txt_point").html(point + "<span>Point</span>");

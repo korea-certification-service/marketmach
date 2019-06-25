@@ -189,10 +189,11 @@
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type, "buy");
                 var trade_type = replaceType(data[i].trade_type);
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                
                 var money = point + 'Point';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + 'MACH';
+                    money = price + cryptoCurrencyCode;
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 

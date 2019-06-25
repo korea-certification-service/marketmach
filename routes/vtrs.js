@@ -108,7 +108,7 @@ router.get('/count/user/:userId', function (req, res, next) {
                         if(vtrs[i]._doc.from_userId == userId) {
                             if(vtrs[i]._doc.item.category == "game") {
                                 count_data.game_sell++;
-                            } if(vtrs[i]._doc.item.category == "otc") {
+                            } else if(vtrs[i]._doc.item.category == "otc") {
                                 count_data.otc_sell++;
                             } else {
                                 count_data.etc_sell++;
@@ -116,7 +116,7 @@ router.get('/count/user/:userId', function (req, res, next) {
                         } else {
                             if(vtrs[i]._doc.item.category == "game") {
                                 count_data.game_buy++;
-                            } if(vtrs[i]._doc.item.category == "otc") {
+                            } else if(vtrs[i]._doc.item.category == "otc") {
                                 count_data.otc_buy++;
                             } else {
                                 count_data.etc_buy++;
@@ -128,7 +128,7 @@ router.get('/count/user/:userId', function (req, res, next) {
                         if(pointTrades[i]._doc.from_userId == userId) {
                             if(pointTrades[i]._doc.item.category == "game") {
                                 //count_data.game_sell++;
-                            } if(pointTrades[i]._doc.item.category == "otc") {
+                            } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_sell++;
                             } else {
                                 //count_data.etc_sell++;
@@ -136,7 +136,7 @@ router.get('/count/user/:userId', function (req, res, next) {
                         } else {
                             if(pointTrades[i]._doc.item.category == "game") {
                                 //count_data.game_buy++;
-                            } if(pointTrades[i]._doc.item.category == "otc") {
+                            } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_buy++;
                             } else {
                                 //count_data.etc_buy++;
@@ -548,9 +548,9 @@ router.post('/buynow', function (req, res, next) {
                 item._doc.status = 2;
                 req.body['item'] = item;
 
-                if(item.price != req.body.mach) {
-                    item._doc.price = req.body.mach;
-                    item._doc.total_price = req.body.mach;
+                if(item.price != req.body.price) {
+                    item._doc.price = req.body.price;
+                    item._doc.total_price = req.body.price;
                 }
 
                 let controllerUser = require('../controllers/users');
@@ -592,13 +592,16 @@ router.post('/buynow', function (req, res, next) {
                                             let coinId = user._doc.coinId;
                                             controllerCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
-                                                    let user_mach = coin.total_mach;
-                                                    // let user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
-                                                    // if(user_mach >= user_output_mach) {
-                                                    //     user_output_mach = (user_output_mach - req.body.mach < 0 ? 0 : user_output_mach - req.body.mach);
-                                                    // }
-                                                    user_mach = parseFloat((user_mach - req.body.mach).toFixed(8));
-                                                    if (user_mach < 0) {
+
+                                                    let user_price = coin.total_mach;
+                                                    if(req.body.cryptoCurrencyCode == "BTC") {
+                                                        user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+                                                    } else if(req.body.cryptoCurrencyCode == "ETH") {
+                                                        user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+                                                    }
+
+                                                    user_price = parseFloat((user_price - req.body.price).toFixed(8));
+                                                    if (user_price < 0) {
                                                         let msg = {
                                                             "status": "fail",
                                                             "code" : "E002",
@@ -627,15 +630,22 @@ router.post('/buynow', function (req, res, next) {
                                                                 controllerVtrs.create(req)
                                                                     .then(result => {       
                                                                         controllerItems.updateById(country, itemId, item)
-                                                                            .then(data => {                        
-                                                                                let mach_json = {"total_mach": user_mach};
+                                                                            .then(data => {    
+                                                                                let mach_json = {"total_mach": user_price};
+                                                                                if(req.body.cryptoCurrencyCode == "BTC") {
+                                                                                    mach_json = {"total_btc": user_price};
+                                                                                } else if(req.body.cryptoCurrencyCode == "ETH") {
+                                                                                    mach_json = {"total_ether": user_price};
+                                                                                }                    
+                                                                                
                                                                                 controllerCoins.updateTotalCoin(country, coinId, mach_json)
                                                                                     .then(() => {
                                                                                         let body3 = {
                                                                                             "type": "deposit",
-                                                                                            "itemId": result._doc.item._id,
+                                                                                            "itemId": result._doc.item._id,                                                                                            
                                                                                             "vtr": result,
-                                                                                            "mach": req.body.mach,
+                                                                                            "cryptoCurrencyCode": req.body.cryptoCurrencyCode,                                                                                           
+                                                                                            "price": req.body.price,
                                                                                             "reqUser":user._doc._id,
                                                                                             "regDate": util.formatDate(new Date().toString())
                                                                                         };
@@ -651,45 +661,45 @@ router.post('/buynow', function (req, res, next) {
                                                                                                         "coinId" : coinId,
                                                                                                         "category" : "withdraw",
                                                                                                         "status" : "success",
-                                                                                                        "currencyCode" : "MACH",
-                                                                                                        "amount" : req.body.mach,
-                                                                                                        "mach" : req.body.mach,
+                                                                                                        "currencyCode" : req.body.cryptoCurrencyCode,
+                                                                                                        "amount" : req.body.price,
+                                                                                                        "price" : req.body.price,
                                                                                                         "regDate" : util.formatDate(new Date().toString())
                                                                                                     }
                                                                                                     controllerCoinHistorys.createData(country, coinData);
 
                                                                                                     //바로구매 후 페르소나에 동기와 요청
-                                                                                                    let seller_userTag = req.params.userTag;
-                                                                                                    if(result._doc.item.trade_type == 'sell') {
-                                                                                                        seller_userTag = result._doc.item.userTag;
-                                                                                                    }
-                                                                                                    let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/buynow';
+                                                                                                    // let seller_userTag = req.params.userTag;
+                                                                                                    // if(result._doc.item.trade_type == 'sell') {
+                                                                                                    //     seller_userTag = result._doc.item.userTag;
+                                                                                                    // }
+                                                                                                    // let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/buynow';
 
-                                                                                                    let param = {
-                                                                                                        "country": dbconfig.country,
-                                                                                                        "vtr_id": result._doc._id.toString(), 
-                                                                                                        "mach": req.body.mach,
-                                                                                                        "itemId": result._doc.item._id.toString(),
-                                                                                                        "from_userId": fromUserTag,
-                                                                                                        "to_userId": targetUserTag
-                                                                                                    };
+                                                                                                    // let param = {
+                                                                                                    //     "country": dbconfig.country,
+                                                                                                    //     "vtr_id": result._doc._id.toString(), 
+                                                                                                    //     "mach": req.body.mach,
+                                                                                                    //     "itemId": result._doc.item._id.toString(),
+                                                                                                    //     "from_userId": fromUserTag,
+                                                                                                    //     "to_userId": targetUserTag
+                                                                                                    // };
 
-                                                                                                    let header = {
-                                                                                                        'Content-Type': 'application/json'
-                                                                                                    };
+                                                                                                    // let header = {
+                                                                                                    //     'Content-Type': 'application/json'
+                                                                                                    // };
 
-                                                                                                    console.log(param);
+                                                                                                    // console.log(param);
 
-                                                                                                    request({uri: url, 
-                                                                                                        method:'POST',
-                                                                                                        form: param,
-                                                                                                        headers: header}, function (error, response, body) {
-                                                                                                        if (!error && response.statusCode == 200) {
-                                                                                                            console.log('success : ', body);
-                                                                                                        } else {
-                                                                                                            console.log('error = ' + error);
-                                                                                                        }
-                                                                                                    });
+                                                                                                    // request({uri: url, 
+                                                                                                    //     method:'POST',
+                                                                                                    //     form: param,
+                                                                                                    //     headers: header}, function (error, response, body) {
+                                                                                                    //     if (!error && response.statusCode == 200) {
+                                                                                                    //         console.log('success : ', body);
+                                                                                                    //     } else {
+                                                                                                    //         console.log('error = ' + error);
+                                                                                                    //     }
+                                                                                                    // });
 
                                                                                                     result._doc['result'] = "success";
                                                                                                     bitwebResponse.code = 200;
