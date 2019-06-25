@@ -238,13 +238,14 @@ function updateStatus(country, req) {
                                             let coinId = user.coinId;
                                             bitwebCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
-                                                    let to_user_mach = coin.total_mach;
-                                                    // let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
-                                                    // if(to_user_mach >= to_user_output_mach) {
-                                                    //     to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
-                                                    // }
-                                                    to_user_mach = parseFloat((to_user_mach - vtr._doc.mach).toFixed(8));
-                                                    if (tradeType == "buy" && to_user_mach < 0) {
+                                                    let to_user_price = coin.total_mach;                                                    
+                                                    to_user_price = parseFloat((to_user_price - vtr._doc.mach).toFixed(8));
+                                                    if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                        to_user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+                                                    } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                        to_user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+                                                    }
+                                                    if (tradeType == "buy" && to_user_price < 0) {
                                                         let msg = {
                                                             "status": "fail",
                                                             "code" : "E001",
@@ -257,7 +258,13 @@ function updateStatus(country, req) {
                                                             .then((result) => {
                                                                 console.log('result=>', result);
                                                                 if (tradeType == "buy") {
-                                                                    let mach_json = {"total_mach": to_user_mach}
+                                                                    let mach_json = {"total_mach": to_user_price}
+                                                                    if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                                        mach_json = {"total_btc": to_user_price};
+                                                                    } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                                        mach_json = {"total_ether": to_user_price};
+                                                                    }   
+
                                                                     bitwebCoins.updateTotalCoin(country, coinId, mach_json)
                                                                         .then(() => {
                                                                             // console.log('result=>', result);
@@ -272,7 +279,8 @@ function updateStatus(country, req) {
                                                                                         "type": "deposit",
                                                                                         "itemId": result._doc.item._id,
                                                                                         "vtr": result,
-                                                                                        "mach": mach,
+                                                                                        "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                                        "price": vtr._doc.price,
                                                                                         "reqUser":result._doc.to_userId,
                                                                                         "regDate": util.formatDate(new Date().toString())
                                                                                     };
@@ -287,7 +295,7 @@ function updateStatus(country, req) {
                                                                                                 "status" : "success",
                                                                                                 "currencyCode" : "MACH",
                                                                                                 "amount" : mach,
-                                                                                                "mach" : mach,
+                                                                                                "price" : mach,
                                                                                                 "regDate" : util.formatDate(new Date().toString())
                                                                                             }
                                                                                             bitwebCoinHistorys.createCoinHistory(coinData);
@@ -332,10 +340,21 @@ function updateStatus(country, req) {
                                                                             let coinId = user.coinId;
                                                                             bitwebCoins.getByCoinId(country, coinId)
                                                                                 .then(coin => {
-                                                                                    let user_mach = coin.total_mach;
-                                                                                    user_mach = parseFloat((user_mach + mach).toFixed(8));
-                                                                                    //let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
-                                                                                    let mach_json = {"total_mach": user_mach};
+                                                                                    let user_price = coin.total_mach;
+                                                                                    if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                                                        user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+                                                                                    } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                                                        user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+                                                                                    }
+                                                                                    user_price = parseFloat((user_price + vtr._doc.price).toFixed(8));
+                                                                                    
+                                                                                    let mach_json = {"total_mach": user_price}
+                                                                                    if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                                                        mach_json = {"total_btc": user_price};
+                                                                                    } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                                                        mach_json = {"total_ether": user_price};
+                                                                                    }  
+                                                                                    
                                                                                     console.log('escrow go to mach : ', mach_json);
                                                                                     if(coin._doc.firstVtr == undefined) {
                                                                                         mach_json['firstVtr'] = true;
@@ -376,7 +395,7 @@ function updateStatus(country, req) {
                                                                                                                         "status": "success",
                                                                                                                         "currencyCode": "MACH",
                                                                                                                         "amount": dbconfig.bonus.firstVtr,
-                                                                                                                        "mach": dbconfig.bonus.firstVtr,
+                                                                                                                        "price": dbconfig.bonus.firstVtr,
                                                                                                                         "regDate": util.formatDate(new Date().toString())  
                                                                                                                     }
                                                                                                 
@@ -394,7 +413,8 @@ function updateStatus(country, req) {
                                                                                                                                         "type": "withdraw",
                                                                                                                                         "itemId": result._doc.item._id,
                                                                                                                                         "vtr": result,
-                                                                                                                                        "mach": mach,
+                                                                                                                                        "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                                                                                        "price": vtr._doc.price,
                                                                                                                                         "reqUser":result._doc.from_userId,
                                                                                                                                         "regDate": util.formatDate(new Date().toString())
                                                                                                                                     };
@@ -437,7 +457,8 @@ function updateStatus(country, req) {
                                                                                                                     "type": "withdraw",
                                                                                                                     "itemId": result._doc.item._id,
                                                                                                                     "vtr": result,
-                                                                                                                    "mach": mach,
+                                                                                                                    "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                                                                    "price": vtr._doc.price,
                                                                                                                     "reqUser":result._doc.from_userId,
                                                                                                                     "regDate": util.formatDate(new Date().toString())
                                                                                                                 };
@@ -450,9 +471,9 @@ function updateStatus(country, req) {
                                                                                                                             "coinId" : coinId,
                                                                                                                             "category" : "deposit",
                                                                                                                             "status" : "success",
-                                                                                                                            "currencyCode" : "MACH",
-                                                                                                                            "amount" : mach,
-                                                                                                                            "mach" : mach,
+                                                                                                                            "currencyCode" : vtr._doc.cryptoCurrencyCode,
+                                                                                                                            "amount" : vtr._doc.price,
+                                                                                                                            "price" : vtr._doc.price,
                                                                                                                             "regDate" : util.formatDate(new Date().toString())
                                                                                                                         }
                                                                                                                         bitwebCoinHistorys.createCoinHistory(coinData);
@@ -526,7 +547,7 @@ function updateStatusByItemId(country, req) {
             .then(() => {
                 bitwebVtrs.getByItemId(itemId)
                     .then(vtr => {
-                        let mach = vtr._doc.mach;
+                        let mach = vtr._doc.price;
                         let from_userId = vtr._doc.from_userId;
                         let to_userId = vtr._doc.to_userId;
                         bitwebUsers.getById(country, to_userId)
@@ -534,13 +555,14 @@ function updateStatusByItemId(country, req) {
                                 let coinId = user.coinId;
                                 bitwebCoins.getByCoinId(country, coinId)
                                     .then(coin => {
-                                        let to_user_mach = coin.total_mach;
-                                        // let to_user_output_mach = (coin._doc.output_total_mach == undefined ? 0 : coin._doc.output_total_mach);
-                                        // if(to_user_mach >= to_user_output_mach) {
-                                        //     to_user_output_mach = (to_user_output_mach - mach < 0 ? 0 : to_user_output_mach - mach);
-                                        // }
-                                        to_user_mach = parseFloat((to_user_mach - vtr._doc.mach).toFixed(8));
-                                        if (tradeType == "buy" && to_user_mach < 0) {
+                                        let to_user_price = coin.total_mach;
+                                        if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                            to_user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+                                        } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                            to_user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+                                        }
+                                        to_user_price = parseFloat((to_user_price - vtr._doc.price).toFixed(8));
+                                        if (tradeType == "buy" && to_user_price < 0) {
                                             let msg = {
                                                 "status": "fail",
                                                 "code" : "E001",
@@ -553,7 +575,13 @@ function updateStatusByItemId(country, req) {
                                                 .then((result) => {
                                                     console.log('result=>', result);
                                                     if (tradeType == "buy") {
-                                                        let mach_json = {"total_mach": to_user_mach}
+                                                        let mach_json = {"total_mach": to_user_price}
+                                                        if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                            mach_json = {"total_btc": to_user_price};
+                                                        } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                            mach_json = {"total_ether": to_user_price};
+                                                        }   
+
                                                         bitwebCoins.updateTotalCoin(country, coinId, mach_json)
                                                             .then(() => {
                                                                 // console.log('result=>', result);
@@ -568,7 +596,8 @@ function updateStatusByItemId(country, req) {
                                                                             "type": "deposit",
                                                                             "itemId": result._doc.item._id,
                                                                             "vtr": result,
-                                                                            "mach": mach,
+                                                                            "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                            "price": vtr._doc.price,
                                                                             "reqUser":result._doc.to_userId,
                                                                             "regDate": util.formatDate(new Date().toString())
                                                                         };
@@ -582,9 +611,9 @@ function updateStatusByItemId(country, req) {
                                                                                     "coinId" : coinId,
                                                                                     "category" : "withdraw",
                                                                                     "status" : "success",
-                                                                                    "currencyCode" : "MACH",
-                                                                                    "amount" : mach,
-                                                                                    "mach" : mach,
+                                                                                    "currencyCode" : vtr._doc.cryptoCurrencyCode,
+                                                                                    "amount" : vtr._doc.price,
+                                                                                    "price" : vtr._doc.price,
                                                                                     "regDate" : util.formatDate(new Date().toString())
                                                                                 }
                                                                                 bitwebCoinHistorys.createCoinHistory(coinData);
@@ -628,10 +657,20 @@ function updateStatusByItemId(country, req) {
                                                                 let coinId = user.coinId;
                                                                 bitwebCoins.getByCoinId(country, coinId)
                                                                     .then(coin => {
-                                                                        let user_mach = coin.total_mach;
-                                                                        user_mach = parseFloat((user_mach + mach).toFixed(8));
-                                                                        //let user_output_mach = (coin.output_total_mach == undefined ? 0 : coin.output_total_mach) + mach;
-                                                                        let mach_json = {"total_mach": user_mach}
+                                                                        let user_price = coin.total_mach;
+                                                                        if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                                            user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+                                                                        } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                                            user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+                                                                        }
+                                                                        user_price = parseFloat((user_price + vtr._doc.price).toFixed(8));
+                                                                        
+                                                                        let mach_json = {"total_mach": user_price}
+                                                                        if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                                            mach_json = {"total_btc": user_price};
+                                                                        } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                                            mach_json = {"total_ether": user_price};
+                                                                        }  
                                                                         
                                                                         bitwebCoins.updateTotalCoin(country, coinId, mach_json)
                                                                             .then(() => {
@@ -647,7 +686,8 @@ function updateStatusByItemId(country, req) {
                                                                                                     "type": "withdraw",
                                                                                                     "itemId": result._doc.item._id,
                                                                                                     "vtr": result,
-                                                                                                    "mach": mach,
+                                                                                                    "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                                                    "price": vtr._doc.price,
                                                                                                     "reqUser":result._doc.from_userId,
                                                                                                     "regDate": util.formatDate(new Date().toString())
                                                                                                 };
@@ -660,9 +700,9 @@ function updateStatusByItemId(country, req) {
                                                                                                             "coinId" : coinId,
                                                                                                             "category" : "deposit",
                                                                                                             "status" : "success",
-                                                                                                            "currencyCode" : "MACH",
-                                                                                                            "amount" : mach,
-                                                                                                            "mach" : mach,
+                                                                                                            "currencyCode" : vtr._doc.cryptoCurrencyCode,
+                                                                                                            "amount" : vtr._doc.price,
+                                                                                                            "price" : vtr._doc.price,
                                                                                                             "regDate" : util.formatDate(new Date().toString())
                                                                                                         }
                                                                                                         bitwebCoinHistorys.createCoinHistory(coinData);
@@ -870,8 +910,16 @@ function deleteVtrs(country, vtrId, userId) {
                                 let coinId = user._doc.coinId;
                                 bitwebCoins.getCoinById(coinId)
                                     .then((coin) => {
-                                        let total_mach = coin._doc.total_mach + vtr._doc.item.total_price;
-                                        let data1 = {"total_mach": total_mach};
+                                        let total_price = parseFloat((coin._doc.total_mach + (vtr._doc.price == undefined ? vtr._doc.mach : vtr._doc.price)).toFixed(8));
+                                        let data1 = {"total_mach": total_price};
+                                        if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                            total_price = parseFloat((coin._doc.total_btc + vtr._doc.price).toFixed(8));
+                                            data1 = {"total_btc": total_price};
+                                        } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                            total_price = parseFloat((coin._doc.total_ether + vtr._doc.price).toFixed(8));
+                                            data1 = {"total_ether": total_price};
+                                        }
+
                                         bitwebCoins.updateCoinById(coinId, data1)
                                             .then(() => {
                                                 // OB에서는 임시로 값을 1로 함
@@ -886,7 +934,8 @@ function deleteVtrs(country, vtrId, userId) {
                                                                     "type": "cancel",
                                                                     "itemId": vtr._doc.item._id,
                                                                     "vtr": vtr,
-                                                                    "mach": vtr._doc.item.total_price,
+                                                                    "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                    "price": vtr._doc.price,
                                                                     "reqUser":vtr._doc.to_userId,
                                                                     "regDate": util.formatDate(new Date().toString())
                                                                 };
@@ -901,8 +950,9 @@ function deleteVtrs(country, vtrId, userId) {
                                                                             "category" : "deposit",
                                                                             "status" : "success",
                                                                             "currencyCode" : "MACH",
-                                                                            "amount" : vtr._doc.item.total_price,
-                                                                            "mach" : vtr._doc.item.total_price,
+                                                                            "currencyCode" : vtr._doc.cryptoCurrencyCode,
+                                                                            "amount" : vtr._doc.price,
+                                                                            "price" : vtr._doc.price,
                                                                             "regDate" : util.formatDate(new Date().toString())
                                                                         }
                                                                         bitwebCoinHistorys.createCoinHistory(coinData);
@@ -1047,8 +1097,16 @@ function deleteVtrsByItemId(country, itemId, userId) {
                                     let coinId = user._doc.coinId;
                                     bitwebCoins.getCoinById(coinId)
                                         .then((coin) => {
-                                            let total_mach = coin._doc.total_mach + vtr._doc.item.total_price;
-                                            let data1 = {"total_mach": total_mach};
+                                            let total_price = parseFloat((coin._doc.total_mach + (vtr._doc.price == undefined ? vtr._doc.mach : vtr._doc.price)).toFixed(8));
+                                            let data1 = {"total_mach": total_price};
+                                            if(vtr._doc.cryptoCurrencyCode == "BTC") {
+                                                total_price = parseFloat((coin._doc.total_btc + vtr._doc.price).toFixed(8));
+                                                data1 = {"total_btc": total_price};
+                                            } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
+                                                total_price = parseFloat((coin._doc.total_ether + vtr._doc.price).toFixed(8));
+                                                data1 = {"total_ether": total_price};
+                                            }
+
                                             bitwebCoins.updateCoinById(coinId, data1)
                                                 .then(() => {
                                                     // OB에서는 임시로 값을 1로 함
@@ -1065,7 +1123,8 @@ function deleteVtrsByItemId(country, itemId, userId) {
                                                                                 "type": "cancel",
                                                                                 "itemId": vtr._doc.item._id,
                                                                                 "vtr": vtr,
-                                                                                "mach": vtr._doc.item.total_price,
+                                                                                "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
+                                                                                "price": vtr._doc.price,
                                                                                 "reqUser":vtr._doc.to_userId,
                                                                                 "regDate": util.formatDate(new Date().toString())
                                                                             };
@@ -1079,24 +1138,25 @@ function deleteVtrsByItemId(country, itemId, userId) {
                                                                                         "category" : "deposit",
                                                                                         "status" : "success",
                                                                                         "currencyCode" : "MACH",
-                                                                                        "amount" : vtr._doc.item.total_price,
-                                                                                        "mach" : vtr._doc.item.total_price,
+                                                                                        "currencyCode" : vtr._doc.cryptoCurrencyCode,
+                                                                                        "amount" : vtr._doc.price,
+                                                                                        "price" : vtr._doc.price,
                                                                                         "regDate" : util.formatDate(new Date().toString())
                                                                                     }
                                                                                     bitwebCoinHistorys.createCoinHistory(coinData);
                                                                                     
                                                                                     console.log('cancel vtr : ', vtr);
-                                                                                    // 거래 취소 시 페르소나 API 호출
-                                                                                    let seller_userTag = vtrTemp._doc.seller_id;
-                                                                                    let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/cancel/'+vtr._doc._id+'/' + seller_userTag;
-                                                                                    request({uri: url, 
-                                                                                        method:'GET'}, function (error, response, body) {
-                                                                                        if (!error && response.statusCode == 200) {
-                                                                                            console.log('success : ', body);
-                                                                                        } else {
-                                                                                            console.log('error = ' + error);
-                                                                                        }
-                                                                                    });
+                                                                                    // // 거래 취소 시 페르소나 API 호출
+                                                                                    // let seller_userTag = vtrTemp._doc.seller_id;
+                                                                                    // let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/cancel/'+vtr._doc._id+'/' + seller_userTag;
+                                                                                    // request({uri: url, 
+                                                                                    //     method:'GET'}, function (error, response, body) {
+                                                                                    //     if (!error && response.statusCode == 200) {
+                                                                                    //         console.log('success : ', body);
+                                                                                    //     } else {
+                                                                                    //         console.log('error = ' + error);
+                                                                                    //     }
+                                                                                    // });
 
                                                                                     let result = {
                                                                                         "code": 31,

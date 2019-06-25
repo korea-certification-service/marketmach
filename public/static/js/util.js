@@ -334,6 +334,7 @@ function checkDecimal(evt) {
 }
 
 function resetSearchFilter(selector) {
+    console.log("set history")
     $(selector+ " input").each(function(){
         var $this = $(this);
         var $type = $this[0].type.toLowerCase();

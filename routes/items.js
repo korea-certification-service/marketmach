@@ -522,7 +522,7 @@ router.get('/service/:itemId', function (req, res, next) {
                                     .then(point => {
                                         let result = item;
                                         result['_doc']['phone'] = user._doc.phone;
-                                        result['_doc']['total_mach'] = coin._doc.total_mach;
+                                        result['_doc']['total_coins'] = coin;
                                         result['_doc']['total_point'] = point._doc.total_point;
 
                                         bitwebResponse.code = 200;

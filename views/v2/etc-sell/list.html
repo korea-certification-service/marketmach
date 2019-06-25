@@ -24,11 +24,14 @@
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
 
+            $(".srch_select").val("assets").attr("selected", "selected");
+            $("#search_item_name").val(title);
+            $(".form-control").val(title);
             $("#list").html('');
             loadGameList();
-            getSearchValue();
+            //getSearchValue();
             search();
-            
+            console.log(title);
             $('#btn_search').click(function() {
                 getSearchValue();
                 search();
@@ -195,6 +198,7 @@
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
 
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
@@ -205,7 +209,7 @@
                 
                 var money = point + '<span>Point</span>';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 if(i % 4 == 0) strDOM += '<li class="row">';

@@ -9,8 +9,8 @@
 
         $(document).ready(function() {
             if(bitberry_token != undefined && bitberry_token != "") {
-                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
-                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
+                $('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                //$('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
             }
 
             $('#deposit').on('click', function(){
@@ -45,7 +45,7 @@
         function getTotalEscrow() {
             $.ajax({
                 method: "GET",
-                url: "/v1/escrows/" + userId + "/total_escrow/mach"
+                url: "/v1/escrows/" + userId + "/total_escrow/coin"
             }).done(function (success) {
                 $("#machSell").text(success.data.sell_total_escrow);
                 $("#machBuy").text(success.data.buy_total_escrow);
@@ -90,7 +90,7 @@
                 for(var i=0;i<coinHistorys.length;i++) {
                     var extType = coinHistorys[i].extType;
                     var category = coinHistorys[i].category;
-                    var amount = numberWithCommas(coinHistorys[i].amount);
+                    var amount = numberWithCommas((coinHistorys[i].price == undefined ? coinHistorys[i].mach : coinHistorys[i].price));
                     var currency_code = coinHistorys[i].currencyCode;
                     // var mach = numberWithCommas(coinHistorys[i].mach);
                     var status = coinHistorys[i].status;
@@ -135,7 +135,7 @@
         function getEscrow() {
             $.ajax({
                 method: "GET",
-                url: "/v1/escrows/" + userId + "/list/mach"
+                url: "/v1/escrows/" + userId + "/list/coin"
             }).done(function (success) {
                 var col = '<col class="col4_1"><col class="col4_2"><col class="col4_3"><col class="col4_4">';
                 $('.colgroup_walletinfo').html(col);
@@ -153,13 +153,13 @@
                 }
 
                 for(var i=0;i<escrows.length;i++) {
-                    var amount = numberWithCommas(escrows[i].mach == undefined ? escrows[i].point : escrows[i].mach);
-                    var currency_code = escrows[i].mach == undefined ? "Point" : "MACH";
+                    var amount = numberWithCommas(escrows[i].price == undefined ? escrows[i].point : escrows[i].price);
+                    var currency_code = escrows[i].price == undefined ? "Point" : escrows[i].cryptoCurrencyCode;
                     var type = getEscrowType(escrows[i].type);
                     var regDate = escrows[i].regDate.substr(2);
 
                     result += '<tr>' + 
-                                    '<td>내부거래</td>' +                                     
+                                    '<td>마켓마하<br>거래</td>' +                                     
                                     '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>' + 

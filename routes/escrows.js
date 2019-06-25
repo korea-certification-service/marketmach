@@ -14,7 +14,7 @@ router.get('/:userId/list/:coinType', function (req, res, next) {
     }
     let coinType = req.params.coinType;
     
-    if(coinType == "mach") condition['mach'] = {$exists: true};
+    if(coinType == "coin") condition['price'] = {$exists: true};
     if(coinType == "point") condition['point'] = {$exists: true};
 
     let option = {

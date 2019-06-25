@@ -35,6 +35,10 @@
 .no_w100p_wrap .w50p{width: 50%;}
 .no_w100p_wrap .w40p{width: 40%;}
 .no_w100p_wrap .w30p{width: 30%;}
+@media (min-width: 320px) and (max-width: 375px){
+    .no_w100p_wrap .w30p{width: 40%;}
+    .no_w100p_wrap .w60p{width: 50%;}
+}
 
 .em_calc_ico{display: inline-block; margin-right: 10px; width: 24px; height: 24px; line-height: 24px; font-size: 22px; border-radius: 50%; text-align: center; color: #ffffff;}
 .em_calc_ico.plus{background-color: #0a73b8;}
@@ -543,14 +547,14 @@
 .item_select_area .item_detail_area{margin-top: 30px; text-align: center;}
 
 /*텍스트 검색 가이드 박스*/
-.sch_sec .search_bar .textSearchBox::after { content:""; display:block; clear: both; }
+/* .sch_sec .search_bar .textSearchBox::after { content:""; display:block; clear: both; }
 .sch_sec .search_bar .textSearchBox { width: 100%; min-height: 250px; border: 1px solid #000039; background-color: #fff; position: absolute; top: 50px; left: 0; z-index: 4; display: none; }
 
 .sch_sec .search_bar .show_textSearchBox { display: block; }
 .sch_sec .search_bar .show_textSearchBox_ctr { width: calc(100% / 3); min-height: 250px; display: block }
 
 .sch_sec .search_bar .textSearchBox_ctr { float: left; border-left: 1px solid #000039; display: none; }
-.sch_sec .search_bar .ctr01 { width: 100%; display: block; border: none; }
+.sch_sec .search_bar .ctr01 { width: 100%; display: block; border: none; } */
 
 /* OTC거래 */
 .otc_table td .ellipse{width: calc(100% - 30px)}

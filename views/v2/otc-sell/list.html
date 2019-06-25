@@ -21,8 +21,11 @@
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
 
+            $(".srch_select").val("otc").attr("selected", "selected");
+            $("#search_item_name").val(title);
+            $(".form-control").val(title);
             $("#list").html('');
-            getSearchValue();
+            //getSearchValue();
             search();
             
             $('#btn_search').click(function() {
@@ -114,6 +117,8 @@
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
                     // prime 상품의 경우: <div class="ico_special ico_prime"></div>
@@ -123,7 +128,7 @@
                 
                 var money = point + '<span>Point</span>';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 

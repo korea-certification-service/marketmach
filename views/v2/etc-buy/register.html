@@ -68,8 +68,12 @@
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
-                                        <em class="fc2">MACH</em>
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="number" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력.">
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
@@ -230,8 +234,10 @@
                 "clicked": 0
             };
             if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
                 data["price"] = $("#price").val();
             } else {
+                data["cryptoCurrencyCode"] = "MACH";
                 data["price"] = 0;
             }
             

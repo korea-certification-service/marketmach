@@ -90,13 +90,14 @@
                     }
                     
                     var title = buyList[i].item.title;
+                    var cryptoCurrencyCode = buyList[i].item.cryptoCurrencyCode == undefined ? "MACH" : buyList[i].item.cryptoCurrencyCode;
                     var price = numberWithCommas(buyList[i].item.price);
                     var point = numberWithCommas(buyList[i].item.point);
                     var status = "취소완료";
                     var refund = buyList[i].refund == true ? "(환불)" : "";
                     var money = point + ' Point';
                     if("<%=useBlockchain%>" =='Y') {
-                        money = price + ' MACH';
+                        money = price + ' ' + cryptoCurrencyCode;
                     }
                     
                     result += '<tr>' + 

@@ -43,14 +43,18 @@
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
-                                        <em class="fc2">MACH</em>
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="number" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력.">
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
                             <tr>
-                                <th>거래가격(Point)</th>
+                                <th>거래가격<br>(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
@@ -256,6 +260,7 @@
                 "status": 0,
                 "clicked": 0
             };
+            data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
             data["price"] = $("#price").val();
             data["currency"]="POINT";
             data["point"]=$("#point").val();

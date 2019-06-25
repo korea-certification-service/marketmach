@@ -98,7 +98,7 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 .header .sch_sec{position: relative; height: 105px;}
 .header .sch_sec .h_logo{float: left; margin-top: 30px; width: 210px; text-align: center;}
 .header .sch_sec .h_logo img{height: 40px;}
-.header .sch_sec .search_bar{float: left; margin-top: 26px; width: calc(100% - 360px); position: relative; }
+.header .sch_sec .search_bar{float: left; margin-top: 26px; width: calc(100% - 360px); position: relative; display: none; }
 .header .sch_sec .search_bar .ipt_search_bar{float: left; padding-left: 10px; width: calc(100% - 50px); height: 50px; border: 3px solid #000039;}
 .header .sch_sec .search_bar .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: #000039 url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 16.5px 15px; border:none;}
 .header .sch_sec .chatbot{position: absolute; right: 60px; top: 15px; /*float: left; margin: 15px 0 0 20px; width: 90px;*/}
@@ -614,6 +614,8 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 
 /*** material-icons ***/
 /* Rules for sizing the icon. */
+.add_circle_outline { margin-left: 5px; }
+.add_circle_outline > .material-icons { position: relative; top: 6px; }
 .material-icons.md-16 { font-size: 16px; }
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
@@ -625,3 +627,14 @@ input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+/*메인페이지 공지사항박스 레이아웃 수정코드*/
+.secNoti1 table tbody div { max-width: 282px;overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}
+
+@media (max-width: 1199px) {
+    .secNoti1 table tbody div { max-width: 234px; }
+}
+@media (max-width: 992px) {
+    .secNoti1 table tbody div { max-width: 638px; }
+}

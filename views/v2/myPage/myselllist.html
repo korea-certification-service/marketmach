@@ -11,7 +11,7 @@
         var item_title =  "<%=item_title%>";
         
         $(document).ready(function(){
-            resetSearchFilter(".search_filter");
+            //resetSearchFilter(".search_filter");
             $('#check_otc').hide();
             if(category == "otc") {
                 $('#check_otc').show();
@@ -139,13 +139,14 @@
                     }
                     
                     var title = buyList[i].title;
+                    var cryptoCurrencyCode = buyList[i].cryptoCurrencyCode == undefined ? "MACH" : buyList[i].cryptoCurrencyCode;
                     var price = numberWithCommas(buyList[i].price);
                     var point = numberWithCommas(buyList[i].point);
                     var status = getStatus(buyList[i].status);
                     var trade_type = replaceType(buyList[i].trade_type);
                     var money = point + ' Point';
                     if("<%=useBlockchain%>" =='Y' && buyList[i].status < 100) {
-                        money = price + ' MACH';
+                        money = price + ' ' + cryptoCurrencyCode;
                     }
                     
                     result += '<tr onclick="location.href=\''+url+'\'">' + 
