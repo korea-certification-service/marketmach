@@ -4,14 +4,22 @@
     var game_name;
     
     $(document).ready(function(){
-        $("#search_item_name, #m_search_item_name").keydown(function(key){
+        $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
             if(key.keyCode==13){
-                _mainSearch();
+                _mainSearch(key.currentTarget);
             }
         });
 
-        $("#main_search, #m_main_search").on('click', function(key){
-            _mainSearch();
+        $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
+            _mainSearch(key.currentTarget);
+        });
+
+        $(".srch_box_left").on("click", function(e){ //첫번째 카테고리를 눌렀을때
+            _mainSearch(e.target);
+        });
+
+        $(".srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
+            _mainSearch(e.target);
         });
 
         if(game_name != undefined) {
@@ -31,28 +39,65 @@
         }
     });
 
-    function _mainSearch() {
-        if(game_name != undefined) {
-            var games = $('#search_item_name').val().trim().split(' ');
-            game_name = games[0];
-            if(games.length == 2) {
-                game_server  = games[1];
-            } else if(games.length == 3) {
-                title = games[2];
+    function _mainSearch(target) {
+
+        if( 
+            target.id == 'main_search' || 
+            target.id == 'search_item_name' ||
+            target.id == 'm_main_search' || 
+            target.id == 'm_search_item_name'
+        ) {
+
+            var games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
+            var srchBoxLeftClassName = $(".srch_box_left ul li")[0].classList[0];
+
+            if( srchBoxLeftClassName == "game_width_server" ){
+                var searchValue = $(".srch_box_left ul li")[0].innerText.split(">");
+                var game_name = searchValue[0]
+                var game_server = searchValue[1]; 
+            } else {
+                game_name = games[0];
+                if(games.length == 2) {
+                    game_server  = games[1];
+                } else if(games.length == 3) {
+                    game_server  = games[1];
+                    title = games[2];
+                }
             }
-            $("#game-name").val(game_name).attr("selected", "selected");
-            $("#game-name").selectpicker('refresh');
-            selectServer();
-            setTimeout(function() {
-                $("#game-server").val(game_server).attr("selected", "selected");
-                $("#game-server").selectpicker('refresh');
-                $("#list").html('');
-                searchMain('sell');
-            });
+
+            _doSearch(game_name, game_server, games);
             
-        } else {
-            searchMain('sell');
-        }
+        } else if( target.nodeName == 'LI' ) {
+
+            if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_width_server"){
+                return;
+            }
+            if(target.classList[0] == "game_width_server" ){
+                var searchValue = target.innerText.split(">");
+                var game_name = searchValue[0]
+                var game_server = searchValue[1];
+            } else {
+                var game_name = $(".srch_box_left .clicked")[0].innerText;
+                var game_server = target.innerText;
+            }
+            _doSearch(game_name, game_server);
+        } 
+        // else {
+        //     console.log(1);
+        //     searchMain('sell');
+        // }
+    }
+
+    function _doSearch(game_name, game_server, games){
+        $("#game-name").val(game_name).attr("selected", "selected");
+        $("#game-name").selectpicker('refresh');
+        //selectServer();
+        setTimeout(function() {
+            $("#game-server").val(game_server).attr("selected", "selected");
+            $("#game-server").selectpicker('refresh');
+            $("#list").html('');
+            searchMain(game_name, game_server, games);
+        });
     }
 
     function loginChecker() {
@@ -96,24 +141,29 @@
         }
     }
 
-    function searchMain(tabName) {
-        if($("#search_item_name").val() == "" && $("#m_search_item_name").val() == "") {
-            alert("게임명/서버명을 입력하세여.\r\n예)로스트아크 이그하람");
-            return;
-        }
+    function searchMain(game_name, game_server, search_item_name) {
+        // if($("#search_item_name").val() == "" && $("#m_search_item_name").val() == "") {
+        //     alert("게임명/서버명을 입력하세여.\r\n예)로스트아크 이그하람");
+        //     return;
+        // }
 
         var category = "game";
         var trade_type = "sell";
-        var search_item_name = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
-        var game_name =  search_item_name[0];
-        var game_server =  search_item_name.length == 1 ? "" : search_item_name[1];
+        // var search_item_name = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
+        // var game_name =  search_item_name[0];
+        // var game_server =  search_item_name.length == 1 ? "" : search_item_name[1];
         var type = "";
         var title = "";
-        if(search_item_name.length < 2) {
-            title = search_item_name[2];
-        }
 
-        var query = "?category=" + category + "&game_name=" + game_name + "&game_server=" + game_server + "&trade_type=" + trade_type + "&type=" + type + "&title=" + title + "&pageIdx=0";
+        if( search_item_name != undefined ){
+            if(search_item_name.length > 2) {
+                title = search_item_name[2];
+            }
+        }
+        console.log(game_name);
+        console.log(game_server);
+        console.log(title);
+        var query = "?category=" + category + "&game_name=" + encodeURIComponent(game_name) + "&game_server=" + encodeURIComponent(game_server) + "&trade_type=" + trade_type + "&type=" + type + "&title=" + encodeURIComponent(title) + "&pageIdx=0";
         location.href = '/sells' + query;
     }
 
@@ -140,10 +190,14 @@
             </div>
             <section class="sch_sec cf">
                 <h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
-                <div class="search_bar cf">
+                
+                <!-- <div class="search_bar cf">
                     <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="게임명과 서버명 입력  ex)로스트아크 이그하람" autocomplete="off">
                     <input type="button" class="btn_search bgc1" id="main_search" value="검색" autocomplete=off>
-                </div>
+                </div> -->
+
+                <% include modules/search_guide.html %>
+                
                 <div class="chatbot jumpBot">
                     <%if(useBlockchain == 'Y') {%>
                     <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
