@@ -55,126 +55,125 @@ document.addEventListener("DOMContentLoaded", function () {
 
         var that = this;
 
-        inputSetTimeOut = setTimeout(function(){
-            if(event.data != " ") {
+        clearTimeout(inputSetTimeOut);
 
-                var val = that.value;
-                var srchVal = val.split(' ');
-        
-                var step01Rge = new RegExp(srchVal[0], "g");
-                var step02Reg = new RegExp(srchVal[1], "g");
-        
-                var _arr;
+        inputSetTimeOut = setTimeout(function(){
+ 
+            var val = that.value;
+            var srchVal = val.split(' ');
     
-                srchDel.style.display = "block"; 
+            var step01Rge = new RegExp(srchVal[0], "g");
+            var step02Reg = new RegExp(srchVal[1], "g");
     
-                //카테고리박스 초기화
-                removeList(leftUl);
-                removeList(rightUl);
-        
-                //카테고리박스 사이즈 초기화
-                setSize(1);
-        
-                //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
-                if( seletedValue == "games" ) { //게임자산일때
-                    
-                    //게임이름 또는 서버명으로 검색할때
-                    data.games.forEach(function(el){ 
+            var _arr;
+
+            srchDel.style.display = "block"; 
+
+            //카테고리박스 초기화
+            removeList(leftUl);
+            removeList(rightUl);
     
-                        if( el.game_name.match(step01Rge) != null && val != "" ) { //게임이름으로 검색할때
-        
-                            addList(el.game_name, leftUl);
-                             
+            //카테고리박스 사이즈 초기화
+            setSize(1);
     
-                        } else {
+            //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
+            if( seletedValue == "games" ) { //게임자산일때
+                
+                //게임이름 또는 서버명으로 검색할때
+                data.games.forEach(function(el){ 
+
+                    if( el.game_name.match(step01Rge) != null && val != "" ) { //게임이름으로 검색할때
     
-                            el.servers.forEach(function(e) { //서버명으로 검색할때
-    
-                                if(e.match(step01Rge) != null && val != "") {
-    
-                                    addList(el.game_name+">"+e, leftUl, "game_width_server");
-    
-                                }
-        
-                            });
-    
-                        } 
-    
-                    });
-    
-                    //게임이름과 서버명으로 검색했을때
-                    if( srchVal[1] != undefined && srchVal[0] != " " ) {
-    
-                        removeList(rightUl);
-                        setSize(0);
-                        
-                        _arr = data.games.filter(function(el){
-                            return el.game_name == srchVal[0]; //검색한 게임이름을 가지고있는 객체를 반환
-                        });
-    
-                        if( _arr.length == 0 ) { //첫번째 검색어와 일치되는 데이터가 없을때
-                            removeList(leftUl);
-                            removeList(rightUl);
-                            setSize(1);
-                            addList("검색결과가 없습니다", leftUl, "no_exist");
-                            var NoExist = document.querySelector(".no_exist");
-                            if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
-                            return;
-                        }
-  
-                        _arr[0].servers.forEach(function(el){ //검색한 게임이름을 가지고있는 객체의 servers배열을 탐색하여 리스트추가
+                        addList(el.game_name, leftUl);
                             
-                            if( el.match(step02Reg) != null && val != "" ) {
-    
-                                addList(el, rightUl);
-    
+
+                    } else {
+
+                        el.servers.forEach(function(e) { //서버명으로 검색할때
+
+                            if(e.match(step01Rge) != null && val != "") {
+
+                                addList(el.game_name+">"+e, leftUl, "game_width_server");
+
                             }
     
                         });
+
+                    } 
+
+                });
+
+                //게임이름과 서버명으로 검색했을때
+                if( srchVal[1] != undefined && srchVal[0] != " " ) {
+
+                    removeList(rightUl);
+                    setSize(0);
+                    
+                    _arr = data.games.filter(function(el){
+                        return el.game_name == srchVal[0]; //검색한 게임이름을 가지고있는 객체를 반환
+                    });
+
+                    if( _arr.length == 0 ) { //첫번째 검색어와 일치되는 데이터가 없을때
+                        removeList(leftUl);
+                        removeList(rightUl);
+                        setSize(1);
+                        addList("검색결과가 없습니다", leftUl, "no_exist");
+                        var NoExist = document.querySelector(".no_exist");
+                        if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
+                        return;
                     }
-        
-                } 
-                // else if( seletedValue == "assets" ) { //현물자산일때
-        
-                //     data.assets.forEach(function(el){
-        
-        
-                //         if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
-        
-                //             addList(el.category1, leftUl);
-        
-                //         }
-        
-                //     });
-        
-                // }
-    
-                if(  val == "" ){ //사용자가 텍스트를 모두 지웠을때
-    
-                    srchDel.style.display = "none";
-                    showLeftList();
-    
+
+                    _arr[0].servers.forEach(function(el){ //검색한 게임이름을 가지고있는 객체의 servers배열을 탐색하여 리스트추가
+                        
+                        if( el.match(step02Reg) != null && val != "" ) {
+
+                            addList(el, rightUl);
+
+                        }
+
+                    });
                 }
     
-                //검색결과없음 표시
-                if(leftUl.childElementCount == 0){
+            } 
+            // else if( seletedValue == "assets" ) { //현물자산일때
     
-                    addList("검색결과가 없습니다", leftUl, "no_exist");
+            //     data.assets.forEach(function(el){
     
-                    var NoExist = document.querySelector(".no_exist");
     
-                } else if(leftUl.childElementCount != 0 && NoExist ){
+            //         if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
     
-                    leftUl.removeChild( NoExist );
+            //             addList(el.category1, leftUl);
     
-                }
+            //         }
     
-                if( leftUl.childNodes[0] ) { leftUl.childNodes[0].classList.add("clicked"); }
-                if( rightUl.childNodes[0] ) { rightUl.childNodes[0].classList.add("clicked"); }
+            //     });
     
+            // }
+
+            if(  val == "" ){ //사용자가 텍스트를 모두 지웠을때
+
+                srchDel.style.display = "none";
+                showLeftList();
+
             }
-            clearTimeout(inputSetTimeOut);
-        },500);
+
+            //검색결과없음 표시
+            if(leftUl.childElementCount == 0){
+
+                addList("검색결과가 없습니다", leftUl, "no_exist");
+
+                var NoExist = document.querySelector(".no_exist");
+
+            } else if(leftUl.childElementCount != 0 && NoExist ){
+
+                leftUl.removeChild( NoExist );
+
+            }
+
+            if( leftUl.childNodes[0] ) { leftUl.childNodes[0].classList.add("clicked"); }
+            if( rightUl.childNodes[0] ) { rightUl.childNodes[0].classList.add("clicked"); }
+    
+        }, 500);
         
 
     });
