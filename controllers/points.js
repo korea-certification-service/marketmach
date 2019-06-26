@@ -146,8 +146,8 @@ function updateById(country, id, body) {
                         if(body.type == "withdraw") {
                             fee_rate = parseInt((body.amount * dbconfig.fee.point.withdraw).toFixed());
                             user_amount = body.amount - fee_rate;
-                            let user_point = point._doc.total_point - user_amount;
-                            if(user_point <= 0) {
+                            let user_point = point._doc.total_point - body.amount;
+                            if(user_point < 0) {
                                 let result = {
                                     "code":"E001",
                                     "msg":"포인트 출금 금액이 가지고 있는 금액보다 적습니다."

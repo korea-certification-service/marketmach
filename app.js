@@ -80,8 +80,9 @@ app.use(session({
     proxy: false,
     resave: true,
     saveUninitialized: true,
+    rolling: true,
     cookie: {
-        // maxAge: 60 * 60 * 24 * 30 * 10000 // 쿠키 유효기간 하루 (24시간) * 30일 //현재 무기한
+        //maxAge: 1000 * 60 * 60 // 쿠키 유효기간 하루 (24시간) * 30일 //현재 무기한
         expires: 1000 * 60 * 60 // 쿠키 유효기간 (1시간)
     }
 }));
