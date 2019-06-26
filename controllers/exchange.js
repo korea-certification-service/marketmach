@@ -61,7 +61,7 @@ function deposit(country, data) {
                                             "currencyCode": "MACH",
                                             "amountCurrency": "POINT",
                                             "amount": data.amount,
-                                            "mach": user_amount,
+                                            "price": user_amount,
                                             "regDate": util.formatDate(new Date().toString()) 
                                         }
 
@@ -143,7 +143,7 @@ function withdraw(country, data) {
                                             "rate":data.rate,
                                             "amountCurrency": "POINT",
                                             "amount": user_amount,
-                                            "mach": data.amount,
+                                            "price": data.amount,
                                             "fee": dbconfig.fee.exchange.withdraw,
                                             "regDate": util.formatDate(new Date().toString()) 
                                         }

@@ -89,7 +89,7 @@
 
                 for(var i=0;i<coinHistorys.length;i++) {
                     var extType = coinHistorys[i].extType;
-                    var category = coinHistorys[i].category;
+                    var category = getCoinType(coinHistorys[i].category);
                     var amount = numberWithCommas((coinHistorys[i].price == undefined ? coinHistorys[i].mach : coinHistorys[i].price));
                     var currency_code = coinHistorys[i].currencyCode;
                     // var mach = numberWithCommas(coinHistorys[i].mach);
@@ -99,13 +99,13 @@
                     result += '<tr>';
                         if(extType == "bitberry") {
                             result += '<td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>';
-                            result += '<td>'+category+'</td>';
+                            result += '<td>'+category.text+'</td>';
                             result +=   '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>';
                         } else {
                             result += '<td><img src="/static/img/symbol/symbol_mach.png" alt="mach"></td>';
-                            result += '<td>'+category+'</td>';
+                            result += '<td>'+category.text+'</td>';
                             result +=   '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>';
