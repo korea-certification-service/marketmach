@@ -28,6 +28,8 @@
             $('#disconnect').on('click',function() {
                 disconnect();
             });
+
+            //_PopupUI.closeAfterClick();
         });
 
         function setAuthCode() {
@@ -39,6 +41,9 @@
                 auth_code = success.data.code;
                 $('#view_auth_code').html('<em class="fcrd">'+auth_code+'</em>');
                 $('#connect').show();
+                _PopupUI.showWithDim(function(){
+                    //console.log("콜백 후")
+                });
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -63,6 +68,7 @@
                     alert('비트베리가 성공적으로 연결이 되었습니다.');
                     $('.not_connected').hide();
                     $('.connected').show();
+                    _PopupUI.hideWithDim();
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -121,11 +127,11 @@
                             </div>
                             <ul class="highligh_list fcrd">
                                 <li>※ 화면의 인증번호를 비트베리(BITBERRY) APP에 입력하여 마켓마하와 연결하세요.</li>
-                                <li>※ 비트베리APP에 인증번호 등록 후 아래 (비트베리 연결 완료) 버튼을 클릭해 주세요.</li>
+                                <li>※ 비트베리APP에 인증번호 등록 후 모달창의 (비트베리 연결 완료) 버튼을 클릭해 주세요.</li>
                             </ul>
-                            <div class="btn_align_c">
+                            <!-- <div class="btn_align_c">
                                 <button class="btn item_view btn_in_view1" id="connect">비트베리 연결 완료</button>
-                            </div> 
+                            </div>  -->
                         </div>
 
                         <%# 인증 후 %>
@@ -141,6 +147,16 @@
                             <div class="btn_align_c">
                                 <button class="btn btn_in_view1" id="disconnect">비트베리 연결 해제</button>
                             </div>  
+                        </div>
+
+                         <!-- 모달창 -->
+                         <div class="dim_all_area" style="display: none">
+                            <article class="modal_bitberry_deposit">
+                                <button id="btnmCloseModal" class="btn">X</button>
+                                <h1>비트베리 연결요청</h1>
+                                <p>비트베리 앱에서 연결승인후 아래의 확인 버튼을 눌러주세요.</p>
+                                <button id="connect" class="btn btn-danger">확인</button>
+                            </article>
                         </div>
 
                         <h2 class="tit_mypage dot_tit">비트베리 안내</h2>

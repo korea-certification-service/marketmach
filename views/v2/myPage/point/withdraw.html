@@ -74,7 +74,7 @@
                                         '<em class="fc3">'+point+'<span>Point</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+status+'</td>' + 
-                                    '<td>'+regDate+'</td>' + 
+                                    '<td>'+regDate.replace(' ','<br>')+'</td>' + 
                                 '</tr>';
                 }
 
@@ -121,7 +121,7 @@
                 return;
             }
 
-            if($("#amount").val() < 10000) {
+            if(parseInt($("#amount").val()) < 10000) {
                 alert("출금 금액은 최소 10,000KRW 부터 가능합니다.");
                 return;
             }

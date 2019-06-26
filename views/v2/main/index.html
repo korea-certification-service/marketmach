@@ -127,10 +127,11 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var title = data[i].title;
                 var money = point + '<span>Point</span>';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 result += '<div>' +
@@ -167,9 +168,10 @@
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -192,9 +194,10 @@
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -215,9 +218,10 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -236,9 +240,10 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -279,9 +284,10 @@
                 }
                 var title = data[i].title;
                 var regDate = data[i].regDate;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + '<span>Point</span>';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
                 
                 result += '<div class="bd_area">' +

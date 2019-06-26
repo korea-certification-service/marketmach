@@ -137,6 +137,7 @@ router.get('/all', function (req, res, next) {
     let data = {};
 
     data['trade_type'] = trade_type;
+    data['status'] = 0;
     data['pageIdx'] = pageIdx;
     data['perPage'] = perPage;
     data['category'] = category;
