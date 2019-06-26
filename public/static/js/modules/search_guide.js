@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 var _arr;
     
-                srchDel.style.display = "block";
+                srchDel.style.display = "block"; 
     
                 //카테고리박스 초기화
                 removeList(leftUl);
