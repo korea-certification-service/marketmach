@@ -245,7 +245,7 @@
 
         function submit() {
             var country = "<%= country %>";
-            if ($("#item-game-name option:selected").val() == "false") {
+            if ($("#item-game-name option:selected").val() == "") {
                 alert('게임명을 선택하세요.');
                 return false;
             } else if ($("#game-server option:selected").val() == "") {
@@ -260,11 +260,11 @@
             } else if ($("#buyer_game_character").val() == "") {
                 alert('구매자 케릭터명을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                alert('거래 가격(Point)을 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');

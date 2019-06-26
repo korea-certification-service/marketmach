@@ -78,7 +78,7 @@
                                                 <option value="ETH">ETH</option>
                                                 <option value="MACH" selected>MACH</option>
                                             </select>
-                                            <input type="number" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력.">                                            
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력.">                                            
                                         </div>
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
@@ -88,7 +88,7 @@
                                     <th>거래가격<br>(Point)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                             <em class="fc2" id="currencyName"></em>
                                         </div>
                                     </td>
@@ -397,7 +397,7 @@
 
         function submit() {
             var country = "<%= country %>";
-            if ($("#item-game-name option:selected").val() == "false") {
+            if ($("#item-game-name option:selected").val() == "") {
                 alert('게임명을 선택하세요.');
                 return false;
             } else if ($("#game-server option:selected").val() == "") {
@@ -412,11 +412,11 @@
             } else if ($("#seller_game_character").val() == "") {
                 alert('판매자 케릭터명을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                alert('거래 가격(Point)을 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
