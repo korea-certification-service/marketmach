@@ -12,8 +12,10 @@
         }); 
 
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
-            if($(".srch_box_left ul li")[0].classList[0] == "no_exist"){
-                return;
+            if(selecValue == "games") {
+                if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                    return;
+                }
             }
             if(key.keyCode==13){
                 _mainSearch(key.currentTarget);
@@ -189,14 +191,14 @@
         } else if(selecValue == "assets") {
 
             query = "?category=etc&trade_type=sell" + 
-                    "&title=" + search_item_name[0]
+                    "&title=" + encodeURIComponent(search_item_name[0])
 
             location.href = '/etc-sells' + query;
 
         } else if(selecValue == "otc") {
 
             query = "?category=otc&trade_type=sell" + 
-                    "&title=" + search_item_name[0]
+                    "&title=" + encodeURIComponent(search_item_name[0])
 
             location.href = '/otc-sells' + query;
 
