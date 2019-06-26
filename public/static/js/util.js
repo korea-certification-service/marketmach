@@ -242,6 +242,45 @@ function getEscrowType(value) {
     }
 }
 
+function getCoinType(value) {
+    if(value == "deposit") {
+        return {
+            'text':'입금',
+            'className': 'icon0'
+        };
+    } else if(value == "event-airdrop") {
+        return {
+            'text':'Airdrop',
+            'className': 'icon1'
+        };
+    } else if(value == "event-recommander") {
+        return {
+            'text':'추천인 이벤트',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-deposit") {
+        return {
+            'text':'MACH로 입금',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-withdraw") {
+        return {
+            'text':'Point로 출금',
+            'className': 'icon2'
+        };
+    } else if(value == "withdraw") {
+        return {
+            'text':'출금',
+            'className': 'icon2'
+        };
+    } else {
+        return {
+            'text':'-',
+            'className': 'icon2'
+        };
+    }
+}
+
 function checkStrNum(value) {
     //var idReg = /^[A-Za-z0-9]{6,20}$/g;
     var idReg =  /^[a-z]+[a-z0-9]{5,19}$/g;

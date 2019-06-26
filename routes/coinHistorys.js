@@ -53,7 +53,9 @@ router.get('/:coinId/list', function (req, res, next) {
     };
 
     if(trade_type == "event") {
-        trade_type = ['deposit','event-signup','event-recommander','event-airdrop'];
+        trade_type = ['deposit','event-signup','event-recommander','event-airdrop', 'exchange-deposit'];
+    } else {
+        trade_type = ['withdraw','exchange-withdraw']
     }
 
     var bitwebResponse = new BitwebResponse();
