@@ -63,6 +63,7 @@
         ) {
             var games;
             if(selecValue == "games"){ //게임자산일떄
+                console.log("게임");
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
@@ -80,7 +81,8 @@
                     }
                 }
             } else { //현물, OTC일떄
-                games = $("#search_item_name, #m_search_item_name").val();
+                console.log("자산, otc");
+                games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
             }
             console.log(games);
             _doSearch(game_name, game_server, games);
