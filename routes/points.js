@@ -514,17 +514,12 @@ function _tcpConnection(reqData, bitwebResponse, res) {
         this.setTimeout(5000);
         this.setEncoding('utf8');
         _writeData(connection, reqData);
+        let data = {'msg' : 'none'};
 
         this.on('data', function(resData) {
             console.log(" From Server: " + resData.toString());
+            data = resData;
             this.end();
-            bitwebResponse.code = 200;
-            bitwebResponse.data = {
-                "result": result,
-                "reqData": reqData,
-                "resData": resData
-            };
-            res.status(200).send(bitwebResponse.create())
         });
     
         this.on('end', function() {
@@ -538,6 +533,12 @@ function _tcpConnection(reqData, bitwebResponse, res) {
         });
         this.on('close', function() {
             console.log('Socket Closed');
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "reqData": reqData,
+                "resData": data
+            };
+            res.status(200).send(bitwebResponse.create())
         });
     });
 }
