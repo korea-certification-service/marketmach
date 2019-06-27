@@ -477,29 +477,30 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     let PinNo = cryptojs.TripleDES.encrypt("5746606380005303",dbconfig.happymoney.onlineId).toString();
     let PinDate = cryptojs.TripleDES.encrypt("20190422",dbconfig.happymoney.onlineId).toString();
     
-    let reqData = {
-        "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
-        "DocDate": today,
-        "DocCode": "ON",
-        "DocCnt":"0001",
-        "FldCnt":"0017",
-        "EncryptType": "TDES",
-        "MerchantID": dbconfig.happymoney.onlineId,
-        "MerchantPwd": MerchantPwd,
-        "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
-        "DealCallDate":today.substr(0,7),
-        "DealCallTime": today.substr(8),
-        "QueryKind": "G2",
-        "QueryGiftQty":1,
-        "PinNo": PinNo,
-        "PinDate": PinDate,
-        "BranchCode": "",
-        "SalesDate": today.substr(0,7),
-        "PosNo": "",
-        "InputKind":""
-    }
+    // let reqData = {
+    //     "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
+    //     "DocDate": today,
+    //     "DocCode": "ON",
+    //     "DocCnt":"0001",
+    //     "FldCnt":"0017",
+    //     "EncryptType": "TDES",
+    //     "MerchantID": dbconfig.happymoney.onlineId,
+    //     "MerchantPwd": MerchantPwd,
+    //     "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
+    //     "DealCallDate":today.substr(0,7),
+    //     "DealCallTime": today.substr(8),
+    //     "QueryKind": "G2",
+    //     "QueryGiftQty":1,
+    //     "PinNo": PinNo,
+    //     "PinDate": PinDate,
+    //     "BranchCode": "",
+    //     "SalesDate": today.substr(0,7),
+    //     "PosNo": "",
+    //     "InputKind":""
+    // }
     //상품권 조회
-    // let reqData = JSON.stringify(req.body);
+    let reqData = "0610^" + today + "^ON^0001^0017^TDES^" + dbconfig.happymoney.onlineId + "^" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
+                    + "^" + today.substr(0,8) + "^" + today.substr(8) + "^G2^1^" + PinNo + "^" + PinDate + "^^" + today.substr(0,8) + "^^";
     console.log('reqData => ', reqData);
     _tcpConnection(reqData, bitwebResponse, res);
 });
