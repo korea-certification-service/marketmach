@@ -531,7 +531,7 @@ function _tcpConnection(reqData, bitwebResponse, res) {
 }
 
 function _writeData(connection, reqData, bitwebResponse, res) {
-    var success = !connection.write(reqData);
+    var success = !connection.write(JSON.stringify(reqData));
     console.log(success);
     if (!success){
         (function(connection, reqData){
