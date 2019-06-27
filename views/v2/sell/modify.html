@@ -479,7 +479,7 @@
             }).done(function (success) {
                 // console.log(success);
                 if(sel_files.length == 0) {
-                    location.href = '/sells/detail/' + itemId;
+                    location.replace('/sells/detail/' + itemId);
                 } else {
                     submitAction(itemId);
                 }
@@ -506,7 +506,7 @@
                 data: images
             }).done(function (success) {
                 console.log(success);
-                location.href = '/sells/detail/' + itemId;
+                location.replace('/sells/detail/' + itemId);
             }).fail(function (fail) {
                 console.log('실패',fail);
             })

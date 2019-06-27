@@ -20,14 +20,14 @@ function getData(path){
 //ONLY PURE JAVASCRTPT
 document.addEventListener("DOMContentLoaded", function () { 
 
-    var srchSelect = document.querySelector(".srch_select");
+    var srchSelect = document.querySelector(".m_srch_select");
     var seletedValue;
-    var srchInput = document.querySelector("#search_item_name");
-    var srchBoxWrap = document.querySelector(".srch_bottomWrap");
-    var srchDel = document.querySelector(".srch_del");
+    var srchInput = document.querySelector("#m_search_item_name");
+    var srchDel = document.querySelector(".m_srch_del");
+    var srchBoxWrap = document.querySelector(".m_srch_bottomWrap");
 
-    var srchBoxLeft = document.querySelector(".srch_box_left");
-    var srchBoxRight = document.querySelector(".srch_box_right");
+    var srchBoxLeft = document.querySelector(".m_srch_box_left");
+    var srchBoxRight = document.querySelector(".m_srch_box_right");
 
     var leftUl = srchBoxLeft.children[0];
     var rightUl = srchBoxRight.children[0];
@@ -200,11 +200,11 @@ document.addEventListener("DOMContentLoaded", function () {
         srchBoxWrap.style.display = "none";
         //showed = true;
         if(srchSelect.value == "games"){
-            srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
+            srchInput.setAttribute("placeholder", "게임검색이 가능합니다.");
         } else if(srchSelect.value == "assets"){
-            srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
+            srchInput.setAttribute("placeholder", "자산검색이 가능합니다.");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
+            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다.");
         }
         
     });
@@ -229,10 +229,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if(e.target.offsetParent){
             if( 
-                srchSelect.value == "games" && e.target.id == "search_item_name" ||
-                srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap"
+                srchSelect.value == "games" && e.target.id == "m_search_item_name" ||
+                srchSelect.value == "games" && e.target.offsetParent.classList[1] == "m_srch_bottomWrap"
             ){
-
                 srchBoxWrap.style.display = "block";
                 if(showed){
                     showLeftList();

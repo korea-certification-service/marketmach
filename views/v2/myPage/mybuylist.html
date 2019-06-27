@@ -20,7 +20,7 @@
             if(category == "") {
                 category = "game";
             }
-            getItemList();
+            //status = $("[name=status]:checked").val();
             
             if(category == "game") {
                 $('#myItemTitle').text("게임 아이템");
@@ -32,10 +32,10 @@
                 $('#myItemTitle').text("자산거래");
                 $('#table_category').text('카테고리')
             }
-            $("#"+category).prop('checked', true);
+            //$("#"+category).prop('checked', true);
             setItemStatus(status);
             $('#title').val(item_title);
-            
+
             $("input[name=category]").on('click', function() {
                 category = $("[name=category]:checked").val();
                 if(category == "game") {
@@ -80,9 +80,33 @@
             $("#btn_search").on("click", function(e) {
                 getItemList();
             });
-        });
 
+            remeberChecked();
+        });
+        function remeberChecked(){
+            category = $("[name=category]:checked").val();
+            if(category == "game") {
+                $('#myItemTitle').text("게임 아이템");
+                $('#table_category').text('게임>서버')
+            } else if(category == "otc") {
+                $('#myItemTitle').text("OTC");
+                $('#table_category').text('카테고리')
+            } else {
+                $('#myItemTitle').text("자산거래");
+                $('#table_category').text('카테고리')
+            }
+
+            if(category == "otc") {
+                $('#check_otc').show();
+            } else {
+                $('#check_otc').hide();
+            }
+            status = $("[name=status]:checked").val();
+
+            getItemList();
+        }
         function getItemList() {
+            console.log("call ajax");
             var param = "?category=" + category;
             if(pageIdx != undefined) {
                 param += "&pageIdx=" + pageIdx;

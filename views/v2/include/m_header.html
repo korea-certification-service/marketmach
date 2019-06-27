@@ -87,10 +87,35 @@
                     </button>
                 </li>
             </ul>
-            <div class="search_bar cf">
+            <div class="srch_module">
+                <div class="srch_topWrap">
+                    <select class="srch_select m_srch_select">
+                        <option value="games">게임아이템</option>
+                        <option value="assets">자산거래</option>
+                        <option value="otc">OTC거래</option>
+                    </select>
+                    <input class="srch_input ipt_search_bar" id="m_search_item_name" type="text" placeholder="게임검색이 가능합니다." autocomplete="off"/>
+                    <input type="button" class="btn_search bgc1 .btn_search" id="m_main_search" value="검색" autocomplete=off>
+                    <div class="srch_del m_srch_del"></div>
+                </div>
+                <div class="srch_bottomWrap m_srch_bottomWrap">
+                    <div class="srch_box_left m_srch_box_left">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                    <div class="srch_box_right m_srch_box_right">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <script src="/static/js/modules/m_search_guide.js"></script>
+            <!-- <div class="search_bar cf">
                 <input type="text" class="ipt_search_bar" id="m_search_item_name">
                 <input type="button" class="btn_search bgc1" id="m_main_search" value="검색">
-            </div>              
+            </div>               -->
         </section>
         <!-- 모바일 네비게이션 -->
         <nav class="mob_nav">

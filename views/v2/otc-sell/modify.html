@@ -322,7 +322,7 @@
             }).done(function (success) {
                 // console.log(success);
                 if(sel_files.length == 0) {
-                    location.href = '/otc-sells/detail/' + itemId;
+                    location.replace('/otc-sells/detail/' + itemId);
                 } else {
                     submitAction(itemId);
                 }
@@ -351,7 +351,7 @@
                 //console.log(success);
                 
                 $("#ajaxSpiner").hide(); // spinner
-                location.href = '/otc-sells/detail/' + itemId;
+                location.replace('/otc-sells/detail/' + itemId);
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $("#ajaxSpiner").hide(); // spinner

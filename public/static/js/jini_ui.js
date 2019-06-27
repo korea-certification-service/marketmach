@@ -1,3 +1,4 @@
+//마하 및 포인트를 입력하는 인풋태그의 maxLength값을 설정하는 스크립트
 window.addEventListener("load", function(){
     var price = document.querySelector("#price");
     var point = document.querySelector("#point");

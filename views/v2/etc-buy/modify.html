@@ -303,7 +303,7 @@
                 }
             }).done(function (success) {
                 // console.log(success);
-                location.href = '/etc-buys/detail/' + itemId;
+                location.replace('/etc-buys/detail/' + itemId);
             }).fail(function (fail) {
                 $('#btnSubmit').attr('disabled', false);
             })

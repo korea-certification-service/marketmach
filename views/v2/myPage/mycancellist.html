@@ -99,17 +99,21 @@
                     if("<%=useBlockchain%>" =='Y') {
                         money = price + ' ' + cryptoCurrencyCode;
                     }
+                    var ico_item = "";
+                    if(buyList[i].item.type == "item") {
+                        ico_item = "ico_item";
+                    }
                     
                     result += '<tr>' + 
                                 '<td>'+category+'</td>' + 
                                 '<td>' + 
-                                    '<span class="btn_cmm_bd ico_item">'+item_type.text+'</span>' + 
+                                    '<span class="btn_cmm_bd '+ico_item+'">'+item_type.text+'</span>' + 
                                     '<div class="ellipse">' + title +
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+money+'</td>' + 
                                 '<td>' + 
-                                    '<span class="btn_cmm_bd ico_item">'+status + '<br>' + refund + '</span>' + 
+                                    '<span class="btn_cmm_bd">'+status + '<br>' + refund + '</span>' + 
                                 '</td>' + 
                                 '<td>'+regDate+'</td>' + 
                             '</tr>';
