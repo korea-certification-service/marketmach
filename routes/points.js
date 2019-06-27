@@ -505,15 +505,26 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     console.log('reqData => ', reqData);
     let result = !connection.write(JSON.stringify(reqData));
     console.log(result);
-    if(result) {
-        bitwebResponse.code = 200;
-        bitwebResponse.data = result;
-        res.status(200).send(bitwebResponse.create())
+    if (!result){
+        (function(connection, reqData){
+            connection.once('drain', function(){
+                writeData(connection, reqData);
+            });
+        })(connection, reqData);
     } else {
-        bitwebResponse.code = 500;
-        bitwebResponse.message = result;
-        res.status(500).send(bitwebResponse.create())
-    }
+        connection.on('data', function(data) {
+            console.log(" From Server: " + data.toString());
+            this.end();
+        });
+
+        bitwebResponse.code = 200;
+        bitwebResponse.data = {
+            "result": result,
+            "reqData": reqData,
+            "resData": data
+        };
+        res.status(200).send(bitwebResponse.create())
+    } 
 });
 
 function _tcpConnection() {
@@ -523,13 +534,8 @@ function _tcpConnection() {
         console.log('   local = %s:%s', this.localAddress, this.localPort);
         console.log('   remote = %s:%s', this.remoteAddress, this.remotePort);
         
-        this.setTimeout(500);
+        //this.setTimeout(500);
         this.setEncoding('utf8');
-
-        this.on('data', function(data) {
-            console.log(" From Server: " + data.toString());
-            this.end();
-        });
     
         this.on('end', function() {
             console.log(' Client disconnected');
