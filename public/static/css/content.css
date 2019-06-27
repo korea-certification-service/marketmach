@@ -87,7 +87,7 @@
 .board_sec .board_tit h1 span em{font-weight: normal;}
 .board_sec .board_tit button{float: right;}
 .board_sec .mrg_cell .btn_align_c{margin: 20px 0;}
-.board_sec .mrg_cell #fullImg{margin: 20px 0;}
+.board_sec .mrg_cell #fullImg{margin: 20px 0; text-align: center;}
 .board_sec .item_type{margin: 0 0 0 5px;}
 .board_sec .delivery_type{margin: 0 0 0 5px; padding: 2px 5px;}
 /* 게시판 상단 검색영역 */ 
@@ -207,20 +207,18 @@
 
 /* 이미지 업로드 부분 */
 .input_wrap{text-align: right;}
-.input_wrap input[type=file] {display: none;}
-
+/*.input_wrap input[type=file] {display: none;}*/
+.input_wrap .input_imgs {width: 0; height: 0; overflow: hidden;}
 .imgs_wrap .list_of_thumbnail{}
-.imgs_wrap .list_of_thumbnail li{float: left; display: inline-block; width: 120px; text-align: center;}
+.imgs_wrap .list_of_thumbnail li{float: left; display: inline-block; width: 120px; height: 70px; text-align: center;}
 .imgs_wrap .list_of_thumbnail li .btn{color: #fff; background-color: #28a745; border-color: #28a745;}
+.imgs_wrap .thumbnail_btn_list li{float: left; width: 120px; text-align: center;}
+.imgs_wrap .thumbnail_btn_list li .label_input_imgs{display: inline-block; padding: 0.313rem 0.75rem; background-color: #28a745; border-color: #28a745; border-radius: 0.25rem; color: #fff;}
 
 .imgs_wrap .thumbnail_box{position: relative; /*display: inline-block;*/ width: 100px;height: 50px;margin: 10px; text-align: center; background-color: #000000;}
 .imgs_wrap .thumbnail_box .img_view_area{height: 50px; overflow: hidden;}
 .imgs_wrap .thumbnail_box a{position: absolute; right: 0; bottom: 0; display: inline-block; width: 20px; height: 20px; border: 1px solid #000; background: url(/static/img/sub/ico_img_del.png) 50% 50% no-repeat; background-size: 80% 80%;}
-.imgs_wrap img{
-    height: 100%;
-    max-width: initial;
-    /* transform: translateX(-33.33%); */
-}
+.imgs_wrap img{height: 100%;max-width: initial; /* transform: translateX(-33.33%); */}
 /* 이미지 업로드 : 로직 변경 */
 .btn_img_upload_wrap{font-size: 0;}
 .btn_img_upload_wrap input[type=file] {display: none;}
