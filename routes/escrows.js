@@ -74,8 +74,8 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
             }
 
             let result = {
-                "buy_total_escrow": buyEscrow,
-                "sell_total_escrow": sellEscrow
+                "buy_total_escrow_point": buyEscrow,
+                "sell_total_escrow_point": sellEscrow
             }
             bitwebResponse.code = 200;
             bitwebResponse.data = result;
@@ -90,21 +90,45 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     } else {
         controllerVtrs.getTradingItems(country, condition)
         .then(vtrs => {
-            let buyEscrow = 0;
-            let sellEscrow = 0;
+            let buyEscrowBtc = 0;
+            let buyEscrowEth = 0;
+            let buyEscrowMach = 0;
+            let sellEscrowBtc = 0;
+            let sellEscrowEth = 0;
+            let sellEscrowMach = 0;
             for(var i in vtrs) {
                 if(vtrs[i]._doc.from_userId == userId) {
-                    sellEscrow = sellEscrow + vtrs[i]._doc.mach;
+                    if(vtrs[i]._doc.cryptoCurrencyCode == "BTC") {
+                        sellEscrowBtc = parseFloat((sellEscrowBtc + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "ETH") {
+                        sellEscrowEth = parseFloat((sellEscrowEth + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
+                        sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.price).toFixed(8));
+                    } else {
+                        sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                    }
                 }
 
                 if(vtrs[i]._doc.to_userId == userId) {
-                    buyEscrow = buyEscrow + vtrs[i]._doc.mach;
+                    if(vtrs[i]._doc.cryptoCurrencyCode == "BTC") {
+                        buyEscrowBtc = parseFloat((buyEscrowBtc + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "ETH") {
+                        buyEscrowEth = parseFloat((buyEscrowEth + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
+                        buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.price).toFixed(8));
+                    } else {
+                        buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                    }
                 }
             }
 
             let result = {
-                "buy_total_escrow": buyEscrow,
-                "sell_total_escrow": sellEscrow
+                "buy_total_escrow_btc": buyEscrowBtc,
+                "buy_total_escrow_eth": buyEscrowEth,
+                "buy_total_escrow_mach": buyEscrowMach,
+                "sell_total_escrow_btc": sellEscrowBtc,
+                "sell_total_escrow_eth": sellEscrowEth,
+                "sell_total_escrow_mach": sellEscrowMach
             }
             bitwebResponse.code = 200;
             bitwebResponse.data = result;
