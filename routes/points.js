@@ -513,7 +513,19 @@ function _tcpConnection(reqData, bitwebResponse, res) {
         
         this.setTimeout(5000);
         this.setEncoding('utf8');
-        _writeData(connection, reqData, bitwebResponse, res);
+        _writeData(connection, reqData);
+
+        this.on('data', function(resData) {
+            console.log(" From Server: " + resData.toString());
+            this.end();
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "result": result,
+                "reqData": reqData,
+                "resData": resData
+            };
+            res.status(200).send(bitwebResponse.create())
+        });
     
         this.on('end', function() {
             console.log(' Client disconnected');
@@ -530,28 +542,15 @@ function _tcpConnection(reqData, bitwebResponse, res) {
     });
 }
 
-function _writeData(connection, reqData, bitwebResponse, res) {
+function _writeData(connection, reqData) {
     var success = connection.write(JSON.stringify(reqData));
     console.log(success);
     if (!success){
         (function(connection, reqData){
             connection.once('drain', function(){
-                _writeData(connection, reqData, bitwebResponse, res);
+                _writeData(connection, reqData);
             });
         })(connection, reqData);
-    } else {
-        connection.on('data', function(resData) {
-            console.log(" From Server: " + resData.toString());
-            this.end();
-            bitwebResponse.code = 200;
-            bitwebResponse.data = {
-                "result": result,
-                "reqData": reqData,
-                "resData": resData
-            };
-            res.status(200).send(bitwebResponse.create())
-        });
-        return success;
     }
 }
 
