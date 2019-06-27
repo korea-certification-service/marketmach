@@ -316,6 +316,7 @@
 .table_total_escrow .td_grey{background: #bfbfbf !important;}
 .table_total_escrow thead th{height: 50px;  border-bottom: 5px solid #000038;}
 .table_total_escrow thead th img{width: 30px;}
+.table_total_escrow thead th img[alt="escrow"]{width: 14px;}
 .table_total_escrow tbody td{height: 70px; }
 .table_total_escrow tbody .first_tr *{background-color: #e8f2fc; }
 .tab_board{}
