@@ -503,27 +503,20 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     //상품권 조회
     // let reqData = JSON.stringify(req.body);
     console.log('reqData => ', reqData);
-    let result = !connection.write(JSON.stringify(reqData));
+    let result = _writeData(connection, JSON.stringify(reqData));
     console.log(result);
-    if (!result){
-        (function(connection, reqData){
-            connection.once('drain', function(){
-                writeData(connection, reqData);
-            });
-        })(connection, reqData);
-    } else {
+    if (result){
         connection.on('data', function(data) {
             console.log(" From Server: " + data.toString());
             this.end();
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "result": result,
+                "reqData": reqData,
+                "resData": data
+            };
+            res.status(200).send(bitwebResponse.create())
         });
-
-        bitwebResponse.code = 200;
-        bitwebResponse.data = {
-            "result": result,
-            "reqData": reqData,
-            "resData": data
-        };
-        res.status(200).send(bitwebResponse.create())
     } 
 });
 
@@ -552,6 +545,19 @@ function _tcpConnection() {
     });
 
     return connection;
+}
+
+function _writeData(socket, data) {
+    var success = !socket.write(data);
+    if (!success){
+    (function(socket, data){
+        socket.once('drain', function(){
+                _writeData(socket, data);
+            });
+        })(socket, data);
+    } else {
+        return success;
+    }
 }
 
 module.exports = router;
