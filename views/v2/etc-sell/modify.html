@@ -557,7 +557,7 @@
             }).done(function (success) {
                 // console.log(success);
                 if(sel_files.length == 0) {
-                    location.href = '/etc-sells/detail/' + itemId;
+                    location.replace('/etc-sells/detail/' + itemId);
                 } else {
                     submitAction(itemId);
                 }

@@ -172,7 +172,7 @@
                 }
             }).done(function (success) {
                 // console.log(success);
-                location.href = '/otc-buys/detail/' + itemId;
+                location.replace('/otc-buys/detail/' + itemId);
             }).fail(function (fail) {
                 $('#btnSubmit').attr('disabled', false);
             })

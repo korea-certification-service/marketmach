@@ -326,7 +326,7 @@
                 }
             }).done(function (success) {
                 // console.log(success);
-                location.href = '/buys/detail/' + itemId;
+                location.replace('/buys/detail/' + itemId);
             }).fail(function (fail) {
                 $('#btnSubmit').attr('disabled', false);
             })
