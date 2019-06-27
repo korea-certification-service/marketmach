@@ -39,16 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var inputSetTimeOut;
 
+    //showLeftList();
+
     //[ 포커스 이벤트 ] : 셀렉트옵션에 해당하는 리스트들을 출력하고 검색가이드박스를 보여줌
-    srchInput.addEventListener("focus", function(){
-        if(srchSelect.value == "games"){
-            srchBoxWrap.style.display = "block";
-            if(showed){
-                showLeftList();
-            }
-            showed = false;
-        }
-    });
+    // srchInput.addEventListener("focus", function(){
+    //     if(srchSelect.value == "games"){
+    //         srchBoxWrap.style.display = "block";
+    //         if(showed){
+    //             showLeftList();
+    //         }
+    //         showed = false;
+    //     }
+    // });
 
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     srchInput.addEventListener("input", function(event){
@@ -212,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //[ 클릭 이벤트 ] : 왼쪽 카테고리에 리스트 추가
     srchSelect.addEventListener("click",function(e){
         srchBoxWrap.style.display = "none";
-        showed = true;
+        //showed = true;
         if(srchSelect.value == "games"){
             srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
         } else if(srchSelect.value == "assets"){
@@ -238,19 +240,26 @@ document.addEventListener("DOMContentLoaded", function () {
         showLeftList();
     });
 
-    //[ 클릭 이벤트 ] : 검색가이드박스가 사라짐
+    //[ 클릭 이벤트 ] : 검색가이드박스를 보여주거나 없애줌
     document.addEventListener("click", function(e){
+        if(e.target.offsetParent){
+            if( 
+                srchSelect.value == "games" && e.target.id == "search_item_name" ||
+                srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap"
+            ){
+            
+                srchBoxWrap.style.display = "block";
+                if(showed){
+                    showLeftList();
+                }
+                showed = false;
 
-        if( e.target.id != "search_item_name" ){
-
-            if( e.target.parentElement.parentElement.className != "srch_box_left" ){
+            } else {
 
                 srchBoxWrap.style.display = "none";
 
             }
-        
-        };
-
+        }
     });
 
 
