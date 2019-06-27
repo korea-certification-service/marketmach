@@ -2,54 +2,6 @@
 <html>
 <head>
     <% include ../../include/head.html %>
-    <script>
-        var oppositionId = "<%=oppositionId%>";
-        $(document).ready(function() {
-            detail();
-            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
-                var src = $(this).children("img").attr("src");
-                $("#fullImg > img").attr("src", src);
-            });
-
-            $('#modify').on('click', function() {
-                location.href = '/supports/opposition/modify/' + oppositionId;
-            });
-        });
-
-        function detail() {
-            $.ajax({
-                method: "GET",
-                url: "/v1/opposition/" + oppositionId
-            }).done(function (success) {
-                //console.log(success.data);
-                var opposition = success.data; 
-                $('#itemId').text(opposition.item._id);
-                $('#itemTitle').text(opposition.item.title);
-                $('#title').text(opposition.title);
-                $('#content').html(replaceDesc(opposition.content));                
-                $("#reply").html(opposition.reply == undefined ? '' : replaceDesc(opposition.reply));
-                if(opposition.reply != undefined) {
-                    $('#modify').hide();
-                }
-
-                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
-                $("#fullImg").html(img1th);
-                
-                
-                for(var i=0;i<success.data.images.length; i++) {
-                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
-                        html += '<div class="img_view_area">';
-                        html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
-                        html += '</div>';
-                        html += '</div>';
-                                                    
-                    $("#listOfThumbnail li").eq(i).html(html);
-                }
-            }).fail(function (fail) {
-                console.log(fail);
-            })
-        }
-    </script>
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -147,7 +99,55 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        var oppositionId = "<%=oppositionId%>";
+        $(document).ready(function() {
+            detail();
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('#modify').on('click', function() {
+                location.href = '/supports/opposition/modify/' + oppositionId;
+            });
+        });
+
+        function detail() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/opposition/" + oppositionId
+            }).done(function (success) {
+                //console.log(success.data);
+                var opposition = success.data; 
+                $('#itemId').text(opposition.item._id);
+                $('#itemTitle').text(opposition.item.title);
+                $('#title').text(opposition.title);
+                $('#content').html(replaceDesc(opposition.content));                
+                $("#reply").html(opposition.reply == undefined ? '' : replaceDesc(opposition.reply));
+                if(opposition.reply != undefined) {
+                    $('#modify').hide();
+                }
+
+                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                $("#fullImg").html(img1th);
+                
+                
+                for(var i=0;i<success.data.images.length; i++) {
+                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                        html += '<div class="img_view_area">';
+                        html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                        html += '</div>';
+                        html += '</div>';
+                                                    
+                    $("#listOfThumbnail li").eq(i).html(html);
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+     
     <% include ../../include/footer.html %>
 </div>
 </body>
