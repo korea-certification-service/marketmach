@@ -37,7 +37,7 @@
         });
 
         if(game_name != undefined) {
-            
+            //console.log(game_name);
             if(isPc()) {
                 $('#search_item_name').val(game_name + ' ' + (game_server == "undefined" ? "" : game_server) + ' ' + (title == "undefined" ? "" : title));
             } else {
@@ -61,18 +61,17 @@
             target.id == 'm_main_search' || 
             target.id == 'm_search_item_name'
         ) {
-
             var games;
-            if(selecValue == "games"){
+            if(selecValue == "games"){ //게임자산일떄
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
-                if( srchBoxLeftClassName == "game_width_server" ){
+                if( srchBoxLeftClassName == "game_width_server" ){ //서버명으로검색할때
                     var searchValue = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].innerText.split(">");
                     var game_name = searchValue[0]
                     var game_server = searchValue[1]; 
-                } else {
-                    game_name = games[0];
+                } else { //게임이름으로 검색할때
+                    game_name = $(".srch_box_left .clicked")[0].innerText;
                     if(games.length == 2) {
                         game_server  = games[1];
                     } else if(games.length == 3) {
@@ -80,10 +79,10 @@
                         title = games[2];
                     }
                 }
-            } else {
-                games = $("#m_search_item_name").val();
+            } else { //현물, OTC일떄
+                games = $("#search_item_name, #m_search_item_name").val();
             }
-            console.log(games)
+            console.log(games);
             _doSearch(game_name, game_server, games);
             
         } else if( target.nodeName == 'LI' ) {
