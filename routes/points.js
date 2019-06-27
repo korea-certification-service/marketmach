@@ -503,21 +503,7 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     //상품권 조회
     // let reqData = JSON.stringify(req.body);
     console.log('reqData => ', reqData);
-    let result = _writeData(connection, JSON.stringify(reqData));
-    console.log(result);
-    if (result){
-        connection.on('data', function(data) {
-            console.log(" From Server: " + data.toString());
-            this.end();
-            bitwebResponse.code = 200;
-            bitwebResponse.data = {
-                "result": result,
-                "reqData": reqData,
-                "resData": data
-            };
-            res.status(200).send(bitwebResponse.create())
-        });
-    } 
+    _writeData(connection, JSON.stringify(reqData));
 });
 
 function _tcpConnection() {
@@ -527,7 +513,7 @@ function _tcpConnection() {
         console.log('   local = %s:%s', this.localAddress, this.localPort);
         console.log('   remote = %s:%s', this.remoteAddress, this.remotePort);
         
-        //this.setTimeout(500);
+        this.setTimeout(5000);
         this.setEncoding('utf8');
     
         this.on('end', function() {
@@ -547,15 +533,27 @@ function _tcpConnection() {
     return connection;
 }
 
-function _writeData(socket, data) {
-    var success = !socket.write(data);
+function _writeData(socket, reqData) {
+    var success = !socket.write(reqData);
+    console.log(success);
     if (!success){
-    (function(socket, data){
+    (function(socket, reqData){
         socket.once('drain', function(){
-                _writeData(socket, data);
+                _writeData(socket, reqData);
             });
-        })(socket, data);
+        })(socket, reqData);
     } else {
+        connection.on('data', function(resData) {
+            console.log(" From Server: " + resData.toString());
+            this.end();
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "result": result,
+                "reqData": reqData,
+                "resData": resData
+            };
+            res.status(200).send(bitwebResponse.create())
+        });
         return success;
     }
 }
