@@ -49,6 +49,32 @@ function addHistory(country, data) {
     })
 }
 
+function getHistorys(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.getHistorys(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
+function getHistoryCount(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.getHistoryCount(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
 function updateRecord(country, data) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
@@ -65,4 +91,6 @@ exports.add = add;
 exports.getByUserId = getByUserId;
 exports.update = update;
 exports.addHistory = addHistory;
+exports.getHistorys = getHistorys;
+exports.getHistoryCount = getHistoryCount;
 exports.updateRecord = updateRecord;

@@ -309,7 +309,7 @@
 .escrow_side_tit{float: right; font-size: 12px;color: #000000;}
 .escrow_side_tit img{width: 12px;}
 .table_total_escrow_wrap{position: relative;}
-.table_total_escrow_wrap::after{position: absolute; bottom: 0; right: 0; display: block; content: '오픈 예정입니다'; clear:both; width: 56%; height: 210px; line-height: 210px; font-size: 20px; text-align: center; color: #ffffff; background-color: rgba(0, 0, 0, 0.8);}
+/* .table_total_escrow_wrap::after{position: absolute; bottom: 0; right: 0; display: block; content: '오픈 예정입니다'; clear:both; width: 56%; height: 210px; line-height: 210px; font-size: 20px; text-align: center; color: #ffffff; background-color: rgba(0, 0, 0, 0.8);} */
 .table_total_escrow{width: 100%; border: 1px solid #000038;}
 .table_total_escrow th{text-align: center; border: 1px solid #bfbfbf;}
 .table_total_escrow td{text-align: center; border: 1px solid #bfbfbf;}

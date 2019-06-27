@@ -2,7 +2,7 @@ var MachGames = require('../libs/machgames');
 
 function count (condition) {
     return new Promise((resolve, reject) => {
-        GameCenter.count(condition)
+        MachGames.count(condition)
         .exec(function (err, result) {
             if (err) {
                 // console.error(err)
@@ -15,7 +15,7 @@ function count (condition) {
 
 function list (condition) {
     return new Promise((resolve, reject) => {
-        GameCenter.find(condition)
+        MachGames.find(condition)
         .exec(function (err, result) {
             if (err) {
                 // console.error(err)
@@ -28,7 +28,7 @@ function list (condition) {
 
 function get (condition) {
     return new Promise((resolve, reject) => {
-        GameCenter.findOne(condition)
+        MachGames.findOne(condition)
         .exec(function (err, result) {
             if (err) {
                 // console.error(err)
@@ -42,8 +42,8 @@ function get (condition) {
 function add(data) {
     return new Promise((resolve, reject) => {
         console.log(data)
-        var gameCenter = new GameCenter(data)
-        gameCenter.save(function (err, result) {
+        var machGames = new MachGames(data)
+        machGames.save(function (err, result) {
             if (err) {
                 reject(err);
             } else {
@@ -56,7 +56,7 @@ function add(data) {
 
 function update (condition, data) {
     return new Promise((resolve, reject) => {
-        GameCenter.findOneAndUpdate(
+        MachGames.findOneAndUpdate(
             condition,
         {
             $set: data
