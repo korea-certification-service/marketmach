@@ -115,14 +115,13 @@
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
-                                            <!--
-                                            <div class="thumbnail_box">
-                                                <div class="img_view_area">
-                                                    <img src="/static/img/main/main_visual02.jpg">
-                                                </div>
-                                                <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
-                                            </div>
-                                            -->
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>    
                                         </div>
                                     </div>
                                 </td>
@@ -283,7 +282,7 @@
                                 html += '</div>';
                                 html += '</div>';
                                                     
-                    $(".imgs_wrap").append(html);
+                    $("#listOfThumbnail li").eq(i).html(html);
                 }
                 
                 $(".view_emphasis").text(item_type.text);

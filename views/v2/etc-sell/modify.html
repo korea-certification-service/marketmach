@@ -176,7 +176,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submitAction(itemId);
+                submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
             });
 
             // $("#item-game-name").on('change', function() {
@@ -215,14 +215,13 @@
                 for(var i=0;i<success.data.images.length; i++) {
                     var index = i;
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
-                                html += '<div class="img_view_area">';
-                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
-                                html += '</div>';
-                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
-                                html += '</div>';
-                                //html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">submitAction</button>';
-                                                    
-                    //$(".imgs_wrap").append(html);
+                        html += '<div class="img_view_area">';
+                        html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                        html += '</div>';
+                        html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
+                        html += '</div>';
+                        //html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">submitAction</button>';
+
                     $("#listOfThumbnail li").eq(index).html(html);
                 }
                 
@@ -259,7 +258,6 @@
                 }
 
                 $("#item-game-name").append(strDOM);
-
                 $("#item-game-name").selectpicker('refresh');
                 //selectServer();
                 $("#item-game-name").val(itemGameName).attr("selected", "selected");

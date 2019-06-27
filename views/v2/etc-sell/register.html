@@ -162,7 +162,8 @@
     
     $(document).ready(function() {
         $(".input_imgs").on("change", singleUpload);
-            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+        
+        $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
                 $("#fullImg > img").attr("src", src);
             });
