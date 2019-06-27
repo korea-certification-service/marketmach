@@ -213,7 +213,7 @@
 .imgs_wrap .list_of_thumbnail li{float: left; display: inline-block; width: 120px; height: 70px; text-align: center;}
 .imgs_wrap .list_of_thumbnail li .btn{color: #fff; background-color: #28a745; border-color: #28a745;}
 .imgs_wrap .thumbnail_btn_list li{float: left; width: 120px; text-align: center;}
-.imgs_wrap .thumbnail_btn_list li .label_input_imgs{display: inline-block; padding: 0.313rem 0.75rem; background-color: #28a745; border-color: #28a745; border-radius: 0.25rem; color: #fff;}
+.imgs_wrap .thumbnail_btn_list li .label_input_imgs{display: inline-block; padding: 8px 8px 8px 24px; background: #68BBBB url(/static/img/sub/ico_img_wht.png) 6px 50% no-repeat; background-size: 15px 15px; border-radius: 0.25rem; color: #fff;}
 
 .imgs_wrap .thumbnail_box{position: relative; /*display: inline-block;*/ width: 100px;height: 50px;margin: 10px; text-align: center; background-color: #000000;}
 .imgs_wrap .thumbnail_box .img_view_area{height: 50px; overflow: hidden;}
