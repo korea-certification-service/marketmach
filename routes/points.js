@@ -531,14 +531,14 @@ function _tcpConnection(reqData, bitwebResponse, res) {
 }
 
 function _writeData(connection, reqData, bitwebResponse, res) {
-    var success = !socket.write(reqData);
+    var success = !connection.write(reqData);
     console.log(success);
     if (!success){
-        (function(socket, reqData){
-            socket.once('drain', function(){
-                _writeData(socket, reqData);
+        (function(connection, reqData){
+            connection.once('drain', function(){
+                _writeData(connection, reqData, bitwebResponse, res);
             });
-        })(socket, reqData);
+        })(connection, reqData);
     } else {
         connection.on('data', function(resData) {
             console.log(" From Server: " + resData.toString());
