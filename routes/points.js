@@ -471,8 +471,6 @@ router.post('/happymoney/payment', function(req, res, next) {
 
 router.post('/happymoney/pin/payment', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
-
-    let connection = _tcpConnection();
     //전문 test
     let today = util.formatDate2(new Date().toString());
     let MerchantPwd = cryptojs.TripleDES.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId).toString();
@@ -503,10 +501,10 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     //상품권 조회
     // let reqData = JSON.stringify(req.body);
     console.log('reqData => ', reqData);
-    _writeData(connection, JSON.stringify(reqData));
+    _tcpConnection(reqData, bitwebResponse, res);
 });
 
-function _tcpConnection() {
+function _tcpConnection(reqData, bitwebResponse, res) {
      // pin 결제의 경우 socket 통신으로 처리한다.
      let connection = net.connect({port: 9006, host:dbconfig.happymoney.pinIp}, function(){
         console.log('********** happymoney pin connected **********');
@@ -515,6 +513,7 @@ function _tcpConnection() {
         
         this.setTimeout(5000);
         this.setEncoding('utf8');
+        _writeData(connection, reqData, bitwebResponse, res);
     
         this.on('end', function() {
             console.log(' Client disconnected');
@@ -529,16 +528,14 @@ function _tcpConnection() {
             console.log('Socket Closed');
         });
     });
-
-    return connection;
 }
 
-function _writeData(socket, reqData) {
+function _writeData(connection, reqData, bitwebResponse, res) {
     var success = !socket.write(reqData);
     console.log(success);
     if (!success){
-    (function(socket, reqData){
-        socket.once('drain', function(){
+        (function(socket, reqData){
+            socket.once('drain', function(){
                 _writeData(socket, reqData);
             });
         })(socket, reqData);
