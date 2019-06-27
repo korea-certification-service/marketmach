@@ -527,12 +527,12 @@ function _tcpConnection() {
     });
 
     connection.on('data', function(data) {
-        console.log(connName + " From Server: " + data.toString());
+        console.log(" From Server: " + data.toString());
         this.end();
     });
 
     connection.on('end', function() {
-        console.log(connName + ' Client disconnected');
+        console.log(' Client disconnected');
     });
     connection.on('error', function(err) {
         console.log('Socket Error: ', JSON.stringify(err));
