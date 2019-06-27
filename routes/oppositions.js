@@ -17,7 +17,7 @@ router.post('/', function (req, res, next) {
         .then(item => {
             req.body['item'] = item;
             controllerOpposition.add(req)
-                .then(result => {
+                .then(_result => {
                     controllerVtrs.opposition(country, itemId)
                         .then((vtr) => {
                             let result = vtr;
@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
                             .then((pointTrade) => {
                                 if(pointTrade != null) result = pointTrade;
                                 bitwebResponse.code = 200;
-                                bitwebResponse.data = result;
+                                bitwebResponse.data = _result;
                                 res.status(200).send(bitwebResponse.create())
                             }).catch((err) => {
                                 console.error('err=>', err)
