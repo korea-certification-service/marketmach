@@ -1,10 +1,10 @@
 var db = require('../utils/db');
-var bitwebGameCenter = require('../services/gameCenter');
+var bitwebMachgames = require('../services/machgames');
 
 function add(country, data) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.add(data))
+            .then(() => bitwebMachgames.add(data))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -13,10 +13,10 @@ function add(country, data) {
     })
 }
 
-function getByUserId(country, userId) {
+function count(country, condition) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.getByUserId(userId))
+            .then(() => bitwebMachgames.count(condition))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -25,10 +25,10 @@ function getByUserId(country, userId) {
     })
 }
 
-function update(country, userId, data) {
+function list(country, condition) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.update(userId, data))
+            .then(() => bitwebMachgames.list(condition))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -37,10 +37,10 @@ function update(country, userId, data) {
     })
 }
 
-function addHistory(country, data) {
+function get(country, condition) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.addHistory(data))
+            .then(() => bitwebMachgames.get(condition))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -49,10 +49,10 @@ function addHistory(country, data) {
     })
 }
 
-function updateRecord(country, data) {
+function update(country, condition, data) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.updateRecord(data))
+            .then(() => bitwebMachgames.update(condition, data))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -62,7 +62,7 @@ function updateRecord(country, data) {
 }
 
 exports.add = add;
-exports.getByUserId = getByUserId;
 exports.update = update;
-exports.addHistory = addHistory;
-exports.updateRecord = updateRecord;
+exports.count = count;
+exports.list = list;
+exports.get = get;
