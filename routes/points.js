@@ -504,6 +504,7 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     // let reqData = JSON.stringify(req.body);
     console.log('reqData => ', reqData);
     let result = !connection.write(JSON.stringify(reqData));
+    console.log(result);
     if(result) {
         bitwebResponse.code = 200;
         bitwebResponse.data = result;
