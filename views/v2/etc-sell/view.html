@@ -136,12 +136,10 @@
 
                 <div class="tar">
                     <a href="javascript:history.back()" class="btn btn_go_list">목록</a>
-
                     <!-- [모듈] 댓글모듈 -->
                     <% include ../include/modules/comment.html %>
                 </div>
-            </div>
-                
+
                 <!-- 모달창 -->
                 <div class="dim_all_area" style="display: none">
                     <article class="modal_bitberry_deposit">
@@ -275,10 +273,10 @@
                 
                 for(var i=0;i<success.data.images.length; i++) {
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
-                                html += '<div class="img_view_area">';
-                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
-                                html += '</div>';
-                                html += '</div>';
+                        html += '<div class="img_view_area">';
+                        html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                        html += '</div>';
+                        html += '</div>';
                                                     
                     $("#listOfThumbnail li").eq(i).html(html);
                 }

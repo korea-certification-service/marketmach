@@ -104,7 +104,6 @@
                                                 <li></li>
                                                 <li></li>
                                             </ul>
-
                                             <ul class="thumbnail_btn_list cf">
                                                 <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
                                                 <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
@@ -158,12 +157,12 @@
     <!--// content_wrap -->
 
     <script type="text/javascript">
-    var sel_files = []; // 이미지 정보들을 담을 배열
-    
-    $(document).ready(function() {
-        $(".input_imgs").on("change", singleUpload);
+        var sel_files = []; // 이미지 정보들을 담을 배열
         
-        $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
                 $("#fullImg > img").attr("src", src);
             });
