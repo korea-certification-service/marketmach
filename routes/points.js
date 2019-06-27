@@ -524,24 +524,24 @@ function _tcpConnection() {
         
         this.setTimeout(500);
         this.setEncoding('utf8');
-    });
 
-    connection.on('data', function(data) {
-        console.log(" From Server: " + data.toString());
-        this.end();
-    });
-
-    connection.on('end', function() {
-        console.log(' Client disconnected');
-    });
-    connection.on('error', function(err) {
-        console.log('Socket Error: ', JSON.stringify(err));
-    });
-    connection.on('timeout', function() {
-        console.log('Socket Timed Out');
-    });
-    connection.on('close', function() {
-        console.log('Socket Closed');
+        this.on('data', function(data) {
+            console.log(" From Server: " + data.toString());
+            this.end();
+        });
+    
+        this.on('end', function() {
+            console.log(' Client disconnected');
+        });
+        this.on('error', function(err) {
+            console.log('Socket Error: ', JSON.stringify(err));
+        });
+        this.on('timeout', function() {
+            console.log('Socket Timed Out');
+        });
+        this.on('close', function() {
+            console.log('Socket Closed');
+        });
     });
 
     return connection;
