@@ -46,7 +46,7 @@ function multiUpload() {
                 cb(null, {fieldName: files.fieldname});
             },
             key: function (req, file, cb) {
-                cb(null, Date.now().toString())
+                cb(null, file.originalname + '-' + Date.now().toString())
             }
         })
     })
