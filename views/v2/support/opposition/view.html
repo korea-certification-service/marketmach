@@ -118,7 +118,7 @@
                 method: "GET",
                 url: "/v1/opposition/" + oppositionId
             }).done(function (success) {
-                //console.log(success.data);
+                console.log(success.data);
                 var opposition = success.data; 
                 $('#itemId').text(opposition.item._id);
                 $('#itemTitle').text(opposition.item.title);

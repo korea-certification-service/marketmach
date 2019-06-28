@@ -186,7 +186,15 @@
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
-                var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+
+                //var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                var image_url = ""; 
+                if(data[i].images[0] == null){
+                    image_url = "/image/no-image.png";
+                } else {
+                    image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                }
+
 
                 if(i % 4 == 0) strDOM += '<li class="row">';
 
