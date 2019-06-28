@@ -78,7 +78,7 @@
                                                 <option value="ETH">ETH</option>
                                                 <option value="MACH" selected>MACH</option>
                                             </select>
-                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력.">                                            
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">                                            
                                         </div>
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
@@ -151,6 +151,12 @@
                                         <div id="fullImg"></div>
                                     </td>
                                 </tr> 
+                                <tr>
+                                    <th>상세정보</th>
+                                    <td>
+                                        <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                    </td>
+                                </tr>                                
                                 <tr class="mrg_cell">
                                     <td colspan="2">
                                         <div class="btn_align_c">
@@ -337,6 +343,12 @@
                 return false;
             } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
                 alert('거래 가격(Point)을 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#point").val())) {
+                alert('거래 가격(Point)을 숫자로 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
