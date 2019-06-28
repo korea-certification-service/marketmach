@@ -499,8 +499,10 @@ router.post('/happymoney/pin/payment', function(req, res, next) {
     //     "InputKind":""
     // }
     //상품권 조회
-    let reqData = "0610^" + today + "^ON^0001^0017^TDES^" + dbconfig.happymoney.onlineId + "^" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
-                    + "^" + today.substr(0,8) + "^" + today.substr(8) + "^G2^1^" + PinNo + "^" + PinDate + "^^" + today.substr(0,8) + "^^";
+    // let reqData = "0610^" + today + "^ON^0001^0017^TDES^" + dbconfig.happymoney.onlineId + "^" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
+    //                 + "^" + today.substr(0,8) + "^" + today.substr(8) + "^G2^1^" + PinNo + "^" + PinDate + "^^" + today.substr(0,8) + "^^";
+    let reqData = "DocType:0610^DocDate:" + today + "^DocCode:ON^DocCnt:0001^FldCnt:0017^EncryptType:TDES^MerchantID:" + dbconfig.happymoney.onlineId + "^MerchantPwd:" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
+        + "^DealCallDate:" + today.substr(0,8) + "^DealCallTime:" + today.substr(8) + "^QueryKind:G2^QueryGiftQty:1^PinNo:" + PinNo + "^PinDate:" + PinDate + "^BranchCode:^SalesDate:" + today.substr(0,8) + "^PosNo:^InputKind:";
     console.log('reqData => ', reqData);
     _tcpConnection(reqData, bitwebResponse, res);
 });
