@@ -31,7 +31,12 @@
                 // IE 경우 이미지 가공이 지원안됨
                 if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
                     var objImgInfo = {"index": index, "name": "img_id_"+index, "value": f};
-                    sel_files.splice(index, 1, objImgInfo);
+
+                    if(sel_files.length === 0) {
+                        sel_files[index] = objImgInfo;
+                    } else {
+                        sel_files.splice(index, 1, objImgInfo);
+                    }
 
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
                         html += '<div class="img_view_area">';
@@ -60,7 +65,11 @@
                                 var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
 
                                 var objImgInfo = {"index": index, "name": "img_id_"+index, "value": createdFile};
-                                sel_files.splice(index, 1, objImgInfo);
+                                if(sel_files.length === 0) {
+                                    sel_files[index] = objImgInfo;
+                                } else {
+                                    sel_files.splice(index, 1, objImgInfo);
+                                }
                             });
     
                             var thumnail = new Image();

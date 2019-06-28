@@ -183,6 +183,7 @@
                 for (var i = 0; i < arrImages.length; i++) {
                     if(arrImages[i] === null) {
                         arrImages.splice(i, 1);
+                        i--;
                     }
                 }
                 data.images = arrImages;

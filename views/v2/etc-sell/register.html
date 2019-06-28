@@ -345,7 +345,7 @@
     
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
-                images.append(name, sel_files[i].value);
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
             }
             //console.log(images);
             //ajax 처리

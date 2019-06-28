@@ -253,7 +253,7 @@
                 method: "GET",
                 url: "/v1/items/service/" + itemId
             }).done(function (success) {
-                //console.log(success);
+                console.log(success);
                 
                 itemId = success.data._id;
                 roomToken = success.data.roomToken;

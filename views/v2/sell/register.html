@@ -356,7 +356,7 @@
     
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
-                images.append(name, sel_files[i].value);
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
             }
             //console.log(images);
             //ajax 처리
@@ -369,7 +369,7 @@
             }).done(function (success) {
                 //console.log(success);
                 $("#ajaxSpiner").hide(); // spinner
-                location.href = '/sells?category=game&trade_type=sell';
+                //location.href = '/sells?category=game&trade_type=sell';
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $("#ajaxSpiner").hide(); // spinner
