@@ -2,28 +2,30 @@
     var coinId = "<%=coinId%>";
     var userId = "<%=userId%>";   
     var game_name;
-    var selecValue = "games";
-    
+    var selecValue;
+
     $(document).ready(function(){
+
+        selecValue = $(".srch_select, .m_srch_select").val();
 
         $(".srch_select, .m_srch_select").on("change", function(){
             selecValue = $(this).val();
-            console.log(selecValue);
         }); 
 
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
             if(key.keyCode==13){
+                selecValue = $(".srch_select, .m_srch_select").val();
                 if(selecValue == "games") {
                     if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
                         return;
                     }
                 }
                 _mainSearch(key.currentTarget);
-
             }
         });
 
         $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
+            selecValue = $(".srch_select, .m_srch_select").val();
             if(selecValue == "games") {
                 if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
                     return;
