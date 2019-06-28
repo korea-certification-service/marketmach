@@ -103,7 +103,7 @@
         console.log("index : "+index);
         var findIndex = -1;
         for (var i = 0; i < sel_files.length; ++i) {
-            if(sel_files[i].name == index) {
+            if(sel_files[i] !== undefined && sel_files[i].name == index) {
                 findIndex = i;
             }
         }
@@ -220,7 +220,7 @@
         console.log("index : "+index, idx);
         var findIndex = -1;
         for (var i = 0; i < sel_files.length; ++i) {
-            if(sel_files[i].name == index) {
+            if(sel_files[i] !== undefined && sel_files[i].name == index) {
                 findIndex = i;
             }
         }

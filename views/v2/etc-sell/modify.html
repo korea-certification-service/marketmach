@@ -195,7 +195,7 @@
                 method: "GET",
                 url: "/v1/items/" + "<%= id%>"
             }).done(function (success) {
-                console.log(success.data.images[0], success);
+                console.log(success);
                 
                 itemId = success.data._id;
                 var regDate = success.data.regDate;
