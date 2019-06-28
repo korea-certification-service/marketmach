@@ -257,30 +257,32 @@
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
-
-                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
-
+                
                 if(success.data.images.length === 0) {
                     $(".trForDel").remove();
                 }
                 
-                for(var i=0;i<success.data.images.length; i++) {
-                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
-                        html += '<div class="img_view_area">';
-                        html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
-                        html += '</div>';
-                        html += '</div>';
-                                                    
-                    $("#listOfThumbnail li").eq(i).html(html);
+                // 이미지 모두 지운 상황이 아닌 경우
+                if(success.data.images[0] !== null) {
+                    var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                    for(var i=0;i<success.data.images.length; i++) {
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                            html += '</div>';
+                            html += '</div>';
+                                                        
+                        $("#listOfThumbnail li").eq(i).html(html);
+                    }
+                    $("#fullImg").html(img1th);
                 }
-                                
+
                 $(".posting_date").text("등록일 : " + regDate);
                 $(".item_title").text(title);
                 $(".item_id").text(itemId);
                 $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 $(".txt_point").html(point + "<span>Point</span>");
                 $(".item_desc").html(desc);
-                $("#fullImg").html(img1th);
                 $(".item_status").addClass(status.className).text(((success.data.status > 0 && success.data.status < 4)||success.data.status == 50 ||success.data.status == 5) && (success.data.vtr_btn_active) ? status.text+ ' - ' + status.detail : status.text);             
                 $(".user_tag").text(success.data.userTag);
 
