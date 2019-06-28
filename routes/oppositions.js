@@ -151,6 +151,12 @@ router.post('/:oppositionId/images', function (req, res, next) {
                 data['images'].push(image);
             }
 
+            for(var i in data['images']) {
+                if(data['images'][i] == null) {
+                    data['images'].splice(i,0);
+                }
+            }
+
             controllerOpposition.update(country, oppositionId, data)
                 .then((result) => {
 
