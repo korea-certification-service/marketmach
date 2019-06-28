@@ -145,12 +145,12 @@
                 // IE 경우 이미지 가공이 지원안됨
                 if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
                     sel_files.push({"index": index, "name": "img_id_"+index, "value": f});
-
+                    var i = index;
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
                         html += '<div class="img_view_area">';
                         html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
                         html += '</div>';
-                        // html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                        html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
                         html += '</div>';
 
                     // 풀이미지 썸네일 로직 추가
@@ -186,12 +186,12 @@
 
                             // 풀이미지 썸네일 로직 추가
                             $("#fullImg").empty().append(thumnail);
-
+                            var i = index;
                             var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
                                 html += '<div class="img_view_area">';
                                 html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
                                 html += '</div>';
-                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
                                 html += '</div>';
                                 //html += '<button id="btnModifyImg'+index+'" class="btn btn_modify_img">이미지수정</button>';
                                                     
