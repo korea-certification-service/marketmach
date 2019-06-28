@@ -42,7 +42,7 @@
                 $('#view_auth_code').html('<em class="fcrd">'+auth_code+'</em>');
                 $('#connect').show();
                 _PopupUI.showWithDim(function(){
-                    //console.log("콜백 후")
+                    $("#btnmCloseModal").focus();
                 });
             }).fail(function (fail) {
                 console.log(fail);
