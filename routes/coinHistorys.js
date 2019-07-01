@@ -47,6 +47,7 @@ router.get('/:coinId/list', function (req, res, next) {
     let country = dbconfig.country;
     let coinId = req.params.coinId;
     let trade_type = req.query.trade_type;
+    let extType = req.query.extType;
     let option = {
         "perPage": 0,
         "pageIdx": 10
@@ -58,9 +59,17 @@ router.get('/:coinId/list', function (req, res, next) {
         trade_type = ['withdraw','exchange-withdraw']
     }
 
+    let condition = {
+        "coinId": coinId,
+        "category": trade_type
+    }
+    if(extType != undefined) {
+        condition['extType'] = extType;
+    }
+
     var bitwebResponse = new BitwebResponse();
 
-    controllerCoinHistorys.getCoinHistoryExtByCoinId(country, coinId, trade_type, option)
+    controllerCoinHistorys.getCoinHistoryExtByCoinId(country, condition, option)
         .then(result => {
             bitwebResponse.code = 200;
             bitwebResponse.data = result;

@@ -501,13 +501,9 @@ function getDepositHistoryCountbyCoinId(coinId, option) {
     })
 }
 
-function getCoinHistoryExtByCoinId (coinId, trade_type, option) {
+function getCoinHistoryExtByCoinId (condition, option) {
     return new Promise((resolve, reject) => {
-        CoinHistorys.find(
-            {
-                "coinId": coinId,
-                "category": trade_type
-            })
+        CoinHistorys.find(condition)
             .limit(option.perPage)
             .skip(option.pageIdx * option.perPage)
             .sort({regDate:'desc'})
