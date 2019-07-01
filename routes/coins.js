@@ -1038,12 +1038,13 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                 
                                 
                                 let data = {
+                                    "extType": "bitberry",
                                     "coinId": user._doc.coinId,
                                     "category": "withdraw",          
                                     "status": result.status,
                                     "currencyCode": result.currency_code,
                                     "amount": amount,
-                                    "price": mach,
+                                    "price": amount,
                                     "regDate": util.formatDate(new Date().toString())  
                                 }
     
@@ -1257,7 +1258,7 @@ router.post('/bitberry/deposit/callback', function(req, res, next) {
                     "status": result.status,
                     "currencyCode": result.currency_code,
                     "amount": amount,
-                    // "mach": mach,
+                    "price": amount,
                     "regDate": util.formatDate(new Date().toString())  
                 }
 
