@@ -312,7 +312,7 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
                 if("<%=useBlockchain%>" == 'Y') {
-                    $(".txt_price").html(price + "<span>MACH</span>");
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
                     $(".txt_point").html(point_txt + "<span>Point</span>");
