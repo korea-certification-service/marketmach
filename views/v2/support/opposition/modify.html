@@ -209,8 +209,7 @@
             }).done(function (success) {
                 // console.log(success);
                 // 이미지 업로드를 먼저 하는 로직으로 변경
-                //location.href = '/supports/opposition/detail/' + oppositionId;
-                $("#ajaxSpiner").hide(); // spinner
+                location.href = '/supports/opposition/detail/' + oppositionId;
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $('#modifyOpposition').attr('disabled', false);

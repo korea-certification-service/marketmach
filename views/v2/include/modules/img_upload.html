@@ -32,18 +32,24 @@
                 // IE 경우 이미지 가공이 지원안됨
                 if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
                     var objImgInfo = {"index": index, "name": "img_id_"+index, "value": f};
-
+                    /*
                     if(sel_files.length === 0) {
                         sel_files[index] = objImgInfo;
                     } else {
                         sel_files.splice(index, 1, objImgInfo);
                     }
+                    */
+                    sel_files.push({
+                        "index": index,
+                        "name": "img_id_"+index,
+                        "value": f      
+                    });
 
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
                         html += '<div class="img_view_area">';
                         html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
                         html += '</div>';
-                        html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                        html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\',"+index+")\"></a>";
                         html += '</div>';
 
                     // 풀이미지 썸네일 로직 추가
@@ -66,11 +72,19 @@
                                 var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
 
                                 var objImgInfo = {"index": index, "name": "img_id_"+index, "value": createdFile};
+                                /*
                                 if(sel_files.length === 0) {
                                     sel_files[index] = objImgInfo;
                                 } else {
                                     sel_files.splice(index, 1, objImgInfo);
                                 }
+                                */
+
+                                sel_files.push({
+                                    "index": index,
+                                    "name": "img_id_"+index,
+                                    "value": createdFile      
+                                });
                             });
     
                             var thumnail = new Image();
@@ -84,7 +98,7 @@
                                 html += '<div class="img_view_area">';
                                 html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
                                 html += '</div>';
-                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\',"+index+")\"></a>";
                                 html += '</div>';
                                                     
                             //$(".imgs_wrap").append(html);
@@ -100,11 +114,11 @@
     }
 
     // 등록 페이지 이미지 삭제
-    function deleteImageAction(index) {
-        console.log("index : "+index);
+    function deleteImageAction(index, idx) {
+        //console.log("index : "+index);
         var findIndex = -1;
         for (var i = 0; i < sel_files.length; ++i) {
-            if(sel_files[i].name == index) {
+            if(sel_files[i] !== undefined && sel_files[i].name == index) {
                 findIndex = i;
             }
         }
@@ -114,6 +128,7 @@
         }
 
         $('#' + index).remove();
+        $('#input_imgs'+idx).val("");
 
         console.log("sel length : ",sel_files);
 
@@ -219,10 +234,10 @@
 
     // 수정 페이지 이미지 삭제
     function deleteImageAction(index, idx) {
-        console.log("index : "+index, idx);
+        //console.log("index : "+index, idx);
         var findIndex = -1;
         for (var i = 0; i < sel_files.length; ++i) {
-            if(sel_files[i].name == index) {
+            if(sel_files[i] !== undefined && sel_files[i].name == index) {
                 findIndex = i;
             }
         }
@@ -232,6 +247,7 @@
         }
 
         $('#' + index).remove();
+        $('#input_imgs'+idx).val("");
 
         //beforeImgs.splice(idx, 1);
         beforeImgs[idx] = null;

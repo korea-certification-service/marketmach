@@ -280,7 +280,7 @@ function getCoinType(value) {
         };
     } else {
         return {
-            'text':'-',
+            'text':value,
             'className': 'icon2'
         };
     }
