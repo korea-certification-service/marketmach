@@ -103,12 +103,12 @@
                 for(var i=0;i<historys.length;i++) {
                     var amount = numberWithCommas(historys[i].amount);
                     var currencyCode = historys[i].currencyCode;
-                    var amount = numberWithCommas((historys[i].price == undefined ? historys[i].mach : historys[i].price));
+                    var price = numberWithCommas((historys[i].price == undefined ? historys[i].mach : historys[i].price));
                     var regDate = historys[i].regDate.substr(2);
 
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
-                                        '<em class="fc3">'+amount+'<span>Point</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>MACH</span></em>' + 
+                                        '<em class="fc3">'+amount+'<span>Point</span></em><span class="arw_txt">>>></span><em class="fc3">'+price+'<span>MACH</span></em>' + 
                                     '</td>' + 
                                     '<td>'+regDate+'</td>' + 
                                 '</tr>';
