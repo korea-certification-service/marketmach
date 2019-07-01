@@ -27,7 +27,8 @@
                     t = f.type,
                     n = f.name,
                     s = ~~(f.size / 1024) + 'KB';
-
+                // 확장자를 제외한 파일명
+                var originName = n.substring(0, n.lastIndexOf(".")); 
                 // IE 경우 이미지 가공이 지원안됨
                 if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
                     var objImgInfo = {"index": index, "name": "img_id_"+index, "value": f};
@@ -165,7 +166,8 @@
                     t = f.type,
                     n = f.name,
                     s = ~~(f.size / 1024) + 'KB';
-
+                // 확장자를 제외한 파일명
+                var originName = n.substring(0, n.lastIndexOf(".")); 
                 // IE 경우 이미지 가공이 지원안됨
                 if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
                     sel_files.push({"index": index, "name": "img_id_"+index, "value": f});
