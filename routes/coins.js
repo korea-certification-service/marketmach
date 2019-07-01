@@ -1043,7 +1043,7 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                     "status": result.status,
                                     "currencyCode": result.currency_code,
                                     "amount": amount,
-                                    // "mach": mach,
+                                    "price": mach,
                                     "regDate": util.formatDate(new Date().toString())  
                                 }
     
