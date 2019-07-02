@@ -32,7 +32,7 @@ function deposit(country, data) {
                                 bitwebCoin.getCoinById(user._doc.coinId)
                                     .then(coin => {
                                         //mach coin 증감 저장
-                                        let cal_rate = data.amount * dbconfig.fee.exchange.deposit;
+                                        let cal_rate = data.amount * dbconfig.fee.exchange.point.deposit;
                                         let user_amount = ((data.amount - cal_rate) / data.rate).toFixed(8);
                                         let user_coin = coin._doc.total_mach + parseFloat(user_amount);
                                         bitwebCoin.updateCoinById(user._doc.coinId, {"total_mach":user_coin});
@@ -128,7 +128,7 @@ function withdraw(country, data) {
                                 bitwebPoint.getPointById(user._doc.pointId)
                                     .then(point => {
                                         //mach point 증감 저장
-                                        let cal_rate = parseFloat((data.amount * dbconfig.fee.exchange.withdraw).toFixed(8));
+                                        let cal_rate = parseFloat((data.amount * dbconfig.fee.exchange.point.withdraw).toFixed(8));
                                         let user_amount = ((data.amount - cal_rate) * data.rate).toFixed();
                                         let user_point = point._doc.total_point + parseInt(user_amount);
                                         bitwebPoint.updatePointById(user._doc.pointId, {"total_point": user_point});

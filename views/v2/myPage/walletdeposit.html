@@ -71,7 +71,7 @@
             })
 
             getCoin();
-            getCoinHistory('deposit');
+            getCoinHistory('deposit','bitberry');
         });
 
         function getCoin() {
@@ -104,10 +104,10 @@
             });
         }
 
-        function getCoinHistory(trade_type) {
+        function getCoinHistory(trade_type, extType) {
             $.ajax({
                 method: "GET",
-                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type + '&extType=' + extType
             }).done(function (success) {
                 console.log(success.data);
                 var coinHistorys = success.data;
@@ -272,7 +272,7 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == "success") {
-                    alert('MACH 입금이 정상적으로 처리되었습니다.');
+                    alert('Coin 입금이 정상적으로 처리되었습니다.');
                     // getCoin();
                     // getCoinHistory('deposit');
                     /*

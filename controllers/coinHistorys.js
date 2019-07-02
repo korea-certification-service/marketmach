@@ -450,10 +450,10 @@ function createCoinHistoryExtByCoinId(country, data) {
     })
 }
 
-function getCoinHistoryExtByCoinId(country, coinId, trade_type, option) {
+function getCoinHistoryExtByCoinId(country, condition, option) {
     return new Promise((resolve , reject) => {
         db.connectDB(country)
-            .then(() => bitwebCoinHistorys.getCoinHistoryExtByCoinId(coinId, trade_type, option))
+            .then(() => bitwebCoinHistorys.getCoinHistoryExtByCoinId(condition, option))
             .then((result) => {
                 console.log('result=>' , result);
                 resolve(result)

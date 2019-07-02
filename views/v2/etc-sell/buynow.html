@@ -190,8 +190,8 @@
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
                     <%if(useBlockchain == 'Y') {%>
-                    <li>※ 나의 지갑 잔액(MACH)이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [MACH 입금] 버튼 또는 [나의페이지-지갑관리]에서 MACH를 입금하실 수 있습니다.</li>
+                    <li>※ 나의 지갑 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
+                    <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
                     <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
                     <li>※ 나의 포안트 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
                     <li>※ [포인트 입금] 버튼 또는 [나의페이지-포인트관리]에서 Point 입금하실 수 있습니다.</li>
@@ -312,7 +312,7 @@
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
                 if("<%=useBlockchain%>" == 'Y') {
-                    $(".txt_price").html(price + "<span>MACH</span>");
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
                     $(".txt_point").html(point_txt + "<span>Point</span>");
