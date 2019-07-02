@@ -177,6 +177,17 @@
             });
 
             $("#btnSubmit").on('click', function(){
+                var listOfThumbnail = $("#listOfThumbnail li");
+                var count = 0;
+                for(var i=0; i<listOfThumbnail.length; i++) {
+                    if($("#listOfThumbnail li").eq(i).find(".img_view_area").length == 0) {
+                        count++;
+                    }
+                }
+                if(listOfThumbnail.length == count) {
+                    alert("상품 이미지를 업로드 하세요.");
+                    return;
+                }
                 submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
             });
 
