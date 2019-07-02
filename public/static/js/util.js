@@ -242,6 +242,50 @@ function getEscrowType(value) {
     }
 }
 
+function getCoinType(value) {
+    if(value == "deposit") {
+        return {
+            'text':'입금',
+            'className': 'icon0'
+        };
+    } else if(value == "event-signup") {
+        return {
+            'text':'회원가입',
+            'className': 'icon1'
+        };
+    } else if(value == "event-airdrop") {
+        return {
+            'text':'Airdrop',
+            'className': 'icon1'
+        };
+    } else if(value == "event-recommander") {
+        return {
+            'text':'추천인 이벤트',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-deposit") {
+        return {
+            'text':'MACH로 입금',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-withdraw") {
+        return {
+            'text':'Point로 출금',
+            'className': 'icon2'
+        };
+    } else if(value == "withdraw") {
+        return {
+            'text':'출금',
+            'className': 'icon2'
+        };
+    } else {
+        return {
+            'text':value,
+            'className': 'icon2'
+        };
+    }
+}
+
 function checkStrNum(value) {
     //var idReg = /^[A-Za-z0-9]{6,20}$/g;
     var idReg =  /^[a-z]+[a-z0-9]{5,19}$/g;
@@ -327,6 +371,15 @@ function checkDecimal(evt) {
 
     var decimal8th = /^\d*[.]\d{8}$/;
     if (decimal8th.test(_value)) {
+        return false;
+    }
+
+    return true;
+}
+
+function checkValidDecimal(value) {
+    var reg = /^\d+\.?\d*$/;
+    if (!reg.test(value)) {
         return false;
     }
 

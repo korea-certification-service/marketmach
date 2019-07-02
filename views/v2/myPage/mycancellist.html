@@ -90,25 +90,30 @@
                     }
                     
                     var title = buyList[i].item.title;
+                    var cryptoCurrencyCode = buyList[i].item.cryptoCurrencyCode == undefined ? "MACH" : buyList[i].item.cryptoCurrencyCode;
                     var price = numberWithCommas(buyList[i].item.price);
                     var point = numberWithCommas(buyList[i].item.point);
                     var status = "취소완료";
                     var refund = buyList[i].refund == true ? "(환불)" : "";
                     var money = point + ' Point';
                     if("<%=useBlockchain%>" =='Y') {
-                        money = price + ' MACH';
+                        money = price + ' ' + cryptoCurrencyCode;
+                    }
+                    var ico_item = "";
+                    if(buyList[i].item.type == "item") {
+                        ico_item = "ico_item";
                     }
                     
                     result += '<tr>' + 
                                 '<td>'+category+'</td>' + 
                                 '<td>' + 
-                                    '<span class="btn_cmm_bd ico_item">'+item_type.text+'</span>' + 
+                                    '<span class="btn_cmm_bd '+ico_item+'">'+item_type.text+'</span>' + 
                                     '<div class="ellipse">' + title +
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+money+'</td>' + 
                                 '<td>' + 
-                                    '<span class="btn_cmm_bd ico_item">'+status + '<br>' + refund + '</span>' + 
+                                    '<span class="btn_cmm_bd">'+status + '<br>' + refund + '</span>' + 
                                 '</td>' + 
                                 '<td>'+regDate+'</td>' + 
                             '</tr>';

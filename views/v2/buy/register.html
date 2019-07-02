@@ -71,8 +71,12 @@
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
-                                        <em class="fc2">MACH</em>
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
@@ -82,7 +86,7 @@
                                 <th>거래가격(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                         <em class="fc2" id="currencyName"></em>
                                     </div>
                                 </td>
@@ -190,7 +194,7 @@
 
         function submit() {
             var country = "<%= country %>";
-            if ($("#game-name option:selected").val() == "false") {
+            if ($("#game-name option:selected").val() == "") {
                 alert('게임명을 선택하세요.');
                 return false;
             } else if ($("#game-server option:selected").val() == "") {
@@ -205,11 +209,17 @@
             } else if ($("#game_character").val() == "") {
                 alert('구매자 케릭터명을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                alert('거래 가격(Point)을 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#point").val())) {
+                alert('거래 가격(Point)을 숫자로 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
@@ -243,8 +253,10 @@
                 "clicked": 0
             };
             if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
                 data["price"] = $("#price").val();
             } else {
+                data["cryptoCurrencyCode"] = "MACH";
                 data["price"] = 0;
             }
             

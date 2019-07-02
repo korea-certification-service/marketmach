@@ -202,10 +202,11 @@
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 
                 var money = point + 'Point';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + 'MACH';
+                    money = price + cryptoCurrencyCode;
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
@@ -213,7 +214,7 @@
                                 '<td>' + 
                                     '<span class="btn_cmm_bd '+item_type.className+'">'+ item_type.text +'</span>' + 
                                     ' <div class="ellipse"> &nbsp;' + title + 
-                                        '<span>('+replyCount+')</span>' + 
+                                        '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
                                     '<span class="ico_photo">사진</span>' + 
                                 '</td>' + 

@@ -23,7 +23,7 @@
 
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
-
+            $('#item_title').val(title);
             $("#list").html('');
             loadGameList();
             getSearchValue();
@@ -209,10 +209,11 @@
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
 
                 var money = point + 'Point';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + 'MACH';
+                    money = price + cryptoCurrencyCode;
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
@@ -223,7 +224,7 @@
                     strDOM +=          '<span class="ico_photo">사진</span>';
                 }
                 strDOM +=              '<div class="ellipse"> ' + title + 
-                                        '<span>('+replyCount+')</span>' + 
+                                        '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 

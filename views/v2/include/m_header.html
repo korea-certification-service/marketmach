@@ -87,10 +87,35 @@
                     </button>
                 </li>
             </ul>
-            <div class="search_bar cf">
+            <div class="srch_module">
+                <div class="srch_topWrap">
+                    <select class="srch_select m_srch_select">
+                        <option value="games">게임아이템</option>
+                        <option value="assets">자산거래</option>
+                        <option value="otc">OTC거래</option>
+                    </select>
+                    <input class="srch_input ipt_search_bar" id="m_search_item_name" type="text" placeholder="게임검색이 가능합니다." autocomplete="off"/>
+                    <input type="button" class="btn_search bgc1 .btn_search" id="m_main_search" value="검색" autocomplete=off>
+                    <div class="srch_del m_srch_del"></div>
+                </div>
+                <div class="srch_bottomWrap m_srch_bottomWrap">
+                    <div class="srch_box_left m_srch_box_left">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                    <div class="srch_box_right m_srch_box_right">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <script src="/static/js/modules/m_search_guide.js"></script>
+            <!-- <div class="search_bar cf">
                 <input type="text" class="ipt_search_bar" id="m_search_item_name">
                 <input type="button" class="btn_search bgc1" id="m_main_search" value="검색">
-            </div>              
+            </div>               -->
         </section>
         <!-- 모바일 네비게이션 -->
         <nav class="mob_nav">
@@ -229,8 +254,8 @@
                                         <%if(useBlockchain == 'Y') {%>
                                         <em>나의지갑 잔액</em>
                                         <p class="fc2 total_mach">100 <span>MACH</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button>
                                         <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
                                         <em>나의 포인트 잔액</em>
                                         <p class="fc2 total_point">100 <span>Point</span></p>
@@ -239,7 +264,7 @@
                                         <%}%>
                                     </li>
                                 </ul>
-                                <dl class="block_menu cf">
+                                <!-- <dl class="block_menu cf">
                                     <dt>게임아이템</dt>
                                     <dd><a href="/sells/register">판매등록</a></dd>
                                     <dd><a href="/buys/register">구매등록</a></dd>
@@ -252,11 +277,9 @@
                                     <dd><a href="/etc-buys/register">구매등록</a></dd>
                                     <dd><a href="/etc-sells?category=etc&trade_type=sell">팝니다</a></dd>
                                     <dd><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></dd>
-                                </dl>                    
+                                </dl>                     -->
                             </div>
                         </li>
-                        <li><a href="/supports/info" class="btn_1depth">고객센터</a></li>
-                        <li><a href="/howto/trade/vtr" class="btn_1depth">이용안내</a></li>
                         <li>
                             <%if(useBlockchain == 'Y') {%>
                             <dl class="available_coin cf">
@@ -283,6 +306,8 @@
                                 <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                             </dl>
                         </li>
+                        <li><a href="/supports/info" class="btn_1depth">고객센터</a></li>
+                        <li><a href="/howto/trade/vtr" class="btn_1depth">이용안내</a></li>
                         <li class="li_logout"><a href="/logout" class="menu_logout btn bggr1">로그아웃</a></li>
                     </ul>
                 </div>

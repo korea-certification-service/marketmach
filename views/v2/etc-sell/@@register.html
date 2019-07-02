@@ -66,51 +66,65 @@
                                 <th>거래제목</th>
                                 <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력" maxlength="50"></td>
                             </tr>
+                            <%if(useBlockchain == 'Y') {%>
                             <tr>
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
                                         <em class="fc2">MACH</em>
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <th>거래가격(캐시)</th>
+                            <%} if(usePoint == 'Y') {%>
+                            <tr>
+                                <th>거래가격(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="text" class="form-control w80p" id="point" placeholder="거래 가격 입력.">
-                                        <em class="fc2">CASH</em>
-                                    </div>
-                                    <p class="fcrd">※ 1CASH = 1원</p>
-                                </td>
-                            </tr> -->
-                            <tr class="mrg_cell">
-                                <td colspan="2">
-                                    <div id="fullImg"></div>
-                                    <div class="input_wrap">
-                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
-                                        <input type="file" id="input_imgs" multiple/>
+                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <em class="fc2" id="currencyName"></em>
                                     </div>
                                 </td>
                             </tr>
+                            <%}%>
                             <tr>
                                 <th>상품이미지</th>
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
-                                            <!--
-                                            <div class="thumbnail_box">
-                                                <div class="img_view_area">
-                                                    <img src="/static/img/main/main_visual02.jpg">
-                                                </div>
-                                                <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
-                                            </div>
-                                            -->
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+
+                                            <ul class="thumbnail_btn_list cf">
+                                                <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                            </ul>
                                         </div>
                                     </div>
+                                </td>
+                            </tr>         
+                            <tr class="mrg_cell">
+                                <td colspan="2">
+                                    <div class="input_wrap">
+                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                        <input type="file" class="input_imgs" id="input_imgs1" index="1"/>
+                                        <input type="file" class="input_imgs" id="input_imgs2" index="2"/>
+                                        <input type="file" class="input_imgs" id="input_imgs3" index="3"/>
+                                        <input type="file" class="input_imgs" id="input_imgs4" index="4"/>
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                    </div>
+                                    <div id="fullImg"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -127,6 +141,7 @@
                 <ul class="fcrd mb50">
                     <li>※ 입력하신 정보는 구매자가 구매확인 시 전달됩니다.</li>
                     <li>※ 입력하신 정보의 오 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
+                    <li>※ 게시글에 맞지 않는 양식으로 작성될 경우 관리자에 의해 이동 및 삭제 될 수 있습니다.</li>
                 </ul>
 
                 <div class="btn_align_c">
@@ -139,12 +154,10 @@
     <!--// content_wrap -->
 
     <script type="text/javascript">
-
-        // 이미지 정보들을 담을 배열
-        var sel_files = [];
+        var sel_files = []; // 이미지 정보들을 담을 배열
     
         $(document).ready(function() {
-            $("#input_imgs").on("change", handleImgFileSelect)
+            $(".input_imgs").on("change", singleUpload);
 
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
@@ -199,7 +212,10 @@
 
             $.ajax({
                 method: "GET",
-                url: "/v1/categories/" + gameName
+                url: "/v1/categories/" + gameName,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
             }).done(function (success) {
                 renderServerSelect(success.data);
             }).fail(function (fail) {
@@ -216,121 +232,96 @@
             $("#game-server").append(strDOM);
             $("#game-server").selectpicker('refresh');
         }
+        /*
+        function singleUpload(e) {
+            var index = parseInt(e.target.getAttribute("index"));
+            var f = e.target.files[0];
 
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
-    
-        function handleImgFileSelect(e) {
-            var $spinner = $("#ajaxSpiner");
-            $spinner.show(); // spinner
-            var pos = $("#spinnerTarget").offset().top - 100;
-            $("html, body").animate({
-                "scrollTop":pos
-            },0);
-
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
-    
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-    
-            if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
-                $spinner.hide(); // spinner
+            if(!f.type.match("image.*")) {
+                alert("이미지 파일만 업로드가 가능합니다.");
+                e.target.value = "";
+                $("#listOfThumbnail li").eq(index).html("");
+                if(index === 0) {$("#fullImg").html("");}
+                sel_files.splice(index, 1);
                 return;
             }
-    
-            var index = 0;
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    $spinner.hide(); // spinner
-                    return;
-                }
-    
-                var reader = new FileReader();
-                var image  = new Image();
-    
-                reader.readAsDataURL(f);
-                reader.onload = function(_file) {
-                    image.src    = _file.target.result;
-                    image.onload = function() {
-                        var w = this.width,
-                            h = this.height,
-                            t = f.type,                           // ext only: // file.type.split('/')[1],
-                            n = f.name,
-                            s = ~~(f.size / 1024) + 'KB';
-    
-                        //파일 길이, 높이 체크
-                        // if(w > 300 || h > 500) {
-                        //     alert('300x500 이하의 이미지만 업로드가 가능합니다');
-                        //     return;
-                        // }
-    
-                        sel_files.push({
-                            "name": "img_id_"+index,
-                            "value": f
-                        });
-    
-                        //var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\" id=\"img_id_"+index+"\"><img src=\"" + _file.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
-                        
+
+            var reader = new FileReader();
+            var image  = new Image();
+            var agent = navigator.userAgent.toLowerCase();
+
+            reader.readAsDataURL(f);
+            reader.onload = function(_file) {
+                image.src    = _file.target.result;
+                image.onload = function() {
+                    var w = this.width,
+                        h = this.height,
+                        t = f.type,
+                        n = f.name,
+                        s = ~~(f.size / 1024) + 'KB';
+
+                    // IE 경우 이미지 가공이 지원안됨
+                    if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+                        var objImgInfo = {"index": index, "name": "img_id_"+index, "value": f};
+                        sel_files.splice(index, 1, objImgInfo);
+
                         var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
                             html += '<div class="img_view_area">';
                             html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
                             html += '</div>';
-                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                            // html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
                             html += '</div>';
-                                                
-                        $(".imgs_wrap").append(html);
 
                         // 풀이미지 썸네일 로직 추가
-                        if(index === 0) {
+                        $("#listOfThumbnail li").eq(index).html(html);
+
+                        //if(index === "0") {
                             var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
                             $("#fullImg").html(img1th);
-                        }
-
-                        index++;
-
-                        if(filesArr.length === index) {
-                            $spinner.hide(); // spinner
-                        }
+                        //}
+                    } else {
+                        var fileType = f.type;
+                        var fileExte = f.name.split(".")[1];
+                        var resultImg = loadImage(
+                            _file.target.result, //fileOrBlobOrUrl,
+                            function (img, data) {
+                                console.log("data: ", img, data); // requires exif extension
+                                
+                                // 이미지 업로드 실행
+                                img.toBlob(function(blob){
+                                    var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+    
+                                    var objImgInfo = {"index": index, "name": "img_id_"+index, "value": createdFile};
+                                    sel_files.splice(index, 1, objImgInfo);
+                                });
+        
+                                var thumnail = new Image();
+                                    thumnail.id = "pic"
+                                    thumnail.src = img.toDataURL();
+    
+                                // 풀이미지 썸네일 로직 추가
+                                $("#fullImg").empty().append(thumnail);
+    
+                                var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
+                                    html += '<div class="img_view_area">';
+                                    html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
+                                    html += '</div>';
+                                    // html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                                    html += '</div>';
+                                                        
+                                //$(".imgs_wrap").append(html);
+                                $("#listOfThumbnail li").eq(index).html(html);
+                                
+                            },
+                            { maxWidth: 900, orientation: true }
+                        );
                     }
-                }
 
-            });
-
-            //console.log(filesArr[0])
-        }
-    
-        function deleteImageAction(index) {
-            console.log("index : "+index);
-            var findIndex = -1;
-            for (var i = 0; i < sel_files.length; ++i) {
-                if(sel_files[i].name == index) {
-                    findIndex = i;
                 }
             }
-    
-            if(findIndex > -1) {
-                sel_files.splice(findIndex, 1);
-            }
-    
-            $('#' + index).remove();
-
-            console.log("sel length : ",sel_files);
-
-            // 풀이미지 썸네일 로직 추가
-            var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-            $("#fullImg").html(img1th)
         }
 
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
+        */
 
         function submit() {
             var country = "<%= country %>";
@@ -386,12 +377,14 @@
             } else {
                 data["price"] = 0;
             }
-            // if ("<%= usePoint %>" == "Y" && country == "KR") {
-            //     data["point"]=$("#point").val();
-            // }else{
-            //     data["point"]=0;
-            // }
-            data["point"]=0;
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                data["currency"]="POINT";
+                data["point"]=0;
+            }
 
             if(country=="CN"){
                 data["china_region1"]=$("#region1").val();
@@ -451,6 +444,8 @@
             })
         }
     </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/img_upload.html', {pageName: 'register'}) %>
 
     <% include ../include/footer.html %>
 </div>

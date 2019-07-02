@@ -6,5 +6,9 @@ module.exports = {
     notification: {
         ko: "님이 바로구매를 요청하셨습니다. 구매자님의 금액이 에스크로 되었습니다.\n",
         cn: "VTR我想继续进行交易。\n"
+    },
+    authSms: {
+        KR: "[MarketMACH]휴대폰인증코드입니다.\n",
+        CN: "[MarketMACH]휴대폰인증코드입니다.\n"
     }
 };

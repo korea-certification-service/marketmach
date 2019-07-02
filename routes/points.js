@@ -471,80 +471,91 @@ router.post('/happymoney/payment', function(req, res, next) {
 
 router.post('/happymoney/pin/payment', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
-
-    let connection = _tcpConnection();
     //전문 test
     let today = util.formatDate2(new Date().toString());
     let MerchantPwd = cryptojs.TripleDES.encrypt(dbconfig.happymoney.onlineId,dbconfig.happymoney.onlineId).toString();
     let PinNo = cryptojs.TripleDES.encrypt("5746606380005303",dbconfig.happymoney.onlineId).toString();
     let PinDate = cryptojs.TripleDES.encrypt("20190422",dbconfig.happymoney.onlineId).toString();
     
-    let reqData = {
-        "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
-        "DocDate": today,
-        "DocCode": "ON",
-        "DocCnt":"0001",
-        "FldCnt":"0017",
-        "EncryptType": "TDES",
-        "MerchantID": dbconfig.happymoney.onlineId,
-        "MerchantPwd": MerchantPwd,
-        "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
-        "DealCallDate":today.substr(0,7),
-        "DealCallTime": today.substr(8),
-        "QueryKind": "G2",
-        "QueryGiftQty":1,
-        "PinNo": PinNo,
-        "PinDate": PinDate,
-        "BranchCode": "",
-        "SalesDate": today.substr(0,7),
-        "PosNo": "",
-        "InputKind":""
-    }
+    // let reqData = {
+    //     "DocType": "0610", //[0610: 잔액 조회 요청, 0630:결제 요청]
+    //     "DocDate": today,
+    //     "DocCode": "ON",
+    //     "DocCnt":"0001",
+    //     "FldCnt":"0017",
+    //     "EncryptType": "TDES",
+    //     "MerchantID": dbconfig.happymoney.onlineId,
+    //     "MerchantPwd": MerchantPwd,
+    //     "QueryNo": "happymoneyDeposit" + util.formatDate2(new Date().toString()),
+    //     "DealCallDate":today.substr(0,7),
+    //     "DealCallTime": today.substr(8),
+    //     "QueryKind": "G2",
+    //     "QueryGiftQty":1,
+    //     "PinNo": PinNo,
+    //     "PinDate": PinDate,
+    //     "BranchCode": "",
+    //     "SalesDate": today.substr(0,7),
+    //     "PosNo": "",
+    //     "InputKind":""
+    // }
     //상품권 조회
-    // let reqData = JSON.stringify(req.body);
+    let reqData = "0610^" + today + "^ON^0001^0017^TDES^" + dbconfig.happymoney.onlineId + "^" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
+                    + "^" + today.substr(0,8) + "^" + today.substr(8) + "^G2^1^" + PinNo + "^" + PinDate + "^^" + today.substr(0,8) + "^^";
+    // let reqData = "DocType:0610^DocDate:" + today + "^DocCode:ON^DocCnt:0001^FldCnt:0017^EncryptType:TDES^MerchantID:" + dbconfig.happymoney.onlineId + "^MerchantPwd:" + MerchantPwd + "^happymoneyDeposit" + util.formatDate2(new Date().toString())
+    //     + "^DealCallDate:" + today.substr(0,8) + "^DealCallTime:" + today.substr(8) + "^QueryKind:G2^QueryGiftQty:1^PinNo:" + PinNo + "^PinDate:" + PinDate + "^BranchCode:^SalesDate:" + today.substr(0,8) + "^PosNo:^InputKind:";
     console.log('reqData => ', reqData);
-    let result = !connection.write(JSON.stringify(reqData));
-    if(result) {
-        bitwebResponse.code = 200;
-        bitwebResponse.data = result;
-        res.status(200).send(bitwebResponse.create())
-    } else {
-        bitwebResponse.code = 500;
-        bitwebResponse.message = result;
-        res.status(500).send(bitwebResponse.create())
-    }
+    _tcpConnection(reqData, bitwebResponse, res);
 });
 
-function _tcpConnection() {
+function _tcpConnection(reqData, bitwebResponse, res) {
      // pin 결제의 경우 socket 통신으로 처리한다.
      let connection = net.connect({port: 9006, host:dbconfig.happymoney.pinIp}, function(){
         console.log('********** happymoney pin connected **********');
         console.log('   local = %s:%s', this.localAddress, this.localPort);
         console.log('   remote = %s:%s', this.remoteAddress, this.remotePort);
         
-        this.setTimeout(500);
+        this.setTimeout(5000);
         this.setEncoding('utf8');
-    });
+        _writeData(connection, reqData);
+        let data = {'msg' : 'none'};
 
-    connection.on('data', function(data) {
-        console.log(connName + " From Server: " + data.toString());
-        this.end();
+        this.on('data', function(resData) {
+            console.log(" From Server: " + resData.toString());
+            data = resData;
+            this.end();
+        });
+    
+        this.on('end', function() {
+            console.log(' Client disconnected');
+        });
+        this.on('error', function(err) {
+            console.log('Socket Error: ', JSON.stringify(err));
+        });
+        this.on('timeout', function() {
+            console.log('Socket Timed Out');
+        });
+        this.on('close', function() {
+            console.log('Socket Closed');
+            bitwebResponse.code = 200;
+            bitwebResponse.data = {
+                "reqData": reqData,
+                "resData": data
+            };
+            res.status(200).send(bitwebResponse.create())
+        });
     });
+}
 
-    connection.on('end', function() {
-        console.log(connName + ' Client disconnected');
-    });
-    connection.on('error', function(err) {
-        console.log('Socket Error: ', JSON.stringify(err));
-    });
-    connection.on('timeout', function() {
-        console.log('Socket Timed Out');
-    });
-    connection.on('close', function() {
-        console.log('Socket Closed');
-    });
-
-    return connection;
+function _writeData(connection, reqData) {
+    var success = connection.write(JSON.stringify(reqData));
+    console.log(success);
+    if (!success){
+        (function(connection, reqData){
+            connection.once('drain', function(){
+                _writeData(connection, reqData);
+            });
+        })(connection, reqData);
+    }
 }
 
 module.exports = router;

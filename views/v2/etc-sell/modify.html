@@ -25,7 +25,7 @@
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
                 <div class="table_wrap table-responsive">
                     <!-- 거래정보 -->
-                <div class="table_wrap table-responsive">
+                    <div class="table_wrap table-responsive">
                         <table class="table_view table">
                             <colgroup class="colgroup_etc-sell_modify">
                                 <col class="col2_1">
@@ -73,8 +73,12 @@
                                     <th>거래가격</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
-                                            <em class="fc2">MACH</em>
+                                            <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                                <option value="BTC">BTC</option>
+                                                <option value="ETH">ETH</option>
+                                                <option value="MACH" selected>MACH</option>
+                                            </select>
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                         </div>
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
@@ -84,33 +88,50 @@
                                     <th>거래가격(Point)</th>
                                     <td>
                                         <div class="no_w100p_wrap">
-                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                             <em class="fc2" id="currencyName"></em>
                                         </div>
                                     </td>
                                 </tr>
                                 <%}%>
-                                <tr class="mrg_cell">
-                                    <td colspan="2">
-                                        <div id="fullImg"></div>
-                                        <div class="input_wrap">
-                                            <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
-                                            <input type="file" id="input_imgs" multiple/>
-                                        </div>
-                                        <ul class="highligh_list fcrd">
-                                            <li>※ 이미지 업로드 수정 시 기존 업로드한 이미지 포함하여 다시 업로드 하셔야 적용됩니다.</li>
-                                        </ul>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <th>상품이미지</th>
                                     <td>
                                         <div class="product_img_list">
                                             <div class="imgs_wrap">
+                                                <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                                <ul class="thumbnail_btn_list cf">
+                                                    <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                </ul>                                                
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                <tr class="mrg_cell">
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                            <input type="file" class="input_imgs" id="input_imgs1" index="1" />
+                                            <input type="file" class="input_imgs" id="input_imgs2" index="2" />
+                                            <input type="file" class="input_imgs" id="input_imgs3" index="3" />
+                                            <input type="file" class="input_imgs" id="input_imgs4" index="4" />
+                                        </div>
+                                        <ul class="highligh_list fcrd">
+                                            <li>※ </li>
+                                        </ul>
+                                        <div id="fullImg"></div>
+                                    </td>
+                                </tr> 
                                 <tr>
                                     <th>상세정보</th>
                                     <td>
@@ -132,24 +153,19 @@
                 <!--// 상품정보 : 이미지 업로드 UI 포함 -->
             </section>
             <!--// view page-->
+        </div>
     </div>
     <!--// content_wrap -->
 
     <script type="text/javascript">
-
-        // 이미지 정보들을 담을 배열
         var itemId;
-        var sel_files = [];
+        var sel_files = [];  // 이미지 정보들을 담을 배열
         var itemGameName;
         var itemGameServer;
+        var beforeImgs = []; // 수정될 이미지 정보 배열
     
         $(document).ready(function() {
-            var agent = navigator.userAgent.toLowerCase();
-            if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
-                $("#input_imgs").on("change", handleImgFileSelectForIE);
-            } else {
-                $("#input_imgs").on("change", handleImgFileSelect);
-            }
+            $(".input_imgs").on("change", singleUpload);
 
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
@@ -161,7 +177,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submit();
+                submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
             });
 
             // $("#item-game-name").on('change', function() {
@@ -193,27 +209,31 @@
                 var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type);
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = success.data.desc;
-                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 
-                for(var i=0;i<success.data.images.length; i++) {
-                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
-                                html += '<div class="img_view_area">';
-                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
-                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\')\"></a>";
-                                html += '</div>';
-                                html += '</div>';
-                                                    
-                    $(".imgs_wrap").append(html);
+                beforeImgs = success.data.images;
+                // 이미지 모두 지운 상황이 아닌 경우
+                if(success.data.images[0] !== null) {
+                    var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                    for(var i=0;i<success.data.images.length; i++) {
+                        var index = i;
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                            html += '</div>';
+                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
+                            html += '</div>';
+                            //html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">submitAction</button>';
 
-                    // sel_files.push({
-                    //     "name": "img_id_"+i,
-                    //     "value": f
-                    // });
+                        $("#listOfThumbnail li").eq(index).html(html);
+                    }
+                    $("#fullImg").html(img1th);
                 }
-                
+
                 $("[name=item_type]").filter('[value='+success.data.delivery_type+']').prop('checked', true);
                 $("#title").val(title);
                 $("#item-game-name").val(success.data.category1);
+                $("#cryptoCurrencyCode").val(cryptoCurrencyCode);
                 if("<%=useBlockchain%>" == 'Y') {
                     $("#price").val(price);
                 } 
@@ -221,11 +241,11 @@
                     $("#point").val(point);
                 }
                 $("#desc").text(desc);
-                $("#fullImg").html(img1th);
                 
-                setTimeout(function(){
-                    selectServer();
-                });
+                loadGameList();
+                // setTimeout(function(){
+                //     selectServer();
+                // });
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -242,7 +262,6 @@
                 }
 
                 $("#item-game-name").append(strDOM);
-
                 $("#item-game-name").selectpicker('refresh');
                 //selectServer();
                 $("#item-game-name").val(itemGameName).attr("selected", "selected");
@@ -283,205 +302,9 @@
             $("#game-server").selectpicker('refresh');
         }
 
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
-
-        function handleImgFileSelect(e) {
-            var $spinner = $("#ajaxSpiner");
-            $spinner.show(); // spinner
-            var pos = $("#spinnerTarget").offset().top - 100;
-            $("html, body").animate({
-                "scrollTop":pos
-            },0);
-
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
-    
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-    
-            if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
-                $spinner.hide(); // spinner
-                return;
-            }
-    
-            var index = 0;
-            filesArr.forEach(function(f, idx) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    $spinner.hide(); // spinner
-                    return;
-                }
-
-                var reader = new FileReader();
-                var image  = new Image();
-    
-                reader.readAsDataURL(f);
-                reader.onload = function(_file) {
-                    image.src    = _file.target.result;
-                    image.onload = function() {
-                        var w = this.width,
-                            h = this.height,
-                            t = f.type,                           // ext only: // file.type.split('/')[1],
-                            n = f.name,
-                            s = ~~(f.size / 1024) + 'KB';
-
-                        var fileType = f.type;
-                        var fileExte = f.name.split(".")[1];
-                        var resultImg = loadImage(
-                            _file.target.result, //fileOrBlobOrUrl,
-                            function (img, data) {
-                                console.log("data: ", img, data); // requires exif extension
-                                
-                                // 이미지 업로드 실행
-                                img.toBlob(function(blob){
-                                    var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
-                                    
-                                    sel_files.push({
-                                        "name": "img_id_"+index,
-                                        "value": createdFile
-                                    });
-                                    
-                                   //console.log(createdFile)
-                                });
-       
-                                var thumnail = new Image();
-                                    thumnail.id = "pic"
-                                    thumnail.src = img.toDataURL();
-
-                                // 풀이미지 썸네일 로직 추가
-                                if(idx === 0) {
-                                    $("#fullImg").empty().append(thumnail);
-                                }
-
-                                var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
-                                    html += '<div class="img_view_area">';
-                                    html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
-                                    html += '</div>';
-                                    html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
-                                    html += '</div>';
-                                                        
-                                $(".imgs_wrap").append(html);
-                                
-                            },
-                            { maxWidth: 900, orientation: true }
-                        );
-                    
-                        console.log("resultImg:", resultImg)
-
-                        index++;
-
-                        if(filesArr.length === index) {
-                            $spinner.hide(); // spinner
-                        }
-                    }
-                }
-
-            });
-
-            //console.log(filesArr[0])
-        }
-
-        function handleImgFileSelectForIE(e) {
-    
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
-    
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-    
-            if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
-                return;
-            }
-    
-            var index = 0;
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    return;
-                }
-    
-                var reader = new FileReader();
-                var image  = new Image();
-    
-                reader.readAsDataURL(f);
-                reader.onload = function(_file) {
-                    image.src    = _file.target.result;
-                    image.onload = function() {
-                        var w = this.width,
-                            h = this.height,
-                            t = f.type,                           // ext only: // file.type.split('/')[1],
-                            n = f.name,
-                            s = ~~(f.size / 1024) + 'KB';
-    
-                        //파일 길이, 높이 체크
-                        // if(w > 300 || h > 500) {
-                        //     alert('300x500 이하의 이미지만 업로드가 가능합니다');
-                        //     return;
-                        // }
-    
-                        sel_files.push({
-                            "name": "img_id_"+index,
-                            "value": f
-                        });
-    
-                        //var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\" id=\"img_id_"+index+"\"><img src=\"" + _file.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
-                        
-                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
-                            html += '<div class="img_view_area">';
-                            html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
-                            html += '</div>';
-                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
-                            html += '</div>';
-                                                
-                        $(".imgs_wrap").append(html);
-
-                        // 풀이미지 썸네일 로직 추가
-                        if(index === 0) {
-                            var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
-                            $("#fullImg").html(img1th);
-                        }
-
-                        index++;
-                    }
-                }
-
-            });
-
-            //console.log(filesArr[0])
-        }
-   
-        function deleteImageAction(index) {
-            console.log("index : "+index);
-            var findIndex = -1;
-            for (var i = 0; i < sel_files.length; ++i) {
-                if(sel_files[i].name == index) {
-                    findIndex = i;
-                }
-            }
-    
-            if(findIndex > -1) {
-                sel_files.splice(findIndex, 1);
-            }
-    
-            $('#' + index).remove();
-
-            console.log("sel length : ",sel_files);
-
-            // 풀이미지 썸네일 로직 추가
-            var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-            $("#fullImg").html(img1th)
-        }
-
-        function submit() {
+        function submit(arrImages) {
             var country = "<%= country %>";
-            if ($("#item-game-name option:selected").val() == "false") {
+            if ($("#item-game-name option:selected").val() == "") {
                 alert('카테코리를 선택하세요.');
                 return false;
             } else if ($("[name=item_type]:checked").val() == "") {
@@ -490,11 +313,17 @@
             } else if ($("#title").val() == "") {
                 alert('거래제목을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
+            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                alert('거래 가격(Point)을 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#point").val())) {
+                alert('거래 가격(Point)을 숫자로 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
@@ -515,7 +344,23 @@
                 "count": 1
                 // "item_tag": $("#keywords").val(),
             };
+
+            console.log("before arrImages: ", arrImages);
+            // 이미지 수정 있는 경우
+            if(arrImages.length > 0) {
+                // 삭제된 이미지는 배열에서 삭제
+                for (var i = 0; i < arrImages.length; i++) {
+                    if(arrImages[i] === null) {
+                        arrImages.splice(i, 1);
+                        i--;
+                    }
+                }
+                data.images = arrImages;
+            }
+            console.log("after arrImages: ", arrImages);
+
             if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
                 data["price"] = $("#price").val();
             } else {
                 //data["price"] = 0;
@@ -548,26 +393,22 @@
                 }
             }).done(function (success) {
                 // console.log(success);
-                if(sel_files.length == 0) {
-                    location.href = '/etc-sells/detail/' + itemId;
-                } else {
-                    submitAction(itemId);
-                }
+                // 이미지 업로드를 먼저 하는 로직으로 변경
+                location.replace('/etc-sells/detail/' + itemId);
             }).fail(function (fail) {
                 $('#btnSubmit').attr('disabled', false);
             })
         }
     
         function submitAction(id) {
-            console.log("업로드 파일 갯수 : "+sel_files.length);
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
                 images.append(name, sel_files[i].value);
             }
-            console.log(images);
-            //ajax 처리
+
             $.ajax({
                 method: "POST",
                 url: "/v1/items/"+id+"/images",
@@ -576,12 +417,22 @@
                 data: images
             }).done(function (success) {
                 console.log(success);
-                location.href = '/etc-sells/detail/' + itemId;
+                //location.href = '/etc-sells/detail/' + itemId;
+
+                if(sel_files.length > 0) {
+                    // sel_files[i].index는 수정이 일어난 이미지의 인덱스
+                    for (var i = 0; i < sel_files.length; i++) {
+                        beforeImgs.splice(sel_files[i].index, 1, success.data[i]);
+                    }
+                }
+                submit(beforeImgs);
             }).fail(function (fail) {
                 console.log('실패',fail);
             })
         }
     </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'modify'}) %>
 
     <% include ../include/footer.html %>
 </div>

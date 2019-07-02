@@ -6,6 +6,10 @@ var util = require('../utils/util');
 var dbconfig = require('../config/dbconfig');
 var controllerUsers = require('../controllers/users');
 var controllerGameCenter = require('../controllers/gameCenter');
+var controllerMachgames = require('../controllers/machgames');
+var controllerCoins = require('../controllers/coins');
+var dbconfig = require('../config/dbconfig');
+var BitwebResponse = require('../utils/BitwebResponse');
 
 router.post('/login', function (req, res, next) {
     let head = JSON.parse(req.body.head);
@@ -356,5 +360,85 @@ router.post('/:service/receive', function (req, res, next) {
             res.status(500).send("No data.");
         });
 });
+
+router.post('/games/list', function(req, res, next) {
+    let bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let condition = {};
+
+    controllerMachgames.count(country, condition)
+    .then(count => {
+        controllerMachgames.list(country, condition)
+        .then(machgames => {
+            let result = {
+                "list":machgames,
+                "count": count
+            }
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+            console.error('games list err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
+    }).catch((err) => {
+        console.error('games list err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+})
+
+router.get('/:userId/info', function(req, res, next) {
+    let bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let userId = req.params.userId;
+
+    controllerGameCenter.getByUserId(country, userId)
+    .then(userGameCenter => {
+        bitwebResponse.code = 200;
+        bitwebResponse.data = userGameCenter;
+        res.status(200).send(bitwebResponse.create())
+    }).catch((err) => {
+        console.error('user game center err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+})
+
+router.get('/:userId/history', function(req, res, next) {
+    let bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let condition = {
+        "userId": req.params.userId
+    };
+
+    controllerGameCenter.getHistoryCount(country, condition)
+    .then(gameCenterHistoryCount => {
+        controllerGameCenter.getHistorys(country, condition)
+        .then(gameCenterHistorys => {
+            let result = {
+                "list":gameCenterHistorys,
+                "count": gameCenterHistoryCount
+            }
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+            console.error('games list err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
+    }).catch((err) => {
+        console.error('user game center err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+})
 
 module.exports = router;

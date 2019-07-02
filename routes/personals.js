@@ -118,6 +118,12 @@ router.post('/:personalId/images', function (req, res, next) {
                 data['images'].push(image);
             }
 
+            for(var i in data['images']) {
+                if(data['images'][i] == null) {
+                    data['images'].splice(i,0);
+                }
+            }
+
             controllerPersonal.update(country, personalId, data)
                 .then((result) => {
 

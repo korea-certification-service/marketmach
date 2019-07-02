@@ -137,6 +137,7 @@ router.get('/all', function (req, res, next) {
     let data = {};
 
     data['trade_type'] = trade_type;
+    data['status'] = 0;
     data['pageIdx'] = pageIdx;
     data['perPage'] = perPage;
     data['category'] = category;
@@ -522,7 +523,7 @@ router.get('/service/:itemId', function (req, res, next) {
                                     .then(point => {
                                         let result = item;
                                         result['_doc']['phone'] = user._doc.phone;
-                                        result['_doc']['total_mach'] = coin._doc.total_mach;
+                                        result['_doc']['total_coins'] = coin;
                                         result['_doc']['total_point'] = point._doc.total_point;
 
                                         bitwebResponse.code = 200;
@@ -734,6 +735,12 @@ router.post('/:itemId/images', function (req, res, next) {
                 }
 
                 data['images'].push(image);
+            }
+
+            for(var i in data['images']) {
+                if(data['images'][i] == null) {
+                    data['images'].splice(i,0);
+                }
             }
 
             controllerItems.updateById(country, itemId, data)

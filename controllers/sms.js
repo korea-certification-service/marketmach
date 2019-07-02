@@ -149,6 +149,37 @@ function sendBuynow(country, fromUserTag, targetUserTag) {
     });
 }
 
+function sendSmsCommon(data) {
+    return new Promise((resolve, reject) => {
+        // Set region
+        AWS.config.update({
+            accessKeyId: credentials.s3.accessKeyId,
+            secretAccessKey: credentials.s3.secretAccessKey,
+            region: credentials.sns.region
+        });
+
+        // Create publish parameters(언어에 따라서 표시, 일단은 한국어와 중국어만)
+        let params = {
+            Message: data.message,
+            PhoneNumber: data.countryCode + data.phone,  //전화번호
+        };
+
+        // Create promise and SNS service object
+        var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+
+        // Handle promise's fulfilled/rejected states
+        publishTextPromise.then((data) => {
+            console.log("MessageID is " + data.MessageId);
+            resolve(data);
+        }).catch((err) => {
+            console.error(err, err.stack);
+            reject(err);
+        });
+        
+    });
+}
+
 exports.sendSms = sendSms;
 exports.sendNotification = sendNotification;
 exports.sendBuynow = sendBuynow;
+exports.sendSmsCommon = sendSmsCommon;  

@@ -105,8 +105,8 @@
                     <article class="modal_bitberry_deposit">
                         <button id="btnmCloseModal" class="btn">X</button>
                         <h1>연락처 표시</h1>
-                        <p>구매자 : <span id="to_userTag"></span> 연락처 : <span id="toPhone"></span></p>
-                        <p>판매자 : <span id="from_userTag"></span> 연락처 : <span id="fromPhone"></span></p>
+                        <p>구매자 : <span id="to_userTag"></span><br> 연락처 : <span id="toPhone"></span></p>
+                        <p>판매자 : <span id="from_userTag"></span><br> 연락처 : <span id="fromPhone"></span></p>
                         <button id="checkok" class="btn btn-danger">확인</button>
                     </article>
                 </div>
@@ -137,7 +137,7 @@
             });
 
             $('#modify').on('click', function() {
-                location.href="/otc-buys/modify/" + itemId;
+                location.replace("/otc-buys/modify/" + itemId);
             });
 
             $('#cancel').on('click', function() {
@@ -193,11 +193,12 @@
                 var status = getStatus(success.data.status);
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 
                 $(".posting_date").text("등록일 : " + regDate);
                 $(".item_title").text(title);
                 $(".item_id").text(itemId);
-                $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 $(".txt_point").html(point + "<span>Point</span>");
                 $(".item_desc").html(desc);
                 $(".item_status").addClass(status.className).text(((success.data.status > 0 && success.data.status < 4)||success.data.status == 50 ||success.data.status == 5) && (success.data.vtr_btn_active) ? status.text+ ' - ' + status.detail : status.text);             

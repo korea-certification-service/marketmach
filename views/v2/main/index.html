@@ -127,10 +127,11 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var title = data[i].title;
                 var money = point + '<span>Point</span>';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 result += '<div>' +
@@ -167,9 +168,10 @@
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -192,9 +194,10 @@
                 var point = numberWithCommas(data[i].total_point);
                 var game_server = data[i].game_name + '>' + data[i].game_server;
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -215,9 +218,10 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -236,9 +240,10 @@
                 var price = numberWithCommas(data[i].total_price);
                 var point = numberWithCommas(data[i].total_point);
                 var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + ' Point';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + ' MACH';
+                    money = price + ' ' + cryptoCurrencyCode;
                 }
                 
                 result += '<tr>' + 
@@ -279,9 +284,10 @@
                 }
                 var title = data[i].title;
                 var regDate = data[i].regDate;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                 var money = point + '<span>Point</span>';
                 if("<%=useBlockchain%>" =='Y') {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
                 
                 result += '<div class="bd_area">' +
@@ -349,6 +355,14 @@
                         </a>
                     </div>                       
                     <!-- <div class="visual_img">
+                        <div class="pc_img">
+                            <img src="/static/img/main/main_visual12.jpg" alt="마하코인 프리세일">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/mob/m_main_visual12.jpg" alt="마하코인 프리세일">
+                        </div>
+                    </div>                    
+                    <div class="visual_img">
                         <div class="pc_img">
                             <img src="/static/img/main/main_visual11.jpg" alt="OTC">
                         </div>
@@ -669,7 +683,7 @@
                             <div class="cpn_box"><a href="http://www.blockchaintoday.co.kr/" target="_blank"><img src="/static/img/main/logo_today.png" alt="블록체인투데이" title="블록체인투데이"></a></div>
                             <div class="cpn_box"><a href="https://bctimes.co.kr/" target="_blank"><img class="img_vac" src="/static/img/main/logo_times.png" alt="블록체인타임즈" title="블록체인타임즈"></a></div>
                             <div class="cpn_box"><a href="http://gameabout.com/" target="_blank"><img src="/static/img/main/logo_gameabout.png" alt="게임어바웃" title="게임어바웃"></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a href="http://www.coinvoice.cn/" target="_blank"><img src="/static/img/main/logo_coinvoice.png" alt="코인보이스" title="코인보이스"></a></div>
                             <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
                             <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
                             <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>

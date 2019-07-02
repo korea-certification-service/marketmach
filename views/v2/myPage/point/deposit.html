@@ -25,6 +25,11 @@
             var $CategoryList = $("#ulCategory li");
             $CategoryList.hide().eq(0).show();
             $("#depositType").on("change", function() {
+                if($("#depositType").val() == "happymoney") {
+                    alert("준비중입니다.");
+                    $("#depositType").val("bank_account");
+                    return;
+                }
                 var idx = $(this)[0].selectedIndex;
                 $CategoryList.hide().eq(idx).show();
             });
@@ -110,7 +115,7 @@
                                         '<em class="fc3">'+amount+'<span>'+currencyCode+'</span></em><span class="arw_txt">>>></span><em class="fc3">'+point+'<span>Point</span></em>' + 
                                     '</td>' + 
                                     '<td>'+status+'</td>' + 
-                                    '<td>'+regDate+'</td>' + 
+                                    '<td>'+regDate.replace(' ','<br>')+'</td>' + 
                                 '</tr>';
                 }
 

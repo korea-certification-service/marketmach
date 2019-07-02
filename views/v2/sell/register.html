@@ -71,18 +71,22 @@
                                 <th>거래가격</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="price" min="0" placeholder="거래 가격 입력.">
-                                        <em class="fc2">MACH</em>
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
                             <%} if(usePoint == 'Y') {%>
                             <tr>
-                                <th>거래가격(Point)</th>
+                                <th>거래가격<br>(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="number" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
                                         <em class="fc2" id="currencyName"></em>
                                     </div>
                                 </td>
@@ -92,31 +96,43 @@
                                 <th>판매자 캐릭터명</th>
                                 <td><input type="text" class="form-control" id="game_character" placeholder="물품을 전달 하실 본인의 캐릭터명 입력"></td>
                             </tr>
-                            <tr class="mrg_cell">
-                                <td colspan="2">
-                                    <div id="fullImg"></div>
-                                    <div class="input_wrap">
-                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
-                                        <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
-                                        <input type="file" id="input_imgs" multiple/>
-                                    </div>
-                                </td>
-                            </tr>
                             <tr>
                                 <th>상품이미지</th>
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
-                                            <!--
-                                            <div class="thumbnail_box">
-                                                <div class="img_view_area">
-                                                    <img src="/static/img/main/main_visual02.jpg">
-                                                </div>
-                                                <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
-                                            </div>
-                                            -->
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+
+                                            <ul class="thumbnail_btn_list cf">
+                                                <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                            </ul>
                                         </div>
                                     </div>
+                                </td>
+                            </tr>         
+                            <tr class="mrg_cell">
+                                <td colspan="2">
+                                    <div class="input_wrap">
+                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                        <input type="file" class="input_imgs" id="input_imgs1" index="1"/>
+                                        <input type="file" class="input_imgs" id="input_imgs2" index="2"/>
+                                        <input type="file" class="input_imgs" id="input_imgs3" index="3"/>
+                                        <input type="file" class="input_imgs" id="input_imgs4" index="4"/>
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                    </div>
+                                    <div id="fullImg"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -146,308 +162,201 @@
     <!--// content_wrap -->
 
     <script type="text/javascript">
-
-        // 이미지 정보들을 담을 배열
-        var sel_files = [];
+    var sel_files = []; // 이미지 정보들을 담을 배열
     
-        $(document).ready(function() {
-            $("#input_imgs").on("change", handleImgFileSelect);
+    $(document).ready(function() {
+        $(".input_imgs").on("change", singleUpload);
 
-            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
-                var src = $(this).children("img").attr("src");
-                $("#fullImg > img").attr("src", src);
-            });
-
-            $('.selectpicker').selectpicker({
-                size: 4
-            });
-
-            $("#btnSubmit").on('click', function(){
-                submit();
-            });
-
-            $("#game-name").on('change', function() {
-                selectServer();
-            })
-
-            loadGameList();
+        $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+            var src = $(this).children("img").attr("src");
+            $("#fullImg > img").attr("src", src);
         });
 
-        function loadGameList() {
-            $.ajax({
-                method: "GET",
-                url: "/v1/games"
-            }).done(function (success) {
-                var strDOM = '';
-                for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
-                }
+        $('.selectpicker').selectpicker({
+            size: 4
+        });
 
-                $("#game-name").append(strDOM);
+        $("#btnSubmit").on('click', function(){
+            submit();
+        });
 
-                $("#game-name").selectpicker('refresh');
-                selectServer();
-            }).fail(function (fail) {
-                console.log(fail);
-            })
+        $("#game-name").on('change', function() {
+            selectServer();
+        })
+
+        loadGameList();
+    });
+
+    function loadGameList() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/games"
+        }).done(function (success) {
+            var strDOM = '';
+            for (var i = 0; i < success.data.length; i++) {
+                strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
+            }
+
+            $("#game-name").append(strDOM);
+
+            $("#game-name").selectpicker('refresh');
+            selectServer();
+        }).fail(function (fail) {
+            console.log(fail);
+        })
+    }
+
+    function selectServer() {
+        var gameName;
+        if ($("#game-name option").val() != null) {
+            $("#game-server option").remove();
+        }
+        gameName = $("#game-name option:selected").val();
+
+        if (gameName == "") {
+            renderServerSelect({"servers":[]});
+            return false;
+        }
+        
+        $.ajax({
+            method: "GET",
+            url: "/v1/games/" + gameName
+        }).done(function (success) {
+            renderServerSelect(success.data);
+        }).fail(function (fail) {
+            console.log(fail);
+        })
+    }
+
+    function renderServerSelect(data) {
+        var strDOM = '<option value="">선택하세요</option>';
+
+        for (var i = 0; i < data.servers.length; i++) {
+            strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
+        }
+        $("#game-server").append(strDOM);
+        $("#game-server").selectpicker('refresh');
+    }
+
+    function submit() {
+        var country = "<%= country %>";
+        if ($("#game-name option:selected").val() == "") {
+            alert('게임명을 선택하세요.');
+            return false;
+        } else if ($("#game-server option:selected").val() == "") {
+            alert('서버명을 선택하세요.');
+            return false;
+        } else if ($("[name=item_type]:checked").val() == "") {
+            alert('상품유형을 선택하세요.');
+            return false;
+        } else if ($("#title").val() == "") {
+            alert('거래제목을 입력하세요.');
+            return false;
+        } else if ($("#game_character").val() == "") {
+            alert('판매자 케릭터명을 입력하세요.');
+            return false;
+        } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
+            alert('거래 가격을 입력하세요.');
+            return false;
+        } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+            alert('거래 가격(Point)을 입력하세요.');
+            return false;
+        // } else if (sel_files.length == 0) {
+        //     if($("[name=item_type]:checked").val() == "item") {
+        //         alert('상품 이미지를 업로드 하세요.');
+        //         return false;
+        //     }
+        } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+        } else if(!checkValidDecimal($("#point").val())) {
+            alert('거래 가격(Point)을 숫자로 입력하세요.');
+            return false;
+        } else if ($("#desc").val() == "") {
+            alert('상세 정보를 입력하세요.');
+            return false;
+        } else if (country == "CN" && $("#region1").val() == "") {
+            alert('지역 1 입력');
+            return false;
+        } 
+        // else if (country == "CN" && $("#region2").val() == "") {
+        //     swal({
+        //         text: "<%= __('page.sell.game.add.validation.alert11') %>",
+        //         button: "<%= __('common.buttons.button10')%>"
+        //     });
+        //     return false;
+        // }
+
+        var data = {
+            "userTag": "<%= userTag %>",
+            "type": $("[name=item_type]:checked").val(),
+            "trade_type": "sell",
+            "category": "game",
+            "game_name": $("#game-name option:selected").val(),
+            "game_server": $("#game-server option:selected").val(),
+            "name": "",
+            "title": $("#title").val(),
+            "desc": $("#desc").val(),
+            "count": 1,
+            "game_character": $("#game_character").val(),
+            "status": 0,
+            // "item_tag": $("#keywords").val(),
+            "clicked": 0
+        };
+        if ("<%= useBlockchain %>" == "Y") {
+            data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
+            data["price"] = $("#price").val();
+        } else {
+            data["cryptoCurrencyCode"] = "MACH";
+            data["price"] = 0;
+        }
+        
+        if ("<%= usePoint %>" == "Y") {
+            data["currency"]="POINT";
+            data["point"]=$("#point").val();
+        }else{
+            data["currency"]="POINT";
+            data["point"]=0;
         }
 
-        function selectServer() {
-            var gameName;
-            if ($("#game-name option").val() != null) {
-                $("#game-server option").remove();
-            }
-            gameName = $("#game-name option:selected").val();
-
-            if (gameName == "") {
-                renderServerSelect({"servers":[]});
-                return false;
-            }
-            
-            $.ajax({
-                method: "GET",
-                url: "/v1/games/" + gameName
-            }).done(function (success) {
-                renderServerSelect(success.data);
-            }).fail(function (fail) {
-                console.log(fail);
-            })
+        if(country=="CN"){
+            data["china_region1"]=$("#region1").val();
+            //data["china_region2"]=$("#region2").val();
         }
 
-        function renderServerSelect(data) {
-            var strDOM = '<option value="">선택하세요</option>';
+        //console.log(data);
+        // console.log($("#ex_filename")[0].files[0]);
 
-            for (var i = 0; i < data.servers.length; i++) {
-                strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
+        $.ajax({
+            method: "POST",
+            url: "/v1/items",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                $("#btnSubmit").attr('disabled', true);
+                $("#ajaxSpiner").show(); // spinner
+                var pos = $("#spinnerTarget").offset().top - 100;
+                $("html, body").animate({
+                    "scrollTop":pos
+                },0);
             }
-            $("#game-server").append(strDOM);
-            $("#game-server").selectpicker('refresh');
-        }
+        }).done(function (success) {
+            // console.log(success);
+            submitAction(success.data._id);
 
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
-    
-        function handleImgFileSelect(e) {
-            var $spinner = $("#ajaxSpiner");
-            $spinner.show(); // spinner
-            var pos = $("#spinnerTarget").offset().top - 100;
-            $("html, body").animate({
-                "scrollTop":pos
-            },0);
-                
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
-    
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-    
-            if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
-                $spinner.hide(); // spinner
-                return;
-            }
-    
-            var index = 0;
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    $spinner.hide(); // spinner
-                    return;
-                }
-    
-                var reader = new FileReader();
-                var image  = new Image();
-    
-                reader.readAsDataURL(f);
-                reader.onload = function(_file) {
-                    image.src    = _file.target.result;
-                    image.onload = function() {
-                        var w = this.width,
-                            h = this.height,
-                            t = f.type,                           // ext only: // file.type.split('/')[1],
-                            n = f.name,
-                            s = ~~(f.size / 1024) + 'KB';
-    
-                        //파일 길이, 높이 체크
-                        // if(w > 300 || h > 500) {
-                        //     alert('300x500 이하의 이미지만 업로드가 가능합니다');
-                        //     return;
-                        // }
-    
-                        sel_files.push({
-                            "name": "img_id_"+index,
-                            "value": f
-                        });
-    
-                        //var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\" id=\"img_id_"+index+"\"><img src=\"" + _file.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
-                        
-                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
-                            html += '<div class="img_view_area">';
-                            html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
-                            html += '</div>';
-                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
-                            html += '</div>';
-                                                
-                        $(".imgs_wrap").append(html);
+        }).fail(function (fail) {
+            $('#btnSubmit').attr('disabled', false);
+        })
+    }
 
-                        // 풀이미지 썸네일 로직 추가
-                        if(index === 0) {
-                            var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
-                            $("#fullImg").html(img1th);
-                        }
-
-                        index++;
-
-                        if(filesArr.length === index) {
-                            $spinner.hide(); // spinner
-                        }
-                    }
-                }
-
-            });
-
-            //console.log(filesArr[0])
-        }
-    
-        function deleteImageAction(index) {
-            console.log("index : "+index);
-            var findIndex = -1;
-            for (var i = 0; i < sel_files.length; ++i) {
-                if(sel_files[i].name == index) {
-                    findIndex = i;
-                }
-            }
-    
-            if(findIndex > -1) {
-                sel_files.splice(findIndex, 1);
-            }
-    
-            $('#' + index).remove();
-
-            console.log("sel length : ",sel_files);
-
-            // 풀이미지 썸네일 로직 추가
-            var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-            $("#fullImg").html(img1th)
-        }
-
-        function submit() {
-            var country = "<%= country %>";
-            if ($("#game-name option:selected").val() == "false") {
-                alert('게임명을 선택하세요.');
-                return false;
-            } else if ($("#game-server option:selected").val() == "") {
-                alert('서버명을 선택하세요.');
-                return false;
-            } else if ($("[name=item_type]:checked").val() == "") {
-                alert('상품유형을 선택하세요.');
-                return false;
-            } else if ($("#title").val() == "") {
-                alert('거래제목을 입력하세요.');
-                return false;
-            } else if ($("#game_character").val() == "") {
-                alert('판매자 케릭터명을 입력하세요.');
-                return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
-                alert('거래 가격을 입력하세요.');
-                return false;
-            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
-                alert('거래 가격을 입력하세요.');
-                return false;
-            // } else if (sel_files.length == 0) {
-            //     if($("[name=item_type]:checked").val() == "item") {
-            //         alert('상품 이미지를 업로드 하세요.');
-            //         return false;
-            //     }
-            } else if ($("#desc").val() == "") {
-                alert('상세 정보를 입력하세요.');
-                return false;
-            } else if (country == "CN" && $("#region1").val() == "") {
-                alert('지역 1 입력');
-                return false;
-            } 
-            // else if (country == "CN" && $("#region2").val() == "") {
-            //     swal({
-            //         text: "<%= __('page.sell.game.add.validation.alert11') %>",
-            //         button: "<%= __('common.buttons.button10')%>"
-            //     });
-            //     return false;
-            // }
-
-            var data = {
-                "userTag": "<%= userTag %>",
-                "type": $("[name=item_type]:checked").val(),
-                "trade_type": "sell",
-                "category": "game",
-                "game_name": $("#game-name option:selected").val(),
-                "game_server": $("#game-server option:selected").val(),
-                "name": "",
-                "title": $("#title").val(),
-                "desc": $("#desc").val(),
-                "count": 1,
-                "game_character": $("#game_character").val(),
-                "status": 0,
-                // "item_tag": $("#keywords").val(),
-                "clicked": 0
-            };
-            if ("<%= useBlockchain %>" == "Y") {
-                data["price"] = $("#price").val();
-            } else {
-                data["price"] = 0;
-            }
-            
-            if ("<%= usePoint %>" == "Y") {
-                data["currency"]="POINT";
-                data["point"]=$("#point").val();
-            }else{
-                data["currency"]="POINT";
-                data["point"]=0;
-            }
-
-            if(country=="CN"){
-                data["china_region1"]=$("#region1").val();
-                //data["china_region2"]=$("#region2").val();
-            }
-
-            //console.log(data);
-            // console.log($("#ex_filename")[0].files[0]);
-
-            $.ajax({
-                method: "POST",
-                url: "/v1/items",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(data),
-                beforeSend: function (xhr) {
-                    $("#btnSubmit").attr('disabled', true);
-                    $("#ajaxSpiner").show(); // spinner
-                    var pos = $("#spinnerTarget").offset().top - 100;
-                    $("html, body").animate({
-                        "scrollTop":pos
-                    },0);
-                }
-            }).done(function (success) {
-                // console.log(success);
-                if($("[name=item_type]:checked").val() == "gameMoney") {
-                    location.href = '/sells?category=game&trade_type=sell';
-                } else {
-                    submitAction(success.data._id);
-                }
-            }).fail(function (fail) {
-                $('#btnSubmit').attr('disabled', false);
-            })
-        }
-    
-        function submitAction(id) {
+    function submitAction(id) {
             //console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
-                images.append(name, sel_files[i].value);
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
             }
             //console.log(images);
             //ajax 처리
@@ -467,6 +376,8 @@
             })
         }
     </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'register'}) %>
 
     <% include ../include/footer.html %>
 </div>

@@ -26,7 +26,6 @@
             getPoint();
             getPointHistory('deposit');
             getTotalEscrow();
-            getEscrow();
         });
 
         function getPoint() {
@@ -35,9 +34,9 @@
                 url: "/v1/points/" + pointId
             }).done(function (success) {
                 if (success.data.total_point != null) {
-                    $("#point").html(numberWithCommas(success.data.total_point) + "<span>Point</span>");
+                    $("#point").html(numberWithCommas(success.data.total_point));
                 } else {
-                    $("#point").html("0<span>Point</span>");
+                    $("#point").html("0");
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -51,7 +50,9 @@
             }).done(function (success) {
                 //buy_total_escrow: 바로구매 에스크로 출금한 총 금액
                 //sell_total_escrow: 에스크로 거래 완료 시 받을 총 금액
-                console.log(success.data);
+                //console.log(success.data);
+                $("#sellPoint").text(success.data.sell_total_escrow_point);
+                $("#buyPoint").text(success.data.buy_total_escrow_point);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -191,7 +192,7 @@
                     <!-- mypage -->
                     <section class="mypage_sec">
                         <h1 class="tit_mypage">포인트관리 <span>나의 포인트 정보</span></h1>
-                        <div class="point_box">
+                        <!-- <div class="point_box">
                             <div class="pb_inner cf">
                                 <div class="paint_point">
                                     <em>P</em>
@@ -203,7 +204,31 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="table_wrap table_total_escrow_wrap">
+                            <table class="table_total_escrow">
+                                <colgroup class="colgroup_total_escorw">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>나의 포인트 잔액</th>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt="escrow"> 입금예정</th>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt="escrow"> 출금액</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="first_tr">
+                                        <td id="point"></td>
+                                        <td id="sellPoint"></td>
+                                        <td id="buyPoint"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
                         <div class="btn_align_c mb50">
                             <button class="btn bgc1" id="deposit">포인트 입금</button>
                             <button class="btn bgc2" id="withdraw">포인트 출금</button>

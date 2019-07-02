@@ -113,10 +113,12 @@
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
-                var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                //var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
                 var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
                     // prime 상품의 경우: <div class="ico_special ico_prime"></div>
@@ -126,7 +128,7 @@
                 
                 var money = point + '<span>Point</span>';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
@@ -136,7 +138,7 @@
                 }
                 
                 strDOM +=              '<div class="ellipse"> ' + title + 
-                                            '<span>('+replyCount+')</span>' + 
+                                            '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 

@@ -140,8 +140,8 @@
                 </div>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
-                    <li>※ 나의 지갑 잔액(MACH)이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [MACH 입금] 버튼 또는 [나의페이지-지갑관리]에서 MACH를 입금하실 수 있습니다.</li>
+                    <li>※ 나의 지갑 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
+                    <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
                 </ul>  
                 <div class="btn_align_c">
                     <button class="btn btn_in_view1" id="buynow">결제하기</button>
@@ -163,6 +163,7 @@
         var from_userTag;
         var mach;
         var point;
+        var cryptoCurrencyCode = "MACH";
     
         $(document).ready(function() {
             //$("#input_imgs").on("change", handleImgFileSelect);
@@ -195,11 +196,9 @@
                 var regDate = success.data.regDate;
                 var title = success.data.title;
                 mach = success.data.price;
-                point = success.data.point;
-                var total_mach = success.data.total_mach;
+                point = success.data.point;                
                 var total_point = success.data.total_point;
-                var price = numberWithCommas(mach);
-                var item_user_price = numberWithCommas(total_mach);
+                var price = numberWithCommas(mach);                
                 var item_user_price_point = numberWithCommas(total_point);
                 var point_txt = numberWithCommas(success.data.point);
                 var status = getStatus(success.data.status);
@@ -207,6 +206,19 @@
                 var desc = replaceDesc(success.data.desc);
                 var item_phone = success.data.phone;
                 from_userTag = success.data.userTag;
+                cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                var item_user_price = numberWithCommas(success.data.total_coins.total_mach);
+                var total_mach = success.data.total_coins.total_mach;
+                if(cryptoCurrencyCode == "BTC") {
+                    var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ETH") {
+                    var coin_price = success.data.total_coins.total_ether == undefined ? 0 : success.data.total_coins.total_ether;
+                    item_user_price = numberWithCommas(success.data.total_coins.total_ether);
+                    total_mach = coin_price;
+                }
+                
                 var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
 
                 if(success.data.images.length === 0) {
@@ -227,13 +239,13 @@
                 $(".posting_date").text("등록일 : " + regDate);
                 $(".item_title").text(title);
                 $(".item_id").text(itemId);
-                $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);
                 $(".item_phone").text(item_phone);
-                $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
-                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
-                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>MACH</span>");
+                $(".item_user_price").html(item_user_price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".item_status").addClass(status.className).addClass(status.className).text(status.text);
             }).fail(function (fail) {
                 console.log(fail);
@@ -241,13 +253,15 @@
         }
 
         function buynow() {
+
             var confirmYn = confirm("거래를 시작하시겠습니까?");
             if(confirmYn) {
                 var params = {
                     "itemId": itemId,
                     "from_userId": from_userTag,
                     "to_userId": userTag,
-                    "mach": mach
+                    "cryptoCurrencyCode": cryptoCurrencyCode,
+                    "price": mach
                 };
                 //console.log(params);
                 $.ajax({
