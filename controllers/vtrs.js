@@ -657,13 +657,14 @@ function updateStatusByItemId(country, req) {
                                                                 let coinId = user.coinId;
                                                                 bitwebCoins.getByCoinId(country, coinId)
                                                                     .then(coin => {
+                                                                        let to_price = vtr._doc.price == undefined ? vtr._doc.mach : vtr._doc.price;
                                                                         let user_price = coin.total_mach;
                                                                         if(vtr._doc.cryptoCurrencyCode == "BTC") {
                                                                             user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
                                                                         } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
                                                                             user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
                                                                         }
-                                                                        user_price = parseFloat((user_price + vtr._doc.price).toFixed(8));
+                                                                        user_price = parseFloat((user_price + to_price).toFixed(8));
                                                                         
                                                                         let mach_json = {"total_mach": user_price}
                                                                         if(vtr._doc.cryptoCurrencyCode == "BTC") {
