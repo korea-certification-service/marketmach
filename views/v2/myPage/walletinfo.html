@@ -91,7 +91,7 @@
 
                 for(var i=0;i<coinHistorys.length;i++) {
                     var extType = coinHistorys[i].extType;
-                    var category = getCoinType(coinHistorys[i].category);
+                    var category = getCoinType(coinHistorys[i].category, coinHistorys[i].memo);
                     var amount = numberWithCommas((coinHistorys[i].price == undefined ? coinHistorys[i].amount : coinHistorys[i].price));
                     var currency_code = coinHistorys[i].currencyCode;
                     // var mach = numberWithCommas(coinHistorys[i].mach);

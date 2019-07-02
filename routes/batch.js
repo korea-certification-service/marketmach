@@ -56,6 +56,7 @@ router.post('/marketmach/airdrop', function (req, res, next) {
                         "extType" : "mach",
                         "coinId" : coinId,
                         "category" : data.category,
+                        "memo": data,memo,
                         "status" : "success",
                         "currencyCode" : "MACH",
                         "amount" : data.airdropAmount,

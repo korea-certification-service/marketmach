@@ -242,7 +242,7 @@ function getEscrowType(value) {
     }
 }
 
-function getCoinType(value) {
+function getCoinType(value, memo) {
     if(value == "deposit") {
         return {
             'text':'입금',
@@ -276,6 +276,11 @@ function getCoinType(value) {
     } else if(value == "withdraw") {
         return {
             'text':'출금',
+            'className': 'icon2'
+        };
+    } else if(value == "event-etc") {
+        return {
+            'text': memo,
             'className': 'icon2'
         };
     } else {
