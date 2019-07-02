@@ -151,9 +151,10 @@ router.post('/:oppositionId/images', function (req, res, next) {
                 data['images'].push(image);
             }
 
-            for(var i in data['images']) {
+            for(var i=0; i<data['images'].length; i++) {
                 if(data['images'][i] == null) {
-                    data['images'].splice(i,0);
+                    data['images'].splice(i,1);
+                    i--;
                 }
             }
 
