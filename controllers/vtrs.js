@@ -230,7 +230,7 @@ function updateStatus(country, req) {
                         } else {
                             bitwebVtrs.getVtrById(vtrId)
                                 .then(vtr => {
-                                    let mach = vtr._doc.mach;
+                                    let price = vtr._doc.price == undefined ? vtr._doc.mach : vtr._doc.price;
                                     let from_userId = vtr._doc.from_userId;
                                     let to_userId = vtr._doc.to_userId;
                                     bitwebUsers.getById(country, to_userId)
@@ -239,7 +239,7 @@ function updateStatus(country, req) {
                                             bitwebCoins.getByCoinId(country, coinId)
                                                 .then(coin => {
                                                     let to_user_price = coin.total_mach;                                                    
-                                                    to_user_price = parseFloat((to_user_price - vtr._doc.mach).toFixed(8));
+                                                    to_user_price = parseFloat((to_user_price - price).toFixed(8));
                                                     if(vtr._doc.cryptoCurrencyCode == "BTC") {
                                                         to_user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
                                                     } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
@@ -547,7 +547,7 @@ function updateStatusByItemId(country, req) {
             .then(() => {
                 bitwebVtrs.getByItemId(itemId)
                     .then(vtr => {
-                        let mach = vtr._doc.price;
+                        let price = vtr._doc.price == undefined ? vtr._doc.mach : vtr._doc.price;
                         let from_userId = vtr._doc.from_userId;
                         let to_userId = vtr._doc.to_userId;
                         bitwebUsers.getById(country, to_userId)
@@ -561,7 +561,7 @@ function updateStatusByItemId(country, req) {
                                         } else if(vtr._doc.cryptoCurrencyCode == "ETH") {
                                             to_user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
                                         }
-                                        to_user_price = parseFloat((to_user_price - vtr._doc.price).toFixed(8));
+                                        to_user_price = parseFloat((to_user_price - price).toFixed(8));
                                         if (tradeType == "buy" && to_user_price < 0) {
                                             let msg = {
                                                 "status": "fail",
