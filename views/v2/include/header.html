@@ -82,6 +82,7 @@
                     var game_name = searchValue[0]
                     var game_server = searchValue[1]; 
                 } else { //게임이름으로 검색할때
+                    
                     game_name = $(".srch_box_left .clicked")[0].innerText;
                     if(games.length == 2) {
                         game_server  = games[1];
@@ -97,7 +98,7 @@
             console.log(games);
             _doSearch(game_name, game_server, games);
             
-        } else if( target.nodeName == 'LI' ) {
+        } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
 
             // if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_width_server"){
             //     return;
@@ -108,7 +109,7 @@
                 var game_server = searchValue[1];
             } else {
                 var game_name = $(".srch_box_left .clicked")[0].innerText;
-                var game_server = target.innerText;
+                var game_server = target.innerText == "서버전체" ? "" : target.innerText;
             }
             _doSearch(game_name, game_server);
         } 
