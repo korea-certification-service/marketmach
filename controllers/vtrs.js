@@ -687,8 +687,8 @@ function updateStatusByItemId(country, req) {
                                                                                                     "type": "withdraw",
                                                                                                     "itemId": result._doc.item._id,
                                                                                                     "vtr": result,
-                                                                                                    "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode,                                                                                           
-                                                                                                    "price": vtr._doc.price,
+                                                                                                    "cryptoCurrencyCode": vtr._doc.cryptoCurrencyCode == undefined ? "MACH":vtr._doc.cryptoCurrencyCode,
+                                                                                                    "price": to_price,
                                                                                                     "reqUser":result._doc.from_userId,
                                                                                                     "regDate": util.formatDate(new Date().toString())
                                                                                                 };
@@ -701,9 +701,9 @@ function updateStatusByItemId(country, req) {
                                                                                                             "coinId" : coinId,
                                                                                                             "category" : "deposit",
                                                                                                             "status" : "success",
-                                                                                                            "currencyCode" : vtr._doc.cryptoCurrencyCode,
-                                                                                                            "amount" : vtr._doc.price,
-                                                                                                            "price" : vtr._doc.price,
+                                                                                                            "currencyCode" : vtr._doc.cryptoCurrencyCode == undefined ? "MACH":vtr._doc.cryptoCurrencyCode,
+                                                                                                            "amount" : to_price,
+                                                                                                            "price" : to_price,
                                                                                                             "regDate" : util.formatDate(new Date().toString())
                                                                                                         }
                                                                                                         bitwebCoinHistorys.createCoinHistory(coinData);
