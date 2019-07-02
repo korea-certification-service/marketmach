@@ -90,11 +90,32 @@
                                     </td>
                                 </tr>
                                 <%}%>
+                                <tr>
+                                    <th>상품이미지</th>
+                                    <td>
+                                        <div class="product_img_list">
+                                            <div class="imgs_wrap">
+                                                <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                                <ul class="thumbnail_btn_list cf">
+                                                    <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                    <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                </ul>                                                
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr class="mrg_cell">
                                     <td colspan="2">
                                         <div class="input_wrap">
-                                            <!-- <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
-                                            <input type="file" id="input_imgs" multiple/> -->
                                             <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
                                             <input type="file" class="input_imgs" id="input_imgs1" index="1" />
                                             <input type="file" class="input_imgs" id="input_imgs2" index="2" />
@@ -102,27 +123,11 @@
                                             <input type="file" class="input_imgs" id="input_imgs4" index="4" />
                                         </div>
                                         <ul class="highligh_list fcrd">
-                                            <li>※ 이미지 업로드 수정 시 기존 업로드한 이미지 포함하여 다시 업로드 하셔야 적용됩니다.</li>
+                                            <li>※ </li>
                                         </ul>
                                         <div id="fullImg"></div>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th>상품이미지</th>
-                                    <td>
-                                        <div class="product_img_list">
-                                            <div class="imgs_wrap">
-                                                <ul id="listOfThumbnail" class="list_of_thumbnail cf">
-                                                    <li><button class="btnModifyImg btn btn_modify_img" index="0">이미지추가</button></li>
-                                                    <li><button class="btnModifyImg btn btn_modify_img" index="1">이미지추가</button></li>
-                                                    <li><button class="btnModifyImg btn btn_modify_img" index="2">이미지추가</button></li>
-                                                    <li><button class="btnModifyImg btn btn_modify_img" index="3">이미지추가</button></li>
-                                                    <li><button class="btnModifyImg btn btn_modify_img" index="4">이미지추가</button></li>
-                                                </ul>                                               
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                </tr>                                
                                 <tr>
                                     <th>상세정보</th>
                                     <td>
@@ -148,27 +153,20 @@
     <!--// content_wrap -->
 
     <script type="text/javascript">
-        // 이미지 정보들을 담을 배열
         var itemId;
-        var sel_files = [];
+        var sel_files = [];  // 이미지 정보들을 담을 배열
         var itemGameName;
         var itemGameServer;
-        var beforeImgs = [];
+        var beforeImgs = []; // 수정될 이미지 정보 배열
     
         $(document).ready(function() {
-            var agent = navigator.userAgent.toLowerCase();
-            if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
-                $(".input_imgs").on("change", handleImgFileSelectForIE);
-            } else {
-                $(".input_imgs").on("change", singleUpload);
-
-                $(document).on("click", ".btnModifyImg", function(e){
-                    var idx = e.target.getAttribute("index");
-                    $(".input_imgs").eq(idx).click();
-                });
-
-            }
-
+            $(".input_imgs").on("change", singleUpload);
+/*
+            $(document).on("click", ".btnModifyImg", function(e){
+                var idx = e.target.getAttribute("index");
+                $(".input_imgs").eq(idx).click();
+            });
+*/
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
                 var src = $(this).children("img").attr("src");
                 $("#fullImg > img").attr("src", src);
@@ -220,10 +218,10 @@
                     var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
                                 html += '<div class="img_view_area">';
                                 html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                                html += '</div>';
                                 html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
                                 html += '</div>';
-                                html += '</div>';
-                                html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">이미지수정</button>';
+                                //html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">이미지수정</button>';
                                                     
                     //$(".imgs_wrap").append(html);
                     $("#listOfThumbnail li").eq(index).html(html);
@@ -306,6 +304,7 @@
             $("#game-server").selectpicker('refresh');
         }
 
+        /*
         function singleUpload(e) {
             var index = parseInt(e.target.getAttribute("index"));
             var f = e.target.files[0];
@@ -313,13 +312,15 @@
             if(!f.type.match("image.*")) {
                 alert("이미지 파일만 업로드가 가능합니다.");
                 e.target.value = "";
-                //$("#listOfThumbnail li").eq(index).html("");
+                $("#listOfThumbnail li").eq(index).html("");
                 if(index === 0) {$("#fullImg").html("");}
+                beforeImgs.splice(index, 1);
                 return;
             }
 
             var reader = new FileReader();
             var image  = new Image();
+            var agent = navigator.userAgent.toLowerCase();
 
             reader.readAsDataURL(f);
             reader.onload = function(_file) {
@@ -331,75 +332,70 @@
                         n = f.name,
                         s = ~~(f.size / 1024) + 'KB';
 
-                    var fileType = f.type;
-                    var fileExte = f.name.split(".")[1];
-                    var resultImg = loadImage(
-                        _file.target.result, //fileOrBlobOrUrl,
-                        function (img, data) {
-                            console.log("data: ", img, data); // requires exif extension
-                            
-                            // 이미지 업로드 실행
-                            img.toBlob(function(blob){
-                                var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+                    // IE 경우 이미지 가공이 지원안됨
+                    if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+                        sel_files.push({"index": index, "name": "img_id_"+index, "value": f});
 
-                                sel_files.push({
-                                    "index": index,
-                                    "name": "img_id_"+index,
-                                    "value": createdFile      
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
+                            html += '</div>';
+                            // html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                            html += '</div>';
+
+                        // 풀이미지 썸네일 로직 추가
+                        $("#listOfThumbnail li").eq(index).html(html);
+
+                        //if(index === "0") {
+                            var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
+                            $("#fullImg").html(img1th);
+                        //}                    
+                    } else {
+                        var fileType = f.type;
+                        var fileExte = f.name.split(".")[1];
+                        var resultImg = loadImage(
+                            _file.target.result, //fileOrBlobOrUrl,
+                            function (img, data) {
+                                console.log("data: ", img, data); // requires exif extension
+                                
+                                // 이미지 업로드 실행
+                                img.toBlob(function(blob){
+                                    var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+    
+                                    sel_files.push({
+                                        "index": index,
+                                        "name": "img_id_"+index,
+                                        "value": createdFile      
+                                    });
+                                    //console.log("sel_files: ", sel_files)
                                 });
-
-                                //console.log("sel_files: ", sel_files)
-                            });
+        
+                                var thumnail = new Image();
+                                    thumnail.id = "pic"
+                                    thumnail.src = img.toDataURL();
     
-                            var thumnail = new Image();
-                                thumnail.id = "pic"
-                                thumnail.src = img.toDataURL();
-
-                            // 풀이미지 썸네일 로직 추가
-                            $("#fullImg").empty().append(thumnail);
-
-                            var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
-                                html += '<div class="img_view_area">';
-                                html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
-                                html += '</div>';
-                                html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
-                                html += '</div>';
-                                html += '<button id="btnModifyImg'+index+'" class="btn btn_modify_img">이미지수정</button>';
-                                                    
-                            //$(".imgs_wrap").append(html);
-                            $("#listOfThumbnail li").eq(index).html(html);
-                            
-                        },
-                        { maxWidth: 900, orientation: true }
-                    );
+                                // 풀이미지 썸네일 로직 추가
+                                $("#fullImg").empty().append(thumnail);
+    
+                                var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
+                                    html += '<div class="img_view_area">';
+                                    html += "<img src=\"" + img.toDataURL() + "\" data-file='"+f.name+"'>";
+                                    html += '</div>';
+                                    html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
+                                    html += '</div>';
+                                    html += '<button id="btnModifyImg'+index+'" class="btn btn_modify_img">이미지수정</button>';
+                                                        
+                                //$(".imgs_wrap").append(html);
+                                $("#listOfThumbnail li").eq(index).html(html);
+                                
+                            },
+                            { maxWidth: 900, orientation: true }
+                        );
+                    }                                              
                 }
             }
         }
-
-        function deleteImageAction(index, idx) {
-            console.log("index : "+index, idx);
-            var findIndex = -1;
-            for (var i = 0; i < sel_files.length; ++i) {
-                if(sel_files[i].name == index) {
-                    findIndex = i;
-                }
-            }
-    
-            if(findIndex > -1) {
-                sel_files.splice(findIndex, 1);
-            }
-    
-            $('#' + index).remove();
-
-            //beforeImgs.splice(idx, 1);
-            beforeImgs[idx] = null;
-
-            console.log("sel length : ",sel_files);
-
-            // 풀이미지 썸네일 로직 추가
-            var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-            $("#fullImg").html(img1th)
-        }
+        */
 
         function submit(arrImages) {
             var country = "<%= country %>";
@@ -504,10 +500,7 @@
                 var name = "image";
                 images.append(name, sel_files[i].value);
             }
-            console.log(images);
 
-            var changeIdx = [];
-            //ajax 처리
             $.ajax({
                 method: "POST",
                 url: "/v1/items/"+id+"/images",
@@ -516,6 +509,7 @@
                 data: images
             }).done(function (success) {
                 console.log(success);
+                //location.href = '/etc-sells/detail/' + itemId;
 
                 if(sel_files.length > 0) {
                     // sel_files[i].index는 수정이 일어난 이미지의 인덱스
@@ -523,13 +517,14 @@
                         beforeImgs.splice(sel_files[i].index, 1, success.data[i]);
                     }
                 }
-                //location.href = '/etc-sells/detail/' + itemId;
                 submit(beforeImgs);
             }).fail(function (fail) {
                 console.log('실패',fail);
             })
         }
     </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/img_upload.html', {pageName: 'modify'}) %>
 
     <% include ../include/footer.html %>
 </div>

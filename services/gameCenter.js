@@ -54,7 +54,6 @@ function update (userId, data) {
     })
 }
 
-
 function addHistory(data) {
     return new Promise((resolve, reject) => {
         console.log(data)
@@ -69,6 +68,32 @@ function addHistory(data) {
         })
     })
 }
+
+function getHistoryCount (condition) {
+    return new Promise((resolve, reject) => {
+        GameCenterHistory.count(condition)
+        .exec(function (err, result) {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+}
+
+
+function getHistorys (condition) {
+    return new Promise((resolve, reject) => {
+        GameCenterHistory.find(condition)
+        .exec(function (err, result) {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+}
+
 
 function updateRecord(data) {
     return new Promise((resolve, reject) => {
@@ -126,4 +151,6 @@ exports.add = add;
 exports.getByUserId = getByUserId;
 exports.update = update;
 exports.addHistory = addHistory;
+exports.getHistorys = getHistorys;
+exports.getHistoryCount = getHistoryCount;
 exports.updateRecord = updateRecord;

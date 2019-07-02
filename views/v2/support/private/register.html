@@ -1,199 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% include ../../include/head.html %>
-    <script>
-        var userTag = "<%=userTag%>";
-        var sel_files = [];
-
-        $(document).ready(function() {
-            $("#input_imgs").on("change", handleImgFileSelect);
-            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
-                var src = $(this).children("img").attr("src");
-                $("#fullImg > img").attr("src", src);
-            });
-
-            $('.selectpicker').selectpicker({
-                size: 4
-            });
-
-            $('#addPersonal').on('click', function() {
-                addPersonal();
-            });
-        });
-
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
-    
-        function handleImgFileSelect(e) {
-    
-            // 이미지 정보들을 초기화
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-    
-            if(filesArr.length > 5){
-                alert('이미지 업로드는 5개까지 가능합니다.');
-                return;
-            }
-
-            sel_files = [];
-            $(".imgs_wrap").empty();
-    
-            var index = 0;
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    return;
-                }
-    
-                var reader = new FileReader();
-                var image  = new Image();
-    
-                reader.readAsDataURL(f);
-                reader.onload = function(_file) {
-                    image.src    = _file.target.result;
-                    image.onload = function() {
-                        var w = this.width,
-                            h = this.height,
-                            t = f.type,                           // ext only: // file.type.split('/')[1],
-                            n = f.name,
-                            s = ~~(f.size / 1024) + 'KB';
-    
-                        //파일 길이, 높이 체크
-                        // if(w > 300 || h > 500) {
-                        //     alert('300x500 이하의 이미지만 업로드가 가능합니다');
-                        //     return;
-                        // }
-    
-                        sel_files.push({
-                            "name": "img_id_"+index,
-                            "value": f
-                        });
-    
-                        //var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\" id=\"img_id_"+index+"\"><img src=\"" + _file.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
-                        
-                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+index+"\">";
-                            html += '<div class="img_view_area">';
-                            html += "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>";
-                            html += '</div>';
-                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+index+"\')\"></a>";
-                            html += '</div>';
-                                                
-                        $(".imgs_wrap").append(html);
-
-                        // 풀이미지 썸네일 로직 추가
-                        if(index === 0) {
-                            var img1th = "<img src=\"" + _file.target.result + "\" data-file='"+f.name+"'>"
-                            $("#fullImg").html(img1th);
-                        }
-
-                        index++;
-                    }
-                }
-
-            });
-
-            //console.log(filesArr[0])
-        }
-    
-        function deleteImageAction(index) {
-            console.log("index : "+index);
-            var findIndex = -1;
-            for (var i = 0; i < sel_files.length; ++i) {
-                if(sel_files[i].name == index) {
-                    findIndex = i;
-                }
-            }
-    
-            if(findIndex > -1) {
-                sel_files.splice(findIndex, 1);
-            }
-    
-            $('#' + index).remove();
-
-            console.log("sel length : ",sel_files);
-
-            // 풀이미지 썸네일 로직 추가
-            var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-            $("#fullImg").html(img1th)
-        }
-
-        function addPersonal() {
-            var type = $("[name=type]:checked").val();
-            var title = $('#title').val();
-            var content = $('#content').val();
-
-            if(type == "") {
-                alert('타입을 선택하세요.');
-                return;
-            }
-                        
-            if(title == "") {
-                alert('제목을 입력하세요.');
-                return;
-            }
-
-            if(content == "") {
-                alert('문의 내용을 입력하세요.');
-                return;
-            }
-
-            var data = {
-                "type": type,
-                "title": title,
-                "content": content,
-                "reporter": userTag,
-                "sendSms": false,
-                "sendEmail": false
-            }
-
-            $.ajax({
-                method: "POST",
-                url: "/v1/personal",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(data),
-                beforeSend: function (xhr) {
-                    $("#btnSubmit").attr('disabled', true);
-                }
-            }).done(function (success) {
-                // console.log(success);
-                if(sel_files.length == 0) {
-                    location.href = '/supports/private/list';
-                } else {
-                    submitAction(success.data._id);
-                }
-            }).fail(function (fail) {
-                $('#btnSubmit').attr('disabled', false);
-            })
-        }
-
-        function submitAction(id) {
-            console.log("업로드 파일 갯수 : "+sel_files.length);
-            var images = new FormData();
-    
-            for(var i=0, len=sel_files.length; i<len; i++) {
-                var name = "image";
-                images.append(name, sel_files[i].value);
-            }
-            console.log(images);
-            //ajax 처리
-            $.ajax({
-                method: "POST",
-                url: "/v1/personal/"+id+"/images",
-                processData: false,
-                contentType: false,
-                data: images
-            }).done(function (success) {
-                console.log(success);
-                location.href = '/supports/private/list';
-            }).fail(function (fail) {
-                console.log('실패',fail);
-            })
-        }
-    </script>
+    <% include ../../include/head.html %>  
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -253,13 +61,17 @@
                                     </tr>
                                     <tr class="mrg_cell trForDel">
                                         <td colspan="2">
-                                            <div id="fullImg">
-                                                <!-- <img src="/static/img/main/main_visual02.jpg"> -->
-                                            </div>
                                             <div class="input_wrap">
-                                                <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
-                                                <input type="file" id="input_imgs" multiple="">
+                                                <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+        
+                                                <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                                <input type="file" class="input_imgs" id="input_imgs1" index="1"/>
+                                                <input type="file" class="input_imgs" id="input_imgs2" index="2"/>
+                                                <input type="file" class="input_imgs" id="input_imgs3" index="3"/>
+                                                <input type="file" class="input_imgs" id="input_imgs4" index="4"/>
+                                                <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
                                             </div>
+                                            <div id="fullImg"></div>
                                         </td>
                                     </tr>
                                     <tr class="trForDel">
@@ -267,14 +79,20 @@
                                         <td>
                                             <div class="product_img_list">
                                                 <div class="imgs_wrap">
-                                                    <!--
-                                                    <div class="thumbnail_box">
-                                                        <div class="img_view_area">
-                                                            <img src="/static/img/main/main_visual02.jpg">
-                                                        </div>
-                                                        <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
-                                                    </div>
-                                                    -->
+                                                    <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                    </ul>
+                                                    <ul class="thumbnail_btn_list cf">
+                                                        <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -291,7 +109,110 @@
             </div>
         </div>
     </div>
+    <!--// content_wrap -->
+    <script>
+        var userTag = "<%=userTag%>";
+        var sel_files = []; // 이미지 정보들을 담을 배열
+
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $('#addPersonal').on('click', function() {
+                addPersonal();
+            });
+        });
+
+        function addPersonal() {
+            var type = $("[name=type]:checked").val();
+            var title = $('#title').val();
+            var content = $('#content').val();
+
+            if(type == "") {
+                alert('타입을 선택하세요.');
+                return;
+            }
+                        
+            if(title == "") {
+                alert('제목을 입력하세요.');
+                return;
+            }
+
+            if(content == "") {
+                alert('문의 내용을 입력하세요.');
+                return;
+            }
+
+            var data = {
+                "type": type,
+                "title": title,
+                "content": content,
+                "reporter": userTag,
+                "sendSms": false,
+                "sendEmail": false
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/personal",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);                    
+                }
+            }).done(function (success) {
+                // console.log(success);
+                if(sel_files.length == 0) {
+                    location.href = '/supports/private/list';
+                } else {
+                    submitAction(success.data._id);
+                }
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner                
+            })
+        }
+
+        function submitAction(id) {
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
+            var images = new FormData();
     
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image";
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/personal/"+id+"/images",
+                processData: false,
+                contentType: false,
+                data: images
+            }).done(function (success) {
+                //console.log(success);
+                $("#ajaxSpiner").hide(); // spinner
+                location.href = '/supports/private/list';
+            }).fail(function (fail) {
+                console.log('실패',fail);
+            })
+        }
+    </script>
+    <%- include('../../include/modules/img_upload.html', {pageName: 'register'}) %> 
+
     <% include ../../include/footer.html %>
 </div>
 </body>

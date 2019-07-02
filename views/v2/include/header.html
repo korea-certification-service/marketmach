@@ -2,17 +2,19 @@
     var coinId = "<%=coinId%>";
     var userId = "<%=userId%>";   
     var game_name;
-    var selecValue = "games";
-    
+    var selecValue;
+
     $(document).ready(function(){
+
+        selecValue = $(".srch_select, .m_srch_select").val();
 
         $(".srch_select, .m_srch_select").on("change", function(){
             selecValue = $(this).val();
-            console.log(selecValue);
         }); 
 
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
             if(key.keyCode==13){
+                selecValue = $(".srch_select, .m_srch_select").val();
                 if(selecValue == "games") {
                     if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
                         return;
@@ -23,6 +25,7 @@
         });
 
         $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
+            selecValue = $(".srch_select, .m_srch_select").val();
             if(selecValue == "games") {
                 if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
                     return;
@@ -374,8 +377,8 @@
                                         <%if(useBlockchain == 'Y') {%>
                                         <em>나의 지갑 잔액</em>
                                         <p class="fc2 total_mach">100 <span>MACH</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button>
                                         <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
                                             <em>나의 포인트 잔액</em>
                                             <p class="fc2 total_point">100 <span>Point</span></p>

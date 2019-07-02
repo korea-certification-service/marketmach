@@ -9,8 +9,8 @@
 
         $(document).ready(function() {
             if(bitberry_token != undefined && bitberry_token != "") {
-                $('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
-                //$('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
+                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
             }
 
             $('#deposit').on('click', function(){
@@ -31,12 +31,10 @@
                 method: "GET",
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
-                if (success.data.total_mach != null) {
-                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
-                    $("#machTotal").text(success.data.total_mach);
-                } else {
-                    $("#mach").html("0<span>MACH</span>");
-                }
+                //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                $("#machTotal").text(success.data.total_mach == undefined ? 0 : success.data.total_mach);
+                $("#btcTotal").text(success.data.total_btc == undefined ? 0 : success.data.total_btc);
+                $("#ethTotal").text(success.data.total_ether == undefined ? 0 : success.data.total_ether);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -47,9 +45,13 @@
                 method: "GET",
                 url: "/v1/escrows/" + userId + "/total_escrow/coin"
             }).done(function (success) {
-                $("#machSell").text(success.data.sell_total_escrow);
-                $("#machBuy").text(success.data.buy_total_escrow);
-                console.log(success.data);
+                $("#machSellBtc").text(success.data.sell_total_escrow_btc);
+                $("#machBuyBtc").text(success.data.buy_total_escrow_btc);
+                $("#machSellEth").text(success.data.sell_total_escrow_eth);
+                $("#machBuyEth").text(success.data.buy_total_escrow_eth);
+                $("#machSellMach").text(success.data.sell_total_escrow_mach);
+                $("#machBuyMach").text(success.data.buy_total_escrow_mach);
+                //console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -104,7 +106,7 @@
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>';
                         } else {
-                            result += '<td><img src="/static/img/symbol/symbol_mach.png" alt="mach"></td>';
+                            result += '<td><img src="/static/img/symbol/symbol_mach_wallet.png" alt="mach wallet"></td>';
                             result += '<td>'+category.text+'</td>';
                             result +=   '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
@@ -202,7 +204,7 @@
                     <section class="mypage_sec">
                         <h1 class="tit_mypage">지갑관리 <span>나의 지갑 정보</span></h1>
                         
-                            <div class="bitberry_switch_box">
+                            <!-- <div class="bitberry_switch_box">
                                 <div class="bitberry_switch">
                                     <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
                                     <a href="/myPages/wallet/connect">
@@ -212,10 +214,10 @@
                                 </div>
                                 <em>나의지갑 잔액</em>
                                 <p class="fc3" id="mach">100 <span>MACH</span></p>
-                            </div>
+                            </div> -->
                        
                             
-                        <!-- <div class="bitberry_grey_box">
+                        <div class="bitberry_grey_box">
                             <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
                         </div>
                         <h2 class="tit_mypage dot_tit">입출금현황 <span class="escrow_side_tit">* <img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> : 에스크로</span></h2>
@@ -239,28 +241,28 @@
                                     <tr class="first_tr">
                                         <th>나의지갑잔액</th>
                                         <td id="machTotal"></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td id="btcTotal"></td>
+                                        <td id="ethTotal"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 입금예정</th>
-                                        <td id="machSell"></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td id="machSellMach"></td>
+                                        <td id="machSellBtc"></td>
+                                        <td id="machSellEth"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 출금액</th>
-                                        <td id="machBuy"></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td id="machBuyMach"></td>
+                                        <td id="machBuyBtc"></td>
+                                        <td id="machBuyEth"></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div> -->
+                        </div>
 
                         <div class="btn_align_c mb50">
-                            <button class="btn bgc1" id="deposit">MACH 입금</button>
-                            <button class="btn bgc3" id="withdraw">MACH 출금</button>
+                            <button class="btn bgc1" id="deposit">Coin 입금</button>
+                            <button class="btn bgc3" id="withdraw">Coin 출금</button>
                         </div>
 
                         <ul class="tab_board ul_li3n cf">

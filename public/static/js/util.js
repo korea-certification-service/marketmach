@@ -248,6 +248,11 @@ function getCoinType(value) {
             'text':'입금',
             'className': 'icon0'
         };
+    } else if(value == "event-signup") {
+        return {
+            'text':'회원가입',
+            'className': 'icon1'
+        };
     } else if(value == "event-airdrop") {
         return {
             'text':'Airdrop',
@@ -275,7 +280,7 @@ function getCoinType(value) {
         };
     } else {
         return {
-            'text':'-',
+            'text':value,
             'className': 'icon2'
         };
     }
@@ -366,6 +371,15 @@ function checkDecimal(evt) {
 
     var decimal8th = /^\d*[.]\d{8}$/;
     if (decimal8th.test(_value)) {
+        return false;
+    }
+
+    return true;
+}
+
+function checkValidDecimal(value) {
+    var reg = /^\d+\.?\d*$/;
+    if (!reg.test(value)) {
         return false;
     }
 

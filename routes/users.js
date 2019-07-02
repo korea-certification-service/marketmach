@@ -380,7 +380,7 @@ router.post('/', function (req, res, next) {
                                                         controllerUsers.createWithIds(req, coinId, agreementId, pointId)
                                                             .then(result => {
 
-                                                                if(dbconfig.bonus.signup > 0) {
+                                                                if(dbconfig.bonus.signup > 0 && coins.total_mach > 0) {
                                                                     let data10 = {
                                                                         "extType":"mach",
                                                                         "coinId": coinId,

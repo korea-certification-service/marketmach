@@ -81,6 +81,16 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function makeNumber() {
+    var text = "";
+    var possible = "0123456789";
+
+    for( var i=0; i < 6; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 function makeToken()
 {
     var text = "";
@@ -134,4 +144,4 @@ exports.checkStrNum = checkStrNum;
 exports.checkPassword = checkPassword;
 exports.checkEmail = checkEmail;
 exports.checkAdult = checkAdult;
-
+exports.makeNumber = makeNumber;
