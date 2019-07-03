@@ -7,6 +7,7 @@
     var game_name;
         
     $(document).ready(function(){
+        console.log();
         if("<%=userId%>"=="") {
             $('.menu_login').css('display', 'inline-block');
             $('.menu_logout').css('display', 'none');
@@ -29,9 +30,15 @@
         });
 
         /*모바일 네비게이션의 추천URL로직*/
+        if(userId == ""){
+            $(".recommendUrl").css({display: "none"});
+        } else {
+            $(".recommendUrl").css({display: "block"});
+        }
+        
         voucherHistory();
-        $('#voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
-        $('#voucherCopy').on('click', function(){
+        $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
+        $('#m_voucherCopy').on('click', function(){
             console.log(1);
             copyUrl(); 
         });
@@ -238,9 +245,9 @@
                     <ul class="cf">
                         <li><img src="/static/img/main/ico_korea.png" alt="한국"></li>
                         <li><button class="btn_lang">한국</button></li>
-                        <li>
-                            <input type="hidden" id="voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                            <input type="button" class="btn btn-info btn btn-success recomandation" id="voucherCopy" value="추천URL">
+                        <li class="recommendUrl">
+                            <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
+                            <input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL">
                         </li>
                         <li>
                             <button id="btnCloseMobSideMenu" class="menu-trigger on">
