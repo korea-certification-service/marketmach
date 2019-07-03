@@ -313,6 +313,8 @@
 .escrow_side_tit{float: right; font-size: 12px;color: #000000;}
 .escrow_side_tit img{width: 12px;}
 .table_total_escrow_wrap{position: relative;}
+/*모바일에서 비트베리 coonnect페이지를 보여주기위한 버튼 표시*/
+.m_link_connect { display: none; }
 /* .table_total_escrow_wrap::after{position: absolute; bottom: 0; right: 0; display: block; content: '오픈 예정입니다'; clear:both; width: 56%; height: 210px; line-height: 210px; font-size: 20px; text-align: center; color: #ffffff; background-color: rgba(0, 0, 0, 0.8);} */
 .table_total_escrow{width: 100%; border: 1px solid #000038;}
 .table_total_escrow th{text-align: center; border: 1px solid #bfbfbf;}
@@ -597,6 +599,9 @@
     .support_sec .support_main_info .inner_area{}
     /* 이용약관 */
     .content_tab_depth1 li{width: 50%; border: 1px solid #0a73b8;}
+    /*모바일에서 비트베리 coonnect페이지를 보여주기위한 버튼 표시*/
+    .m_link_connect { display: inline-block; position: relative; left: 50%; transform: translateX(-50%); margin-bottom: 20px; }
+    .m_link_connect.bgc1 { background-color: #1e2560; color: #ffffff; }
 }
 @media (max-width: 576px){
     /* 나의페이지 메인 */
