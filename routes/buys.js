@@ -11,7 +11,7 @@ const dbconfig = require('../config/dbconfig')
 router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/buy/list', {
-            userId: req.session.userId, coinId: req.session.coinId, pointId: req.session.pointId,
+            userId: req.session.userId, coinId: req.session.coinId, pointId: req.session.pointId, userTag:req.session.userTag,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server, 
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
         });
     } else {
         res.render('v2_en/buy/list', {
-            userId: req.session.userId, coinId: req.session.coinId, pointId: req.session.pointId,
+            userId: req.session.userId, coinId: req.session.coinId, pointId: req.session.pointId,userTag:req.session.userTag,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server, 
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
@@ -124,7 +124,7 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
                 userTag = result._doc.userTag;
                 if(dbconfig.country == "KR") {
                     res.render('v2/buy/modify', {title: 'Bitweb Main', 
-                        userId: req.session.userId, coinId: req.session.coinId,
+                        userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
                         pointId: req.session.pointId,
                         id: id, userTag:userTag, country: country,
                         usePoint:dbconfig.usePoint,
@@ -132,7 +132,7 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
                         useBlockchain:dbconfig.useBlockchain});
                 } else {
                     res.render('v2_en/buy/modify', {title: 'Bitweb Main', 
-                    userId: req.session.userId, coinId: req.session.coinId,
+                    userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
                     pointId: req.session.pointId,
                     id: id, userTag:userTag, country: country,
                     usePoint:dbconfig.usePoint,

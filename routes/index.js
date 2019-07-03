@@ -39,7 +39,7 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/main/index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -49,7 +49,7 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
     } else {
         res.render('v2_en/main/index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -72,7 +72,7 @@ router.get('/nodev_index', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/main/nodev_index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -82,7 +82,7 @@ router.get('/nodev_index', function (req, res, next) {
     } else {
         res.render('v2_en/main/nodev_index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -117,7 +117,7 @@ router.get('/main', function (req, res, next) {
      if(dbconfig.country == "KR") {
         res.render('v2/main/index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -127,7 +127,7 @@ router.get('/main', function (req, res, next) {
     } else {
         res.render('v2_en/main/index', {
             title: 'Bitweb Main',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -149,7 +149,7 @@ router.get('/main', function (req, res, next) {
 router.get('/currency', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/main/currency', {title: 'Currency',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -158,7 +158,7 @@ router.get('/currency', function (req, res, next) {
         });
     } else {
         res.render('v2_en/main/currency', {title: 'Currency',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,

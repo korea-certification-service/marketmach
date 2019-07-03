@@ -8,7 +8,7 @@ router.get('/info', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/info', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
@@ -19,7 +19,7 @@ router.get('/info', function (req, res, next) {
     } else{
         res.render('v2_en/support/info', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
@@ -34,7 +34,7 @@ router.get('/notice', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -46,7 +46,7 @@ router.get('/notice', function (req, res, next) {
     } else {
         res.render('v2_en/support/notice/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -62,7 +62,7 @@ router.get('/notice/detail', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/detail', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             noticeId: req.query.noticeId,
@@ -74,7 +74,7 @@ router.get('/notice/detail', function (req, res, next) {
     } else{
         res.render('v2_en/support/notice/detail', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             noticeId: req.query.noticeId,
@@ -90,7 +90,7 @@ router.get('/event', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/now', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -102,7 +102,7 @@ router.get('/event', function (req, res, next) {
     } else {
         res.render('v2_en/support/event/now', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -118,7 +118,7 @@ router.get('/event/past', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/past', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -130,7 +130,7 @@ router.get('/event/past', function (req, res, next) {
     } else {
         res.render('v2_en/support/event/past', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -146,7 +146,7 @@ router.get('/event/detail/:eventId', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/detail', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             eventId: req.params.eventId,
@@ -158,7 +158,7 @@ router.get('/event/detail/:eventId', function (req, res, next) {
     } else {
         res.render('v2_en/support/event/detail', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             eventId: req.params.eventId,
@@ -174,7 +174,7 @@ router.get('/faq', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/faq', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -186,7 +186,7 @@ router.get('/faq', function (req, res, next) {
     } else {
         res.render('v2_en/support/faq', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             pageIdx: req.query.pageIdx,
@@ -202,7 +202,7 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/register', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -215,7 +215,7 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
     } else {
         res.render('v2_en/support/opposition/register', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -232,7 +232,7 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userTag: req.session.userTag,
@@ -245,7 +245,7 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
     } else {
         res.render('v2_en/support/opposition/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userTag: req.session.userTag,
@@ -262,7 +262,7 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/view', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
@@ -274,7 +274,7 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
     } else {
         res.render('v2_en/support/opposition/view', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
@@ -290,7 +290,7 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/modify', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userTag: req.session.userTag,
@@ -304,7 +304,7 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
     } else {
         res.render('v2_en/support/opposition/modify', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userTag: req.session.userTag,
@@ -322,7 +322,7 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/register', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -334,7 +334,7 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
     } else {
         res.render('v2_en/support/private/register', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -350,7 +350,7 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -363,7 +363,7 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
     } else {
         res.render('v2_en/support/private/list', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -380,7 +380,7 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/view', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -393,7 +393,7 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
     } else {
         res.render('v2_en/support/private/view', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -410,7 +410,7 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/modify', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -423,7 +423,7 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
     } else {
         res.render('v2_en/support/private/modify', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             userTag: req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
@@ -440,7 +440,7 @@ router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next
     if(dbconfig.country == "KR") {
         res.render('v2/support/reqGames', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,
@@ -451,7 +451,7 @@ router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next
     } else {
         res.render('v2_en/support/reqGames', {
             title: 'Bitweb Support',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             usePoint:dbconfig.usePoint,

@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
     // });
     if(dbconfig.country == "KR") {
         res.render('v2/etc-buy/list', {
-            userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,
+            userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,userTag:req.session.userTag,
             category: req.query.category, category1: req.query.category1, category2: req.query.category2,
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
         });
     } else {
         res.render('v2_en/etc-buy/list', {
-            userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,
+            userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,userTag:req.session.userTag,
             category: req.query.category, category1: req.query.category1, category2: req.query.category2,
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,

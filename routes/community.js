@@ -7,7 +7,7 @@ const BitwebResponse = require('../utils/BitwebResponse');
 router.get('/board', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/list', {title: 'Bitweb Main', 
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         authPhone: req.session.authPhone,
@@ -18,7 +18,7 @@ router.get('/board', function (req, res, next) {
         pageIdx: req.query.pageIdx});
     } else {
         res.render('v2_en/community/list', {title: 'Bitweb Main', 
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         authPhone: req.session.authPhone,
@@ -33,7 +33,7 @@ router.get('/board', function (req, res, next) {
 router.get('/board/detail/:communityId', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/view', {title: 'Bitweb Main',
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,
@@ -43,7 +43,7 @@ router.get('/board/detail/:communityId', function (req, res, next) {
         authPhone: req.session.authPhone});
     } else {
         res.render('v2_en/community/view', {title: 'Bitweb Main',
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
         pointId: req.session.pointId,
         usePoint:dbconfig.usePoint,

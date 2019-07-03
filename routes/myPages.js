@@ -11,7 +11,7 @@ router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mypage', {
             title: 'Bitweb MyPage',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userName: req.session.userName,
@@ -23,7 +23,7 @@ router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
     } else {
         res.render('v2_en/myPage/mypage', {
             title: 'Bitweb MyPage',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             userName: req.session.userName,
@@ -145,7 +145,7 @@ router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, n
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/walletinfo', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             bitberry_token: req.session.bitberry_token,
@@ -157,7 +157,7 @@ router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, n
     } else {
         res.render('v2_en/myPage/walletinfo', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             bitberry_token: req.session.bitberry_token,
@@ -173,7 +173,7 @@ router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/walletconnect', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -185,7 +185,7 @@ router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res
     } else {
         res.render('v2_en/myPage/walletconnect', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -202,7 +202,7 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
         if(req.session.bitberry_token == "") {
             res.render('v2/myPage/walletconnect', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -214,7 +214,7 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
         } else {
             res.render('v2/myPage/walletdeposit', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -231,7 +231,7 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
         if(req.session.bitberry_token == "") {
             res.render('v2_en/myPage/walletconnect', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -243,7 +243,7 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
         } else {
             res.render('v2_en/myPage/walletdeposit', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -265,7 +265,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
         if(req.session.bitberry_token == "") {
             res.render('v2/myPage/walletconnect', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -277,7 +277,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
         } else {
             res.render('v2/myPage/walletwithdraw', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -294,7 +294,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
         if(req.session.bitberry_token == "") {
             res.render('v2_en/myPage/walletconnect', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -306,7 +306,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
         } else {
             res.render('v2_en/myPage/walletwithdraw', {
                 title: 'Bitweb Wallet Info',
-                userId: req.session.userId,
+                userId: req.session.userId,userTag:req.session.userTag,
                 coinId: req.session.coinId,
                 pointId: req.session.pointId,
                 authPhone: req.session.authPhone,
@@ -326,7 +326,7 @@ router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, ne
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/info', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -337,7 +337,7 @@ router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, ne
     } else {
         res.render('v2_en/myPage/point/info', {
             title: 'Bitweb Wallet Info',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
@@ -352,7 +352,7 @@ router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res,
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/deposit', {
             title: 'Bitweb Wallet Deposit',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.point.deposit,
@@ -365,7 +365,7 @@ router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res,
     } else {
         res.render('v2_en/myPage/point/deposit', {
             title: 'Bitweb Wallet Deposit',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.point.deposit,
@@ -382,7 +382,7 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/withdraw', {
             title: 'Bitweb Point Withdraw',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.point.withdraw,
@@ -395,7 +395,7 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
     } else {
         res.render('v2_en/myPage/point/withdraw', {
             title: 'Bitweb Point Withdraw',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.point.withdraw,
@@ -413,7 +413,7 @@ router.get('/point/exchange/deposit', sessionChecker.sessionChecker2, function (
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/exchange_deposit', {
             title: 'Bitweb Point Exchange',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.exchange.point.deposit,
@@ -425,7 +425,7 @@ router.get('/point/exchange/deposit', sessionChecker.sessionChecker2, function (
     } else {
         res.render('v2_en/myPage/point/exchange_deposit', {
             title: 'Bitweb Point Exchange',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.exchange.point.deposit,
@@ -441,7 +441,7 @@ router.get('/point/exchange/withdraw', sessionChecker.sessionChecker2, function 
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/exchange_withdraw', {
             title: 'Bitweb Point Exchange',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.exchange.point.deposit,
@@ -453,7 +453,7 @@ router.get('/point/exchange/withdraw', sessionChecker.sessionChecker2, function 
     } else {
         res.render('v2_en/myPage/point/exchange_withdraw', {
             title: 'Bitweb Point Exchange',
-            userId: req.session.userId,
+            userId: req.session.userId,userTag:req.session.userTag,
             coinId: req.session.coinId,
             pointId: req.session.pointId,
             fee: dbconfig.fee.exchange.point.deposit,

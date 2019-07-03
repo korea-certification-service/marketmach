@@ -8,6 +8,7 @@ const controllerVtrs = require('../controllers/vtrs')
 const shortUrl = require('node-url-shortener')
 const dbconfig = require('../config/dbconfig');
 const util = require('../utils/util');
+const smsContent = require('../config/sms');
 
 router.get('/vtr/:country/:userId/:itemId', function(req, res, next) {
     let userId = req.params.userId;
@@ -191,18 +192,26 @@ router.post('/user/checkPhone', function(req,res,next) {
     let authCode = util.makeNumber();
     let reqData = {
         'country': country,
-        'countryCode':'+82',
-        'phone': '01038134024',
+        'countryCode':req.body.countryCode,
+        'phone': req.body.phone,
         'authCode': authCode
     }
 
     controllerOccupancyPhones.add(country, reqData)
     .then(() => {
         //SMS인증 후 인증번호 회신
-        smsController.sendSmsCommon()
-        bitwebResponse.code = 200;
-        bitwebResponse.data = result;
-        res.status(200).send(bitwebResponse.create())
+        reqData['message'] = smsContent.authSms[country] +'\n'+ reqData.authCode;
+        smsController.sendSmsCommon(reqData)
+        .then((result) => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
     }).catch((err) => {
         console.error('err=>', err)
         bitwebResponse.code = 500;

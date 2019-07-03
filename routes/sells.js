@@ -11,7 +11,7 @@ const dbconfig = require('../config/dbconfig')
 router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/sell/list', {
-            userId: req.session.userId, coinId: req.session.coinId,
+            userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
             pointId: req.session.pointId,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
             , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
         });
     } else {
         res.render('v2_en/sell/list', {
-            userId: req.session.userId, coinId: req.session.coinId,
+            userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
             pointId: req.session.pointId,
             category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
             , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
