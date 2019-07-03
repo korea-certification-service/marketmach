@@ -26,7 +26,7 @@
 .sub_container .form-control {display: inline-block; height: calc(1.5em + 0.75rem);}
 .form-inline.radio_wrap label{margin: 0 15px 0 5px;}
 /* 모바일 네비게이션 copy버튼 튜닝 */
-.btn.btn-success.recomandation { padding: 0 0.75rem; }
+.btn.btn-info.btn.btn-success.recomandation { padding: 0 0.75rem; }
 /* input 100% 아닌 경우 */
 .no_w100p_wrap{}
 .no_w100p_wrap input{display: inline-block;}

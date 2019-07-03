@@ -22,17 +22,19 @@
             getPointMain();
             getItemCountMain();
 
-            /*모바일 네비게이션의 추천URL로직*/
-            voucherHistory();
-            $('#voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
-            $('#voucherCopy').on('click', function(){
-                copyUrl(); 
-            });
         }
 
         $("#gotoUserInfo").on('click', function(){
             location.href = '/myPages/user/checkPassword';
-        })
+        });
+
+        /*모바일 네비게이션의 추천URL로직*/
+        voucherHistory();
+        $('#voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
+        $('#voucherCopy').on('click', function(){
+            console.log(1);
+            copyUrl(); 
+        });
     });
 
     function getCoinMain() {
@@ -238,7 +240,7 @@
                         <li><button class="btn_lang">한국</button></li>
                         <li>
                             <input type="hidden" id="voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                            <input type="button" class="btn btn-success recomandation" id="voucherCopy" value="추천URL">
+                            <input type="button" class="btn btn-info btn btn-success recomandation" id="voucherCopy" value="추천URL">
                         </li>
                         <li>
                             <button id="btnCloseMobSideMenu" class="menu-trigger on">
