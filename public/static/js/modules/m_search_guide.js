@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     //[ 클릭 이벤트 ] : 왼쪽 카테고리에 리스트 추가
-    srchSelect.addEventListener("click",function(e){
+    srchSelect.addEventListener("change",function(e){
         srchBoxWrap.style.display = "none";
         //showed = true;
         if(srchSelect.value == "games"){
