@@ -194,13 +194,14 @@ router.post('/user/checkPhone', function(req,res,next) {
         'country': country,
         'countryCode':req.body.countryCode,
         'phone': req.body.phone,
-        'authCode': authCode
+        'authCode': authCode,
+        'regDate': util.formatDate(new Date().toString())
     }
 
     controllerOccupancyPhones.add(country, reqData)
     .then(() => {
         //SMS인증 후 인증번호 회신
-        reqData['message'] = smsContent.authSms[country] +'\n'+ reqData.authCode;
+        reqData['message'] = smsContent.authSms[country] + reqData.authCode;
         smsController.sendSmsCommon(reqData)
         .then((result) => {
             bitwebResponse.code = 200;
@@ -217,9 +218,42 @@ router.post('/user/checkPhone', function(req,res,next) {
         bitwebResponse.code = 500;
         bitwebResponse.message = err;
         res.status(500).send(bitwebResponse.create())
-    })
-
-     
+    })     
 })
+
+router.post('/user/checkAuthNo', function(req,res,next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let condition = {
+        'country': country,
+        'countryCode':req.body.countryCode,
+        'phone': req.body.phone,
+        'authCode': req.body.authCode
+    }
+
+    controllerOccupancyPhones.detail(country,condition)
+    .then((authInfo) => {
+        let result = {};
+        if(authInfo == null) {
+            result = {
+                "successYn": "fail",
+                "msg": "인증번호가 유효하지 않습니다. 인증번호를 다시 받으세요."
+            }
+        } else {
+            result = {
+                "successYn": "success",
+                "msg": "성공적으로 인증되었습니다."
+            }
+        }
+        bitwebResponse.code = 200;
+        bitwebResponse.data = result;
+        res.status(200).send(bitwebResponse.create())
+    }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
 
 module.exports = router;
