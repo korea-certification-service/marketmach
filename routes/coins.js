@@ -1043,8 +1043,8 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                     "category": "withdraw",          
                                     "status": result.status,
                                     "currencyCode": result.currency_code,
-                                    "amount": amount,
-                                    "price": amount,
+                                    "amount": req.body.amount,
+                                    "price": req.body.amount,
                                     "regDate": util.formatDate(new Date().toString())  
                                 }
     

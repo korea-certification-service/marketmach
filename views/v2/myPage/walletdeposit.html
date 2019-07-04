@@ -120,7 +120,7 @@
                     var amount = numberWithCommas(coinHistorys[i].amount);
                     var currencyCode = coinHistorys[i].currencyCode;
                     var mach = numberWithCommas(coinHistorys[i].mach);
-                    var status = coinHistorys[i].status;
+                    var status = coinHistorys[i].status == "true" ? "success" : coinHistorys[i].status;
                     var regDate = coinHistorys[i].regDate.substr(2);
 
                     result += '<tr>' + 
