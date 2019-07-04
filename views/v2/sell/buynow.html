@@ -62,17 +62,10 @@
                                 <th>캐릭터명</th>
                                 <td><span class="item_character"></span></td>
                             </tr>
-                            <%if(useBlockchain == 'Y') {%>
                             <tr>
                                 <th>거래가격</th>
                                 <td><p class="txt_price"><span></span></p></td>
                             </tr>
-                            <%}if(usePoint == 'Y') {%>
-                            <tr>
-                                <th>거래가격(Point)</th>
-                                <td><p class="txt_point"><span></span></p></td>
-                            </tr>
-                            <%}%>
                             <tr class="mrg_cell trForDel">
                                 <td colspan="2">
                                     <div id="fullImg"></div>
@@ -139,79 +132,40 @@
                 </ul>              
 
                 <!-- 결제정보 -->
-                <%if(useBlockchain == 'Y') {%>
-                    <div class="table_wrap">
-                        <table class="table_payment_info table">
-                            <colgroup class="colgroup_etc-sell_buynow">
-                                <col class="col50p">
-                                <col class="col50p">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>                           
-                                <tr>
-                                    <th>나의 지갑 잔액</th>
-                                    <td><span class="item_user_price"></span></td>
-                                </tr>
-                                <tr>
-                                    <th>거래가격</th>
-                                    <td><span class="item_price"></span></td>
-                                </tr>
-                                <tr>
-                                    <th>결제 후 나의 지갑 잔액(예상)</th>
-                                    <td><span class="user_price_balance"></span></td>
-                                </tr>                        
-                            </tbody>
-                        </table>
-                    </div>
-                <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
-                    <div class="table_wrap">
-                        <table class="table_payment_info table">
-                            <colgroup class="colgroup_etc-sell_buynow">
-                                <col class="col50p">
-                                <col class="col50p">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="2"><span class="dot_tit">결제정보</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>                           
-                                <tr>
-                                    <th>나의 포인트 잔액</th>
-                                    <td><span class="item_user_price_point"></span></td>
-                                </tr>
-                                <tr>
-                                    <th>거래가격</th>
-                                    <td><span class="item_price_point"></span></td>
-                                </tr>
-                                <tr>
-                                    <th>결제 후 나의 포인트 잔액(예상)</th>
-                                    <td><span class="user_price_balance_point"></span></td>
-                                </tr>                        
-                            </tbody>
-                        </table>
-                    </div>
-                <%}%>
+                <div class="table_wrap">
+                    <table class="table_payment_info table">
+                        <colgroup class="colgroup_etc-sell_buynow">
+                            <col class="col50p">
+                            <col class="col50p">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>나의 지갑 잔액</th>
+                                <td><span class="item_user_price"></span></td>
+                            </tr>
+                            <tr>
+                                <th>거래가격</th>
+                                <td><span class="item_price"></span></td>
+                            </tr>
+                            <tr>
+                                <th>결제 후 나의 지갑 잔액(예상)</th>
+                                <td><span class="user_price_balance"></span></td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                </div>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
-                    <%if(useBlockchain == 'Y') {%>
                     <li>※ 나의 지갑 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
                     <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
-                    <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
-                    <li>※ 나의 포안트 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [포인트 입금] 버튼 또는 [나의페이지-포인트관리]에서 Point 입금하실 수 있습니다.</li>
-                    <%}%>
                 </ul>   
                 <div class="btn_align_c">
-                    <%if(useBlockchain == 'Y') {%>
                         <button class="btn btn_in_view1" id="buynow">결제하기</button>
-                    <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>
-                        <button class="btn btn_in_view1" id="pointBuynow">결제하기</button>
-                    <%}%>
                 </div>  
             </section>
             <!--// view page-->

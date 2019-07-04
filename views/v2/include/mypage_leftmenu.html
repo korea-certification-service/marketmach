@@ -4,7 +4,6 @@
         <li class=<%=(arrDepth[0] === 1) ? "on" : "" %>><a href="/myPages/sell/list">판매관리</a></li>
         <li class=<%=(arrDepth[0] === 2) ? "on" : "" %>><a href="/myPages/buy/list">구매관리</a></li>
         <li class=<%=(arrDepth[0] === 3) ? "on" : "" %>><a href="/myPages/cancel/list">취소관리</a></li>
-        <%if(useBlockchain =='Y') {%>
         <li class=<%=(arrDepth[0] === 4) ? "on" : "" %>><a href="/myPages/wallet/info">지갑관리</a>
             <ul class="depth2">
                 <li class=<%=(arrDepth[0] === 4 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/wallet/info">- 나의 지갑 정보</a></li>
@@ -13,15 +12,12 @@
                 <li class=<%=(arrDepth[0] === 4 && arrDepth[1] === 4) ? "on" : "" %>><a href="/myPages/wallet/connect">- 비트베리 연결</a></li>
             </ul>
         </li>
-        <%}%>
         <li class=<%=(arrDepth[0] === 5) ? "on" : "" %>><a href="/myPages/point/info">포인트관리</a>
             <ul class="depth2">
                 <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/point/info">- 나의 포인트 정보</a></li>
                 <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/mypages/point/deposit">- 포인트 입금</a></li>
                 <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/point/withdraw">- 포인트 출금</a></li>
-                <%if(useBlockchain =='Y') {%>
                 <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 4) ? "on" : "" %>><a href="/myPages/point/exchange/deposit">- 포인트 -> MACH 교환</a></li>
-                <%}%>
             </ul>
         </li>
         <li class=<%=(arrDepth[0] === 6) ? "on" : "" %>><a href="/myPages/user/checkPassword">회원정보관리</a>

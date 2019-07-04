@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">1:1문의 <span>1:1 문의내역</span></h1>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_myInquiry">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>유형</th>
+                                        <th>제목</th>
+                                        <th>Q&A</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="personal_list">
+                                </tbody>
+                            </table>
+                        </div> 
+                        <div class="paging_wrap">
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var userTag = "<%=userTag%>";
+
+        $(document).ready(function() {
+            loadPersonalList();
+        });
+
+        function loadPersonalList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/personal/list/" + userTag
+            }).done(function (success) {
+                console.log(success.data);
+                var personalList = success.data.list;
+                var result = "";
+                for(var i=0; i<personalList.length; i++) {
+                    result += '<tr onclick="location.href=\'/supports/private/detail/'+personalList[i]._id+'\';">' +
+                                    '<td class="tal">' +
+                                        getPersonalType(personalList[i].type).text + 
+                                    '</td>' +
+                                    '<td class="tal">' +
+                                        '<div class="ellipse" style="width:100%;">' +
+                                            personalList[i].title + 
+                                        '</div>' +
+                                    '</td>' +
+                                    '<td class="ico_q">'+(personalList[i].reply == undefined ? 'Q' : 'A')+'</td>' +
+                                    '<td>'+personalList[i].regDate.substring(2, 10)+'</td>' +
+                                '</tr>';
+                }
+                $('#personal_list').html(result);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/supports/private/list?pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+    </script>    
+
+    <% include ../../include/footer.html %>
+</div>
+</body>
