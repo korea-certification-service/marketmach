@@ -300,9 +300,9 @@ var MainUi = {
             target[i].addEventListener("click", function(e) {
                 var eTarget = e.target.parentNode.nextElementSibling; // trade_list
                 //console.log(eTarget, eTarget.classList[0]);
-                if(eTarget.classList[0] === "trade_list"){
+                if(eTarget.classList[3] === "toggleTable"){
                     for(var j=0; j < len; j++){
-                        document.querySelectorAll(_obj.sec + " .trade_list")[j].style.display="none";
+                        document.querySelectorAll(_obj.sec + " .toggleTable")[j].style.display="none";
                         document.querySelectorAll(_obj.sec + " > h2")[j].classList.remove("on");
                         document.querySelectorAll(_obj.sec + " "+_obj.btn)[j].classList.remove("on");
                     }

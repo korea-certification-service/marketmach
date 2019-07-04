@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
+            <section class="board_sec c_style_buy">
+                <div class="board_tit cf">
+                    <h1>구매등록</span></h1>
+                </div>
+
+                <!-- 상품정보 : 이미지 업로드 UI 포함 -->
+                <div class="table_wrap table-responsive">
+                    <!-- 거래정보 -->
+                <div class="table_wrap table-responsive">
+                        <table class="table_view table">
+                            <colgroup class="colgroup_etc-buys_modify">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">거래정보</th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>거래제목</th>
+                                    <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격</th>
+                                    <td>
+                                        <div class="no_w100p_wrap">
+                                            <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                                <option value="BTC">BTC</option>
+                                                <option value="ETH">ETH</option>
+                                                <option value="MACH" selected>MACH</option>
+                                            </select>
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        </div>
+                                        <p class="fcrd">※ 1MACH = 1$</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>거래가격(Point)</th>
+                                    <td>
+                                        <div class="no_w100p_wrap">
+                                            <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                            <em class="fc2" id="currencyName"></em>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>상세정보</th>
+                                    <td>
+                                        <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="mrg_cell">
+                                    <td colspan="2">
+                                        <div class="btn_align_c">
+                                            <button class="btn btn_in_view1" id="btnSubmit">수정하기</button>
+                                        </div>
+                                    </td>
+                                </tr>  
+                            </tbody>
+                        </table>
+                    </div>              
+                    <!--// 거래정보 -->
+                </div>
+                <!--// 상품정보 : 이미지 업로드 UI 포함 -->
+            </section>
+            <!--// view page-->
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+
+        // 이미지 정보들을 담을 배열
+        var itemId;
+        
+        $(document).ready(function() {
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $("#btnSubmit").on('click', function(){
+                submit();
+            });
+
+            getData();
+        });
+
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/service/" + "<%= id%>"
+            }).done(function (success) {
+                console.log(success);
+                
+                itemId = success.data._id;
+                var regDate = success.data.regDate;
+                var title = success.data.title;
+                var price = success.data.price;
+                var point = success.data.point;
+                var status = getStatus(success.data.status);
+                var trade_type = replaceType(success.data.trade_type);
+                var desc = success.data.desc;
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                
+                $("#title").val(title);
+                $("#price").val(price);
+                $("#point").val(point);
+                $("#desc").text(desc);
+                $("#cryptoCurrencyCode").val(cryptoCurrencyCode);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function submit() {
+            var country = "<%= country %>";
+            if ($("#title").val() == "") {
+                alert('거래제목을 입력하세요.');
+                return false;
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
+                alert('거래 가격을 입력하세요.');
+                return false;
+            } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
+                alert('거래 가격(Point)을 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#point").val())) {
+                alert('거래 가격(Point)을 숫자로 입력하세요.');
+                return false;
+            } else if ($("#desc").val() == "") {
+                alert('상세 정보를 입력하세요.');
+                return false;
+            } 
+
+            var data = {
+                "userTag": "<%= userTag %>",
+                "title": $("#title").val(),
+                "desc": $("#desc").val(),
+                "count": 1
+            };
+            data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
+            data["price"] = $("#price").val();
+            data["currency"]="POINT";
+            data["point"]=$("#point").val();
+            
+            console.log(data);
+            
+            $.ajax({
+                method: "PUT",
+                url: "/v1/items/" + itemId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                location.replace('/otc-buys/detail/' + itemId);
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+            })
+        }
+    </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        
