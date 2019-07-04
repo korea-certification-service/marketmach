@@ -44,6 +44,9 @@ router.get('/5', function (req, res, next) {
 router.get('/6', function (req, res, next) {
     res.render('v2/login/auth_mail', {title: 'Bitweb Main'});
 });
+router.get('/7', function (req, res, next) {
+    res.render('v2/login/certification');
+});
 /** 끝: 회원 가입 페이지 퍼블 수정용 라우팅 **/
 
 module.exports = router;

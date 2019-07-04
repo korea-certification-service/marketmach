@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>휴대폰 확인</h1>
+                <hr>
+                <div class="submit_ctc_code">
+                    <div class="submit_ctc_code_top no_w100p_wrap">
+                        <select class="custom-select w30p" id="">
+                                <option value="KO" selected>KO</option>
+                                <option value="EN">EN</option>
+                                <option value="CH">CH</option>
+                        </select>
+                        <input type="text" class="form-control" id="" placeholder="전화 번호 입력" maxlength="50"> 
+                    </div>
+                    <button class="btn btn_in_view1" id="">인증코드 전송</button>
+                </div>
+                <div class="confirm_ctc_code">
+                    <input type="text" class="form-control" id="" placeholder="전화 번호 입력" maxlength="50">
+                    <br>
+                    <button class="btn btn_in_view1" id="">전송</button>
+                </div>
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body>
+</html>

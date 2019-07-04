@@ -181,7 +181,7 @@
 
                 var itemId = data[i]._id;
                 var regDate = data[i].regDate.substring(2, 10);
-                var etc_category = data[i].category1  == undefined ? '-' : data[i].category1;
+                var etc_category = data[i].category1  == "" ? '기타' : data[i].category1;
                 var title = data[i].title;
                 var price = numberWithCommas(data[i].price);
                 var point = numberWithCommas(data[i].point);
