@@ -427,7 +427,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .assets_trade_sec{}
 .assets_trade_sec .plus_link{margin-top: 10px;}
 .assets_trade_sec .bd_area{height: 300px; border: 1px solid #ced4da;;}
-.assets_trade_sec .bd_area > a{display: block;}
+.assets_trade_sec .bd_area > a{display: block; margin-top: 5px;}
 .assets_trade_sec .main_tit_assets{background: url(/static/img/main/ico_asset.png) 0 13px no-repeat; background-size: 16px 16px;}
 .assets_trade_sec .assets_img{text-align: center; width: 95%; margin: auto; height: 200px; line-height: 203px;}
 .assets_trade_sec .assets_img img{max-height: 200px;box-shadow: 0 0 8px 0 rgba(0,0,0,0.4);}
