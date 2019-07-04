@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>  
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">1:1 문의<span> 문의하기</span></h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">유형</th>
+                                        <td>
+                                            <div class="form-inline radio_wrap">
+                                                <div class="form-group">
+                                                    <input type="radio" name="type" id="type0" value="0" checked><label for="type0">사이트 이용문의</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="radio" name="type" id="type1" value="1"><label for="type1">본인확인 및 인증 문의</label>
+                                                </div>  
+                                                <div class="form-group">
+                                                    <input type="radio" name="type" id="type2" value="2"><label for="type2">이벤트 문의</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="radio" name="type" id="type3" value="3"><label for="type3">기타 문의</label>
+                                                </div>                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">제목</th>
+                                        <td><input type="text" id="title" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">문의내용</th>
+                                        <td>
+                                            <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr class="mrg_cell trForDel">
+                                        <td colspan="2">
+                                            <div class="input_wrap">
+                                                <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+        
+                                                <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                                <input type="file" class="input_imgs" id="input_imgs1" index="1"/>
+                                                <input type="file" class="input_imgs" id="input_imgs2" index="2"/>
+                                                <input type="file" class="input_imgs" id="input_imgs3" index="3"/>
+                                                <input type="file" class="input_imgs" id="input_imgs4" index="4"/>
+                                                <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                            </div>
+                                            <div id="fullImg"></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="trForDel">
+                                        <th class="fc2">첨부 이미지</th>
+                                        <td>
+                                            <div class="product_img_list">
+                                                <div class="imgs_wrap">
+                                                    <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                    </ul>
+                                                    <ul class="thumbnail_btn_list cf">
+                                                        <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="addPersonal">확인</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// content_wrap -->
+    <script>
+        var userTag = "<%=userTag%>";
+        var sel_files = []; // 이미지 정보들을 담을 배열
+
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $('#addPersonal').on('click', function() {
+                addPersonal();
+            });
+        });
+
+        function addPersonal() {
+            var type = $("[name=type]:checked").val();
+            var title = $('#title').val();
+            var content = $('#content').val();
+
+            if(type == "") {
+                alert('타입을 선택하세요.');
+                return;
+            }
+                        
+            if(title == "") {
+                alert('제목을 입력하세요.');
+                return;
+            }
+
+            if(content == "") {
+                alert('문의 내용을 입력하세요.');
+                return;
+            }
+
+            var data = {
+                "type": type,
+                "title": title,
+                "content": content,
+                "reporter": userTag,
+                "sendSms": false,
+                "sendEmail": false
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/personal",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);                    
+                }
+            }).done(function (success) {
+                // console.log(success);
+                if(sel_files.length == 0) {
+                    location.href = '/supports/private/list';
+                } else {
+                    submitAction(success.data._id);
+                }
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner                
+            })
+        }
+
+        function submitAction(id) {
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
+            var images = new FormData();
+    
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image";
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/personal/"+id+"/images",
+                processData: false,
+                contentType: false,
+                data: images
+            }).done(function (success) {
+                //console.log(success);
+                $("#ajaxSpiner").hide(); // spinner
+                location.href = '/supports/private/list';
+            }).fail(function (fail) {
+                console.log('실패',fail);
+            })
+        }
+    </script>
+    <%- include('../../include/modules/img_upload.html', {pageName: 'register'}) %> 
+
+    <% include ../../include/footer.html %>
+</div>
+</body>

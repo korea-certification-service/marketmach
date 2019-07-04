@@ -60,24 +60,15 @@
                                 <th>거래상태</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
-                            <%if(useBlockchain == 'Y') {%>
                             <tr>
                                 <th>거래가격</th>
                                 <td><p class="txt_price"><span></span></p></td>
                             </tr>
-                            <%}if(usePoint == 'Y') {%>
-                            <tr>
-                                <th>거래가격(Point)</th>
-                                <td><p class="txt_point"><span></span></p></td>
-                            </tr>
-                            <%}%>
                             <tr class="mrg_cell trForBtn">
                                 <td colspan="2">
                                     <div class="btn_align_c">
-                                        <%if(useBlockchain == 'Y') {%>
-                                            <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
-                                            <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청</button>
-                                        <%}%>
+                                        <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
+                                        <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청</button>
                                         <button class="btn item_view btn_in_view3" id="modify">수정</button>
                                         <button class="btn item_view btn_in_view4" id="remove">삭제</button>
                                         <button class="btn item_view btn_in_view5" id="buyComplete">구매확인</button>

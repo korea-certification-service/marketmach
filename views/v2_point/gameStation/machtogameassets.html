@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/gameStation_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- gameStation -->
+                    <section class="gameStation_sec mypage_sec">
+                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;MACH -> 게임자산</span></h1>
+                        <div class="gst_exchangeguide">
+                            <p>
+                                <em>MACH를 게임자산으로</em><br>
+                                교환을 원하는 게임을 선택하세요.
+                            </p>
+                        </div>
+                        <dl class="gst_gametable cf">
+                            <dd>
+                                <a href="/gameStation/trade/exchange_mach/">
+                                    <div class="gst_gametemplet">
+                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
+                                        <div class="coin_value">
+                                            <em>보관중인 몽키코인</em>
+                                            <div>
+                                                <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
+                                                <p>
+                                                    <span>10,213</span> 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </dd>
+                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                        </dl>
+                    </section>
+                    <!--// gameStation -->
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

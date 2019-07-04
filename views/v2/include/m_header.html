@@ -157,13 +157,9 @@
                             <tr>
                                 <th><button class="btnMobMenu btn_mob_menu">게임아이템</button></th>
                                 <th><button class="btnMobMenu btn_mob_menu">자산거래</button></th>                                
-                                <%if(useBlockchain == 'Y') {%>
                                 <th><button class="btnMobMenu btn_mob_menu">OTC거래</button></th>
-                                <%}%>
                                 <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th>
-                                <%if(useBlockchain == 'Y') {%>
                                 <!-- <th><a href="/shopping/view">한정 이벤트</a></th>  -->
-                                <%}%>
                                 <!-- <th><a href="/gameStation/" class="fcbk">게임스테이션</a></th> -->
                                 <th><a href="/community/board" class="fcbk">게임소식</a></th>
                                 <th><a href="javascript:alert('기능 개선 중입니다.');" target="_blank">환전소</a></th>
@@ -179,17 +175,13 @@
                     <dd>
                         <a href="/sells/register" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">자산거래</a>
-                        <%if(useBlockchain == 'Y') {%>
                         <a href="/otc-sells/register" class="bgc2 mob_rnd_btn">OTC거래</a>
-                        <%}%>
                     </dd>
                     <dt class="fc2">구매등록</dt>
                     <dd>
                         <a href="/buys/register" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-buys/register" class="bgc2 mob_rnd_btn">자산거래</a>
-                        <%if(useBlockchain == 'Y') {%>
                         <a href="/otc-buys/register" class="bgc2 mob_rnd_btn">OTC거래</a>
-                        <%}%>
                     </dd>
                 </dl>
                 <dl class="rgh_menu">
@@ -206,19 +198,15 @@
                 </dl>
                 <dl class="rgh_menu">
                     <dd>
-                        <%if(useBlockchain == 'Y') {%>
                         <a href="/otc-sells?category=otc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
                         <a href="/otc-buys?category=otc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
-                        <%}%>
                     </dd>
                 </dl>               
                 <dl class="rgh_menu">
                     <dd>
-                        <%if(useBlockchain == 'Y') {%>
                         <a href="https://open.kakao.com/o/gD3UkX4" target="_blank" class="bgc2 mob_rnd_btn">카톡1</a>
                         <a href="https://open.kakao.com/o/gLyYRupb" target="_blank" class="bgc2 mob_rnd_btn">카톡2</a>
                         <a href="https://t.me/marketmachcom" target="_blank" class="bgc2 mob_rnd_btn">텔레그램1</a>
-                        <%}%>
                     </dd>
                 </dl>
             </div>
@@ -282,17 +270,10 @@
                                         </div>
                                     </li>
                                     <li class="mdl_area">                                        
-                                        <%if(useBlockchain == 'Y') {%>
                                         <em>나의지갑 잔액</em>
                                         <p class="fc2 total_mach">100 <span>MACH</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button>
-                                        <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
-                                        <em>나의 포인트 잔액</em>
-                                        <p class="fc2 total_point">100 <span>Point</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
-                                        <%}%>
                                     </li>
                                 </ul>
                                 <!-- <dl class="block_menu cf">
@@ -312,7 +293,6 @@
                             </div>
                         </li>
                         <li>
-                            <%if(useBlockchain == 'Y') {%>
                             <dl class="available_coin cf">
                                 <dt>마켓마하 상장 코인</dt>
                                 <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
@@ -324,7 +304,6 @@
                                 <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                 <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                             </dl>
-                            <%}%>
                             <dl class="available_coin cf">
                                 <dt>마켓마하 상장 게임</dt>
                                 <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH" title="몽키 클래시 사가"></a></dd>
