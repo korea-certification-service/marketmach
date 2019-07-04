@@ -5,8 +5,10 @@
     var userTag = "<%=userTag%>"
     var authPhone = "<%=authPhone%>";
     var game_name;
+    var agent = navigator.userAgent.toLowerCase();
         
     $(document).ready(function(){
+
         if("<%=userId%>"=="") {
             $('.menu_login').css('display', 'inline-block');
             $('.menu_logout').css('display', 'none');
@@ -41,6 +43,13 @@
             console.log(1);
             copyUrl(); 
         });
+
+        /*브라우저 체크해서 사파리일때는 추천URL버튼이 링크버튼이됨*/
+        if(agent.indexOf("chrome") != -1) {
+            $(".recommendUrl").html('<input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);"><input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL">')
+        } else if (agent.indexOf("safari") != -1) {
+            $(".recommendUrl").html('<a class="btn btn-info btn btn-success recomandation" href="/myPages/user/voucher">추천URL</a>');
+        }
     });
 
     function getCoinMain() {
@@ -245,8 +254,8 @@
                         <li><img src="/static/img/main/ico_korea.png" alt="한국"></li>
                         <li><button class="btn_lang">한국</button></li>
                         <li class="recommendUrl">
-                            <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                            <input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL">
+                            <!-- <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
+                            <input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL"> -->
                         </li>
                         <li>
                             <button id="btnCloseMobSideMenu" class="menu-trigger on">
