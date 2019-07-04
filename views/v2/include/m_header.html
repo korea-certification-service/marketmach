@@ -35,7 +35,6 @@
             $(".recommendUrl").css({display: "block"});
         }
         
-        voucherHistory();
         $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
         $('#m_voucherCopy').on('click', function(){
             console.log(1);
@@ -90,18 +89,6 @@
     }
 
     /*모바일 네비게이션의 추천URL로직*/
-    function voucherHistory() {
-            $.ajax({
-                method: "GET",
-                url: "/v1/coins/historys/" + coinId + "/list"
-            }).done(function (success) {
-                console.log(success);
-                
-            }).fail(function (fail) {
-                console.log(fail);
-            });
-        }
-
     function copyUrl() {
         var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n 아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n 회원추천하고 또 1마하 득! \n 친구 추천을 받으시면 최대 100MACH까지 드립니다.\n';
         var str = $('#m_voucherUrl').val();

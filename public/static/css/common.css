@@ -339,13 +339,16 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .slick_coin_quotes dd em{margin-left: 5px; font-weight: bold; font-size: 16px;}
 
 /* primezone */
-.primezone_wrap{background-color: #ececec;}
+.primezone_wrap{}
 .primezone_sec{position: relative; min-height: 275px;}
-.primezone_sec > h1{padding: 20px 0; font-size: 18px; text-align: center; }
-.primezone_sec > h1 .crown{display: inline-block; width: 60px; height: 27px; background: url(/static/img/main/ico_prime.png) 50% 100% no-repeat; background-size: 36px 20px;}
+.primezone_sec > h1{position: relative; padding: 20px 0; font-size: 18px; text-align: center; background: url(/static/img/main/bg_goldline.png) 0 33px no-repeat;}
+.primezone_sec > h1 .crown{margin-top: -4px; display: inline-block; width: 60px; height: 27px; background: #fff url(/static/img/main/ico_prime.png) 50% 100% no-repeat; background-size: 36px 20px;}
+.primezone_sec > h1 .primezone_tit{display: inline-block; padding-right: 10px; height: 27px; line-height: 27px; vertical-align: top; background-color: #ffffff;}
 .primezone_sec > h1 button{float: right;}
+.primezone_sec > h1:before{position: absolute; top: 15px; left: 0; width: 18px; height: 39px; display: inline-block; content: ''; clear: both; background: url(/static/img/main/bg_gl_left.png) 0 0 no-repeat;}
+.primezone_sec > h1:after{position: absolute; top: 15px; right: 0; width: 18px; height: 39px; display: inline-block; content: ''; clear: both; background: url(/static/img/main/bg_gl_right.png) 0 0 no-repeat;}
 .primezone_sec .slick_primezone{padding-bottom: 50px; text-align: center;}
-.primezone_sec .slick_primezone .img_monkey{text-align: center; margin-bottom: -10px; width: 44px;}
+.primezone_sec .slick_primezone .img_monkey{text-align: center; margin-bottom: -7px; width: 44px;}
 .primezone_sec .slick_primezone .card_ui{margin: auto;width: 246px;height: 150px;background: #fff; text-align: left;}
 .primezone_sec .slick_primezone .card_ui dt{float: left; height: 100%; padding-top: 35px; width:30px; text-align:center; font-size: 16px;  }
 .primezone_sec .slick_primezone .card_ui dt.bgc1{}
@@ -366,7 +369,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .primezone_sec .slick_primezone .slick-slide{height: 100%; display: inline-block;}
 .primezone_sec .slick_primezone .slick-dots{position: absolute; z-index: 2; bottom: 0; left: 50%; margin-bottom: 20px; margin-left: -50px; width: 100px;  text-align: center;}
 .primezone_sec .slick_primezone .slick-dots li{display: inline-block;}
-.primezone_sec .slick_primezone .slick-dots li button{margin-right: 10px; width: 20px; height: 20px; background-color: #fff; border-radius: 50% 50%; border:none; text-indent: -99999px;}
+.primezone_sec .slick_primezone .slick-dots li button{margin-right: 10px; width: 20px; height: 20px; background-color: #fff; border-radius: 50% 50%; border:1px solid #000; text-indent: -99999px;}
 .primezone_sec .slick_primezone .slick-dots li.slick-active button{background-color: red;}
 .primezone_sec .primezone_arrow{ }
 .primezone_sec .primezone_arrow > div{position: absolute; z-index: 1; bottom: 100px; cursor: pointer;}
@@ -386,70 +389,97 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .account_banner{margin: 0 auto 20px; width: 280px;}
 
 /* MACH SERVICE & MACH LINK */
+.main_tit_img_link{margin-left: 15px; padding-left: 18px; background: url(/static/img/main/ico_hotmenu.png) 0 50% no-repeat; background-size: 16px 16px;}
 .img_banner_sec{margin-bottom: 40px;}
 .img_banner_tit .con_tit{}
 .img_banner_tit .con_tit i{margin-bottom: -2px; font-size: 18px;}
 .img_banner_tit .con_tit span{margin-left: 5px;}
 
+/* 메인 리스트 테이블 공통 */
+.tit_main_sec{padding-left: 20px; height: 40px; line-height: 40px; font-size: 16px; font-weight: bold;}
+.item_trade_sec{position: relative; height: 351px;}
+.item_trade_sec .main_tit_gameitem{background: url(/static/img/main/ico_gameitem.png) 0 13px no-repeat; background-size: 16px 16px;}
+.item_trade_sec .main_tit_otc{background: url(/static/img/main/ico_otc.png) 0 13px no-repeat; background-size: 16px 16px;}
+.item_trade_sec .main_tit_notice{background: url(/static/img/main/ico_notice.png) 0 12px no-repeat; background-size: 20px 20px;}
+.item_trade_sec h2{padding-top: 2px; width: 50%; height: 40px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #ced4da; border-bottom: 1px solid #ced4da;}
+.item_trade_sec .item_sell_tit{float: left; border-left: 1px solid #ced4da; border-right: 1px solid #ced4da;}
+.item_trade_sec .item_buy_tit{float: right; border-right: 1px solid #ced4da;}
+.item_trade_sec h2 button{margin-top: 6px; border: none; font-size: 16px; font-weight: bold; background-color: transparent;}
+.item_trade_sec .trade_list{position: absolute; top: 80px; padding: 19px 20px; width: calc(100% - 30px); overflow: auto; box-sizing: border-box; border: 1px solid #ced4da; border-top: none;}
+.item_trade_sec .on{border-bottom: none; background-color: #ffffff;}
+.item_trade_sec .on .btn_show_list{padding: 0 10px 6px 10px; border-bottom: 3px solid #000;}
+.item_trade_sec .main_list_table{width: 100%; }
+.item_trade_sec .main_list_table tbody td{height: 40px;}
+.item_trade_sec .main_list_table tbody td a{color: #333333;}
+.detail_link{float: right; margin: 6px 13px 0 0;}
+
 /* 게임아이템 판매 & 게임아이템 구매 */
-.item_trade_sec{position: relative; height: 357px;}
-.item_trade_sec h2{padding-top: 2px; width: 50%; height: 40px; text-align: center; border-top: 2px solid #ced4da; border-bottom: 2px solid #ced4da;}
-.item_trade_sec .item_sell_tit{float: left; border-left: 2px solid #ced4da; border-right: 2px solid #ced4da;}
-.item_trade_sec .item_buy_tit{float: right; border-right: 2px solid #ced4da;}
-.item_trade_sec h2 button{border: none; font-size: 16px; font-weight: bold; background-color: transparent;}
-.item_trade_sec .trade_list{position: absolute; top: 40px; padding: 20px; width: calc(100% - 30px); box-sizing: border-box; border: 2px solid #ced4da; border-top: none; background-color: rgba(217, 237, 247, 0.25);}
 .item_trade_sec .item_buy{display: none;}
-.item_trade_sec .trade_list .table{background-color: #ffffff;}
-.item_trade_sec .trade_list .table .txt_el{width: 270px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: normal;}
-.item_trade_sec .on{border-bottom: none; background-color: rgba(217, 237, 247, 0.25);}
-.item_trade_sec .on .btn_show_list{background-color: rgba(217, 237, 247, 0.25); color: #1e2560;}
+.item_trade_sec .item_table_wrap table{min-width: 700px;}
+.item_trade_sec .item_table_wrap .ellipse{width: 380px;}
+
+/* otc 판매 & otc 구매 */
+.item_trade_sec .otc_buy{display: none;}
+.item_trade_sec .otc_table_wrap table{min-width: 500px;}
+.item_trade_sec .otc_table_wrap .ellipse{width: 450px;}
 
 /* 자산거래 */
 .assets_trade_sec{}
 .assets_trade_sec .plus_link{margin-top: 10px;}
-.assets_trade_sec .bd_area{height: 357px; border: 2px solid #ced4da;;}
+.assets_trade_sec .bd_area{height: 300px; border: 1px solid #ced4da;;}
 .assets_trade_sec .bd_area > a{display: block;}
-.assets_trade_sec .assets_tit{height: 40px; line-height: 40px; text-align: center; border-bottom: 2px solid #ced4da;; background-color: #ececec; font-size: 16px;}
-.assets_trade_sec .assets_tit i{margin-left: 5px;}
-.assets_trade_sec .assets_img{text-align: center; overflow: hidden; height: 200px; line-height: 203px;}
-.assets_trade_sec .assets_img img{max-height: 200px;}
+.assets_trade_sec .main_tit_assets{background: url(/static/img/main/ico_asset.png) 0 13px no-repeat; background-size: 16px 16px;}
+.assets_trade_sec .assets_img{text-align: center; width: 95%; margin: auto; height: 200px; line-height: 203px;}
+.assets_trade_sec .assets_img img{max-height: 200px;box-shadow: 0 0 8px 0 rgba(0,0,0,0.4);}
+.assets_trade_sec .assets_img img:hover{transform: scale(1.05);  transition: all .1s linear;}
 .assets_trade_sec dt{margin-top: 20px; padding-left: 10px; font-size: 16px;}
-.assets_trade_sec dt .assets_tit_txt{width: 100%;}
+.assets_trade_sec dt .assets_tit_txt{width: 100%; color: #333333;}
 .assets_trade_sec dd{margin-top: 10px; padding: 0 10px;}
 .assets_trade_sec dd .money_txt{float: left; font-size: 22px; font-weight: bold; color: #1e2560;}
 .assets_trade_sec dd .money_txt span{font-size: 14px;}
 .assets_trade_sec dd .time_txt{float: right; font-weight: bold; color: #777;}
 
+/* 공지사항 */
+.noti_area{}
+.noti_area .main_tit_notice{background: url(/static/img/main/ico_notice.png) 0 13px no-repeat; background-size: 20px 20px;}
+.noti_area .bd_area{height: 300px; border: 1px solid #ced4da;}
+.noti_area .bd_area .noti_list{margin-top: 40px; padding: 0 10px;}
+.noti_area .bd_area .noti_list li{margin-bottom: 14px;}
+.noti_area .bd_area .noti_list li a{color: #333;}
+
 /* 동영상 */
-.media_sec{margin-bottom: 30px;}
+.media_sec{margin-bottom: 30px; }
+.media_sec .main_tit_media{margin: auto; width: 75px; background: url(/static/img/main/ico_video.png) 0 13px no-repeat; background-size: 18px 18px;}
 .media_sec .plus_link{margin-top: 10px;}
-.media_sec .bd_area{border: 1px solid #000039;;}
+.media_sec .bd_area{border: 1px solid #ced4da; background-color: #f8f9fa;}
 .media_sec .media_tit{text-align: center; /*padding-left: 10px;*/ height: 40px; line-height: 40px; background-color: #f0f0f0; font-size: 16px;}
 .media_sec .media_img_wrap{padding: 15px 10px; display: flex; display: -ms-flexbox;}
 .media_sec .media_img_wrap .media_img{width: 32%; margin-left: 2%;}
+.media_sec .media_img_wrap .media_img:hover{box-shadow: 0 0 16px 0 rgba(0,0,0,.16); transition: all .2s linear;}
 .media_sec .media_img_wrap .media_img:first-child{margin-left: 0;}
 .media_sec .media_img_wrap .media_img a{display: block; text-align: center;}
 .media_sec .media_img_wrap .media_img img{max-height: 130px;}
-.media_sec .media_img_wrap .media_img h2{text-align: center;}
+.media_sec .media_img_wrap .media_img h2{margin-top: 10px; text-align: center; color: #222222; font-weight: bold;}
 
 /* 게임뉴스 */
 .gamenews_sec{display: none;}
 .gamenews_sec .plus_link{margin-top: 10px;}
-.gamenews_sec .bd_area{height: 215px; border: 1px solid #1e2560;}
+.gamenews_sec .bd_area{height: 215px; border: 1px solid #ced4da;}
 .gamenews_sec .gamenews_tit{padding-left: 10px; height: 40px; line-height: 40px; background-color: #f0f0f0; font-size: 16px;}
 .gamenews_sec ul{padding: 0 10px;}
 .gamenews_sec li{width: 100%; margin-top: 15px;}
 
 /* 상장매체 */
 .company_sec{margin-bottom: 50px;}
-.company_sec .bd_area{border: 1px solid #000039;   }
+.company_sec .main_tit_company{margin: auto; width: 85px; background: url(/static/img/main/ico_best.png) 0 13px no-repeat; background-size: 16px 16px;}
+.company_sec .bd_area{border: 1px solid #ced4da; background-color: #f8f9fa;}
 .company_sec .company_tit{text-align: center; height: 40px; line-height: 40px; background-color: #f0f0f0; font-size: 16px;}
 .company_sec .cpn_box_wrap{padding: 30px 20px;}
-.company_sec .cpn_box{float: left; margin-left: 1%; width: 15.833%;  height: 60px; text-align: center;}
+.company_sec .cpn_box{float: left; margin-left: 1%; width: 15.833%;  height: 60px; text-align: center; background-color: #ffffff;}
 .company_sec .cpn_box:nth-of-type(6n+1){margin-left: 0;}
 .company_sec .cpn_box:nth-of-type(n+7){margin-top: 15px;}
 .company_sec .cpn_box a{display: block; padding: 10px 5px; height: 100%; box-sizing: border-box; border: 1px solid #c8c8c8;}
-.company_sec .cpn_box a:hover{ box-shadow: 5px 5px 3px #0a062c94;}
+.company_sec .cpn_box a:hover{transition: all .2s linear; box-shadow: 5px 5px 3px #0a062c94;}
 .company_sec .cpn_box a img{max-height: 100%; }
 .company_sec .cpn_box a i{margin-top: 8px; color: #dcdcdc; font-size: 24px;}
 .img_vac{transform: translateY(50%);}
@@ -516,8 +546,6 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     /* 게임아이템 판매 & 게임아이템 구매 */
     .item_trade_sec{margin-bottom: 30px;}
     .item_trade_sec .trade_list{overflow-x: scroll;}
-    .item_trade_sec .trade_list .table{min-width: 400px;}
-    .item_trade_sec .trade_list .table .txt_el{width: 110px;}
     .media_sec{}
     /* 상장매체 */
     /*
@@ -555,6 +583,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .primezone_sec .slick_primezone .card_ui dd li:nth-child(1) strong{font-size: 20px;}
     /**/
     .item_trade_sec h2 button{font-size: 14px;}
+    .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}
     /* footer */
     .footer .footer_content .ft_top > div{display: none;}
     .footer .footer_content .ft_top > div:nth-child(1){display: inline-block; max-width: 50%;}
@@ -619,6 +648,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 
 /*** material-icons ***/
 /* Rules for sizing the icon. */
+.material-icons{font-size: 22px;}
 .add_circle_outline { margin-left: 5px; }
 .add_circle_outline > .material-icons { position: relative; top: 6px; }
 .material-icons.md-16 { font-size: 16px; }
