@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">거래 이의관리 <span>이의 내용 보기</span></h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">유형</th>
+                                        <td id="type"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">제목</th>
+                                        <td id="title"></td>
+                                    </tr>
+                                    <tr class="merge_th">
+                                        <th class="fc2">문의 내용</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="support_notice_content" id="content">
+                                                    
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                    <tr class="merge_th">
+                                        <th class="fc2">답변</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="support_notice_content" id="reply">
+                                                    
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="trForDel">
+                                        <th class="fc2">첨부 이미지</th>
+                                        <td>
+                                            <div class="product_img_list">
+                                                <div class="imgs_wrap">
+                                                    <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                    </ul>    
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="mrg_cell trForDel">
+                                        <td colspan="2">
+                                            <div id="fullImg"></div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="modify">수정</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var personalId = "<%=personalId%>";
+        $(document).ready(function() {
+            detail();
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('#modify').on('click', function() {
+                location.href = '/supports/private/modify/' + personalId;
+            });
+        });
+
+        function detail() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/personal/" + personalId
+            }).done(function (success) {
+                //console.log(success.data);
+                var personal = success.data; 
+                $('#type').text(getPersonalType(personal.type).text);
+                $('#title').text(personal.title);
+                $('#content').html(replaceDesc(personal.content));                
+                $("#reply").html(personal.reply == undefined ? '' : replaceDesc(personal.reply));
+                if(personal.reply != undefined) {
+                    $('#modify').hide();
+                }
+                
+                // 이미지 모두 지운 상황이 아닌 경우
+                if(success.data.images[0] !== null) {
+                    var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                    for(var i=0;i<success.data.images.length; i++) {
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                            html += '</div>';
+                            html += '</div>';
+                                                        
+                        $("#listOfThumbnail li").eq(i).html(html);
+                    }
+                    $("#fullImg").html(img1th);
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+
+    <% include ../../include/footer.html %>
+</div>
+</body>
