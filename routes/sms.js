@@ -228,7 +228,7 @@ router.post('/user/checkAuthNo', function(req,res,next) {
         'country': country,
         'countryCode':req.body.countryCode,
         'phone': req.body.phone,
-        'authCode': req.body.authCode
+        'authCode': req.body.authNo
     }
 
     controllerOccupancyPhones.detail(country,condition)
@@ -240,6 +240,8 @@ router.post('/user/checkAuthNo', function(req,res,next) {
                 "msg": "인증번호가 유효하지 않습니다. 인증번호를 다시 받으세요."
             }
         } else {
+            req.session.countryCode = req.body.countryCode;
+            req.session.phone = req.body.phone;
             result = {
                 "successYn": "success",
                 "msg": "성공적으로 인증되었습니다."
