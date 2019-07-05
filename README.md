@@ -1,45 +1,24 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+**MACH Project - MarketMACH**
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+The cryptocurrency world that anyone in real life can use it immediately, this has become the motto of our project. Eventually, after many hours of thought, we had finished to this conclusion, "Let's create cryptocurrency, which is widely used by ordinary people to benefit from blockchain in real life, and their trading platform."
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+The target is the market for individual asset trading. It is so routine that anyone may have had a chance to trade personal goods at least once in their life, and the market is very large. 
 
----
+So, "MarketMACH" is a open merket platform which user can trade a kind of asset sach as game items, used assets and OTC. It is supported VTR, escrow systems which user can safety trade. For more information, visit to website this follow, 
+About MACH Project : [https://mymach.io](https://mymach.io)
+MarketMACH Platform : [https://www.marketmach.com](https://www.marketmach.com)
 
-## Edit a file
-
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
-
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
 
 ---
 
-## Create a file
+## Installration 
 
-Next, you’ll add a new file to this repository.
-
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+1. Download from git repository.
+2. Installration npm modules.
+3. Start npm.
 
 ---
 
-## Clone a repository
+## License
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+MarketMACH is licensed as Apache 2.0.
