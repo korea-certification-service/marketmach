@@ -262,6 +262,7 @@ router.get('/signup', function (req, res, next) {
         commId: req.session.commid,
         foreigner: req.session.foreigner,
         total_mach: dbconfig.bonus.signup,
+        countryCode: req.session.countryCode,
         recommander: req.session.recommander,
         pushMarketing: false
     };
