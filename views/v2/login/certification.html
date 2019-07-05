@@ -2,6 +2,77 @@
 <html>
 <head>
     <% include ../include/head.html %>
+    <script type="text/javascript">
+        var currencyCode="";
+    
+        $(document).ready(function() {
+            $("#currencyType").on('change', function() {
+                $("#currencyName").text($("#currencyType").val());
+            });
+
+            $("#phone").on('click', function() {
+                if(window.event.keyCode==13){
+                    sendAuthNo();
+                }
+            })
+
+            $("#sendAuthNo").on('click', function() {
+                sendAuthNo();
+            });
+
+            loadCurrencyList();
+            $('.auth_no_class').hide();
+        });
+
+        function loadCurrencyList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/countryCodes"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_en + '('+ success.data[i].country_code +')' + '</option>'
+                }
+
+                $("#currencyType").html(strDOM);
+                $("#currencyType").selectpicker('refresh');
+                $("#currencyType").val(currencyCode).attr("selected", "selected");
+                $("#currencyType").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function sendAuthNo() {
+            if($("#currencyType").val() == "") {
+                alert("거래국가를 선택하세요.");
+                return;
+            } else if($("#phone").val() == "") {
+                alert("전화번호를 입력하세요.");
+                return;
+            }
+
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkPhone",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                $('.auth_no_class').show();
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+
+    </script>
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -18,19 +89,15 @@
                 <hr>
                 <div class="submit_ctc_code">
                     <div class="submit_ctc_code_top no_w100p_wrap">
-                        <select class="custom-select w30p" id="">
-                                <option value="KO" selected>KO</option>
-                                <option value="EN">EN</option>
-                                <option value="CH">CH</option>
-                        </select>
-                        <input type="text" class="form-control" id="" placeholder="전화 번호 입력" maxlength="50"> 
+                        <select id="currencyType" class="selectpicker" data-live-search="true"></select>
+                        <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
                     </div>
                     <button class="btn btn_in_view1" id="">인증코드 전송</button>
                 </div>
-                <div class="confirm_ctc_code">
-                    <input type="text" class="form-control" id="" placeholder="전화 번호 입력" maxlength="50">
+                <div class="confirm_ctc_code auth_no_class">
+                    <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
                     <br>
-                    <button class="btn btn_in_view1" id="">전송</button>
+                    <button class="btn btn_in_view1" id="sendAuthNo">전송</button>
                 </div>
             </section>
             <!--// join_sec page-->
