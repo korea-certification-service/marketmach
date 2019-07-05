@@ -115,13 +115,15 @@
 .table_list .col5_5{width: 120px;}
 .table_list .ellipse{display: inline-block; width: calc(100% - 130px); vertical-align: top; text-align: left;}
 .table_list .ellipse100{display: inline-block; width: 100%; vertical-align: top; text-align: left;}
+.table_list .no_ellipse{display: inline-block; width: calc(100% - 130px); text-align: left;}
+.table_list .no_ellipse-30{display: inline-block; width: calc(100% - 30px); text-align: left;}
 /* .table_list .reply_num{padding-left: 17px; background: url(/static/img/sub/ico_comment.png) 2px 50% no-repeat; background-size: 15px 15px;} */
 .table_list .reply_num{color: #0a73b8;}
 /* 게임아이템 리스트 */
 .table_list.has_etc_icon .btn_cmm_bd{margin-right: 10px; padding: 3px 6px; border-radius: 5px;}
 /* 자산거래 리스트 */
 .table_list.has_game_icon .btn_cmm_bd{display: inline-block; margin-right: 22px; text-align: center; width: 60px;}
-.table_list.has_game_icon .ico_item{width: 78px;}
+.table_list.has_game_icon .ico_item{width: 78px; vertical-align: top;}
 .table_list.has_game_icon .ico_money{width: 78px;}
 .table_list.has_game_icon tbody td:nth-child(2){text-align: left;}
 
