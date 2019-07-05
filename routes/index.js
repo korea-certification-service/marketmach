@@ -244,6 +244,10 @@ router.get('/agreement', function (req, res, next) {
     }
 });
 
+router.get('/certification', function (req, res, next) {
+    res.render('v2/login/certification');
+});
+
 router.get('/signup', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 

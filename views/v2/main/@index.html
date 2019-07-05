@@ -51,7 +51,7 @@
             }
 
             currency();
-            myCurrency = setInterval(currency, 1000 * 60);
+            //myCurrency = setInterval(currency, 1000 * 60);
             //console.log(myCurrency);
         }
         function loadCurrency(data) {
@@ -260,12 +260,10 @@
             for(var i=0; i<data.length; i++) {
                 var noticeId = data[i]._id;
                 var title = data[i].title;
-                /*
+                
                 result += '<tr>' + 
                         '<td><div class=""><a href="/supports/notice/detail?noticeId='+noticeId+'">'+title+'</a></div></td>' + 
                     '</tr>';
-                */
-               result += '<li><div class="ellipse noti_ell"><a href="/supports/notice/detail?noticeId='+noticeId+'">'+title+'</a></div></li>'
             }
             $('#notice_list').html(result);
         }
@@ -291,21 +289,22 @@
                 if("<%=useBlockchain%>" =='Y') {
                     money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
-                result += '<h1 class="tit_main_sec main_tit_assets">자산거래</h1>' +
-                '<div class="bd_area">' +
-                    '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
-                        '<img src="'+image_src+'" alt="">' +
-                    '</div>' +
-                    '<dl>' +
-                        '<dt>' +
-                            '<div class="assets_tit_txt ellipse">'+title+'</div>' +
-                        '</dt>' +
-                        '<dd class="cf">' +
-                            '<div class="money_txt">'+money+'</div>' +
-                            '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
-                        '</dd>' +
-                    '</dl></a>' +
-                '</div>';
+                
+                result += '<div class="bd_area">' +
+                        '<h1 class="assets_tit">자산거래<a class="add_circle_outline" href="/etc-sells?category=etc&trade_type=sell"><i class="material-icons">add_circle_outline</i></a></h1>' +
+                        '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
+                            '<img src="'+image_src+'" alt="">' +
+                        '</div>' +
+                        '<dl>' +
+                            '<dt>' +
+                                '<div class="assets_tit_txt ellipse">'+title+'</div>' +
+                            '</dt>' +
+                            '<dd class="cf">' +
+                                '<div class="money_txt">'+money+'</div>' +
+                                '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
+                            '</dd>' +
+                        '</dl></a>' +
+                    '</div>';
             }
             $('#assets_trade_sec').html(result);
         }
@@ -346,6 +345,26 @@
                 <h1 class="blind">메인 비주얼 이미지 영역</h1>
                 <div class="slick_visual">
                     <div class="visual_img">
+                        <a href="/supports/notice/detail?noticeId=5d1db5ac5e0698631cae511d">
+                            <div class="pc_img">
+                                <img src="/static/img/main/main_visual14.jpg" alt="2차 IEO 이벤트">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/mob/m_main_visual14.jpg" alt="2차 IEO 이벤트">
+                            </div>
+                        </a>
+                    </div> 
+                    <div class="visual_img">
+                        <a href="/supports/event/detail/5d1b2b51aa5354a85615767f">
+                            <div class="pc_img">
+                                <img src="/static/img/main/main_visual13.jpg" alt="개인 자산 판매 에어드롭 이벤트">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/mob/m_main_visual13.jpg" alt="개인 자산 판매 에어드롭 이벤트">
+                            </div>
+                        </a>
+                    </div>                                             
+                    <!-- <div class="visual_img">
                         <div class="pc_img">
                             <img src="/static/img/main/main_visual12.jpg" alt="마하코인 프리세일">
                         </div>
@@ -360,7 +379,7 @@
                         <div class="mob_img">
                             <img src="/static/img/mob/m_main_visual11.jpg" alt="OTC">
                         </div>
-                    </div>                    
+                    </div>                     -->
                     <div class="visual_img">
                         <a href="/howto/trade/vtr">
                             <div class="pc_img">
@@ -428,8 +447,7 @@
         </div>
 
         <%if(useBlockchain == 'Y') {%>
-        <!--
-        <section class="btm_visual_sec cf">
+        <!-- <section class="btm_visual_sec cf">
             <div class="flow_box">
                 <h1 class="cf"><i class="material-icons">trending_up</i><span>COIN 시세</span></h1>
             </div>
@@ -444,13 +462,12 @@
             <div class="flow_box">
                 <a class="add_circle_outline" href="https://www.binance.com/kr" target="_blank"><i class="material-icons">add_circle_outline</i></a>
             </div>
-        </section>
-        -->
+        </section> -->
         <%}%>
         <!-- primezone_wrap -->
         <div class="primezone_wrap">
             <section class="primezone_sec container">
-                <h1><span class="crown"></span><span class="primezone_tit">PRIME ZONE</span></h1>
+                <h1><span class="crown"></span>PRIME ZONE <a class="add_circle_outline" href="/sells?category=game&trade_type=sell" target="_blank"><i class="material-icons">add_circle_outline</i></a></h1>
                 <div class="primezone_arrow">
                     <div class="prev"><i class="material-icons">keyboard_arrow_left</i></div>
                     <div class="next"><i class="material-icons">keyboard_arrow_right</i></div>
@@ -494,7 +511,7 @@
             </section>
             -->
             <div class="row img_banner_tit">
-                <h1 class="tit_main_sec main_tit_img_link col-lg-12">Hot Menu</h1>
+                <h1 class="con_tit col-lg-4"><i class="material-icons">face</i><span>마켓마하 링크</span></h1>
             </div>
             <div class="img_banner_sec row">
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/main/mach_link01.jpg" alt="MACH 게임"></a></div>
@@ -509,19 +526,13 @@
             <div class="img_banner_sec row">
                 <!-- 게임 아이템 판매/구매 -->
                 <section class="secGame item_trade_sec col-lg-8">
-                    <h1 class="tit_main_sec main_tit_gameitem">Game Item</h1>
+                    <h1 class="blind">게임아이템 판매와 구매 게시판 리스트</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnGame btn_show_list on">판매</button>
+                        <button class="btnGame btn_show_list on">게임아이템 판매</button>
                         <a class="add_circle_outline" href="/sells?category=game&trade_type=sell"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_sell table-responsive">              
-                        <table class="main_list_table">
-                            <colgroup class="colgroup_main_gameitem">
-                                <col class="col4_1">
-                                <col class="col4_2">
-                                <col class="col4_3">
-                                <col class="col4_4">
-                            </colgroup>
+                        <table class="table">
                             <thead>
                                 <tr class="active">
                                     <th>종류</th>
@@ -535,7 +546,7 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnGame btn_show_list">구매</button>
+                        <button class="btnGame btn_show_list">게임아이템 구매</button>
                         <a class="add_circle_outline" href="/buys?category=game&trade_type=buy"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_buy table-responsive">
@@ -561,19 +572,15 @@
             <div class="row">
                 <!-- OTC 판매/구매 -->
                 <section class="secOtc item_trade_sec col-lg-8">
-                    <h1 class="tit_main_sec main_tit_otc">OTC</h1>
+                    <h1 class="blind">OTC 판매와 구매 게시판 리스트</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnOtc btn_show_list on">판매</button>
+                        <button class="btnOtc btn_show_list on">OTC 판매</button>
                         <a class="add_circle_outline" href="/otc-sells?category=otc&trade_type=sell"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_sell table-responsive">              
-                        <table class="main_list_table">
-                            <colgroup class="colgroup_main_otc">
-                                <col class="col2_1">
-                                <col class="col2_2">
-                            </colgroup>
+                        <table class="table">
                             <thead>
-                                <tr>
+                                <tr class="active">
                                     <th>제 목</th>
                                     <th>거래가격</th>
                                 </tr>
@@ -583,15 +590,11 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnOtc btn_show_list">구매</button>
+                        <button class="btnOtc btn_show_list">OTC 구매</button>
                         <a class="add_circle_outline" href="/otc-buys?category=otc&trade_type=buy"><i class="material-icons">add_circle_outline</i></a>
                     </h2>
                     <div class="trade_list item_buy table-responsive">
-                        <table class="main_list_table">
-                            <colgroup class="colgroup_main_otc">
-                                <col class="col2_1">
-                                <col class="col2_2">
-                            </colgroup>                            
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>제 목</th>
@@ -604,12 +607,23 @@
                     </div>             
                 </section>
                 <!--// OTC 아이템 판매/구매 -->
-                <section class="secNoti1 noti_area col-lg-4">
-                    <h1 class="tit_main_sec main_tit_notice">Notice</h1>
-                    <div class="bd_area">
-                        <ul id="notice_list" class="noti_list">
-                        </ul>       
-                    </div>
+                <section class="secNoti1 item_trade_sec col-lg-4">
+                    <h1 class="blind">공지사항</h1>
+                    <h2 class="item_sell_tit on">
+                        <button class="btnNoti1 btn_show_list on">공지사항</button>
+                        <a class="add_circle_outline" href="/supports/notice"><i class="material-icons">add_circle_outline</i></a>
+                    </h2>
+                    <div class="trade_list item_sell table-responsive">              
+                        <table class="table">
+                            <thead>
+                                <tr class="active">
+                                    <th>제 목</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notice_list">                               
+                            </tbody>
+                        </table>
+                    </div>           
                 </section>
             </div>   
             <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>   
@@ -650,8 +664,11 @@
             <div class="row">
                 <!-- 동영상 -->
                 <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_media">동영상</h1>
                     <div class="bd_area">
+                        <h1 class="media_tit fc2">
+                            동영상
+                            <!-- <a class="add_circle_outline" href=""><i class="material-icons">add_circle_outline</i></a> -->
+                        </h1>
                         <div class="media_img_wrap cf">
                         </div>
                     </div>
@@ -669,8 +686,8 @@
             </div>
             <div class="row">
                 <section class="company_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_company">상장매체</h1>
                     <div class="bd_area">
+                        <h1 class="company_tit fc2">상장매체</h1>
                         <div class="cpn_box_wrap cf">
                             <div class="cpn_box"><a href="http://bitweb.co.kr/" target="_blank"><img src="/static/img/main/logo_bitweb.png" alt="비트웹" title="비트웹"></a></div>
                             <div class="cpn_box"><a href="http://www.blockchaintoday.co.kr/" target="_blank"><img src="/static/img/main/logo_today.png" alt="블록체인투데이" title="블록체인투데이"></a></div>
