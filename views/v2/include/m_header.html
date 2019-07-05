@@ -5,10 +5,10 @@
     var userTag = "<%=userTag%>"
     var authPhone = "<%=authPhone%>";
     var game_name;
-    var agent = navigator.userAgent.toLowerCase();
-        
+    
     $(document).ready(function(){
-
+        var agent = navigator.userAgent.toLowerCase();
+        console.log(agent);
         if("<%=userId%>"=="") {
             $('.menu_login').css('display', 'inline-block');
             $('.menu_logout').css('display', 'none');
@@ -30,25 +30,24 @@
             location.href = '/myPages/user/checkPassword';
         });
 
-        /*모바일 네비게이션의 추천URL로직*/
-        if(userId == ""){
-            $(".recommendUrl").css({display: "none"});
-        } else {
-            $(".recommendUrl").css({display: "block"});
-        }
-        
-        $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
-        $('#m_voucherCopy').on('click', function(){
-            console.log(1);
-            copyUrl(); 
-        });
-
         /*브라우저 체크해서 사파리일때는 추천URL버튼이 링크버튼이됨*/
         if(agent.indexOf("chrome") != -1) {
             $(".recommendUrl").html('<input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);"><input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL">')
         } else if (agent.indexOf("safari") != -1) {
             $(".recommendUrl").html('<a class="btn btn-info btn btn-success recomandation" href="/myPages/user/voucher">추천URL</a>');
         }
+
+        /*모바일 네비게이션의 추천URL로직*/
+        if(userId == ""){
+        $(".recommendUrl").css({display: "none"});
+        } else {
+            $(".recommendUrl").css({display: "block"});
+        }
+        
+        $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
+        $('#m_voucherCopy').on('click', function(){
+            copyUrl(); 
+        });
     });
 
     function getCoinMain() {
