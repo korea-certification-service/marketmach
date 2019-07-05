@@ -21,4 +21,4 @@ MarketMACH Platform : [https://www.marketmach.com](https://www.marketmach.com)
 
 ## License
 
-MarketMACH is licensed as Apache 2.0.
+MarketMACH ALL RIGHTS RESERVED. MarketMACH is licensed as MIT.
