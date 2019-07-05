@@ -13,6 +13,12 @@ var userValidate = (req, res, next) => {
         return _resultValidate(valid, msg, res, next);
     }
 
+    if(valid != util.isNull(body.userName)) {
+        valid = util.isNull(body.userName);
+        msg = "이름을 입력해주세요.";
+        return _resultValidate(valid, msg, res, next);
+    }
+
     if(valid != util.checkStrNum(body.userTag)) {
         valid = util.checkStrNum(body.userTag);
         msg = "아이디는 4~12자, 영문/숫자/영문+숫자로 조합하여 사용하세요.";
