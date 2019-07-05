@@ -6,9 +6,7 @@
 
     $(document).ready(function(){
         
-        if(location.pathname == "/main") {
-            selecValue = "games";
-        } else if(location.pathname == "/sells") {
+        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/sells") {
             selecValue = "games";
         } else if(location.pathname == "/etc-sells") {
             selecValue = "assets";
@@ -73,7 +71,6 @@
         ) {
             var games;
             if(selecValue == "games"){ //게임자산일떄
-                console.log("게임");
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
@@ -92,10 +89,8 @@
                     }
                 }
             } else { //현물, OTC일떄
-                console.log("자산, otc");
                 games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
             }
-            console.log(games);
             _doSearch(game_name, game_server, games);
             
         } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
@@ -186,7 +181,7 @@
         var type = "";
         var title = "";
         var query;
- 
+
         if(selecValue == "games") {
             if( search_item_name != undefined ){
                 if(search_item_name.length > 2) {
