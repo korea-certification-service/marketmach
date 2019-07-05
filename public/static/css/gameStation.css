@@ -48,9 +48,9 @@
 
 .gameStation_gamestation .gameStation_article > .gameStation_title { width: 100%; height: 45px; text-align: center; line-height: 45px; color: #002060; border-bottom: 2px solid #002060; font-weight: bold; font-size: 18px; background-color: #DEEBF7; } 
 
-.gameStation_gamestation .gameStation_article > .gameStation_contents { min-height: 355px; text-align: center;}
+.gameStation_gamestation .gameStation_article > .gameStation_contents { min-height: 322px; text-align: center;}
 .gameStation_gamestation .gameStation_article .gameStation_contents > em { font-size: 18px; }
-.gameStation_gamestation .gameStation_article .gameStation_contents > p { margin-top: 5px; margin-bottom: 35px; }
+.gameStation_gamestation .gameStation_article .gameStation_contents > p { margin-top: 5px; }
 .gameStation_gamestation .gameStation_article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; }
 .gameStation_gamestation .gameStation_article .gameStation_contents > img { display: block; width: 100%; height: 155px; }
 .gameStation_gamestation .gameStation_article .gameStation_contents > a { display:inline-block; width: 350px; height: 60px; border: 2px solid #7F7F7F; border-radius: 10px; background-color: #70AD47; color: #fff; font-size: 16px; }

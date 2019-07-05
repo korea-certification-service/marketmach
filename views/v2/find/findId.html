@@ -32,13 +32,17 @@
             })
 
             $("#sendAuthNo").on('click', function() {
+                if($(this).text() == "인증코드 재전송" ) {
+                    alert("인증코드가 재전송 되었습니다.");
+                }
+                $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
                 sendAuthNo();
             });
 
-            $("#reSendAuthNo").on('click', function() {
-                sendAuthNo();
-                alert("인증번호를 재발송 하였습니다.");
-            });
+            // $("#reSendAuthNo").on('click', function() {
+            //     sendAuthNo();
+            //     alert("인증번호를 재발송 하였습니다.");
+            // });
 
             $("#checkAuthNo").on('click', function() {
                 checkAuthNo();
@@ -107,7 +111,7 @@
             }).done(function (success) {
                 console.log(success);
                 $('.auth_no_class').show();
-                $('#sendAuthNo').hide();
+                $('#sendAuthNo').text("인증코드 재전송");
                 $('#phone').prop('readonly', true);
                 $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
@@ -196,18 +200,19 @@
                </ul>
                <div class="find_info_box">
                     <h2>휴대폰 확인으로 찾기</h2>
-                    <div class="submit_ctc_code">
-                        <div class="submit_ctc_code_top no_w100p_wrap">
-                            <select id="currencyType" class="selectpicker" data-live-search="true"></select>
-                            <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
+                    <div class="align_c">
+                        <div class="submit_ctc_code">
+                            <div class="submit_ctc_code_top no_w100p_wrap">
+                                <select id="currencyType" class="selectpicker" data-live-search="true"></select>
+                                <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
+                            </div>
+                            <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
                         </div>
-                        <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
-                    </div>
-                    <div class="confirm_ctc_code auth_no_class">
-                        <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
-                        <button class="btn btn_in_view1 send_auth_class" id="reSendAuthNo">인증코드 재전송</button>
-                        <br>
-                        <button class="btn btn_in_view1" id="checkAuthNo">전송</button>
+                        <div class="confirm_ctc_code auth_no_class">
+                            <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
+                            <br>
+                            <button class="btn btn_in_view1" id="checkAuthNo">전송</button>
+                        </div>
                     </div>
                     <!-- <div class="btn_align_c">
                         <button class="btn btn_in_view3" id="authPhone">휴대폰 인증</button>
