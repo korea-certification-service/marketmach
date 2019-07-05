@@ -6,6 +6,7 @@
         var checkUserTagYn = false;
         var checkEmailYn = false;
         var total_mach = "<%=total_mach%>";
+        var countryCode = "<%=countryCode%>";
 
         $(document).ready(function() {
             $('.menu_login').css('display', 'inline-block');
@@ -107,8 +108,8 @@
                 "userTag": $("input[name=id]").val(),
                 "password": $('input[name=password]').val(),
                 "email": $("input[name=email]").val(),
-                "userName": $("#username").text(),
-                "countryCode" : "+82",
+                "userName": $("#username").val(),
+                "countryCode" :countryCode,
                 "phone": $("#phone").text(),
                 "birth": $("#birth").val(),
                 "sex": "<%=sex%>",
@@ -218,7 +219,7 @@
                                 <th>이름</th>
                                 <td>
                                     <input type="hidden" id="birth"/>
-                                    <span id="username">홍길동</span>
+                                    <span><input type="text" class="form-control w80p" id="username" placeholder="실명 입력"></span>
                                 </td>
                             </tr>
                             <tr>

@@ -6,18 +6,34 @@
         var currencyCode="";
     
         $(document).ready(function() {
+            $('.menu_login').show();
+            $('.menu_logout').hide();
+            
             $("#currencyType").on('change', function() {
                 $("#currencyName").text($("#currencyType").val());
             });
 
-            $("#phone").on('click', function() {
+            $("#phone").on('keyup', function() {
                 if(window.event.keyCode==13){
                     sendAuthNo();
                 }
             })
 
             $("#sendAuthNo").on('click', function() {
+                if($(this).text() == "인증코드 재전송" ) {
+                    alert("인증코드가 재전송 되었습니다.");
+                }
+                $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
                 sendAuthNo();
+            });
+
+            // $("#reSendAuthNo").on('click', function() {
+            //     sendAuthNo();
+            //     alert("인증번호를 재발송 하였습니다.");
+            // });
+
+            $("#checkAuthNo").on('click', function() {
+                checkAuthNo();
             });
 
             loadCurrencyList();
@@ -66,12 +82,44 @@
             }).done(function (success) {
                 console.log(success);
                 $('.auth_no_class').show();
+                $('#sendAuthNo').text("인증코드 재전송");
+                $('#phone').prop('readonly', true);
+                $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
                 console.log(fail);
             })
         }
 
+        function checkAuthNo() {
+            if($("#authNo").val() == "") {
+                alert("인증번호를 입력하세요.");
+                return;
+            } 
 
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val(),
+                'authNo': $("#authNo").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkAuthNo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                if(success.data.successYn == "fail") {
+                    alert("인증번호가 유효하지 않습니다. 인증번호를 확인하세요.");
+                    return;
+                } else {
+                    location.href = '/signup';
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
     </script>
 </head>
 <body>
@@ -92,12 +140,12 @@
                         <select id="currencyType" class="selectpicker" data-live-search="true"></select>
                         <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
                     </div>
-                    <button class="btn btn_in_view1" id="">인증코드 전송</button>
+                    <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
                 </div>
                 <div class="confirm_ctc_code auth_no_class">
                     <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
                     <br>
-                    <button class="btn btn_in_view1" id="sendAuthNo">전송</button>
+                    <button class="btn btn_in_view1" id="checkAuthNo">휴대폰 인증</button>
                 </div>
             </section>
             <!--// join_sec page-->
