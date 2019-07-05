@@ -201,7 +201,7 @@ router.post('/user/checkPhone', function(req,res,next) {
     controllerOccupancyPhones.add(country, reqData)
     .then(() => {
         //SMS인증 후 인증번호 회신
-        reqData['message'] = smsContent.authSms[country] + reqData.authCode;
+        reqData['message'] = "[" + reqData.authCode + "]" + smsContent.authSms[country];
         smsController.sendSmsCommon(reqData)
         .then((result) => {
             bitwebResponse.code = 200;
