@@ -65,6 +65,7 @@
 /* 휴대폰 인증 페이지 */
 .submit_ctc_code { padding-top: 30px; }
 .submit_ctc_code .submit_ctc_code_top { margin-bottom: 30px; font-size: 0px; }
+.submit_ctc_code .submit_ctc_code_top .dropdown { width: 30% !important; }
 .submit_ctc_code .form-control { width: 69%; margin-left: 1%;}
 .submit_ctc_code .btn_in_view1 { position: relative; left: 50%; transform: translateX(-50%); margin-bottom: 30px; }
 .confirm_ctc_code { padding-top: 30px; }
