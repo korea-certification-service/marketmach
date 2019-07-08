@@ -205,13 +205,34 @@ var MainUi = {
     slickSlide: function() {
         // Main Visual
         $('.slick_visual').slick({
-            dots: true,
-            speed: 1200,
+            dots: false,
+            speed: 600,
             autoplay: true,
             autoplaySpeed: 6000,
             fade: true,
             cssEase: 'linear',
-        }); 
+            //asNavFor: '#navSlcikVisual',
+            pauseOnHover: false,
+            responsive: [
+                {
+                    breakpoint: 993,
+                    settings: { 
+                        dots: true,
+                    }
+                },
+            ]
+        }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
+            $('.nav_text_box').removeClass("on").eq(nextSlide).addClass("on");
+        });
+               
+        var navVisualLength = parseInt(document.getElementById("navSlcikVisual").getAttribute("nav-visual-length"));
+        $('#navSlcikVisual').slick({
+            slidesToShow: 5,
+            asNavFor: '.slick_visual',
+            focusOnSelect: true,
+            pauseOnHover: false,
+        });
+
         // PRIME ZONE card UI
         $('.slick_primezone').slick({
             dots: true,
