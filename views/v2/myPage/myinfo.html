@@ -61,7 +61,6 @@
                 if($(this).text() == "인증코드 재전송" ) {
                     alert("인증코드가 재전송 되었습니다.");
                 }
-                $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
                 sendAuthNo();
             });
 
@@ -310,7 +309,7 @@
                 alert("전화번호가 변경되지 않았습니다.");
                 return;
             }
-
+            $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
                 'phone': $("#phone").val()
@@ -360,6 +359,7 @@
                     alert("휴대폰 인증이 완료되었습니다.");
                     checkAuthNoYn = true;
                     $("#checkAuthNo").hide();
+                    $("#sendAuthNo").attr("disabled", "disabled");
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -420,7 +420,7 @@
                                             <br class="mob_br">
                                             <button class="btn btn-default" id="authPhone">연락처 변경</button>
                                         </td> -->
-                                        <td>
+                                        <td class="set_margin">
                                             <select id="currencyType" class="selectpicker" data-live-search="true"></select>
                                             <input type="text" class="form-control w60p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
                                             <br class="mob_br">
@@ -431,13 +431,13 @@
                                         <th class="fc2"></th>
                                         <td class="auth_no_class">
                                             <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
-                                            <br>
+                                            <br class="mob_br">
                                             <button class="btn btn_in_view1" id="checkAuthNo">휴대폰 인증</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="fc2">이메일</th>
-                                        <td>
+                                        <td class="set_margin">
                                             <div class="w100p-120px">
                                                 <input type="text" class="form-control" id="email" placeholder="example@mymach.asia">
                                             </div>
