@@ -77,7 +77,7 @@
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
-                if( srchBoxLeftClassName == "game_width_server" ){ //서버명으로검색할때
+                if( srchBoxLeftClassName == "game_with_server" ){ //서버명으로검색할때
                     var searchValue = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].innerText.split(">");
                     var game_name = searchValue[0]
                     var game_server = searchValue[1]; 
@@ -100,10 +100,10 @@
             
         } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
 
-            // if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_width_server"){
+            // if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_with_server"){
             //     return;
             // }
-            if(target.classList[0] == "game_width_server" ){
+            if(target.classList[0] == "game_with_server" ){
                 var searchValue = target.innerText.split(">");
                 var game_name = searchValue[0]
                 var game_server = searchValue[1];

@@ -40,8 +40,8 @@
             _mainSearch(key.currentTarget);
         });
 
-        $(".srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
-            _mainSearch(e.target);
+        $(".srch_box_left, .srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
+            _mainSearch(e.target, e.currentTarget);
         });
 
         if(game_name != undefined) {
@@ -61,20 +61,20 @@
         }
     });
 
-    function _mainSearch(target) {
+    function _mainSearch(target, currentTarget) {
 
         if( 
             target.id == 'main_search' || 
             target.id == 'search_item_name' ||
             target.id == 'm_main_search' || 
-            target.id == 'm_search_item_name'
+            target.id == 'm_search_item_name' //검색버튼또는 엔터키를 눌렀을때
         ) {
             var games;
             if(selecValue == "games"){ //게임자산일떄
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
-                if( srchBoxLeftClassName == "game_width_server" ){ //서버명으로검색할때
+                if( srchBoxLeftClassName == "game_with_server" ){ //서버명으로검색할때
                     var searchValue = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].innerText.split(">");
                     var game_name = searchValue[0]
                     var game_server = searchValue[1]; 
@@ -95,23 +95,22 @@
             
         } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
 
-            // if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_width_server"){
-            //     return;
-            // }
-            if(target.classList[0] == "game_width_server" ){
-                var searchValue = target.innerText.split(">");
-                var game_name = searchValue[0]
-                var game_server = searchValue[1];
-            } else {
+            if(currentTarget.classList[0] == "srch_box_left") { //왼쪽 리스트일때
+                if(target.classList[0] == "game_with_server"){
+                    var searchValue = target.innerText.split(">");
+                    var game_name = searchValue[0]
+                    var game_server = searchValue[1];
+                } else {
+                    return;
+                }
+            }
+            if(currentTarget.classList[0] == "srch_box_right") { //오른쪽 리스트일때
                 var game_name = $(".srch_box_left .clicked")[0].innerText;
                 var game_server = target.innerText == "서버전체" ? "" : target.innerText;
             }
             _doSearch(game_name, game_server);
         } 
-        // else {
-        //     console.log(1);
-        //     searchMain('sell');
-        // }
+
     }
 
     function _doSearch(game_name, game_server, games){

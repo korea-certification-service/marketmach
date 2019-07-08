@@ -1,24 +1,21 @@
-// USE JQUERY
-var data = [];
-getData("games");
-//getData("categories");
-
-function getData(path){
-    $.ajax({
-        url: '/v1/'+path,
-        success: function(dt){
-            //console.dir(dt.data);
-            if(path == "games") {
-                data.games = dt.data;
-            } else if(path == "assets") {
-                data.assets = dt.data;
-            }
-        }
-    })   
-}
-
-//ONLY PURE JAVASCRTPT
 document.addEventListener("DOMContentLoaded", function () { 
+    
+    var data = [];
+    getData("games");
+    
+    function getData(path){
+        $.ajax({
+            url: '/v1/'+path,
+            success: function(dt){
+                if(path == "games") {
+                    data.games = dt.data;
+                } else if(path == "assets") {
+                    data.assets = dt.data;
+                }
+                showLeftList();
+            }
+        })   
+    }
 
     var srchSelect = document.querySelector(".m_srch_select");
     var seletedValue;
@@ -31,8 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var leftUl = srchBoxLeft.children[0];
     var rightUl = srchBoxRight.children[0];
-
-    var showed = true;
 
     var inputSetTimeOut;
 
@@ -79,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             if(e.match(step01Rge) != null && val != "") {
 
-                                addList(el.game_name+">"+e, leftUl, "game_width_server");
+                                addList(el.game_name+">"+e, leftUl, "game_with_server");
 
                             }
     
@@ -159,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if( leftUl.childNodes[0] ) { leftUl.childNodes[0].classList.add("clicked"); }
             if( rightUl.childNodes[0] ) { rightUl.childNodes[0].classList.add("clicked"); }
     
-        }, 500);
+        }, 250);
         
 
     });
@@ -198,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //[ 클릭 이벤트 ] : 왼쪽 카테고리에 리스트 추가
     srchSelect.addEventListener("change",function(e){
         srchBoxWrap.style.display = "none";
-        //showed = true;
+
         if(srchSelect.value == "games"){
             srchInput.setAttribute("placeholder", "게임검색이 가능합니다.");
         } else if(srchSelect.value == "assets"){
@@ -211,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //[ 클릭 이벤트 ] : 왼쪽 카테고리를 클릭하면 해당 카테고리에 맞는 리스트를 오른쪽에 추가
     leftUl.addEventListener("click", function(e){
-        if( e.target.classList[0] == "game_width_server" ) {
+        if( e.target.classList[0] == "game_with_server" ) {
             return;
         }
         showRightList(e);
@@ -233,10 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 srchSelect.value == "games" && e.target.offsetParent.classList[1] == "m_srch_bottomWrap"
             ){
                 srchBoxWrap.style.display = "block";
-                if(showed){
-                    showLeftList();
-                }
-                showed = false;
 
             } else {
 
