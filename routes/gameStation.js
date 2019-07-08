@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
+var sessionChecker = require('../utils/session');
 
-router.get('/', function (req, res, next) {
+router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/gamestation', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {

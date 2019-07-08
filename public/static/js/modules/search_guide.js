@@ -227,24 +227,23 @@ document.addEventListener("DOMContentLoaded", function () {
     //[ 클릭 이벤트 ] : 검색가이드박스를 보여주거나 없애줌
     document.addEventListener("click", function(e){
         
-        if(e.target.offsetParent){
-            if( 
-                srchSelect.value == "games" && e.target.id == "search_item_name" ||
-                srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap"
-            ){
+        if( e.target.offsetParent &&
+            (srchSelect.value == "games" && e.target.id == "search_item_name" ||
+            srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap")
+        ){
 
-                srchBoxWrap.style.display = "block";
-                if(showed){
-                    showLeftList();
-                }
-                showed = false;
-
-            } else {
-
-                srchBoxWrap.style.display = "none";
-
+            srchBoxWrap.style.display = "block";
+            if(showed){
+                showLeftList();
             }
+            showed = false;
+
+        } else {
+
+            srchBoxWrap.style.display = "none";
+
         }
+
     });
 
 

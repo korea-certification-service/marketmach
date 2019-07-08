@@ -5,6 +5,8 @@ var machgamesSchema = new Schema({
     gameNameKr : String,
     gameNameEn : String,
     coinName : String,
+    titleImgUrl: String, 
+    iconImgUrl: String,
     regDate: String
 });
 
