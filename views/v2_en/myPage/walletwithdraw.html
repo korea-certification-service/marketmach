@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+        var total_price = 0;
+        var output_total_mach = 0;
+        var walletId;
+        var btc_fee = "<%=btc_fee%>";
+        var ether_fee = "<%=ether_fee%>";
+        var mach_fee = "<%=mach_fee%>";
+        var fee;
+        var rate;
+        
+        $(document).ready(function() {
+            if(bitberry_token != undefined && bitberry_token != "") {
+                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
+            }
+
+            $('[name=amount]').on('keyup',function() {
+                if($('[name=amount]').val() != "") {
+                    $('#total_amount').text(total_price - parseInt($('[name=amount]').val()));
+                    calculate();
+                }
+            });
+
+            $('[name=amount]').on("keydown", function(e){
+                /* e(지수), .(소수점) -(마이너스) 예외처리 */
+                if(e.keyCode == 69 || e.keyCode == 189){
+                    return false;
+                }
+            });
+
+            $("#confirmWithdraw").on("click", function() {
+                reqWithdraw();
+            });
+
+            $("select[name=coin]").on('change', function() {
+                if($("select[name=coin] option:selected").val() == "BTC") {
+                    total_price = total_btc;
+                } else if($("select[name=coin] option:selected").val() == "ETH") {
+                    total_price = total_ether;
+                } else {
+                    total_price = total_mach;
+                }
+                $('[name=amount]').val("0");
+                calculate();
+            })
+
+            getCoin();
+            getCoinHistory('bitberry_withdraw','bitberry');
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                var coin = $("select[name=coin] option:selected").val();
+                total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
+                //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
+                $("#btcTotal").html(numberWithCommas(total_btc));                        
+                $("#my_amount").html(numberWithCommas(success.data.total_btc)  + "<span>BTC</span>");
+                $("#total_amount").html(numberWithCommas(total_btc) + " BTC");
+
+                total_ether = success.data.total_ether == undefined ? 0 : success.data.total_ether;
+                //$("#mach").html(numberWithCommas(success.data.total_ether == undefined ? 0 : success.data.total_ether) + "<span>ETH</span>");
+                $("#ethTotal").html(numberWithCommas(total_ether));                        
+                $("#my_amount").html(numberWithCommas(success.data.total_ether)  + "<span>ETH</span>");
+                $("#total_amount").html(numberWithCommas(total_ether) + " ETH");
+                
+                total_mach = success.data.total_mach;                        
+                //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                $("#machTotal").html(numberWithCommas(total_mach));
+                $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
+                $("#total_amount").html(numberWithCommas(total_mach) + " MACH");
+
+                total_price = total_mach;
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoinHistory(trade_type, extType) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type + '&extType=' + extType
+            }).done(function (success) {
+                //console.log(success.data);
+                var coinHistorys = success.data;
+                var result = ""
+                if(coinHistorys.length == 0) {
+                    result = "<tr><td colspan='3'>내역이 존재하지 않습니다.</td></tr>";
+                }
+
+                for(var i=0;i<coinHistorys.length;i++) {
+                    var amount = numberWithCommas(coinHistorys[i].amount);
+                    var currencyCode = coinHistorys[i].currencyCode;
+                    var status = coinHistorys[i].status;
+                    var regDate = coinHistorys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '</span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate.replace(' ','<br>')+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var mach = Number($("input[name=amount]").val());
+            var coin = $("select[name=coin] option:selected").val();
+            var price = 0;
+            var data;
+            if (coin == "BTC") {
+                price = parseFloat((mach - (mach * btc_fee)).toFixed(8));
+                data = mach + " BTC - "+(btc_fee * 100)+"% = " + price + " BTC  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                $("#my_amount").html(numberWithCommas(total_btc)  + "<span>BTC</span>");
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " BTC");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " BTC");
+            } else if (coin == "ETH") {
+                price = parseFloat((mach - (mach * ether_fee)).toFixed(8));
+                data = mach + " ETH - "+(ether_fee * 100)+"% = " + price + " ETH  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                $("#my_amount").html(numberWithCommas(total_ether)  + "<span>ETH</span>");
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ETH");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " ETH");
+            } else if (coin == "MACH") {
+                price = parseFloat(mach.toFixed(8));
+                data = mach + " MACH = " + price + " MACH";
+                $("#my_amount").html(numberWithCommas(total_mach)  + "<span>MACH</span>");
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(mach+"<span>MACH</span>");
+                $("#exchange_amount").html(mach+"<span>MACH</span>");
+                $("#plus_amount").html(mach + " MACH");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " MACH");
+            }
+        }
+
+        function reqWithdraw() {
+            if(bitberry_token == "") {
+                alert("비트베리 앱에서 연동이 필요합니다.");
+                location.href = '/myPages/wallet/connect';
+                return;
+            } 
+
+            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
+                alert("Coin 금액을 입력하세요.");
+                return;
+            }
+
+            if(parseFloat($('#total_amount').text()) < 0) {
+                alert("출금 요청 금액이 출금 가능 잔액보다 클 수 없습니다.");
+                return;
+            }
+
+            // if($('[name=amount]').val() < 1) {
+            //     alert("출금 금액은 최소 1MACH 부터 가능 합니다.");
+            //     return;
+            // }
+
+            var data = {
+                "amount": Number($("input[name=amount]").val())
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/wallets/"+$("select[name=coin] option:selected").val()+"/withdraw",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+            }).done(function (success) {
+                //console.log(success.data);
+                if(success.data.code == undefined) {
+                    alert('MACH 출금이 정상적으로 처리되었습니다.');
+                    // getCoin();
+                    // getCoinHistory('withdraw');
+                    location.href = "/myPages/wallet/withdraw";
+                } else {
+                    alert(success.data.msg);
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+                alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">지갑관리 <span>Coin 출금</span></h1>
+                        <!-- <div class="bitberry_switch_box">
+                            <div class="bitberry_switch">
+                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
+                                <a href="/myPages/wallet/connect">
+                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                    <p>OFF</p>
+                                </a>
+                            </div>
+                            <em>나의지갑 잔액</em>
+                            <p class="fc3" id="mach"></p>
+                        </div> -->
+                        <div class="bitberry_grey_box">
+                            <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
+                        </div>
+                        <h2 class="tit_mypage dot_tit">나의 지갑 현황</h2>
+                        <div class="table_wrap table_total_escrow_wrap">
+                            <table class="table_total_escrow">
+                                <colgroup class="colgroup_total_escorw">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>코인</th>
+                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="first_tr">
+                                        <th>나의지갑잔액</th>
+                                        <td id="machTotal"></td>
+                                        <td id="btcTotal"></td>
+                                        <td id="ethTotal"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">출금하기</h2>
+                        <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="Withdraw_amount">0<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>MACH</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>코인선택</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" name="coin" onchange="calculate()">
+                                                    <option value="BTC">BTC</option>
+                                                    <option value="ETH">ETH</option>
+                                                    <option value="MACH" selected>MACH</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※MACH 코인으로 출금할 코인선택</span>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th>출금 금액</th>
+                                        <td>
+                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
+                                            <br class="mob_br"><span class="fcrd">※ 아이템 및 자산 거래가 완료된 MACH 금액만 출금 가능</span>
+                                        </td>
+                                    </tr>                  
+                                    <tr>
+                                        <th>자동계산</th>
+                                        <td><em id="calculate">0 MACH = 0 MACH</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap">
+                            <h2 class="tit_mypage dot_tit">결제정보</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>출금 가능 금액</th>
+                                        <td><span id="my_amount">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico minus">-</em> <span id="plus_amount">0 MACH</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>출금 후 출금 가능 금액</th>
+                                        <td><span id="total_amount">0</span></td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmWithdraw">비트베리<br class="mob_br"> 출금요청</button>
+                            </div>                            
+                        </div>
+                        <h2 class="tit_mypage">비트베리 출금 내역</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>출금액</th>
+                                        <th>처리상태</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

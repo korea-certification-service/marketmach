@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
+            <section class="board_sec c_style_sell">
+                <div class="board_tit cf">
+                    <h1>자산거래 판매등록</span></h1>
+                </div>
+
+                <!-- 거래정보 -->
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_etc-sell_register">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><em class="dot_tit">거래정보 등록</em></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>카테고리</th>
+                                <td>
+                                    <div id="virture_h" class="virture_h">
+                                        <select class="selectpicker" id="game-name" data-live-search="true">
+                                        </select>
+                                        <!-- <select class="selectpicker" id="game-server" data-live-search="true">
+                                        </select> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품유형</th>
+                                <td>
+                                    <div class="form-inline radio_wrap">
+                                        <div class="form-group">
+                                            <input type="radio" name="item_type" id="direct" value="direct" checked><label for="direct">직거래</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="radio" name="item_type" id="free_delivery" value="free_delivery"><label for="free_delivery">무료배송</label>
+                                        </div>  
+                                        <div class="form-group">
+                                            <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">착불거래</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>거래제목</th>
+                                <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력" maxlength="50"></td>
+                            </tr>
+                            <tr>
+                                <th>거래가격</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                    </div>
+                                    <p class="fcrd">※ 1MACH = 1$</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품이미지</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <ul class="thumbnail_btn_list cf">
+                                                <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>         
+                            <tr class="mrg_cell">
+                                <td colspan="2">
+                                    <div class="input_wrap">
+                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                        <input type="file" class="input_imgs" id="input_imgs1" index="1"/>
+                                        <input type="file" class="input_imgs" id="input_imgs2" index="2"/>
+                                        <input type="file" class="input_imgs" id="input_imgs3" index="3"/>
+                                        <input type="file" class="input_imgs" id="input_imgs4" index="4"/>
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0"/>
+                                    </div>
+                                    <div id="fullImg"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상세정보</th>
+                                <td>
+                                    <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                </td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>   
+                <!--// 거래정보 -->
+
+                <ul class="fcrd mb50">
+                    <li>※ 입력하신 정보는 구매자가 구매확인 시 전달됩니다.</li>
+                    <li>※ 입력하신 정보의 오 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
+                    <li>※ 게시글에 맞지 않는 양식으로 작성될 경우 관리자에 의해 이동 및 삭제 될 수 있습니다.</li>
+                </ul>
+
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="btnSubmit">등록하기</button>
+                </div>                         
+            </section>
+            <!--// view page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+        var sel_files = []; // 이미지 정보들을 담을 배열
+        
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $("#btnSubmit").on('click', function(){
+                submit();
+            });
+
+            $("#game-name").on('change', function() {
+                selectServer();
+            })
+
+            loadGameList();
+        });
+
+        function loadGameList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var strDOM = '<option value="">선택하세요</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].category1 + '">' + success.data[i].category1 + '</option>'
+                }
+
+                $("#game-name").append(strDOM);
+
+                $("#game-name").selectpicker('refresh');
+                selectServer();
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function selectServer() {
+            var gameName;
+            if ($("#game-name option").val() != null) {
+                $("#game-server option").remove();
+            }
+            gameName = $("#game-name option:selected").val();
+
+            if (gameName == "") {
+                renderServerSelect({"category2":[]});
+                return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories/" + gameName,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+            }).done(function (success) {
+                renderServerSelect(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function renderServerSelect(data) {
+            var strDOM = '<option value="">선택하세요</option>';
+
+            for (var i = 0; i < data.category2.length; i++) {
+                strDOM += '<option value="' + data.category2[i] + '">' + data.category2[i] + '</option>'
+            }
+            $("#game-server").append(strDOM);
+            $("#game-server").selectpicker('refresh');
+        }
+
+        function submit() {
+            var country = "<%= country %>";
+            if ($("#game-name option:selected").val() == "") {
+                alert('카테고리를 선택하세요.');
+                return false
+                /*
+            } else if ($("#game-server option:selected").val() == undefined) {
+                alert('서버명을 선택하세요.');
+                return false;
+                */
+            } else if ($("[name=item_type]:checked").val() == "") {
+                alert('상품유형을 선택하세요.');
+                return false;
+            } else if ($("#title").val() == "") {
+                alert('거래제목을 입력하세요.');
+                return false;
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
+                alert('거래 가격을 입력하세요.');
+                return false;
+            } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                alert('거래 가격(Point)을 입력하세요.');
+                return false;
+            } else if (sel_files.length == 0) {
+                alert('상품 이미지를 업로드 하세요.');
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('거래 가격을 숫자로 입력하세요.');
+                return false;
+            } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
+                alert('거래 가격(Point)을 숫자로 입력하세요.');
+                return false;
+            } else if ($("#desc").val() == "") {
+                alert('상세 정보를 입력하세요.');
+                return false;
+            } else if (country == "CN" && $("#region1").val() == "") {
+                alert('지역 1 입력');
+                return false;
+            } 
+            
+            var data = {
+                "userTag": "<%= userTag %>",
+                "delivery_type": $("[name=item_type]:checked").val(),
+                "trade_type": "sell",
+                "category": "etc",
+                "category1": $("#game-name option:selected").val(),
+                //"category2": $("#game-server option:selected").val(),
+                "category2": "기타",
+                "name": "",
+                "title": $("#title").val(),
+                "desc": $("#desc").val(),
+                "count": 1,
+                "status": 0,
+                // "item_tag": $("#keywords").val(),
+                "clicked": 0
+            };
+            if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
+                data["price"] = $("#price").val();
+            } else {
+                data["cryptoCurrencyCode"] = "MACH";
+                data["price"] = 0;
+            }
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                data["currency"]="POINT";
+                data["point"]=0;
+            }
+
+            if(country=="CN"){
+                data["china_region1"]=$("#region1").val();
+                //data["china_region2"]=$("#region2").val();
+            }
+
+            //console.log(data);
+            // console.log($("#ex_filename")[0].files[0]);
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/items",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                submitAction(success.data._id);
+                
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner
+            })
+        }
+    
+        function submitAction(id) {
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
+            var images = new FormData();
+    
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image";
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+            }
+            //console.log(images);
+            //ajax 처리
+            $.ajax({
+                method: "POST",
+                url: "/v1/items/"+id+"/images",
+                processData: false,
+                contentType: false,
+                data: images
+            }).done(function (success) {
+                //console.log(success);
+                $("#ajaxSpiner").hide(); // spinner
+                location.href = '/etc-sells?category=etc&trade_type=sell';
+            }).fail(function (fail) {
+                console.log('실패',fail);
+                $("#ajaxSpiner").hide(); // spinner
+            })
+        }
+    </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'register'}) %>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

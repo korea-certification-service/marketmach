@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var pageIdx = "<%=pageIdx%>";
+        var pageIdx = "<%=pageIdx%>";
+        var category = "<%=category%>";
+        var item_title =  "<%=item_title%>";
+        
+        $(document).ready(function(){
+            if(category == "") {
+                category = "game";
+            }
+
+            if(category == "game") {
+                $('#myItemTitle').text("게임 아이템");
+                $('#table_category').text('게임>서버')
+            } else if(category == "otc") {
+                $('#myItemTitle').text("OTC");
+                $('#table_category').text('카테고리')
+            } else {
+                $('#myItemTitle').text("자산 거래");
+                $('#table_category').text('카테고리')
+            }
+            $("#"+category).prop('checked', true);
+            getItemList();
+            $('#item_title').val(item_title);
+
+            $("input[name=category]").on('click', function() {
+                category = $("[name=category]:checked").val();
+                if(category == "game") {
+                    $('#myItemTitle').text("게임 아이템");
+                    $('#table_category').text('게임>서버')
+                } else if(category == "otc") {
+                    $('#myItemTitle').text("OTC");
+                    $('#table_category').text('카테고리')
+                } else {
+                    $('#myItemTitle').text("자산 거래");
+                    $('#table_category').text('카테고리')
+                }
+                getItemList();
+            });
+
+            $('#item_title').on("keyup", function(e) {
+                item_title = $("#item_title").val();
+                if(e.keyCode === 13){
+                    getItemList();
+                }
+            });
+
+            $("#btn_search").on("click", function(e) {
+                getItemList();
+            });
+        });
+
+        function getItemList() {
+            var param = "?category=" + category;
+            if(pageIdx != undefined) {
+                param += "&pageIdx=" + pageIdx;
+            }
+
+            if(item_title != "") {
+                param += "&item_title=" + encodeURIComponent(item_title);
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/vtrs/cancel/" + userId + param
+            }).done(function (success) {
+                console.log(success.data);
+                var buyList = success.data.list;
+                var result = "";
+                if(buyList.length == 0) {
+                    result = "<tr><td colspan='5'>취소된 내역이 없습니다.</td><tr>";
+                }
+                for(var i=0; i< buyList.length; i++) {
+                    var itemId = buyList[i].item._id;
+                    var regDate = buyList[i].regDate.substring(2, 10);
+                    var category = buyList[i].item.game_name + '>' + buyList[i].item.game_server;
+                    var item_type = getItemType(buyList[i].item.type);
+                    if(buyList[i].item.game_name == undefined) {
+                        category = buyList[i].item.category1  == undefined ? '-' : buyList[i].item.category1 + '>' + buyList[i].item.category2;
+                        item_type = getDelivery(buyList[i].item.delivery_type == undefined ? "direct" : buyList[i].item.delivery_type);
+                    }
+
+                    if(buyList[i].item.category == "otc") {
+                        category = "OTC";
+                    }
+                    
+                    var title = buyList[i].item.title;
+                    var cryptoCurrencyCode = buyList[i].item.cryptoCurrencyCode == undefined ? "MACH" : buyList[i].item.cryptoCurrencyCode;
+                    var price = numberWithCommas(buyList[i].item.price);
+                    var point = numberWithCommas(buyList[i].item.point);
+                    var status = "취소완료";
+                    var refund = buyList[i].refund == true ? "(환불)" : "";
+                    var money = point + ' Point';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + ' ' + cryptoCurrencyCode;
+                    }
+                    var ico_item = "";
+                    if(buyList[i].item.type == "item") {
+                        ico_item = "ico_item";
+                    }
+                    
+                    result += '<tr>' + 
+                                '<td>'+category+'</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd '+ico_item+'">'+item_type.text+'</span>' + 
+                                    '<div class="ellipse">' + title +
+                                    '</div>' + 
+                                '</td>' + 
+                                '<td>'+money+'</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd">'+status + '<br>' + refund + '</span>' + 
+                                '</td>' + 
+                                '<td>'+regDate+'</td>' + 
+                            '</tr>';
+                }
+
+                $('#cancel_list').html(result);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+            // var result = "<tr><td colspan='5'>서비스 준비 중입니다.</td><tr>";
+            // $('#cancel_list').html(result);
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/myPages/cancel/list?category='+category+'&item_title='+item_title+'&pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">취소관리</h1>
+                        <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">거래유형</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="category" id="game" value="game"><label for="game">게임아이템</label>
+                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">자산거래</label>
+                                        <input type="radio" name="category" id="otc" value="otc"><label for="otc">OTC거래</label>
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                                    <div class="col-sm-10 col-xs-12">
+                                        <div class="w100p-120px">
+                                            <input type="text" class="form-control" id="item_title">
+                                        </div>
+                                        <div class="mob_100p_tar">
+                                            <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="table_wrap table-responsive">
+                            <h2 class="tit_mypage" id="myItemTitle">전체</h2>
+                            <table class="table_list has_game_icon table">
+                                <colgroup class="colgroup_mycancellist">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th id="table_category">게임>서버</th>
+                                        <th>제목</th>
+                                        <th>거래가격</th>
+                                        <th>거래상태</th>
+                                        <th>등록일</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cancel_list">
+                                                              
+                                </tbody>
+                            </table>                 
+                        </div>
+                        <div class="paging_wrap">
+                            <!-- <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button> -->
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+   
+   </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

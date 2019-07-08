@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+        });
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>이미 가입된 회원입니다.</h1>
+                <ul class="existence_box">
+                    <li><em>아이디 : </em><span class="fcrd"><%=userTag%></span></li>
+                    <li><em>가입일 : </em><span><%=regDate%></span></li>
+                </ul>    
+                <p class="p_join">※ 현재 MACH 서비스에 가입되어 있습니다.</p>
+                <p class="p_join">※ 비밀번호를 알 수 없다면 하단 <em class="fcrd">[비밀번호 찾기]</em>를 이용하세요</p>
+                <p class="p_join">※ 본인이 가입하지 않았거나, 개인정보 도용이 의심된다면 <em class="fcrd">[고객센터 1899-8696]</em>로 문의 바랍니다.</p>
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" onclick="location.href='/login';">로그인</button>
+                    <button class="btn btn_in_view2" onclick="location.href='/findPassword';">비밀번호 찾기</button>
+                </div> 
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body> 

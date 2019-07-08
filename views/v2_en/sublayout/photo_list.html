@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+    <script>
+    //document.querySelector("#btnInfoBox").click();
+    </script>
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- list page-->
+            <section class="board_sec">
+                <div class="board_tit cf">
+                    <h1>팝니다<span>전체 게임</span></h1>
+                    <button class="btn btn-success">판매등록</button>
+                </div>
+                <div class="search_filter">
+                    <ul class="">
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">상품유형</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <input type="checkbox" name="" id=""><label for="">아이템</label>
+                                <input type="checkbox" name="" id=""><label for="">게임머니</label>
+                                <input type="checkbox" name="" id=""><label for="">기타</label>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <input type="checkbox" name="" id=""><label for="">거래가능</label>
+                                <input type="checkbox" name="" id=""><label for="">거래중</label>
+                                <input type="checkbox" name="" id=""><label for="">거래완료</label>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <div class="check_filter col-sm-10 col-xs-12">
+                                <input type="text" class="form-control">
+                            </div>
+                        </li>
+                        <li class="tar">
+                            <input type="button" class="btn btn-primary" value="검색">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="photo_list">
+                    <ul>
+                        <li class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <%# class명 step + [거래가능: 1, 거래중: 2, 거래완료:3] %>
+                                    <em class="ico_trade state_possible step1">거래가능</em>
+                                    <%# class명 deli + [직거래:1 무료배송: 2, 착불거래: 3] %>
+                                    <em class="ico_trade state_step deli1">직거래</em>
+                                    <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step2">거래중</em>
+                                    <em class="ico_trade state_step deli2">무료배송</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step3">거래완료</em>
+                                    <em class="ico_trade state_step deli3">착불거래</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step1">거래가능</em>
+                                    <em class="ico_trade state_step deli1">직거래</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <%# class명 step + [거래가능: 1, 거래중: 2, 거래완료:3] %>
+                                    <em class="ico_trade state_possible step1">거래가능</em>
+                                    <%# class명 deli + [직거래:1 무료배송: 2, 착불거래: 3] %>
+                                    <em class="ico_trade state_step deli1">직거래</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step2">거래중</em>
+                                    <em class="ico_trade state_step deli2">무료배송</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step3">거래완료</em>
+                                    <em class="ico_trade state_step deli3">착불거래</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="img_list_box">
+                                    <em class="ico_trade state_possible step1">거래가능</em>
+                                    <em class="ico_trade state_step deli1">직거래</em>
+                                    <div class="photo_frame">
+                                        <img src="/static/img/main/@test_macbook.jpg" alt="">
+                                    </div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse">맥북 프로 레티나 디스플레이 2015 급처분합니다. 빠른 거래 원합니다. 연락주세요</div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1200.25 <span>MACH</span></div>
+                                            <div class="time_txt">1분전</div>  
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <!--// list page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body>        
