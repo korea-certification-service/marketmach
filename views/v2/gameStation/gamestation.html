@@ -3,6 +3,24 @@
 <head>
     <% include ../include/head.html %>
 </head>
+<script>
+     var userId = "<%=userId%>";
+     $(document).ready(function() {
+        getUesrGameInfo();
+     });
+
+     function getUesrGameInfo() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/gameCenter/"+userId+"/info"
+        }).done(function (success) {
+            console.log(success.data);
+            $("#mcs1_coin").text(success.data.total_mcs1_coin);
+        }).fail(function (fail) {
+            console.log(fail);
+        })
+     }
+</script>
 <body>
 <div id="wrap" class="wrap">
     <!-- header -->
@@ -23,12 +41,12 @@
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec gameStation_gamestation">
                         <article class="gameStation_article">
-                            <h1 class="gameStation_title">마하어드벤쳐</h1>
+                            <h1 class="gameStation_title">MACH Adventure</h1>
                             <div class="gameStation_contents">
-                                <img src="" alt="마하어드벤쳐 이미지">
+                                <img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/gamestation/MACH_Adventure.png" alt="마하어드벤쳐 이미지">
                                 <br>
                                 <em>보관중인 몽키코인</em>
-                                <p><img src="" alt="코인이미지"/><span>10,213</span></p>
+                                <p><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/gamestation/monkey_coin.png" alt="코인이미지"/><span id="mcs1_coin">0</span></p>
                             </div>
                             <div class="gameStation_store">
                                 <a href="https://itunes.apple.com/kr/app/mach-adventure/id1465065764?mt=8">
