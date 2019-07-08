@@ -47,15 +47,16 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain
         });
     } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
-        });
+        res.redirect("/agreement");
+        // res.render('v2_en/main/index', {
+        //     title: 'Bitweb Main',
+        //     userId: req.session.userId,userTag:req.session.userTag,
+        //     coinId: req.session.coinId,
+        //     pointId: req.session.pointId,
+        //     authPhone: req.session.authPhone,
+        //     usePoint:dbconfig.usePoint,
+        //     useBlockchain:dbconfig.useBlockchain
+        // });
     }
 
     // res.render('v2/error/coming_soon', {
