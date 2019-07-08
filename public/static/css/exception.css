@@ -102,6 +102,11 @@
 .find_info_sec .find_info_box .table{margin-top: 20px;}
 .find_info_sec .find_info_box .table th{border: none;}
 .find_info_sec .find_info_box .table td{border: none;}
+/*회원정보 관리 휴대폰 인증*/
+.set_margin { font-size: 0; }
+.set_margin > .dropdown.bootstrap-select { width: 31% !important; margin-right: 1%; }
+.set_margin > .form-control { width: 31%; margin-right: 1%; }
+.w100p-120px { margin-right: 1%; }
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
@@ -120,6 +125,14 @@
 @media (max-width: 576px){
     .header.member_header h1{width: 100%;}
     .join_sec .join_box > dd li .flt_box:nth-child(1){margin-bottom: 5px; width: 100%;}
+    .set_margin > .dropdown.bootstrap-select { width: 48% !important; }
+    .set_margin > .form-control.w60p { width: 49%; }
+    .btn.btn-default { margin-top: 20px; }
+    .set_margin > .btn.btn_in_view1 { margin-top: 20px; }
+}
+@media (max-width: 529px) {
+    .set_margin > .dropdown.bootstrap-select { width: 100% !important; }
+    .set_margin > .form-control.w60p { width: 100%; margin-top: 20px; }
 }
 @media (max-width: 375px) and (min-width: 320px){
     .submit_ctc_code .custom-select.w30p { width: 30%; }

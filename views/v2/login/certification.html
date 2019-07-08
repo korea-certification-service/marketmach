@@ -59,13 +59,20 @@
         }
 
         function sendAuthNo() {
+            var phoneNo = $("#phone").val();
+            var countryCode = $("#currencyType").val().replace('+','');
+
             if($("#currencyType").val() == "") {
                 alert("거래국가를 선택하세요.");
                 return;
             } else if($("#phone").val() == "") {
                 alert("전화번호를 입력하세요.");
                 return;
+            } else if(phoneNo.replace('+','').substr(0,countryCode.length) == countryCode) {
+                alert("국가번호를 제외한 전화번호를 입력하세요.");
+                return;
             }
+            
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
@@ -86,6 +93,7 @@
                 $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
                 console.log(fail);
+                alert("전송중 문제가 발생하였습니다. 전화번호가 올바르게 입력되었는지 확인하시기 바랍니다.\n 문제가 계속 발생될 경우 관리자에게 문의하세요.");
             })
         }
 

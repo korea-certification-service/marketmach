@@ -72,7 +72,7 @@
 
 .srch_module {float: left; margin-top: 26px; width: calc(100% - 360px); position: relative; }
 .srch_module .ipt_search_bar{float: left; padding-left: 10px; width: calc(100% - 150px); height: 50px; border: none; border-bottom: 3px solid #0a73b8; border-left: none; font-weight: bold; }
-.srch_module .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: transparent url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 16.5px 15px; border: none; border-bottom: 3px solid #0a73b8; }
+.srch_module .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: transparent url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 20px 20px; border: none; border-bottom: 3px solid #0a73b8; }
 
 @media (max-width: 767px) {
     .srch_module { width: 100%; float: none; margin-top: 0; }
