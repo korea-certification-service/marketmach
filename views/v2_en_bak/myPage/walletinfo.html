@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+
+        $(document).ready(function() {
+            if(bitberry_token != undefined && bitberry_token != "") {
+                $('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+            }
+
+            $('#deposit').on('click', function(){
+                location.href = '/mypages/wallet/deposit';
+            });
+
+            $('#withdraw').on('click', function(){
+                location.href = '/mypages/wallet/withdraw';
+            });
+
+            getCoin();
+            getCoinHistory('deposit');
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                if (success.data.total_mach != null) {
+                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                } else {
+                    $("#mach").html("0<span>MACH</span>");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoinHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type
+            }).done(function (success) {
+                //console.log(success.data);
+                var coinHistorys = success.data;
+                var result = ""
+                if(coinHistorys.length == 0) {
+                    result = "<tr><td colspan='4'>No exist.</td></tr>";
+                }
+
+                for(var i=0;i<coinHistorys.length;i++) {
+                    var amount = numberWithCommas(coinHistorys[i].amount);
+                    var currency_code = coinHistorys[i].currencyCode;
+                    var mach = numberWithCommas(coinHistorys[i].mach);
+                    var status = coinHistorys[i].status;
+                    var regDate = coinHistorys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em><span class="arw_txt">>>></span><em class="fc3">'+mach+'<span>MACH</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+
+                if(trade_type == 'deposit') {
+                    $('#mach_sell').removeClass('on');
+                    $('#mach_buy').addClass('on');
+                } else {
+                    $('#mach_buy').removeClass('on');
+                    $('#mach_sell').addClass('on');
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Wallet <span>information</span></h1>
+                        <div class="bitberry_switch_box">
+                            <div class="bitberry_switch">
+                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
+                                <a href="/myPages/wallet/connect">
+                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                    <p>OFF</p>
+                                </a>
+                            </div>
+                            <em>MY Wallet Balance</em>
+                            <p class="fc3" id="mach">100 <span>MACH</span></p>
+                        </div>
+                        <div class="btn_align_c mb50">
+                            <button class="btn bgc1" id="deposit">Deposit MACH</button>
+                            <button class="btn bgc3" id="withdraw">Withdraw MACH</button>
+                        </div>
+
+                        <div class="tab_board cf">
+                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('deposit');">Deposit Statement</a></li>
+                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">Withdrawal Statement</a></li>
+                        </div>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup class="colgroup_walletinfo">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Wallet</th>
+                                        <th>Statement</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                    <!-- <tr>
+                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
+                                        </td>
+                                        <td>출금대기</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>         
+                                    <tr>
+                                        <td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>
+                                        <td class="td_exchange_coin">
+                                            <em class="fc2">100<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">25<span>ETH</span></em>
+                                        </td>
+                                        <td>출금완료</td>
+                                        <td>2019-03-22 19:42</td>
+                                    </tr>          -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

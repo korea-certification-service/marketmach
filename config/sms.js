@@ -9,6 +9,7 @@ module.exports = {
     },
     authSms: {
         KR: "[MarketMACH]휴대폰인증코드입니다.\n",
-        CN: "[MarketMACH]휴대폰인증코드입니다.\n"
+        CN: "[MarketMACH]휴대폰인증코드입니다.\n",
+        EN: "MarketMACH-The Authentication Code.\n"
     }
 };

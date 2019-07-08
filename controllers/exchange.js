@@ -47,7 +47,7 @@ function deposit(country, data) {
                                             "point":data.amount,
                                             "rate":data.rate,
                                             "fee": dbconfig.fee.exchange.deposit,
-                                            "status": true,
+                                            "status": "success",
                                             "regDate": util.formatDate(new Date().toString())
                                         }
                                         bitwebPointHistory.createPointHistory(pointHisory);
@@ -57,7 +57,7 @@ function deposit(country, data) {
                                             "extType": "mach",
                                             "coinId": user._doc.coinId,
                                             "category": "exchange-deposit",          
-                                            "status": true,
+                                            "status": "success",
                                             "currencyCode": "MACH",
                                             "amountCurrency": "POINT",
                                             "amount": data.amount,

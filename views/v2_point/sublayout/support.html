@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">나의 센터</h1>
+                        <div class="support_main_info cf">
+                            <div class="lft_area">
+                                <div class="inner_area">
+                                    <h2>거래 이의신청</h2>
+                                    <p>거래에 문제가 있으시면 이용하세요.</p>
+                                    <a class="btn btn-success" href="">거래 이의신청</a>
+                                    <a class="btn btn-success" href="">거래 이의내역</a>
+                                </div>
+                            </div>
+                            <div class="rgh_area">
+                                <div class="inner_area">
+                                    <h2>1:1 문의</h2>
+                                    <p>이용중에 궁금한게 있으시면 이용하세요.</p>
+                                    <a class="btn btn-success" href="">문의하기</a>
+                                    <a class="btn btn-success" href="">나의 문의내역</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_support"><a href="">공지사항</a></h2>
+                        <div class="table_wrap table-responsive mb_lrg">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>분류</th>
+                                        <th>제목</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>         
+                                </tbody>
+                            </table>
+                        </div>                        
+                        
+                        <h2 class="tit_support"><a href="">진행중인 이벤트</a></h2>
+                        <div class="event_list_area">
+                            <p class="fcrd tac">진행중인 이벤트가 없습니다.</p>
+                        </div>
+                    </section>
+                    <!--// support -->
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">공지사항</h1>
+                        <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">유 형</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="" id=""><label for="">전체</label>
+                                        <input type="radio" name="" id=""><label for="">안내</label>
+                                        <br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">점검</label>
+                                        <input type="radio" name="" id=""><label for="">이벤트</label>
+                                    </div>
+                                </li>
+                                <li class="row" style="display: none">
+                                    <h2 class="col-sm-2 col-xs-12">검 색</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <div class="w100p-120px">
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                        <br class="mob_br">
+                                        <button class="btn btn-primary">검색</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>분류</th>
+                                        <th>제목</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>         
+                                    <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>        
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="paging_wrap">
+                            <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button>
+                        </div>
+
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">공지사항</h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">날짜</th>
+                                        <td>2019-03-26</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">제목</th>
+                                        <td>점검 2019년 3월 30일 Mach거래소 오픈!!</td>
+                                    </tr>
+                                    <tr class="merge_th">
+                                        <th class="fc2">내용</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="support_notice_content">
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tar">
+                            <a href="" class="btn btn-default">목록</a>
+                        </div>
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">이벤트</h1>
+                        <div class="tab_board cf">
+                            <li class="on"><a href="">진행중인 이벤트</a></li>
+                            <li><a href="">지난 이벤트</a></li>
+                        </div>
+                        <div class="tac">
+                            <div class="mb50"></div>
+                            <p class="fcrd tac">진행중인 이벤트가 없습니다.</p>
+                        </div>
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">FAQ</h1>
+                        <div class="slide_board" id="supportFaq">
+                            <ul class="table_ul">
+                                <li>
+                                    <dl>
+                                        <dt class="cf">
+                                            <div class="tgtTit b_num">1</div>
+                                            <div class="tgtTit b_fld">회원정보</div>
+                                            <div class="tgtTit b_tit">회원 정보를 수정하고 싶어요.</div>
+                                        </dt>
+                                        <dd class="faqContent">
+                                            회원가입시 입력하신 정보는 'My Page > 나의 정보' 페이지에서 확인 및 수정이 가능합니다.
+                                            이메일 주소를 수정하신 경우 새로 입력하신 이메일 주소로 회원인증 메일을 다시 발송해 드리오니, 이메일 인증 후에 서비스를 이용하시기 바랍니다.
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt class="cf">
+                                            <div class="tgtTit b_num">1</div>
+                                            <div class="tgtTit b_fld">회원정보</div>
+                                            <div class="tgtTit b_tit">회원 정보를 수정하고 싶어요.</div>
+                                        </dt>
+                                        <dd class="faqContent">
+                                            회원가입시 입력하신 정보는 'My Page > 나의 정보' 페이지에서 확인 및 수정이 가능합니다.
+                                            이메일 주소를 수정하신 경우 새로 입력하신 이메일 주소로 회원인증 메일을 다시 발송해 드리오니, 이메일 인증 후에 서비스를 이용하시기 바랍니다.
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt class="cf">
+                                            <div class="tgtTit b_num">1</div>
+                                            <div class="tgtTit b_fld">회원정보</div>
+                                            <div class="tgtTit b_tit">회원 정보를 수정하고 싶어요.</div>
+                                        </dt>
+                                        <dd class="faqContent">
+                                            회원가입시 입력하신 정보는 'My Page > 나의 정보' 페이지에서 확인 및 수정이 가능합니다.
+                                            이메일 주소를 수정하신 경우 새로 입력하신 이메일 주소로 회원인증 메일을 다시 발송해 드리오니, 이메일 인증 후에 서비스를 이용하시기 바랍니다.
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt class="cf">
+                                            <div class="tgtTit b_num">1</div>
+                                            <div class="tgtTit b_fld">회원정보</div>
+                                            <div class="tgtTit b_tit">회원 정보를 수정하고 싶어요.</div>
+                                        </dt>
+                                        <dd class="faqContent">
+                                            회원가입시 입력하신 정보는 'My Page > 나의 정보' 페이지에서 확인 및 수정이 가능합니다.
+                                            이메일 주소를 수정하신 경우 새로 입력하신 이메일 주소로 회원인증 메일을 다시 발송해 드리오니, 이메일 인증 후에 서비스를 이용하시기 바랍니다.
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">거래 이의관리 <span>거래 이의신청</span></h1>
+                        <div class="prepare_service">
+                            서비스 준비 중입니다.
+                        </div>                        
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">거래 이의관리 <span>거래 이의내역</span></h1>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_dispute">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>이의거래</th>
+                                        <th>상황</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                               이의를 제기합니다.이의를 제기합니다.이의를 제기합니다.이의를 제기합니다.이의를 제기합니다.이의를 제기합니다.
+                                            </div>
+                                        </td>
+                                        <!-- 클래스명 A인경우 : ico_a -->
+                                        <td class="ico_q">Q</td>
+                                        <td>2015.03.12</td>
+                                    </tr>        
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tac" style="display:none">
+                            <div class="mb50"></div>
+                            <p class="fcrd tac">진행중인 이벤트가 없습니다.</p>
+                        </div>                     
+                    </section>
+
+ <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">공지사항</h1>
+                        <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">유 형</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="" id=""><label for="">전체</label>
+                                        <input type="radio" name="" id=""><label for="">안내</label>
+                                        <br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">점검</label>
+                                        <input type="radio" name="" id=""><label for="">이벤트</label>
+                                    </div>
+                                </li>
+                                <li class="row" style="display: none">
+                                    <h2 class="col-sm-2 col-xs-12">검 색</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <div class="w100p-120px">
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                        <br class="mob_br">
+                                        <button class="btn btn-primary">검색</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>분류</th>
+                                        <th>제목</th>
+                                        <th>날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>         
+                                    <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>        
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="paging_wrap">
+                            <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button>
+                        </div>
+
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">거래 이의관리 <span>이의신청</span></h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">거래검색</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">거래번호</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">거래제목</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">이의내용</th>
+                                        <td>
+                                            <textarea name="" id="" class="form-control" style="height: 200px">aaaa</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr class="mrg_cell trForDel">
+                                        <td colspan="2">
+                                            <div id="fullImg">
+                                                <img src="/static/img/main/main_visual02.jpg">
+                                            </div>
+                                            <div class="input_wrap">
+                                                <button class="btn btn-primary" onclick="fileUploadAction();">이미지 선택</button>
+                                                <input type="file" id="input_imgs" multiple="">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="trForDel">
+                                        <th class="fc2">첨부 이미지</th>
+                                        <td>
+                                            <div class="product_img_list">
+                                                <div class="imgs_wrap">
+                                                    <!--
+                                                    <div class="thumbnail_box">
+                                                        <div class="img_view_area">
+                                                            <img src="/static/img/main/main_visual02.jpg">
+                                                        </div>
+                                                        <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
+                                                    </div>
+                                                    -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="">이의신청</button>
+                        </div>
+                    </section>
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">거래 이의관리 <span>이의내역</span></h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">날짜</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">거래번호</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">거래내용</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="merge_th">
+                                        <th class="fc2">이의내용</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <pre class="support_notice_content">
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                            </pre>
+                                        </td>
+                                    </tr>
+                                    <tr class="merge_th">
+                                        <th class="fc2">답변</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <pre class="support_notice_content">
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                                aaaa<br>
+                                            </pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tar">
+                            <button class="btn btn_go_list" onclick="history.back();">목록</button>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

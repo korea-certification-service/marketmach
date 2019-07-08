@@ -47,15 +47,16 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain
         });
     } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
-        });
+        res.redirect("/agreement");
+        // res.render('v2_en/main/index', {
+        //     title: 'Bitweb Main',
+        //     userId: req.session.userId,userTag:req.session.userTag,
+        //     coinId: req.session.coinId,
+        //     pointId: req.session.pointId,
+        //     authPhone: req.session.authPhone,
+        //     usePoint:dbconfig.usePoint,
+        //     useBlockchain:dbconfig.useBlockchain
+        // });
     }
 
     // res.render('v2/error/coming_soon', {
@@ -125,15 +126,16 @@ router.get('/main', function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain
         });
     } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
-        });
+        res.redirect("/agreement");
+        // res.render('v2_en/main/index', {
+        //     title: 'Bitweb Main',
+        //     userId: req.session.userId,userTag:req.session.userTag,
+        //     coinId: req.session.coinId,
+        //     pointId: req.session.pointId,
+        //     authPhone: req.session.authPhone,
+        //     usePoint:dbconfig.usePoint,
+        //     useBlockchain:dbconfig.useBlockchain
+        // });
     }
 
     // res.render('v2/error/coming_soon', {
@@ -244,6 +246,14 @@ router.get('/agreement', function (req, res, next) {
     }
 });
 
+router.get('/certification', function (req, res, next) {
+    if(dbconfig.country =="KR") {
+        res.render('v2/login/certification');
+    } else {
+        res.render('v2_en/login/certification');
+    }
+});
+
 router.get('/signup', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -258,6 +268,7 @@ router.get('/signup', function (req, res, next) {
         commId: req.session.commid,
         foreigner: req.session.foreigner,
         total_mach: dbconfig.bonus.signup,
+        countryCode: req.session.countryCode,
         recommander: req.session.recommander,
         pushMarketing: false
     };
@@ -270,7 +281,7 @@ router.get('/signup', function (req, res, next) {
         res.redirect('/agreement');
         next();
     } else {
-        controllerUsers.getByPhone(data.country, data.phone) 
+        controllerUsers.getByPhone(data.country, data.phone + "$") 
         .then((user) => {
             if(user == null) {
                 // 블랙리스트 명단에 있는지 체크

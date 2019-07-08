@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
+            <section class="board_sec c_style_sell">
+                <div class="board_tit cf">
+                    <h1>Sell Game Items <span>VTR Transaction</span></h1>
+                </div>
+
+                <!-- 상품정보 : 이미지 업로드 UI 포함 -->
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_sell_vtr">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    <span class="dot_tit">Listing Details</span>
+                                    <span class="posting_date"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>     
+                            <tr>
+                                <th>Transaction No.</th>
+                                <td><span class="item_id"></span></td>
+                            </tr>                      
+                            <tr>
+                                <th>Game > Server</th>
+                                <td><span class="item_game_server"></span><span class="item_type"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td>
+                                    <div class="ellipse item_title">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><span class="item_status"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Character's Name</th>
+                                <td><span class="item_character"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Price(MACH)</th>
+                                <td><p class="txt_price"></p></td>
+                            </tr>
+                            <tr>
+                                <th>Price(Currency)</th>
+                                <td><p class="txt_price txt_point"></p></td>
+                            </tr>
+                            <tr class="mrg_cell trForDel">
+                                <td colspan="2">
+                                    <div id="fullImg"></div>
+                                </td>
+                            </tr>
+                            <tr class="trForDel">
+                                <th>Image</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>
+                                    <span class="item_desc">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--// 상품정보 : 이미지 업로드 UI 포함 -->
+
+                <!-- 내 정보 입력 -->
+                <div class="table_wrap table-responsive preparation_dim">
+                    <!-- 서비스준비중입니다 : 부모클래스 preparation_dim 필요 -->
+                    <table class="table_view table">
+                        <colgroup class="colgroup_sell_vtr">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><em class="dot_tit">My Contacts</em></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>Phone</th>
+                                <td><span class="item_phone"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Character's Name</th>
+                                <td><input type="text" class="form-control" id="buyer_game_character" placeholder="Please enter your game character's name to trade the item."></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="highligh_list fcrd">
+                    <li>※ The information you enter will be passed on to your trading partner upon confirmation of purchase.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
+                </ul>              
+                <!--// 내 정보 입력 -->
+                <!-- 회색테이블 -->
+                <div class="table_wrap">
+                    <table class="grey_table table_view table">
+                        <colgroup class="colgroup_sell_vtr">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><em class="dot_tit">My Wallet</em></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>My Wallet Balance</th>
+                                <td><p class="item_user_price"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="highligh_list fcrd">
+                    <li>※ You can not pay if your wallet balance(MACH) is less than the transaction price.</li>
+                    <li>※ You can deposit MACH from [MACH Deposit] button or [My Page - My Wallet].</li>
+                </ul>
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view2" onclick="openVtrInfo()">About VTR</button>
+                    <button class="btn btn_in_view1" id="btnSubmit">Enter VTR</button>
+                </div>
+                <!--// 회색테이블 -->
+            </section>
+            <!--// view page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+
+        var userTag = "<%= userTag %>";
+        var country = "<%= country %>";
+        var itemId = "<%= id %>";
+        var n_status;
+        var from_userTag;
+        var mach;
+        var total_mach;
+    
+        $(document).ready(function() {
+            //$("#input_imgs").on("change", handleImgFileSelect);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            getData();
+
+            $("#btnSubmit").on('click', function() {
+                openVTR();
+            });
+        });
+
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/service/" + itemId
+            }).done(function (success) {
+                //console.log(success);
+                
+                itemId = success.data._id;
+                var currencyType = success.data.currency == undefined ? "" : success.data.currency;
+                var regDate = success.data.regDate;
+                var item_game_server = success.data.game_name + ' > ' + success.data.game_server;
+                var title = success.data.title;
+                mach = success.data.price;
+                total_mach = success.data.total_mach;
+                var price = numberWithCommas(mach);
+                var item_user_price = numberWithCommas(total_mach);
+                var point = numberWithCommas(success.data.point);
+                n_status = success.data.status;
+                var status = getStatus(success.data.status);
+                var item_type = getItemType(success.data.type);
+                var trade_type = replaceType(success.data.trade_type);
+                var desc = replaceDesc(success.data.desc);
+                var game_character = success.data.game_character;
+                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                var item_phone = success.data.phone;
+                from_userTag = success.data.userTag;
+
+                if(success.data.images.length === 0) {
+                    $(".trForDel").remove();
+                }
+
+                for(var i=0;i<success.data.images.length; i++) {
+                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                                html += '<div class="img_view_area">';
+                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                                html += '</div>';
+                                html += '</div>';
+                                                    
+                    $(".imgs_wrap").append(html);
+                }
+                
+                $(".view_emphasis").text(item_type.text);
+                $(".posting_date").text("Date : " + regDate);
+                $(".item_title").text(title);
+                $(".item_game_server").text(item_game_server);
+                $(".item_type").addClass(item_type.className);
+                $(".item_id").text(itemId);
+                $(".txt_price").html(price + "<span>MACH</span>");
+                $(".txt_point").html(point + "<span>"+currencyType+"</span>");
+                $(".item_desc").html(desc);
+                $("#fullImg").html(img1th);
+                $(".item_phone").text(item_phone);
+                $(".item_user_price").html(item_user_price + "<span class='fzsm'>MACH</span>");
+                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>MACH</span>");
+                $(".user_price_balance").text(numberWithCommas(total_mach - mach) + "<span class='fzsm'>MACH</span>");
+                $(".item_status").addClass(status.className).text(status.text);
+                $(".item_character").text(game_character);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function openVTR() {
+            if($("#buyer_game_character").val() == "") {
+                alert("Please enter your game character's name to trade the item.");
+                return;
+            }
+
+            var url = "/v1/items/check/coin/" + itemId;
+            var popup;
+
+            if(mach == 0) {
+                alert('MACH 금액이 0인 거래는 거래 신청을 할 수 없습니다.');
+                return;
+            }
+
+            if(total_mach == 0) {
+                alert('구매자의 MACH 금액이 0인 거래는 거래 신청을 할 수 없습니다.');
+                return;
+            }
+
+            var confirmYn = confirm('현재 오픈베타 버전이어서 거래취소 기능은 제공하지 않습니다.\n 거래 취소 시 서비스에서 취소를 할 수 있지만 취소 후 VTR 재 입장시 기능이 정상적으로 동작하지 않을 수 있습니다.\nVTR에 접속하시겠습니까?');
+
+            if(confirmYn) {
+                roomToken = makeToken1();
+                if (isMobile()) {
+                    popup = window.open('about:blank', "room" + roomToken);
+                }
+
+                var body = {
+                    "user_id": userTag,
+                    "roomToken": roomToken,
+                    "buyer_id": userTag,
+                    "seller_id": from_userTag,
+                    "status": 50,
+                    "cmod": "deal",
+                    "game_character":$("#buyer_game_character").val()
+                };
+
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/items/updateStatus/" + itemId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(body),
+                }).done(function (data) {
+                    console.log(data);
+                    if(isMobile()) {
+                        popup.location.href = data.data;
+                    } else {
+                        window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
+                            '                                    location=no,\n' +
+                            '                                    status=no,\n' +
+                            '                                    menubar=no,\n' +
+                            '                                    scrollbars=yes,\n' +
+                            '                                    resizable=yes,\n' +
+                            '                                    width=550,\n' +
+                            '                                    height=750');
+                    }
+                    location.href = "/sells/detail/" + itemId;
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+    </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

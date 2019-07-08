@@ -6,6 +6,7 @@
         var checkUserTagYn = false;
         var checkEmailYn = false;
         var total_mach = "<%=total_mach%>";
+        var countryCode = "<%=countryCode%>";
 
         $(document).ready(function() {
             $('.menu_login').css('display', 'inline-block');
@@ -31,13 +32,13 @@
 
         function checkUserTag() {
             if($("input[name=id]").val() == "") {
-                alert("enter your id");
+                alert("Please input the ID.");
                 return;
             }
 
             var valid = checkStrNum($("input[name=id]").val());
             if(!valid) {
-                alert("The ID must be between 6 and 20 alphanumeric characters starting with an alphabetic character.");
+                alert("The ID have to be 6 ~ 20 lowercase letters or numbers.");
                 return;
             }
 
@@ -47,17 +48,17 @@
             }).done(function (success) {
                 //console.log("success : ", success);
                 checkUserTagYn = true;
-                alert('ID is available.');
+                alert('This ID is available.');
             }).fail(function (fail) {
                 if (fail.status == 403) {
-                    alert('ID is already in use');
+                    alert('This ID is already in use.');
                 }
             });
         }
 
         function checkEmail() {
             if($("input[name=email]").val() == "") {
-                alert("enter your email");
+                alert("Please enter your email.");
                 return;
             }
 
@@ -65,7 +66,7 @@
                 type: 'GET',
                 url: '/v1/users/email/' + $("input[name=email]").val(),
             }).done(function (success) {                
-                //console.log("success : ", success);
+                console.log("success : ", success);
                 checkEmailYn = true;
                 alert('Email address is available.');
             }).fail(function (fail) {
@@ -87,12 +88,12 @@
             }
 
             if(!checkUserTagYn) {
-                alert("Check your ID");
+                alert("Check your ID.");
                 return;
             }
 
             if(!checkEmailYn) {
-                alert("Check your email");
+                alert("Check your email.");
                 return;
             }
 
@@ -107,8 +108,8 @@
                 "userTag": $("input[name=id]").val(),
                 "password": $('input[name=password]').val(),
                 "email": $("input[name=email]").val(),
-                "userName": $("#username").text(),
-                "countryCode" : "+82",
+                "userName": $("#username").val(),
+                "countryCode" :countryCode,
                 "phone": $("#phone").text(),
                 "birth": $("#birth").val(),
                 "sex": "<%=sex%>",
@@ -123,7 +124,9 @@
                     "authPhone": "true"
                 },
                 "coins": {
-                    "total_mach": total_mach
+                    "total_mach": total_mach,
+                    "total_ether": 0,
+                    "total_btc": 0
                 }
             };
             
@@ -204,7 +207,7 @@
         <div class="sub_container container">
             <!-- join_sec page-->
             <section class="join_sec">
-                <h1>Member Infomation <em class="fcor">(Required)</em></h1>
+                    <h1>Member Infomation <em class="fcor">(Required)</em></h1>
                 <div class="table_wrap table-responsive">
                     <table class="table_view table">
                         <colgroup class="colgroup_signup">
@@ -216,46 +219,52 @@
                                 <th>Name</th>
                                 <td>
                                     <input type="hidden" id="birth"/>
-                                    <span id="username"></span>
+                                    <span><input type="text" class="form-control w80p" id="username" placeholder="First & Last Name. ex)Smith Sam."></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>ID</th>
                                 <td>
                                     <div class="no_w100p_wrap">
-                                        <input type="text" class="form-control w80p" name="id" placeholder="6~20자 영문or영문+숫자 조합 사용">
-                                        <button class="btn btn-info" id="checkUserTag">check</button>
+                                        <input type="text" class="form-control w80p" name="id" placeholder="6 ~ 20 characters english or english + number combination.">
+                                        <button class="btn btn-info" id="checkUserTag">Check</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Password</th>
-                                <td><input type="password" class="form-control" name="password" placeholder="8~16자의 영문+숫자 or 특수문자 사용"></td>
+                                <td><input type="password" autocomplete="new-password" class="form-control" name="password" placeholder="8~16 characters english + number or special character"></td>
                             </tr>
                             <tr>
                                 <th>Password(confirm)</th>
-                                <td><input type="password" class="form-control" placeholder="" name="passwordConfirm"></td>
+                                <td><input type="password" autocomplete="new-password" class="form-control" placeholder="" name="passwordConfirm"></td>
                             </tr>
                             <tr>
                                 <th>Phone</th>
                                 <td>
-                                    <div class="no_w100p_wrap">
-                                        <select id="" class="form-control" style="width:100px">
-                                            <option value="">country code</option>
-                                        </select>
-                                        <input type="text" class="form-control w80p" name="" placeholder="">
-                                    </div>
+                                    <em id="phone">010-1234-1234</em>
                                 </td>
                             </tr>
                             <tr>
-                                <th>email</th>
+                                <th>Email</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <input type="text" class="form-control w80p" name="email" placeholder="example@mymach.asia">
-                                        <button class="btn btn-info" id="checkEmail">check</button>
+                                        <button class="btn btn-info" id="checkEmail">Check</button>
                                     </div>                                
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <h1>Member Infomation <em class="fcor">(Optional)</em></h1>
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_signup">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>
                             <tr>
                                 <th class="fcgr1" colspan="2"><br>Optional</th>
                             </tr>
@@ -271,7 +280,7 @@
                     </table>
                 </div> 
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="signup">sign up</button>
+                    <button class="btn btn_in_view1" id="signup">Sign Up</button>
                 </div>                    
             </section>
             <!--// join_sec page-->

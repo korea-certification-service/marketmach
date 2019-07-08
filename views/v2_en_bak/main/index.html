@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <script>
+        var myCurrency;
+        document.querySelector("#floatingInfoBox").setAttribute("ismain", "true");
+
+        $(document).ready(function () {
+            loadItemsAll();
+            if("<%=useBlockchain%>"=="Y") {
+                loadCurrencyData();
+            }
+
+            if(userId != "" && authPhone == "") {
+                // 메인 전용 팝업 로직
+                $(".dim_all_area").show();
+                $("body").css("position", "fixed");
+            }
+        });
+        
+        function loadCurrencyData() {
+            var loadText = '<div class="coin_load_text cf">';
+                loadText += '<em>Loading Currency</em>';
+                loadText += '<div class="lds-facebook"><div></div><div></div><div></div></div>';
+                loadText += '</div>';
+                $('.slick_coin_quotes').slick('slickAdd', loadText);
+                
+            var currency_url = "/v1/charts/currency/5";
+            var currency = function () {
+                $.ajax({
+                    method: "GET",
+                    url: currency_url,
+                }).done(function (success) {
+                    //console.log(success);
+                    loadCurrency(success.data);
+                }).fail(function (fail) {
+                    console.log('system error : ', fail);
+                });
+            };
+            if(myCurrency != undefined) {
+                clearInterval(myCurrency);
+            }
+
+            currency();
+            myCurrency = setInterval(currency, 1000 * 60);
+            //console.log(myCurrency);
+        }
+        function loadCurrency(data) {
+
+            var chartTotalData = data;
+            var currency_result = "";
+
+            for (var i = 0; i < chartTotalData.length; i++) {
+                if(chartTotalData[i].data.binance.change_percent > 0) {
+                    currency_result += '<div class="">' +
+                    '<dl class="cf">' +
+                        '<dt><em class="ico_coin '+chartTotalData[i].type.toLowerCase()+'"></em>'+chartTotalData[i].type+'</dt>' +
+                        '<dd class="fcrd">$'+chartTotalData[i].data.binance.usd_price+'<em>'+chartTotalData[i].data.binance.change_percent+'%</em></dd>' +
+                    '</dl>' +
+                '</div>';
+                } else {
+                    currency_result += '<div class="">' +
+                    '<dl class="cf">' +
+                        '<dt><em class="ico_coin '+chartTotalData[i].type.toLowerCase()+'"></em>'+chartTotalData[i].type+'</dt>' +
+                        '<dd class="fc3">$'+chartTotalData[i].data.binance.usd_price+'<em>'+chartTotalData[i].data.binance.change_percent+'%</em></dd>' +
+                    '</dl>' +
+                '</div>';
+                }
+                
+            }
+
+            $('.slick_coin_quotes').slick('slickRemove', null, null, true);
+            $('.slick_coin_quotes').slick('slickAdd', currency_result);
+        }
+
+        function loadItemsAll() {
+            var url = "/v1/items/all";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                var strDOM = '';
+                var game_buys = success.data.game_buys;
+                var game_sells = success.data.game_sells;
+                var etc_buys = success.data.etc_buys;
+                var etc_sells = success.data.etc_sells;
+                var prime_services = success.data.primes;
+                var cms = success.data.cms;
+                var movies = success.data.movies;
+                var boards = success.data.boards;
+
+                console.log(success);
+
+                setPrimeService(prime_services);
+                setGameSellList(game_sells);
+                setGameBuyList(game_buys);
+                setEtcSellList(etc_sells);
+                setCommunityMovie(movies);
+                setCommunityBoard(boards);
+            }).fail(function (fail) {
+                console.log('system error : ', fail);
+            })
+        }
+
+        function setPrimeService(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var trade_type = replaceType(data[i].trade_type);
+                var price = numberWithCommas(data[i].total_price);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var title = data[i].title;
+
+                result += '<div>' +
+                    '<img src="/static/img/main/monkey_face.png" alt="Monkey Icon" class="img_monkey">' +
+                    '<dl class="card_ui '+trade_type.title_bg_class+'">' +
+                        '<dt class="'+trade_type.title_class+'">' + trade_type.title + '</dt>' +
+                        '<dd>' +
+                            '<a href="/sells/detail/'+itemId+'">' +
+                                '<ul>' +
+                                    '<li class="cf">' +
+                                        '<em>'+item_type.text+'</em>' +
+                                        '<strong class="fc1">'+price+'<span>MACH</span></strong>' +
+                                        '</li>' +
+                                        '<li>'+game_server+'</li>' +
+                                        '<li>'+title+'</li>' +
+                                    '</ul>' +
+                                '</a>' +
+                            '</dd>' +
+                        '</dl>' +
+                    '</div>';
+            }
+
+            $('.slick_primezone').slick('slickRemove', null, null, true);
+            $('.slick_primezone').slick('slickAdd', result);
+        }
+
+        function setGameSellList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var price = numberWithCommas(data[i].total_price);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var title = data[i].title;
+                
+                result += '<tr>' + 
+                        '<td>'+item_type.text+'</td>' + 
+                        '<td>'+game_server+'</td>' + 
+                        '<td><div class="txt_el"><a href="/sells/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+price+' MACH</td>' + 
+                    '</tr>';
+            }
+            $('#sell_list').html(result);
+        }
+
+        function setGameBuyList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var price = numberWithCommas(data[i].total_price);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var title = data[i].title;
+                
+                result += '<tr>' + 
+                        '<td>'+item_type.text+'</td>' + 
+                        '<td>'+game_server+'</td>' + 
+                        '<td><div class="txt_el"><a href="/buys/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+price+' MACH</td>' + 
+                    '</tr>';
+            }
+            $('#buy_list').html(result);
+        }
+        function setEtcSellList(data) {
+            var result = "";
+
+            for(var i=0; i<1; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var price = numberWithCommas(data[i].total_price);
+                var image_src;
+                if(data[i].images[0] === undefined || data[i].images[0] === "") {
+                    image_src = "/image/no-image.png";
+                } else {
+                    image_src = data[i].images[0].path;
+                }
+                var title = data[i].title;
+                var regDate = data[i].regDate;
+                
+                result += '<div class="bd_area">' +
+                        '<h1 class="assets_tit">Asset<a class="add_circle_outline" href="/etc-sells?category=etc&trade_type=sell"><i class="material-icons">add_circle_outline</i></a></h1>' +
+                        '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
+                            '<img src="'+image_src+'" alt="">' +
+                        '</div>' +
+                        '<dl>' +
+                            '<dt>' +
+                                '<div class="assets_tit_txt ellipse">'+title+'</div>' +
+                            '</dt>' +
+                            '<dd class="cf">' +
+                                '<div class="money_txt">'+price+'<span>MACH</span></div>' +
+                                '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
+                            '</dd>' +
+                        '</dl></a>' +
+                    '</div>';
+            }
+            $('.assets_trade_sec').html(result);
+        }
+
+        function setCommunityMovie(data) {
+            var result = "";
+            for(var i=0; i<data.length; i++) {
+                var movie_img = data[i].images[0].path;
+                var title = data[i].title;
+                var movieUrl = data[i].movieUrl;
+                result += '<div class="media_img">' +
+                                '<a href="'+movieUrl+'" target="_blank">' +
+                                    '<img src="'+movie_img+'" alt="">' +
+                                    '<h2 class="ellipse">'+title+'</h2>' +
+                                '</a>' +
+                            '</div>';
+            }
+
+            $('.media_img_wrap').html(result);
+        }
+
+        function setCommunityBoard(data) {
+            var result = "";
+            for(var i=0; i<data.length; i++) {
+                var title = data[i].title;
+                result += '<li class="ellipse">'+title+'</li>';
+            }
+
+            $('#community_boards').html(result);
+        }
+    </script>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="visual_wrap">
+            <section class="visual_sec">
+                <h1 class="blind">Main Visual Image Area</h1>
+                <div class="slick_visual">
+                    <div class="visual_img">
+                        <div class="visual_txt">
+
+                        </div>
+                        <a href="/howto/trade/vtr">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual01.jpg" alt="">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_m_main_visual01.jpg" alt="">
+                            </div>
+                        </a> 
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="btm_visual_sec cf">
+            <div class="flow_box">
+                <h1 class="cf"><i class="material-icons">trending_up</i><span>COIN Market</span></h1>
+            </div>
+            <div class="flow_box cf">
+                <div class="coin_quotes_arrow">
+                    <div class="prev"><i class="material-icons">fast_rewind</i></div>
+                    <div class="next"><i class="material-icons">fast_forward</i></div>
+                </div>
+                <div class="slick_coin_quotes">
+                </div>
+            </div>
+            <div class="flow_box">
+                <a class="add_circle_outline" href="https://www.binance.com/kr" target="_blank"><i class="material-icons">add_circle_outline</i></a>
+            </div>
+        </section>
+        <!-- primezone_wrap -->
+        <div class="primezone_wrap">
+            <section class="primezone_sec container">
+                <h1><span class="crown"></span>PRIME ZONE <a class="add_circle_outline" href="/sells?category=game&trade_type=sell" target="_blank"><i class="material-icons">add_circle_outline</i></a></h1>
+                <div class="primezone_arrow">
+                    <div class="prev"><i class="material-icons">keyboard_arrow_left</i></div>
+                    <div class="next"><i class="material-icons">keyboard_arrow_right</i></div>
+                </div>
+                <div class="slick_primezone">                                                      
+                </div>
+            </section>
+        </div>
+        <!--// primezone_wrap -->
+        <!--// bootstrap container -->
+        <div class="container">
+            <div class="w100p_banner row">
+                <div class="col-lg-12">
+                    <a class="mob_hide" href="https://t.me/marketmach.com" target="_blank">
+                        <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
+                    </a>
+                    <a class="mob_show" href="https://t.me/marketmach.com" target="_blank">
+                        <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
+                    </a>
+                </div>
+            </div>
+            <!--
+            <div class="row img_banner_tit">
+                <h1 class="con_tit col-lg-4"><i class="material-icons">queue_play_next</i><span>마켓마하 서비스</span></h1>
+            </div>
+            <section class="img_banner_sec row cf">
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/howto/etc/csbot"><img src="/static/img/main/mach_service01.jpg" alt="MACH 챗봇"></a></div>
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/howto/trade/vtr"><img src="/static/img/main/mach_service02.jpg" alt="VTR"></a></div>
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/howto/buymach/wallet"><img src="/static/img/main/mach_service03.jpg" alt="MACH 구입안내"></a></div>           
+            </section>
+            -->
+            <div class="row img_banner_tit">
+                <h1 class="con_tit col-lg-4"><i class="material-icons">face</i><span>Market MACH Links</span></h1>
+            </div>
+            <div class="img_banner_sec row">
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/en/en_mach_link01.jpg" alt="MACH 게임"></a></div>
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/event"><img src="/static/img/en/en_mach_link04.jpg" alt="EVENT"></a></div>
+                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="https://tokensales.marketmach.com/login" target="_blank"><img src="/static/img/en/en_mach_link03.jpg" alt="MACH 구입하기"></a></div>
+            </div>
+            <div class="row">
+                <!-- 게임 아이템 판매/구매 -->
+                <section class="item_trade_sec col-lg-8">
+                    <h1 class="blind">게임아이템 판매와 구매 게시판 리스트</h1>
+                    <h2 class="item_sell_tit on">
+                        <button class="btn_show_list on">Sale Game Items</button>
+                        <a class="add_circle_outline" href="/sells?category=game&trade_type=sell"><i class="material-icons">add_circle_outline</i></a>
+                    </h2>
+                    <div class="trade_list item_sell table-responsive">              
+                        <table class="table">
+                            <thead>
+                                <tr class="active">
+                                    <th>Categoty</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sell_list">                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 class="item_buy_tit">
+                        <button class="btn_show_list">Buy Game Items</button>
+                        <a class="add_circle_outline" href="/buys?category=game&trade_type=buy"><i class="material-icons">add_circle_outline</i></a>
+                    </h2>
+                    <div class="trade_list item_buy table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Categoty</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="buy_list">
+                            </tbody>
+                        </table>                           
+                    </div>             
+                </section>
+                <!--// 게임 아이템 판매/구매 -->
+                <section class="assets_trade_sec col-lg-4">
+                </section>
+            </div>
+            <section class="w100p_banner row">
+                <div class="col-lg-12">
+                    <a class="mob_hide" href="http://bitweb.co.kr/" target="_blank">
+                        <img src="/static/img/en/en_main_content_banner03.jpg" alt="">
+                    </a>
+                    <a class="mob_show" href="http://bitweb.co.kr/" target="_blank">
+                        <img src="/static/img/en/en_mob_main_banner03.jpg" alt="">
+                    </a>
+                </div>
+            </section>
+            <div class="row">
+                <!-- 동영상 -->
+                <section class="media_sec col-lg-12">
+                    <div class="bd_area">
+                        <h1 class="media_tit fc2">
+                            Video
+                            <!-- <a class="add_circle_outline" href=""><i class="material-icons">add_circle_outline</i></a> -->
+                        </h1>
+                        <div class="media_img_wrap cf">
+                        </div>
+                    </div>
+                </section>
+                <!--// 동영상 -->
+                <!-- 게임뉴스 -->
+                <section class="gamenews_sec col-lg-4">
+                    <div class="bd_area">
+                        <h1 class="gamenews_tit fc2">Game News<a class="plus_link" href="">More</a></h1>
+                        <ul id='community_boards'>
+                        </ul>
+                    </div>
+                </section>
+                <!--// 게임뉴스 -->              
+            </div>
+            <div class="row">
+                <section class="company_sec col-lg-12">
+                    <div class="bd_area">
+                        <h1 class="company_tit fc2">Listed Media</h1>
+                        <div class="cpn_box_wrap cf">
+                            <div class="cpn_box"><a href="http://bitweb.co.kr/" target="_blank"><img src="/static/img/main/logo_bitweb.png" alt="비트웹" title="비트웹"></a></div>
+                            <div class="cpn_box"><a href="http://www.blockchaintoday.co.kr/" target="_blank"><img src="/static/img/main/logo_today.png" alt="블록체인투데이" title="블록체인투데이"></a></div>
+                            <div class="cpn_box"><a href="https://bctimes.co.kr/" target="_blank"><img class="img_vac" src="/static/img/main/logo_times.png" alt="블록체인타임즈" title="블록체인타임즈"></a></div>
+                            <div class="cpn_box"><a href="http://gameabout.com/" target="_blank"><img src="/static/img/main/logo_gameabout.png" alt="게임어바웃" title="게임어바웃"></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
+                        </div>
+                    </div>
+                </section>                   
+            </div>
+        </div>
+        <!--// bootstrap container -->
+    </div>
+    <!--// content_wrap -->
+    <!--
+    <section class="partners_ci">
+        <div class="ci_arrow">
+            <div class="ci_ico_arrow prev"><i class="material-icons">keyboard_arrow_left</i></div>
+            <div class="ci_ico_arrow next"><i class="material-icons">keyboard_arrow_right</i></div>
+        </div>
+        <div class="ci_area">
+            <div class=""><a href="http://www.kipo.go.kr​" target="_blank"><img src="/static/img/main/footer_ci_01.png" alt="특허청"></a></div>
+            <div class=""><a href="http://www.ftc.go.kr" target="_blank"><img src="/static/img/main/footer_ci_02.png" alt="공정가위원회"></a></div>
+            <div class=""><a href="https://www.kisa.or.kr" target="_blank"><img src="/static/img/main/footer_ci_03.png" alt="한국인터넷진흥원"></a></div>
+            <div class=""><a href="https://okbfex.kbstar.com/quics?page=oescrow" target="_blank"><img src="/static/img/main/footer_ci_04.png" alt="KB에스크로"></a></div>
+            <div class=""><a href="https://thecheat.co.kr" target="_blank"><img src="/static/img/main/footer_ci_05.png" alt="더치트"></a></div>
+            <div class=""><a href="http://cyberbureau.police.go.kr" target="_blank"><img src="/static/img/main/footer_ci_06.png" alt="경찰청 사이버안전국"></a></div>                
+        </div>
+    </section> 
+    -->
+    <!-- 모달창 -->
+    <div class="dim_all_area" style="display: none">
+        <article class="modal_bitberry_deposit">
+            <br>
+            <h1>Need to auth phone</h1>
+            <p>Need to auth phone [My Page->My Account].</p>
+            <button id="gotoUserInfo" class="btn btn-danger">OK</button>
+        </article>
+    </div>
+    <% include ../include/footer.html %>
+</div>
+</body>

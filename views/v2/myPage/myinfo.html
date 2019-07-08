@@ -17,6 +17,8 @@
         var checkEmailYn = true;
         var bitberry_token;
         var total_mach = 0;
+        var currencyCode="";
+        var checkAuthNoYn = true;
         
         $(document).ready(function() {
             loadData();
@@ -30,7 +32,7 @@
             });
 
             $("#authPhone").on('click', function() {
-                fnAuthPhone();
+                //fnAuthPhone();
             });
 
             $("#checkEmail").on('click', function() {
@@ -46,6 +48,32 @@
                 //location.href="/supports/private/register";
                 withdraw();
             });
+
+            $("#phone").on('keyup', function() {
+                if(window.event.keyCode==13){
+                    checkAuthNoYn = false;
+                    sendAuthNo();
+                }
+            })
+
+            $("#sendAuthNo").on('click', function() {
+                checkAuthNoYn = false;
+                if($(this).text() == "인증코드 재전송" ) {
+                    alert("인증코드가 재전송 되었습니다.");
+                }
+                sendAuthNo();
+            });
+
+            // $("#reSendAuthNo").on('click', function() {
+            //     sendAuthNo();
+            //     alert("인증번호를 재발송 하였습니다.");
+            // });
+
+            $("#checkAuthNo").on('click', function() {
+                checkAuthNo();
+            });
+
+            $('.auth_no_class').hide();
         });
 
         function loadData() {
@@ -60,12 +88,15 @@
                 email = success.data.email;
                 coinId = success.data.coinId;
                 bitberry_token = success.data.bitberry_token;
+                currencyCode = success.data.countryCode;
 
                 $("#username").text(username);
                 $("#userTag").text(userTag);
-                $("#phone").text(phone);
+                $("#phone").val(phone);
                 $("#email").val(email);
+                
                 getCoin();
+                loadCurrencyList();
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -151,7 +182,7 @@
                 userReq = {
                     "agreements": {"authPhone": authPhone}
                 };               
-                userReq["phone"] = $("#phone").text();
+                userReq["phone"] = $("#phone").val();
                 userReq["userName"] = username;
                 userReq["birth"] = birth;
                 userReq["sex"] = sex;
@@ -167,8 +198,8 @@
                 userReq["password"] = $("#password").val();
             }
 
-            if (phone != $("#phone").text()) {
-                userReq["phone"] = $("#phone").text();              
+            if (phone != $("#phone").val()) {
+                userReq["phone"] = $("#phone").val();              
             }
 
             if (Object.keys(userReq).length > 0) {
@@ -204,7 +235,10 @@
             } else if (emailChk.test($("#email").val()) == false) {
                 alert("이메일을 확인 하세요.");
                 return false;
-            } 
+            } else if(checkAuthNoYn == false) {
+                alert("휴대폰을 인증 하세요.");
+                return false;
+            }
 
             return true;
         }
@@ -243,6 +277,94 @@
             }).fail(function (fail) {
                 console.log(fail);
             });
+        }
+
+        function loadCurrencyList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/countryCodes"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_en + '('+ success.data[i].country_code +')' + '</option>'
+                }
+
+                $("#currencyType").html(strDOM);
+                $("#currencyType").selectpicker('refresh');
+                $("#currencyType").val(currencyCode).attr("selected", "selected");
+                $("#currencyType").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function sendAuthNo() {
+            if($("#currencyType").val() == "") {
+                alert("거래국가를 선택하세요.");
+                return;
+            } else if($("#phone").val() == "") {
+                alert("전화번호를 입력하세요.");
+                return;
+            } else if($("#phone").val() == phone) {
+                alert("전화번호가 변경되지 않았습니다.");
+                return;
+            }
+            $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkPhone",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                $('.auth_no_class').show();
+                $('#sendAuthNo').text("인증코드 재전송");
+                $('#phone').prop('readonly', true);
+                $('#currencyType').prop('readonly', true);
+            }).fail(function (fail) {
+                console.log(fail);
+                alert("전송중 문제가 발생하였습니다. 전화번호가 올바르게 입력되었는지 확인하시기 바랍니다.\n 문제가 계속 발생될 경우 관리자에게 문의하세요.");
+            })
+        }
+
+        function checkAuthNo() {
+            if($("#authNo").val() == "") {
+                alert("인증번호를 입력하세요.");
+                return;
+            } 
+
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val(),
+                'authNo': $("#authNo").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkAuthNo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                if(success.data.successYn == "fail") {
+                    alert("인증번호가 유효하지 않습니다. 인증번호를 확인하세요.");
+                    return;
+                } else {
+                    alert("휴대폰 인증이 완료되었습니다.");
+                    checkAuthNoYn = true;
+                    $("#checkAuthNo").hide();
+                    $("#sendAuthNo").attr("disabled", "disabled");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
         }
     </script>
 
@@ -294,15 +416,29 @@
                                     </tr>
                                     <tr>
                                         <th class="fc2">연락처(휴대폰)</th>
-                                        <td>
+                                        <!-- <td>
                                             <em class="w100p-120px" id="phone"></em>
                                             <br class="mob_br">
                                             <button class="btn btn-default" id="authPhone">연락처 변경</button>
+                                        </td> -->
+                                        <td class="set_margin">
+                                            <select id="currencyType" class="selectpicker" data-size="5" ata-live-search="true"></select>
+                                            <input type="text" class="form-control w60p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
+                                            <br class="mob_br">
+                                            <button class="btn btn-default" id="sendAuthNo">연락처 변경</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2"></th>
+                                        <td class="auth_no_class">
+                                            <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
+                                            <br class="mob_br">
+                                            <button class="btn btn_in_view1" id="checkAuthNo">휴대폰 인증</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="fc2">이메일</th>
-                                        <td>
+                                        <td class="set_margin">
                                             <div class="w100p-120px">
                                                 <input type="text" class="form-control" id="email" placeholder="example@mymach.asia">
                                             </div>

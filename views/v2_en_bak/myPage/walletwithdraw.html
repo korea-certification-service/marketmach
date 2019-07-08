@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+        var total_mach = 0;
+        var output_total_mach = 0;
+        var walletId;
+        var fee = "<%=fee%>";
+        var rate;
+        
+        $(document).ready(function() {
+            if(bitberry_token != undefined && bitberry_token != "") {
+                $('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+            }
+
+            $('[name=amount]').on('keyup',function() {
+                if($('[name=amount]').val() != "") {
+                    $('#total_amount').text(output_total_mach - parseInt($('[name=amount]').val()));
+                    calculate();
+                }
+            });
+
+            $('[name=amount]').on("keydown", function(e){
+                /* e(지수), .(소수점) -(마이너스) 예외처리 */
+                if(e.keyCode == 69 || e.keyCode == 189){
+                    return false;
+                }
+            });
+
+            $("#confirmWithdraw").on("click", function() {
+                reqWithdraw();
+            });
+
+            getCoin();
+            getCoinHistory('withdraw');
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                if (success.data.total_mach != null) {
+                    total_mach = success.data.total_mach;
+                    output_total_mach = success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach;
+                    //$("#mach").html(numberWithCommas(success.data.total_mach) + "(출금 가능 : "+numberWithCommas(output_total_mach)+")<span>MACH</span>");
+                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                    $("#withdrawable").html("Withdrawable : <br class='mob_br'>"+numberWithCommas(output_total_mach)+ "<span>MACH</span>");
+                    $("#my_amount").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
+                    $("#total_amount").text(numberWithCommas(success.data.output_total_mach == undefined ? 0 : success.data.output_total_mach));
+                } else {
+                    $("#mach").html("0<span>MACH</span>");
+                    $("#my_amount").text("0");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoinHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type
+            }).done(function (success) {
+                //console.log(success.data);
+                var coinHistorys = success.data;
+                var result = ""
+                if(coinHistorys.length == 0) {
+                    result = "<tr><td colspan='3'>No exist.</td></tr>";
+                }
+
+                for(var i=0;i<coinHistorys.length;i++) {
+                    var amount = numberWithCommas(coinHistorys[i].amount);
+                    var currencyCode = coinHistorys[i].currencyCode;
+                    var mach = numberWithCommas(coinHistorys[i].mach);
+                    var status = coinHistorys[i].status;
+                    var regDate = coinHistorys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc3">'+mach+'<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var mach = Number($("input[name=amount]").val());
+            var coin = $("select[name=coin] option:selected").val();
+            var price = 0;
+            var data;
+            if (coin == "BTC") {
+                var url = "/v1/charts/currency/BTC/1";
+                $.ajax({
+                    method: "GET",
+                    url: url
+                }).done(function (success) {
+                    //console.log(success);
+                    rate = Number(success.data[0].data.binance.usd_price);
+                    //console.log(rate);
+                    price = ((mach / rate) - ((mach / rate) * fee)).toFixed(8);
+                    data = mach + " MACH / $" + rate + " - "+(fee * 100)+"% = " + price + " BTC";
+                    $("#calculate").text(data);
+                    $("#Withdraw_amount").html(price+"<span>BTC</span>");
+                    $("#exchange_amount").html(mach+"<span>MACH</span>");
+                    $("#plus_amount").text(mach);
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            } else if (coin == "ETH") {
+                var url = "/v1/charts/currency/ETH/1";
+                $.ajax({
+                    method: "GET",
+                    url: url
+                }).done(function (success) {
+                    //console.log(success);
+                    rate = Number(success.data[0].data.binance.usd_price);
+                    console.log(rate);
+                    price = ((mach / rate) - ((mach / rate) * fee)).toFixed(8);
+                    data = mach + " MACH / $" + rate + " - "+(fee * 100)+"% = " + price + " ETH";
+                    $("#calculate").text(data);
+                    $("#Withdraw_amount").html(price+"<span>ETH</span>");
+                    $("#exchange_amount").html(mach+"<span>MACH</span>");
+                    $("#plus_amount").text(mach);
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+
+            } else if (coin == "MACH") {
+                price = mach.toFixed(8);
+                data = mach + " MACH = " + price + " MACH";
+                $("#calculate").text(data);
+                $("#Withdraw_amount").html(mach+"<span>MACH</span>");
+                $("#exchange_amount").html(mach+"<span>MACH</span>");
+                $("#plus_amount").text(mach);
+            }
+        }
+
+        function reqWithdraw() {
+            if(bitberry_token == "") {
+                alert("Connection with Bitberry is required.");
+                location.href = '/myPages/wallet/connect';
+                return;
+            } 
+
+            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0") {
+                alert("Please enter MACH amount.");
+                return;
+            }
+
+            if(parseInt($('#total_amount').text()) < 0) {
+                alert("The withdrawal request amount can not be greater than the withdrawable amount.");
+                return;
+            }
+
+            if($('[name=amount]').val() > 100) {
+                alert("The withdrawal amount is only 100MACH.");
+                return;
+            }
+
+            var data = {
+                "mach": Number($("input[name=amount]").val()),
+                "fee": fee,
+                "rate": rate
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/wallets/"+$("select[name=coin] option:selected").val()+"/withdraw",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+            }).done(function (success) {
+                //console.log(success.data);
+                if(success.data.code == undefined) {
+                    alert('MACH withdrawal has been processed successfully.');
+                    // getCoin();
+                    // getCoinHistory('withdraw');
+                    location.href = "/myPages/wallet/withdraw";
+                } else {
+                    alert(success.data.msg);
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Wallet <span>withdraw MACH</span></h1>
+                        <div class="bitberry_switch_box">
+                            <div class="bitberry_switch">
+                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
+                                <a href="/myPages/wallet/connect">
+                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                    <p>OFF</p>
+                                </a>
+                            </div>
+                            <em>MY Wallet Balance</em>
+                            <p class="fc3" id="mach"></p>
+                            <strong id="withdrawable"></strong>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">withdraw</h2>
+                        <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="Withdraw_amount">0<span>MACH</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>MACH</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>Select Coin</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" name="coin" onchange="calculate()">
+                                                    <option value="BTC">BTC</option>
+                                                    <option value="ETH">ETH</option>
+                                                    <option value="MACH" selected>MACH</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ Please select coin to withdraw MACH.</span>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th>MACH Amount</th>
+                                        <td>
+                                            <input type="number" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
+                                            <br class="mob_br"><span class="fcrd">※ Only the MACH amount of items and assets transaction completed can be withdrawn</span>
+                                        </td>
+                                    </tr>                  
+                                    <tr>
+                                        <th>Exchange Rate</th>
+                                        <td><em id="calculate">0 MACH = 0.00000000 MACH</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap">
+                            <h2 class="tit_mypage dot_tit">Billing information</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>My Wallet Balance</th>
+                                        <td><span id="my_amount">0</span> MACH</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Withdrawal Amount</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico minus">-</em> <span id="plus_amount">0</span> MACH
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Withdrawable Amount after Withdrawal</th>
+                                        <td><span id="total_amount">0</span> MACH</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmWithdraw">Bitberry Withdrawal Request</button>
+                            </div>                            
+                        </div>
+                        <h2 class="tit_mypage">Bitberry Withdrawal Statement</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Withdrawal Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

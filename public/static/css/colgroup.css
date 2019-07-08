@@ -9,6 +9,15 @@
 * <주석 표기 방식> 1dpetha명 - 2depth명 : 공통 클래스명
 */
 
+/********** 메인페이지 **********/
+.colgroup_main_gameitem .col4_1{width: 50px;}
+.colgroup_main_gameitem .col4_2{width: 130px;}
+.colgroup_main_gameitem .col4_3{}
+.colgroup_main_gameitem .col4_4{width: 100px;}
+.colgroup_main_otc .col2_1{}
+.colgroup_main_otc .col2_2{width: 150px;}
+
+
 /********** 판매등록 **********/
 /*** 판매등록 - 게임아이템 : .table_view .col2_1 ***/
 .table .colgroup_sell_register .col2_1{}
@@ -112,7 +121,7 @@
 .table .colgroup_mycancellist .col5_1{}
 /*** 지갑관리 - 나의지갑정보 ***/
 .table .colgroup_walletinfo .col5_1{width: 80px;}
-.table .colgroup_walletinfo .col5_2{width: 110px;}
+.table .colgroup_walletinfo .col5_2{width: 120px;}
 .table .colgroup_walletinfo .col5_3{width: 370px;}
 .table .colgroup_walletinfo .col5_4{width: 80px;}
 .table .colgroup_walletinfo .col5_5{width: 150px;}

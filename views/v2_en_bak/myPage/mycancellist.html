@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var pageIdx = "<%=pageIdx%>";
+        var pageIdx = "<%=pageIdx%>";
+        var category = "<%=category%>";
+        var item_title =  "<%=item_title%>";
+        
+        $(document).ready(function(){
+            if(category == "") {
+                category = "game";
+            }
+
+            if(category == "game") {
+                $('#myItemTitle').text("Game Item");
+                $('#table_category').text('Game / Server')
+            } else {
+                $('#myItemTitle').text("Asset Trading");
+                $('#table_category').text('Categoty')
+            }
+            $("#"+category).prop('checked', true);
+            getItemList();
+            $('#item_title').val(item_title);
+
+            $("input[name=category]").on('click', function() {
+                category = $("[name=category]:checked").val();
+                if(category == "game") {
+                    $('#myItemTitle').text("Game Item");
+                    $('#table_category').text('Game / Server')
+                } else {
+                    $('#myItemTitle').text("Asset Trading");
+                    $('#table_category').text('Categoty')
+                }
+                getItemList();
+            });
+
+            $('#item_title').on("keyup", function(e) {
+                item_title = $("#item_title").val();
+                if(e.keyCode === 13){
+                    getItemList();
+                }
+            });
+
+            $("#btn_search").on("click", function(e) {
+                getItemList();
+            });
+        });
+
+        function getItemList() {
+            var param = "?category=" + category;
+            if(pageIdx != undefined) {
+                param += "&pageIdx=" + pageIdx;
+            }
+
+            if(item_title != "") {
+                param += "&item_title=" + encodeURIComponent(item_title);
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/vtrs/cancel/" + userId + param
+            }).done(function (success) {
+                console.log(success.data);
+                var buyList = success.data.list;
+                var result = "";
+                if(buyList.length == 0) {
+                    result = "<tr><td colspan='5'>No exist.</td><tr>";
+                }
+                for(var i=0; i< buyList.length; i++) {
+                    var itemId = buyList[i].item._id;
+                    var regDate = buyList[i].regDate.substring(2, 10);
+                    var category = buyList[i].item.game_name + '>' + buyList[i].item.game_server;
+                    var item_type = getItemType(buyList[i].item.type);
+                    if(buyList[i].item.game_name == undefined) {
+                        category = buyList[i].item.category1  == undefined ? '-' : buyList[i].item.category1 + '>' + buyList[i].item.category2;
+                        item_type = getDelivery(buyList[i].item.delivery_type == undefined ? "direct" : buyList[i].item.delivery_type);
+                    }
+                    
+                    var title = buyList[i].item.title;
+                    var price = numberWithCommas(buyList[i].item.price);
+                    var point = numberWithCommas(buyList[i].item.point);
+                    var status = "Canceled";
+                    var refund = buyList[i].refund == true ? "(refund)" : "";
+                    
+                    result += '<tr>' + 
+                                '<td>'+category+'</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd ico_item">'+item_type.text+'</span>' + 
+                                    '<div class="ellipse">' + title +
+                                    '</div>' + 
+                                '</td>' + 
+                                '<td>'+price+' MACH</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd ico_item">'+status + '<br>' + refund + '</span>' + 
+                                '</td>' + 
+                                '<td>'+regDate+'</td>' + 
+                            '</tr>';
+                }
+
+                $('#cancel_list').html(result);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+            // var result = "<tr><td colspan='5'>서비스 준비 중입니다.</td><tr>";
+            // $('#cancel_list').html(result);
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/myPages/cancel/list?category='+category+'&item_title='+item_title+'&pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Cancellation</h1>
+                        <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">Goods Type</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="category" id="game" value="game"><label for="game">Game Item</label>
+                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">Asset Trading</label>
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">Keyword</h2>
+                                    <div class="col-sm-10 col-xs-12">
+                                        <div class="w100p-120px">
+                                            <input type="text" class="form-control" id="item_title">
+                                        </div>
+                                        <div class="mob_100p_tar">
+                                            <input type="button" class="btn btn-primary" id="btn_search" value="search">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="table_wrap table-responsive">
+                            <h2 class="tit_mypage" id="myItemTitle">All</h2>
+                            <table class="table_list has_game_icon table">
+                                <colgroup class="colgroup_mycancellist">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th id="table_category">Game / Server</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cancel_list">
+                                                              
+                                </tbody>
+                            </table>                 
+                        </div>
+                        <div class="paging_wrap">
+                            <!-- <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button> -->
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+   
+   </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

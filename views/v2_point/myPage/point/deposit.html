@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var pointId = "<%=pointId%>";
+        var total_point = 0;
+        var price = 0;
+        var fee = "<%=fee%>";
+        var payKey;
+        
+        $(document).ready(function() {
+            $('#amount, #happymoneyAmount').on('change',function(e) {
+                calculate();
+            })
+            
+            $("#confirmDeposit").on("click", function() {
+                reqDeposit();
+            });
+
+            getPoint();
+            getPointHistory('deposit');
+
+            var $CategoryList = $("#ulCategory li");
+            $CategoryList.hide().eq(0).show();
+            $("#depositType").on("change", function() {
+                if($("#depositType").val() == "happymoney") {
+                    alert("준비중입니다.");
+                    $("#depositType").val("bank_account");
+                    return;
+                }
+                var idx = $(this)[0].selectedIndex;
+                $CategoryList.hide().eq(idx).show();
+            });
+
+            //로그인 성공시 아래 실행되면 가려진 부분 보임
+            $('#happymoneyLogin').on('click', function() {
+                happyomoneyLogin();
+            });
+            //$(".hideBeforeLogin").show();
+        });
+
+        function happyomoneyLogin() {
+            alert('준비중입니다.');
+            return;
+
+            var loginInfo = {
+                'authType':'ID',
+                "authValue":$('#happymoneyId').val(),
+                "encryptType":"N",
+                "payPassword":$('#happymoneyPw').val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/points/happymoney/balance",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(loginInfo)
+            }).done(function (success) {
+                console.log(success);
+                if(success.data.code != undefined) {
+                    alert('해피머니 아이디 또는 패스워드가 일치하지 않습니다.');
+                    return;
+                }
+
+                payKey = success.data.result.payKey;
+                $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + 'Happy Cash');
+                $(".hideBeforeLogin").show();
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getPoint() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/points/" + pointId
+            }).done(function (success) {
+                if (success.data.total_point != null) {
+                    total_point = success.data.total_point;
+                    $("#point").html(numberWithCommas(success.data.total_point) + "<span>Point</span>");
+                    $("#my_amount").text(numberWithCommas(success.data.total_point));
+                    $("#total_amount").text(numberWithCommas(success.data.total_point));
+                } else {
+                    $("#point").html("0<span>Point</span>");
+                    $("#my_amount").text("0");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getPointHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/point/historys/" + pointId + "/" + trade_type
+            }).done(function (success) {
+                //console.log(success.data);
+                var pointHistorys = success.data;
+                var result = ""
+                if(pointHistorys.length == 0) {
+                    result = "<tr><td colspan='2'>내역이 존재하지 않습니다.</td></tr>";
+                }
+
+                for(var i=0;i<pointHistorys.length;i++) {
+                    var amount = numberWithCommas(pointHistorys[i].amount);
+                    var currencyCode = pointHistorys[i].amountCurrency;
+                    var point = numberWithCommas(pointHistorys[i].point);
+                    var status = pointHistorys[i].status == true ? '입금 완료' : '입금 대기';
+                    var regDate = pointHistorys[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc3">'+amount+'<span>'+currencyCode+'</span></em><span class="arw_txt">>>></span><em class="fc3">'+point+'<span>Point</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate.replace(' ','<br>')+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var point = $('#depositType').val() == 'bank_account' ? Number($("#amount").val()) : Number($("#happymoneyAmount").val());
+            fee = $('#depositType').val() == 'bank_account' ? "<%=fee%>" : "<%=happyMoneyFee%>";
+            var fee_amount = parseInt((point * fee).toFixed());            
+            var data;
+            var strFee = $("#depositType").val() == "happymoney" ? "("+(fee * 100)+"% 전환 수수료 차감)" : "";
+            price = point - fee_amount;
+            data = point + " KRW = " + price + " Point " + strFee;
+            $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
+            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>KRW</span>");
+            $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
+            $("#plus_amount").text(numberWithCommas(price));
+            $("#total_amount").text(numberWithCommas(total_point + price));
+        }
+
+        function reqDeposit() {     
+            // alert("준비중입니다.");
+            // return;
+            
+            if($("#depositType").val() == "") {
+                alert("입금 방법을 선택하세요.");
+                return;
+            }
+
+            var amount = $('#depositType').val() == 'bank_account' ? $("#amount").val() : $("#happymoneyAmount").val();
+            if(amount == "") {
+                alert("입금 금액을 선택하세요.");
+                return;
+            }
+
+            var confirmYn = confirm("입금을 요청 하시겠습니까?");
+            if(confirmYn) {
+                var data = {
+                    "userId": userId,
+                    "amount": Number(amount),
+                    "extType":$("#depositType").val(),
+                    "type":"deposit",
+                    "amountCurrency":"KRW"
+                };
+                let url = "/v1/points/" + pointId;
+                var method = "PUT";
+                if($('#depositType').val() == 'happymoney') {
+                    data = {
+                        "type":"deposit",
+                        "extType":$("#depositType").val(),
+                        "amountCurrency":"KRW",
+                        "pointId":pointId,
+                        "onlineId":"happymall",
+                        'authType':'ID',
+                        "authValue":$('#happymoneyId').val(),
+                        "encryptType":"N",
+                        "payKey": payKey,
+                        "orderAmount": Number(amount),
+                        "userId": userId
+                    };
+                    url = "/v1/points/happymoney/payment";
+                    method = "POST";
+                }
+
+                console.log(data);
+
+                $.ajax({
+                    method: method,
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data)
+                }).done(function (success) {
+                    console.log(success.data);
+                    alert(success.data.msg);
+                    if(success.data.code == "Success") {
+                        location.href = "/mypages/point/deposit";
+                    } 
+                }).fail(function (fail) {
+                    console.log(fail);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">포인트관리 <span>포인트 입금</span></h1>
+                        <div class="point_box">
+                            <div class="pb_inner cf">
+                                <div class="paint_point">
+                                    <em>P</em>
+                                </div>
+                                <div class="pb_center">
+                                    <div>
+                                        <em>나의 포인트 잔액</em>
+                                        <p class="fc3" id="point">0 <span>Point</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">
+                            입금하기: 
+                            <div class="deposit_type_wrap">
+                                <select class="custom-select" id="depositType">
+                                    <option value="bank_account" selected>계좌 이체</option>
+                                    <option value="happymoney">해피캐시</option>
+                                </select>
+                            </div>
+                        </h2>
+
+                        <ul id="ulCategory">
+                            <li>
+                                <div class="table_wrap table-responsive mb50">
+                                    <table class="table_account">
+                                        <colgroup>
+                                            <col class="col2_1">
+                                            <col class="col2_2">
+                                        </colgroup>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="td_exchange_coin" colspan="2">
+                                                    <em class="fc3" id="deposit_amount">0<span>KRW</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>Point</span></em>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <th>입금 방법</th>
+                                                <td><em>계좌 이체</em></td>
+                                            </tr>  
+                                            <tr>
+                                                <th>입금 금액</th>
+                                                <td>
+                                                    <div class="dib_220">
+                                                        <select class="custom-select" id="amount">
+                                                            <option value="">금액 선택</option>
+                                                            <option value="5000" >5000KRW</option>
+                                                            <option value="10000" >10000KRW</option>
+                                                            <option value="30000" >30000KRW</option>
+                                                            <option value="50000" >50000KRW</option>
+                                                            <option value="100000" >100000KRW</option>
+                                                        </select>
+                                                    </div>
+                                                    <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액</span>
+                                                </td>
+                                            </tr>  
+                                            <tr>
+                                                <th>입금 계좌번호</th>
+                                                <td><em>국민은행 584101-01-214594 한국인증서비스(주)</em></td>
+                                            </tr>                
+                                            <tr>
+                                                <th>자동계산</th>
+                                                <td><em id="calculate">0 KRW = 0 Point</em></td>
+                                            </tr>    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="table_wrap table-responsive mb50">
+                                    <table class="table_account">
+                                        <colgroup>
+                                            <col class="col2_1">
+                                            <col class="col2_2">
+                                        </colgroup>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="td_exchange_coin" colspan="2">
+                                                    <em class="fc3" id="happymoney_deposit_amount">0<span>KRW</span></em><span class="arw_txt">>>></span><em class="fc2" id="happymoney_exchange_amount">0<span>Point</span></em>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <th>입금 방법</th>
+                                                <td><em>해피캐시</em></td>
+                                            </tr>  
+                                            <tr>
+                                                <th>아이디</th>
+                                                <td><input type="text" id="happymoneyId" class="form-control" value=""></td>
+                                            </tr>  
+                                            <tr>
+                                                <th>결제비밀번호</th>
+                                                <td>
+                                                    <input type="password" autocomplete="new-password" id="happymoneyPw" class="form-control" value="">
+                                                    <input type="button" class="btn btn-success" id="happymoneyLogin" value="로그인">
+                                                    <br class="mob_br"><span class="fcrd">※결제 비말번호는 해피머니 사이트에서 발급받으세요.</span>
+                                                </td>
+                                            </tr>  
+                                            <tr class="hideBeforeLogin">
+                                                <th>해피캐시 잔액</th>
+                                                <td><em id="happymoneyBalance"></em></td>
+                                            </tr> 
+                                            <tr class="hideBeforeLogin">
+                                                <th>입금 금액</th>
+                                                <td>
+                                                    <div class="dib_220">
+                                                        <select class="custom-select" id="happymoneyAmount">
+                                                            <option value="">금액 선택</option>
+                                                            <option value="5000" >5000 Happy Cash</option>
+                                                            <option value="10000" >10000 Happy Cash</option>
+                                                            <option value="30000" >30000 Happy Cash</option>
+                                                            <option value="50000" >50000 Happy Cash</option>
+                                                            <option value="100000" >100000 Happy Cash</option>
+                                                        </select>
+                                                    </div>
+                                                    <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액(9.9% 결제 수수료 발생)</span>
+                                                </td>
+                                            </tr>                  
+                                            <tr class="hideBeforeLogin">
+                                                <th>자동계산</th>
+                                                <td><em id="happymoneyCalculate">0 Happy Cash = 0 Point</em></td>
+                                            </tr>    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="deposit_amount">0<span>KRW</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>Point</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>입금 방법</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" id="depositType">
+                                                    <option value="bank_account" selected>계좌 이체</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ 입금할 포인트 선택 1KRW = 1Point</span>
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th>입금 금액</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" id="amount">
+                                                    <option value="">금액 선택</option>
+                                                    <option value="5000" >5000KRW</option>
+                                                    <option value="10000" >10000KRW</option>
+                                                    <option value="30000" >30000KRW</option>
+                                                    <option value="50000" >50000KRW</option>
+                                                    <option value="100000" >100000KRW</option>
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액</span>
+                                        </td>
+                                    </tr>                  
+                                    <tr>
+                                        <th>자동계산</th>
+                                        <td><em id="calculate">0 KRW = 0 Point</em></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div> -->
+
+                        <div class="table_wrap mb50">
+                            <h2 class="tit_mypage dot_tit">결제정보</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>나의 포인트 잔액</th>
+                                        <td><span id="my_amount">0</span> Point</td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 금액</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico plus">+</em> <span id="plus_amount">0</span> Point
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>입금 후 나의 포인트 잔액</th>
+                                        <td><span id="total_amount">0</span> Point</td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmDeposit">입금요청</button>
+                            </div>                            
+                        </div>
+                        <!-- 모달창 -->
+                        <!-- <div class="dim_all_area" style="display: none">
+                            <article class="modal_bitberry_deposit">
+                                <button id="btnmCloseModal" class="btn">X</button>
+                                <h1>비트베리 입금요청</h1>
+                                <p>비트베리 앱에서 입금승인요청후 아래의 확인 버튼을 눌러주세요.</p>
+                                <button id="resultDeposit" class="btn btn-danger">확인</button>
+                            </article>
+                        </div> -->
+                        <h2 class="tit_mypage dot_tit">포인트 입금 내역</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>출금액</th>
+                                        <th>처리상태</th>
+                                        <th>일자</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>

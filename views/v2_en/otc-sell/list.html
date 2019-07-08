@@ -21,17 +21,24 @@
         $(document).ready(function () {
             //resetSearchFilter(".search_filter");
 
+            $(".srch_select").val("otc").attr("selected", "selected");
+            $("#search_item_name").val(title);
+            $(".form-control").val(title);
             $("#list").html('');
+            //getSearchValue();
             search();
             
             $('#btn_search').click(function() {
+                getSearchValue();
+                search();
+            });
+
+            function getSearchValue(){
                 $("#list").html('');
                 pageIdx = 0;
                 title = $('#item_title').val();
                 status = $('[name=status]:checked').val();
-
-                search();
-            });
+            }
 
             $('#item_title').on("keydown", function(e) {
                 if(e.keyCode === 13){
@@ -79,7 +86,7 @@
                     createData(success.data.list);
                 } else {
                     if(pageIdx == 0) {
-                        $("#list").html("<tr><td colspan='4'>>No exist.</td></tr>")
+                        $("#list").html("<tr><td colspan='4'>검색 결과를 찾을 수 없습니다.</td></tr>")
                     }
                 }
 
@@ -106,9 +113,12 @@
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
-                var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                //var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
+                var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+
                 if(userTag === "machprime") {
                     tradingFlag = '<div class="ico_special ico_timekill"></div>';
                     // prime 상품의 경우: <div class="ico_special ico_prime"></div>
@@ -118,7 +128,7 @@
                 
                 var money = point + '<span>Point</span>';
                 if("<%= useBlockchain %>" == "Y") {
-                    money = price + '<span>MACH</span>';
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
 
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
@@ -127,7 +137,8 @@
                     strDOM +=          '<span class="ico_photo">사진</span>';
                 }
                 
-                strDOM +=              '<div class="ellipse"> ' + title + 
+                strDOM +=              '<div class="no_ellipse-30"> ' + title + 
+                                            '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 
@@ -151,28 +162,28 @@
             <!-- list page-->
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>Sell by OTC<span> <span id="category1">All</span></span></h1>
-                    <button class="btn btn-success" id="register">Register to Sell</button>
+                    <h1>OTC거래 팝니다<span> <span id="category1">전체</span></span></h1>
+                    <button class="btn btn-success" id="register">판매등록</button>
                 </div>
                 <div class="search_filter">
                     <ul class="">
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">Status</h2>
+                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">All</label>
-                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">Available</label>
-                                <input type="radio" name="status" id="trading" value="1"><label for="trading">Trading</label>
-                                <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">Complete</label>
+                                <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
+                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">거래가능</label>
+                                <input type="radio" name="status" id="trading" value="1"><label for="trading">거래중</label>
+                                <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">거래완료</label>
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">Keyword</h2>
+                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
                             <div class="col-sm-10 col-xs-12">
                                 <div class="w100p-120px">
                                     <input type="text" class="form-control" id="item_title">
                                 </div>
                                 <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="Search">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
                                 </div>
                             </div>
                         </li>                        
@@ -180,7 +191,7 @@
                 </div>
 
                 <div class="table_wrap table-responsive">
-                    <table class="table_list has_game_icon table">
+                    <table class="table_list has_game_icon table otc_table">
                         <colgroup class="colgroup_otc-sells">
                             <col class="col4_1">
                             <col class="col4_2">
@@ -189,10 +200,10 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Date</th>
+                                <th>제목</th>
+                                <th>거래가격</th>
+                                <th>거래상태</th>
+                                <th>등록일</th>
                             </tr>
                         </thead>
                         <tbody id="list">
@@ -200,7 +211,7 @@
                     </table>                 
                 </div>
                 <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20 more</button>
+                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
                 </div>
             </section>
             <!--// list page-->

@@ -68,7 +68,6 @@
                                     <th>거래제목</th>
                                     <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
                                 </tr>
-                                <%if(useBlockchain == 'Y') {%>
                                 <tr>
                                     <th>거래가격</th>
                                     <td>
@@ -83,17 +82,6 @@
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
                                 </tr>
-                                <%} if(usePoint == 'Y') {%>
-                                <tr>
-                                    <th>거래가격(Point)</th>
-                                    <td>
-                                        <div class="no_w100p_wrap">
-                                            <input type="text" class="form-control w80p" id="point" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
-                                            <em class="fc2" id="currencyName"></em>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <%}%>
                                 <th>구매자 캐릭터명</th>
                                     <td><input type="text" class="form-control" id="buyer_game_character" placeholder="물품을 전달 받으실 본인의 캐릭터명 입력"></td>
                                 </tr>

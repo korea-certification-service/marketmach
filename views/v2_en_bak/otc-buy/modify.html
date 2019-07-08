@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
+            <section class="board_sec c_style_buy">
+                <div class="board_tit cf">
+                    <h1>Buy by OTC <span>Modify</span></h1>
+                </div>
+
+                <!-- 상품정보 : 이미지 업로드 UI 포함 -->
+                <div class="table_wrap table-responsive">
+                    <!-- 거래정보 -->
+                <div class="table_wrap table-responsive">
+                        <table class="table_view table">
+                            <colgroup class="colgroup_etc-buys_modify">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Listing Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>Title</th>
+                                    <td><input type="text" class="form-control" id="title" placeholder=""></td>
+                                </tr>
+                                <tr>
+                                    <th>Price(MACH)</th>
+                                    <td>
+                                        <div class="no_w100p_wrap">
+                                            <input type="number" class="form-control w80p" id="price" min="0" placeholder="">
+                                            <em class="fc2">MACH</em>
+                                        </div>
+                                        <p class="fcrd">※ 1MACH = 1$</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Price(Point)</th>
+                                    <td>
+                                        <div class="no_w100p_wrap">
+                                            <input type="number" class="form-control w80p" id="point" min="0" placeholder="" onkeypress="return checkDecimal(event)">
+                                            <em class="fc2" id="currencyName"></em>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>
+                                        <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="mrg_cell">
+                                    <td colspan="2">
+                                        <div class="btn_align_c">
+                                            <button class="btn btn_in_view1" id="btnSubmit">edit</button>
+                                        </div>
+                                    </td>
+                                </tr>  
+                            </tbody>
+                        </table>
+                    </div>              
+                    <!--// 거래정보 -->
+                </div>
+                <!--// 상품정보 : 이미지 업로드 UI 포함 -->
+            </section>
+            <!--// view page-->
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+
+        // 이미지 정보들을 담을 배열
+        var itemId;
+        
+        $(document).ready(function() {
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $("#btnSubmit").on('click', function(){
+                submit();
+            });
+
+            getData();
+        });
+
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/service/" + "<%= id%>"
+            }).done(function (success) {
+                //console.log(success);
+                
+                itemId = success.data._id;
+                var regDate = success.data.regDate;
+                var title = success.data.title;
+                var price = success.data.price;
+                var point = success.data.point;
+                var status = getStatus(success.data.status);
+                var trade_type = replaceType(success.data.trade_type);
+                var desc = success.data.desc;
+                
+                $("#title").val(title);
+                $("#price").val(price);
+                $("#point").val(point);
+                $("#desc").text(desc);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function submit() {
+            var country = "<%= country %>";
+            if ($("#title").val() == "") {
+                alert('Please enter a title.');
+                return false;
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseInt($("#price").val()) < 0) {
+                alert('Please enter a Price(MACH).');
+                return false;
+            } else if (country == "KR" && ($("#point").val() == "" || $("#point").val() == "0" || parseInt($("#point").val()) < 0)) {
+                alert('Please enter a Price(Point).');
+                return false;
+            } else if ($("#desc").val() == "") {
+                alert('Please enter a Description.');
+                return false;
+            } 
+
+            var data = {
+                "userTag": "<%= userTag %>",
+                "title": $("#title").val(),
+                "desc": $("#desc").val(),
+                "count": 1
+            };
+            data["price"] = $("#price").val();
+            data["currency"]="POINT";
+            data["point"]=$("#point").val();
+            
+            console.log(data);
+            
+            $.ajax({
+                method: "PUT",
+                url: "/v1/items/" + itemId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                location.href = '/otc-buys/detail/' + itemId;
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+            })
+        }
+    </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

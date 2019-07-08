@@ -205,13 +205,37 @@ var MainUi = {
     slickSlide: function() {
         // Main Visual
         $('.slick_visual').slick({
-            dots: true,
-            speed: 1200,
+            dots: false,
+            speed: 600,
             autoplay: true,
             autoplaySpeed: 6000,
             fade: true,
             cssEase: 'linear',
-        }); 
+            //asNavFor: '#navSlcikVisual',
+            pauseOnHover: false,
+            responsive: [
+                {
+                    breakpoint: 993,
+                    settings: { 
+                        dots: true,
+                    }
+                },
+            ]
+        }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
+            $('.nav_text_box').removeClass("on").eq(nextSlide).addClass("on");
+        });
+        
+        var navVisualLength;
+        if(document.getElementById("navSlcikVisual")) {
+            navVisualLength = parseInt(document.getElementById("navSlcikVisual").getAttribute("nav-visual-length"));
+        }
+        $('#navSlcikVisual').slick({
+            slidesToShow: navVisualLength,
+            asNavFor: '.slick_visual',
+            focusOnSelect: true,
+            pauseOnHover: false,
+        });
+
         // PRIME ZONE card UI
         $('.slick_primezone').slick({
             dots: true,
@@ -300,9 +324,9 @@ var MainUi = {
             target[i].addEventListener("click", function(e) {
                 var eTarget = e.target.parentNode.nextElementSibling; // trade_list
                 //console.log(eTarget, eTarget.classList[0]);
-                if(eTarget.classList[0] === "trade_list"){
+                if(eTarget.classList[3] === "toggleTable"){
                     for(var j=0; j < len; j++){
-                        document.querySelectorAll(_obj.sec + " .trade_list")[j].style.display="none";
+                        document.querySelectorAll(_obj.sec + " .toggleTable")[j].style.display="none";
                         document.querySelectorAll(_obj.sec + " > h2")[j].classList.remove("on");
                         document.querySelectorAll(_obj.sec + " "+_obj.btn)[j].classList.remove("on");
                     }
