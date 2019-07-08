@@ -224,8 +224,7 @@ var MainUi = {
         }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
             $('.nav_text_box').removeClass("on").eq(nextSlide).addClass("on");
         });
-               
-        var navVisualLength = parseInt(document.getElementById("navSlcikVisual").getAttribute("nav-visual-length"));
+
         $('#navSlcikVisual').slick({
             slidesToShow: 5,
             asNavFor: '.slick_visual',
