@@ -23,7 +23,6 @@
                 if($(this).text() == "인증코드 재전송" ) {
                     alert("인증코드가 재전송 되었습니다.");
                 }
-                $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
                 sendAuthNo();
             });
 
@@ -67,7 +66,7 @@
                 alert("전화번호를 입력하세요.");
                 return;
             }
-
+            $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
                 'phone': $("#phone").val()
