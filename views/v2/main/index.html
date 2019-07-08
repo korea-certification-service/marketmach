@@ -290,7 +290,7 @@
                     money = price + '<span>'+cryptoCurrencyCode+'</span>';
                 }
                 
-                result += '<h1 class="tit_main_sec main_tit_assets">자산거래</h1>' +
+                result += 
                 '<div class="bd_area">' +
                     '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
                         '<img src="'+image_src+'" alt="">' +
@@ -306,7 +306,7 @@
                     '</dl></a>' +
                 '</div>';
             }
-            $('#assets_trade_sec').html(result);
+            $('#assetsTrade').html(result);
         }
 
         function setCommunityMovie(data) {
@@ -409,6 +409,13 @@
                         </a>
                     </div>                     
                     -->                                                
+                </div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>마하코인 2차 IEO</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>에어드롭 이벤트</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마켓마하 오픈베타</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>친구추천 이벤트</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마하 어드벤쳐</em></div></div>
                 </div>
             </section>
         </div>
@@ -518,7 +525,9 @@
                     </div>             
                 </section>
                 <!--// 게임 아이템 판매/구매 -->
-                <section id="assets_trade_sec" class="assets_trade_sec col-lg-4">
+                <section class="assets_trade_sec col-lg-4">
+                    <h1 class="tit_main_sec main_tit_assets">자산거래<a class="detail_plus" href="/etc-sells?category=etc&trade_type=sell"></a></h1>
+                    <div id="assetsTrade"></div>
                 </section>
             </div>   
   
@@ -569,7 +578,7 @@
                 </section>
                 <!--// OTC 아이템 판매/구매 -->
                 <section class="secNoti1 noti_area col-lg-4">
-                    <h1 class="tit_main_sec main_tit_notice">Notice</h1>
+                    <h1 class="tit_main_sec main_tit_notice">Notice<a class="detail_plus" href="/supports/notice"></a></h1>
                     <div class="bd_area">
                         <ul id="notice_list" class="noti_list">
                         </ul>       

@@ -131,7 +131,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .nav > .r_menu > li{float: left; width: 50%;}
 .header .nav > .r_menu > li .notice_number{visibility: hidden; display: inline-block; margin-left: 20px; width: 22px; height: 22px; line-height: 22px; border-radius: 50% 50%; text-align: center; background-color: red; color: #ffffff; font-weight: bold;}
 .header .nav > .r_menu > li .btn_info_box{width: 100%; height: 50px; text-align: center; border: none; background-color: #dadada;}
-.header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; right: 0; width: 220px; padding: 15px; text-align: center; background-color: #ffffff; border: 1px solid #c1c1c1;}
+.header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; right: 0; width: 220px; padding: 10px 15px; text-align: center; background-color: #ffffff; border: 1px solid #c1c1c1;}
 .header .nav > .r_menu > li .floating_info_box > ul > li{padding: 20px 0;}
 .header .nav > .r_menu > li .floating_info_box .btn{width: 100%;font-size: 14px;font-weight: bold;height: 40px;padding: 10px 0;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info{padding-top: 15px;}
@@ -297,6 +297,22 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .visual_wrap .visual_sec .slick_visual .pc_img{}
 .visual_wrap .visual_sec .slick_visual .mob_img{display: none;}
 /* --slick Layout setting-- */
+.nav_slick_visual{position: absolute; bottom: 0; z-index: 3; width: 1200px; height: 60px; left: 50%; margin-left: -600px; overflow: hidden;}
+.nav_slick_visual .slick-list{height: 60px;}
+.nav_slick_visual .slick-list .slick-track{height: 60px;}
+.nav_slick_visual .nav_text_box{margin-right: 1px; display: inline-block; height: 60px; line-height: 60px; text-align: center; font-size: 16px; cursor: pointer; color: #ffffff; background: rgba(0, 0, 0, 0.6)}
+.nav_slick_visual .nav_text_box .nav_text_box_inner{position: relative; height: 5px; top: 55px;}
+.nav_slick_visual .nav_text_box .nav_text_box_inner em{position: relative; z-index: 10; top: -55px;}
+/* 비주얼 애니메이션 on */
+.nav_slick_visual .nav_text_box.on .nav_text_box_inner {font-weight: bold; background-color: lightgray; position: relative;}
+.nav_slick_visual .nav_text_box.on .nav_text_box_inner:after{
+    animation: progress 7s ease-in-out forwards;  
+    background-color: red; transition: 0.3s all linear; position: absolute; bottom: 0; left: 0; height: 5px; display: block; content: ''; clear: both;
+}
+@keyframes progress {
+    from {width: 0;}
+    to {width: 100%;}
+}
 
 /* COIN 시세 */
 .btm_visual_sec{margin: auto; position: relative; max-width: 1200px; height: 58px;}
@@ -397,6 +413,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 
 /* 메인 리스트 테이블 공통 */
 .tit_main_sec{padding-left: 20px; height: 40px; line-height: 40px; font-size: 16px; font-weight: bold;}
+.tit_main_sec .detail_plus{float: right; margin-top: 15px; display: block; width: 16px; height: 17px; background: url(/static/img/main/ico_main_plus.png) 0 0 no-repeat; }
 .item_trade_sec{position: relative; height: 351px;}
 .item_trade_sec .main_tit_gameitem{background: url(/static/img/main/ico_gameitem.png) 0 13px no-repeat; background-size: 16px 16px;}
 .item_trade_sec .main_tit_otc{background: url(/static/img/main/ico_otc.png) 0 13px no-repeat; background-size: 16px 16px;}
@@ -519,12 +536,16 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .assets_trade_sec .bd_area{padding-bottom: 0;}
     .item_trade_sec .trade_list .table th{padding: 0 6px; height: 46px; font-size: 13px;}
     .item_trade_sec .trade_list .table td{padding: 0 6px; height: 46px; font-size: 13px;}   
+
+    .nav_slick_visual{width: 100%; left: 0; margin-left: 0;}
 }
 @media (max-width: 992px){
     .header .nav > .nav_menu > li > .depth2 > li{width: 100%;}
     /* visual section */
     .visual_wrap{height: 350px;}
     .visual_wrap .visual_sec{height: 350px;}
+    .nav_slick_visual{display: none;}
+    .visual_wrap .visual_sec .slick_visual .slick-dots{display: block;}
     /* COIN 시세 */
     .btm_visual_sec .flow_box:nth-child(1){width: 150px}
     .btm_visual_sec .flow_box:nth-child(2){width: calc(100% - 180px);}
