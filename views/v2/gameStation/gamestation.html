@@ -15,7 +15,9 @@
             url: "/v1/gameCenter/"+userId+"/info"
         }).done(function (success) {
             console.log(success.data);
-            $("#mcs1_coin").text(success.data.total_mcs1_coin);
+            if(success.data != null) {
+                $("#mcs1_coin").text(success.data.total_mcs1_coin);
+            }
         }).fail(function (fail) {
             console.log(fail);
         })
