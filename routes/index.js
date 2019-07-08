@@ -245,7 +245,11 @@ router.get('/agreement', function (req, res, next) {
 });
 
 router.get('/certification', function (req, res, next) {
-    res.render('v2/login/certification');
+    if(dbconfig.country =="KR") {
+        res.render('v2/login/certification');
+    } else {
+        res.render('v2_en/login/certification');
+    }
 });
 
 router.get('/signup', function (req, res, next) {
