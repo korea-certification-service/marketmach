@@ -549,9 +549,9 @@ router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, 
     }
 });
 
-router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/myPage/mygrade', {
+        res.render('v2/myPage/auth_phone', {
             title: 'Bitweb user grade',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -563,7 +563,7 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
             arrDepth:[6,3]
         });
     } else {
-        res.render('v2_en/myPage/mygrade', {
+        res.render('v2_en/myPage/auth_phone', {
             title: 'Bitweb user grade',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -573,6 +573,34 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             arrDepth:[6,3]
+        });
+    }
+});
+
+router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/myPage/mygrade', {
+            title: 'Bitweb user grade',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,4]
+        });
+    } else {
+        res.render('v2_en/myPage/mygrade', {
+            title: 'Bitweb user grade',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,4]
         });
     }
 });

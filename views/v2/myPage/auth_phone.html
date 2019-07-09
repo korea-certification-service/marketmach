@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+    $(document).ready(function(){
+        $.ajax({
+            method: "GET",
+            url: "/v1/users/" + userId
+        }).done(function (success) {
+            if(success.data.birth == "") {
+                $("#authPhone").text('휴대폰 인증');
+                $("#authPhone").prop('disabled', false);
+            }
+        });
+
+        $("#authPhone").on('click', function() {
+            authPhoneCall();
+        });
+    });
+    
+    function authPhoneCall(){
+        if (isPc()) {
+            popup = window.open("/reg/auth/start","PAY_WIN","width=480,height=570,toolbar=no,menubar=no,scrollbars=no,resizable=yes");
+            var interval = window.setInterval(function() {
+                try {
+                    //console.log("popup : ", popup);
+                    if (popup == null || popup.closed) {
+                        window.clearInterval(interval);
+                        var param = "";
+                        if ($("input:checkbox[id=cbk4]").is(":checked")) {
+                            param = "?pushMarketing=Y";
+                        }
+                        location.reload();
+                    }
+                }
+                catch (e) {
+                }
+            }, 2000);
+        } else {
+            location.href = '/reg/auth/start';
+        }
+    }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">회원정보관리 <span>휴대폰 본인 인증</span></h1>
+                        <hr class="hr_mypage">
+                        <h2 class="tit_mypage dot_tit">휴대폰 본인 인증</h2>
+                        <div class="coin_certification">
+                            <dl class="cf">
+                                <dd>
+                                    <button class="btn btn_in_view1" id="authPhone" disabled>휴대폰 인증 완료</button>
+                                </dd>
+                            </dl>
+                        </div>                   
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>                

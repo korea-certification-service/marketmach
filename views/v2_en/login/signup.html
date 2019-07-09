@@ -117,7 +117,7 @@
                 "foreigner": "<%=foreigner%>",
                 "agreements": {
                     "use": "true",
-                    "teenager": "true",
+                    "teenager": "false",
                     "privacy": "true",
                     "pushTrade":"true",
                     "pushMarketing": "false",
@@ -130,9 +130,9 @@
                 }
             };
             
-            if(diffAge < 19) {
-                signUpForm.agreements.teenager = "false";
-            }
+            // if(diffAge < 19) {
+            //     signUpForm.agreements.teenager = "false";
+            // }
 
             if("<%=pushMarketing%>" == "true") {
                 signUpForm.agreements.pushMarketing = "true";

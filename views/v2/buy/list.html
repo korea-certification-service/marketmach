@@ -82,7 +82,8 @@
             });
 
             $('#register').on('click',function() {
-                location.href = '/buys/register';
+                checkTeenager('/buys/register');
+                //location.href = '/buys/register';
             });
         });
 
@@ -230,7 +231,8 @@
         }
 
         function detail(id) {
-            location.href="/buys/detail/" + id;
+            checkTeenager('/buys/detail/'+id);
+            //location.href="/buys/detail/" + id;
         }
     </script>
     <!-- content_wrap -->

@@ -109,6 +109,30 @@
         document.body.removeChild(t);
         alert("copied");
     }
+
+    function checkTeenager(url) {
+        if(userId == "") {
+            location.href = '/login';
+        } else {
+            $.ajax({
+                method: "GET",
+                url: "/v1/users/" + userId
+            }).done(function (success) {
+                if(success.data.agreement.teenager == false) {
+                    if(success.data.birth == "") {
+                        //console.log('준비중');
+                        location.href = '/myPages/user/authPhone';
+                    } else {
+                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.');
+                    }
+                } else {
+                    location.href = url;
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+    }
 </script>
     <header class="mob_header">
         <!-- 모바일 검색영역 -->
@@ -170,7 +194,8 @@
                                 <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th>
                                 <!-- <th><a href="/shopping/view">한정 이벤트</a></th>  -->
                                 <!-- <th><a href="/gameStation/" class="fcbk">게임스테이션</a></th> -->
-                                <th><a href="/community/board" class="fcbk">게임소식</a></th>
+                                <th><a href="http://mymach.creatorlink.net" target="_blank" class="fcbk">이벤트</a></th>
+                                <!-- <th><a href="/community/board" class="fcbk">게임소식</a></th> -->
                                 <th><a href="javascript:alert('기능 개선 중입니다.');" target="_blank">환전소</a></th>
                                 <th></th>
                             </tr>
@@ -182,13 +207,13 @@
                 <dl class="lft_menu">
                     <dt class="fc2">판매등록</dt>
                     <dd>
-                        <a href="/sells/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="javascript:checkTeenager('/sells/register');" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">자산거래</a>
                         <a href="/otc-sells/register" class="bgc2 mob_rnd_btn">OTC거래</a>
                     </dd>
                     <dt class="fc2">구매등록</dt>
                     <dd>
-                        <a href="/buys/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="javascript:checkTeenager('/buys/register');" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-buys/register" class="bgc2 mob_rnd_btn">자산거래</a>
                         <a href="/otc-buys/register" class="bgc2 mob_rnd_btn">OTC거래</a>
                     </dd>

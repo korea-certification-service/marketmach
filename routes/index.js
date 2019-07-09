@@ -8,6 +8,7 @@ var BitwebResponse = require('../utils/BitwebResponse');
 var request = require('request');
 
 let controllerUsers = require('../controllers/users');
+var controllerAgreements = require('../controllers/agreements');
 let controllerBusinessContacts = require('../controllers/businessContacts');
 let controllerAuthPhone = require('../controllers/authPhones');
 let client_id = 'N190vIFvGWb_8YJWKoLJ';
@@ -664,7 +665,46 @@ router.post('/reg/auth/okurl', function (req, res, next) {
             req.session.foreigner = result.Foreigner;
             req.session.authPhone = true;
 
-            res.render('v2/auth/okurl', result);
+            //res.render('v2/auth/okurl', result);
+            let reqData = {
+                "birth": result.Socialno,
+                "userName": result.Name,
+                "phone": result.No,
+                "countryCode":"+82",
+                "sex": result.Sex,
+                "commId": result.Commid,
+                "foreigner": result.Foreigner
+            }
+
+            let year = result.Socialno.substr(0,4);
+            let month = result.Socialno.substr(4,2);
+            let day = result.Socialno.substr(6,2);
+            let diffAge = util.checkAdult(new Date(year,month,day).toString(), new Date().toString());
+            let agreements = {
+                teenager: true
+            }
+            if(diffAge < 19) {
+                agreements.teenager = false;
+            }
+
+            var bitwebResponse = new BitwebResponse();
+            controllerUsers.updateByUserTag(dbconfig.country, req.session.userTag, reqData)
+            .then(user => {
+                controllerAgreements.updateById(dbconfig.country, user._doc.agreementId, agreements)
+                .then(agreement => {
+                    res.render('v2/auth/okurl');
+                }).catch((err) => {
+                    // console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                })
+            }).catch((err) => {
+                // console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
         } else {
             res.status(response.statusCode).end();
             console.log('error = ' + response.statusCode);

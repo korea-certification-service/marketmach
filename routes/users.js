@@ -88,11 +88,20 @@ router.get('/:userId', function (req, res, next) {
     if (req.params.userId != null) {
         controllerUsers.get(req)
             .then(result => {
-
-                delete result._doc.password;
-                bitwebResponse.code = 200;
-                bitwebResponse.data = result;
-                res.status(200).send(bitwebResponse.create())
+                controllerAgreements.getById(dbconfig.country, result._doc.agreementId)
+                .then(agreement => {
+                    delete result._doc.password;
+                    result._doc['agreement'] = agreement;
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = result;
+                    res.status(200).send(bitwebResponse.create())
+                }).catch((err) => {
+                    console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                })
+                
             }).catch((err) => {
             console.error('err=>', err)
             bitwebResponse.code = 500;
