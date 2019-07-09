@@ -36,6 +36,7 @@
             });
 
             $("#confirmWithdraw").on("click", function() {
+                $(this).attr("disabled","disabled");
                 reqWithdraw();
             });
 
