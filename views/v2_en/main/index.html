@@ -271,40 +271,42 @@
         function setEtcSellList(data) {
             var result = "";
 
-            for(var i=0; i<1; i++) {
-                var itemId = data[i]._id;
-                var item_type = getItemType(data[i].type);
-                var price = numberWithCommas(data[i].total_price);
-                var point = numberWithCommas(data[i].total_point);
-                var image_src;
-                if(data[i].images[0] === undefined || data[i].images[0] === "") {
-                    image_src = "/image/no-image.png";
-                } else {
-                    image_src = data[i].images[0].path;
+            if(data.length > 0) {
+                for(var i=0; i<1; i++) {
+                    var itemId = data[i]._id;
+                    var item_type = getItemType(data[i].type);
+                    var price = numberWithCommas(data[i].total_price);
+                    var point = numberWithCommas(data[i].total_point);
+                    var image_src;
+                    if(data[i].images[0] === undefined || data[i].images[0] === "") {
+                        image_src = "/image/no-image.png";
+                    } else {
+                        image_src = data[i].images[0].path;
+                    }
+                    var title = data[i].title;
+                    var regDate = data[i].regDate;
+                    var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                    var money = point + '<span>Point</span>';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                    }
+                    
+                    result += 
+                    '<div class="bd_area">' +
+                        '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
+                            '<img src="'+image_src+'" alt="">' +
+                        '</div>' +
+                        '<dl>' +
+                            '<dt>' +
+                                '<div class="assets_tit_txt ellipse">'+title+'</div>' +
+                            '</dt>' +
+                            '<dd class="cf">' +
+                                '<div class="money_txt">'+money+'</div>' +
+                                '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
+                            '</dd>' +
+                        '</dl></a>' +
+                    '</div>';
                 }
-                var title = data[i].title;
-                var regDate = data[i].regDate;
-                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
-                var money = point + '<span>Point</span>';
-                if("<%=useBlockchain%>" =='Y') {
-                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
-                }
-                
-                result += 
-                '<div class="bd_area">' +
-                    '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
-                        '<img src="'+image_src+'" alt="">' +
-                    '</div>' +
-                    '<dl>' +
-                        '<dt>' +
-                            '<div class="assets_tit_txt ellipse">'+title+'</div>' +
-                        '</dt>' +
-                        '<dd class="cf">' +
-                            '<div class="money_txt">'+money+'</div>' +
-                            '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
-                        '</dd>' +
-                    '</dl></a>' +
-                '</div>';
             }
             $('#assetsTrade').html(result);
         }

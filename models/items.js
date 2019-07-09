@@ -41,7 +41,8 @@ var itemsSchema = new Schema({
     item_tag:String,
     vtrTempId: String,
     clicked: Number,
-    primeService: String
+    primeService: String,
+    country: String
 });
 
 module.exports = itemsSchema;

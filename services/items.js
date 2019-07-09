@@ -54,6 +54,11 @@ function getItemCount(data) {
 
     if (data['primeService'] != undefined && data['primeService'] == "Y") arr_search[0]['primeService'] = data['primeService'];
     if (data['status'] != undefined) arr_search[0]['status'] = data['status'];
+    if (data['country'] != undefined) {
+        arr_search[0]['country'] = data['country'];
+    } else {
+        arr_search[0]['country'] = {$exists: false};
+    }
 
     if (data['userTag'] != undefined) {
         arr_search = [
@@ -101,6 +106,11 @@ function getItemCount(data) {
             if (data['primeService'] != undefined && data['primeService'] == "Y") etc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) etc_array_search[0]['status'] = data['status'];
             if (data['delivery_type'] != undefined) etc_array_search[0]['delivery_type'] = data['delivery_type'];
+            if (data['country'] != undefined) {
+                etc_array_search[0]['country'] = data['country'];
+            } else {
+                etc_array_search[0]['country'] = {$exists: false};
+            }
 
             if (data['userTag'] != undefined) {
                 etc_array_search = [
@@ -137,6 +147,11 @@ function getItemCount(data) {
 
             if (data['primeService'] != undefined && data['primeService'] == "Y") otc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) otc_array_search[0]['status'] = data['status'];
+            if (data['country'] != undefined) {
+                otc_array_search[0]['country'] = data['country'];
+            } else {
+                otc_array_search[0]['country'] = {$exists: false};
+            }
             
             if (data['userTag'] != undefined) {
                 otc_array_search = [
@@ -189,6 +204,11 @@ function getItemByRequired(data) {
 
     if (data['primeService'] != undefined && data['primeService'] == "Y") arr_search[0]['primeService'] = data['primeService'];
     if (data['status'] != undefined) arr_search[0]['status'] = data['status'];
+    if (data['country'] != undefined) {
+        arr_search[0]['country'] = data['country'];
+    } else {
+        arr_search[0]['country'] = {$exists: false};
+    }
 
     if (data['userTag'] != undefined) {
         arr_search = [
@@ -237,6 +257,11 @@ function getItemByRequired(data) {
             if (data['primeService'] != undefined && data['primeService'] == "Y") etc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) etc_array_search[0]['status'] = data['status'];
             if (data['delivery_type'] != undefined) etc_array_search[0]['delivery_type'] = data['delivery_type'];
+            if (data['country'] != undefined) {
+                etc_array_search[0]['country'] = data['country'];
+            } else {
+                etc_array_search[0]['country'] = {$exists: false};
+            }
 
             if (data['userTag'] != undefined) {
                 etc_array_search = [
@@ -276,6 +301,11 @@ function getItemByRequired(data) {
 
             if (data['primeService'] != undefined && data['primeService'] == "Y") otc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) otc_array_search[0]['status'] = data['status'];
+            if (data['country'] != undefined) {
+                otc_array_search[0]['country'] = data['country'];
+            } else {
+                otc_array_search[0]['country'] = {$exists: false};
+            }
             
             if (data['userTag'] != undefined) {
                 otc_array_search = [

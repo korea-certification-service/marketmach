@@ -23,6 +23,9 @@ router.get('/', function (req, res, next) {
     let country = dbconfig.country;
     let category = req.query.category;
     let data = {}
+    if(country != "KR") {
+        data['country'] = country;
+    }
     if (category == "game") {
 
         let game_name = req.query.game_name;
@@ -141,6 +144,9 @@ router.get('/all', function (req, res, next) {
     data['pageIdx'] = pageIdx;
     data['perPage'] = perPage;
     data['category'] = category;
+    if(country != "KR") {
+        data['country'] = country;
+    }
 
     controllerItems.getItemByRequired(country, data)
         .then(game_buys => {
@@ -618,6 +624,9 @@ router.post('/', function (req, res, next) {
         let country = dbconfig.country;
         let data = {}
         data = req.body;
+        if(country != "KR") {
+            data['country'] = country;
+        }
         data['total_price'] = req.body.price * req.body.count;
         data['total_point'] = req.body.point * req.body.count;
 

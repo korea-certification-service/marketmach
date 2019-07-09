@@ -47,7 +47,7 @@
                 location.href='/';
             }).fail(function (fail) {
                 if (fail.status == 403) {
-                    alert('아이디 또는 패스워드가 일치하지 않습니다.');
+                    alert('ID or Password is incorrect. Please enter again.');
                 } else {
                     console.log(fail);
                 }
@@ -99,20 +99,20 @@
         <input type="password" style="display:none" aria-hidden="true">
         <!--remove autocomplete end-->
 
-        <input class="login_ipt" type="text" name="id" id="userId" placeholder="아이디">
-        <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="비밀번호">
+        <input class="login_ipt" type="text" name="id" id="userId" placeholder="ID">
+        <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
 
         <!--
             <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
         -->
         <div class="text-center">
-            <button class="btn_login" onclick="login()">로그인</button>
+            <button class="btn_login" onclick="login()">Sign in</button>
         </div>
         <div class="login_btn_sec">
             <div class="col-lg-12 col-md-12 col-sm-12 form-inline text-center">
-                <a href="/findId" class="col-lg-4 col-md-4 col-sm-12">아이디 찾기</a>
-                <a href="/findPassword" class="col-lg-4 col-md-4 col-sm-12">비밀번호 찾기</a>
-                <a href="/agreement" class="col-lg-4 col-md-4 col-sm-12">회원가입</a>
+                <a href="/findId" class="col-lg-4 col-md-4 col-sm-12">Find ID</a>
+                <a href="/findPassword" class="col-lg-4 col-md-4 col-sm-12">Find Password</a>
+                <a href="/agreement" class="col-lg-4 col-md-4 col-sm-12">Sign Up</a>
             </div>            
         </div>
     </div>
