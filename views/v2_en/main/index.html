@@ -344,9 +344,19 @@
     <div class="content_wrap">
         <div class="visual_wrap">
             <section class="visual_sec">
-                <h1 class="blind">메인 비주얼 이미지 영역</h1>
+                <h1 class="blind">Main Banners</h1>
                 <div class="slick_visual">
                     <div class="visual_img">
+                        <a href="http://bit.ly/2JdWcsO" target="_blank">
+                            <div class="pc_img">
+                                <img src="/static/img/main/main_visual15.jpg" alt="LATOKEN">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/mob/m_main_visual15.jpg" alt="LATOKEN">
+                            </div>
+                        </a>
+                    </div>  
+                    <!-- <div class="visual_img">
                         <a href="/supports/notice/detail?noticeId=5d1db5ac5e0698631cae511d">
                             <div class="pc_img">
                                 <img src="/static/img/main/main_visual14.jpg" alt="마하코인 2차 IEO">
@@ -365,7 +375,7 @@
                                 <img src="/static/img/mob/m_main_visual13.jpg" alt="개인 자산 판매 에어드롭 이벤트">
                             </div>
                         </a>
-                    </div>                     
+                    </div>                      -->
                     <div class="visual_img">
                         <a href="/howto/trade/vtr">
                             <div class="pc_img">
@@ -376,7 +386,7 @@
                             </div>
                         </a> 
                     </div>                    
-                    <div class="visual_img">
+                    <!-- <div class="visual_img">
                         <a href="/supports/event/detail/5cb6d5081528652dd9937573">                                 
                             <div class="pc_img">
                                 <img src="/static/img/main/main_visual05.jpg" alt="회원추천">
@@ -395,7 +405,7 @@
                                 <img src="/static/img/mob/m_main_visual06.jpg" alt="마하 어드벤쳐">
                             </div>
                         </a>
-                    </div>                                       
+                    </div>                                        -->
                     <!--
                     <div class="visual_img">
                         <div class="visual_txt">
@@ -413,12 +423,13 @@
                     -->                                                
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
-                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
-                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>마하코인 2차 IEO</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>에어드롭 이벤트</em></div></div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="6">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>LATOKEN</em></div></div>
+                    <!-- <div class="nav_text_box"><div class="nav_text_box_inner"><em>마하코인 2차 IEO</em></div></div>    
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>에어드롭 이벤트</em></div></div> -->
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>마켓마하 오픈베타</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>친구추천 이벤트</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마하 어드벤쳐</em></div></div>
+                    <!-- <div class="nav_text_box"><div class="nav_text_box_inner"><em>친구추천 이벤트</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마하 어드벤쳐</em></div></div> -->
                 </div>
             </section>
         </div>
@@ -457,10 +468,10 @@
         <div class="container">
             <div class="w100p_banner row">
                 <div class="col-lg-12">
-                    <a class="mob_hide" href="https://open.kakao.com/o/gD3UkX4" target="_blank">
+                    <a class="mob_hide" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
                         <img src="/static/img/main/main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
                     </a>
-                    <a class="mob_show" href="https://open.kakao.com/o/gD3UkX4" target="_blank">
+                    <a class="mob_show" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
                         <img src="/static/img/mob/mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                     </a>
                 </div>
@@ -479,7 +490,7 @@
                 <section class="secGame item_trade_sec col-lg-8">
                     <h1 class="tit_main_sec main_tit_gameitem">Game Item</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnGame btn_show_list on">판매</button>
+                        <button class="btnGame btn_show_list on">Purchase</button>
                         <a class="detail_link" href="/sells?category=game&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>
                     </h2>
                     <div class="item_sell item_table_wrap trade_list toggleTable">              
@@ -492,10 +503,10 @@
                             </colgroup>
                             <thead>
                                 <tr class="active">
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Category</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="sell_list">                               
@@ -503,7 +514,7 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnGame btn_show_list">구매</button>
+                        <button class="btnGame btn_show_list">Sales</button>
                         <a class="detail_link" href="/buys?category=game&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>
                     </h2>
                     <div class="item_buy item_table_wrap trade_list toggleTable">
@@ -516,10 +527,10 @@
                             </colgroup>                            
                             <thead>
                                 <tr>
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Category</th>
+                                    <th>Game>Server </th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="buy_list">
@@ -529,7 +540,7 @@
                 </section>
                 <!--// 게임 아이템 판매/구매 -->
                 <section class="assets_trade_sec col-lg-4">
-                    <h1 class="tit_main_sec main_tit_assets">자산거래<a class="detail_plus" href="/etc-sells?category=etc&trade_type=sell"></a></h1>
+                    <h1 class="tit_main_sec main_tit_assets">Asset<a class="detail_plus" href="/etc-sells?category=etc&trade_type=sell"></a></h1>
                     <div id="assetsTrade"></div>
                 </section>
             </div>   
@@ -539,7 +550,7 @@
                 <section class="secOtc item_trade_sec col-lg-8">
                     <h1 class="tit_main_sec main_tit_otc">OTC</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnOtc btn_show_list on">판매</button>
+                        <button class="btnOtc btn_show_list on">Purchase</button>
                         <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
                     </h2>
                     <div class="otc_sell otc_table_wrap trade_list toggleTable">              
@@ -550,8 +561,8 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="otc_sell_list">                               
@@ -559,7 +570,7 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnOtc btn_show_list">구매</button>
+                        <button class="btnOtc btn_show_list">Sales</button>
                         <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
                     </h2>
                     <div class="otc_buy otc_table_wrap trade_list toggleTable">
@@ -570,8 +581,8 @@
                             </colgroup>                            
                             <thead>
                                 <tr>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody id="otc_buy_list">
@@ -602,7 +613,7 @@
             <div class="row">
                 <!-- 동영상 -->
                 <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_media">동영상</h1>
+                    <h1 class="tit_main_sec main_tit_media">Video</h1>
                     <div class="bd_area">
                         <div class="media_img_wrap cf">
                         </div>
@@ -612,7 +623,7 @@
             </div>
             <div class="row">
                 <section class="company_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_company">상장매체</h1>
+                    <h1 class="tit_main_sec main_tit_company">Media</h1>
                     <div class="bd_area">
                         <div class="cpn_box_wrap cf">
                             <div class="cpn_box"><a href="http://bitweb.co.kr/" target="_blank"><img src="/static/img/main/logo_bitweb.png" alt="비트웹" title="비트웹"></a></div>
@@ -655,9 +666,9 @@
     <div class="dim_all_area" style="display: none">
         <article class="modal_bitberry_deposit">
             <br>
-            <h1>휴대폰 인증 필요</h1>
-            <p>[나의 페이지->회원정보수정]에서 휴대폰 인증을 하시기 바랍니다.</p>
-            <button id="gotoUserInfo" class="btn btn-danger">확인</button>
+            <h1>Need to auth phone</h1>
+            <p>Need to auth phone [My Page->My Account].</p>
+            <button id="gotoUserInfo" class="btn btn-danger">OK</button>
         </article>
     </div>
     <% include ../include/footer.html %>
