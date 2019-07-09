@@ -36,7 +36,7 @@
             });
 
             $("#confirmWithdraw").on("click", function() {
-                $(this).attr("disabled","disabled");
+                $(this).attr("disabled","true");
                 reqWithdraw();
             });
 
@@ -199,6 +199,7 @@
             }).fail(function (fail) {
                 console.log(fail);
                 alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                $("#confirmWithdraw").attr("disabled", "false");
             });
         }
     </script>
