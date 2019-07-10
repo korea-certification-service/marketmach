@@ -21,4 +21,22 @@ router.get('/', function (req, res, next) {
     })
 });
 
+router.post('/add', function (req, res, next) {
+    let country = dbconfig.country;
+    let reqData = req.body;
+
+    var bitwebResponse = new BitwebResponse();
+    controllerCountryCodes.add(country, reqData)
+        .then(result => {
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
 module.exports = router;

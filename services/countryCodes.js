@@ -14,4 +14,18 @@ function get () {
     })
 }
 
+function add (data) {
+    return new Promise((resolve, reject) => {
+        var countryCodes = new CountryCodes(data)
+        countryCodes.save(function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result)
+            }
+        })
+    })
+}
+
 exports.get = get;
+exports.add = add;
