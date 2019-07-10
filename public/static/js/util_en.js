@@ -294,6 +294,16 @@ function checkDecimal(evt) {
     return true;
 }
 
+function checkValidDecimal(value) {
+    var reg = /^\d+\.?\d*$/;
+    if (!reg.test(value)) {
+        return false;
+    }
+
+    return true;
+}
+
+
 function resetSearchFilter(selector) {
     $(selector+ " input").each(function(){
         var $this = $(this);

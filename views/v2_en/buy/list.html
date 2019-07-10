@@ -61,7 +61,7 @@
                 if($(this).val() !== ""){
                     $("#titName").text($(this).val());
                 } else {
-                    $("#titName").text("모든 게임");
+                    $("#titName").text("All Games");
                 }
                 $('#btn_search').trigger('click');                
             });
@@ -72,7 +72,7 @@
                 if($(this).val() !== ""){
                     $("#titServer").text($(this).val());
                 } else {
-                    $("#titServer").text("모든 서버");
+                    $("#titServer").text("All Servers");
                 }
                 $('#btn_search').trigger('click');                
             });
@@ -92,7 +92,7 @@
                 method: "GET",
                 url: "/v1/games"
             }).done(function (success) {
-                var strDOM = '<option value="">모든 게임</option>';
+                var strDOM = '<option value="">All Games</option>';
                 for (var i = 0; i < success.data.length; i++) {
                     strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
                 }
@@ -129,7 +129,7 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">모든 서버</option>';
+            var strDOM = '<option value="">All Servers</option>';
 
             for (var i = 0; i < data.servers.length; i++) {
                 strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
@@ -175,7 +175,7 @@
                     createData(success.data.list);
                 } else {
                     if(pageIdx == 0) {
-                        $("#list").html("<tr><td colspan='5'>검색 결과를 찾을 수 없습니다.</td></tr>")
+                        $("#list").html("<tr><td colspan='5'>No exist.</td></tr>")
                     }
                 }
 
@@ -241,13 +241,13 @@
             <!-- list page-->
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>게임아이템 삽니다<span><em id="titName">모든 게임</em> > <em id="titServer">모든 서버</em></span></h1>
-                    <button class="btn btn-success" id="register">구매등록</button>
+                    <h1>Buy Game Items<span><em id="titName">All</em> > <em id="titServer">All</em></span></h1>
+                    <button class="btn btn-success" id="register">Add Sales</button>
                 </div>
                 <div class="search_filter">
                     <ul class="">
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">게임/서버</h2>
+                            <h2 class="col-sm-2 col-xs-12">Game/Server</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
                                 <select class="selectpicker" id="game-name" data-live-search="true">
                                 </select>
@@ -256,31 +256,31 @@
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품유형</h2>
+                            <h2 class="col-sm-2 col-xs-12">Categoty</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="item_type" id="all" value="" checked><label for="all">전체</label>
-                                <input type="radio" name="item_type" id="item" value="item"><label for="item">아이템</label>
-                                <input type="radio" name="item_type" id="gameMoney" value="gameMoney"><label for="gameMoney">게임머니</label>
-                                <input type="radio" name="item_type" id="etc" value="etc"><label for="etc">기타</label>
+                                <input type="radio" name="item_type" id="all" value="" checked><label for="all">All</label>
+                                <input type="radio" name="item_type" id="item" value="item"><label for="item">Item</label>
+                                <input type="radio" name="item_type" id="gameMoney" value="gameMoney"><label for="gameMoney">Game Money</label>
+                                <input type="radio" name="item_type" id="etc" value="etc"><label for="etc">Etc</label>
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
+                            <h2 class="col-sm-2 col-xs-12">Status</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="status" id="all" value="" checked><label for="all">전체</label>
-                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">거래가능</label>
-                                <input type="radio" name="status" id="trading" value="101"><label for="trading">거래중</label>
-                                <input type="radio" name="status" id="trade_complete" value="104"><label for="trade_complete">거래완료</label>
+                                <input type="radio" name="status" id="all" value="" checked><label for="all">All</label>
+                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">Available</label>
+                                <input type="radio" name="status" id="trading" value="101"><label for="trading">Trading</label>
+                                <input type="radio" name="status" id="trade_complete" value="104"><label for="trade_complete">Traded</label>
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <h2 class="col-sm-2 col-xs-12">Keyword</h2>
                             <div class="col-sm-10 col-xs-12">
                                 <div class="w100p-120px">
                                     <input type="text" class="form-control" id="item_title">
                                 </div>
                                 <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="Search">
                                 </div>
                             </div>
                         </li>                        
@@ -298,11 +298,11 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>게임>서버</th>
-                                <th>제목</th>
-                                <th>거래가격</th>
-                                <th>거래상태</th>
-                                <th>등록일</th>
+                                <th>Game > Server</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="list">
@@ -310,7 +310,7 @@
                     </table>                 
                 </div>
                 <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                    <button class="btn btn_more_list" id="more_search">More 20</button>
                 </div>
             </section>
             <!--// list page-->
