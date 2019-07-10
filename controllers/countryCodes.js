@@ -12,8 +12,22 @@ function get(country) {
             reject(err)
         })
     })
+}
+
+function add(country, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCountryCodes.add(data))
+            .then((result) => {
+                //console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
 
 }
 
 
 exports.get = get;
+exports.add = add;
