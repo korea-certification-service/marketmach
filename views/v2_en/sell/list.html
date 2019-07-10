@@ -222,7 +222,7 @@
                                 '<td>' + 
                                     '<span class="btn_cmm_bd '+item_type.className+'">'+ item_type.text +'</span>';
                 if(data[i].images.length != 0) {
-                    strDOM +=          '<span class="ico_photo">사진</span>';
+                    strDOM +=          '<span class="ico_photo">Photo</span>';
                 }
                 strDOM +=              '<div class="no_ellipse"> ' + title + 
                                         '<span class="reply_num">('+replyCount+')</span>' + 
@@ -250,8 +250,8 @@
             <!-- list page-->
             <section class="board_sec c_style_sell">
                 <div class="board_tit cf">
-                    <h1>Purchase Game Items<span><em id="titName">All Game</em> > <em id="titServer">All Server</em></span></h1>
-                    <button class="btn btn-success" id="register">Add Purchase</button>
+                    <h1>Sell Game Items<span><em id="titName">All Game</em> > <em id="titServer">All Server</em></span></h1>
+                    <button class="btn btn-success" id="register">Register to Sell</button>
                 </div>
                 <div class="search_filter">
                     <ul class="">
@@ -283,13 +283,13 @@
                             </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <h2 class="col-sm-2 col-xs-12">Keyword</h2>
                             <div class="col-sm-10 col-xs-12">
                                 <div class="w100p-120px">
                                     <input type="text" class="form-control" id="item_title">
                                 </div>
                                 <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="Search">
                                 </div>
                             </div>
                         </li>
@@ -311,11 +311,11 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>게임>서버</th>
-                                <th>제목</th>
-                                <th>거래가격</th>
-                                <th>거래상태</th>
-                                <th>등록일</th>
+                                <th>Game > Server</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="list">
@@ -323,7 +323,7 @@
                     </table>                 
                 </div>
                 <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                    <button class="btn btn_more_list" id="more_search">more 20</button>
                 </div>
             </section>
             <!--// list page-->

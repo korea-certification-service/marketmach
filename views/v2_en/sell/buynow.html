@@ -17,10 +17,9 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- view page-->
-            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_sell">
                 <div class="board_tit cf">
-                    <h1>게임아이템 팝니다<span>바로구매 신청</span></h1>
+                    <h1>Sell Game Items<span>Buy now</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -270,7 +269,7 @@
                 }
                 
                 $(".view_emphasis").text(item_type.text);
-                $(".posting_date").text("등록일 : " + regDate);
+                $(".posting_date").text("Date : " + regDate);
                 $(".item_title").text(title);
                 $(".item_game_server").text(item_game_server);
                 $(".item_type").addClass(item_type.className);
@@ -329,7 +328,7 @@
         }
 
         function pointBuynow() {
-            var confirmYn = confirm("거래를 시작하시겠습니까?");
+            var confirmYn = confirm("Are you start trading?");
             if(confirmYn) {
                 var params = {
                     "itemId": itemId,
@@ -346,7 +345,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('거래가 시작되었습니다.\r 연락처 표시 버튼을 클릭하여 연락하시기 바랍니다.');
+                        alert('The transaction has started.\r Please contact directly by clicking [View Contact] button.');
                         location.href = "/sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);

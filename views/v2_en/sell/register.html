@@ -16,10 +16,9 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- view page-->
-            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_sell">
                 <div class="board_tit cf">
-                    <h1>게임아이템 판매등록</span></h1>
+                    <h1>Sell Game Items <span>Add Sales</span></h1>
                 </div>
 
                 <!-- 거래정보 -->
@@ -31,12 +30,12 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><em class="dot_tit">거래정보 등록</em></th>
+                                <th colspan="2"><em class="dot_tit">Listing Details</em></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>게임>서버</th>
+                                <th>Game > Server</th>
                                 <td>
                                     <div id="virture_h" class="virture_h">
                                         <select class="selectpicker" id="game-name" data-live-search="true">
@@ -47,7 +46,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>상품유형</th>
+                                <th>Categoty</th>
                                 <td>
                                     <div class="form-inline radio_wrap">
                                         <div class="form-group">
@@ -63,11 +62,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>거래제목</th>
-                                <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력" maxlength="50"></td>
+                                <th>Title</th>
+                                <td><input type="text" class="form-control" id="title" placeholder="Please enter a Title." maxlength="50"></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>Price</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <select class="custom-select w30p" id="cryptoCurrencyCode">
@@ -75,17 +74,17 @@
                                             <option value="ETH">ETH</option>
                                             <option value="MACH" selected>MACH</option>
                                         </select>
-                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="Please enter a transaction Price." onkeypress="return checkDecimal(event)">
                                     </div>
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
                             <tr>
-                                <th>판매자 캐릭터명</th>
-                                <td><input type="text" class="form-control" id="game_character" placeholder="물품을 전달 하실 본인의 캐릭터명 입력"></td>
+                                <th>Character's Name</th>
+                                <td><input type="text" class="form-control" id="game_character" placeholder="Please enter your game character's name to trade the item."></td>
                             </tr>
                             <tr>
-                                <th>상품이미지</th>
+                                <th>Image</th>
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
@@ -111,7 +110,7 @@
                             <tr class="mrg_cell">
                                 <td colspan="2">
                                     <div class="input_wrap">
-                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+                                        <span>It takes a long time to upload a high-quality image.</span>
 
                                         <input type="file" class="input_imgs" id="input_imgs0" index="0" accept="image/*"/>
                                         <input type="file" class="input_imgs" id="input_imgs1" index="1" accept="image/*"/>
@@ -123,7 +122,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>상세정보</th>
+                                <th>Description</th>
                                 <td>
                                     <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
                                 </td>
@@ -134,13 +133,13 @@
                 <!--// 거래정보 -->
 
                 <ul class="fcrd mb50">
-                    <li>※ 입력하신 정보는 구매자가 구매확인 시 전달됩니다.</li>
-                    <li>※ 입력하신 정보의 오 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
-                    <li>※ 게시글에 맞지 않는 양식으로 작성될 경우 관리자에 의해 이동 및 삭제 될 수 있습니다.</li>
+                    <li>※ The information you enter will be passed on to the buyer upon confirmation of purchase.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
+                    <li>※ If it is written in a form that does not fit the post, it may be moved and deleted by the administrator.</li>
                 </ul>
 
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="btnSubmit">등록하기</button>
+                    <button class="btn btn_in_view1" id="btnSubmit">write</button>
                 </div>
             </section>
             <!--// view page-->
@@ -216,7 +215,7 @@
     }
 
     function renderServerSelect(data) {
-        var strDOM = '<option value="">선택하세요</option>';
+        var strDOM = '<option value="">Server</option>';
 
         for (var i = 0; i < data.servers.length; i++) {
             strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
@@ -228,16 +227,16 @@
     function submit() {
         var country = "<%= country %>";
         if ($("#game-name option:selected").val() == "") {
-            alert('게임명을 선택하세요.');
+            alert('Please select a Game');
             return false;
         } else if ($("#game-server option:selected").val() == "") {
-            alert('서버명을 선택하세요.');
+            alert('Please select a Server');
             return false;
         } else if ($("[name=item_type]:checked").val() == "") {
-            alert('상품유형을 선택하세요.');
+            alert('Please select a Category');
             return false;
         } else if ($("#title").val() == "") {
-            alert('거래제목을 입력하세요.');
+            alert('Please enter a Title.');
             return false;
         } else if ($("#game_character").val() == "") {
             alert('판매자 케릭터명을 입력하세요.');
