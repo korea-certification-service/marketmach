@@ -121,10 +121,10 @@
                 if(success.data.agreement.teenager == false) {
                     if(success.data.birth == "") {
                         //console.log('준비중');
-                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.\n 미성년자 유무 확인을 위한 휴대폰 본인 인증을 진행합니다.');
+                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 및 OTC거래가 불가능 합니다.\n 미성년자 유무 확인을 위한 휴대폰 본인 인증을 진행합니다.');
                         location.href = '/myPages/user/authPhone';
                     } else {
-                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.');
+                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 및 OTC거래가 불가능 합니다.');
                     }
                 } else {
                     location.href = url;
