@@ -226,8 +226,10 @@ var MainUi = {
         });
         
         var navVisualLength;
-        if(document.getElementById("navSlcikVisual")) {
-            navVisualLength = parseInt(document.getElementById("navSlcikVisual").getAttribute("nav-visual-length"));
+        var navSlcikVisual = document.getElementById("navSlcikVisual");
+        if(navSlcikVisual) {
+            navVisualLength = parseInt(navSlcikVisual.getAttribute("nav-visual-length"));
+            navSlcikVisual.querySelectorAll(".nav_text_box")[0].classList.add("on");
         }
         $('#navSlcikVisual').slick({
             slidesToShow: navVisualLength,
