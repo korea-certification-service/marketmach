@@ -690,6 +690,7 @@ router.post('/reg/auth/okurl', function (req, res, next) {
             .then(user => {
                 controllerAgreements.updateById(dbconfig.country, user._doc.agreementId, agreements)
                 .then(agreement => {
+                    req.session.teenager = agreements.teenager;
                     res.render('v2/auth/okurl');
                 }).catch((err) => {
                     // console.error('err=>', err)
