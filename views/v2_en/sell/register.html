@@ -97,11 +97,11 @@
                                             </ul>
 
                                             <ul class="thumbnail_btn_list cf">
-                                                <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
-                                                <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
-                                                <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
-                                                <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
-                                                <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs0" class="label_input_imgs">Select IMG</label></li>
+                                                <li><label for="input_imgs1" class="label_input_imgs">Select IMG</label></li>
+                                                <li><label for="input_imgs2" class="label_input_imgs">Select IMG</label></li>
+                                                <li><label for="input_imgs3" class="label_input_imgs">Select IMG</label></li>
+                                                <li><label for="input_imgs4" class="label_input_imgs">Select IMG</label></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                 </ul>
 
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="btnSubmit">write</button>
+                    <button class="btn btn_in_view1" id="btnSubmit">save</button>
                 </div>
             </section>
             <!--// view page-->
@@ -215,7 +215,7 @@
     }
 
     function renderServerSelect(data) {
-        var strDOM = '<option value="">Server</option>';
+        var strDOM = '<option value="">Choice</option>';
 
         for (var i = 0; i < data.servers.length; i++) {
             strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
@@ -239,31 +239,31 @@
             alert('Please enter a Title.');
             return false;
         } else if ($("#game_character").val() == "") {
-            alert('판매자 케릭터명을 입력하세요.');
+            alert('Please enter a character\'s name.');
             return false;
         } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-            alert('거래 가격을 입력하세요.');
+            alert('Please enter a price.');
             return false;
         } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
-            alert('거래 가격(Point)을 입력하세요.');
-            return false;
+            // alert('거래 가격(Point)을 입력하세요.');
+            // return false;
         // } else if (sel_files.length == 0) {
         //     if($("[name=item_type]:checked").val() == "item") {
         //         alert('상품 이미지를 업로드 하세요.');
         //         return false;
         //     }
         } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
+            alert('Please enter only numbers in a price.');
                 return false;
         } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
-            alert('거래 가격(Point)을 숫자로 입력하세요.');
-            return false;
+            // alert('거래 가격(Point)을 숫자로 입력하세요.');
+            // return false;
         } else if ($("#desc").val() == "") {
-            alert('상세 정보를 입력하세요.');
+            alert('Please enter a description.');
             return false;
         } else if (country == "CN" && $("#region1").val() == "") {
-            alert('지역 1 입력');
-            return false;
+            // alert('지역 1 입력');
+            // return false;
         } 
         // else if (country == "CN" && $("#region2").val() == "") {
         //     swal({

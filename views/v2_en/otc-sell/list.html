@@ -86,7 +86,7 @@
                     createData(success.data.list);
                 } else {
                     if(pageIdx == 0) {
-                        $("#list").html("<tr><td colspan='4'>검색 결과를 찾을 수 없습니다.</td></tr>")
+                        $("#list").html("<tr><td colspan='4'>No exist.</td></tr>")
                     }
                 }
 
@@ -134,7 +134,7 @@
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
                                 '<td>';
                                     if(data[i].images.length != 0) {
-                    strDOM +=          '<span class="ico_photo">사진</span>';
+                    strDOM +=          '<span class="ico_photo">photo</span>';
                 }
                 
                 strDOM +=              '<div class="no_ellipse-30"> ' + title + 
@@ -162,28 +162,27 @@
             <!-- list page-->
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>OTC거래 팝니다<span> <span id="category1">전체</span></span></h1>
-                    <button class="btn btn-success" id="register">판매등록</button>
+                    <h1>Sell by OTC<span> <span id="category1">All</span></span></h1>
+                    <button class="btn btn-success" id="register">Register to Sell</button>
                 </div>
                 <div class="search_filter">
                     <ul class="">
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">거래상태</h2>
-                            <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
-                                <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">거래가능</label>
-                                <input type="radio" name="status" id="trading" value="1"><label for="trading">거래중</label>
-                                <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">거래완료</label>
-                            </div>
+                        <h2 class="col-sm-2 col-xs-12">Status</h2>
+                        <div class="check_filter col-sm-10 col-xs-12">
+                            <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">All</label>
+                            <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">Available</label>
+                            <input type="radio" name="status" id="trading" value="1"><label for="trading">Trading</label>
+                            <input type="radio" name="status" id="trade_complete" value="4"><label for="trade_complete">Complete</label>                            </div>
                         </li>
                         <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                            <h2 class="col-sm-2 col-xs-12">Keyword</h2>
                             <div class="col-sm-10 col-xs-12">
                                 <div class="w100p-120px">
                                     <input type="text" class="form-control" id="item_title">
                                 </div>
                                 <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                    <input type="button" class="btn btn-primary" id="btn_search" value="Search">
                                 </div>
                             </div>
                         </li>                        
@@ -200,10 +199,10 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>제목</th>
-                                <th>거래가격</th>
-                                <th>거래상태</th>
-                                <th>등록일</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="list">
@@ -211,7 +210,7 @@
                     </table>                 
                 </div>
                 <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
+                    <button class="btn btn_more_list" id="more_search">more 20</button>
                 </div>
             </section>
             <!--// list page-->

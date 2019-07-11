@@ -16,10 +16,9 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- view page-->
-            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_sell">
                 <div class="board_tit cf">
-                    <h1>OTC거래 팝니다<span>바로구매 신청</span></h1>
+                        <h1>Sell by OTC<span>Buy now(Coin)</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -32,29 +31,29 @@
                         <thead>
                             <tr>
                                 <th colspan="2">
-                                    <span class="dot_tit">거래 정보</span>
+                                    <span class="dot_tit">Listing Details</span>
                                     <span class="posting_date"></span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>     
                             <tr>
-                                <th>거래 번호</th>
+                                <th>Transaction No.</th>
                                 <td><span class="item_id"></span></td>
                             </tr>                      
                             <tr>
-                                <th>거래 제목</th>
+                                <th>Title</th>
                                 <td>
                                     <div class="ellipse item_title">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>거래상태</th>
+                                <th>Status</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>Price(Coin)</th>
                                 <td><p class="txt_price"><span></span></p></td>
                             </tr>
                             <tr class="mrg_cell trForDel">
@@ -63,7 +62,7 @@
                                 </td>
                             </tr>
                             <tr class="trForDel">
-                                <th>상품이미지</th>
+                                <th>Image</th>
                                 <td>
                                     <div class="product_img_list">
                                         <div class="imgs_wrap">
@@ -72,7 +71,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>상세정보</th>
+                                <th>Description</th>
                                 <td>
                                     <span class="item_desc">
                                     </span>
@@ -93,12 +92,12 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><span class="dot_tit">내 정보 입력</span></th>
+                                <th colspan="2"><span class="dot_tit">My Contacts</span></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>연락처</th>
+                                <th>Phone</th>
                                 <td><span class="item_phone"></span></td>
                             </tr>
                         </tbody>
@@ -106,8 +105,8 @@
                 </div>
                 <!--// 내 정보 입력 -->
                 <ul class="highligh_list fcrd">
-                    <li>※ 입력하신 정보는 결제 시 구매자에게 전달됩니다.</li>
-                    <li>※ 입력하신 정보 오 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
+                    <li>※ The information you enter will be passed on to the buyer upon confirmation of purchase.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
                 </ul>              
 
                 <!-- 결제정보 -->
@@ -119,20 +118,20 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                <th colspan="2"><span class="dot_tit">Billing information</span></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>나의 지갑 잔액</th>
+                                <th>My Wallet Balance</th>
                                 <td><span class="item_user_price"></span></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
+                                <th>Price</th>
                                 <td><span class="item_price"></span></td>
                             </tr>
                             <tr>
-                                <th>결제 후 나의 지갑 잔액(예상)</th>
+                                <th>My Wallet Estimated Balance after Payment</th>
                                 <td><span class="user_price_balance"></span></td>
                             </tr>                        
                         </tbody>
@@ -140,11 +139,11 @@
                 </div>
                 <!--// 결제정보 -->
                 <ul class="highligh_list fcrd">
-                    <li>※ 나의 지갑 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
+                    <li>※ You can not pay if your wallet balance is less than the transaction price.</li>
+                    <li>※ [You can deposit Coin from [Deposit Coin] or [My Page - My Wallet].</li>
                 </ul>  
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="buynow">결제하기</button>
+                    <button class="btn btn_in_view1" id="buynow">Make a Payment</button>
                 </div>             
             </section>
             <!--// view page-->
@@ -175,10 +174,10 @@
 
             $("#buynow").on('click', function() {
                 if($('#buyer_game_character').val() == "") {
-                    alert("구매자 캐릭터명을 입력하십시오.");
+                    alert("Please enter your game character's name.");
                     return;
                 }
-
+s
                 buynow();
             });
 
@@ -236,7 +235,7 @@
                 }
                 
                 //console.log(delivery_type);      
-                $(".posting_date").text("등록일 : " + regDate);
+                $(".posting_date").text("Date : " + regDate);
                 $(".item_title").text(title);
                 $(".item_id").text(itemId);
                 $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
@@ -253,8 +252,7 @@
         }
 
         function buynow() {
-
-            var confirmYn = confirm("거래를 시작하시겠습니까?");
+            var confirmYn = confirm("Are you start trading?");
             if(confirmYn) {
                 var params = {
                     "itemId": itemId,
@@ -272,7 +270,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('거래가 시작되었습니다.\r 연락처 표시 버튼을 클릭하여 연락하시기 바랍니다.');
+                        alert('The transaction has started.\r Please contact directly by clicking [View Contact] button.');
                         location.href = "/otc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);

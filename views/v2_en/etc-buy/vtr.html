@@ -16,10 +16,9 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- view page-->
-            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1> 자산거래 삽니다 <span>VTR 거래신청</span></h1>
+                    <h1>Buy Assets<span>VTR Transaction</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -32,7 +31,7 @@
                         <thead>
                             <tr>
                                 <th colspan="2">
-                                    <span class="dot_tit">거래 정보</span>
+                                    <span class="dot_tit">Listing Details</span>
                                     <em class="delivery_type"></em>
                                     <span class="posting_date"></span>
                                 </th>
@@ -40,30 +39,30 @@
                         </thead>
                         <tbody>     
                             <tr>
-                                <th>거래 번호</th>
+                                <th>Transaction No.</th>
                                 <td><span class="item_id"></span></td>
                             </tr>                      
                             <tr>
-                                <th>카테고리</th>
+                                <th>Category</th>
                                 <td><span class="item_game_server"></span></td>
                             </tr>
                             <tr>
-                                <th>거래 제목</th>
+                                <th>Title</th>
                                 <td>
                                     <div class="ellipse item_title">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>거래상태</th>
+                                <th>Status</th>
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>거래 가격</th>
+                                <th>Price</th>
                                 <td><p class="txt_price"></p></td>
                             </tr>
                             <tr>
-                                <th>상세정보</th>
+                                <th>Description</th>
                                 <td>
                                     <span class="item_desc">
                                     </span>
@@ -84,21 +83,20 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><em class="dot_tit">내 정보 입력</em></th>
+                                <th colspan="2"><em class="dot_tit">My Contacts</em></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>연락처</th>
+                                <th>Phone</th>
                                 <td><span class="item_phone"></span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <ul class="highligh_list fcrd">
-                    <li>※ 입력하신 정보(연락처)는 결제 시 판매자에게 전달됩니다.</li>
-                    <li>※ 입력하신 정보 기재로 인해 문제가 발생될 수 있으며, 거래신청자에게 책임이 있습니다.</li>
-                </ul>              
+                    <li>※ The information you enter will be passed on to your trading partner upon confirmation of purchase.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>                </ul>              
                 <!--// 내 정보 입력 -->
 
                 <!-- 회색테이블 -->
@@ -110,24 +108,24 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><span class="dot_tit">내 지갑정보</span></th>
+                                <th colspan="2"><span class="dot_tit">My Wallet</span></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
-                                <th>나의 지갑 잔액</th>
+                                <th>My Wallet Balance</th>
                                 <td><p class="item_user_price"></p></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <ul class="highligh_list fcrd">
-                    <li>※ 나의 지갑 잔액이 거래 가격 보다 적다면 결제하실 수 없습니다.</li>
-                    <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
+                    <li>※ You can not pay if your wallet balance(MACH) is less than the transaction price.</li>
+                    <li>※ You can deposit MACH from [MACH Deposit] button or [My Page - My Wallet].</li>
                 </ul>
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view2" onclick="openVtrInfo()">VTR 안내</button>
-                    <button class="btn btn_in_view1" id="btnSubmit">VTR 입장하기</button>
+                    <button class="btn btn_in_view2" onclick="openVtrInfo()">About VTR</button>
+                    <button class="btn btn_in_view1" id="btnSubmit">Enter VTR</button>
                 </div>
                 <!--// 회색테이블 -->
             </section>
@@ -200,7 +198,7 @@
                 }
                 
                 $(".delivery_type").addClass(delivery_type.className).text(delivery_type.text);
-                $(".posting_date").text("등록일 : " + regDate);
+                $(".posting_date").text("Date : " + regDate);
                 $(".item_title").text(title);
                 $(".item_game_server").text(item_game_server);
                 $(".item_id").text(itemId);
@@ -219,11 +217,11 @@
         function openVTR() {
             var popup;
             if(mach == 0) {
-                alert('MACH 금액이 0인 거래는 거래 신청을 할 수 없습니다.');
+                alert('You can not apply for a transaction with a MACH amount of 0.');
                 return;
             }
 
-            var confirmYn = confirm('현재 오픈베타 버전이어서 거래취소 기능은 제공하지 않습니다.\n 거래 취소 시 서비스에서 취소를 할 수 있지만 취소 후 VTR 재 입장시 기능이 정상적으로 동작하지 않을 수 있습니다.\nVTR에 접속하시겠습니까?');
+            var confirmYn = confirm('This is an open beta version, so we do not offer transaction cancellation.\n When canceling a transaction, you can cancel the service, but the function may not work normally when you re-enter the VTR after canceling.\nDo you want to connect to VTR?');
 
             if(confirmYn) {
                 roomToken = makeToken1();

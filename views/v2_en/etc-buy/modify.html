@@ -16,10 +16,9 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- view page-->
-            <%# section의 클래스명 추가= 팝니다: c_style_sell, 삽니다: c_style_buy %>
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>구매등록</span></h1>
+                    <h1>Purchase Registration</span></h1>
                 </div>
 
                 <!-- 상품정보 : 이미지 업로드 UI 포함 -->
@@ -33,12 +32,12 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th colspan="2">거래정보</th>
+                                    <th colspan="2">Listing Details</th>
                                 </tr>
                             </thead>
                             <tbody>                           
                                 <tr>
-                                    <th>카테고리</th>
+                                    <th>Category</th>
                                     <td>
                                         <div id="virture_h" class="virture_h">
                                             <select class="selectpicker" id="item-game-name" data-live-search="true">
@@ -49,24 +48,24 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>상품유형</th>
+                                    <th>Delivery Type</th>
                                     <td>
                                         <div class="form-inline radio_wrap">
                                             <div class="form-group">
-                                                <input type="radio" name="item_type" id="direct" value="direct" checked><label for="direct">직거래</label>
+                                                <input type="radio" name="item_type" id="direct" value="direct" checked><label for="direct">Direct Deal</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">택배거래</label>
+                                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Courier Transaction</label>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>거래제목</th>
-                                    <td><input type="text" class="form-control" id="title" placeholder="거래 제목 입력"></td>
+                                    <th>Title</th>
+                                    <td><input type="text" class="form-control" id="title" placeholder="Please enter the title"></td>
                                 </tr>
                                 <tr>
-                                    <th>거래가격</th>
+                                    <th>Price</th>
                                     <td>
                                         <div class="no_w100p_wrap">
                                             <select class="custom-select w30p" id="cryptoCurrencyCode">
@@ -74,13 +73,13 @@
                                                 <option value="ETH">ETH</option>
                                                 <option value="MACH" selected>MACH</option>
                                             </select>
-                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">    
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="Please enter a transaction price." onkeypress="return checkDecimal(event)">    
                                         </div>
                                         <p class="fcrd">※ 1MACH = 1$</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>상세정보</th>
+                                    <th>Description</th>
                                     <td>
                                         <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
                                     </td>
@@ -88,7 +87,7 @@
                                 <tr class="mrg_cell">
                                     <td colspan="2">
                                         <div class="btn_align_c">
-                                            <button class="btn btn_in_view1" id="btnSubmit">수정하기</button>
+                                            <button class="btn btn_in_view1" id="btnSubmit">save</button>
                                         </div>
                                     </td>
                                 </tr>  
@@ -175,7 +174,7 @@
                 method: "GET",
                 url: "/v1/categories"
             }).done(function (success) {
-                var strDOM = '<option value="">선택하세요</option>';
+                var strDOM = '<option value="">Please select</option>';
                 for (var i = 0; i < success.data.length; i++) {
                     strDOM += '<option value="' + success.data[i].category1 + '">' + success.data[i].category1 + '</option>'
                 }
@@ -213,7 +212,7 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">선택하세요</option>';
+            var strDOM = '<option value="">Please select</option>';
 
             for (var i = 0; i < data.category2.length; i++) {
                 strDOM += '<option value="' + data.category2[i] + '">' + data.category2[i] + '</option>'
@@ -225,32 +224,32 @@
         function submit() {
             var country = "<%= country %>";
             if ($("#item-game-name option:selected").val() == "") {
-                alert('카테고리를 선택하세요.');
+                alert('select category');
                 return false;
             } else if ($("[name=item_type]:checked").val() == "") {
-                alert('상품유형을 선택하세요.');
+                alert('Please select delivery type');
                 return false;
             } else if ($("#title").val() == "") {
-                alert('거래제목을 입력하세요.');
+                alert('Please enter a title.');
                 return false;
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('거래 가격을 입력하세요.');
+                alert('Please enter a price.');
                 return false;
             } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
-                alert('거래 가격(Point)을 입력하세요.');
+                alert('Please enter a price.');
                 return false;
             } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
+                alert('Please enter only numbers in a price.');
                 return false;
             } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
-                alert('거래 가격(Point)을 숫자로 입력하세요.');
-                return false;
+                // alert('거래 가격(Point)을 숫자로 입력하세요.');
+                // return false;
             } else if ($("#desc").val() == "") {
-                alert('상세 정보를 입력하세요.');
+                alert('Please enter a Description.');
                 return false;
             } else if (country == "CN" && $("#region1").val() == "") {
-                alert('지역 1 입력');
-                return false;
+                // alert('지역 1 입력');
+                // return false;
             } 
 
             var data = {
