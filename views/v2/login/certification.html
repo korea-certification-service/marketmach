@@ -3,7 +3,7 @@
 <head>
     <% include ../include/head.html %>
     <script type="text/javascript">
-        var currencyCode="";
+        var currencyCode="+82";
     
         $(document).ready(function() {
             $('.menu_login').show();
@@ -46,7 +46,7 @@
             }).done(function (success) {
                 var strDOM = '<option value="">Choice</option>';
                 for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_en + '('+ success.data[i].country_code +')' + '</option>'
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_kr + '('+ success.data[i].country_code +')' + '</option>'
                 }
 
                 $("#currencyType").html(strDOM);

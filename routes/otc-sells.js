@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -45,7 +45,7 @@ router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
             userTag: req.session.userTag, country:req.session.country,
@@ -63,7 +63,7 @@ router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
     }
 });
 
-router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/modify', {title: 'Bitweb Main',id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -82,7 +82,7 @@ router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/buynow/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -101,7 +101,7 @@ router.get('/buynow/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/buynow/point/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/buynow/point/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/buynow_point', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
@@ -120,7 +120,7 @@ router.get('/buynow/point/:id', sessionChecker.adultChecker, function (req, res,
     }
 });
 
-router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
