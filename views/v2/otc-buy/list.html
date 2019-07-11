@@ -53,7 +53,8 @@
             });
             
             $('#register').on('click',function() {
-                location.href = '/otc-buys/register';
+                checkTeenager('/otc-buys/register');
+                //location.href = '/otc-buys/register';
             });
         });
 
@@ -134,7 +135,8 @@
         }
 
         function detail(id) {
-            location.href="/otc-buys/detail/" + id;
+            checkTeenager("/otc-buys/detail/" + id);
+            //location.href="/otc-buys/detail/" + id;
         }
     </script>
     <!-- content_wrap -->
