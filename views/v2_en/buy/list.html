@@ -92,10 +92,10 @@
                 method: "GET",
                 url: "/v1/games"
             }).done(function (success) {
-                var strDOM = '<option value="">All Games</option>';
-                for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
-                }
+                var strDOM = '<option value="">All Games</option><option value="etc">Etc</option>';
+                // for (var i = 0; i < success.data.length; i++) {
+                //     strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
+                // }
 
                 $("#game-name").append(strDOM);
 
@@ -129,7 +129,7 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">All Servers</option>';
+            var strDOM = '<option value="">All Servers</option><option value="etc">Etc</option>';
 
             for (var i = 0; i < data.servers.length; i++) {
                 strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'

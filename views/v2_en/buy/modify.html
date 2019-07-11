@@ -182,10 +182,10 @@
                 method: "GET",
                 url: "/v1/games"
             }).done(function (success) {
-                var strDOM = '';
-                for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
-                }
+                var strDOM = '<option value="etc">Etc</option>';
+                // for (var i = 0; i < success.data.length; i++) {
+                //     strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
+                // }
 
                 $("#item-game-name").append(strDOM);
                 $("#item-game-name").selectpicker('refresh');
@@ -221,11 +221,11 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">Choice</option>';
+            var strDOM = '<option value="etc">Etc</option>';
 
-            for (var i = 0; i < data.servers.length; i++) {
-                strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
-            }
+            // for (var i = 0; i < data.servers.length; i++) {
+            //     strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'
+            // }
             $("#game-server").append(strDOM);
             $("#game-server").selectpicker('refresh');
         }
