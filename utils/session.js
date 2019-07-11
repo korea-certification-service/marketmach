@@ -86,7 +86,7 @@ var adultChecker = (req, res, next) => {
             //성인인증 안한 경우
             //res.redirect("/adults");
             next();
-        } else if(req.session.teenager == false){
+        } else if(req.session.teenager == false&&req.session.country=="KR"){
             res.redirect('/main');
         } else{
             //이메일 인증 한 경우

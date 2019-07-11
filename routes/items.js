@@ -180,7 +180,6 @@ router.get('/all', function (req, res, next) {
                                                                             controllerCms.getCmsList(country)
                                                                                 .then((cms) => {
                                                                                     req["query"]["perPage"] = perPage;
-                                                                                    req.query.perPage = 8;
                                                                                     controllerNotices.list(req)
                                                                                         .then(notices => {
                                                                                             let result = {
