@@ -13,6 +13,12 @@ function count(req) {
             eventEnd = false;
         }
         let data = {"eventEnd": eventEnd};
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
+        }
+
         let option = {
             "perPage": req.query.perPage == undefined ? 20 : parseInt(req.query.perPage),
             "pageIdx": req.query.pageIdx == undefined ? 0 : parseInt(req.query.pageIdx)
@@ -43,6 +49,11 @@ function list(req) {
             eventEnd = false;
         }
         let data = {"eventEnd": eventEnd};
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
+        }
         let option = {
             "perPage": req.query.perPage == undefined ? 20 : parseInt(req.query.perPage),
             "pageIdx": req.query.pageIdx == undefined ? 0 : parseInt(req.query.pageIdx)

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var FaqSchema = new Schema({
+    country: String,
     title: String,
     content: String,
     regDate: String,
