@@ -56,7 +56,7 @@
                                 <td><span class="item_status"></span></td>
                             </tr>
                             <tr>
-                                <th>Price(MACH)</th>
+                                <th>Price</th>
                                 <td><p class="txt_price"><span></span></p></td>
                             </tr>
                             <!-- <tr>
@@ -420,7 +420,7 @@
 
         function pointCancelItem() {
             var confirms = confirm('Do you want to cancel a transaction?');
-            console.log('준비중');
+            //console.log('준비중');
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
@@ -447,7 +447,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\n판매자의 판매 완료를 기다려 주세요.');
+                    alert('Buyer verified purchase.\nPlease wait for seller to complete the sale.');
                     location.href = '/otc-sells/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);

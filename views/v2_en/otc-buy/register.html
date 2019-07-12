@@ -39,7 +39,7 @@
                                 <td><input type="text" class="form-control" id="title" placeholder="Please enter a Title." maxlength="50"></td>
                             </tr>
                             <tr>
-                                <th>Price(MACH)</th>
+                                <th>Price</th>
                                 <td>
                                     <div class="no_w100p_wrap">
                                         <select class="custom-select w30p" id="cryptoCurrencyCode">
@@ -52,7 +52,7 @@
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>Price(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
@@ -60,7 +60,7 @@
                                         <em class="fc2" id="currencyName"></em>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>Description</th>
                                 <td>
@@ -133,7 +133,8 @@
             data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
             data["price"] = $("#price").val();
             data["currency"]="POINT";
-            data["point"]=$("#point").val();
+            // data["point"]=$("#point").val();
+            data["point"]=0;
 
             console.log(data);
             
