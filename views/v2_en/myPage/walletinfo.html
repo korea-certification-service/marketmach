@@ -11,7 +11,7 @@
             if(bitberry_token != undefined && bitberry_token != "") {
                 //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
                 $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');  
-                $('.m_link_connect').addClass("bgc1").text("비트베리 연결 해제");      
+                $('.m_link_connect').addClass("bgc1").text("Disconnect Bitberry");      
             }
 
             $('#deposit').on('click', function(){
@@ -70,24 +70,24 @@
                 //console.log(success.data);
                 var coinHistorys = success.data;
                 var resultColumn = "<tr>" + 
-                                "<th>지갑</th>" + 
-                                "<th>입금내용</th>" + 
-                                "<th>내역</th>" + 
-                                "<th>처리상태</th>" + 
-                                "<th>일자</th>" + 
+                                "<th>Wallet</th>" + 
+                                "<th>Deposit Statement</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
                             "</tr>";
                 if(trade_type == "withdraw") {
                     resultColumn = "<tr>" + 
-                                "<th>지갑</th>" + 
-                                "<th>출금내용</th>" + 
-                                "<th>내역</th>" + 
-                                "<th>처리상태</th>" + 
-                                "<th>일자</th>" + 
+                                "<th>Wallet</th>" + 
+                                "<th>Withdrawal Statement</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
                             "</tr>";
                 }
                 var result = ""
                 if(coinHistorys.length == 0) {
-                    result = "<tr><td colspan='5'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='5'>No exist.</td></tr>";
                 }
 
                 for(var i=0;i<coinHistorys.length;i++) {
@@ -145,14 +145,14 @@
 
                 var escrows = success.data.list;
                 var resultColumn = "<tr>" + 
-                                "<th>거래</th>" + 
-                                "<th>내역</th>" + 
-                                "<th>처리상태</th>" + 
-                                "<th>일자</th>" + 
+                                "<th>Trade</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
                             "</tr>";
                 var result = "";
                 if(escrows.length == 0) {
-                    result = "<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='4'>No exist.</td></tr>";
                 }
 
                 for(var i=0;i<escrows.length;i++) {
@@ -162,7 +162,7 @@
                     var regDate = escrows[i].regDate.substr(2);
 
                     result += '<tr>' + 
-                                    '<td>마켓마하<br>거래</td>' +                                     
+                                    '<td>Market MACH<br>Trade</td>' +                                     
                                     '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>' + 
@@ -203,7 +203,7 @@
 
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">지갑관리 <span>나의 지갑 정보</span></h1>
+                        <h1 class="tit_mypage">My Wallet <span>information</span></h1>
                             <!-- <div class="bitberry_switch_box">
                                 <div class="bitberry_switch">
                                     <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
@@ -221,7 +221,7 @@
                             <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
                         </div>
                         <a href="/myPages/wallet/connect" class="btn btn_in_view2 m_link_connect">비트베리 연결</a>
-                        <h2 class="tit_mypage dot_tit">입출금현황 <span class="escrow_side_tit">* <img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> : 에스크로</span></h2>
+                        <h2 class="tit_mypage dot_tit">Deposit & Withdraw Statement<span class="escrow_side_tit">* <img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> : Escrow</span></h2>
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
@@ -232,7 +232,7 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>코인</th>
+                                        <th>Coin</th>
                                         <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
@@ -240,19 +240,19 @@
                                 </thead>
                                 <tbody>
                                     <tr class="first_tr">
-                                        <th>나의지갑잔액</th>
+                                        <th>My Wallet<br>Balance</th>
                                         <td id="machTotal"></td>
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
                                     </tr>
                                     <tr>
-                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 입금예정</th>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Expected<br>Deposit</th>
                                         <td id="machSellMach"></td>
                                         <td id="machSellBtc"></td>
                                         <td id="machSellEth"></td>
                                     </tr>
                                     <tr>
-                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 출금액</th>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Withdraw</th>
                                         <td id="machBuyMach"></td>
                                         <td id="machBuyBtc"></td>
                                         <td id="machBuyEth"></td>
@@ -262,14 +262,14 @@
                         </div>
 
                         <div class="btn_align_c mb50">
-                            <button class="btn bgc1" id="deposit">Coin 입금</button>
-                            <button class="btn bgc3" id="withdraw">Coin 출금</button>
+                            <button class="btn bgc1" id="deposit">Deposit Coin</button>
+                            <button class="btn bgc3" id="withdraw">Withdraw Coin</button>
                         </div>
 
                         <ul class="tab_board ul_li3n cf">
-                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('event');">입금 내역</a></li>
-                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">출금 내역</a></li>
-                            <li id="mach_escrow"><a href="javascript:getEscrow();">에스크로 내역</a></li>
+                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('event');">Deposit Statement</a></li>
+                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">Withdrawal Statement</a></li>
+                            <li id="mach_escrow"><a href="javascript:getEscrow();">Escrow Statement</a></li>
                         </ul>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
@@ -282,11 +282,11 @@
                                 </colgroup>
                                 <thead id="wallet_historys_column">
                                     <tr>
-                                        <th>지갑</th>
-                                        <th>처리내용</th>
-                                        <th>내역</th>
-                                        <th>처리상태</th>
-                                        <th>일자</th>
+                                        <th>Wallet</th>
+                                        <th>Statement</th>
+                                        <th>Status</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">

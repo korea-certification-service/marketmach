@@ -13,32 +13,34 @@
             if(category == "") {
                 category = "game";
             }
-
+            
             if(category == "game") {
-                $('#myItemTitle').text("게임 아이템");
-                $('#table_category').text('게임>서버')
+                $('#myItemTitle').text("Game Item");
+                $('#table_category').text('Game > Server')
             } else if(category == "otc") {
                 $('#myItemTitle').text("OTC");
-                $('#table_category').text('카테고리')
+                $('#table_category').text('Category')
             } else {
-                $('#myItemTitle').text("자산 거래");
-                $('#table_category').text('카테고리')
+                $('#myItemTitle').text("Asset Trading");
+                $('#table_category').text('Category')
             }
+
             $("#"+category).prop('checked', true);
             getItemList();
             $('#item_title').val(item_title);
 
             $("input[name=category]").on('click', function() {
                 category = $("[name=category]:checked").val();
+            
                 if(category == "game") {
-                    $('#myItemTitle').text("게임 아이템");
-                    $('#table_category').text('게임>서버')
+                    $('#myItemTitle').text("Game Item");
+                    $('#table_category').text('Game > Server')
                 } else if(category == "otc") {
                     $('#myItemTitle').text("OTC");
-                    $('#table_category').text('카테고리')
+                    $('#table_category').text('Category')
                 } else {
-                    $('#myItemTitle').text("자산 거래");
-                    $('#table_category').text('카테고리')
+                    $('#myItemTitle').text("Asset Trading");
+                    $('#table_category').text('Category')
                 }
                 getItemList();
             });
@@ -73,7 +75,7 @@
                 var buyList = success.data.list;
                 var result = "";
                 if(buyList.length == 0) {
-                    result = "<tr><td colspan='5'>취소된 내역이 없습니다.</td><tr>";
+                    result = "<tr><td colspan='5'>No exist.</td><tr>";
                 }
                 for(var i=0; i< buyList.length; i++) {
                     var itemId = buyList[i].item._id;
@@ -93,8 +95,8 @@
                     var cryptoCurrencyCode = buyList[i].item.cryptoCurrencyCode == undefined ? "MACH" : buyList[i].item.cryptoCurrencyCode;
                     var price = numberWithCommas(buyList[i].item.price);
                     var point = numberWithCommas(buyList[i].item.point);
-                    var status = "취소완료";
-                    var refund = buyList[i].refund == true ? "(환불)" : "";
+                    var status = "Canceled";
+                    var refund = buyList[i].refund == true ? "(refund)" : "";
                     var money = point + ' Point';
                     if("<%=useBlockchain%>" =='Y') {
                         money = price + ' ' + cryptoCurrencyCode;
@@ -159,25 +161,25 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">취소관리</h1>
+                        <h1 class="tit_mypage">My Cancellation</h1>
                         <div class="search_filter">
                             <ul class="">
                                 <li class="row">
-                                    <h2 class="col-sm-2 col-xs-12">거래유형</h2>
+                                    <h2 class="col-sm-2 col-xs-12">Goods Type</h2>
                                     <div class="check_filter col-sm-10 col-xs-12">
-                                        <input type="radio" name="category" id="game" value="game"><label for="game">게임아이템</label>
-                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">자산거래</label>
-                                        <input type="radio" name="category" id="otc" value="otc"><label for="otc">OTC거래</label>
+                                            <input type="radio" name="category" id="game" value="game"><label for="game">Game Item</label>
+                                            <input type="radio" name="category" id="etc" value="etc"><label for="etc">Asset Trading</label>
+                                        <input type="radio" name="category" id="otc" value="otc"><label for="otc">OTC Trading</label>
                                     </div>
                                 </li>
                                 <li class="row">
-                                    <h2 class="col-sm-2 col-xs-12">상품검색</h2>
+                                    <h2 class="col-sm-2 col-xs-12">Keyword</h2>
                                     <div class="col-sm-10 col-xs-12">
                                         <div class="w100p-120px">
                                             <input type="text" class="form-control" id="item_title">
                                         </div>
                                         <div class="mob_100p_tar">
-                                            <input type="button" class="btn btn-primary" id="btn_search" value="검색">
+                                            <input type="button" class="btn btn-primary" id="btn_search" value="Search">
                                         </div>
                                     </div>
                                 </li>
@@ -185,7 +187,7 @@
                         </div>
 
                         <div class="table_wrap table-responsive">
-                            <h2 class="tit_mypage" id="myItemTitle">전체</h2>
+                            <h2 class="tit_mypage" id="myItemTitle">All</h2>
                             <table class="table_list has_game_icon table">
                                 <colgroup class="colgroup_mycancellist">
                                     <col class="col5_1">
@@ -196,11 +198,11 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th id="table_category">게임>서버</th>
-                                        <th>제목</th>
-                                        <th>거래가격</th>
-                                        <th>거래상태</th>
-                                        <th>등록일</th>
+                                        <th id="table_category">Game > Server</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="cancel_list">

@@ -92,7 +92,7 @@ function getStatus(value) {
             'text': 'Available',
             'number': 1,
             'className': 'todo',
-            'detail': '거래가능'
+            'detail': 'Available' // 거래가능
         };
     } else if((value >= 1 && value <= 3) || (value >= 101 && value <= 103)) {
         var detail = "Transaction Request"; // 거래요청
@@ -206,6 +206,79 @@ function getCommunityType(value) {
     } else  {
         return {
             'text':'Post',
+            'className': 'icon2'
+        };
+    }
+}
+
+function getEscrowType(value) {
+    if(value == "deposit") {
+        return {
+            'text':'Withdrawal Escrow',
+            'className': 'icon0'
+        };
+    } else if(value == "withdraw") {
+        return {
+            'text':'Deposit Escrow',
+            'className': 'icon1'
+        };
+    } else if(value == "cancel") {
+        return {
+            'text':'Cancel Escrow',
+            'className': 'icon2'
+        };
+    } else {
+        return {
+            'text':'-',
+            'className': 'icon2'
+        };
+    }
+}
+
+function getCoinType(value, memo) {
+    if(value == "deposit") {
+        return {
+            'text':'Deposit',
+            'className': 'icon0'
+        };
+    } else if(value == "event-signup") {
+        return {
+            'text':'Join',
+            'className': 'icon1'
+        };
+    } else if(value == "event-airdrop") {
+        return {
+            'text':'Airdrop',
+            'className': 'icon1'
+        };
+    } else if(value == "event-recommander") {
+        return {
+            'text':'Recomender<br>event',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-deposit") {
+        return {
+            'text':'Deposit MACH',
+            'className': 'icon2'
+        };
+    } else if(value == "exchange-withdraw") {
+        return {
+            'text':'Withdraw Point',
+            'className': 'icon2'
+        };
+    } else if(value == "withdraw") {
+        return {
+            'text':'Withdraw',
+            'className': 'icon2'
+        };
+    } else if(value == "event-etc") {
+        return {
+            'text': memo,
+            'className': 'icon2'
+        };
+    } else {
+        return {
+            'text':value,
             'className': 'icon2'
         };
     }

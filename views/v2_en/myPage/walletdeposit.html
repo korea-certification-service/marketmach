@@ -113,7 +113,7 @@
                 var coinHistorys = success.data;
                 var result = ""
                 if(coinHistorys.length == 0) {
-                    result = "<tr><td colspan='3'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='3'>No exist.</td></tr>";
                 }
 
                 for(var i=0;i<coinHistorys.length;i++) {
@@ -209,13 +209,13 @@
             var $dim = $(".dim_all_area");
             */
             if(bitberry_token == "") {
-                alert("비트베리 앱에서 연동이 필요합니다.");
+                alert("Connection with Bitberry is required.");
                 location.href = '/myPages/wallet/connect';
                 return;
             } 
             
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
-                alert("Coin 금액을 입력하세요.");
+                alert("Please enter Coin amount.");
                 return;
             }
 
@@ -244,7 +244,7 @@
                 });
             }).fail(function (fail) {
                 console.log(fail);
-                alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                alert('There was a problem during the process. \n If the problem persists, please contact administrators')
             });
         }
 
@@ -254,7 +254,7 @@
             var $dim = $(".dim_all_area");
             */
             if(walletId == undefined) {
-                alert('요청 중입니다. 잠시만 기다려 주세여');
+                alert('It is in progress. Please wait a moment.');
                 return;
             }
 
@@ -272,7 +272,7 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == "success") {
-                    alert('Coin 입금이 정상적으로 처리되었습니다.');
+                    alert('Coin deposit has been processed successfully.');
                     // getCoin();
                     // getCoinHistory('deposit');
                     /*
@@ -310,18 +310,7 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">지갑관리 <span>Coin 입금</span></h1>
-                        <!-- <div class="bitberry_switch_box">
-                            <div class="bitberry_switch">
-                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
-                                <a href="/myPages/wallet/connect">
-                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
-                                    <p>OFF</p>
-                                </a>
-                            </div>
-                            <em>나의지갑 잔액</em>
-                            <p class="fc3" id="mach">100 <span>MACH</span></p>
-                        </div> -->
+                        <h1 class="tit_mypage">My Wallet <span>deposit Coin</span></h1>
 
                         <div class="bitberry_grey_box">
                             <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>

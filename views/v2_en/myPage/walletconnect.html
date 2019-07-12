@@ -65,7 +65,7 @@
                 if(success.data.code != undefined) {
                     alert(success.data.msg);
                 } else {
-                    alert('비트베리가 성공적으로 연결이 되었습니다.');
+                    alert('Bitberry has connected successfully.');
                     $('.not_connected').hide();
                     $('.connected').show();
                     _PopupUI.hideWithDim();
@@ -81,7 +81,7 @@
                 url: "/v1/coins/disconnect"
             }).done(function (success) {
                 //console.log(success.data);
-                alert('비트베리 연결이 해제되었습니다.');
+                alert('Bitberry has disconnected.');
                 $('.not_connected').show();
                 $('.connected').hide();
             }).fail(function (fail) {
@@ -109,28 +109,28 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">지갑관리 <span>비트베리 연결</span></h1>
+                        <h1 class="tit_mypage">My Wallet <span>connect bitnerry</span></h1>
                         <hr class="hr_mypage">
                         
-                        <h2 class="tit_mypage dot_tit">비트베리 연결</h2>
+                        <h2 class="tit_mypage dot_tit">Connect Bitnerry</h2>
                         
                         <%# 인증 전 %>
                         <div class="connected_box not_connected">
                             <div class="coin_certification">
                                 <dl class="cf">
-                                    <dt class="fc2">인증번호</dt>
+                                    <dt class="fc2">Verification No.</dt>
                                     <dd id="view_auth_code">
                                         <!-- <em class="fcrd">1234-1234</em> -->
-                                        <button class="btn btn_in_view2" id="set_auth_code">인증번호 보기</button>
+                                        <button class="btn btn_in_view2" id="set_auth_code">View Verification No.</button>
                                     </dd>
                                 </dl>
                             </div>
                             <ul class="highligh_list fcrd">
-                                <li>※ 화면의 인증번호를 비트베리(BITBERRY) APP에 입력하여 마켓마하와 연결하세요.</li>
-                                <li>※ 비트베리APP에 인증번호 등록 후 모달창의 (비트베리 연결 완료) 버튼을 클릭해 주세요.</li>
+                                <li>※ Please enter verification number on screen into Bitberry App and connect with MarketMACH.</li>
+                                <li>※ After registering the verification number in the Bitberry APP, please click the [Bitberry Connected].</li>
                             </ul>
                             <!-- <div class="btn_align_c">
-                                <button class="btn item_view btn_in_view1" id="connect">비트베리 연결 완료</button>
+                                <button class="btn item_view btn_in_view1" id="connect">Bitberry Connected</button>
                             </div>  -->
                         </div>
 
@@ -140,12 +140,12 @@
                                 <dl class="cf">
                                     <dt class=""><img src="/static/img/sub/logo_bitberry.png" alt=""></dt>
                                     <dd>
-                                        <strong class="fc2">비트베리와<br>나의 지갑이<br>연결되어 있습니다.</strong>
+                                        <strong class="fc2">My wallet<br>connected to<br>Bitberry</strong>
                                     </dd>
                                 </dl>
                             </div> 
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="disconnect">비트베리<br class="mob_br"> 연결 해제</button>
+                                <button class="btn btn_in_view1" id="disconnect">Bitberry<br class="mob_br"> Disconnected</button>
                             </div>  
                         </div>
 
@@ -153,16 +153,16 @@
                          <div class="dim_all_area" style="display: none">
                             <article class="modal_bitberry_deposit">
                                 <button id="btnmCloseModal" class="btn">X</button>
-                                <h1>비트베리 연결요청</h1>
-                                <p>비트베리 앱에서 연결승인후 아래의 확인 버튼을 눌러주세요.</p>
-                                <button id="connect" class="btn btn-danger">확인</button>
+                                <h1>Connect Bitberry</h1>
+                                <p>If you proceed connection request<br>on Bitberry App, click the Confirm</p> <!-- 비트베리 앱에서 연결승인후 아래의 확인 버튼을 눌러주세요. -->
+                                <button id="connect" class="btn btn-danger">Confirm</button>
                             </article>
                         </div>
 
-                        <h2 class="tit_mypage dot_tit">비트베리 안내</h2>
+                        <h2 class="tit_mypage dot_tit">About Bitberry</h2>
                         <ul class="bitberry_info cf">
                             <li><img src="/static/img/sub/logo_bitberry.png" alt=""></li>
-                            <li><a href="https://bitberry.app/" target="_blank" class="btn btn-success">비트베리 안내</a></li>
+                            <li><a href="https://bitberry.app/" target="_blank" class="btn btn-success">More Information</a></li>
                         </ul>                        
                     </section>
                 </div>
