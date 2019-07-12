@@ -97,6 +97,11 @@
                 return;
             }
 
+            if($('#recommander').val() != "" && $('#recommander').val() == $("input[name=id]").val()) {
+                alert("You can not input ID which you are making it.");
+                return;
+            }
+
             var birth = "<%=birth%>";
             var year = birth.substr(0,4);
             var month = birth.substr(4,2);
