@@ -4,6 +4,7 @@ var Item = require('./items');
 var Image = require('./image');
 
 var OppositionsSchema = new Schema({
+    country: String,
     item: Item,
     title: String,
     content: String,

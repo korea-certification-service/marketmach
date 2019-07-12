@@ -69,7 +69,7 @@
         function setEvents(data) {
             var strDOM="";
             if(data.length == 0) {
-                strDOM = '<li class="fcrd tac">진행중인 이벤트가 없습니다.</li>';
+                strDOM = '<li class="fcrd tac">No exist.</li>';
             }
 
             for(var i=0; i<data.length; i++) {
@@ -103,27 +103,27 @@
 
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">고객센터</h1>
+                        <h1 class="tit_support">Support <span>information</span></h1>
                         <div class="support_main_info cf">
                             <div class="lft_area">
                                 <div class="inner_area">
-                                    <h2>거래 이의신청</h2>
-                                    <p>거래에 문제가 있으시면 이용하세요.</p>
-                                    <a class="btn bgc1" href="/supports/opposition/register">거래 이의신청</a>
-                                    <a class="btn bgc2" href="/supports/opposition/list">거래 이의내역</a>
+                                    <h2>Disputes</h2>
+                                    <p>If you have any problems with your transaction.</p>
+                                    <a class="btn bgc1" href="/supports/opposition/register">Post</a>
+                                    <a class="btn bgc2" href="/supports/opposition/list">List</a>
                                 </div>
                             </div>
                             <div class="rgh_area">
                                 <div class="inner_area">
-                                    <h2>1:1 문의</h2>
-                                    <p>이용중에 궁금한게 있으시면 이용하세요.</p>
-                                    <a class="btn bgc4" href="/supports/private/register">문의하기</a>
-                                    <a class="btn bgc3" href="/supports/private/list">나의 문의내역</a>
+                                    <h2>1:1 Inquiry</h2>
+                                    <p>If you have any questions?</p>
+                                    <a class="btn bgc4" href="/supports/private/register">Post</a>
+                                    <a class="btn bgc3" href="/supports/private/list">List</a>
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="tit_support dot_tit">공지사항 <a class="add_circle_outline" href="/supports/notice"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <h2 class="tit_support dot_tit">Notice <a class="add_circle_outline" href="/supports/notice"><i class="material-icons">add_circle_outline</i></a></h2>
                         <div class="table_wrap table-responsive mb_lrg">
                             <table class="table_list table">
                                 <colgroup class="colgroup_support_notice">
@@ -133,9 +133,9 @@
                                 </colgroup>
                                 <thead>
                                     <tr>  
-                                        <th>분류</th>
-                                        <th>제목</th>
-                                        <th>날짜</th>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="notice_list">
@@ -152,7 +152,7 @@
                             </table>
                         </div>                        
                         
-                        <h2 class="tit_support dot_tit">진행중인 이벤트 <a class="add_circle_outline" href="/supports/event"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <h2 class="tit_support dot_tit">Current Events<a class="add_circle_outline" href="/supports/event"><i class="material-icons">add_circle_outline</i></a></h2>
                         <div class="event_list_area">
                             <!-- <p><a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a></p> -->
                             <ul id="eventList">

@@ -23,7 +23,7 @@
         function setEvents(data) {
             var strDOM="";
             if(data.length == 0) {
-                strDOM = '<p class="fcrd tac">진행중인 이벤트가 없습니다.</p>';
+                strDOM = '<p class="fcrd tac">No exist.</p>';
             }
 
             for(var i=0; i<data.length; i++) {
@@ -74,10 +74,10 @@
                 <div class="sub_content">
                     <!-- support -->
                     <section class="support_sec">
-                        <h1 class="tit_support">이벤트</h1>
+                        <h1 class="tit_support">Event</h1>
                         <div class="tab_board cf">
-                            <li><a href="/supports/event">진행중인 이벤트</a></li>
-                            <li class="on"><a href="/supports/event/past">지난 이벤트</a></li>
+                            <li><a href="/supports/event">Current Events</a></li>
+                            <li class="on"><a href="/supports/event/past">End Events</a></li>
                         </div>
                         <div class="event_list_wrap">
                             <ul id="event_list">

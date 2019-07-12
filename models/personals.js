@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var Image = require('./image');
 
 var personalsSchema = new Schema({
+    country: String,
     type: String,
     title: String,
     content: String,
