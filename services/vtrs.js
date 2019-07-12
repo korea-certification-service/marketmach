@@ -178,9 +178,7 @@ function getItemIdsByUserId(data) {
 function getItemIdsByUserTag(data) {
     return new Promise((resolve, reject) => {
         VtrTemps.find(
-            {
-                $or: [{"buyer_id": data.userId}, {"seller_id": data.userId}]
-            })
+            data)
             .exec(function(err, vtrs) {
                 if (err) {
                     // console.error(err)

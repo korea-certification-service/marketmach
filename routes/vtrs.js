@@ -19,6 +19,9 @@ router.get('/:userId', function (req, res, next) {
     let body = {
         $or : [{"from_user": Schema.Types.ObjectId(req.params.userId)},{"to_user": Schema.Types.ObjectId(req.params.userId)}]
     };
+    if(country != "KR") {
+        body['item.country'] = country;
+    }
 
     var bitwebResponse = new BitwebResponse();
 
@@ -89,6 +92,9 @@ router.get('/count/user/:userId', function (req, res, next) {
     let option = {
         $or: [{"from_userId": userId}, {"to_userId": userId}],
         "completed": { $exists: false }
+    }
+    if(country != "KR") {
+        option['item.country'] = country;
     }
     
     var bitwebResponse = new BitwebResponse();
@@ -185,6 +191,9 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
     if(trade_type == "sell") {
         option = {"from_userId": userId};
     }
+    if(country != "KR") {
+        option['item.country'] = country;
+    }
     
     var bitwebResponse = new BitwebResponse();
     controllerVtrs.getItemsByUserId(country, userId, option)
@@ -236,6 +245,10 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
                     if (item_title != undefined) {
                         params['$or'][0]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
                         params['$or'][1]['$and'].push({'title':{$regex: item_title, $options: 'i' }});
+                    }
+                    if(country != "KR") {
+                        params['$or'][0]['$and'].push({'country': country});
+                        params['$or'][1]['$and'].push({'country': country});
                     }
 
 
@@ -296,6 +309,9 @@ router.get('/cancel/:userId', function (req, res, next) {
     if (item_title != undefined) {
         params['$and'].push({'item.title':{$regex: item_title, $options: 'i' }});
     }
+    if(country != "KR") {
+        params['item.country'] = country;
+    }
 
     let option = {
         pageIdx: 0,
@@ -336,9 +352,12 @@ router.get('/user/:userTag', function (req, res, next) {
     let userId = req.params.userTag;
     let country = dbconfig.country;
 
-    let data = {};
-    data['userId'] = userId;
-    data['country'] = country;
+    let data = {
+        $or: [{"buyer_id": userId}, {"seller_id": userId}]
+    };
+    if(country != "KR") {
+        data['item.country'] = country;
+    }
     if (pageIdx != undefined) data['pageIdx'] = parseInt(pageIdx);
     if (perPage != undefined) data['perPage'] = parseInt(perPage);
 
