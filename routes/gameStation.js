@@ -7,7 +7,7 @@ router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/gamestation', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/gamestation', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -15,7 +15,7 @@ router.get('/trade/list/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/tradelist', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/tradelist', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -23,7 +23,7 @@ router.get('/trade/assets/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/gameassetstomach', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/gameassetstomach', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -31,7 +31,7 @@ router.get('/trade/exchange_assets/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/exchange_gameassets', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/exchange_gameassets', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -39,7 +39,7 @@ router.get('/trade/mach/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/machtogameassets', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/machtogameassets', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -47,7 +47,7 @@ router.get('/trade/exchange_mach/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/exchange_mach', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/exchange_mach', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -55,7 +55,7 @@ router.get('/machAdventure/list/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/machadventurelist', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/machadventurelist', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
@@ -63,7 +63,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gamestation/infoboard', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     } else {
-        //res.render('v2_en/howto/tradevtr', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint});
+        res.render('v2_en/gamestation/infoboard', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId, authPhone: req.session.authPhone, pointId: req.session.pointId, useBlockchain:dbconfig.useBlockchain, usePoint:dbconfig.usePoint, userTag:req.session.userTag});
     }
 });
 
