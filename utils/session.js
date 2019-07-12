@@ -1,3 +1,4 @@
+var dbconfig = require('../config/dbconfig');
 var sessionChecker = (req, res, next) => {
     console.log('sessionID =>', req.sessionID);
     console.log('session.userTag =>', req.session.userTag);
@@ -46,7 +47,12 @@ var sessionChecker2 = (req, res, next) => {
             req.session.originUrl = req.originalUrl;
         }
         //res.redirect("/login");
-        res.render('v2/login/login', {title: 'Bitweb Main'});
+
+        if(dbconfig.country == "KR") {
+            res.render('v2/login/login', {title: 'Bitweb Main'});
+        } else {
+            res.render('v2_en/login/login', {title: 'Bitweb Main'});
+        }
         // if(req.cookies.orange__F == undefined) {
         //     res.render('login/login', {title: 'Bitweb Main'});
         // } else {
@@ -98,7 +104,11 @@ var adultChecker = (req, res, next) => {
             req.session.originUrl = req.originalUrl;
         }
         //res.redirect("/login");
-        res.render('v2/login/login', {title: 'Bitweb Main'});
+        if(dbconfig.country == "KR") {
+            res.render('v2/login/login', {title: 'Bitweb Main'});
+        } else {
+            res.render('v2_en/login/login', {title: 'Bitweb Main'});
+        }
         // if(req.cookies.orange__F == undefined) {
         //     res.render('login/login', {title: 'Bitweb Main'});
         // } else {
