@@ -15,6 +15,11 @@ function count(req) {
                 $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}, {'category' : { $regex: req.query.title, $options: 'i' }}, ]
             }
         };
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
+        }
 
         db.connectDB(country)
             .then(() => bitwebFaq.count(data, option))
@@ -40,6 +45,11 @@ function list(req) {
             data = {
                 $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}, {'category' : { $regex: req.query.title, $options: 'i' }}, ]
             }
+        }
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
         }
 
         db.connectDB(country)
