@@ -41,14 +41,14 @@
             $("input[name=category]").on('click', function() {
                 category = $("[name=category]:checked").val();
                 if(category == "game") {
-                    $('#myItemTitle').text("게임 아이템");
-                    $('#table_category').text('게임>서버')
+                    $('#myItemTitle').text("Game Item");
+                    $('#table_category').text('Game > Server')
                 } else if(category == "otc") {
                     $('#myItemTitle').text("OTC");
-                    $('#table_category').text('카테고리')
+                    $('#table_category').text('Category')
                 } else {
-                    $('#myItemTitle').text("자산거래");
-                    $('#table_category').text('카테고리')
+                    $('#myItemTitle').text("Asset Trading");
+                    $('#table_category').text('Category')
                 }
 
                 if(category == "otc") {
@@ -87,15 +87,16 @@
 
         function remeberChecked(){
             category = $("[name=category]:checked").val();
+
             if(category == "game") {
-                $('#myItemTitle').text("게임 아이템");
-                $('#table_category').text('게임>서버')
+                $('#myItemTitle').text("Game Item");
+                $('#table_category').text('Game > Server')
             } else if(category == "otc") {
                 $('#myItemTitle').text("OTC");
-                $('#table_category').text('카테고리')
+                $('#table_category').text('Category')
             } else {
-                $('#myItemTitle').text("자산거래");
-                $('#table_category').text('카테고리')
+                $('#myItemTitle').text("Asset Trading");
+                $('#table_category').text('Category')
             }
 
             if(category == "otc") {
@@ -131,7 +132,7 @@
                 var buyList = success.data.list;
                 var result = "";
                 if(buyList.length == 0) {
-                    result = "<tr><td colspan='5'>검색 결과가 없습니다.</td><tr>";
+                    result = "<tr><td colspan='5'>No exist.</td><tr>";
                 }
                 for(var i=0; i< buyList.length; i++) {
                     var itemId = buyList[i]._id;
@@ -179,7 +180,7 @@
                                 '<td>' + 
                                     '<span class="btn_cmm_bd '+item_type.className+'">'+item_type.text+'</span>';
                                     if(buyList[i].images.length != 0) {
-                                        result +=          '<span class="ico_photo">사진</span>';
+                                        result +=          '<span class="ico_photo">Photo</span>';
                                     }
                     result +=       '<div class="ellipse">' + title +
                                     '</div>' + 
@@ -188,9 +189,9 @@
                                     '<span>' + money + '</span>' + 
                                     '<div class="btn_adjust">';
                                     if(buyList[i].status ==2 || buyList[i].status ==3) {
-                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="showPhone(\''+itemId+'\');">연락처 표시</button>';
+                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="showPhone(\''+itemId+'\');">View Contact</button>';
                                     } else if(buyList[i].status ==102 || buyList[i].status ==103) {
-                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="pointShowPhone(\''+itemId+'\');">연락처 표시</button>';
+                                        result +=   '<button class="btn btn_in_view6" id="showPhone" onclick="pointShowPhone(\''+itemId+'\');">View Contact</button>';
                                     } 
                     result +=   '</div></td>' + 
                                 '<td>' + 
@@ -198,31 +199,31 @@
                                     '<div class="btn_adjust">';
                                     if(buyList[i].status ==1) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                            result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="buyComplete(\''+itemId+'\');">구매확인</button>';
+                                            result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="buyComplete(\''+itemId+'\');">Confirm Purchase</button>';
                                         }
                                     } else if(buyList[i].status ==2) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="sellComplete(\''+itemId+'\');">판매완료</button>';
+                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="sellComplete(\''+itemId+'\');">Complete Sales</button>';
                                         }
                                     } else if(buyList[i].status ==3){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">거래완료</button>';
+                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">Complete Trade</button>';
                                         } else {    
-                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==101) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                            result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="pointBuyComplete(\''+itemId+'\');">구매확인</button>';
+                                            result +=   '<button class="btn btn_in_view5" id="buyComplete" onclick="pointBuyComplete(\''+itemId+'\');">Confirm Purchase</button>';
                                         }
                                     } else if(buyList[i].status ==102) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="pointSellComplete(\''+pointTradeId+'\');">판매완료</button>';
+                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="pointSellComplete(\''+pointTradeId+'\');">Complete Sales</button>';
                                         }
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">거래완료</button>';
+                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">Complete Trade</button>';
                                         } else {    
-                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel Trade(refund)</button>';
                                         }
                                     }
                                 result +=  '</div>' + 
@@ -231,25 +232,25 @@
                                     '<span>' + regDate + '</span>' + 
                                     '<div class="btn_adjust">';
                                     if(buyList[i].status ==1) {
-                                        result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소</button>';    
+                                        result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade</button>';    
                                     } else if(buyList[i].status ==2) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==3){
-                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     } else if(buyList[i].status == 5) {
-                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     } else if(buyList[i].status ==101) {
-                                        result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소</button>';    
+                                        result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel Trade</button>';    
                                     } else if(buyList[i].status ==102) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
+                                            result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel Trade(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==103){
-                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     } else if(buyList[i].status == 105) {
-                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">이의신청</button>';
+                                        result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     }
                                 result +='</div></td>' + 
                             '</tr>'; 
@@ -274,7 +275,7 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('구매 확인 하시겠습니까?');
+            var confirms = confirm('Do you want to purchase confirmation?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -287,7 +288,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
+                    alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -310,7 +311,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매확정이 완료되면 거래가 완료됩니다.');
+                    alert('판매자가 판매 완료하였습니다.\n구매자의 구매확정이 완료되면 거래가 완료됩니다.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -416,7 +417,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                    alert('판매자가 판매 완료하였습니다.\n구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);

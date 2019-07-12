@@ -316,7 +316,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('The transaction has started.\r Please contact directly by clicking [View Contact] button.');
+                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
                         location.href = "/sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
@@ -345,7 +345,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('The transaction has started.\r Please contact directly by clicking [View Contact] button.');
+                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
                         location.href = "/sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);

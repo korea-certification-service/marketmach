@@ -98,7 +98,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .top_menu .menu_list > li{float: left; padding: 13px 0; }
 .header .top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-right: 1px solid #929292;}
 .header .top_menu .menu_list > li .menu_logout{border-right: none;}
-.header .top_menu .menu_list > li:nth-child(4) > a{border-right: none;}
+.header .top_menu .menu_list > li:nth-child(6) > a{border-right: none;}
 .header .top_menu .menu_list > li:last-child > a{visibility: hidden; color: #fff; border: none;}
 
 .header .sch_sec{position: relative; height: 105px;}

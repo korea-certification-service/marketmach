@@ -322,7 +322,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('Buyer confirmed purchase. \r Please wait for the seller to complete the sale.');
+                    alert('Buyer confirmed purchase. \n Please wait for the seller to complete the sale.');
                     location.href = '/etc-buys/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);
@@ -344,7 +344,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert("The seller finished the sale.\r Once the buyer's purchase is finalized, the transaction is complete.");
+                    alert("The seller finished the sale.\n Once the buyer's purchase is finalized, the transaction is complete.");
                     location.href = '/etc-buys/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);

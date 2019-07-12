@@ -210,7 +210,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('Buyer confirmed purchase.\rPlease wait for the seller to complete the sale.');
+                    alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -233,7 +233,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert("The seller finished the sale.\rOnce the buyer's purchase is finalized, the transaction is complete.");
+                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);

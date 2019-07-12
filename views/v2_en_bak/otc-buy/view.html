@@ -313,7 +313,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
+                    alert('구매자가 구매 확인하였습니다.\n판매자의 판매 완료를 기다려 주세요.');
                     location.href = '/otc-buys/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);

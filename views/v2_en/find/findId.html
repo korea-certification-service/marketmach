@@ -169,7 +169,7 @@
             }).done(function (success) {
                 console.log(success);
                 //location.href = "/existUser?id=" + success.data._id;
-                alert('성공적으로 메일을 보냈습니다.\r확인 후 로그인하십시오.');
+                alert('성공적으로 메일을 보냈습니다.\n확인 후 로그인하십시오.');
                 location.href="/login";
             }).fail(function (fail) {
                 if (fail.status == 403) {

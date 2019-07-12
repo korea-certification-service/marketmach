@@ -262,7 +262,7 @@
         }
 
         function buynow() {
-            var confirmYn = confirm("Please contact the seller or buyer by phone. \r The Market MACH does not take responsibility for interpersonal transactions without using VTR.\r Are you start trading?");
+            var confirmYn = confirm("Please contact the seller or buyer by phone. \n The Market MACH does not take responsibility for interpersonal transactions without using VTR.\n Are you start trading?");
 
             if(confirmYn) {
                 var params = {
@@ -281,7 +281,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('The transaction has started.\r Please contact directly by clicking [View Contact] button.');
+                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
                         location.href = "/sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);

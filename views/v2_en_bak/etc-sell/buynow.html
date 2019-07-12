@@ -260,7 +260,7 @@
         }
 
         function buynow() {
-            var confirmYn = confirm("After purchasing, please make a deal through mobile phone contact between seller and buyer. \r The Exchange does not take responsibility for inter-individual transactions without using VTR.\r Do you want to start a transaction?");
+            var confirmYn = confirm("After purchasing, please make a deal through mobile phone contact between seller and buyer. \n The Exchange does not take responsibility for inter-individual transactions without using VTR.\n Do you want to start a transaction?");
             if(confirmYn) {
                 var params = {
                     "itemId": itemId,
@@ -277,7 +277,7 @@
                     data: JSON.stringify(params),
                 }).done(function (success) {
                     if(success.data.code == undefined) {
-                        alert('The transaction has started.\r You can contact by clicking the contact display button.');
+                        alert('The transaction has started.\n You can contact by clicking the contact display button.');
                         location.href = "/etc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
