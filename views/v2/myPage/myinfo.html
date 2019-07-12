@@ -286,7 +286,7 @@
             }).done(function (success) {
                 var strDOM = '<option value="">Choice</option>';
                 for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_ko + '('+ success.data[i].country_code +')' + '</option>'
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_kr + '('+ success.data[i].country_code +')' + '</option>'
                 }
 
                 $("#currencyType").html(strDOM);
