@@ -9,6 +9,9 @@ router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
     let itemId = req.body.itemId;
+    if(country != "KR") {
+        req.body['country'] = country;
+    }
 
     controllerPersonal.add(req)
         .then(result => {

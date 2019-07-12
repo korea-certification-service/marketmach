@@ -18,6 +18,12 @@ function count(req) {
         //         $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}, {'category' : { $regex: req.query.title, $options: 'i' }}, ]
         //     }
         // };
+        //국가별로 1:1 문의 관리
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
+        }
 
         db.connectDB(country)
             .then(() => bitwebPersonals.count(data, option))
@@ -46,6 +52,12 @@ function list(req) {
         //         $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}, {'category' : { $regex: req.query.title, $options: 'i' }}, ]
         //     }
         // }
+        //국가별로 1:1 문의 관리
+        if(dbconfig.country != "KR") {
+            data['country'] = dbconfig.country;
+        } else {
+            data['country'] = {$exists: false};
+        }
 
         db.connectDB(country)
             .then(() => bitwebPersonals.search(data, option))
