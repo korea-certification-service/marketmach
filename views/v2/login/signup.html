@@ -97,6 +97,11 @@
                 return;
             }
 
+            if($('#recommander').val() != "" && $('#recommander').val() == $("input[name=id]").val()) {
+                alert("등록할 ID로 추천인을 넣을 수 없습니다.");
+                return;
+            }
+
             var birth = "<%=birth%>";
             var year = birth.substr(0,4);
             var month = birth.substr(4,2);
