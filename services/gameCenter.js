@@ -1,6 +1,7 @@
 var GameCenter = require('../libs/gameCenter');
 var GameCenterHistory = require('../libs/gameCenterHistorys');
 var GameCenterRecord = require('../libs/gameCenterRecords');
+var GameCenterExchangeHistory = require('../libs/gameCenterExchangeHistory');
 
 function add(data) {
     return new Promise((resolve, reject) => {
@@ -54,6 +55,23 @@ function update (userId, data) {
     })
 }
 
+function updateByCondition (condition, data) {
+    return new Promise((resolve, reject) => {
+        GameCenter.findOneAndUpdate(
+            condition,
+            data,
+        {upsert: false, new: true},
+        function (err, result) {
+            if (err) {
+                console.error(err)
+                reject(err)
+            }
+            console.log('updateByCondition done: ' + result)
+            resolve(result)
+        })
+    })
+}
+
 function addHistory(data) {
     return new Promise((resolve, reject) => {
         console.log(data)
@@ -85,6 +103,18 @@ function getHistoryCount (condition) {
 function getHistorys (condition) {
     return new Promise((resolve, reject) => {
         GameCenterHistory.find(condition)
+        .exec(function (err, result) {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+}
+
+function getRecords (condition) {
+    return new Promise((resolve, reject) => {
+        GameCenterRecord.findOne(condition)
         .exec(function (err, result) {
             if (err) {
                 reject(err)
@@ -132,20 +162,33 @@ function updateRecord(data) {
     })
 }
 
-function addRecord(data) {
+function addExchangeHistory(data) {
     return new Promise((resolve, reject) => {
         console.log(data)
-        var gameCenter = new GameCenter(data)
-        gameCenter.save(function (err, result) {
+        var gameCenterExchangeHistory = new GameCenterExchangeHistory(data)
+        gameCenterExchangeHistory.save(function (err, result) {
             if (err) {
                 reject(err);
             } else {
-                console.log('add done: ' + result)
+                console.log('addHistory done: ' + result)
                 resolve(result)
             }
         })
     })
 }
+
+function getExchangeHistorys (condition) {
+    return new Promise((resolve, reject) => {
+        GameCenterExchangeHistory.find(condition)
+        .exec(function (err, result) {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+}
+
 
 exports.add = add;
 exports.getByUserId = getByUserId;
@@ -154,3 +197,7 @@ exports.addHistory = addHistory;
 exports.getHistorys = getHistorys;
 exports.getHistoryCount = getHistoryCount;
 exports.updateRecord = updateRecord;
+exports.getRecords = getRecords;
+exports.addExchangeHistory = addExchangeHistory;
+exports.getExchangeHistorys = getExchangeHistorys;
+exports.updateByCondition = updateByCondition;

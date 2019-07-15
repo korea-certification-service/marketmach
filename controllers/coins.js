@@ -222,6 +222,18 @@ function updateTotalCoin(country, coinId, data) {
     })
 }
 
+function updateCoin(country, condition, reqData) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoins.updateCoin(condition, reqData))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function remove(req) {
     return new Promise((resolve, reject) => {
 
@@ -252,4 +264,5 @@ exports.updateWithHistory = updateWithHistory;
 exports.updateWithWithdrawHistory = updateWithWithdrawHistory;
 exports.updateTotalCoin = updateTotalCoin;
 exports.remove = remove;
+exports.updateCoin = updateCoin;
 
