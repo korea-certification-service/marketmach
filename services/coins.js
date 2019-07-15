@@ -226,6 +226,24 @@ function updateCoinBtcHistoryId(coinId, historyId) {
     })
 }
 
+function updateCoin(condition, data) {
+    return new Promise((resolve, reject) => {
+
+        Coins.findOneAndUpdate(
+            condition,
+            data,
+            {upsert: false, returnNewDocument: false },
+            function (err, data) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                resolve(data)
+            })
+    })
+}
+
+
 function updateCoinMachHistoryId(coinId, historyId) {
     return new Promise((resolve, reject) => {
 
@@ -277,3 +295,4 @@ exports.updateCoinEtherWithdrawHistoryId = updateCoinEtherWithdrawHistoryId;
 exports.updateCoinMachWithdrawHistoryId = updateCoinMachWithdrawHistoryId;
 exports.updateCoinBtcWithdrawHistoryId = updateCoinBtcWithdrawHistoryId;
 exports.deleteCoinById = deleteCoinById;
+exports.updateCoin = updateCoin;

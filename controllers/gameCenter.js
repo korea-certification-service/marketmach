@@ -25,6 +25,30 @@ function getByUserId(country, userId) {
     })
 }
 
+function getRecords(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.getRecords(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function updateByCondition(country, condition, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.updateByCondition(condition, data))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function update(country, userId, data) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
@@ -87,6 +111,30 @@ function updateRecord(country, data) {
     })
 }
 
+function addExchangeHistory(country, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.addExchangeHistory(data))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function getExchangeHistorys(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.getExchangeHistorys(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 exports.add = add;
 exports.getByUserId = getByUserId;
 exports.update = update;
@@ -94,3 +142,7 @@ exports.addHistory = addHistory;
 exports.getHistorys = getHistorys;
 exports.getHistoryCount = getHistoryCount;
 exports.updateRecord = updateRecord;
+exports.getRecords = getRecords;
+exports.addExchangeHistory = addExchangeHistory;
+exports.getExchangeHistorys = getExchangeHistorys;
+exports.updateByCondition = updateByCondition;
