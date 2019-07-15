@@ -460,10 +460,15 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* 공지사항 */
 .noti_area{}
 .noti_area .main_tit_notice{background: url(/static/img/main/ico_notice.png) 0 13px no-repeat; background-size: 20px 20px;}
-.noti_area .bd_area{height: 300px; border: 1px solid #ced4da;}
+.noti_area .bd_area{height: 230px; border: 1px solid #ced4da;}
 .noti_area .bd_area .noti_list{margin-top: 40px; padding: 0 10px;}
 .noti_area .bd_area .noti_list li{margin-bottom: 14px;}
 .noti_area .bd_area .noti_list li a{color: #333;}
+.noti_area .noti_btm_media{text-align: center; font-size: 0; border-bottom: 1px solid #ced4da;}
+.noti_area .noti_btm_media ul{padding: 14.5px 0; display: inline-block;}
+.noti_area .noti_btm_media li{float: left; margin-left: 8px;}
+.noti_area .noti_btm_media li:first-child{margin-left: 0;}
+.noti_area .noti_btm_media li img{width: 40px;}
 
 /* 동영상 */
 .media_sec{margin-bottom: 30px; }
