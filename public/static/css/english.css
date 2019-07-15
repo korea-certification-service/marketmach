@@ -1,5 +1,4 @@
 @charset "utf-8";
-@import url("english_jini.css");
 /*
 * KCS: http://www.onlykcs.com/
 * since: 201905024 
@@ -11,20 +10,33 @@
 .header .nav > .l_menu > li:nth-child(2) > button{margin-left: 7px;}
 .header .nav > .c_menu > li{width: 20%;}
 .header .nav > .r_menu > li .beforeLoginBox .mdl_area p{font-size: 13px;}
-.header .nav > .r_menu > li .floating_info_box .btn{font-size: 11px;}
+.header .nav > .r_menu > li .floating_info_box .btn{font-size: 12px;}
 
 .primezone_sec .slick_primezone .card_ui dt{ font-size: 14px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc1{line-height: 1.5; padding-top: 20px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc3{line-height: 1.2; padding-top: 8px;}
 /**********  sub **********/
-.table .colgroup_dispute .col3_2{width: 65px;}
-.support_sec .table_view .col2_1{width: 110px;}
 .sub_lft_menu > .depth1 > li > a{font-size: 14px;}
 .content_tab_depth1 li{width: 33.33%;}
 /**********  hide button **********/
 /*
 #regVTR{display: none !important;}
 */
+
+/*walletconnect페이지속 fc2클래스를 가진 태그 문자개행 방지*/
+.coin_certification dt { width: 155px; }
+
+/*버튼내부 텍스트 개행방지*/
+.btn_align_c button {max-width: 280px;}
+
+/*플러스 아이콘 가운데 정렬*/
+.em_calc_ico {line-height: 22px;}
+
+/* main colgroup */
+.colgroup_main_gameitem .col4_1{width: 80px;}
+/* sub colgroup */
+.table .colgroup_dispute .col3_2{width: 65px;}
+.support_sec .table_view .col2_1{width: 110px;}
 
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){

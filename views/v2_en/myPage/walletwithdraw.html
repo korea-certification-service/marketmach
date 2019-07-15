@@ -94,7 +94,7 @@
                 var coinHistorys = success.data;
                 var result = ""
                 if(coinHistorys.length == 0) {
-                    result = "<tr><td colspan='3'>내역이 존재하지 않습니다.</td></tr>";
+                    result = "<tr><td colspan='3'>No exist.</td></tr>";
                 }
 
                 for(var i=0;i<coinHistorys.length;i++) {
@@ -155,18 +155,18 @@
 
         function reqWithdraw() {
             if(bitberry_token == "") {
-                alert("비트베리 앱에서 연동이 필요합니다.");
+                alert("Connection with Bitberry is required.");
                 location.href = '/myPages/wallet/connect';
                 return;
             } 
 
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
-                alert("Coin 금액을 입력하세요.");
+                alert("Please enter Coin amount.");
                 return;
             }
 
             if(parseFloat($('#total_amount').text()) < 0) {
-                alert("출금 요청 금액이 출금 가능 잔액보다 클 수 없습니다.");
+                alert("The withdrawal request amount can not be greater than the withdrawable amount.");
                 return;
             }
 
@@ -188,7 +188,7 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == undefined) {
-                    alert('MACH 출금이 정상적으로 처리되었습니다.');
+                    alert('MACH withdrawal has been processed successfully.');
                     // getCoin();
                     // getCoinHistory('withdraw');
                     location.href = "/myPages/wallet/withdraw";
@@ -197,7 +197,7 @@
                 }
             }).fail(function (fail) {
                 console.log(fail);
-                alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                alert('There was a problem during the process. \n If the problem persists, please contact administrators.');
             });
         }
     </script>
@@ -221,7 +221,7 @@
                 <div class="sub_content">
                     <!-- mypage -->
                     <section class="mypage_sec">
-                        <h1 class="tit_mypage">지갑관리 <span>Coin 출금</span></h1>
+                        <h1 class="tit_mypage">My Wallet <span>withdraw Coin</span></h1>
                         <!-- <div class="bitberry_switch_box">
                             <div class="bitberry_switch">
                                 <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
@@ -236,7 +236,7 @@
                         <div class="bitberry_grey_box">
                             <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
                         </div>
-                        <h2 class="tit_mypage dot_tit">나의 지갑 현황</h2>
+                        <h2 class="tit_mypage dot_tit">MY Wallet Status</h2>
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
@@ -247,15 +247,15 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>코인</th>
-                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
+                                        <th>Coin</th>
+                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="MACH"></th>
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="first_tr">
-                                        <th>나의지갑잔액</th>
+                                        <th>Balance</th>
                                         <td id="machTotal"></td>
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
@@ -264,7 +264,7 @@
                             </table>
                         </div>
 
-                        <h2 class="tit_mypage dot_tit">출금하기</h2>
+                        <h2 class="tit_mypage dot_tit">withdraw</h2>
                         <div class="table_wrap table-responsive mb50">
                             <table class="table_account">
                                 <colgroup>
@@ -280,7 +280,7 @@
                                 </tfoot>
                                 <tbody>
                                     <tr>
-                                        <th>코인선택</th>
+                                        <th>Coin</th>
                                         <td>
                                             <div class="dib_220">
                                                 <select class="custom-select" name="coin" onchange="calculate()">
@@ -289,18 +289,18 @@
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>
-                                            <br class="mob_br"><span class="fcrd">※MACH 코인으로 출금할 코인선택</span>
+                                            <br class="mob_br"><span class="fcrd">※ Please select coin to withdraw</span>
                                         </td>
                                     </tr>  
                                     <tr>
-                                        <th>출금 금액</th>
+                                        <th>Amount</th>
                                         <td>
                                             <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
-                                            <br class="mob_br"><span class="fcrd">※ 아이템 및 자산 거래가 완료된 MACH 금액만 출금 가능</span>
+                                            <br class="mob_br"><span class="fcrd">※ Only the Coin amount of items and assets transaction completed can be withdrawn</span>
                                         </td>
                                     </tr>                  
                                     <tr>
-                                        <th>자동계산</th>
+                                        <th>Exchange Rate</th>
                                         <td><em id="calculate">0 MACH = 0 MACH</em></td>
                                     </tr>    
                                 </tbody>
@@ -308,7 +308,7 @@
                         </div>
 
                         <div class="table_wrap">
-                            <h2 class="tit_mypage dot_tit">결제정보</h2>
+                            <h2 class="tit_mypage dot_tit">Billing information</h2>
                             <table class="table_payment_info table">
                                 <colgroup>
                                     <col class="col50p">
@@ -316,26 +316,26 @@
                                 </colgroup>
                                 <tbody>                           
                                     <tr>
-                                        <th>출금 가능 금액</th>
+                                        <th>My Wallet Balance</th>
                                         <td><span id="my_amount">0</span></td>
                                     </tr>
                                     <tr>
-                                        <th>출금 금액</th>
+                                        <th>Withdrawal Amount</th>
                                         <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
                                             <em class="em_calc_ico minus">-</em> <span id="plus_amount">0 MACH</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>출금 후 출금 가능 금액</th>
+                                        <th>Balance after Withdrawal</th>
                                         <td><span id="total_amount">0</span></td>
                                     </tr>                        
                                 </tbody>
                             </table>
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="confirmWithdraw">비트베리<br class="mob_br"> 출금요청</button>
+                                <button class="btn btn_in_view1" id="confirmWithdraw">Bitberry<br class="mob_br"> Withdrawal Request</button>
                             </div>                            
                         </div>
-                        <h2 class="tit_mypage">비트베리 출금 내역</h2>
+                        <h2 class="tit_mypage">Bitberry Withdrawal Statement</h2>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>
@@ -345,9 +345,9 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>출금액</th>
-                                        <th>처리상태</th>
-                                        <th>일자</th>
+                                        <th>Withdrawal Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">
