@@ -251,13 +251,24 @@
 .sub_lft_menu > .depth1{border: 1px solid #666; border-top: 3px solid #333;}
 .sub_lft_menu > .depth1 > li{}
 .sub_lft_menu > .depth1 > li.on > a{font-weight: bold; color: #000039; background-color: #fff5d9;}
-.sub_lft_menu > .depth1 > li > a{display: block; padding: 10px 0 10px 10px; font-size: 16px; color: #666666; border-bottom: 1px solid #666;}
+.sub_lft_menu > .depth1 > li > a{display: block; padding: 10px 0 10px 10px; font-size: 16px; color: #444; background-color: #fbfbfb; border-bottom: 1px solid #666;}
 .sub_lft_menu > .depth1 > li:last-child > a{/*border: none;*/}
 .sub_lft_menu > .depth1 > li > .dept    h2{border-bottom: 1px solid #666;}
 .sub_lft_menu > .depth1 > li > .depth2 > li{}
 .sub_lft_menu > .depth1 > li > .depth2 > li:last-child{border-bottom: 1px solid #000;}
 .sub_lft_menu > .depth1 > li > .depth2 > li > a{display: block; padding: 2.5px 0 2.5px 20px; color: #666666;}
 .sub_lft_menu > .depth1 > li > .depth2 > li.on > a{font-weight: bold;  color: #1e2560;} 
+.mob_depth2_menu{display: none; margin: 30px 0;}
+.mob_depth2_menu ul{border: 1px solid #000;}
+.mob_depth2_menu li{float: left; padding: 8px 0; width: 50%; box-sizing: border-box; text-align: center;}
+.mob_depth2_menu li:nth-child(1){border-right: 1px solid #000;}
+.mob_depth2_menu li:nth-child(2){}
+.mob_depth2_menu li:nth-child(3){border-top: 1px solid #000; border-right: 1px solid #000;}
+.mob_depth2_menu li:nth-child(4){border-top: 1px solid #000;}
+.mob_depth2_menu li a{display: block; color: #333333; font-size: 14px;}
+.mob_depth2_menu li.on{background-color: #f3f3f3;}
+.mob_depth2_menu li.on a{font-weight: bold; color: #000000;}
+
 /** 메뉴옆 컨텐츠 **/
 .sub_content{float: left; width: calc(100% - 210px);}
 /** 나의페이지 공통 **/
@@ -580,6 +591,7 @@
     .table_list .col5_2{width: 300px;}
     .table_view .col2_1{width: 80px;}
     .support_sec .table_view .col2_1{width: 80px;}
+    .search_filter{padding: 15px 20px;}
     /** 사이드 메뉴 모바일 **/
     .sub_lft_menu{width: 100%; float: none;}   
     .sub_lft_menu > .depth1{border: none;}
@@ -589,6 +601,7 @@
     .sub_lft_menu > .depth1 > li:nth-child(n+4){border-top: none;}
     .sub_lft_menu > .depth1 > li > .depth2{display: none;}
     .sub_lft_menu > .depth1 > li > a{padding: 10px 0; border: none; text-align: center;}
+    .mob_depth2_menu{display: block;}
     /* 고객센터 사이드 메뉴 비노출 메뉴 = 신규게임/서버추가 */
     /*#leftMenuSupport > .depth1 > li:nth-child(6) {display: none;}*/
     #leftMenuSupport > .depth1 > li:nth-child(7) {border-left: none;}
