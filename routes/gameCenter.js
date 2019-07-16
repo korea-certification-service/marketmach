@@ -489,7 +489,7 @@ router.post('/:userId/exchange/mach', function(req, res, next) {
                 return;
             }
 
-            let exchange_rate = dbconfig.gameCenter.monkeyCrashSaga.mach_rate;
+            let exchange_rate = req.body.mach_rate;
             let exchange_mach = parseFloat((req_exchange_gamecoin * exchange_rate).toFixed());
             
             let updateGameCenter = {};
@@ -595,7 +595,7 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
                     return;
                 }
 
-                let exchange_rate = dbconfig.gameCenter.monkeyCrashSaga.gamecoin_rate;
+                let exchange_rate = req.body.gamecoin_rate;
                 let exchange_gamecoin = parseFloat((req_exchange_mach * exchange_rate).toFixed());
                 let coinId = {"_id" : user._doc.coinId};
                 let updateMachTotalCoin = {"total_mach": balance_total_coin};
