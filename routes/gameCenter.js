@@ -392,6 +392,24 @@ router.post('/games/list', function(req, res, next) {
     })
 })
 
+router.get('/games/:machGameId', function(req, res, next) {
+    let bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let condition = {"_id":req.params.machGameId};
+
+    controllerMachgames.get(country, condition)
+    .then(machGame => {
+        bitwebResponse.code = 200;
+        bitwebResponse.data = machGame;
+        res.status(200).send(bitwebResponse.create())
+    }).catch((err) => {
+        console.error('games list err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+})
+
 router.get('/:userId/info', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
