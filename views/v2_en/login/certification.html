@@ -60,18 +60,18 @@
 
         function sendAuthNo() {
             var phoneNo = $("#phone").val();
-            //var countryCode = $("#currencyType").val().replace('+','');
+            var countryCode = $("#currencyType").val().replace('+','');
 
-            // if($("#currencyType").val() == "") {
-            //     alert("거래국가를 선택하세요.");
-            //     return;
-            // } else if($("#phone").val() == "") {
-            //     alert("Please input the phone.");
-            //     return;
-            // } else if(phoneNo.replace('+','').substr(0,countryCode.length) == countryCode) {
-            //     alert("국가번호를 제외한 전화번호를 입력하세요.");
-            //     return;
-            // }
+            if($("#currencyType").val() == "") {
+                alert("Please select the country.");
+                return;
+            } else if($("#phone").val() == "") {
+                alert("Please input the phone number.");
+                return;
+            } else if(phoneNo.replace('+','').substr(0,countryCode.length) == countryCode) {
+                alert("Please enter a phone number other than your country code.");
+                return;
+            }
 
             if($("#phone").val() == "") {
                 alert("Please input the phone number.");
@@ -80,7 +80,7 @@
             
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
-                // 'countryCode':$("#currencyType").val(),
+                'countryCode':$("#currencyType").val(),
                 'phone': $("#phone").val()
             }
 
@@ -109,7 +109,7 @@
             } 
 
             var reqData = {
-                // 'countryCode':$("#currencyType").val(),
+                'countryCode':$("#currencyType").val(),
                 'phone': $("#phone").val(),
                 'authNo': $("#authNo").val()
             }
@@ -149,8 +149,8 @@
                 <hr>
                 <div class="submit_ctc_code">
                     <div class="submit_ctc_code_top no_w100p_wrap">
-                        <!-- <select id="currencyType" class="selectpicker" data-live-search="true"></select> -->
-                        <input type="text" class="form-control w100p" id="phone" placeholder="E.164 phone number. ex)+821012345678" maxlength="24"> 
+                        <select id="currencyType" class="selectpicker" data-live-search="true"></select>
+                        <input type="text" class="form-control w100p" id="phone" placeholder="your phone number. ex)01012345678" maxlength="24"> 
                     </div>
                     <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">Send</button>
                 </div>
