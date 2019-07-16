@@ -18,8 +18,10 @@
 .primezone_sec .slick_primezone .card_ui dt.bgc3{line-height: 1.2; padding-top: 8px;}
 /**********  sub **********/
 .mob_depth2_menu li a{font-size: 12px;}
+.sub_container .btn{font-size: 12px;}
 .sub_lft_menu > .depth1 > li > a{font-size: 12px;}
 .content_tab_depth1 li{width: 33.33%;}
+.photo_list li .img_list_box .ico_trade{width: 80px; font-size: 12px;}
 /**********  hide button **********/
 /*
 #regVTR{display: none !important;}

@@ -136,7 +136,7 @@
 .colgroup_total_escorw .col4_4{width: 28%;}
 /*** 지갑관리 - MACH 입금 / MACH 출금 ***/
 /* 입금하기 / 출금하기 => 공통 */
-.table_account .col2_1{width: 130px;}
+.table_account .col2_1{width: 125px;}
 .table_account .col2_2{}
 /* 비트베리 입금 내역 / 비트베리 출금 내역 => 공통 */
 .table_wallet .col3_1{}

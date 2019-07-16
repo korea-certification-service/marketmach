@@ -48,6 +48,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_go_detail:hover{color: #333;}
 .btn.btn_more_list:hover{color: #666;}
 .btn.btn_go_list{background-color: #17a2b8; color: #ffffff;}
+.btn.btn_blln{border: 1px solid #0975b8; color: #0975b8; background-color: #ffffff;}
 /********** Common **********/
 .cf:after{display: block; content: ''; clear: both;}
 .fll{float: left;}

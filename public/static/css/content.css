@@ -285,17 +285,19 @@
 .mypage_sec .table_view td{border: none;}
 /** 나의페이지 메인 **/
 .mypage_sec{margin: 30px auto; max-width: 840px;}
-.mypage_sec .mypage_main_info{margin-bottom: 50px; border: 2px solid #1e2560; background-color: #f3f3f3;}
-.mypage_sec .mypage_main_info > div{float: left; padding: 20px 0; width: 50%; text-align: center;}
-.mypage_sec .mypage_main_info .lft_area{}
-.mypage_sec .mypage_main_info .lft_area > p{margin-bottom: 15px; font-size: 16px;}
-.mypage_sec .mypage_main_info .rgh_area{border-left: 2px solid #1e2560;}
+.mypage_sec .mypage_main_info{margin-bottom: 50px; border-right: 1px solid #afb0ae; border-bottom: 1px solid #afb0ae; background-color: #f9faf7;}
+.mypage_sec .mypage_main_info > div{float: left; width: 50%; height: 150px; text-align: center;}
+.mypage_sec .mypage_main_info .lft_area{background: url(/static/img/symbol/ico_grade.png) 28px 50% no-repeat; background-size: 50px 56.5px;}
+.mypage_sec .mypage_main_info .lft_area > p{margin-top: 50px; font-size: 16px;}
+.mypage_sec .mypage_main_info .lft_area .grade_color1{color: #ffc107;}
+.mypage_sec .mypage_main_info .rgh_area{background: url(/static/img/symbol/ico_mywallet.png) 14px 50% no-repeat; background-size: 54px 61px;}
+.mypage_sec .mypage_main_info .rgh_area a{display: block; margin-top: 20px;}
 .mypage_sec .mypage_main_info .rgh_area a em{font-size: 16px; color: #333333;}
-.mypage_sec .mypage_main_info .rgh_area a p{margin-bottom: 15px; font-size: 20px; font-weight: bold; color: #0a73b8;}
+.mypage_sec .mypage_main_info .rgh_area a p{margin-bottom: 15px; font-size: 20px; font-weight: bold; color: #1e2660;}
 .mypage_sec .mypage_main_info .rgh_area a p > span{font-size: 14px;}
-.table_status_3n{width: 100%; border: 2px solid #ffc107;}
-.table_status_3n th{height: 70px; font-size: 16px; text-align: center; border: 1px solid #000;}
-.table_status_3n td{height: 80px; font-size: 16px; text-align: center; border-bottom: 1px solid #000;}
+.table_status_3n{width: 100%; border-top: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0; border-right: 1px solid #afb0ae; border-bottom: 1px solid #afb0ae;}
+.table_status_3n th{height: 70px; font-size: 16px; text-align: center; border: none; background-color: #f9faf7;}
+.table_status_3n td{height: 80px; font-size: 16px; text-align: center; border: none;}
 .table_status_3n td a{color: #333333;}
 .table_status_3n td span em{font-size: 20px;}
 /** 나의페이지 리스트 **/
@@ -361,7 +363,7 @@
 .table_wallet .td_exchange_coin .arw_txt{margin: 0 10px; font-size: 18px; font-weight: bold;}
 /* 입금하기 / 출금하기 */
 .table_account{margin: auto; width: 100%; border: 2px solid #1e2560;}
-.table_account tbody th{padding-left: 25px; color: #1e2560;}
+.table_account tbody th{padding-left: 20px; color: #1e2560;}
 .table_account tbody td{padding: 15px 0 15px 10px; }
 .table_account tbody td input{max-width: 220px;}
 .table_account tbody td span{font-size: 12px;}
@@ -431,14 +433,14 @@
 
 /** 고객센터 **/
 .support_sec{margin: 30px auto; max-width: 840px;}
-.support_sec .support_main_info{margin-bottom: 50px; border: 2px solid #1e2560; background-color: #f3f3f3;}
-.support_sec .support_main_info > div{float: left; padding: 20px 0; width: 50%; text-align: center;}
-.support_sec .support_main_info > div h2{font-size: 16px; color: #1e2560; font-weight: bold;}
+.support_sec .support_main_info{margin-bottom: 50px; border-right: 1px solid #afb0ae; border-bottom: 1px solid #afb0ae; background-color: #f9faf7;}
+.support_sec .support_main_info > div{float: left; width: 50%; height: 150px; text-align: center;}
+.support_sec .support_main_info > div h2{margin-top: 30px; font-size: 16px; color: #1e2560; font-weight: bold;}
 .support_sec .support_main_info > div p{margin-bottom: 15px;}
 .support_sec .support_main_info > div .btn{width: 120px;}
 .support_sec .support_main_info .inner_area{text-align: left; display: inline-block;}
 .support_sec .support_main_info .lft_area{}
-.support_sec .support_main_info .rgh_area{border-left: 2px solid #1e2560;}
+.support_sec .support_main_info .rgh_area{}
 .support_sec .tit_support{font-size: 18px; color: #000039;}
 .support_sec h1.tit_support{margin-bottom: 30px;}
 .support_sec h1.tit_support:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
@@ -609,10 +611,14 @@
     .sub_content {float: none; width: 100%;}
     /* 나의페이지 메인 */
     .mypage_sec{width: 100%;}
+    .mypage_sec .mypage_main_info > div{width: 100%;}
+    .mypage_sec .mypage_main_info .rgh_area{background-position-x: 28px;}
+    .mypage_sec .mypage_main_trade table th{font-size: 14px;}
+    .mypage_sec .mypage_main_trade table td{font-size: 14px;}
     .table_status_3n td > span{display: block;}
     /** 고객센터 **/
     .support_sec .support_main_info > div{float:none; width: 100%;}
-    .support_sec .support_main_info .rgh_area{border-left: none; border-top: 2px solid #1e2560;}
+    .support_sec .support_main_info .rgh_area{}
     .support_sec .support_main_info .inner_area{}
     /* 이용약관 */
     .content_tab_depth1 li{width: 50%; border: 1px solid #0a73b8;}
@@ -621,11 +627,8 @@
     .m_link_connect.bgc1 { background-color: #1e2560; color: #ffffff; }
 }
 @media (max-width: 576px){
-    /* 나의페이지 메인 */
-    .mypage_sec .mypage_main_info > div{width: 100%;}
-    .mypage_sec .mypage_main_info .rgh_area{border-left: none; border-top: 2px solid #1e2560;}
-    .mypage_sec .mypage_main_trade table th{font-size: 14px;}
-    .mypage_sec .mypage_main_trade table td{font-size: 14px;}
+    .mypage_sec .mypage_main_info .lft_area{background-position: 14px 50%;}
+    .mypage_sec .mypage_main_info .rgh_area{background-position: 14px 20px;}
     .point_box .pb_inner .inner_box em{font-size: 14px;}
     .point_box .pb_inner .inner_box p{font-size: 16px;}
     /**/
