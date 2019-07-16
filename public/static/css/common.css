@@ -223,13 +223,12 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu{display: none; position: absolute; /*position: fixed; z-index: 4;*/ right: 0;top: 0px; width: 90%; max-width: 414px; height: 100%; overflow-y: scroll;  background-color: #fff; -webkit-overflow-scrolling: touch;}
 .hamburger_menu a.btn{padding: 0 0.75rem;}
 .hamburger_menu .m_nav_head{height: 40px;}
-.hamburger_menu .m_nav_head li:nth-child(1){float: left; margin-left: 10px;}
-.hamburger_menu .m_nav_head li:nth-child(1) img{width: 23px;}
-.hamburger_menu .m_nav_head li:nth-child(2){float: left; margin-left: 5px;}
-.hamburger_menu .m_nav_head li:nth-child(2) > button{margin-top: 2px; border: none; background-color: #ffffff;}
-.hamburger_menu .m_nav_head li:nth-child(3){float: left; margin-left: 5px;}
-.hamburger_menu .m_nav_head li:nth-child(3) .recomandation{margin: 3px 0 0 5px; font-size: 12px;}
-.hamburger_menu .m_nav_head li:nth-child(4){float: right; margin: 5px 10px 0 0;}
+.hamburger_menu .m_nav_head li{margin-left: 10px; float: left;}
+.hamburger_menu .m_nav_head li img{width: 23px;}
+.hamburger_menu .m_nav_head li span{margin-top: 2px; display: inline-block;}
+.hamburger_menu .m_nav_head li a{color: #666666; font-weight: bold; font-size: 12px;}
+.hamburger_menu .m_nav_head li .recomandation{margin: 3px 0 0 5px; font-size: 12px;}
+.hamburger_menu .m_nav_head li:last-child{float: right; margin: 5px 10px 0 0;}
 .hamburger_menu .m_nav_body{}
 .hamburger_menu .m_nav_body .btn{font-size: 12px;}
 .hamburger_menu .m_nav_body > .ul_dep1{}
