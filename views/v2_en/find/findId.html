@@ -32,8 +32,8 @@
             })
 
             $("#sendAuthNo").on('click', function() {
-                if($(this).text() == "인증코드 재전송" ) {
-                    alert("인증코드가 재전송 되었습니다.");
+                if($(this).text() == "re-send an authentication code" ) {
+                    alert("re-send an authentication code.");
                 }
                 sendAuthNo();
             });
@@ -89,10 +89,10 @@
 
         function sendAuthNo() {
             if($("#currencyType").val() == "") {
-                alert("거래국가를 선택하세요.");
+                alert("choice your country"); // 거래국가를 선택하세요.
                 return;
             } else if($("#phone").val() == "") {
-                alert("전화번호를 입력하세요.");
+                alert("enter a phone number.");
                 return;
             }
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
@@ -110,7 +110,7 @@
             }).done(function (success) {
                 console.log(success);
                 $('.auth_no_class').show();
-                $('#sendAuthNo').text("인증코드 재전송");
+                $('#sendAuthNo').text("re-send an authentication code");
                 $('#phone').prop('readonly', true);
                 $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
@@ -120,7 +120,7 @@
 
         function checkAuthNo() {
             if($("#authNo").val() == "") {
-                alert("인증번호를 입력하세요.");
+                alert("enter an authentication code.");
                 return;
             } 
 
@@ -139,7 +139,7 @@
             }).done(function (success) {
                 console.log(success);
                 if(success.data.successYn == "fail") {
-                    alert("인증번호가 유효하지 않습니다. 인증번호를 확인하세요.");
+                    alert("It's an invalid authorization number."); // 인증번호가 유효하지 않습니다. 인증번호를 확인하세요.
                     return;
                 } else {
                     location.href = '/findResult?type=findId';
@@ -154,12 +154,12 @@
             var email = $("#email").val();
 
             if(name == "") {
-                alert("이름을 입력하세요.");
+                alert("enter a ID");
                 return;
             }
 
             if(email == "") {
-                alert("이메일을 입력하세요.");
+                alert("enter an email.");
                 return;
             }
 
@@ -169,7 +169,7 @@
             }).done(function (success) {
                 console.log(success);
                 //location.href = "/existUser?id=" + success.data._id;
-                alert('성공적으로 메일을 보냈습니다.\n확인 후 로그인하십시오.');
+                alert('send mail \n login after check your mail.'); // 성공적으로 메일을 보냈습니다.\n확인 후 로그인하십시오.
                 location.href="/login";
             }).fail(function (fail) {
                 if (fail.status == 403) {
@@ -194,23 +194,23 @@
             <!-- page-->
             <section class="find_info_sec">
                <ul class="tab_find_info cf">
-                   <li class="on"><a href="findId"><h1>아이디 찾기</h1></a></li>
-                   <li><a href="/findPassword">비밀번호 찾기</a></li>
+                   <li class="on"><a href="findId"><h1>find ID</h1></a></li>
+                   <li><a href="/findPassword">find password</a></li>
                </ul>
                <div class="find_info_box">
-                    <h2>휴대폰 확인으로 찾기</h2>
+                    <h2>by phone number</h2>
                     <div class="align_c">
                         <div class="submit_ctc_code">
                             <div class="submit_ctc_code_top no_w100p_wrap">
                                 <select id="currencyType" class="selectpicker" data-size="5" data-live-search="true"></select>
-                                <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
+                                <input type="text" class="form-control w80p" id="phone" placeholder="enter your phone number" maxlength="24"> 
                             </div>
-                            <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
+                            <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">send authentication code</button>
                         </div>
                         <div class="confirm_ctc_code auth_no_class">
-                            <input type="text" class="form-control" id="authNo" placeholder="인증번호 입력" maxlength="24">
+                            <input type="text" class="form-control" id="authNo" placeholder="enter authentication code" maxlength="24">
                             <br>
-                            <button class="btn btn_in_view1" id="checkAuthNo">전송</button>
+                            <button class="btn btn_in_view1" id="checkAuthNo">confirm</button>
                         </div>
                     </div>
                     <!-- <div class="btn_align_c">
@@ -218,10 +218,10 @@
                     </div> -->
                     <div class="align_c">
                         <hr>
-                        <h2>이메일로 아이디 찾기</h2>
+                        <h2>by e mail</h2>
                         <p>
-                            회원정보의 이메일 주소와 동일한 이메일 주소를 입력하셔야 찾으실 수 있습니다.<br>
-                            ※ 아이디는 본인 이메일 주소에 발송됩니다.
+                            You need to enter the same email address as your account information.<br>
+                            ※ Your ID will be sent to your email address. "
                         </p>
                         <div class="table_wrap table-responsive">
                             <table class="table_view table">
@@ -231,11 +231,11 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th class="fc2">이름</th>
+                                        <th class="fc2">name</th>
                                         <td><input type="text" class="form-control" id="name" placeholder=""></td>
                                     </tr>         
                                     <tr>
-                                        <th class="fc2">이메일</th>
+                                        <th class="fc2">e mail</th>
                                         <td><input type="text" class="form-control" id="email" placeholder=""></td>
                                     </tr>
                                 </tbody>
@@ -243,7 +243,7 @@
                         </div>
                     </div>
                     <div class="btn_align_c">
-                        <button class="btn btn_in_view2" id="findId">아이디 찾기</button>
+                        <button class="btn btn_in_view2" id="findId">find ID</button>
                     </div>
                 </div>
             </section>
