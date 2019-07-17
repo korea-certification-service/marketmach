@@ -61,7 +61,7 @@
                 if($(this).val() !== ""){
                     $("#titName").text($(this).val());
                 } else {
-                    $("#titName").text("All Games");
+                    $("#titName").text("All Game");
                 }
                 $('#btn_search').trigger('click');
             });
@@ -93,7 +93,7 @@
                 method: "GET",
                 url: "/v1/games"
             }).done(function (success) {
-                var strDOM = '<option value="">All Games</option><option value="etc">Etc</option>';
+                var strDOM = '<option value="">All Game</option><option value="etc">Etc</option>';
                 // for (var i = 0; i < success.data.length; i++) {
                 //     strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
                 // }
@@ -134,7 +134,7 @@
         }
 
         function renderServerSelect(data) {
-            var strDOM = '<option value="">All Games</option><option value="etc">Etc</option>';
+            var strDOM = '<option value="">All Server</option><option value="etc">Etc</option>';
 
             // for (var i = 0; i < data.servers.length; i++) {
             //     strDOM += '<option value="' + data.servers[i] + '">' + data.servers[i] + '</option>'

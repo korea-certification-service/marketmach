@@ -61,7 +61,7 @@
                 if($(this).val() !== ""){
                     $("#titName").text($(this).val());
                 } else {
-                    $("#titName").text("All Games");
+                    $("#titName").text("All Game");
                 }
                 $('#btn_search').trigger('click');                
             });
@@ -92,7 +92,7 @@
                 method: "GET",
                 url: "/v1/games"
             }).done(function (success) {
-                var strDOM = '<option value="">All Games</option><option value="etc">Etc</option>';
+                var strDOM = '<option value="">All Game</option><option value="etc">Etc</option>';
                 // for (var i = 0; i < success.data.length; i++) {
                 //     strDOM += '<option value="' + success.data[i].game_name + '">' + success.data[i].game_name + '</option>'
                 // }
@@ -241,7 +241,7 @@
             <!-- list page-->
             <section class="board_sec c_style_buy">
                 <div class="board_tit cf">
-                    <h1>Buy Game Items<span><em id="titName">All</em> > <em id="titServer">All</em></span></h1>
+                    <h1>Buy Game Items<span><em id="titName">All Game</em> > <em id="titServer">All Server</em></span></h1>
                     <button class="btn btn-success" id="register">Add Sales</button>
                 </div>
                 <div class="search_filter">
