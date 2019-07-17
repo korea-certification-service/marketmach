@@ -137,7 +137,7 @@
                 
                 itemId = success.data._id;
                 var regDate = success.data.regDate;
-                var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
+                var item_game_server = success.data.category1 == undefined ? 'Other' : success.data.category1;
                 itemGameName = success.data.category1;
                 //itemGameServer = success.data.category2;
                 var title = success.data.title;
@@ -176,7 +176,7 @@
             }).done(function (success) {
                 var strDOM = '<option value="">Please select</option>';
                 for (var i = 0; i < success.data.length; i++) {
-                    strDOM += '<option value="' + success.data[i].category1 + '">' + success.data[i].category1 + '</option>'
+                    strDOM += '<option value="' + success.data[i].category1_en + '">' + success.data[i].category1_en + '</option>'
                 }
 
                 $("#item-game-name").append(strDOM);

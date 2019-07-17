@@ -242,7 +242,7 @@
                 vtrTempId = success.data.vtrTempId;
                 tradePointId = success.data.tradePointId;
                 var regDate = success.data.regDate;
-                var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
+                var item_game_server = success.data.category1 == undefined ? 'Other' : success.data.category1;
                 var title = success.data.title;
                 var price = numberWithCommas(success.data.price);
                 var point = numberWithCommas(success.data.point);
