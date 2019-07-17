@@ -67,10 +67,10 @@
 .submit_ctc_code .submit_ctc_code_top { margin-bottom: 30px; font-size: 0px; }
 .submit_ctc_code .submit_ctc_code_top .dropdown { width: 30% !important; }
 .submit_ctc_code .form-control { width: 69%; margin-left: 1%;}
-.submit_ctc_code .btn_in_view1 { position: relative; left: 50%; transform: translateX(-50%); margin-bottom: 30px; }
+.submit_ctc_code .btn_in_view1 { position: relative; /*left: 50%; transform: translateX(-50%);*/ margin-bottom: 30px; }
 .confirm_ctc_code { padding-top: 30px; }
 .confirm_ctc_code .form-control { margin-bottom: 30px; position: relative; left: 50%; transform: translateX(-50%); }
-.confirm_ctc_code .btn_in_view1 { width: 106px; position: relative; left: 50%; transform: translateX(-50%); margin-bottom: 30px; }
+.confirm_ctc_code .btn_in_view1 { width: 106px; position: relative; /*left: 50%; transform: translateX(-50%);*/ margin-bottom: 30px; }
 /* 이미 가입된 회원 */
 .join_sec .existence_box{padding: 30px; text-align: center; border: 3px solid orange;}
 .join_sec .existence_box li{text-align: center;}

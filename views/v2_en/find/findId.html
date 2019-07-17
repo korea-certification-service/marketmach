@@ -32,8 +32,8 @@
             })
 
             $("#sendAuthNo").on('click', function() {
-                if($(this).text() == "re-send an authentication code" ) {
-                    alert("re-send an authentication code.");
+                if($(this).text() == "Resend" ) {
+                    alert("The authentication code has been resent.");
                 }
                 sendAuthNo();
             });
@@ -89,12 +89,13 @@
 
         function sendAuthNo() {
             if($("#currencyType").val() == "") {
-                alert("choice your country"); // 거래국가를 선택하세요.
+                alert("Please select the country.");
                 return;
             } else if($("#phone").val() == "") {
-                alert("enter a phone number.");
+                alert("Please input the phone number.");
                 return;
             }
+            
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
@@ -110,7 +111,7 @@
             }).done(function (success) {
                 console.log(success);
                 $('.auth_no_class').show();
-                $('#sendAuthNo').text("re-send an authentication code");
+                $('#sendAuthNo').text("Resend");
                 $('#phone').prop('readonly', true);
                 $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
@@ -120,7 +121,7 @@
 
         function checkAuthNo() {
             if($("#authNo").val() == "") {
-                alert("enter an authentication code.");
+                alert("Please input the authentication code.");
                 return;
             } 
 
@@ -139,7 +140,7 @@
             }).done(function (success) {
                 console.log(success);
                 if(success.data.successYn == "fail") {
-                    alert("It's an invalid authorization number."); // 인증번호가 유효하지 않습니다. 인증번호를 확인하세요.
+                    alert("The authentication code is invalid. Please check it.");
                     return;
                 } else {
                     location.href = '/findResult?type=findId';
@@ -154,12 +155,12 @@
             var email = $("#email").val();
 
             if(name == "") {
-                alert("enter a ID");
+                alert("Please input the name.");
                 return;
             }
 
             if(email == "") {
-                alert("enter an email.");
+                alert("Please input the e-mail.");
                 return;
             }
 
@@ -169,7 +170,7 @@
             }).done(function (success) {
                 console.log(success);
                 //location.href = "/existUser?id=" + success.data._id;
-                alert('send mail \n login after check your mail.'); // 성공적으로 메일을 보냈습니다.\n확인 후 로그인하십시오.
+                alert('You have successfully sent mail.\nPlease check and sign in.');
                 location.href="/login";
             }).fail(function (fail) {
                 if (fail.status == 403) {
@@ -194,8 +195,8 @@
             <!-- page-->
             <section class="find_info_sec">
                <ul class="tab_find_info cf">
-                   <li class="on"><a href="findId"><h1>find ID</h1></a></li>
-                   <li><a href="/findPassword">find password</a></li>
+                   <li class="on"><a href="findId"><h1>Find ID</h1></a></li>
+                   <li><a href="/findPassword">Find password</a></li>
                </ul>
                <div class="find_info_box">
                     <h2>by phone number</h2>
@@ -203,14 +204,16 @@
                         <div class="submit_ctc_code">
                             <div class="submit_ctc_code_top no_w100p_wrap">
                                 <select id="currencyType" class="selectpicker" data-size="5" data-live-search="true"></select>
-                                <input type="text" class="form-control w80p" id="phone" placeholder="enter your phone number" maxlength="24"> 
+                                <input type="text" class="form-control w80p" id="phone" placeholder="your phone number. ex)01012345678" maxlength="24"> 
                             </div>
-                            <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">send authentication code</button>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">Send</button>
+                            </div>
                         </div>
                         <div class="confirm_ctc_code auth_no_class">
-                            <input type="text" class="form-control" id="authNo" placeholder="enter authentication code" maxlength="24">
+                            <input type="text" class="form-control" id="authNo" placeholder="Authentication Code." maxlength="24">
                             <br>
-                            <button class="btn btn_in_view1" id="checkAuthNo">confirm</button>
+                            <button class="btn btn_in_view1" id="checkAuthNo">Next</button>
                         </div>
                     </div>
                     <!-- <div class="btn_align_c">
@@ -231,19 +234,19 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th class="fc2">name</th>
+                                        <th class="fc2">Name</th>
                                         <td><input type="text" class="form-control" id="name" placeholder=""></td>
                                     </tr>         
                                     <tr>
-                                        <th class="fc2">e mail</th>
+                                        <th class="fc2">Email</th>
                                         <td><input type="text" class="form-control" id="email" placeholder=""></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="btn_align_c">
-                        <button class="btn btn_in_view2" id="findId">find ID</button>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view2" id="findId">Send</button>
+                        </div>
                     </div>
                 </div>
             </section>
