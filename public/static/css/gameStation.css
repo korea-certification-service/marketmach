@@ -9,6 +9,7 @@
 .gamestation_lft_menu .depth1 .icon_align a > .material-icons {font-size: 24px; color: #dcdcdc; }
 .gamestation_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
 .sub_content .gameStation_sec { padding-top: 30px; }
+.gameCoinImage { width: 30px; height: 30px; }
 
 /*[모듈] 게임템플릿*/
 .gst_gametemplet::after { content:""; display: block; clear: both; }
@@ -20,6 +21,19 @@
 .gst_gametemplet .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
 .gst_gametemplet .coin_value div > p { float: left; }
 .gst_gametemplet .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
+
+/*[모듈] 게임템플릿 in exchange*/
+.gst_gametemplet.gst_exchange { padding: 25px; }
+.gst_gametemplet.gst_exchange::after { content:""; display: block; clear: both; }
+.gst_gametemplet.gst_exchange > img { float: left; margin-right: 30px; height: 101px; }
+.gst_gametemplet.gst_exchange > .coin_value { float: left; }
+.gst_gametemplet.gst_exchange .coin_value > h2 { font-size: 20px; margin-bottom: 15px; font-weight: bold; }
+.gst_gametemplet.gst_exchange .coin_value > em { color: #000; }
+.gst_gametemplet.gst_exchange .coin_value > div { margin-top: 11px;}
+.gst_gametemplet.gst_exchange .coin_value div::after { content:""; display: block; clear: both; }
+.gst_gametemplet.gst_exchange .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
+.gst_gametemplet.gst_exchange .coin_value div > p { float: left; }
+.gst_gametemplet.gst_exchange .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; font-weight: bold; }
 
 /*[모듈] 상장게임표*/
 .gst_gametable::after { content:""; display: block; clear: both; }
