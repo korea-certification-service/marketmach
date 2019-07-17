@@ -48,7 +48,7 @@
 
 /*[모듈] 교환자산 안내문구*/
 .gst_exchangeguide { height: 240px; position: relative; border-top: 2px solid #000039; }
-.gst_exchangeguide > p { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #000039; font-weight: bold; font-size: 24px; }
+.gst_exchangeguide > p { width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #000039; font-weight: bold; font-size: 24px; }
 .gst_exchangeguide p > em { color: red; }
 
 /*[모듈] 게임스테이션 LNB*/

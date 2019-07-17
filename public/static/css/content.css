@@ -44,7 +44,7 @@
 
 .em_calc_ico{display: inline-block; margin-right: 10px; width: 24px; height: 24px; line-height: 24px; font-size: 22px; border-radius: 50%; text-align: center; color: #ffffff;}
 .em_calc_ico.plus{background-color: #0a73b8;}
-.em_calc_ico.minus{background-color: red;}
+.em_calc_ico.minus{background-color: red;line-height: 19px;}
 /* 거래가능, 거래중, 거래완료 */ 
 .todo:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: #28a745; border-radius: 50% 50%;}
 .doing:before{display: inline-block; content: ''; clear: both; margin-right: 4px; width: 10px; height: 10px; background-color: #ffc107; border-radius: 50% 50%;}
@@ -363,8 +363,8 @@
 .table_wallet .td_exchange_coin .arw_txt{margin: 0 10px; font-size: 18px; font-weight: bold;}
 /* 입금하기 / 출금하기 */
 .table_account{margin: auto; width: 100%; border: 2px solid #1e2560;}
-.table_account tbody th{padding-left: 20px; color: #1e2560;}
-.table_account tbody td{padding: 15px 0 15px 10px; }
+.table_account tbody th{padding-left: 15px; color: #1e2560;}
+.table_account tbody td{padding: 15px; }
 .table_account tbody td input{max-width: 220px;}
 .table_account tbody td span{font-size: 12px;}
 .table_account tfoot td{height: 60px;}

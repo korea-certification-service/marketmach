@@ -7,15 +7,27 @@
         var userId = "<%=userId%>";
 
         $(document).ready(function() {
+            getCoin();
            getUesrGameInfo();
         });
-   
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                total_mach = success.data.total_mach;
+                $("#mach").html(total_mach + " <span>MACH</span>");
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
         function getUesrGameInfo() {
            $.ajax({
                method: "GET",
                url: "/v1/gameCenter/"+userId+"/info"
            }).done(function (success) {
-               console.log(success.data);
                if(success.data != null) {
                    $("#mcs1_coin").text(success.data.total_mcs1_coin);
                }
