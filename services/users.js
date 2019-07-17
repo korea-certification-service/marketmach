@@ -247,7 +247,7 @@ function getUserByEmail (email) {
 function getByPhone(phone) {
     return new Promise((resolve, reject) => {
         Users.findOne(
-            {"phone": {$regex:phone}},
+            {"phone": phone},
             function(err, user) {
                 if (err) {
                     // console.error(err)
