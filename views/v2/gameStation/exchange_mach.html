@@ -109,7 +109,7 @@
                 if(success.data != null) {
                     console.log(success.data);
                     my_game_coin = success.data.total_mcs1_coin;
-                    $("#mcs1_coin").text(my_game_coin);
+                    $("#game_coin").text(my_game_coin);
                     $("#game_amount").html(my_game_coin);
                     $("#total_game_amount").html(my_game_coin);
                 }
@@ -176,31 +176,21 @@
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
                         <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;MACH -> 게임자산</span></h1>
-                        <div class="mypage_main_info cf">
+                        <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
-                                <div class="gst_gametemplet gst_exchange">
-                                    <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
-                                    <div class="coin_value">
-                                        <h2>마하 어드벤쳐</h2>
-                                        <em>보관중인 몽키코인</em>
-                                        <div>
-                                            <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
-                                            <p>
-                                                <span id="mcs1_coin">0</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
+                                <p>
+                                    <em id="game_name">마하 어드벤쳐</em><br>
+                                    <em id="game_coin" class="color-0a73b8">0</em> MC 
+                                </p>
                             </div>
                             <div class="rgh_area">
                                 <a href="/myPages/wallet/info">
                                     <em>나의지갑 잔액</em>
-                                    <p id="mach">0<span>MACH</span></p>
+                                    <p id="mach"><span>MACH</span></p>
                                 </a>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
-                            </div>                         
+                            </div>
                         </div>
 
                         <!-- 교환하기 -->
