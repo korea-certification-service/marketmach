@@ -280,7 +280,7 @@ router.get('/signup', function (req, res, next) {
         res.redirect('/agreement');
         next();
     } else {
-        controllerUsers.getByPhone(data.country, data.phone + "$") 
+        controllerUsers.getByPhone(data.country, data.phone) 
         .then((user) => {
             if(user == null) {
                 // 블랙리스트 명단에 있는지 체크
