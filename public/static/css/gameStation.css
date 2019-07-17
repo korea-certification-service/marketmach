@@ -22,23 +22,20 @@
 .gst_gametemplet .coin_value div > p { float: left; }
 .gst_gametemplet .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
 
-/*[모듈] 게임템플릿 in exchange*/
-.gst_gametemplet.gst_exchange { padding: 25px; }
-.gst_gametemplet.gst_exchange::after { content:""; display: block; clear: both; }
-.gst_gametemplet.gst_exchange > img { float: left; margin-right: 30px; height: 101px; }
-.gst_gametemplet.gst_exchange > .coin_value { float: left; }
-.gst_gametemplet.gst_exchange .coin_value > h2 { font-size: 20px; margin-bottom: 15px; font-weight: bold; }
-.gst_gametemplet.gst_exchange .coin_value > em { color: #000; }
-.gst_gametemplet.gst_exchange .coin_value > div { margin-top: 11px;}
-.gst_gametemplet.gst_exchange .coin_value div::after { content:""; display: block; clear: both; }
-.gst_gametemplet.gst_exchange .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
-.gst_gametemplet.gst_exchange .coin_value div > p { float: left; }
-.gst_gametemplet.gst_exchange .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; font-weight: bold; }
+/*[모듈] 지갑정보*/
+.gameStation_sec .gameStation_mywallet .lft_area {
+    background: url(/static/img/symbol/symbol_monkey.png) 28px 50% no-repeat;
+    background-size: 50px 50px;
+}
+.gameStation_sec .gameStation_mywallet .color-0a73b8 {
+    color: #0a73b8;
+}
+
 
 /*[모듈] 상장게임표*/
 .gst_gametable::after { content:""; display: block; clear: both; }
 .gst_gametable { margin-bottom: 50px; }
-.gst_gametable dd { float: left; width: 280px; height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; padding: 8px; }
+.gst_gametable dd { float: left; width: calc(100% / 3); height: 72px; border-top: 1px solid #aaa; border-right: 1px solid #aaa; padding: 8px; }
 .gst_gametable dd a { display: inline-block; width: 100%; height: 100%; }
 .gst_gametable dd a > img { height: 55px; }
 .gst_gametable dd:nth-of-type(1) { border-left: 1px solid #aaa; }
@@ -91,13 +88,67 @@
 }
 @media (max-width: 992px) {
 
+    .gst_gametemplet > img {
+
+    }
+    .gst_gametemplet .coin_value > em {
+
+    }
+    .gst_gametemplet .coin_value div > img {
+
+    }
+    .gst_gametemplet .coin_value div > p {
+
+    }
+}
+@media (max-width: 930px) {
+    .gst_gametemplet.gst_exchange > img {
+        display: none;
+    }
+    .gst_gametable dd:nth-of-type(1){
+        border: 1px solid #aaa;
+    }
+    .gst_gametable dd {
+        width: 100%;
+        border-top: none;
+        border-bottom: 1px solid #aaa;
+        border-right: 1px solid #aaa;
+        border-left: 1px solid #aaa;
+    }
+    .gst_gametemplet > img {
+        margin-right: 0px;
+    }
+    .gst_gametemplet > .coin_value {
+        height: 55px;
+        position: relative;
+        left: calc(50% - 55px);
+        transform: translateX(-50%);
+    }
+    .gst_gametemplet .coin_value > em {
+        line-height: 55px;
+    }
+    .gst_gametemplet .coin_value > div {
+        float: right;
+        height: 55px;
+        margin-left: 15px;
+        margin-top: 0px;
+        padding-top: 12.5px;
+    }
 }
 @media (max-width: 767px) {
+    .gamestation_lft_menu > .depth1 > li { overflow: hidden; }
+    .gamestation_lft_menu > .depth1 > li > a { padding: 14px 0; border: none; text-align: center; }
     .gamestation_lft_menu .depth1 .icon_align a > .material-icons { font-size: 16px; }
     .gamestation_lft_menu .depth1 > li {height: 52px;}
 }
 @media (max-width: 576px) {
     .gameStation_gamestation .gameStation_article .gameStation_store > a { width: 40%; }
+    .gameStation_sec .gameStation_mywallet .lft_area { background-position: 14px 20px; }
+}
+@media (max-width: 460px) {
+    .gst_gametemplet .coin_value > em {
+        display: none;
+    }
 }
 @media (max-width: 435px) {
     .gamestation_lft_menu > .depth1 > li > a > span { display: none; }

@@ -6,18 +6,20 @@
         var userId = "<%=userId%>";
         var coinId = "<%=coinId%>";
 
-        var total_mach;
-        var mach_rate;
-        var my_game_coin;
-        var gamecoin_rate;
-        
-        var $game_amount;
-        var $minus_amount = 0;
-        var $total_game_amount;
+        var total_mach;//현재 회원이 가지고있는 마하
+        var mach_rate;//교환을 원하는 게임코인에 곱해질 마하의 환율
 
-        var $mach_amount;
-        var $plus_amount = 0;
-        var $total_mach_amount;
+        var my_game_coin;//현재 회원이 가지고있는 게임코인
+        var gamecoin_rate;//교환을 원하는 마하에 곱해질 게임코인의 환율
+        
+
+        var $game_amount;//보관중인 게임 자산 값을 넣기위한 jquery엘리먼트
+        var $minus_amount = 0;//교환 게임 자산 값을 넣기위한 jquery엘리먼트
+        var $total_game_amount;//교환 후 보관중인 게임 자산 값을 넣기위한 jquery엘리먼트
+
+        var $mach_amount;//나의 지갑잔액 값을 넣기위한 jquery엘리먼트
+        var $plus_amount = 0;//교환 금액 값을 넣기위한 jquery엘리먼트
+        var $total_mach_amount;//교환 후 나의 지갑 잔액 값을 넣기위한 jquery엘리먼트
 
         getRate();
         
@@ -75,7 +77,15 @@
             });
 
         });
-        function getRate(){
+        function getRate(option){
+            /**
+            *option = {
+                url: API주소
+                
+            }
+            *
+            * 
+            */
             $.ajax({
                 method: "POST",
                 url: "/v1/gameCenter/games/list"
@@ -107,7 +117,7 @@
                 if(success.data != null) {
                     console.log("getUserGameinfo =>"+success.data);
                     my_game_coin = success.data.total_mcs1_coin;
-                    $("#mcs1_coin").text(my_game_coin);
+                    $("#game_coin").text(my_game_coin);
                     $("#game_amount").html(my_game_coin);
                     $("#total_game_amount").html(my_game_coin);
                 }
@@ -173,33 +183,22 @@
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
                         <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;게임자산 -> MACH</span></h1>
-                        <div class="mypage_main_info cf">
+                        <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
-                                <div class="gst_gametemplet gst_exchange">
-                                    <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
-                                    <div class="coin_value">
-                                        <h2>마하 어드벤쳐</h2>
-                                        <em>보관중인 몽키코인</em>
-                                        <div>
-                                            <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
-                                            <p>
-                                                <span id="mcs1_coin">0</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
+                                <p>
+                                    <em id="game_name">마하 어드벤쳐</em><br>
+                                    <em id="game_coin" class="color-0a73b8">0</em> MC 
+                                </p>
                             </div>
                             <div class="rgh_area">
                                 <a href="/myPages/wallet/info">
                                     <em>나의지갑 잔액</em>
-                                    <p id="mach">0<span>MACH</span></p>
+                                    <p id="mach"><span>MACH</span></p>
                                 </a>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
-                            </div>                         
+                            </div>
                         </div>
-
                         <!-- 교환하기 -->
                         <h2 class="tit_mypage dot_tit">교환하기</h2>
                         <div class="table_wrap table-responsive mb50">
