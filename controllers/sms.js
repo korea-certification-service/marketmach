@@ -159,9 +159,6 @@ function sendSmsCommon(data) {
         });
 
         let phone = data.countryCode + data.phone;
-        if(data.country == "EN") {
-            phone = data.phone;
-        }
 
         // Create publish parameters(언어에 따라서 표시, 일단은 한국어와 중국어만)
         let params = {
