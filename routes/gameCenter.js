@@ -534,19 +534,19 @@ router.post('/:userId/exchange/mach', function(req, res, next) {
                     bitwebResponse.data = updateCoin;
                     res.status(200).send(bitwebResponse.create())
                 }).catch((err) => {
-                    console.error('user game center err=>', err)
+                    console.error('user game center err03=>', err)
                     bitwebResponse.code = 500;
                     bitwebResponse.message = err;
                     res.status(500).send(bitwebResponse.create())
                 })
             }).catch((err) => {
-                console.error('user game center err=>', err)
+                console.error('user game center err02=>', err)
                 bitwebResponse.code = 500;
                 bitwebResponse.message = err;
                 res.status(500).send(bitwebResponse.create())
             })
         }).catch((err) => {
-            console.error('user game center err=>', err)
+            console.error('user game center err01=>', err)
             bitwebResponse.code = 500;
             bitwebResponse.message = err;
             res.status(500).send(bitwebResponse.create())
@@ -560,6 +560,8 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
     let reqData = req.body;
     let country = dbconfig.country;
     let bitwebResponse = new BitwebResponse();
+
+    console.log(reqData);
 
     controllerUsers.getById(country, userId) 
     .then(user => {
