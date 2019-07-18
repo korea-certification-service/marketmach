@@ -182,7 +182,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,0]
+            arrDepth: [2,1]
         });
     } else {
         res.render('v2_en/gameStation/infoboard', {
@@ -194,7 +194,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,0]
+            arrDepth: [2,1]
         });
     }
 });
