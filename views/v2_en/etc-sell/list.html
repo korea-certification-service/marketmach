@@ -194,7 +194,7 @@
                 var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
                 var item_type = getItemType(data[i].type);
                 var trade_type = replaceType(data[i].trade_type);
-                var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                var image_url = data[i].images.length == 0 ? '/static/img/sub/no_image.png' : data[i].images[0].path;
                 var userTag = data[i].userTag;
                 var tradingFlag = "";
                 var replyCount = data[i].replyCount;

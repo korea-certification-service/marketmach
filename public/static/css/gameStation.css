@@ -72,11 +72,11 @@
 .gameStation_gamestation .gameStation_article .gameStation_store > a { display: inline-block; width: 170px; }
 .gameStation_gamestation .gameStation_article .gameStation_store > a:nth-of-type(odd) { margin-right: 25px; }
 .gameStation_gamestation .gameStation_article .gameStation_store a > .store_image { width: 100%; }
-
+.gameStation_gamestation .gameStation_article .gameStation_store .link_wait_a_minute{position: relative;}
+.gameStation_gamestation .gameStation_article .gameStation_store .link_wait_a_minute:after{position: absolute; top: 0; display: block; content: ''; clear: both; width: 100%; height: 42px; background: rgba(0, 0, 0, 0.7);}
 
 .gameStation_gamestation .coming_soon .gameStation_contents{height: 160px;}
-.gameStation_gamestation .coming_soon .gameStation_store{height: 76px; background: rgba(0, 0, 0, 0.7);}
-.gameStation_gamestation .coming_soon .gameStation_store > a{position: relative; z-index: -1;}
+.gameStation_gamestation .coming_soon .gameStation_store{height: 76px; /*background: rgba(0, 0, 0, 0.7);*/}
 
 .gameStation_gamestation .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
 .gameStation_gamestation .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}

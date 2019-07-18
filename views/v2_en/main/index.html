@@ -279,7 +279,7 @@
                     var point = numberWithCommas(data[i].total_point);
                     var image_src;
                     if(data[i].images[0] === undefined || data[i].images[0] === "") {
-                        image_src = "/image/no-image.png";
+                        image_src = "/static/img/sub/no_image.png";
                     } else {
                         image_src = data[i].images[0].path;
                     }
@@ -357,23 +357,25 @@
                         </a>
                     </div>             
                     <div class="visual_img">
-                        <a href="/gameStation">
+                        <a href="https://play.google.com/store/apps/details?id=com.pang.spld.google&hl=en" target="_blank">
                             <div class="pc_img">
-                                <img src="/static/img/main/main_visual16.jpg" alt="2nd Game">
+                                <img src="/static/img/en/en_main_visual03.jpg" alt="2nd Game">
                             </div>
                             <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual16.jpg" alt="2nd Game">
+                                <img src="/static/img/en/en_mob_main_visual03.jpg" alt="2nd Game">
                             </div>
-                        </a> 
+                        </a>
                     </div>
                     <div class="visual_img">
-                        <div class="pc_img">
-                            <img src="/static/img/en/en_main_visual02.jpg" alt="1st Game">
+                        <a href="/gameStation">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual02.jpg" alt="1st Game">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual02.jpg" alt="1st Game">
+                            </div>
                         </div>
-                        <div class="mob_img">
-                            <img src="/static/img/en/en_mob_main_visual02.jpg" alt="1st Game">
-                        </div>
-                    </div>
+                        </a> 
                     <div class="visual_img">
                         <a href="/howto/trade/vtr">
                             <div class="pc_img">
@@ -429,10 +431,10 @@
         <div class="container">
             <div class="w100p_banner row">
                 <div class="col-lg-12">
-                    <a class="mob_hide" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
+                    <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
                         <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
                     </a>
-                    <a class="mob_show" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
+                    <a class="mob_show" href="https://t.me/marketmachcom" target="_blank">
                         <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                     </a>
                 </div>
@@ -450,7 +452,7 @@
                 <section class="secGame item_trade_sec col-lg-8">
                     <h1 class="tit_main_sec main_tit_gameitem">Game Item</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnGame btn_show_list on">Purchase</button>
+                        <button class="btnGame btn_show_list on">Sales</button>
                         <a class="detail_link" href="/sells?category=game&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>
                     </h2>
                     <div class="item_sell item_table_wrap trade_list toggleTable">              
@@ -474,7 +476,7 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnGame btn_show_list">Sales</button>
+                        <button class="btnGame btn_show_list">Purchase</button>
                         <a class="detail_link" href="/buys?category=game&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>
                     </h2>
                     <div class="item_buy item_table_wrap trade_list toggleTable">
@@ -510,7 +512,7 @@
                 <section class="secOtc item_trade_sec col-lg-8">
                     <h1 class="tit_main_sec main_tit_otc">OTC</h1>
                     <h2 class="item_sell_tit on">
-                        <button class="btnOtc btn_show_list on">Purchase</button>
+                        <button class="btnOtc btn_show_list on">Sales</button>
                         <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
                     </h2>
                     <div class="otc_sell otc_table_wrap trade_list toggleTable">              
@@ -530,7 +532,7 @@
                         </table>
                     </div>
                     <h2 class="item_buy_tit">
-                        <button class="btnOtc btn_show_list">Sales</button>
+                        <button class="btnOtc btn_show_list">Purchase</button>
                         <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
                     </h2>
                     <div class="otc_buy otc_table_wrap trade_list toggleTable">
@@ -570,11 +572,11 @@
   
             <div class="w100p_banner row">
                 <div class="col-lg-12">
-                    <a class="mob_hide" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
-                        <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
+                    <a class="mob_hide" href="http://bitweb.co.kr" target="_blank">
+                        <img src="/static/img/en/en_main_content_banner03.jpg" alt="bitweb PC">
                     </a>
-                    <a class="mob_show" href="https://open.kakao.com/o/gNPGb7sb" target="_blank">
-                        <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
+                    <a class="mob_show" href="http://bitweb.co.kr" target="_blank">
+                        <img src="/static/img/en/en_mob_main_banner03.jpg" alt="bitweb mobile">
                     </a>
                 </div>
             </div>
@@ -590,7 +592,7 @@
                 </section>
                 <!--// 동영상 -->
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <section class="company_sec col-lg-12">
                     <h1 class="tit_main_sec main_tit_company">Media</h1>
                     <div class="bd_area">
@@ -610,7 +612,7 @@
                         </div>
                     </div>
                 </section>                   
-            </div>
+            </div> -->
         </div>
         <!--// bootstrap container -->
     </div>
