@@ -31,7 +31,7 @@
     color: #0a73b8;
 }
 
-
+ 
 /*[모듈] 상장게임표*/
 .gst_gametable::after { content:""; display: block; clear: both; }
 .gst_gametable { margin-bottom: 50px; }
