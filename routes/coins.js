@@ -692,10 +692,14 @@ router.post('/connected', function (req, res, next) {
         if (!error && response.statusCode == 200) {            
             let result = JSON.parse(body);
             if(result.status == "not_agreed") {
+                let message = "비트베리 연동이 완료되지 않았습니다.\n 비트베리 엡에서 인증번호 등록 후 비트베리 연결 완료 버튼을 클릭하세요.";
+                if(country == "EN") {
+                    message = "BitBerry connection is not complete.\nClick the button after registering the authentication number in BitBerry App.";
+                }
                 bitwebResponse.code = 200;
                 bitwebResponse.data = {
                     "code":"E001",
-                    "msg": "비트베리 연동이 완료되지 않았습니다.\n 비트베리 엡에서 인증번호 등록 후 비트베리 연결 완료 버튼을 클릭하세요."
+                    "msg": message
                 };
                 res.status(200).send(bitwebResponse.create());
                 return;

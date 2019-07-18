@@ -621,10 +621,14 @@ router.post('/buynow', function (req, res, next) {
 
                                                     user_price = parseFloat((user_price - req.body.price).toFixed(8));
                                                     if (user_price < 0) {
+                                                        let message = "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                        if(country == "EN") {
+                                                            message = "The transaction amount can not be greater than the buyer's retention amount.";
+                                                        }
                                                         let msg = {
                                                             "status": "fail",
                                                             "code" : "E002",
-                                                            "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                            "msg" : message
                                                         };
                                                         bitwebResponse.code = 200;
                                                         bitwebResponse.data = msg;
@@ -769,9 +773,13 @@ router.post('/buynow', function (req, res, next) {
                                         res.status(500).send(bitwebResponse.create())
                                     })
                                 } else {
+                                    let message = "해당 아이템은 거래 진행 중입니다. 거래를 진행할 수 없습니다.";
+                                    if(country == "EN") {
+                                        message = "The transaction amount can not be greater than the buyer's retention amount.";
+                                    }
                                     let msg = {
                                         "code" : "E001",
-                                        "msg" : "해당 아이템은 거래 진행 중입니다. 거래를 진행할 수 없습니다."
+                                        "msg" : message
                                     };
                                     bitwebResponse.code = 200;
                                     bitwebResponse.data = msg;
