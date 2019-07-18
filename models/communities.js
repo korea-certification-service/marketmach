@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var Image = require('./image');
 
 var CommunitySchema = new Schema({
+    country:String,
     type: String,   //movie, board
     title: String,
     content: String,
