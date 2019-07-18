@@ -16,33 +16,34 @@
 
         $(".srch_select, .m_srch_select").on("change", function(){
             selecValue = $(this).val();
+            $("#search_item_name").val("");
         }); 
 
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
             if(key.keyCode==13){
                 //selecValue = selecValue;
-                if(selecValue == "games") {
-                    if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
-                        return;
-                    }
-                }
+                // if(selecValue == "games") {
+                //     if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                //         return;
+                //     }
+                // }
                 _mainSearch(key.currentTarget);
             }
         });
 
         $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
             //selecValue = selecValue;
-            if(selecValue == "games") {
-                if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
-                    return;
-                }
-            }
+            // if(selecValue == "games") {
+            //     if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+            //         return;
+            //     }
+            // }
             _mainSearch(key.currentTarget);
         });
 
-        $(".srch_box_left, .srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
-            _mainSearch(e.target, e.currentTarget);
-        });
+        // $(".srch_box_left, .srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
+        //     _mainSearch(e.target, e.currentTarget);
+        // });
 
         if(game_name != undefined) {
             //console.log(game_name);
@@ -69,59 +70,63 @@
             target.id == 'm_main_search' || 
             target.id == 'm_search_item_name' //검색버튼또는 엔터키를 눌렀을때
         ) {
-            var games;
-            if(selecValue == "games"){ //게임자산일떄
-                games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
-                var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
+            // var games;
+            // if(selecValue == "games"){ //게임자산일떄
+            //     games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
+            //     var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
-                if( srchBoxLeftClassName == "game_with_server" ){ //서버명으로검색할때
-                    var searchValue = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].innerText.split(">");
-                    var game_name = searchValue[0]
-                    var game_server = searchValue[1]; 
-                } else { //게임이름으로 검색할때
+            //     if( srchBoxLeftClassName == "game_with_server" ){ //서버명으로검색할때
+            //         var searchValue = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].innerText.split(">");
+            //         var game_name = searchValue[0]
+            //         var game_server = searchValue[1]; 
+            //     } else { //게임이름으로 검색할때
                     
-                    game_name = $(".srch_box_left .clicked")[0].innerText;
-                    if(games.length == 2) {
-                        game_server  = games[1];
-                    } else if(games.length == 3) {
-                        game_server  = games[1];
-                        title = games[2];
-                    }
-                }
-            } else { //현물, OTC일떄
-                games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
-            }
-            _doSearch(game_name, game_server, games);
+            //         game_name = $(".srch_box_left .clicked")[0].innerText;
+            //         if(games.length == 2) {
+            //             game_server  = games[1];
+            //         } else if(games.length == 3) {
+            //             game_server  = games[1];
+            //             title = games[2];
+            //         }
+            //     }
+            // } else { //현물, OTC일떄
+            //     games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
+            // }
+            // _doSearch(game_name, game_server, games);
+            var games;
+            games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
+            _doSearch(games);
             
-        } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
-
-            if(currentTarget.classList[0] == "srch_box_left") { //왼쪽 리스트일때
-                if(target.classList[0] == "game_with_server"){
-                    var searchValue = target.innerText.split(">");
-                    var game_name = searchValue[0]
-                    var game_server = searchValue[1];
-                } else {
-                    return;
-                }
-            }
-            if(currentTarget.classList[0] == "srch_box_right") { //오른쪽 리스트일때
-                var game_name = $(".srch_box_left .clicked")[0].innerText;
-                var game_server = target.innerText == "서버전체" ? "" : target.innerText;
-            }
-            _doSearch(game_name, game_server);
         } 
+        // else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
+
+        //     if(currentTarget.classList[0] == "srch_box_left") { //왼쪽 리스트일때
+        //         if(target.classList[0] == "game_with_server"){
+        //             var searchValue = target.innerText.split(">");
+        //             var game_name = searchValue[0]
+        //             var game_server = searchValue[1];
+        //         } else {
+        //             return;
+        //         }
+        //     }
+        //     if(currentTarget.classList[0] == "srch_box_right") { //오른쪽 리스트일때
+        //         var game_name = $(".srch_box_left .clicked")[0].innerText;
+        //         var game_server = target.innerText == "서버전체" ? "" : target.innerText;
+        //     }
+        //     _doSearch(game_name, game_server);
+        // } 
 
     }
 
-    function _doSearch(game_name, game_server, games){
-        $("#game-name").val(game_name).attr("selected", "selected");
-        $("#game-name").selectpicker('refresh');
+    function _doSearch(games){
+        // $("#game-name").val(game_name).attr("selected", "selected");
+        // $("#game-name").selectpicker('refresh');
         //selectServer();
         setTimeout(function() {
-            $("#game-server").val(game_server).attr("selected", "selected");
-            $("#game-server").selectpicker('refresh');
+            // $("#game-server").val(game_server).attr("selected", "selected");
+            // $("#game-server").selectpicker('refresh');
             $("#list").html('');
-            searchMain(game_name, game_server, games);
+            searchMain(games);
         });
     }
 
@@ -166,7 +171,7 @@
         }
     }
 
-    function searchMain(game_name, game_server, search_item_name) {
+    function searchMain(search_item_name) {
         // if($("#search_item_name").val() == "" && $("#m_search_item_name").val() == "") {
         //     alert("게임명/서버명을 입력하세여.\n\n예)로스트아크 이그하람");
         //     return;
@@ -174,9 +179,9 @@
 
         var category = "game";
         var trade_type = "sell";
-        // var search_item_name = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
-        // var game_name =  search_item_name[0];
-        // var game_server =  search_item_name.length == 1 ? "" : search_item_name[1];
+        var search_item_name = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
+        var game_name =  search_item_name[0];
+        var game_server =  search_item_name.length == 1 ? "" : search_item_name[1];
         var type = "";
         var title = "";
         var query;
