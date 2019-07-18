@@ -123,10 +123,22 @@ function addExchangeHistory(country, data) {
     })
 }
 
-function getExchangeHistorys(country, condition) {
+function getExchangeHistoryCount(country, condition, option) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
-            .then(() => bitwebGameCenter.getExchangeHistorys(condition))
+            .then(() => bitwebGameCenter.getExchangeHistoryCount(condition, option))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function getExchangeHistorys(country, condition, option) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.getExchangeHistorys(condition, option))
             .then((result) => {
                 resolve(result)
             }).catch((err) => {
@@ -146,3 +158,4 @@ exports.getRecords = getRecords;
 exports.addExchangeHistory = addExchangeHistory;
 exports.getExchangeHistorys = getExchangeHistorys;
 exports.updateByCondition = updateByCondition;
+exports.getExchangeHistoryCount = getExchangeHistoryCount;

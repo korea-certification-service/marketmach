@@ -177,9 +177,27 @@ function addExchangeHistory(data) {
     })
 }
 
-function getExchangeHistorys (condition) {
+function getExchangeHistoryCount (condition,option) {
     return new Promise((resolve, reject) => {
-        GameCenterExchangeHistory.find(condition)
+        GameCenterExchangeHistory
+        .count(condition)
+        .skip(option.pageIdx * option.perPage)
+        .sort({regDate:'desc'})
+        .exec(function (err, result) {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+}
+
+function getExchangeHistorys (condition,option) {
+    return new Promise((resolve, reject) => {
+        GameCenterExchangeHistory
+        .find(condition)
+        .skip(option.pageIdx * option.perPage)
+        .sort({regDate:'desc'})
         .exec(function (err, result) {
             if (err) {
                 reject(err)
@@ -201,3 +219,4 @@ exports.getRecords = getRecords;
 exports.addExchangeHistory = addExchangeHistory;
 exports.getExchangeHistorys = getExchangeHistorys;
 exports.updateByCondition = updateByCondition;
+exports.getExchangeHistoryCount = getExchangeHistoryCount;

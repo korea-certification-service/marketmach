@@ -706,4 +706,43 @@ router.get('/:userId/gameCoinHistory', function(req, res, next) {
     })
 })
 
+router.post('/:userId/exchange/history', function(req, res, next) {
+    let bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    let condition = {
+        "userId": req.params.userId,
+    };
+    if(req.body.category != "all") {
+        condition["category"] = req.body.category
+    }
+    let option = {
+        "pageIdx": req.body.pageIdx == undefined ? 20 : req.body.pageIdx,
+        "perPage": req.body.perPage == undefined ? 0 : req.body.perPage
+    }
+
+    controllerGameCenter.getExchangeHistoryCount(country, condition, option)
+    .then(gameCenterHistoryCount => {
+        controllerGameCenter.getExchangeHistorys(country, condition, option)
+        .then(gameCenterHistorys => {
+            let result = {
+                "list":gameCenterHistorys,
+                "count": gameCenterHistoryCount
+            }
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        }).catch((err) => {
+            console.error('games list err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
+    }).catch((err) => {
+        console.error('games list err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    })
+});
+
 module.exports = router;
