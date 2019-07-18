@@ -10,7 +10,14 @@
         $(document).ready(function() {
             getCoin();
             getUesrGameInfo();
+
+            //교환내역 스크립트
             getExchangeHistory("all");
+            $(".tab_board.ul_li3n.cf").on("click", function(e){
+                $(e.currentTarget).children("li").removeClass('on');
+                console.log($(e.target));
+                $(e.target).parent("li").addClass("on");
+            });
         });
 
         function getCoin() {
@@ -37,6 +44,8 @@
                console.log(fail);
            })
         }
+        
+        //교환내역에 쓰일 함수
         function getExchangeHistory(category) {
             if(category == "all") {
                 reqData = { "category": category }
@@ -45,26 +54,49 @@
             } else if(category == "exchange-gamecoin") {
                 reqData = { "category": category }
             }
+            console.log(userId);
             $.ajax({
                method: "POST",
                url: "/v1/gameCenter/"+userId+"/exchange/history",
                data: reqData
-           }).done(function (success) {
+            }).done(function (success) {
                 console.log(success.data.list);
                 var count = success.data.count;
                 var list = success.data.list;
-                list.forEach(el => {
-                    
-                });
+                var rows = "";
+                console.log(list);
+                $("#wallet_historys").empty();
+                if(list.length === 0) {
+                    $("#wallet_historys").append("<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>");
+                } else {
+                    list.forEach(el => {
+                        var from;
+                        var to;
+                        var tr = '';
+                        if(el.category == "exchange-mach") {
+                            from = '<em class="fcor">'+el.gamecoin+' MC'+'</em>';
+                            to = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                            tr = '<tr>'+
+                                    '<td>'+from+'</td>'+
+                                    '<td>'+to+'</td>'+
+                                    '<td>'+el.regDate+'</td>'+
+                                '</tr>';
+                        } else if(el.category == "exchange-gamecoin" ) {
+                            from = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                            to = '<em class="fcor">'+el.gamecoin+' MC'+'</em>';
+                            tr = '<tr>'+
+                                    '<td>'+from+'</td>'+
+                                    '<td>'+to+'</td>'+
+                                    '<td>'+el.regDate+'</td>'+
+                                '</tr>';
+                        }
+                        rows = tr;
+                        $("#wallet_historys").append(rows);
+                    });
+                }
            }).fail(function (fail) {
                console.log(fail);
-           })
-            $('#mach_buy').removeClass('on');
-            $('#mach_sell').removeClass('on');
-            $('#mach_escrow').removeClass('on');
-           if(trade_type == 'event') {
-                $('#mach_buy').addClass('on');
-            }
+           });
         }
    </script>
 <body>
@@ -139,9 +171,9 @@
                                 <h1 class="tit_mypage">교환내역<span><span id="category1"></h1>
                             </div>
                             <ul class="tab_board ul_li3n cf">
-                                <li id="mach_buy" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
-                                <li id="mach_sell"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
-                                <li id="mach_escrow"><a href="javascript:getExchangeHistory('exchange-gamecoin');">게임자산 -> MACH</a></li>
+                                <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
+                                <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
+                                <li id="his_game"><a href="javascript:getExchangeHistory('exchange-gamecoin');">게임자산 -> MACH</a></li>
                             </ul>
                             <div class="table_wrap table-responsive">
                                 <table class="table_wallet table">
