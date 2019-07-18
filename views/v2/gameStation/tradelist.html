@@ -5,10 +5,12 @@
 </head>
     <script>
         var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
 
         $(document).ready(function() {
             getCoin();
-           getUesrGameInfo();
+            getUesrGameInfo();
+            getExchangeHistory("all");
         });
 
         function getCoin() {
@@ -22,7 +24,6 @@
                 console.log(fail);
             });
         }
-
         function getUesrGameInfo() {
            $.ajax({
                method: "GET",
@@ -30,10 +31,40 @@
            }).done(function (success) {
                if(success.data != null) {
                    $("#mcs1_coin").text(success.data.total_mcs1_coin);
+                   console.log(success);
                }
            }).fail(function (fail) {
                console.log(fail);
            })
+        }
+        function getExchangeHistory(category) {
+            if(category == "all") {
+                reqData = { "category": category }
+            } else if(category == "exchange-mach") {
+                reqData = { "category": category }
+            } else if(category == "exchange-gamecoin") {
+                reqData = { "category": category }
+            }
+            $.ajax({
+               method: "POST",
+               url: "/v1/gameCenter/"+userId+"/exchange/history",
+               data: reqData
+           }).done(function (success) {
+                console.log(success.data.list);
+                var count = success.data.count;
+                var list = success.data.list;
+                list.forEach(el => {
+                    
+                });
+           }).fail(function (fail) {
+               console.log(fail);
+           })
+            $('#mach_buy').removeClass('on');
+            $('#mach_sell').removeClass('on');
+            $('#mach_escrow').removeClass('on');
+           if(trade_type == 'event') {
+                $('#mach_buy').addClass('on');
+            }
         }
    </script>
 <body>
@@ -107,53 +138,32 @@
                             <div class="board_tit cf">
                                 <h1 class="tit_mypage">교환내역<span><span id="category1"></h1>
                             </div>
-                            <div class="search_filter">
-                                <ul class="">
-                                    <li class="row">
-                                        <h2 class="col-sm-2 col-xs-12">교환유형</h2>
-                                        <div class="check_filter col-sm-10 col-xs-12">
-                                            <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
-                                            <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">게임자산 -> MACH</label>
-                                            <input type="radio" name="status" id="trading" value="1"><label for="trading">MACH -> 게임자산</label>
-                                        </div>
-                                    </li>
-                                    <!-- <li class="row">
-                                        <h2 class="col-sm-2 col-xs-12">게임검색</h2>
-                                        <div class="col-sm-10 col-xs-12">
-                                            <div class="w100p-120px">
-                                                <input type="text" class="form-control" id="item_title">
-                                            </div>
-                                            <div class="mob_100p_tar">
-                                                <input type="button" class="btn btn-primary" id="btn_search" value="검색">
-                                            </div>
-                                        </div>
-                                    </li>                         -->
-                                </ul>
-                            </div>
-                
+                            <ul class="tab_board ul_li3n cf">
+                                <li id="mach_buy" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
+                                <li id="mach_sell"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
+                                <li id="mach_escrow"><a href="javascript:getExchangeHistory('exchange-gamecoin');">게임자산 -> MACH</a></li>
+                            </ul>
                             <div class="table_wrap table-responsive">
-                                <table class="table_list has_etc_icon table">
-                                    <colgroup class="colgroup_etc-buy_list">
-                                        <col class="col4_1">
-                                        <col class="col4_2">
-                                        <col class="col4_3">
-                                        <col class="col4_4">
+                                <table class="table_wallet table">
+                                    <colgroup class="colgroup_walletinfo">
+                                        <!-- <col class="col5_1">
+                                        <col class="col5_2">
+                                        <col class="col5_3">
+                                        <col class="col5_4">
+                                        <col class="col5_5"> -->
                                     </colgroup>
-                                    <thead>
+                                    <thead id="wallet_historys_column">
                                         <tr>
-                                            <th>게임</th>
-                                            <th>유형</th>
-                                            <th>내용</th>
-                                            <th>일시</th>
+                                            <th>보낸금액</th>
+                                            <th>받은금액</th>
+                                            <th>일자</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="list">
+                                    <tbody id="wallet_historys">
+                                        
                                     </tbody>
-                                </table>                 
-                            </div>
-                            <div class="btn_align_c">
-                                <button class="btn btn_more_list" id="more_search">20개 더보기</button>
-                            </div>                            
+                                </table>
+                            </div>                         
                         </div> 
                     </section>
                     <!--// gameStation -->

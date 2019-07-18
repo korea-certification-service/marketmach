@@ -171,34 +171,6 @@ router.get('/trade/exchange_mach/', function (req, res, next) {
     }
 });
 
-router.get('/machAdventure/list/', function (req, res, next) {
-    if(dbconfig.country == "KR") {
-        res.render('v2/gameStation/machadventurelist', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,
-            coinId: req.session.coinId,
-            authPhone: req.session.authPhone,
-            pointId: req.session.pointId,
-            useBlockchain: dbconfig.useBlockchain,
-            usePoint: dbconfig.usePoint,
-            userTag: req.session.userTag,
-            arrDepth: [2,1]
-        });
-    } else {
-        res.render('v2_en/gameStation/machadventurelist', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,
-            coinId: req.session.coinId,
-            authPhone: req.session.authPhone,
-            pointId: req.session.pointId,
-            useBlockchain: dbconfig.useBlockchain,
-            usePoint: dbconfig.usePoint,
-            userTag: req.session.userTag,
-            arrDepth: [2,1]
-        });
-    }
-});
-
 router.get('/machAdventure/info/', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/infoboard', {
@@ -222,9 +194,36 @@ router.get('/machAdventure/info/', function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,2]
+            arrDepth: [2,0]
         });
     }
 });
 
+router.get('/superlanding/info/', function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/gameStation/superlandinginfo', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [3,1]
+        });
+    } else {
+        res.render('v2_en/gameStation/superlandinginfo', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [3,1]
+        });
+    }
+});
 module.exports = router;

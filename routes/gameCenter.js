@@ -706,6 +706,7 @@ router.get('/:userId/gameCoinHistory', function(req, res, next) {
     })
 })
 
+//교환내역 가져오기
 router.post('/:userId/exchange/history', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
