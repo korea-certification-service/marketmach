@@ -26,6 +26,12 @@ function count(req) {
             }
         };
 
+        if(country == "KR") {
+            data['country'] = {$exists: false};
+        } else {
+            data['country'] = country;
+        }
+
         db.connectDB(country)
             .then(() => bitwebCommunity.count(data, option))
             .then((result) => {
@@ -61,6 +67,12 @@ function list(req) {
             }
         };
 
+        if(country == "KR") {
+            data['country'] = {$exists: false};
+        } else {
+            data['country'] = country;
+        }
+
         db.connectDB(country)
             .then(() => bitwebCommunity.search(data, option))
             .then((result) => {
@@ -77,7 +89,7 @@ function listMain(country, type, title) {
         let country = dbconfig.country;
         let data = {'type': type};
         let option = {
-            "perPage": 5,
+            "perPage": 3,
             "pageIdx": 0
         };
         if(title != undefined) {
@@ -85,6 +97,12 @@ function listMain(country, type, title) {
                 'type': type,
                 $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }} ]
             }
+        }
+
+        if(country == "KR") {
+            data['country'] = {$exists: false};
+        } else {
+            data['country'] = country;
         }
 
         db.connectDB(country)
