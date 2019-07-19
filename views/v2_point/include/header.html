@@ -253,7 +253,7 @@
                 
                 <div class="chatbot jumpBot">
                     <%if(useBlockchain == 'Y') {%>
-                    <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
+                    <!-- <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a> -->
                     <%}%>
                 </div>
             </section>
@@ -265,7 +265,7 @@
                             <li><a href="/sells/register">게임아이템</a></li>
                             <li><a href="/etc-sells/register">자산거래</a></li>
                             <%if(useBlockchain == 'Y') {%>  
-                            <li><a href="/otc-sells/register">OTC거래</a></li>
+                            <!-- <li><a href="/otc-sells/register">OTC거래</a></li> -->
                             <%}%>
                         </ul>
                     </li>
@@ -275,7 +275,7 @@
                             <li><a href="/buys/register">게임아이템</a></li>
                             <li><a href="/etc-buys/register">자산거래</a></li>
                             <%if(useBlockchain == 'Y') {%>  
-                            <li><a href="/otc-buys/register">OTC거래</a></li>
+                            <!-- <li><a href="/otc-buys/register">OTC거래</a></li> -->
                             <%}%>
                         </ul>                    
                     </li>
@@ -296,13 +296,13 @@
                         </ul>  
                     </li>    
                     <%if(useBlockchain == 'Y') {%>  
-                    <li>
+                    <!-- <li>
                         <button class="hasDepth2">OTC거래</button>
                         <ul class="depth2 cf">
                             <li><a href="/otc-sells?category=otc&trade_type=sell">팝니다</a></li>
                             <li><a href="/otc-buys?category=otc&trade_type=buy">삽니다</a></li>
                         </ul>  
-                    </li>                  
+                    </li>                   -->
                     <%}%>
                     <li>
                         <button class="hasDepth2">커뮤니티</button>
@@ -338,7 +338,7 @@
                                         <a class="btn bgc2" href="https://mymach.io" target="_blank">마켓마하 소개</a>
                                     </li>
                                     <%if(useBlockchain == 'Y') {%>
-                                    <li class="btm_area">   
+                                    <!-- <li class="btm_area">   
                                         <dl class="available_coin cf">
                                             <dt>마켓마하 상장코인</dt>
                                             <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="마하코인" title="마하코인"></a></dd>
@@ -361,11 +361,11 @@
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                         </dl>                                   
-                                        <!--
+                                        
                                             <br>
                                             <img src="/static/img/main/account_banner.jpeg" alt="계좌번호 설명">
-                                        -->
-                                    </li>
+                                       
+                                    </li> -->
                                     <%}%>  
                                 </ul>
                             </div>
@@ -384,10 +384,10 @@
                                     </li>
                                     <li class="mdl_area">                                        
                                         <%if(useBlockchain == 'Y') {%>
-                                        <em>나의 지갑 잔액</em>
+                                        <!-- <em>나의 지갑 잔액</em>
                                         <p class="fc2 total_mach">100 <span>MACH</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button> -->
                                         <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
                                             <em>나의 포인트 잔액</em>
                                             <p class="fc2 total_point">100 <span>Point</span></p>
@@ -396,7 +396,7 @@
                                         <%}%>
                                     </li>
                                     <%if(useBlockchain == 'Y') {%>
-                                    <li class="btm_area">
+                                    <!-- <li class="btm_area">
                                         <dl class="available_coin cf">
                                             <dt>마켓마하 상장코인</dt>
                                             <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
@@ -419,13 +419,13 @@
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                         </dl>
-                                        <!--
+                                        
                                         <br>
                                         <img src="/static/img/main/account_banner.jpeg" alt="계좌번호 설명">
                                             <button class="btn bgc4" onclick="location.href='/myPages/list';">나의 페이지</button>
                                             <button class="btn bgc3" onclick="location.href='/supports/info';">고객센터</button>
-                                        -->
-                                    </li>
+                                       
+                                    </li> -->
                                     <%}%>
                                 </ul>
                             </div>

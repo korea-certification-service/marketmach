@@ -391,7 +391,7 @@
                         </a> 
                     </div>                    
                     <%if(useBlockchain == 'Y') {%>
-                    <div class="visual_img">
+                    <!-- <div class="visual_img">
                         <a href="/supports/event/detail/5cb6d5081528652dd9937573">                                 
                             <div class="pc_img">
                                 <img src="/static/img/main/main_visual05.jpg" alt="회원추천">
@@ -410,7 +410,7 @@
                                 <img src="/static/img/mob/m_main_visual06.jpg" alt="마하 어드벤쳐">
                             </div>
                         </a>
-                    </div>                       
+                    </div>                        -->
                     <!-- 
                     <div class="visual_img">
                         <div class="visual_txt">
@@ -481,14 +481,14 @@
         <div class="container">
             <div class="w100p_banner row">
                 <%if(useBlockchain == 'Y') {%>
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <a class="mob_hide" href="https://open.kakao.com/o/gD3UkX4" target="_blank">
                         <img src="/static/img/main/main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
                     </a>
                     <a class="mob_show" href="https://open.kakao.com/o/gD3UkX4" target="_blank">
                         <img src="/static/img/mob/mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                     </a>
-                </div>
+                </div> -->
                 <%} else if(usePoint == 'Y') {%>
                 <div class="col-lg-12">
                     <a class="mob_hide" href="javascript:alert('준비중입니다.');" target="_blank">
@@ -518,7 +518,7 @@
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/myPages/point/info"><img src="/static/img/main/mach_link02.jpg" alt="EVENT"></a></div>
                 <%if(useBlockchain == 'Y') {%>
                 <!-- <div class="col-xs-12 col-sm-12 col-lg-4"><a href="javascript:alert('기능 개선 중입니다.');" target="_blank"><img src="/static/img/main/mach_link03.jpg" alt="MACH 구입하기"></a></div> -->
-                <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/event"><img src="/static/img/main/mach_link04.jpg" alt="Market MACH 이벤트"></a></div>
+                <!-- <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/event"><img src="/static/img/main/mach_link04.jpg" alt="Market MACH 이벤트"></a></div> -->
                 <%} else if(usePoint == 'Y') {%>
                 <div class="col-xs-12 col-sm-12 col-lg-4"><a href="/supports/event"><img src="/static/img/point/banner_event.jpg" alt="Market MACH 이벤트"></a></div>
                 <%} %>
@@ -569,8 +569,8 @@
                 </section>
             </div>   
             <%if(useBlockchain == 'Y') {%>    
-            <div class="row">
-                <!-- OTC 판매/구매 -->
+            <!-- <div class="row">
+                OTC 판매/구매
                 <section class="secOtc item_trade_sec col-lg-8">
                     <h1 class="blind">OTC 판매와 구매 게시판 리스트</h1>
                     <h2 class="item_sell_tit on">
@@ -606,7 +606,7 @@
                         </table>                           
                     </div>             
                 </section>
-                <!--// OTC 아이템 판매/구매 -->
+                OTC 아이템 판매/구매
                 <section class="secNoti1 item_trade_sec col-lg-4">
                     <h1 class="blind">공지사항</h1>
                     <h2 class="item_sell_tit on">
@@ -625,7 +625,7 @@
                         </table>
                     </div>           
                 </section>
-            </div>   
+            </div>    -->
             <%} else if(useBlockchain == 'N' && usePoint == 'Y') {%>   
             <div class="row">
                 <section class="secNoti2 assets_trade_sec">
@@ -650,31 +650,31 @@
             <%}%>
             <section class="w100p_banner row">
                 <%if(useBlockchain == 'Y') {%>
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <a class="mob_hide" href="http://bitweb.co.kr/" target="_blank">
                         <img src="/static/img/main/main_content_banner03.jpg" alt="">
                     </a>
                     <a class="mob_show" href="http://bitweb.co.kr/" target="_blank">
                         <img src="/static/img/mob/mob_main_banner03.jpg" alt="">
                     </a>
-                </div>
+                </div> -->
                 <%}%>
             </section>
             <%if(useBlockchain == 'Y') {%>
-            <div class="row">
-                <!-- 동영상 -->
+            <!-- <div class="row">
+                동영상
                 <section class="media_sec col-lg-12">
                     <div class="bd_area">
                         <h1 class="media_tit fc2">
                             동영상
-                            <!-- <a class="add_circle_outline" href=""><i class="material-icons">add_circle_outline</i></a> -->
+                            <a class="add_circle_outline" href=""><i class="material-icons">add_circle_outline</i></a>
                         </h1>
                         <div class="media_img_wrap cf">
                         </div>
                     </div>
                 </section>
-                <!--// 동영상 -->
-                <!-- 게임뉴스 -->
+                동영상
+                게임뉴스
                 <section class="gamenews_sec col-lg-4">
                     <div class="bd_area">
                         <h1 class="gamenews_tit fc2">게임뉴스<a class="plus_link" href="">더보기</a></h1>
@@ -682,7 +682,7 @@
                         </ul>
                     </div>
                 </section>
-                <!--// 게임뉴스 -->              
+                게임뉴스            
             </div>
             <div class="row">
                 <section class="company_sec col-lg-12">
@@ -704,7 +704,7 @@
                         </div>
                     </div>
                 </section>                   
-            </div>
+            </div> -->
             <%}%>
         </div>
         <!--// bootstrap container -->
