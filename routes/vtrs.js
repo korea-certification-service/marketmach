@@ -460,9 +460,9 @@ router.post('/chatbot/', function (req, res, next) {
                 item._doc.status = 1;
                 req.body['item'] = item;
 
-                if(item.price != req.body.mach) {
-                    item._doc.price = req.body.mach;
-                    item._doc.total_price = req.body.mach;
+                if(item.price != req.body.price) {
+                    item._doc.price = req.body.price;
+                    item._doc.total_price = req.body.price;
                 }
 
                 let controllerUser = require('../controllers/users');

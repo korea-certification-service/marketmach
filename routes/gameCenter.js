@@ -518,7 +518,7 @@ router.post('/:userId/exchange/mach', function(req, res, next) {
                      //4.coin history 저장
                      let coinData = {
                         "extType" : "game",
-                        "coinId" : coinId.toString(),
+                        "coinId" : user._doc.coinId,
                         "category" : "deposit",
                         "status" : "success",
                         "currencyCode" : "MACH",                        
@@ -626,7 +626,7 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
                         //4.coin history 저장
                         let coinData = {
                         "extType" : "game",
-                        "coinId" : coinId.toString(),
+                        "coinId" : user._doc.coinId,
                         "category" : "withdraw",
                         "status" : "success",
                         "currencyCode" : "MACH",                        
