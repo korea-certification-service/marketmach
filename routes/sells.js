@@ -129,11 +129,31 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
             .then(result => {
                 userTag = result._doc.userTag;
                 if(dbconfig.country == "KR") {
-                    res.render('v2/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-                        userTag:userTag, country: country,pointId: req.session.pointId,
+                    res.render('v2/sell/modify', {
+                        title: 'Bitweb Main', 
+                        id: id, 
+                        userId: req.session.userId, 
+                        coinId: req.session.coinId,
+                        userTag:userTag, 
+                        country: country,
+                        pointId: req.session.pointId,
                         authPhone: req.session.authPhone,
                         usePoint:dbconfig.usePoint,
-                        useBlockchain:dbconfig.useBlockchain});
+                        useBlockchain:dbconfig.useBlockchain
+                    });
+                } else if(dbconfig.country == "POINT") {
+                    res.render('v2_point/sell/modify', {
+                        title: 'Bitweb Main', 
+                        id: id, 
+                        userId: req.session.userId, 
+                        coinId: req.session.coinId,
+                        userTag:userTag, 
+                        country: country,
+                        pointId: req.session.pointId,
+                        authPhone: req.session.authPhone,
+                        usePoint:dbconfig.usePoint,
+                        useBlockchain:dbconfig.useBlockchain
+                    });       
                 } else {
                     res.render('v2_en/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
                     userTag:userTag, country: country,pointId: req.session.pointId,

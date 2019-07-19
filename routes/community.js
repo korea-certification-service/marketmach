@@ -6,51 +6,83 @@ const BitwebResponse = require('../utils/BitwebResponse');
 
 router.get('/board', function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/community/list', {title: 'Bitweb Main', 
-        userId: req.session.userId,userTag:req.session.userTag,
-        coinId: req.session.coinId,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        type: req.query.type,
-        title: req.query.title,
-        pageIdx: req.query.pageIdx});
+        res.render('v2/community/list', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.query.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx
+    });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/community/list', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.query.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx
+        });         
     } else {
-        res.render('v2_en/community/list', {title: 'Bitweb Main', 
-        userId: req.session.userId,userTag:req.session.userTag,
-        coinId: req.session.coinId,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        type: req.query.type,
-        title: req.query.title,
-        pageIdx: req.query.pageIdx});
+        res.render('v2_en/community/list', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.query.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx
+    });
     }
 });
 
 router.get('/board/detail/:communityId', function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/community/view', {title: 'Bitweb Main',
-        userId: req.session.userId,userTag:req.session.userTag,
-        coinId: req.session.coinId,
-        pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        communityId: req.params.communityId,
-        userTag: req.session.userTag,
-        authPhone: req.session.authPhone});
+        res.render('v2/community/view', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            communityId: req.params.communityId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/community/view', {
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            communityId: req.params.communityId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone
+        });         
     } else {
-        res.render('v2_en/community/view', {title: 'Bitweb Main',
-        userId: req.session.userId,userTag:req.session.userTag,
-        coinId: req.session.coinId,
-        pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        communityId: req.params.communityId,
-        userTag: req.session.userTag,
-        authPhone: req.session.authPhone});
+        res.render('v2_en/community/view', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            communityId: req.params.communityId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone
+        });
     }
 });
 
