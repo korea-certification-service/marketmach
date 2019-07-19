@@ -76,12 +76,12 @@
             });
 
             //교환내역 스크립트
-            getExchangeHistory("all");
-            $(".tab_board.ul_li3n.cf").on("click", function(e){
-                $(e.currentTarget).children("li").removeClass('on');
-                console.log($(e.target));
-                $(e.target).parent("li").addClass("on");
-            });
+            getExchangeHistory("exchange-gamecoin");
+            // $(".tab_board.ul_li3n.cf").on("click", function(e){
+            //     $(e.currentTarget).children("li").removeClass('on');
+            //     console.log($(e.target));
+            //     $(e.target).parent("li").addClass("on");
+            // });
         });
         function getRate(){
             $.ajax({
@@ -161,58 +161,67 @@
                 }
             }
         } 
+        
         //교환내역에 쓰일 함수
         function getExchangeHistory(category) {
             if(category == "all") {
-                reqData = { "category": category }
+                req = { "category": category }
             } else if(category == "exchange-mach") {
-                reqData = { "category": category }
+                req = { "category": category }
             } else if(category == "exchange-gamecoin") {
-                reqData = { "category": category }
+                req = { "category": category }
             }
             console.log(userId);
             $.ajax({
                method: "POST",
                url: "/v1/gameCenter/"+userId+"/exchange/history",
-               data: reqData
+               data: req
             }).done(function (success) {
-                console.log(success.data.list);
                 var count = success.data.count;
                 var list = success.data.list;
                 var rows = "";
+
                 console.log(list);
+
                 $("#wallet_historys").empty();
-                if(list.length === 0) {
+                if(list.length === 0) { //내역이 없을때
                     $("#wallet_historys").append("<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>");
-                } else {
+                } else { //내역이 있을때
                     list.forEach(el => {
-                        var from;
-                        var to;
-                        var tr = '';
-                        if(el.category == "exchange-mach") {
-                            from = '<em class="fcor">'+el.gamecoin+' MC'+'</em>';
-                            to = '<em class="fc2">'+el.price+' MACH'+'</em>';
-                            tr = '<tr>'+
-                                    '<td>'+from+'</td>'+
-                                    '<td>'+to+'</td>'+
-                                    '<td>'+el.regDate+'</td>'+
-                                '</tr>';
-                        } else if(el.category == "exchange-gamecoin" ) {
-                            from = '<em class="fc2">'+el.price+' MACH'+'</em>';
-                            to = '<em class="fcor">'+el.gamecoin+' MC'+'</em>';
-                            tr = '<tr>'+
-                                    '<td>'+from+'</td>'+
-                                    '<td>'+to+'</td>'+
-                                    '<td>'+el.regDate+'</td>'+
-                                '</tr>';
+                        if(el.game == "mcs1"){ //몽키코인에 관한 내역일때
+                            appendHistoryRow(el,"MC", "fcor");
                         }
-                        rows = tr;
-                        $("#wallet_historys").append(rows);
                     });
                 }
            }).fail(function (fail) {
                console.log(fail);
            });
+
+            /**
+             * 교환내역을 추가하는 로컬 함수
+             * @param {object} el forEach가 참조중인 요소 
+             * @param {string} currencyType 게임코인종류에 따라 붙을 접미사 대문자
+             * @param {string} color 게임코인 폰트색깔 common.css에 있는 font color에 클래스명을 사용
+            */
+           function appendHistoryRow(el, currencyType, color) { 
+                var from;
+                var to;
+                var tr = '';
+                if(el.category == "exchange-mach") {
+                    from = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                    to = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                } else if(el.category == "exchange-gamecoin" ) {
+                    from = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                    to = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                }
+                tr = '<tr>'+
+                        '<td>'+from+'</td>'+
+                        '<td>'+to+'</td>'+
+                        '<td>'+el.regDate+'</td>'+
+                    '</tr>';
+                rows = tr;
+                $("#wallet_historys").append(rows);
+           }
         }    
    </script>
 </head>
@@ -344,32 +353,32 @@
                                 <button class="btn btn_in_view1" id="doExchange">교환하기</button>
                             </div>      
                             <h2 class="tit_mypage dot_tit">교환 내역</h2>
-                            <ul class="tab_board ul_li3n cf">
-                                    <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
-                                    <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
-                                    <li id="his_game"><a href="javascript:getExchangeHistory('exchange-gamecoin');">게임자산 -> MACH</a></li>
-                                </ul>
-                                <div class="table_wrap table-responsive">
-                                    <table class="table_wallet table">
-                                        <colgroup class="colgroup_walletinfo">
-                                            <!-- <col class="col5_1">
-                                            <col class="col5_2">
-                                            <col class="col5_3">
-                                            <col class="col5_4">
-                                            <col class="col5_5"> -->
-                                        </colgroup>
-                                        <thead id="wallet_historys_column">
-                                            <tr>
-                                                <th>보낸금액</th>
-                                                <th>받은금액</th>
-                                                <th>일자</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="wallet_historys">
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>                      
+                            <!-- <ul class="tab_board ul_li3n cf">
+                                <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
+                                <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
+                                <li id="his_game"><a href="javascript:getExchangeHistory('exchange-gamecoin');">게임자산 -> MACH</a></li>
+                            </ul> -->
+                            <div class="table_wrap table-responsive">
+                                <table class="table_wallet table">
+                                    <colgroup class="colgroup_walletinfo">
+                                        <!-- <col class="col5_1">
+                                        <col class="col5_2">
+                                        <col class="col5_3">
+                                        <col class="col5_4">
+                                        <col class="col5_5"> -->
+                                    </colgroup>
+                                    <thead id="wallet_historys_column">
+                                        <tr>
+                                            <th>보낸금액</th>
+                                            <th>받은금액</th>
+                                            <th>일자</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="wallet_historys">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>                      
                         </div>
                         <!--//나의 지갑 정보 -->                                
                     </section>
