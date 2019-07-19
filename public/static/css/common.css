@@ -114,25 +114,27 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .nav{height: 50px;}
 .header .nav > .nav_menu{}
 .header .nav > .nav_menu > li > .depth2.show{display: block;} 
-.header .nav > .nav_menu > li > .depth2{display: none; position: absolute; left: 0; top: 50px; z-index: 11; width: 100%; background-color: #ffffff; border: 2px solid #000;}
-.header .nav > .nav_menu > li > .depth2 > li{float: left; width: 50%; text-align: center;}
-.header .nav > .nav_menu > li > .depth2 > li > a{display: inline-block; width: 90%; height: 40px; line-height: 40px; text-align: center; font-size: 12px; border-radius: 6px; background-color: #1e2560; font-weight: bold; color: #ffffff;}
-.header .nav > .l_menu{position: relative; float: left; width: 210px;}
-.header .nav > .l_menu > li{float: left; width: 50%; padding: 14.5px 0;}
+.header .nav > .nav_menu > li > .depth2{display: none; position: absolute; left: 0; top: 49px; z-index: 11; width: 100%; background-color: #f1f2f6;}
+.header .nav > .nav_menu > li > .depth2 > li{text-align: center;}
+.header .nav > .nav_menu > li > .depth2 > li:hover { background-color: #1e2560 }
+.header .nav > .nav_menu > li > .depth2 > li:hover a { color: #fff; }
+.header .nav > .nav_menu > li > .depth2 > li > a{display: inline-block; width: 100%; height: inherit; text-align: center; font-size: 16px;font-weight: bold; color: #1e2560;}
+.header .nav > .l_menu{position: relative; float: left; width: 210px; height: inherit}
+.header .nav > .l_menu > li{float: left; width: 50%; height: inherit }
 .header .nav > .l_menu > li:nth-child(1){text-align: right;}
-.header .nav > .l_menu > li:nth-child(1) > button{padding-right: 10px; border-right: 2px solid #fff;}
+.header .nav > .l_menu > li:nth-child(1) > button{padding-right: 10px; border-right: 2px solid #fff; outline: none; }
 .header .nav > .l_menu > li:nth-child(2){text-align: left;}
-.header .nav > .l_menu > li:nth-child(2) > button{margin-left: 10px;}
+.header .nav > .l_menu > li:nth-child(2) > button{margin-left: 10px; outline: none;}
 .header .nav > .l_menu > li > .depth2 > li{ line-height: 48px;}
-.header .nav > .l_menu > li > button{background: none; color: #ffffff; font-size: 15px; font-weight: bold; border: none;}
-.header .nav > .c_menu{float: left; width: calc(100% - 360px); border: 1px solid #c1c1c1;}
+.header .nav > .l_menu > li > button{background: none; color: #ffffff; font-size: 15px; font-weight: bold; border: none; position: relative; top: 50%; transform: translateY(-50%); }
+.header .nav > .c_menu{float: left; width: calc(100% - 360px);border-bottom: 1px solid #f1f2f6;}
 .header .nav > .c_menu > li{position: relative; float: left; width: 20%; line-height: 48px; text-align: center;}
-.header .nav > .c_menu > li > button{background: none; color: #1e2560; font-size: 15px; font-weight: bold; border: none;}
+.header .nav > .c_menu > li > button{background: none; color: #1e2560; font-size: 15px; font-weight: bold; border: none; outline: none; }
 .header .nav > .c_menu > li > a{font-size: 15px; font-weight: bold;}
 .header .nav > .r_menu{float: left; width: 150px; position: relative; /*background: url(/static/img/main/ico_notice_bell.png) 8px 50% no-repeat;*/ background-size: 25px 32px;}
 .header .nav > .r_menu > li{float: left; width: 50%;}
 .header .nav > .r_menu > li .notice_number{visibility: hidden; display: inline-block; margin-left: 20px; width: 22px; height: 22px; line-height: 22px; border-radius: 50% 50%; text-align: center; background-color: red; color: #ffffff; font-weight: bold;}
-.header .nav > .r_menu > li .btn_info_box{width: 100%; height: 50px; text-align: center; border: none; background-color: #dadada;}
+.header .nav > .r_menu > li .btn_info_box{width: 100%; height: 50px; text-align: center; border: none; background-color: #f1f2f6; outline: none;}
 .header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; right: 0; width: 220px; padding: 5px 15px; text-align: center; background-color: #ffffff; border: 1px solid #c1c1c1;}
 .header .nav > .r_menu > li .floating_info_box > ul > li{padding: 20px 0;}
 .header .nav > .r_menu > li .floating_info_box .btn{width: 100%;font-size: 14px;font-weight: bold;height: 40px;padding: 10px 0;}
@@ -425,7 +427,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .item_trade_sec h2 button{margin-top: 6px; border: none; font-size: 16px; font-weight: bold; background-color: transparent;}
 .item_trade_sec .trade_list{position: absolute; top: 80px; padding: 19px 20px; width: calc(100% - 30px); height: 260px; overflow: auto; box-sizing: border-box; border: 1px solid #ced4da; border-top: none;}
 .item_trade_sec .on{border-bottom: none; background-color: #ffffff;}
-.item_trade_sec .on .btn_show_list{padding: 0 10px 6px 10px; border-bottom: 3px solid #000;}
+.item_trade_sec .on .btn_show_list{padding: 0 10px 6px 10px; border-bottom: 3px solid #000; outline: none;}
 .item_trade_sec .main_list_table{width: 100%; }
 .item_trade_sec .main_list_table tbody td{height: 40px;}
 .item_trade_sec .main_list_table tbody td a{color: #333333;}
@@ -480,7 +482,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .media_sec .media_img_wrap .media_img{width: 32%; margin-left: 2%;}
 .media_sec .media_img_wrap .media_img:hover{box-shadow: 0 0 16px 0 rgba(0,0,0,.16); transition: all .2s linear;}
 .media_sec .media_img_wrap .media_img:first-child{margin-left: 0;}
-.media_sec .media_img_wrap .media_img a{display: block; text-align: center;}
+.media_sec .media_img_wrap .media_img a{display: block; text-align: center;padding: 20px;}
 .media_sec .media_img_wrap .media_img img{max-height: 130px;}
 .media_sec .media_img_wrap .media_img h2{margin-top: 10px; text-align: center; color: #222222; font-weight: bold;}
 
@@ -611,6 +613,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     /**/
     .item_trade_sec h2 button{font-size: 14px;}
     .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}
+    .media_sec .media_img_wrap .media_img a{padding:0;}
     /* footer */
     .footer .footer_content .ft_top > div{display: none;}
     .footer .footer_content .ft_top > div:nth-child(1){display: inline-block; max-width: 50%;}
