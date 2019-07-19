@@ -292,11 +292,28 @@ router.get('/signup', function (req, res, next) {
                 controllerUsers.getBlackList(data.country, condition)
                 .then((blacklist) => {
                     if(blacklist.length == 0) {
-                        if(dbconfig.country =="KR") {
-                            res.render('v2/login/signup', data);
-                        } else {
-                            res.render('v2_en/login/signup', data);
+                        //탈퇴 회원인데 30일이내에 재가입하는지 여부 체크
+                        let withdrawCondition = {
+                            "phone": data.phone
                         }
+                        controllerUsers.getWithdrawUser(data.country, withdrawCondition)
+                        .then(withdraws => {
+                            let regDate = withdraws[0]._doc.regDate;
+                            let dateDiff = util.dateDiff(regDate, util.formatDate(new Date().toString()));
+                            if(dateDiff < 31) {                                
+                                if(dbconfig.country =="KR") {
+                                    res.render('v2/login/withdraw', data);
+                                } else {
+                                    res.render('v2_en/login/withdraw', data);
+                                }
+                            } else {
+                                if(dbconfig.country =="KR") {
+                                    res.render('v2/login/signup', data);
+                                } else {
+                                    res.render('v2_en/login/signup', data);
+                                }
+                            }
+                        })
                     } else {
                         if(dbconfig.country =="KR") {
                             data['id'] = blacklist[0]._doc._id;

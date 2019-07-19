@@ -23,7 +23,8 @@ var usersSchema = new Schema({
     agreementId: ObjectId,
     coinId: ObjectId,
     pointId: ObjectId,
-    loginToken: String
+    loginToken: String,
+    withdraw_date: String
 });
 
 module.exports = usersSchema;

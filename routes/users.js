@@ -844,6 +844,7 @@ router.delete('/:userId', function (req, res, next) {
         controllerUsers.getById(dbconfig.country, req.params.userId)
             .then(user => {
                 let withdrawUser = user._doc;
+                withdrawUser['withdraw_date'] = util.formatDate(new Date().toString());
                 let condition = {
                     "userTag":user._doc.userTag,
                     "status": 0
