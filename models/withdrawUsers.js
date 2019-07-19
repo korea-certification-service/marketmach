@@ -24,6 +24,16 @@ var usersSchema = new Schema({
     coinId: ObjectId,
     pointId: ObjectId,
     loginToken: String,
+    extLoginType: String,
+    recommander: String,
+    bitberry_token: String,
+    bitberry_user_id: String,
+    gameCenterId: ObjectId,
+    sessionToken: String,
+    birth: String,
+    sex: String,
+    commId: String, 
+    foreigner: String,
     withdraw_date: String
 });
 
