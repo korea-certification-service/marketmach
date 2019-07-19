@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+        });
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>회원가입 불가</h1>
+                <p class="p_join">※ 해당 사용자 탈퇴 후 30일 이내에 재가입 요청한 번호입니다.</p>
+                <p class="p_join">※ 해당 번호는 30일 후 재가입이 가능합니다.</p>
+                <p class="p_join">※ 본인이 가입하지 않았거나, 개인정보 도용이 의심된다면 <em class="fcrd">[고객센터 1899-8696]</em> 또는 <em class="fcrd">[io@onlykcs.com]</em>로 문의 바랍니다.</p>
+                <div class="btn_align_c">
+                    <a href="/main" class="btn btn_in_view2">홈으로</a>
+                </div> 
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body> 

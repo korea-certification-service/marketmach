@@ -348,6 +348,7 @@ function getWithdrawByPhone (phone) {
 function getWithdrawUser (condition) {
     return new Promise((resolve, reject) => {
         WithdrawUsers.find(condition)
+        .sort({regDate:'desc'})
         .exec(
             function(err, user) {
                 if (err) {
