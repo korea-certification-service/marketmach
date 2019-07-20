@@ -350,7 +350,7 @@ router.get('/signup', function (req, res, next) {
                         }
                         controllerUsers.getWithdrawUser(data.country, withdrawCondition)
                         .then(withdraws => {
-                            if(withdraws == null) {
+                            if(withdraws.length == 0) {
                                 if(dbconfig.country =="KR") {
                                     res.render('v2/login/signup', data);
                                 } else if(dbconfig.country == "POINT") {
