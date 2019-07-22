@@ -245,7 +245,7 @@ router.get('/trade/exchange_mach/', function (req, res, next) {
 
 router.get('/machAdventure/info/', function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/gameStation/infoboard', {
+        res.render('v2/gameStation/machadventureinfo', {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -257,7 +257,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
             arrDepth: [2,1]
         });
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/gameStation/infoboard', {
+        res.render('v2_point/gameStation/machadventureinfo', {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -269,7 +269,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
             arrDepth: [2,1]
         });         
     } else {
-        res.render('v2_en/gameStation/infoboard', {
+        res.render('v2_en/gameStation/machadventureinfo', {
             title: 'Bitweb Main',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -322,4 +322,86 @@ router.get('/superlanding/info/', function (req, res, next) {
         });
     }
 });
+
+//////
+router.get('/machAdventure/myGame/', function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/gameStation/myMachAdventure', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [2,2]
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/gameStation/myMachAdventure', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [2,2]
+        });         
+    } else {
+        res.render('v2_en/gameStation/myMachAdventure', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [2,2]
+        });
+    }
+});
+
+router.get('/superlanding/myGame/', function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/gameStation/mySuperlanding', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [3,2]
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/gameStation/mySuperlanding', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [3,2]
+        });         
+    } else {
+        res.render('v2_en/gameStation/mySuperlanding', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            authPhone: req.session.authPhone,
+            pointId: req.session.pointId,
+            useBlockchain: dbconfig.useBlockchain,
+            usePoint: dbconfig.usePoint,
+            userTag: req.session.userTag,
+            arrDepth: [3,2]
+        });
+    }
+});
+
 module.exports = router;
