@@ -1,5 +1,0 @@
-else if(dbconfig.country == "POINT") {
-    res.render('v2_point/buy/list', {
-
-    });         
-}
