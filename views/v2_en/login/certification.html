@@ -126,7 +126,7 @@
                     alert("The authentication code is invalid. Please check it.");
                     return;
                 } else {
-                    location.href = '/signup';
+                    location.replace = '/signup';
                 }
             }).fail(function (fail) {
                 console.log(fail);
