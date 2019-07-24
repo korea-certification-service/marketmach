@@ -35,7 +35,7 @@
             $(".recommendUrl").css({display: "block"});
         }
         
-        voucherHistory();
+        //voucherHistory();
         $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
         $('#m_voucherCopy').on('click', function(){
             console.log(1);
@@ -90,17 +90,17 @@
     }
 
     /*모바일 네비게이션의 추천URL로직*/
-    function voucherHistory() {
-            $.ajax({
-                method: "GET",
-                url: "/v1/coins/historys/" + coinId + "/list"
-            }).done(function (success) {
-                console.log(success);
+    // function voucherHistory() {
+    //         $.ajax({
+    //             method: "GET",
+    //             url: "/v1/coins/historys/" + coinId + "/list"
+    //         }).done(function (success) {
+    //             console.log(success);
                 
-            }).fail(function (fail) {
-                console.log(fail);
-            });
-        }
+    //         }).fail(function (fail) {
+    //             console.log(fail);
+    //         });
+    //     }
 
     function copyUrl() {
         var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n 아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n 회원추천하고 또 1마하 득! \n 친구 추천을 받으시면 최대 100MACH까지 드립니다.\n';
@@ -112,6 +112,31 @@
         document.execCommand('copy');
         document.body.removeChild(t);
         alert("copied");
+    }
+
+    function checkTeenager(url) {
+        if(userId == "") {
+            location.href = '/login';
+        } else {
+            $.ajax({
+                method: "GET",
+                url: "/v1/users/" + userId
+            }).done(function (success) {
+                if(success.data.agreement.teenager == false) {
+                    if(success.data.birth == "") {
+                        //console.log('준비중');
+                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.\n미성년자 유무 확인을 위한 휴대폰 본인 인증을 진행합니다.');
+                        location.href = '/myPages/user/authPhone';
+                    } else {
+                        alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.');
+                    }
+                } else {
+                    location.href = url;
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
     }
 </script>
     <header class="mob_header">
@@ -133,7 +158,7 @@
                     <select class="srch_select m_srch_select">
                         <option value="games">게임아이템</option>
                         <option value="assets">자산거래</option>
-                        <option value="otc">OTC거래</option>
+                        <!-- <option value="otc">OTC거래</option> -->
                     </select>
                     <input class="srch_input ipt_search_bar" id="m_search_item_name" type="text" placeholder="게임검색이 가능합니다." autocomplete="off"/>
                     <input type="button" class="btn_search bgc1 .btn_search" id="m_main_search" value="검색" autocomplete=off>
@@ -173,13 +198,13 @@
                                 <%if(useBlockchain == 'Y') {%>
                                 <!-- <th><button class="btnMobMenu btn_mob_menu">OTC거래</button></th> -->
                                 <%}%>
-                                <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th>
+                                <!-- <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th> -->
                                 <%if(useBlockchain == 'Y') {%>
                                 <!-- <th><a href="/shopping/view">한정 이벤트</a></th>  -->
                                 <%}%>
                                 <!-- <th><a href="/gameStation/" class="fcbk">게임스테이션</a></th> -->
                                 <th><a href="/community/board" class="fcbk">게임소식</a></th>
-                                <th><a href="javascript:alert('기능 개선 중입니다.');" target="_blank">환전소</a></th>
+                                <!-- <th><a href="javascript:alert('기능 개선 중입니다.');" target="_blank">전소</a></th> -->
                                 <th></th>
                             </tr>
                         </tbody>
@@ -302,7 +327,7 @@
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button> -->
                                         <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
                                         <em>나의 포인트 잔액</em>
-                                        <p class="fc2 total_point">100 <span>Point</span></p>
+                                        <p class="fc2 total_point">0 <span>Point</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
                                         <%}%>

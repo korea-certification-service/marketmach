@@ -63,8 +63,8 @@
                                 <td><span class="item_character"></span></td>
                             </tr>
                             <tr>
-                                <th>거래가격</th>
-                                <td><p class="txt_price"><span></span></p></td>
+                                <th>거래가격(Point)</th>
+                                <td><p class="txt_point"><span></span></p></td>
                             </tr>
                             <tr class="mrg_cell trForDel">
                                 <td colspan="2">
@@ -140,21 +140,21 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th colspan="2"><span class="dot_tit">결제정보</span></th>
+                                <th colspan="2"><span class="dot_tit">나의 지갑 정보</span></th>
                             </tr>
                         </thead>
                         <tbody>                           
                             <tr>
                                 <th>나의 지갑 잔액</th>
-                                <td><span class="item_user_price"></span></td>
+                                <td><span class="item_user_price_point"></span></td>
                             </tr>
                             <tr>
                                 <th>거래가격</th>
-                                <td><span class="item_price"></span></td>
+                                <td><span class="item_price_point"></span></td>
                             </tr>
                             <tr>
                                 <th>결제 후 나의 지갑 잔액(예상)</th>
-                                <td><span class="user_price_balance"></span></td>
+                                <td><span class="user_price_balance_point"></span></td>
                             </tr>                        
                         </tbody>
                     </table>
@@ -165,7 +165,7 @@
                     <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
                 </ul>   
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view1" id="buynow">결제하기</button>
+                    <button class="btn btn_in_view1" id="pointBuynow">결제하기</button>
                 </div>  
             </section>
             <!--// view page-->
@@ -279,7 +279,7 @@
                     $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
-                    $(".txt_point").html(point + "<span>Point</span>");
+                    $(".txt_point").html(numberWithCommas(point) + "<span>Point</span>");
                 }
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);

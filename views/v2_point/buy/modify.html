@@ -95,7 +95,7 @@
                                 </tr>
                                 <%}%>
                                 <th>구매자 캐릭터명</th>
-                                    <td><input type="text" class="form-control" id="buyer_game_character" placeholder="물품을 전달 받으실 본인의 캐릭터명 입력"></td>
+                                    <td><input type="text" class="form-control" id="buyer_game_character" placeholder="물품을 전달 받으실 본인의 캐릭터명 입력" max="50"></td>
                                 </tr>
                                 <tr>
                                     <th>상세정보</th>
@@ -260,14 +260,8 @@
             } else if ($("#buyer_game_character").val() == "") {
                 alert('구매자 케릭터명을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('거래 가격을 입력하세요.');
-                return false;
             } else if ("<%=usePoint%>" == 'Y' &&  ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
                 alert('거래 가격(Point)을 입력하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
                 return false;
             } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
                 alert('거래 가격(Point)을 숫자로 입력하세요.');

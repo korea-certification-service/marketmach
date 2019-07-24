@@ -224,6 +224,7 @@ router.get('/login', sessionChecker.sessionChecker, function (req, res, next) {
 router.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.clearCookie("orange__F");
+    res.clearCookie("loginToken");
     res.redirect('/');
 });
 
