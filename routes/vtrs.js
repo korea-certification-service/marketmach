@@ -255,6 +255,9 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
                     if(country != "KR") {
                         params['$or'][0]['$and'].push({'country': country});
                         params['$or'][1]['$and'].push({'country': country});
+                    } else {
+                        params['$or'][0]['$and'].push({'country': {$exists:false}});
+                        params['$or'][1]['$and'].push({'country': {$exists:false}});
                     }
 
 
