@@ -1,5 +1,5 @@
 var __config = {
 	"str": {
-		"chatbot_url": "http://bitweb.bottalks.co.kr/R2rm9KazOXAlFjD78",
+		"chatbot_url": "http://13.209.227.60:4100",
     }
 }

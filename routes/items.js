@@ -527,14 +527,23 @@ router.get('/service/:itemId', function (req, res, next) {
                             .then(coin => {
                                 controllerPoints.getByPointId(country, user._doc.pointId)
                                     .then(point => {
-                                        let result = item;
-                                        result['_doc']['phone'] = user._doc.phone;
-                                        result['_doc']['total_coins'] = coin;
-                                        result['_doc']['total_point'] = point._doc.total_point;
+                                        controllerVtrs.getVtrTempByItemId(country, itemId) 
+                                        .then(vtrTemp => {
+                                            let result = item;
+                                            result['_doc']['phone'] = user._doc.phone;
+                                            result['_doc']['total_coins'] = coin;
+                                            result['_doc']['total_point'] = point._doc.total_point;
+                                            result['_doc']['vtrTemp'] = vtrTemp;
 
-                                        bitwebResponse.code = 200;
-                                        bitwebResponse.data = result;
-                                        res.status(200).send(bitwebResponse.create())
+                                            bitwebResponse.code = 200;
+                                            bitwebResponse.data = result;
+                                            res.status(200).send(bitwebResponse.create())
+                                        }).catch((err) => {
+                                            console.error('err=>', err)
+                                            bitwebResponse.code = 500;
+                                            bitwebResponse.message = err;
+                                            res.status(500).send(bitwebResponse.create())
+                                        })
                                     }).catch((err) => {
                                     console.error('err=>', err)
                                     bitwebResponse.code = 500;
