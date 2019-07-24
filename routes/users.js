@@ -595,7 +595,7 @@ router.post('/login', function (req, res, next) {
                                 let cookie_string = userTag+'|'+ loginToken; // "|" 로 구분
                                 let orange__F = CryptoJS.AES.encrypt(cookie_string, key, {iv:iv}); // 쿠키명 = orange__T
                                 orange__F = orange__F.ciphertext.toString(CryptoJS.enc.Base64);  //and the ciphertext put to base64
-                                res.cookie("orange__F",orange__F, {
+                                res.cookie("loginToken",result._doc.loginToken, {
                                     domain: 'marketmach.com',
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });

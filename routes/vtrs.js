@@ -21,6 +21,8 @@ router.get('/:userId', function (req, res, next) {
     };
     if(country != "KR") {
         body['item.country'] = country;
+    } else {
+        body['item.country'] = {$exists: false};
     }
 
     var bitwebResponse = new BitwebResponse();
@@ -315,6 +317,8 @@ router.get('/cancel/:userId', function (req, res, next) {
     }
     if(country != "KR") {
         params['item.country'] = country;
+    } else {
+        params['item.country'] = {$exists: false};
     }
 
     let option = {
@@ -361,6 +365,8 @@ router.get('/user/:userTag', function (req, res, next) {
     };
     if(country != "KR") {
         data['item.country'] = country;
+    } else {
+        data['item.country'] = {$exists: false};
     }
     if (pageIdx != undefined) data['pageIdx'] = parseInt(pageIdx);
     if (perPage != undefined) data['perPage'] = parseInt(perPage);
