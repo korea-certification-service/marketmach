@@ -206,7 +206,7 @@
                 var item_phone = success.data.phone;
                 from_userTag = success.data.userTag;
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
-                total_mach = success.data.total_mach;
+                total_mach = success.data.total_coins.total_mach;
                 var item_user_price = numberWithCommas(total_mach);
                 if(cryptoCurrencyCode == "BTC") {
                     var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
@@ -214,7 +214,7 @@
                     total_mach = coin_price;
                 } else if(cryptoCurrencyCode == "ETH") {
                     var coin_price = success.data.total_coins.total_ether == undefined ? 0 : success.data.total_coins.total_ether;
-                    item_user_price = numberWithCommas(success.data.total_coins.total_ether);
+                    item_user_price = numberWithCommas(coin_price);
                     total_mach = coin_price;
                 }
 
@@ -264,7 +264,7 @@
                 return;
             }
 
-            var confirmYn = confirm('현재 오픈베타 버전이어서 거래취소 기능은 제공하지 않습니다.\n 거래 취소 시 서비스에서 취소를 할 수 있지만 취소 후 VTR 재 입장시 기능이 정상적으로 동작하지 않을 수 있습니다.\nVTR에 접속하시겠습니까?');
+            var confirmYn = confirm('VTR에 접속하시겠습니까?');
 
             if(confirmYn) {
                 // roomToken = makeToken1();
