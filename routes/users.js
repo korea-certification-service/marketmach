@@ -600,7 +600,7 @@ router.post('/login', function (req, res, next) {
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
 
-                                res.cookie("orange__F",orange__F, {
+                                res.cookie("loginToken",result._doc.loginToken, {
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
 
