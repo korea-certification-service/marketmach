@@ -50,6 +50,8 @@ var sessionChecker2 = (req, res, next) => {
 
         if(dbconfig.country == "KR") {
             res.render('v2/login/login', {title: 'Bitweb Main'});
+        } else if(dbconfig.country == "POINT") {
+            res.render('v2_point/login/login', {title: 'Bitweb Main'});
         } else {
             res.render('v2_en/login/login', {title: 'Bitweb Main'});
         }
@@ -106,6 +108,8 @@ var adultChecker = (req, res, next) => {
         //res.redirect("/login");
         if(dbconfig.country == "KR") {
             res.render('v2/login/login', {title: 'Bitweb Main'});
+        } else if(dbconfig.country == "POINT") {
+            res.render('v2_point/login/login', {title: 'Bitweb Main'});
         } else {
             res.render('v2_en/login/login', {title: 'Bitweb Main'});
         }

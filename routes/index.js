@@ -560,33 +560,39 @@ router.get("/google2def744eaae3698d.html", function (req, res, next) {
     res.render('google2def744eaae3698d', {title: 'private'});
 });
 
-router.get('/room', function (req, res, next) {
+router.get('/room', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr', {
             title: 'Bitweb VTR',
-            roomToken: req.query.roomToken,
+            country: dbconfig.country,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+            userTag: req.session.userTag,
+            buyerTag: req.query.buyerTag,
+            sellerTag: req.query.sellerTag,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
+            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/common/vtr', {
             title: 'Bitweb VTR',
-            roomToken: req.query.roomToken,
+            country: dbconfig.country,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+            userTag: req.session.userTag,
+            buyerTag: req.query.buyerTag,
+            sellerTag: req.query.sellerTag,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
+            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
         });      
     } else {
         res.render('v2_en/common/vtr', {
             title: 'Bitweb VTR',
-            roomToken: req.query.roomToken,
+            country: dbconfig.country,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
+            userTag: req.session.userTag,
+            buyerTag: req.query.buyerTag,
+            sellerTag: req.query.sellerTag,
+            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
+            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
         });
     }
 });
