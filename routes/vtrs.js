@@ -95,6 +95,8 @@ router.get('/count/user/:userId', function (req, res, next) {
     }
     if(country != "KR") {
         option['item.country'] = country;
+    } else {
+        option['item.country'] = {$exists:false};
     }
     
     var bitwebResponse = new BitwebResponse();
@@ -133,19 +135,19 @@ router.get('/count/user/:userId', function (req, res, next) {
                     for (var i in pointTrades) {
                         if(pointTrades[i]._doc.from_userId == userId) {
                             if(pointTrades[i]._doc.item.category == "game") {
-                                //count_data.game_sell++;
+                                count_data.game_sell++;
                             } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_sell++;
                             } else {
-                                //count_data.etc_sell++;
+                                count_data.etc_sell++;
                             }
                         } else {
                             if(pointTrades[i]._doc.item.category == "game") {
-                                //count_data.game_buy++;
+                                count_data.game_buy++;
                             } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_buy++;
                             } else {
-                                //count_data.etc_buy++;
+                                count_data.etc_buy++;
                             }
                         }
                     }
@@ -193,6 +195,8 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
     }
     if(country != "KR") {
         option['item.country'] = country;
+    } else {
+        option['item.country'] = {$exists:false};
     }
     
     var bitwebResponse = new BitwebResponse();
@@ -206,11 +210,11 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
                         itemIds.push(vtrs[i].item._id);
                     }
 
-                    if(category == "otc") {
+                    // if(category == "otc") {
                         for (var i in pointTrades) {
                             itemIds.push(pointTrades[i].item._id);
                         }
-                    }
+                    // }
                     
                     console.log("itemIds : ", itemIds);
                     var controllerItems = require('../controllers/items')
