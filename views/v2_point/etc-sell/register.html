@@ -251,17 +251,11 @@
             } else if ($("#title").val() == "") {
                 alert('거래제목을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('거래 가격을 입력하세요.');
-                return false;
             } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
                 alert('거래 가격(Point)을 입력하세요.');
                 return false;
             } else if (sel_files.length == 0) {
                 alert('상품 이미지를 업로드 하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
                 return false;
             } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
                 alert('거래 가격(Point)을 숫자로 입력하세요.');

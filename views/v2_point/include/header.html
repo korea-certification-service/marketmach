@@ -232,7 +232,7 @@
             <div class="top_menu cf">
                 <span><a href="" class="lang lang_kr">한국어</a></span>
                 <ul class="menu_list cf">
-                    <li><a href="javascript:goExchange();">환전소</a></li> 
+                    <!-- <li><a href="javascript:goExchange();">환전소</a></li>  -->
                     <li><a href="/howto/trade/vtr">이용안내</a></li>
                     <li><a href="/supports/info">고객센터</a></li>
                     <li><a href="/myPages/list">나의 페이지</a></li>
@@ -304,14 +304,14 @@
                         </ul>  
                     </li>                   -->
                     <%}%>
-                    <li>
+                    <!-- <li>
                         <button class="hasDepth2">커뮤니티</button>
                         <ul class="depth2 cf">
                             <li><a href="https://open.kakao.com/o/gD3UkX4" target="_blank">카톡1</a></li>
                             <li><a href="https://open.kakao.com/o/gLyYRupb" target="_blank">카톡2</a></li>
                             <li><a href="https://t.me/marketmachcom" target="_blank">텔레그램1</a></li>
                         </ul> 
-                    </li>
+                    </li> -->
                     <%if(useBlockchain == 'Y') {%> 
                     <!-- <li><a href="/shopping/view" class="fcbk">한정 이벤트</a></li> -->
                     <%}%>
@@ -383,17 +383,10 @@
                                         </div>
                                     </li>
                                     <li class="mdl_area">                                        
-                                        <%if(useBlockchain == 'Y') {%>
-                                        <!-- <em>나의 지갑 잔액</em>
-                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button> -->
-                                        <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
-                                            <em>나의 포인트 잔액</em>
-                                            <p class="fc2 total_point">100 <span>Point</span></p>
-                                            <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
-                                            <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
-                                        <%}%>
+                                        <em>나의 포인트 잔액</em>
+                                        <p class="fc2 total_point">100 <span>Point</span></p>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
                                     </li>
                                     <%if(useBlockchain == 'Y') {%>
                                     <!-- <li class="btm_area">
