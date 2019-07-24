@@ -127,9 +127,11 @@
     }
 
     function loginChecker() {
-        var login = "<%= userId %>";
+        // var login = "<%= userId %>";
         //console.log(login, typeof login);
-        if(login !== "" && login !== "undefined") {
+        var cookie_data = document.cookie;
+        var loginToken = cookie_data.indexOf("loginToken");
+        if(loginToken > -1) {
             //loginChecker();
             openCSChatBot();
         } else {
@@ -138,18 +140,18 @@
         }
     }
 
-    function openCSChatBot() {
+    function openCSChatBot(loginToken) {
         var cookie_data = document.cookie;
         //console.log(cookie_data);
-        var start = cookie_data.indexOf("orange__F");
+        var start = cookie_data.indexOf("loginToken");
         var cValue = '';
         if(start != -1){
-            start += "orange__F".length;
+            start += "loginToken".length;
             var end = cookie_data.indexOf(';', start);
             if(end == -1) end = cookie_data.length;
             cValue = cookie_data.substring(start, end);
 
-            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&orange__F" + cValue;
+            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&loginToken" + cValue;
             if (isMobile()) {
                 window.open(req_url, "CSChatBot");
             } else {
