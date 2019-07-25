@@ -378,8 +378,8 @@ SubUI.init();
 
 // 임시로 VTR 거래신청 기능 막음
 $("#regVTR").click(function(){
-    // alert("Comming soon.")
-    // throw new Error('VTR 거래신청 기능 막음');
+    alert("Comming soon.")
+    throw new Error('VTR 거래신청 기능 막음');
 });
 
 }, false); // end of DOMContentLoaded
