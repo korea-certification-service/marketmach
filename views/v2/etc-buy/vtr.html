@@ -223,47 +223,62 @@
                 return;
             }
 
-            var confirmYn = confirm('현재 오픈베타 버전이어서 거래취소 기능은 제공하지 않습니다.\n 거래 취소 시 서비스에서 취소를 할 수 있지만 취소 후 VTR 재 입장시 기능이 정상적으로 동작하지 않을 수 있습니다.\nVTR에 접속하시겠습니까?');
+            var confirmYn = confirm('VTR에 접속하시겠습니까?');
 
             if(confirmYn) {
-                roomToken = makeToken1();
-                if (isMobile()) {
-                    popup = window.open('about:blank', "room" + roomToken);
+                // roomToken = makeToken1();
+                // if (isMobile()) {
+                //     popup = window.open('about:blank', "room" + roomToken);
+                // }
+
+                // var body = {
+                //     "user_id": userTag,
+                //     "roomToken": roomToken,
+                //     "buyer_id": to_userTag,
+                //     "seller_id": userTag,
+                //     "status": 50,
+                //     "cmod": "deal"
+                // };
+
+                // $.ajax({
+                //     method: "PUT",
+                //     url: "/v1/items/updateStatus/" + itemId,
+                //     contentType: "application/json; charset=utf-8",
+                //     dataType: "json",
+                //     data: JSON.stringify(body),
+                // }).done(function (data) {
+                //     //console.log(data);
+                //     if(isMobile()) {
+                //         popup.location.href = data.data;
+                //     } else {
+                //         window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
+                //             '                                    location=no,\n' +
+                //             '                                    status=no,\n' +
+                //             '                                    menubar=no,\n' +
+                //             '                                    scrollbars=yes,\n' +
+                //             '                                    resizable=yes,\n' +
+                //             '                                    width=550,\n' +
+                //             '                                    height=750');
+                //     }
+                //     location.href = "/etc-buys/detail/" + itemId;
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
+                var body = "itemId="+itemId+"&buyerTag="+to_userTag+"&sellerTag="+userTag;
+
+                if(isMobile()) {
+                    popup.location.href = '/room?' + body;
+                } else {
+                    window.open('/room?' + body, "room" + to_userTag+"|"+userTag+"|"+itemId, 'toolbar=no,\n' +
+                        '                                    location=no,\n' +
+                        '                                    status=no,\n' +
+                        '                                    menubar=no,\n' +
+                        '                                    scrollbars=yes,\n' +
+                        '                                    resizable=yes,\n' +
+                        '                                    width=550,\n' +
+                        '                                    height=750');
                 }
-
-                var body = {
-                    "user_id": userTag,
-                    "roomToken": roomToken,
-                    "buyer_id": to_userTag,
-                    "seller_id": userTag,
-                    "status": 50,
-                    "cmod": "deal"
-                };
-
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/items/updateStatus/" + itemId,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(body),
-                }).done(function (data) {
-                    //console.log(data);
-                    if(isMobile()) {
-                        popup.location.href = data.data;
-                    } else {
-                        window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
-                            '                                    location=no,\n' +
-                            '                                    status=no,\n' +
-                            '                                    menubar=no,\n' +
-                            '                                    scrollbars=yes,\n' +
-                            '                                    resizable=yes,\n' +
-                            '                                    width=550,\n' +
-                            '                                    height=750');
-                    }
-                    location.href = "/etc-buys/detail/" + itemId;
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
+                location.href = "/buys/detail/" + itemId;
             }
         }
     </script>
