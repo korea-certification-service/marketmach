@@ -21,6 +21,8 @@ router.get('/:userId', function (req, res, next) {
     };
     if(country != "KR") {
         body['item.country'] = country;
+    } else {
+        body['item.country'] = {$exists: false};
     }
 
     var bitwebResponse = new BitwebResponse();
@@ -95,6 +97,8 @@ router.get('/count/user/:userId', function (req, res, next) {
     }
     if(country != "KR") {
         option['item.country'] = country;
+    } else {
+        option['item.country'] = {$exists:false};
     }
     
     var bitwebResponse = new BitwebResponse();
@@ -133,19 +137,19 @@ router.get('/count/user/:userId', function (req, res, next) {
                     for (var i in pointTrades) {
                         if(pointTrades[i]._doc.from_userId == userId) {
                             if(pointTrades[i]._doc.item.category == "game") {
-                                //count_data.game_sell++;
+                                count_data.game_sell++;
                             } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_sell++;
                             } else {
-                                //count_data.etc_sell++;
+                                count_data.etc_sell++;
                             }
                         } else {
                             if(pointTrades[i]._doc.item.category == "game") {
-                                //count_data.game_buy++;
+                                count_data.game_buy++;
                             } else if(pointTrades[i]._doc.item.category == "otc") {
                                 count_data.otc_buy++;
                             } else {
-                                //count_data.etc_buy++;
+                                count_data.etc_buy++;
                             }
                         }
                     }
@@ -193,6 +197,8 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
     }
     if(country != "KR") {
         option['item.country'] = country;
+    } else {
+        option['item.country'] = {$exists:false};
     }
     
     var bitwebResponse = new BitwebResponse();
@@ -206,11 +212,11 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
                         itemIds.push(vtrs[i].item._id);
                     }
 
-                    if(category == "otc") {
+                    // if(category == "otc") {
                         for (var i in pointTrades) {
                             itemIds.push(pointTrades[i].item._id);
                         }
-                    }
+                    // }
                     
                     console.log("itemIds : ", itemIds);
                     var controllerItems = require('../controllers/items')
@@ -249,6 +255,9 @@ router.get('/user/:userId/:trade_type', function (req, res, next) {
                     if(country != "KR") {
                         params['$or'][0]['$and'].push({'country': country});
                         params['$or'][1]['$and'].push({'country': country});
+                    } else {
+                        params['$or'][0]['$and'].push({'country': {$exists:false}});
+                        params['$or'][1]['$and'].push({'country': {$exists:false}});
                     }
 
 
@@ -311,6 +320,8 @@ router.get('/cancel/:userId', function (req, res, next) {
     }
     if(country != "KR") {
         params['item.country'] = country;
+    } else {
+        params['item.country'] = {$exists: false};
     }
 
     let option = {
@@ -357,6 +368,8 @@ router.get('/user/:userTag', function (req, res, next) {
     };
     if(country != "KR") {
         data['item.country'] = country;
+    } else {
+        data['item.country'] = {$exists: false};
     }
     if (pageIdx != undefined) data['pageIdx'] = parseInt(pageIdx);
     if (perPage != undefined) data['perPage'] = parseInt(perPage);

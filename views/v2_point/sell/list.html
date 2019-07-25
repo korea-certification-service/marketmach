@@ -82,7 +82,8 @@
             });
 
             $('#register').on('click',function() {
-                location.href = '/sells/register';
+                checkTeenager('/sells/register');
+                // location.href = '/sells/register';
             });
 
         });
@@ -239,7 +240,8 @@
         }
 
         function detail(id) {
-            location.href="/sells/detail/" + id;
+            checkTeenager("/sells/detail/" + id);
+            // location.href="/sells/detail/" + id;
         }
     </script>
     <!-- content_wrap -->

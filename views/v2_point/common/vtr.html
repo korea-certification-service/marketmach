@@ -5,66 +5,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
-    <title>Title</title>
-    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <title>VTR</title>
+    <script src="/jquery/jquery.js"></script>
     <script>
-        var itemId = "<%=itemId%>";
-        var user_id = "<%=user_id%>";
-        var vtrTempId = "<%=vtrTempId%>";
         $(document).ready(function () {
-            startTrade();
+            if("<%=userTag%>" != "<%=sellerTag%>" && "<%=buyerTag%>" != "<%=userTag%>") {
+                alert("It can not be open VTR Room");
+                window.close();
+                return;
+            }
+
+            $('[name=country]').val("<%=country%>");
+            $('[name=itemId]').val("<%=itemId%>");
+            $('[name=sellerTag]').val("<%=sellerTag%>");
+            $('[name=userTag]').val("<%=userTag%>");
+            $('[name=buyerTag]').val("<%=buyerTag%>");
+            $('[name=formVTR]').submit();
         });
 
         function startTrade() {
-            var body = {
-                "user_id": user_id,
-                "vtrTempId": vtrTempId
-            };
+            // var body = {
+            //     "user_id": user_id,
+            //     "vtrTempId": vtrTempId
+            // };
 
-            $.ajax({
-                method: "POST",
-                url: "/v1/items/getVtrStatus/" + itemId,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(body),
-            }).done(function (data) {
-                //location.href = "/buys"
-                console.log("success", data.data);
-                if(data.data == null) {
-                    alert("It can not be open VTR Room");
-                    window.close();
-                } else {
-                    $('[name=cmod]').val(data.data.cmod);
-                    $('[name=country]').val(data.data.country);
-                    $('[name=roomToken]').val(data.data.roomToken);
-                    $('[name=item_id]').val(data.data.item._id);
-                    $('[name=seller_id]').val(data.data.seller_id);
-                    $('[name=buyer_id]').val(data.data.buyer_id);
-                    $('[name=user_id]').val(user_id);
-                    $('[name=payment_status]').val(data.data.payment_status);
-                    //$('[name=formVTR]').attr('action', 'http://bitweb.bottalks.co.kr/R2Y6mFcdyNUQfJ3XG');
-                    // TO-DO : 모바일 사파리에서 동작 안한다. 우회 방법 찾기
-                    $('[name=formVTR]').submit();
-                }
-            }).fail(function (fail) {
-                swal({
-                    text: "<%= __('common.errorMessage.saveError') %>",
-                    button: "<%= __('common.buttons.button10') %>"
-                });
-            });
+            // $.ajax({
+            //     method: "POST",
+            //     url: "/v1/items/getVtrStatus/" + itemId,
+            //     contentType: "application/json; charset=utf-8",
+            //     dataType: "json",
+            //     data: JSON.stringify(body),
+            // }).done(function (data) {
+            //     //location.href = "/buys"
+            //     console.log("success", data.data);
+            //     if(data.data == null) {
+            //         alert("It can not be open VTR Room");
+            //         window.close();
+            //     } else {
+            //         $('[name=cmod]').val(data.data.cmod);
+            //         $('[name=country]').val(data.data.country);
+            //         $('[name=roomToken]').val(data.data.roomToken);
+            //         $('[name=item_id]').val(data.data.item._id);
+            //         $('[name=seller_id]').val(data.data.seller_id);
+            //         $('[name=buyer_id]').val(data.data.buyer_id);
+            //         $('[name=user_id]').val(user_id);
+            //         $('[name=payment_status]').val(data.data.payment_status);
+            //         //$('[name=formVTR]').attr('action', 'http://bitweb.bottalks.co.kr/R2Y6mFcdyNUQfJ3XG');
+            //         // TO-DO : 모바일 사파리에서 동작 안한다. 우회 방법 찾기
+            //         $('[name=formVTR]').submit();
+            //     }
+            // }).fail(function (fail) {
+            //     swal({
+            //         text: "<%= __('common.errorMessage.saveError') %>",
+            //         button: "<%= __('common.buttons.button10') %>"
+            //     });
+            // });
         }
     </script>
 </head>
 <body>
 <form name="formVTR" action="<%=chatbot_vtr_url%>" method="post" target="room<%=roomToken%>">
-    <input type="hidden" name="cmod">
     <input type="hidden" name="country">
-    <input type="hidden" name="roomToken">
-    <input type="hidden" name="item_id">
-    <input type="hidden" name="seller_id">
-    <input type="hidden" name="buyer_id">
-    <input type="hidden" name="user_id">
-    <input type="hidden" name="payment_status">
+    <input type="hidden" name="itemId">
+    <input type="hidden" name="sellerTag">
+    <input type="hidden" name="buyerTag">
+    <input type="hidden" name="userTag">
 </form>
 </body>
 </html>

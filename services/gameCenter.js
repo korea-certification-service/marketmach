@@ -1,6 +1,7 @@
 var GameCenter = require('../libs/gameCenter');
 var GameCenterHistory = require('../libs/gameCenterHistorys');
 var GameCenterRecord = require('../libs/gameCenterRecords');
+var GameCenterRecordHistory = require('../libs/gameCenterRecordHistorys');
 var GameCenterExchangeHistory = require('../libs/gameCenterExchangeHistory');
 
 function add(data) {
@@ -162,6 +163,19 @@ function updateRecord(data) {
     })
 }
 
+function updateRecordHistory(data) {
+    return new Promise((resolve, reject) => {
+        var gameCenterRecordHistory = new GameCenterRecordHistory(data)
+        gameCenterRecordHistory.save(function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result)
+            }
+        })
+    })
+}
+
 function addExchangeHistory(data) {
     return new Promise((resolve, reject) => {
         console.log(data)
@@ -220,3 +234,4 @@ exports.addExchangeHistory = addExchangeHistory;
 exports.getExchangeHistorys = getExchangeHistorys;
 exports.updateByCondition = updateByCondition;
 exports.getExchangeHistoryCount = getExchangeHistoryCount;
+exports.updateRecordHistory = updateRecordHistory;

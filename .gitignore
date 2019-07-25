@@ -136,6 +136,7 @@ Session.vim
 tags
 
 package-lock.json
+package.json
 
 #config.json
 config.json
@@ -144,6 +145,7 @@ dbconfig_cn.js
 dbconfig_jp.js
 dbconfig_en.js
 dbconfig_ko.js
+dbconfig_point.js
 
 #.iml
 bitweb.iml

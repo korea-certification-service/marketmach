@@ -16,7 +16,10 @@
                     return;
                 }
 
-                authPhone();
+                //휴대폰 본인 인증 잠시 hold
+                //authPhone();
+
+                sendAuthNo();
             });
 
         });
@@ -42,6 +45,10 @@
             } else {
                 location.href = '/reg/auth/start';
             }
+        }
+
+        function sendAuthNo() {
+            location.replace('/certification');
         }
 
         function allAgree() {

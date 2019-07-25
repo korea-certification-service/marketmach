@@ -146,6 +146,8 @@ router.get('/all', function (req, res, next) {
     data['category'] = category;
     if(country != "KR") {
         data['country'] = country;
+    } else {
+        data['country'] = {$exists: false};
     }
 
     controllerItems.getItemByRequired(country, data)

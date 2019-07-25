@@ -124,6 +124,8 @@
         var itemId = "<%= id %>";
         var roomToken;
         var vtrTempId;
+        var buyerTag;
+        var sellerTag;
     
         $(document).ready(function() {
             getData();
@@ -196,6 +198,8 @@
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
+                sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 
                 $(".view_emphasis").text(delivery_type.text);
                 $(".posting_date").text("등록일 : " + regDate);
@@ -277,22 +281,37 @@
         }
 
         function openVTR() {
+            // var popup;
+            // if (isMobile()) {
+            //     popup = window.open('about:blank', "room" + roomToken);
+            // }
+            // let url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            // if(isMobile()) {
+            //     popup.location.href = url;
+            // } else {
+            //     window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+            //         '                                    location=no,\n' +
+            //         '                                    status=no,\n' +
+            //         '                                    menubar=no,\n' +
+            //         '                                    scrollbars=yes,\n' +
+            //         '                                    resizable=yes,\n' +
+            //         '                                    width=550,\n' +
+            //         '                                    height=850');
+            // }
             var popup;
-            if (isMobile()) {
-                popup = window.open('about:blank', "room" + roomToken);
-            }
-            let url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
             if(isMobile()) {
-                popup.location.href = url;
+                popup.location.href = '/room?' + body;
             } else {
-                window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+                window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
                     '                                    location=no,\n' +
                     '                                    status=no,\n' +
                     '                                    menubar=no,\n' +
                     '                                    scrollbars=yes,\n' +
                     '                                    resizable=yes,\n' +
                     '                                    width=550,\n' +
-                    '                                    height=850');
+                    '                                    height=750');
             }
         }
 

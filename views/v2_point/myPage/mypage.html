@@ -3,25 +3,25 @@
 <head>
     <% include ../include/head.html %>
     <script>
-        var coinId = "<%=coinId%>";
+        var pointId = "<%=pointId%>";
         var userId = "<%=userId%>";
         var userName = "<%=userName%>";
          
         $(document).ready(function() {
             $('#username').text(userName);
-            getCoin();
+            getPoint();
             getItemCount();
         })
 
-        function getCoin() {
+        function getPoint() {
             $.ajax({
                 method: "GET",
-                url: "/v1/coins/" + coinId
+                url: "/v1/points/" + pointId
             }).done(function (success) {
-                if (success.data.total_mach != null) {
-                    $("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                if (success.data.total_point != null) {
+                    $("#point").html(numberWithCommas(success.data.total_point) + "<span>Point</span>");
                 } else {
-                    $("#mach").html("0<span>MACH</span>");
+                    $("#point").html("0<span>Point</span>");
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -77,10 +77,10 @@
                             <div class="rgh_area">
                                 <a href="/myPages/wallet/info">
                                     <em>나의지갑 잔액</em>
-                                    <p id="mach"><span>MACH</span></p>
+                                    <p id="point">0<span>Point</span></p>
                                 </a>
-                                <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                <button class="btn bgc3" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
+                                <button class="btn bgc3" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
                             </div>
                         </div>
                         <div class="mypage_main_trade">
@@ -131,7 +131,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th class="fc2">OTC거래</th>
                                             <td>
                                                 <a href="/myPages/sell/list?category=otc">
@@ -149,7 +149,7 @@
                                                     </span>
                                                 </a>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

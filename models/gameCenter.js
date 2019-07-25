@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 var gameCenterSchema = new Schema({
     userId: String,
-    total_mcs1_coin: Number
+    total_mcs1_coin: Number,
+    regDate: String,
+    loginDate: String
 });
 
 module.exports = gameCenterSchema;

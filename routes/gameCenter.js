@@ -56,7 +56,9 @@ router.post('/login', function (req, res, next) {
                 if(user._doc.gameCenterId == undefined) {
                     let reqData = {
                         "userId": user._doc._id,
-                        "total_mcs1_coin": 0
+                        "total_mcs1_coin": 0,
+                        "regDate":util.formatDate(new Date().toString()),
+                        "loginDate":util.formatDate(new Date().toString())
                     }
                     controllerGameCenter.add(country, reqData)
                         .then(gameCenter => {
@@ -71,10 +73,12 @@ router.post('/login', function (req, res, next) {
                                             "isLastStage": isLastStage,
                                             "userRecordInfo": userRecordInfo,
                                             "deviceId": deviceId,
-                                            "cn":head.Cn
+                                            "cn":head.Cn,
+                                            "regDate": util.formatDate(new Date().toString())
                                         }
 
                                         controllerGameCenter.updateRecord(country, recordInfo);
+                                        controllerGameCenter.updateRecordHistory(country, recordInfo);
                                     }
 
                                     let result = {
@@ -105,10 +109,13 @@ router.post('/login', function (req, res, next) {
                                             "service": head.Service,
                                             "lastStageLevel": lastStageLevel,
                                             "isLastStage": isLastStage,
-                                            "userRecordInfo": userRecordInfo
+                                            "userRecordInfo": userRecordInfo,
+                                            "regDate": util.formatDate(new Date().toString())
                                         }
 
                                         controllerGameCenter.updateRecord(country, recordInfo);
+                                        controllerGameCenter.updateRecordHistory(country, recordInfo);
+                                        controllerGameCenter.update(country, user._doc._id, {"loginDate":util.formatDate(new Date().toString())})
                                     }
 
                                     let result = {
