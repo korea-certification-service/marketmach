@@ -111,6 +111,18 @@ function updateRecord(country, data) {
     })
 }
 
+function updateRecordHistory(country, data) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebGameCenter.updateRecordHistory(data))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 function addExchangeHistory(country, data) {
     return new Promise((resolve, reject) => {
         db.connectDB(country)
@@ -159,3 +171,4 @@ exports.addExchangeHistory = addExchangeHistory;
 exports.getExchangeHistorys = getExchangeHistorys;
 exports.updateByCondition = updateByCondition;
 exports.getExchangeHistoryCount = getExchangeHistoryCount;
+exports.updateRecordHistory = updateRecordHistory;
