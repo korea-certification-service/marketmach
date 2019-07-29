@@ -17,6 +17,7 @@ var controllerCoinHistorys = require('../controllers/coinHistorys');
 var controllerItems = require('../controllers/items');
 var CryptoJS = require("crypto-js");
 var md5 = require('md5');
+var token = require('../utils/token');
 let networks = dbconfig.testnet.network == "testnet" ? bitcore.Networks.testnet : bitcore.Networks.mainnet;
 
 router.post('/list', function (req, res, next) {
@@ -595,12 +596,13 @@ router.post('/login', function (req, res, next) {
                                 let cookie_string = userTag+'|'+ loginToken; // "|" 로 구분
                                 let orange__F = CryptoJS.AES.encrypt(cookie_string, key, {iv:iv}); // 쿠키명 = orange__T
                                 orange__F = orange__F.ciphertext.toString(CryptoJS.enc.Base64);  //and the ciphertext put to base64
-                                res.cookie("loginToken",result._doc.loginToken, {
+                                let tokenValue = token.makeLoginToken(loginToken);
+                                res.cookie("loginToken", tokenValue, {
                                     domain: 'marketmach.com',
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
 
-                                res.cookie("loginToken",result._doc.loginToken, {
+                                res.cookie("loginToken", tokenValue, {
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
 

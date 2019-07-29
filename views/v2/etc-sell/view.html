@@ -428,7 +428,11 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    location.href = '/etc-sells/detail/' + itemId;
+                    if(success.data.successYn == "Y") {
+                        location.href = '/etc-sells/detail/' + itemId;
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
