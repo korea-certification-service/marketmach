@@ -169,7 +169,7 @@
                 var item_phone = success.data.phone;
                 to_userTag = success.data.userTag;
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
-                total_mach = success.data.total_mach;
+                total_mach = success.data.total_coins.total_mach;
                 var item_user_price = numberWithCommas(total_mach);
                 if(cryptoCurrencyCode == "BTC") {
                     var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
