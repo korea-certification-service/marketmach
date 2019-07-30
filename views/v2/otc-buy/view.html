@@ -135,7 +135,7 @@
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/otc-buys/vtr/" + itemId;
+                location.replace("/otc-buys/vtr/" + itemId);
             });
 
             $('#modify').on('click', function() {
@@ -296,6 +296,7 @@
             var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
             if(isMobile()) {
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
                 popup.location.href = '/room?' + body;
             } else {
                 window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +

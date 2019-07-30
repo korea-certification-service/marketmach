@@ -326,6 +326,7 @@
                 var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
 
                 if(isMobile()) {
+                    popup = window.open('about:blank', "room" + userTag+"|"+from_userTag+"|"+itemId);
                     popup.location.href = '/room?' + body;
                 } else {
                     window.open('/room?' + body, "room" + userTag+"|"+from_userTag+"|"+itemId, 'toolbar=no,\n' +
@@ -337,7 +338,7 @@
                         '                                    width=550,\n' +
                         '                                    height=750');
                 }
-                location.href = "/sells/detail/" + itemId;
+                location.replace("/sells/detail/" + itemId);
             }
         }
     </script>

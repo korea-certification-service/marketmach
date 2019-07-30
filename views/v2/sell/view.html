@@ -170,7 +170,7 @@
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/sells/vtr/" + itemId;
+                location.replace("/sells/vtr/" + itemId);
             });
 
             $('#buynow, #pointBuynow').on('click', function() {
@@ -376,7 +376,7 @@
         }
 
         function buynow() {
-            location.href='/sells/buynow/' + itemId;
+            location.replace('/sells/buynow/' + itemId);
         }
 
         function removeItem() {
@@ -415,6 +415,7 @@
             var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
             if(isMobile()) {
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
                 popup.location.href = '/room?' + body;
             } else {
                 window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
