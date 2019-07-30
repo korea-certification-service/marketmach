@@ -602,28 +602,34 @@ router.get('/sms/room', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr_for_sms', {
             title: 'Bitweb VTR',
+            country: dbconfig.country,
             roomToken: req.query.roomToken,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
+            userTag: req.query.user_id,
+            buyerTag: req.query.roomToken.split('|')[0],
+            sellerTag: req.query.roomToken.split('|')[1],
             chatbot_vtr_url: dbconfig.chatbot_vtr_url
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/common/vtr_for_sms', {
             title: 'Bitweb VTR',
+            country: dbconfig.country,
             roomToken: req.query.roomToken,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
+            userTag: req.query.user_id,
+            buyerTag: req.query.roomToken.split('|')[0],
+            sellerTag: req.query.roomToken.split('|')[1],
             chatbot_vtr_url: dbconfig.chatbot_vtr_url
         });       
     } else {
         res.render('v2_en/common/vtr_for_sms', {
             title: 'Bitweb VTR',
+            country: dbconfig.country,
             roomToken: req.query.roomToken,
             itemId: req.query.itemId,
-            user_id: req.query.user_id,
-            vtrTempId: req.query.vtrTempId,
+            userTag: req.query.user_id,
+            buyerTag: req.query.roomToken.split('|')[0],
+            sellerTag: req.query.roomToken.split('|')[1],
             chatbot_vtr_url: dbconfig.chatbot_vtr_url
         });
     }
