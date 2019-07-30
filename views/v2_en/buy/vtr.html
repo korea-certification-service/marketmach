@@ -230,45 +230,61 @@
             var confirmYn = confirm('This is an open beta version, so we do not offer transaction cancellation.\n When canceling a transaction, you can cancel the service, but the function may not work normally when you re-enter the VTR after canceling.\nDo you want to connect to VTR?');
 
             if(confirmYn) {
-                roomToken = makeToken1();
-                if (isMobile()) {
-                    popup = window.open('about:blank', "room" + roomToken);
-                }
+                // roomToken = makeToken1();
+                // if (isMobile()) {
+                //     popup = window.open('about:blank', "room" + roomToken);
+                // }
             
-                var body = {
-                    "user_id": userTag,
-                    "roomToken": roomToken,
-                    "buyer_id": to_userTag,
-                    "seller_id": userTag,
-                    "status": 50,
-                    "cmod": "deal",
-                    "game_character":$("#buyer_game_character").val()
-                };
+                // var body = {
+                //     "user_id": userTag,
+                //     "roomToken": roomToken,
+                //     "buyer_id": to_userTag,
+                //     "seller_id": userTag,
+                //     "status": 50,
+                //     "cmod": "deal",
+                //     "game_character":$("#buyer_game_character").val()
+                // };
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/items/updateStatus/" + itemId,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(body),
-                }).done(function (data) {
-                    console.log(data);
-                    if(isMobile()) {
-                        popup.location.href = data.data;
-                    } else {
-                        window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
-                            '                                    location=no,\n' +
-                            '                                    status=no,\n' +
-                            '                                    menubar=no,\n' +
-                            '                                    scrollbars=yes,\n' +
-                            '                                    resizable=yes,\n' +
-                            '                                    width=550,\n' +
-                            '                                    height=750');
-                    }
-                    location.href = "/buys/detail/" + itemId;
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
+                // $.ajax({
+                //     method: "PUT",
+                //     url: "/v1/items/updateStatus/" + itemId,
+                //     contentType: "application/json; charset=utf-8",
+                //     dataType: "json",
+                //     data: JSON.stringify(body),
+                // }).done(function (data) {
+                //     console.log(data);
+                //     if(isMobile()) {
+                //         popup.location.href = data.data;
+                //     } else {
+                //         window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
+                //             '                                    location=no,\n' +
+                //             '                                    status=no,\n' +
+                //             '                                    menubar=no,\n' +
+                //             '                                    scrollbars=yes,\n' +
+                //             '                                    resizable=yes,\n' +
+                //             '                                    width=550,\n' +
+                //             '                                    height=750');
+                //     }
+                //     location.href = "/buys/detail/" + itemId;
+                // }).fail(function (fail) {
+                //     console.log(fail);
+                // });
+                var body = "itemId="+itemId+"&buyerTag="+to_userTag+"&sellerTag="+userTag;
+
+                if(isMobile()) {
+                    popup = window.open('about:blank', "room" + to_userTag+"|"+userTag+"|"+itemId);
+                    popup.location.href = '/room?' + body;
+                } else {
+                    window.open('/room?' + body, "room" + to_userTag+"|"+userTag+"|"+itemId, 'toolbar=no,\n' +
+                        '                                    location=no,\n' +
+                        '                                    status=no,\n' +
+                        '                                    menubar=no,\n' +
+                        '                                    scrollbars=yes,\n' +
+                        '                                    resizable=yes,\n' +
+                        '                                    width=550,\n' +
+                        '                                    height=750');
+                }
+                location.replace("/buys/detail/" + itemId);
             }
         }
     </script>

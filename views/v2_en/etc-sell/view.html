@@ -148,6 +148,8 @@
         var roomToken;
         var vtrTempId;
         var tradePointId;
+        var buyerTag;
+        var sellerTag;
     
         $(document).ready(function() {
             //$("#input_imgs").on("change", handleImgFileSelect);
@@ -164,7 +166,7 @@
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/etc-sells/vtr/" + itemId;
+                location.replace("/etc-sells/vtr/" + itemId);
             });
 
             $('#buynow, #pointBuynow').on('click', function() {
@@ -251,6 +253,8 @@
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
+                sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 
                 // 이미지 모두 지운 상황이 아닌 경우
                 if(success.data.images[0] !== null) {
@@ -309,6 +313,7 @@
                             if(userTag == success.data.userTag) {
                                 $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
@@ -319,6 +324,7 @@
                             } else {
                                 $('#cancel').css('display','inline-block');
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                             $('#opposition').css('display','inline-block');
                         }
@@ -364,7 +370,7 @@
         }
 
         function buynow() {
-            location.href='/etc-sells/buynow/' + itemId;
+            location.replace('/etc-sells/buynow/' + itemId);
         }
 
         function removeItem() {
@@ -382,22 +388,38 @@
         }
 
         function openVTR() {
+            // var popup;
+            // if (isMobile()) {
+            //     popup = window.open('about:blank', "room" + roomToken);
+            // }
+            // var url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            // if(isMobile()) {
+            //     popup.location.href = url;
+            // } else {
+            //     window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+            //         '                                    location=no,\n' +
+            //         '                                    status=no,\n' +
+            //         '                                    menubar=no,\n' +
+            //         '                                    scrollbars=yes,\n' +
+            //         '                                    resizable=yes,\n' +
+            //         '                                    width=550,\n' +
+            //         '                                    height=850');
+            // }
             var popup;
-            if (isMobile()) {
-                popup = window.open('about:blank', "room" + roomToken);
-            }
-            var url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
             if(isMobile()) {
-                popup.location.href = url;
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+                popup.location.href = '/room?' + body;
             } else {
-                window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+                window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
                     '                                    location=no,\n' +
                     '                                    status=no,\n' +
                     '                                    menubar=no,\n' +
                     '                                    scrollbars=yes,\n' +
                     '                                    resizable=yes,\n' +
                     '                                    width=550,\n' +
-                    '                                    height=850');
+                    '                                    height=750');
             }
         }
 
