@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 var MainUi = {
     isMobSideMenu: false,
     init: function(){
+        this.disableShowCode();
         this.floatHeader();
         this.navMenu();
         this.navHiddenMenu();
@@ -21,7 +22,25 @@ var MainUi = {
         this.showSiblingNode({btn: ".btnNoti1", sec: ".secNoti1"}); // Notice
         this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
     },
+    disableShowCode: function() {
+        var isCtrl = false;
+        var isAlt = false;
+        document.addEventListener("keydown", function(e) {
+            if(e.keyCode == 17 || e.keyCode == 91 || e.keyCode == 93) isCtrl = true;
+            if(e.keyCode == 18) isAlt = true;
     
+            if(isCtrl == true && isAlt && e.keyCode == 73) { // command+option+i
+                e.preventDefault();
+                e.returnValue = false;
+            }
+            if(e.keyCode === 123){ // f12
+                e.preventDefault();
+                e.returnValue = false;
+            }
+        });
+    
+        document.oncontextmenu=function(){return false;} // 마우스 오른쪽
+    },
     floatHeader: function() {
         var lastPos = 0;
         var ticking = false;
