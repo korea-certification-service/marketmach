@@ -43,13 +43,13 @@
             $("#doExchange").on("click", function(){
                 var result = calculate(mach_rate, gamecoin_rate, select_value);
                 console.log(result.body);
-                var _confirm = confirm(result.confirm.from+"MC을"+result.confirm.to+"MACH으로 교환하시겠습니까?");
+                var _confirm = confirm("Do you want to "+ result.confirm.from+"MACH to "+result.confirm.to+"MC coins?");
                 if( result.confirm.after < 0 ) {
-                    alert("보유중인 마하가 부족합니다");
+                    alert("It is not enough MACH.");
                     return;
                 }
                 if(select_value == 0) {
-                    alert("교환하고싶은 잔액을 선택해주세요.");
+                    alert("Please select the balance you want to exchange.");
                     return;
                 }
                 if(_confirm){
@@ -62,7 +62,7 @@
                         if(res.successYn == "N"){
                             alert(res.msg);
                         } else if(res.successYn == "Y") {
-                            alert("교환이 완료되었습니다.");
+                            alert("The exchange is complete.");
                             location.reload();
                         }
                     }).fail(function(fail) {
@@ -185,7 +185,7 @@
 
                 $("#wallet_historys").empty();
                 if(list.length === 0) { //내역이 없을때
-                    $("#wallet_historys").append("<tr><td colspan='4'>내역이 존재하지 않습니다.</td></tr>");
+                    $("#wallet_historys").append("<tr><td colspan='4'>No exist.</td></tr>");
                 } else { //내역이 있을때
                     list.forEach(el => {
                         if(el.game == "mcs1"){ //몽키코인에 관한 내역일때
@@ -244,26 +244,26 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;MACH -> 게임자산</span></h1>
+                        <h1 class="tit_mypage">Game coin Exchange<span>&nbsp;&nbsp;MACH -> Game coin</span></h1>
                         <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
                                 <p>
-                                    <em id="game_name">마하 어드벤쳐</em><br>
+                                    <em id="game_name">MACH Adventure</em><br>
                                     <em id="game_coin" class="color-0a73b8">0</em> MC 
                                 </p>
                             </div>
                             <div class="rgh_area">
                                 <a href="/myPages/wallet/info">
-                                    <em>나의지갑 잔액</em>
+                                    <em>My Wallet Balance</em>
                                     <p id="mach"><span>MACH</span></p>
                                 </a>
-                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">Deposit MACH</button>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">Withdraw MACH</button>
                             </div>
                         </div>
 
                         <!-- 교환하기 -->
-                        <h2 class="tit_mypage dot_tit">교환하기</h2>
+                        <h2 class="tit_mypage dot_tit">Exchange</h2>
                         <div class="table_wrap table-responsive mb50">
                             <table class="table_account">
                                 <colgroup>
@@ -272,7 +272,7 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th>교환 게임자산</th>
+                                        <th>MACH</th>
                                         <td>
                                             <div class="dib_220">
                                                 <select class="custom-select" name="coin">
@@ -282,7 +282,7 @@
                                                     <option value="10">10 MACH</option>
                                                 </select>
                                             </div>
-                                            <br class="mob_br"><span class="fcrd"> ※ 교환 할 MACH 입력.</span>
+                                            <br class="mob_br"><span class="fcrd"> ※ Select MACH to exchange.</span>
                                         </td>
                                     </tr>                  
                                 </tbody>
@@ -298,7 +298,7 @@
                         <!--//교환하기 -->
 
                         <!-- 게임자산 정보 -->
-                        <h2 class="tit_mypage dot_tit">나의 지갑 정보</h2>
+                        <h2 class="tit_mypage dot_tit">My Wallet Information</h2>
                         <table class="table_payment_info table">
                             <colgroup>
                                 <col class="col50p">
@@ -306,17 +306,17 @@
                             </colgroup>
                             <tbody>                           
                                 <tr>
-                                    <th>나의 지갑 잔액</th>
+                                    <th>My Wallet Balance</th>
                                     <td><span id="mach_amount">0</span> MACH</td>
                                 </tr>
                                 <tr>
-                                    <th>교환 금액</th>
+                                    <th>Exchange Amount</th>
                                     <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
                                         <em class="em_calc_ico minus">-</em> <span id="minus_amount">0</span> MACH
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>교환 후 나의 지갑 잔액</th>
+                                    <th>Balance after Exchange for</th>
                                     <td><span id="total_mach_amount">0</span> MACH</td>
                                 </tr>                        
                             </tbody>
@@ -326,7 +326,7 @@
 
                         <!-- 나의 지갑 정보 -->
                         <div class="table_wrap mb50">
-                            <h2 class="tit_mypage dot_tit">게임자산 정보</h2>
+                            <h2 class="tit_mypage dot_tit">Game Coin Infomation</h2>
                             <table class="table_payment_info table">
                                 <colgroup>
                                     <col class="col50p">
@@ -334,25 +334,25 @@
                                 </colgroup>
                                 <tbody>                           
                                     <tr>
-                                        <th>보관중인 게임 자산</th>
+                                        <th>My Game Coin Balance</th>
                                         <td><span id="game_amount">0</span> MC</td>
                                     </tr>
                                     <tr>
-                                        <th>교환 게임 자산</th>
+                                        <th>Exchange Game Coin Amount</th>
                                         <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
                                             <em class="em_calc_ico plus">+</em> <span id="plus_amount">0</span> MC
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>교환 후 보관중인 게임 자산</th>
+                                        <th>Balance after Exchange for</th>
                                         <td><span id="total_game_amount">0</span> MC</td>
                                     </tr>                        
                                 </tbody>
                             </table>
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="doExchange">교환하기</button>
+                                <button class="btn btn_in_view1" id="doExchange">Exchange</button>
                             </div>      
-                            <h2 class="tit_mypage dot_tit">교환 내역</h2>
+                            <h2 class="tit_mypage dot_tit">History</h2>
                             <!-- <ul class="tab_board ul_li3n cf">
                                 <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
                                 <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-mach');">MACH -> 게임자산</a></li>
@@ -369,9 +369,9 @@
                                     </colgroup>
                                     <thead id="wallet_historys_column">
                                         <tr>
-                                            <th>보낸금액</th>
-                                            <th>받은금액</th>
-                                            <th>일자</th>
+                                            <th>Sent Amount</th>
+                                            <th>Received Amount</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody id="wallet_historys">
