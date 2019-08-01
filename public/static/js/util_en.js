@@ -414,3 +414,11 @@ function numCheck(obj){
     }
    return true;
 }
+
+function hash(value) {
+    var hash = 5381;
+    for (var i = 0; i < value.length; i++) {
+        hash = ((hash << 5) + hash) + value.charCodeAt(i);
+    }
+    return hash;
+}
