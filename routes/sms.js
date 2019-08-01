@@ -198,6 +198,14 @@ router.post('/user/checkPhone', function(req,res,next) {
         'regDate': util.formatDate(new Date().toString())
     }
 
+    //긴급 패치
+    if((req.body.countryCode + req.body.phone) == "+79852194205") {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
+        res.status(500).send(bitwebResponse.create())
+    }
+
     controllerOccupancyPhones.add(country, reqData)
     .then(() => {
         //SMS인증 후 인증번호 회신
