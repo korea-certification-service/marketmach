@@ -101,73 +101,73 @@ router.get('/list', function (req, res, next) {
     let pageIdx = req.query.pageIdx;
     let perPage = req.query.perPage;
 
-    let url = dbconfig.APIServer + "/v2/community/disconnect";
-    let header = {
-        'token': dbconfig.APIToken
-    };
-    let body = {
-        "param":{
-            "country": dbconfig.country,
-            'type': { $regex: type, $options: 'i' }
-        },
-        "option":{
-            "perPage":perPage,
-            "pageIdx":pageIdx
-        }
-    }
+    // let url = dbconfig.APIServer + "/v2/community/disconnect";
+    // let header = {
+    //     'token': dbconfig.APIToken
+    // };
+    // let body = {
+    //     "param":{
+    //         "country": dbconfig.country,
+    //         'type': { $regex: type, $options: 'i' }
+    //     },
+    //     "option":{
+    //         "perPage":perPage,
+    //         "pageIdx":pageIdx
+    //     }
+    // }
 
-    if(req.query.title != undefined) {
-        if(type == "movie") {
-            body['title'] ={ $regex: req.query.title, $options: 'i' }
-        } else {
-            body['$or']= [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}]
-        }
-    };
+    // if(req.query.title != undefined) {
+    //     if(type == "movie") {
+    //         body['title'] ={ $regex: req.query.title, $options: 'i' }
+    //     } else {
+    //         body['$or']= [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}]
+    //     }
+    // };
     
-    request({uri: url, 
-            method:'POST',
-            headers: header,
-            body: body,
-            json: true}, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
+    // request({uri: url, 
+    //         method:'POST',
+    //         headers: header,
+    //         body: body,
+    //         json: true}, function (error, response, body) {
+    //     if (!error && response.statusCode == 200) {
             
-        } else {
-            console.log('error = ' + response.statusCode);
-            bitwebResponse.code = 500;
-            bitwebResponse.message = error;
-            res.status(500).send(bitwebResponse.create());
-        }
-    });
-
-    // communityController.count(req)
-    //     .then(count => {
-    //         communityController.list(req)
-    //             .then(list => {
-    //                 let result = {
-    //                     "count": count,
-    //                     "list": list
-    //                 };
-    //                 bitwebResponse.code = 200;
-    //                 bitwebResponse.data = result;
-
-    //                 let jsonResult = bitwebResponse.create();
-
-    //                 jsonResult['pageIdx'] = pageIdx;
-    //                 jsonResult['perPage'] = perPage;
-
-    //                 res.status(200).send(jsonResult);
-    //             }).catch((err) => {
-    //             console.error('err=>', err)
-    //             bitwebResponse.code = 500;
-    //             bitwebResponse.message = err;
-    //             res.status(500).send(bitwebResponse.create())
-    //         });
-    //     }).catch((err) => {
-    //     console.error('err=>', err)
-    //     bitwebResponse.code = 500;
-    //     bitwebResponse.message = err;
-    //     res.status(500).send(bitwebResponse.create())
+    //     } else {
+    //         console.log('error = ' + response.statusCode);
+    //         bitwebResponse.code = 500;
+    //         bitwebResponse.message = error;
+    //         res.status(500).send(bitwebResponse.create());
+    //     }
     // });
+
+    communityController.count(req)
+        .then(count => {
+            communityController.list(req)
+                .then(list => {
+                    let result = {
+                        "count": count,
+                        "list": list
+                    };
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = result;
+
+                    let jsonResult = bitwebResponse.create();
+
+                    jsonResult['pageIdx'] = pageIdx;
+                    jsonResult['perPage'] = perPage;
+
+                    res.status(200).send(jsonResult);
+                }).catch((err) => {
+                console.error('err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            });
+        }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    });
 });
 
 router.get('/detail/:communityId', function (req, res, next) {
