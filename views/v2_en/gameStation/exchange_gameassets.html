@@ -44,7 +44,7 @@
 
             $("#doExchange").on("click", function(){
                 var result = calculate(mach_rate, gamecoin_rate, select_value);
-                var _confirm = confirm(result.confirm.from+"MC을"+result.confirm.to+"MACH으로 교환하시겠습니까?");
+                var _confirm = confirm("Do you want to "+ result.confirm.from+"MC to "+result.confirm.to+"MACH?");
                 console.log(result.body);
                 if( result.confirm.after < 0 ) {
                     alert("It is not enough game coins.");
@@ -251,7 +251,7 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">Exchange<span>&nbsp;&nbsp;Game coin -> MACH</span></h1>
+                        <h1 class="tit_mypage">Game coin Exchange<span>&nbsp;&nbsp;Game coin -> MACH</span></h1>
                         <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
                                 <p>
