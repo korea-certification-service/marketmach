@@ -4,6 +4,7 @@
     <% include ../include/head.html %>
     <script type="text/javascript">
         var currencyCode="+82";
+        var token = "<%=token%>";
     
         $(document).ready(function() {
             $('.menu_login').show();
@@ -83,7 +84,8 @@
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
-                'phone': $("#phone").val()
+                'phone': $("#phone").val(),
+                "token": token
             }
 
             $.ajax({

@@ -190,6 +190,15 @@ router.post('/user/checkPhone', function(req,res,next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
     let authCode = util.makeNumber();
+    let header = req.headers;
+    if(dbconfig.APIToken != req.body.token) {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
     let reqData = {
         'country': country,
         'countryCode':req.body.countryCode,
@@ -199,7 +208,7 @@ router.post('/user/checkPhone', function(req,res,next) {
     }
 
     //긴급 패치
-    if((req.body.countryCode + req.body.phone) == "+79852194205") {
+    if((req.body.countryCode + req.body.phone) == "+79852194205" || (req.body.countryCode + req.body.phone) == "+79238283330") {
         console.error('err=>', err)
         bitwebResponse.code = 500;
         bitwebResponse.message = "이상 사용자";

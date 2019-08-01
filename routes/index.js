@@ -298,11 +298,11 @@ router.get('/agreement', function (req, res, next) {
 
 router.get('/certification', function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/login/certification');
+        res.render('v2/login/certification', {"token":dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/login/certification');
+        res.render('v2_point/login/certification', {"token":dbconfig.APIToken});
     } else {
-        res.render('v2_en/login/certification');
+        res.render('v2_en/login/certification', {"token":dbconfig.APIToken});
     }
 });
 
