@@ -648,12 +648,13 @@ router.post('/connect', function (req, res, next) {
     };
     let country = dbconfig.country;
     let userTag = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+    let phone = (result._doc.countryCode == "+82") ? result._doc.phone.substr(1) : result._doc.phone;
     
     controllerUsers.getByUserTag(country, userTag)
         .then(result => {
             let param = {
                 "third_party_uid": result._doc._id.toString(),
-                "phone_number": result._doc.countryCode + result._doc.phone.substr(1)
+                "phone_number": result._doc.countryCode + phone
             };
             
             request({uri: url, 
