@@ -168,11 +168,13 @@
 
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
                 alert("Coin 금액을 입력하세요.");
+                $("#confirmWithdraw").attr("disabled", "false");
                 return;
             }
 
             if(parseFloat($('#total_amount').text()) < 0) {
                 alert("출금 요청 금액이 출금 가능 잔액보다 클 수 없습니다.");
+                $("#confirmWithdraw").attr("disabled", "false");
                 return;
             }
 
