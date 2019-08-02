@@ -190,9 +190,8 @@ router.post('/user/checkPhone', function(req,res,next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
     let authCode = util.makeNumber();
-    let header = req.headers;
     if(dbconfig.APIToken != req.body.token) {
-        console.error('err=>', err)
+        //console.error('err=>', err)
         bitwebResponse.code = 500;
         bitwebResponse.message = "이상 사용자";
         res.status(500).send(bitwebResponse.create());

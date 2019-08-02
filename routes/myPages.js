@@ -718,6 +718,7 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
             arrDepth:[6,1]
         });
     } else if(dbconfig.country == "POINT") {
@@ -730,6 +731,7 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
             arrDepth:[6,1]
         });        
     } else {
@@ -742,6 +744,7 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
             arrDepth:[6,1]
         });
     }

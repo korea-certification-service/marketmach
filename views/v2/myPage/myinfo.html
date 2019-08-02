@@ -19,6 +19,7 @@
         var total_mach = 0;
         var currencyCode="";
         var checkAuthNoYn = true;
+        var token = "<%=token%>";
         
         $(document).ready(function() {
             loadData();
@@ -316,7 +317,8 @@
             $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
-                'phone': $("#phone").val()
+                'phone': $("#phone").val(),
+                'token': token
             }
 
             $.ajax({
