@@ -16,6 +16,12 @@
         var rate;
         
         $(document).ready(function() {
+            if("<%=kyc%>" == "false") {
+                alert('It is scheduled to open after KYC policy is confirmed.');
+                //location.replace('/myPages/user/authPhone');
+                location.replace('/main');
+            }
+
             if(bitberry_token != undefined && bitberry_token != "") {
                 //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
                 $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
