@@ -224,7 +224,7 @@
         }
 
         function openVTR() {
-            if(buyerTag != "" && $("#buyer_game_character").val() == "") {
+            if(buyerTag == "" && $("#buyer_game_character").val() == "") {
                 alert('구매자 캐릭터명을 입력하십시오.');
                 return;
             }
