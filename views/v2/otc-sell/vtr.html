@@ -155,6 +155,8 @@
         var mach;
         var total_mach;
         var sel_files = [];
+        var buyerTag;
+        var sellerTag;
     
         $(document).ready(function() {
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
@@ -190,6 +192,8 @@
                 from_userTag = success.data.userTag;
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
+                sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 total_mach = success.data.total_coins.total_mach;
                 var item_user_price = numberWithCommas(total_mach);
                 if(cryptoCurrencyCode == "BTC") {
@@ -286,20 +290,38 @@
                 // }).fail(function (fail) {
                 //     console.log(fail);
                 // });
-                var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
+                if(n_status == "0") {
+                    var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
 
-                if(isMobile()) {
-                    popup = window.open('about:blank', "room" + userTag+"|"+from_userTag+"|"+itemId);
-                    popup.location.href = '/room?' + body;
+                    if(isMobile()) {
+                        popup = window.open('about:blank', "room" + userTag+"|"+from_userTag+"|"+itemId);
+                        popup.location.href = '/room?' + body;
+                    } else {
+                        window.open('/room?' + body, "room" + userTag+"|"+from_userTag+"|"+itemId, 'toolbar=no,\n' +
+                            '                                    location=no,\n' +
+                            '                                    status=no,\n' +
+                            '                                    menubar=no,\n' +
+                            '                                    scrollbars=yes,\n' +
+                            '                                    resizable=yes,\n' +
+                            '                                    width=550,\n' +
+                            '                                    height=750');
+                    }
                 } else {
-                    window.open('/room?' + body, "room" + userTag+"|"+from_userTag+"|"+itemId, 'toolbar=no,\n' +
-                        '                                    location=no,\n' +
-                        '                                    status=no,\n' +
-                        '                                    menubar=no,\n' +
-                        '                                    scrollbars=yes,\n' +
-                        '                                    resizable=yes,\n' +
-                        '                                    width=550,\n' +
-                        '                                    height=750');
+                    var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
+                    if(isMobile()) {
+                        popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+                        popup.location.href = '/room?' + body;
+                    } else {
+                        window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
+                            '                                    location=no,\n' +
+                            '                                    status=no,\n' +
+                            '                                    menubar=no,\n' +
+                            '                                    scrollbars=yes,\n' +
+                            '                                    resizable=yes,\n' +
+                            '                                    width=550,\n' +
+                            '                                    height=750');
+                    }
                 }
                 location.replace("/otc-sells/detail/" + itemId);
             }
