@@ -588,6 +588,7 @@ router.post('/login', function (req, res, next) {
                                 req.session.teenager = agreement.teenager;
                                 req.session.authPhone = agreement.authPhone;
                                 req.session.bitberry_token = result.bitberry_token;
+                                req.session.kyc = agreement._doc.kyc == undefined ? false : agreement._doc.kyc;
 
                                 // chatbot에서 로그인 확인을 위한 쿠키 생성
                                 let key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef"); // key 값 > 변경가능

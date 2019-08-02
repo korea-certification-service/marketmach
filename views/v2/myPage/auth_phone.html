@@ -8,7 +8,10 @@
             method: "GET",
             url: "/v1/users/" + userId
         }).done(function (success) {
-            if(success.data.birth == "") {
+            if(success.data.agreement.kyc == undefined) {
+                $("#authPhone").text('휴대폰 인증');
+                $("#authPhone").prop('disabled', false);
+            } else if(success.data.agreement.kyc == false) {
                 $("#authPhone").text('휴대폰 인증');
                 $("#authPhone").prop('disabled', false);
             }

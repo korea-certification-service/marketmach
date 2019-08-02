@@ -798,7 +798,8 @@ router.post('/reg/auth/okurl', function (req, res, next) {
             let day = result.Socialno.substr(6,2);
             let diffAge = util.checkAdult(new Date(year,month,day).toString(), new Date().toString());
             let agreements = {
-                teenager: true
+                teenager: true,
+                kyc: true
             }
             if(diffAge < 19) {
                 agreements.teenager = false;
@@ -810,6 +811,7 @@ router.post('/reg/auth/okurl', function (req, res, next) {
                 controllerAgreements.updateById(dbconfig.country, user._doc.agreementId, agreements)
                 .then(agreement => {
                     req.session.teenager = agreements.teenager;
+                    req.session.kyc = agreements.kyc;
                     res.render('v2/auth/okurl');
                 }).catch((err) => {
                     // console.error('err=>', err)

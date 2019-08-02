@@ -384,6 +384,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,4]
             });
         } else {
@@ -399,6 +400,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 mach_fee: dbconfig.fee.coin.mach.withdraw,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,3]
             });
         }
@@ -413,6 +415,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,4]
             });
         } else {
@@ -428,6 +431,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 mach_fee: dbconfig.fee.coin.mach.withdraw,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,3]
             });
         }       
@@ -442,6 +446,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,4]
             });
         } else {
@@ -457,6 +462,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 mach_fee: dbconfig.fee.coin.mach.withdraw,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
+                kyc: req.session.kyc,
                 arrDepth:[4,3]
             });
         }
