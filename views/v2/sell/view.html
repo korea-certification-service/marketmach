@@ -298,10 +298,10 @@
                     if(userTag == success.data.userTag) {
                         $('#modify').css('display','inline-block');
                         $('#remove').css('display','inline-block');
-                    } else {
-                        $('#regVTR').css('display','inline-block');
+                    } else {                        
                         $('#buynow').css('display','inline-block');
                     }
+                    $('#regVTR').css('display','inline-block');
                 } else if((success.data.status > 0 && success.data.status < 4) || success.data.status == 50) {
                     if(success.data.status == "1" || success.data.status == "50") {
                         if(success.data.vtr_btn_active) {
