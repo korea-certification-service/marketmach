@@ -168,13 +168,13 @@
 
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
                 alert("Coin 금액을 입력하세요.");
-                $("#confirmWithdraw").attr("disabled", "false");
+                $("#confirmWithdraw").attr("disabled", false);
                 return;
             }
 
             if(parseFloat($('#total_amount').text()) < 0) {
                 alert("출금 요청 금액이 출금 가능 잔액보다 클 수 없습니다.");
-                $("#confirmWithdraw").attr("disabled", "false");
+                $("#confirmWithdraw").attr("disabled", false);
                 return;
             }
 
@@ -202,12 +202,12 @@
                     location.href = "/myPages/wallet/withdraw";
                 } else {
                     alert(success.data.msg);
-                    $("#confirmWithdraw").attr("disabled", "false");
+                    $("#confirmWithdraw").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
                 alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
-                $("#confirmWithdraw").attr("disabled", "false");
+                $("#confirmWithdraw").attr("disabled", false);
             });
         }
     </script>
