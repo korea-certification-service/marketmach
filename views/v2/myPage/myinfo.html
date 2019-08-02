@@ -50,8 +50,12 @@
             });
 
             $("#phone").on('keyup', function() {
-                if(window.event.keyCode==13){
+                if(phone != $("#phone").val()) {
                     checkAuthNoYn = false;
+                } else {
+                    checkAuthNoYn = true;
+                }
+                if(window.event.keyCode==13){                    
                     sendAuthNo();
                 }
             })

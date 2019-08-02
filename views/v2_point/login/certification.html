@@ -20,9 +20,6 @@
             })
 
             $("#sendAuthNo").on('click', function() {
-                if($(this).text() == "인증코드 재전송" ) {
-                    alert("인증코드가 재전송 되었습니다.");
-                }
                 sendAuthNo();
             });
 
@@ -37,6 +34,8 @@
 
             loadCurrencyList();
             $('.auth_no_class').hide();
+
+            initCaptcha('#defaultReal');
         });
 
         function loadCurrencyList() {
@@ -71,6 +70,14 @@
             } else if(phoneNo.replace('+','').substr(0,countryCode.length) == countryCode) {
                 alert("국가번호를 제외한 전화번호를 입력하세요.");
                 return;
+            } else if($("#defaultReal").val() == "") {
+                alert("자동입력 방지 문자를 입력하세요.");
+                return;
+            } else if(hash($("#defaultReal").val()) != $("#defaultReal").realperson('getHash')) {
+                alert("자동입력 방지 문자 값이 틀립니다. 다시입력하세요.");
+                $('#defaultReal').val('');
+                $(".realperson-regen").trigger('click');
+                return;
             }
             
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
@@ -88,9 +95,14 @@
             }).done(function (success) {
                 console.log(success);
                 $('.auth_no_class').show();
+                if($(this).text() == "인증코드 재전송" ) {
+                    alert("인증코드가 재전송 되었습니다.");
+                }
                 $('#sendAuthNo').text("인증코드 재전송");
                 $('#phone').prop('readonly', true);
                 $('#currencyType').prop('readonly', true);
+                $(".realperson-regen").trigger('click');
+                $('#defaultReal').val('');
             }).fail(function (fail) {
                 console.log(fail);
                 alert("전송중 문제가 발생하였습니다. 전화번호가 올바르게 입력되었는지 확인하시기 바랍니다.\n 문제가 계속 발생될 경우 관리자에게 문의하세요.");
@@ -146,6 +158,9 @@
                     <div class="submit_ctc_code_top no_w100p_wrap">
                         <select id="currencyType" class="selectpicker" data-live-search="true"></select>
                         <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
+                    </div>
+                    <div class="submit_ctc_code_top no_w100p_wrap">
+                        <input type="text" class="form-control" id="defaultReal" max="6" placeholder="자동입력 방지 문자 입력">
                     </div>
                     <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
                 </div>

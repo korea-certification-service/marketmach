@@ -651,9 +651,10 @@ router.post('/connect', function (req, res, next) {
     
     controllerUsers.getByUserTag(country, userTag)
         .then(result => {
+            let phone = (result._doc.phone.substring(0,1) == "0") ? result._doc.phone.substr(1) : result._doc.phone;
             let param = {
                 "third_party_uid": result._doc._id.toString(),
-                "phone_number": result._doc.countryCode + result._doc.phone.substr(1)
+                "phone_number": result._doc.countryCode + phone
             };
             
             request({uri: url, 
