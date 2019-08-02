@@ -214,7 +214,7 @@
                 $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".item_status").text(status.text);
                 $(".item_character").text(game_character);
-                if(success.data.status == "50") {
+                if(buyerTag != "") {
                     $("#buyer_game_character").val(target_game_character);
                     $("#buyer_game_character").prop('readonly', true);
                 }
@@ -224,7 +224,7 @@
         }
 
         function openVTR() {
-            if(n_status == "0" && $("#buyer_game_character").val() == "") {
+            if(buyerTag != "" && $("#buyer_game_character").val() == "") {
                 alert('구매자 캐릭터명을 입력하십시오.');
                 return;
             }
@@ -278,7 +278,7 @@
                 // }).fail(function (fail) {
                 //     console.log(fail);
                 // });
-                if(n_status == "0") {
+                if(buyerTag == "") {
                     var body = "itemId="+itemId+"&buyerTag="+to_userTag+"&sellerTag="+userTag;
 
                     if(isMobile()) {
