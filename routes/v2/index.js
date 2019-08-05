@@ -313,20 +313,46 @@ router.get('/howto' , function(req, res, next) {
 // 커뮤니티 퍼블
 router.get('/community' , function(req, res, next) {
     res.render('v2/sublayout/community_list', {
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
+        authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,
-        authPhone: req.session.authPhone,
+        type: req.query.type,
         title: 'Bitweb Sub'});
 });
 router.get('/community/detail' , function(req, res, next) {
     res.render('v2/sublayout/community_view', {
-        userId: req.session.userId,
+        userId: req.session.userId,userTag:req.session.userTag,
         coinId: req.session.coinId,
+        pointId: req.session.pointId,
+        authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,
+        type: req.query.type,
+        title: 'Bitweb Sub'});
+});
+router.get('/community/write', function (req, res, next) {
+    res.render('v2/sublayout/community_write', {
+        userId: req.session.userId,userTag:req.session.userTag,
+        coinId: req.session.coinId,
+        pointId: req.session.pointId,
         authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        type: req.query.type,
+        title: 'Bitweb Sub'});
+});
+router.get('/community/modify', function (req, res, next) {
+    res.render('v2/sublayout/community_modify', {
+        userId: req.session.userId,userTag:req.session.userTag,
+        coinId: req.session.coinId,
+        pointId: req.session.pointId,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        type: req.query.type,
         title: 'Bitweb Sub'});
 });
 
@@ -375,7 +401,6 @@ router.post('/popup/address_popup', function (req, res, next) {
         // bdMgtSn: req.body.bdMgtSn,
         title: 'post 도로명 주소'});
 });
-
 
 // 테스트용 퍼블
 router.get('/temp/test' , function(req, res, next) {

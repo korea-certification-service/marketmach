@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+
+            <section class="community_sec">
+                <h1 class="tit_community">커뮤니티</span></h1>                    
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup>
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>                           
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" id="title" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td>
+                                    <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품이미지</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <ul class="thumbnail_btn_list cf">
+                                                <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
+                                                <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>         
+                            <tr class="mrg_cell">
+                                <td colspan="2">
+                                    <div class="input_wrap">
+                                        <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+
+                                        <input type="file" class="input_imgs" id="input_imgs0" index="0" accept="image/*"/>
+                                        <input type="file" class="input_imgs" id="input_imgs1" index="1" accept="image/*"/>
+                                        <input type="file" class="input_imgs" id="input_imgs2" index="2" accept="image/*"/>
+                                        <input type="file" class="input_imgs" id="input_imgs3" index="3" accept="image/*"/>
+                                        <input type="file" class="input_imgs" id="input_imgs4" index="4" accept="image/*"/>
+                                    </div>
+                                    <div id="fullImg"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>동영상</th>
+                                <td><input type="text" id="" class="form-control" placeholder="youtube url을 입력해주세요."></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="btnSubmit">등록하기</button>
+                </div>
+            </section>            
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var sel_files = []; // 이미지 정보들을 담을 배열
+        
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+        });
+    </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'modify'}) %>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

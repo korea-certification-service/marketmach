@@ -26,23 +26,53 @@
                         </colgroup>
                         <tbody>                           
                             <tr>
-                                <th class="fc2">제목</th>
-                                <td><input type="text" id="title" class="form-control"></td>
+                                <th>제목</th>
+                                <td>제목입니다.</td>
                             </tr>
-                            <tr>
-                                <th class="fc2">내용</th>
-                                <td>
-                                    <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
+                            <tr class="mrg_cell trForDel">
+                                <td colspan="2">
+                                    <div id="fullImg">
+                                        <img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/items/1561616903723" data-file="2011070711514820448_1.jpg">
+                                    </div>
                                 </td>
                             </tr>
+                            <tr class="trForDel">
+                                <th>상품이미지</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                            <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                <li><div class="thumbnail_box" id="img_id_0"><div class="img_view_area"><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/items/1561616903723" data-file="2011070711514820448_1.jpg"></div></div></li>
+                                                <li><div class="thumbnail_box" id="img_id_1"><div class="img_view_area"><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/items/1561616943033" data-file="2011070711514820448_1.jpg"></div></div></li>
+                                                <li><div class="thumbnail_box" id="img_id_2"><div class="img_view_area"><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/items/1561616903854" data-file="2011070711514820448_1.jpg"></div></div></li>
+                                                <li><div class="thumbnail_box" id="img_id_3"><div class="img_view_area"><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/items/1561616943098" data-file="2011070711514820448_1.jpg"></div></div></li>
+                                                <li></li>
+                                            </ul>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi expedita porro fugiat, nobis beatae quam velit necessitatibus provident ut neque saepe, animi minima dolore enim consequatur voluptate voluptatem quod iste!
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>동영상</th>
+                                <td>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/tU-ddp8NWj8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+                                </td>
+                            </tr>                            
                         </tbody>
                     </table>
                 </div>
 
                 <div class="tac">
+                    <%# i태그 안에 텍스트 favorite로 교체하면 까만 하트로 변경 %>
                     <button class="btn_recommendation">
                         <dl>
-                            <dt><i class="material-icons">thumb_up</i>추천</dt>
+                            <dt><i class="material-icons">favorite_border</i></dt>
                             <dd>0</dd>
                         </dl>
                     </button>
@@ -52,6 +82,7 @@
                     <button class="btn btn_go_list" onclick="history.back();">목록</button>
                 </div>
 
+                <%#
                 <!-- 댓글 입력란 -->
                 <div class="reply_write">
                     <div class="item_txt">
@@ -160,11 +191,21 @@
                         </li>
                     </ul>
                 </div>
+                %>
             </section>            
 
         </div>
     </div>
-    
+    <script type="text/javascript">    
+        $(document).ready(function() {
+            //$("#input_imgs").on("change", handleImgFileSelect);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+        });
+    </script>    
     <% include ../include/footer.html %>
 </div>
 </body>
