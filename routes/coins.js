@@ -874,14 +874,6 @@ router.post('/wallets/:walletId/entries', function (req, res, next) {
 //비트베리 API - 사용자 입금 처리 (호출 시 사용자의 비트베리 앱으로 승인 요청)
 router.post('/wallets/:coinType/deposit', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-
-    if(dbconfig.APIToken != req.body.token) {
-        //console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
-        res.status(500).send(bitwebResponse.create());
-        return;
-    }
     
     let url = dbconfig.bitberry.url + "/v2/wallets";
     let coinType = req.params.coinType;
@@ -970,6 +962,14 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
     if(req.session.userId == undefined) {
         bitwebResponse.code = 500;
         bitwebResponse.message = "이상 사용자 요청";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    if(dbconfig.APIToken != req.body.token) {
+        //console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
         res.status(500).send(bitwebResponse.create());
         return;
     }
