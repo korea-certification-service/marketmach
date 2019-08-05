@@ -147,6 +147,33 @@ router.get('/list', function (req, res, next) {
 });
 
 router.get('/detail/:communityId', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let communityId = req.params.communityId
+
+    let url = dbconfig.APIServer + "/v2/community/detail/" + communityId;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    
+    request({uri: url, 
+            method:'GET',
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+
     // var bitwebResponse = new BitwebResponse();
 
     // communityController.get(req)
