@@ -207,50 +207,132 @@ router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
 
 router.post('/reply', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-
-    communityController.addReply(req)
-        .then(result => {
+    let url = dbconfig.APIServer + "/v2/community/reply";
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    let body = req.body;
+    
+    request({uri: url, 
+            method:'POST',
+            headers: header,
+            body:body,
+            json:true}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
             bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+    // var bitwebResponse = new BitwebResponse();
+
+    // communityController.addReply(req)
+    //     .then(result => {
+    //         bitwebResponse.code = 200;
+    //         bitwebResponse.data = result;
+    //         res.status(200).send(bitwebResponse.create())
+    //     }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })
 });
 
 router.put('/reply/:replyId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
+    let replyId = req.params.replyId
 
-    communityController.modifyReply(req)
-        .then(result => {
+    let url = dbconfig.APIServer + "/v2/community/reply/" + replyId;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    let body = req.body;
+    
+    request({uri: url, 
+            method:'PUT',
+            headers: header,
+            body:body,
+            json:true}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
             bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+    // var bitwebResponse = new BitwebResponse();
+
+    // communityController.modifyReply(req)
+    //     .then(result => {
+    //         bitwebResponse.code = 200;
+    //         bitwebResponse.data = result;
+    //         res.status(200).send(bitwebResponse.create())
+    //     }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })
 });
 
 router.delete('/reply/:replyId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
+    let replyId = req.params.replyId;
 
-    communityController.deleteReply(req)
-        .then(result => {
+    let url = dbconfig.APIServer + "/v2/community/reply/" + replyId;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    
+    request({uri: url, 
+            method:'DELETE',
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
             bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+    // var bitwebResponse = new BitwebResponse();
+
+    // communityController.deleteReply(req)
+    //     .then(result => {
+    //         bitwebResponse.code = 200;
+    //         bitwebResponse.data = result;
+    //         res.status(200).send(bitwebResponse.create())
+    //     }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })
 });
 
 router.put('/reply/:replyId/:recommandYn', function (req, res, next) {
