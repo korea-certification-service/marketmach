@@ -189,7 +189,7 @@ router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
     }
     
     request({uri: url, 
-            method:'GET',
+            method:'PUT',
             headers: header,
             body:body,
             json:true}, function (error, response, body) {
@@ -208,19 +208,6 @@ router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
             res.status(500).send(bitwebResponse.create());
         }
     });
-    // var bitwebResponse = new BitwebResponse();
-
-    // communityController.modifyRecommandCount(req)
-    //     .then(result => {
-    //         bitwebResponse.code = 200;
-    //         bitwebResponse.data = result;
-    //         res.status(200).send(bitwebResponse.create())
-    //     }).catch((err) => {
-    //     console.error('err=>', err)
-    //     bitwebResponse.code = 500;
-    //     bitwebResponse.message = err;
-    //     res.status(500).send(bitwebResponse.create())
-    // })
 });
 
 router.post('/reply', function (req, res, next) {
@@ -318,18 +305,37 @@ router.delete('/reply/:replyId', function (req, res, next) {
 
 router.put('/reply/:replyId/:recommandYn', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
+    let replyId = req.params.replyId;
+    let recommandYn = req.params.recommandYn;
 
-    communityController.modifyReplyCommandCount(req)
-        .then(result => {
+    let url = dbconfig.APIServer + "/v2/community/reply/" + replyId + "/" + recommandYn;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    let body = {
+        "param": {"reqUser": req.session.userTag}
+    }
+    
+    request({uri: url, 
+            method:'PUT',
+            headers: header,
+            body:body,
+            json:true}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
             bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
 });
 
 module.exports = router;
