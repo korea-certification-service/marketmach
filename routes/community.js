@@ -256,7 +256,9 @@ router.put('/reply/:replyId', function (req, res, next) {
     let header = { 
         'token': dbconfig.APIToken
     };
-    let body = req.body;
+    let body = {
+        "param": req.body
+    }
     
     request({uri: url, 
             method:'PUT',
