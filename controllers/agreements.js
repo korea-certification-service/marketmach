@@ -33,6 +33,22 @@ function getById(country, agreementId) {
 
 }
 
+
+function detail(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebAgreements.detail(condition))
+            .then((result) => {
+                console.log('result=>' , result);
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+
+}
+
+
 function create(req) {
     return new Promise((resolve, reject) => {
 
@@ -105,3 +121,4 @@ exports.create = create;
 exports.createByAgreement = createByAgreement;
 exports.updateById = updateById;
 exports.updateByAgreement =updateByAgreement;
+exports.detail = detail;
