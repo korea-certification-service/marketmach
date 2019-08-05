@@ -1050,11 +1050,11 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                     //     amount = total_amount - fee_rate;
                                     // }
 
-                                    let phone = (result._doc.phone.substring(0,1) == "0") ? result._doc.phone.substr(1) : result._doc.phone;
+                                    let phone = (user._doc.phone.substring(0,1) == "0") ? user._doc.phone.substr(1) : user._doc.phone;
                                     let param = {
                                         'amount': amount,
                                         'memo':'withdraw from mach',
-                                        'phone_number': result._doc.countryCode + phone
+                                        'phone_number': user._doc.countryCode + phone
                                     };
                 
                                     request({uri: url, 
