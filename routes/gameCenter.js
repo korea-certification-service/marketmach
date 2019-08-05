@@ -577,7 +577,7 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
         .then(coin => {
             let total_coin = coin._doc.total_mach;
             let req_exchange_mach = reqData.mach;
-            let balance_total_coin = parseFloat((total_coin - req_exchange_mach).toFixed());
+            let balance_total_coin = parseFloat((total_coin - req_exchange_mach).toFixed(8));
             if(balance_total_coin < 0) {
                 let result = {
                     "successYn": "N",
@@ -605,7 +605,7 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
                 }
 
                 let exchange_rate = req.body.gamecoin_rate;
-                let exchange_gamecoin = parseFloat((req_exchange_mach * exchange_rate).toFixed());
+                let exchange_gamecoin = parseFloat((req_exchange_mach * exchange_rate).toFixed(8));
                 let coinId = {"_id" : user._doc.coinId};
                 let updateMachTotalCoin = {"total_mach": balance_total_coin};
                 //1. coin update.

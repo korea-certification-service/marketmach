@@ -86,7 +86,7 @@
                             </tr>
                             <tr>
                                 <th>동영상</th>
-                                <td><input type="text" id="movieUrl" class="form-control" placeholder="youtube url을 입력해주세요."></td>
+                                <td><input type="text" id="movieURL" class="form-control" placeholder="youtube url을 입력해주세요."></td>
                             </tr>
                         </tbody>
                     </table>
@@ -141,6 +141,7 @@
                     $(".trForDel").remove();
                 }
 
+                beforeImgs = success.data.images;
                 // 이미지 모두 지운 상황이 아닌 경우
                 if(success.data.images[0] !== null) {
                     var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
@@ -160,7 +161,7 @@
                 $('#type').val(type);
                 $('#title').val(title);   
                 $('#content').val(content);                   
-                $('#movieUrl').val(movieUrl);                   
+                $('#movieURL').val(movieUrl);                   
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -173,6 +174,11 @@
             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image";
                 images.append(name, sel_files[i].value);
+            }
+
+            if(sel_files.length == 0) {
+                submit(beforeImgs);
+                return;
             }
 
             $.ajax({
@@ -213,7 +219,7 @@
                 "content": $("#content").val()
             }
             if($("#movieURL").val() != "") {
-                data['movieURL'] = $("#movieURL").val()
+                data['movieUrl'] = $("#movieURL").val()
             }
 
             if(arrImages.length > 0) {
@@ -243,7 +249,7 @@
                 }
             }).done(function (success) {
                 // console.log(success);
-                location.href = '/community/detail/' + communityId;
+                location.href = '/community/board/detail/' + communityId;
 
             }).fail(function (fail) {
                 $('#btnSubmit').attr('disabled', false);

@@ -350,7 +350,7 @@ router.put('/:communityId', function (req, res, next) {
     }
     
     request({uri: url, 
-            method:'POST',
+            method:'PUT',
             headers: header,
             body:body,
             json:true}, function (error, response, body) {
@@ -429,7 +429,7 @@ router.post('/:communityId/images', function (req, res, next) {
                     if(typeof(body) == "string") {
                         result = JSON.parse(body).data;
                     }
-                    bitwebResponse.data = result;
+                    bitwebResponse.data = result.images;
                     res.status(200).send(bitwebResponse.create())
                 } else {
                     console.log('error = ' + response.statusCode);
