@@ -148,9 +148,10 @@ router.get('/list', function (req, res, next) {
 
 router.get('/detail/:communityId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-    let communityId = req.params.communityId
+    let communityId = req.params.communityId;
+    let userTag = req.session == undefined ? "" : req.session.userTag;
 
-    let url = dbconfig.APIServer + "/v2/community/detail/" + communityId;
+    let url = dbconfig.APIServer + "/v2/community/detail/" + communityId + "/" + userTag;
     let header = { 
         'token': dbconfig.APIToken
     };
