@@ -14,6 +14,7 @@
         var mach_fee = "<%=mach_fee%>";
         var fee;
         var rate;
+        var token = "<%=token%>";
         
         $(document).ready(function() {
             if("<%=kyc%>" == "false") {
@@ -184,7 +185,8 @@
             // }
 
             var data = {
-                "amount": Number($("input[name=amount]").val())
+                "amount": Number($("input[name=amount]").val()),
+                "token": token
             };
 
             $.ajax({

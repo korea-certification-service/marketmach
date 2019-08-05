@@ -401,6 +401,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
+                token:dbconfig.token,
                 arrDepth:[4,3]
             });
         }
@@ -416,6 +417,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
+                token:dbconfig.token,
                 arrDepth:[4,4]
             });
         } else {
@@ -432,6 +434,7 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
+                token:dbconfig.token,
                 arrDepth:[4,3]
             });
         }       

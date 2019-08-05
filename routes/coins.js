@@ -874,6 +874,15 @@ router.post('/wallets/:walletId/entries', function (req, res, next) {
 //비트베리 API - 사용자 입금 처리 (호출 시 사용자의 비트베리 앱으로 승인 요청)
 router.post('/wallets/:coinType/deposit', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
+
+    if(dbconfig.APIToken != req.body.token) {
+        //console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+    
     let url = dbconfig.bitberry.url + "/v2/wallets";
     let coinType = req.params.coinType;
     let header = {
@@ -1041,10 +1050,11 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                                     //     amount = total_amount - fee_rate;
                                     // }
 
+                                    let phone = (result._doc.phone.substring(0,1) == "0") ? result._doc.phone.substr(1) : result._doc.phone;
                                     let param = {
                                         'amount': amount,
                                         'memo':'withdraw from mach',
-                                        'phone_number': user._doc.countryCode + user._doc.phone.substr(1)
+                                        'phone_number': result._doc.countryCode + phone
                                     };
                 
                                     request({uri: url, 
