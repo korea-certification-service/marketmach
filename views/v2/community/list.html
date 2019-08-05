@@ -33,6 +33,10 @@
                     $('#btn_search').trigger('click');
                 }
             });
+
+            $('#register').on('click', function() {
+                location.href = '/community/register';
+            })
         });
 
         function getCommunityList() {
@@ -119,7 +123,7 @@
                             <h2 class="col-sm-2 col-xs-12">분류</h2>
                             <div class="check_filter col-sm-10 col-xs-12">
                                 <input type="radio" name="type" id="all" value="" checked><label for="all">전체</label>
-                                <input type="radio" name="type" id="board" value="board"><label for="board">게시글</label>
+                                <input type="radio" name="type" id="board" value="board"><label for="board">게시판</label>
                                 <input type="radio" name="type" id="game" value="game"><label for="game">게임 공략</label>
                                 <input type="radio" name="type" id="movie" value="movie"><label for="movie">동영상</label>
                             </div>

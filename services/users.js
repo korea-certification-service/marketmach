@@ -32,6 +32,21 @@ function list (condition) {
     })
 }
 
+function detail (condition) {
+    return new Promise((resolve, reject) => {
+        Users.findOne(
+            condition,
+            function(err, user) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                resolve(user)
+            }
+        )
+    })
+}
+
 function createUser (data) {
     return new Promise((resolve, reject) => {
         console.log(data)
@@ -400,3 +415,4 @@ exports.getRecommanderCount = getRecommanderCount;
 exports.getWithdrawUser = getWithdrawUser;
 exports.getBlackList = getBlackList;
 exports.getByUserInfo = getByUserInfo;
+exports.detail = detail;

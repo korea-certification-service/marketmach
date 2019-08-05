@@ -29,6 +29,18 @@ function list(country, condition) {
     })
 }
 
+function detail(country, condition) {
+    return new Promise((resolve, reject) => {
+        db.connectDB(country)
+            .then(() => bitwebUsers.detail(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+                reject(err)
+        })
+    })
+}
+
 function get(req) {
     return new Promise((resolve, reject) => {
 
@@ -485,3 +497,4 @@ exports.getRecommanderCount = getRecommanderCount;
 exports.getWithdrawUser = getWithdrawUser;
 exports.getBlackList = getBlackList;
 exports.getByUserInfo = getByUserInfo;
+exports.detail = detail;

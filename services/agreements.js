@@ -71,7 +71,24 @@ function getAgreementById (id) {
     })
 }
 
+function detail (condition) {
+    return new Promise((resolve, reject) => {
+        Agreements.findOne(
+            condition,
+            function(err, agreement) {
+                if (err) {
+                    // console.error(err)
+                    reject(err)
+                }
+                console.log('getEtherById done: ' + agreement)
+                resolve(agreement)
+            }
+        )
+    })
+}
+
 exports.createAgreement = createAgreement
 exports.updateAgreementById = updateAgreementById
 exports.getAgreementById = getAgreementById
 exports.updateByAgreement = updateByAgreement
+exports.detail = detail

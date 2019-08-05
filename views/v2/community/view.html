@@ -30,6 +30,10 @@
                     callRecommand();
                 }
             })
+
+            $('#modify').on('click', function() {
+                location.replace('/community/modify/' + communityId);
+            })
         });
 
         function getDetail() {
@@ -42,20 +46,20 @@
                 var title = success.data.title;
                 var reporter = success.data.reporter;
                 var regDate = success.data.regDate.substring(2, 10);
-                var content = success.data.type == 'movie' ? success.data.content : "<div>" + replaceDesc(success.data.content) + "</div>";
+                var content = "<div>" + replaceDesc(success.data.content) + "</div>";
                 var movieUrl = success.data.movieUrl;
                 var replys = success.data.reply;
                 replyCount = success.data.replyCount;
                 recommanded = success.data.recommandedUser;
                 var recommandCount = success.data.recommandCount;
-                var image = success.data.images.length ==0 ? "" : "<div style='text-align: center;'><img style='align: center;' src='" + success.data.images[0].path + "'></div>";
+                var image = "";
+                var movieUrl = success.data.movieUrl == undefined ? "" : "<iframe width='100%' height='100%' src=\'" + movieUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>";
+                for(var i=0;i<success.data.images.length; i++) {
+                    image += "<div style='text-align: center; margin-bottom:10px;'><img style='align: center;' src='" + success.data.images[i].path + "'></div>";
+                }
 
                 $('#title').text(title);   
-                if(success.data.type == 'movie') {
-                    $('#content').addClass("hasYoutube").html("<iframe width='100%' height='100%' src=\'" + movieUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>");   
-                } else {
-                    $('#content').html(image + content);   
-                }
+                $('#content').html(image + movieUrl + content);   
                 $('#recommandCount').text(recommandCount);
                 getReply(replys);
             }).fail(function (fail) {
@@ -263,7 +267,10 @@
         <div class="sub_container container">
 
             <section class="community_sec">
-                <h1 class="tit_community">게임소식</span></h1>                    
+                <div class="board_tit cf">
+                    <h1 class="tit_community">게임소식</h1>    
+                    <button class="btn btn-success" id="modify">수정</button>                
+                </div>
                 <div class="table_wrap table-responsive">
                     <table class="table_view table">
                         <colgroup>
@@ -412,3 +419,4 @@
     <% include ../include/footer.html %>
 </div>
 </body>
+</html>
