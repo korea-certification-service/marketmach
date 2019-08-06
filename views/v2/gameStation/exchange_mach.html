@@ -19,11 +19,12 @@
         var $plus_amount = 0;
         var $total_mach_amount;
 
-        getRate();
+        var select_value = 1;
+
+        
         
         $(document).ready(function(){
-            var select_value = 0;
-
+            
             $game_amount = $("#game_amount");
             $minus_amount = $("#minus_amount");
             $total_game_amount = $("#total_game_amount");
@@ -31,9 +32,8 @@
             $mach_amount = $("#mach_amount");
             $plus_amount = $("#plus_amount");
             $total_mach_amount = $("#total_mach_amount");
-
-            getUesrGameInfo();
-            getCoin();
+            
+            getRate();
 
             $('[name=coin]').on("change", function(e){
                 select_value = $(e.target).val();
@@ -43,7 +43,7 @@
             $("#doExchange").on("click", function(){
                 var result = calculate(mach_rate, gamecoin_rate, select_value);
                 console.log(result.body);
-                var _confirm = confirm(result.confirm.from+"MC을"+result.confirm.to+"MACH으로 교환하시겠습니까?");
+                var _confirm = confirm(result.confirm.from+"마하를"+result.confirm.to+"몽키코인으로 교환하시겠습니까?");
                 if( result.confirm.after < 0 ) {
                     alert("보유중인 마하가 부족합니다");
                     return;
@@ -90,6 +90,9 @@
             }).done(function (success) {
                 mach_rate = success.data.list[0].mach_rate;
                 gamecoin_rate = success.data.list[0].gamecoin_rate;
+
+                getCoin();
+
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -103,6 +106,9 @@
                 $("#mach").html(total_mach + " <span>MACH</span>");
                 $("#mach_amount").html(total_mach);
                 $("#total_mach_amount").html(total_mach);
+
+                getUesrGameInfo();
+
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -119,6 +125,9 @@
                     $("#game_coin").text(my_game_coin);
                     $("#game_amount").html(my_game_coin);
                     $("#total_game_amount").html(my_game_coin);
+
+                    calculate(mach_rate, gamecoin_rate, select_value);
+                    
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -244,7 +253,7 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;MACH -> 게임자산</span></h1>
+                        <h1 class="tit_mypage">교환하기<span>MACH &#8594; 게임자산</span></h1>
                         <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
                                 <p>
@@ -276,8 +285,7 @@
                                         <td>
                                             <div class="dib_220">
                                                 <select class="custom-select" name="coin">
-                                                    <!-- <option value="0" selected>0 MACH</option> -->
-                                                    <option value="1">1 MACH</option>
+                                                    <option value="1" selected>1 MACH</option>
                                                     <option value="5">5 MACH</option>
                                                     <option value="10">10 MACH</option>
                                                 </select>
