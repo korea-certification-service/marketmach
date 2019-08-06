@@ -511,12 +511,15 @@
 /* 커뮤니티 */
 .has_media_icon{}
 .has_media_icon .ico_media{margin-right: 5px; font-size: 18px;}
-.community_sec{margin: auto;max-width: 1000px}
+.community_sec{margin: 30px auto; max-width: 840px}
+.community_sec .community_searchbar{margin: 30px 0;}
+.community_sec .community_searchbar input[type="text"]{width: calc(100% - 110px);}
+.community_sec .community_searchbar input[type="button"]{width: 100px; color: #ffffff; background-color: #000000;}
 .community_sec .tit_community{margin: 50px 0 0 0; padding-bottom: 10px; font-size: 18px; color: #000039;}
 .community_sec .tit_community:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
-.community_sec .btn_recommendation{padding: 10px 20px; border-radius: 5px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
+.community_sec .btn_recommendation{padding: 10px 20px; border-radius: 5px; border: 1px solid #e0e0e0;}
 .community_sec .btn_recommendation dt{font-size: 14px;}
-.community_sec .btn_recommendation dt i{font-size: 18px;}
+.community_sec .btn_recommendation dt i{font-size: 18px; color:#D80A01;}
 .community_sec .btn_recommendation dd{font-weight: bold; font-size: 18px;}
 .community_sec .hasYoutube{display: block;}
 .community_sec .hasYoutube {position: relative;padding-bottom: 56.25%;padding-top: 30px; height: 0; overflow: hidden;}
@@ -524,6 +527,7 @@
 .community_sec .hasYoutube object,
 .community_sec .hasYoutube embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
 .community_sec .mrg_cell #fullImg{margin: 20px 0; text-align: center;}
+.community_sec .post_title{font-size: 18px; font-weight: 600;}
 
 /* BtoC 상세 물품 */
 .item_images_area{margin: 30px 0;}

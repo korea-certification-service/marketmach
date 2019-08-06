@@ -10,6 +10,49 @@ const utils = require('../utils/util');
 
 router.get('/board', function (req, res, next) {
     if(dbconfig.country == "KR") {
+        res.render('v2/community/community', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.params.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx,
+    });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/community/community', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.params.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx,
+        });         
+    } else {
+        res.render('v2_en/community/community', {
+            title: 'Bitweb Main', 
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            type: req.params.type,
+            title: req.query.title,
+            pageIdx: req.query.pageIdx,
+    });
+    }
+});
+
+router.get('/board/:type', function (req, res, next) {
+    if(dbconfig.country == "KR") {
         res.render('v2/community/list', {
             title: 'Bitweb Main', 
             userId: req.session.userId,userTag:req.session.userTag,
@@ -18,9 +61,9 @@ router.get('/board', function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            type: req.query.type,
+            type: req.params.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
     });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/list', {
@@ -31,9 +74,9 @@ router.get('/board', function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            type: req.query.type,
+            type: req.params.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
         });         
     } else {
         res.render('v2_en/community/list', {
@@ -44,9 +87,9 @@ router.get('/board', function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            type: req.query.type,
+            type: req.params.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
     });
     }
 });

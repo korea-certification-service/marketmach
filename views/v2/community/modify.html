@@ -30,9 +30,11 @@
                                 <td>
                                     <div id="virture_h" class="virture_h">
                                         <select class="selectpicker" id="type" data-live-search="true">
-                                            <option value="board">게시판</option>
-                                            <option value="game">게임공략</option>
-                                            <option value="movie">동영상</option>
+                                            <option value="free">자유게시판</option>
+                                            <option value="tabloid">찌라시</option>
+                                            <option value="event">이벤트</option>
+                                            <option value="game">게임</option>
+                                            <option value="cryptocurrency">암호화폐</option>
                                         </select>                                        
                                     </div>
                                 </td>
@@ -114,7 +116,7 @@
             });
 
             $('.selectpicker').selectpicker({
-                size: 3
+                size: 5
             });
 
             $("#btnSubmit").on('click', function(){
