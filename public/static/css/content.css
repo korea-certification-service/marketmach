@@ -515,8 +515,11 @@
 .community_sec .community_searchbar{margin: 30px 0;}
 .community_sec .community_searchbar input[type="text"]{width: calc(100% - 110px);}
 .community_sec .community_searchbar input[type="button"]{width: 100px; color: #ffffff; background-color: #000000;}
-.community_sec .tit_community{margin: 50px 0 0 0; padding-bottom: 10px; font-size: 18px; color: #000039;}
+.community_sec .community_tit{margin: 50px 0 20px 0;}
+.community_sec .community_tit h1{float: left;}
+.community_sec .tit_community{ padding-bottom: 10px; font-size: 18px; color: #000039;}
 .community_sec .tit_community:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
+.community_sec .community_tit button{float: right;}
 .community_sec .btn_recommendation{padding: 10px 20px; border-radius: 5px; border: 1px solid #e0e0e0;}
 .community_sec .btn_recommendation dt{font-size: 14px;}
 .community_sec .btn_recommendation dt i{font-size: 18px; color:#D80A01;}
