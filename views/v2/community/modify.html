@@ -139,6 +139,7 @@
                 url: "/community/detail/" + communityId,
             }).done(function (success) {
                 console.log(success.data);
+                addClassCommunityLeftMenu(success.data.type);
                 var type = success.data.type;
                 var title = success.data.title;
                 var reporter = success.data.reporter;

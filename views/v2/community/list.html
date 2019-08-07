@@ -35,7 +35,6 @@
         });
 
         function getCommunityList() {
-            console.log("title", title)
             var query = "/v1/community/list?pageIdx=" + pageIdx;
             query += "&type=" + type;
             
@@ -45,7 +44,8 @@
                 method: "GET",
                 url: query,
             }).done(function (success) {
-                console.log(success.data);
+                // console.log(success.data);
+                addClassCommunityLeftMenu(success.data.list[0].type);
                 pageIdx = success.pageIdx;
                 setCommunityNotices(success.data.notices);
                 setCommunitys(success.data.list);
