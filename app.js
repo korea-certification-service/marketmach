@@ -47,6 +47,7 @@ var shoppingRouter = require('./routes/shopping');
 var testRouter = require('./routes/test');
 var gameStationRouter = require('./routes/gameStation');
 var escrowRouter = require('./routes/escrows');
+var kycRouter = require('./routes/kyc');
 
 var app = express();
 
@@ -194,6 +195,7 @@ app.use(version + '/personal', personalRouter);
 app.use(version + '/gameCenter', gameCenterRouter);
 app.use(version + '/exchange', exchangeRouter);
 app.use(version + '/escrows', escrowRouter);
+app.use(version + '/kycs', kycRouter);
 
 let v2IndexRouter = require('./routes/v2/index');
 let v2ItemRouter = require('./routes/v2/items');
