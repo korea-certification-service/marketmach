@@ -74,7 +74,7 @@
                                         <button class="btn item_view btn_in_view6" id="showPhone">View Contact</button>
                                         <button class="btn item_view btn_in_view7" id="sellComplete">Sales Complet</button>
                                         <button class="btn item_view btn_in_view8" id="cancel">Transaction Cancel</button>
-                                        <button class="btn item_view btn_in_view9" id="confirm">Transaction Complete</button>
+                                        <button class="btn item_view btn_in_view9" id="confirm">Completed</button>
                                         <button class="btn item_view btn_in_view10" id="opposition">Dispute</button>
                                     </div>
                                     <div class="tac">
@@ -337,7 +337,7 @@
         }
 
         function buyComplete() {
-            var confirms = confirm('Do you want to Purchase Confirmation?');
+            var confirms = confirm('Do you want to Pay(Escrow)?');
             if(confirms) {
                 var data = {
                     "status": true

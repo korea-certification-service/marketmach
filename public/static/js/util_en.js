@@ -95,11 +95,11 @@ function getStatus(value) {
             'detail': 'Available' // 거래가능
         };
     } else if((value >= 1 && value <= 3) || (value >= 101 && value <= 103)) {
-        var detail = "Transaction Request"; // 거래요청
+        var detail = "Start"; // 거래요청
         if(value == 2 || value == 102) {
-            detail = "Purchase Confirmation"; // 구매확인
+            detail = "Pay(Escrow)"; // 구매확인
         } else if(value == 3 || value == 103) {
-            detail = "Sales Complete"; // 판매완료
+            detail = "Deliver"; // 판매완료
         } 
         return {
             'text': 'Trading',
@@ -108,11 +108,11 @@ function getStatus(value) {
             'detail': detail
         };
     } else if(value == 4 || value == 6 || value == 7 || value == 104 || value == 106 || value == 107) {
-        var detail = "Transaction Complete"; // 거래완료 
+        var detail = "Completed"; // 거래완료 
         if(value == 6 || value == 106) {
-            detail = "Transaction Complete(admin)"; // 거래완료(관리자)
+            detail = "Completed(admin)"; // 거래완료(관리자)
         } else if(value == 7 || value == 107) {
-            detail = "Transaction Complete(system)"; // 거래완료(시스템)
+            detail = "Completed(system)"; // 거래완료(시스템)
         } 
         return {
             'text': 'Complete',

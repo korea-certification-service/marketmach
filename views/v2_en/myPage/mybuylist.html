@@ -274,7 +274,7 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('Do you want to purchase confirmation?');
+            var confirms = confirm('Do you want to Pay(Escrow)?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -510,11 +510,11 @@
                                                 <input type="radio" name="status" id="all" value=""><label for="all">All</label><br class="mob_br">
                                                 <input type="radio" name="status" id="regist" value="0"><label for="regist">Available</label><br class="mob_br">
                                                 <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Transaction Request</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Purchase Confirmation</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Pay(Escrow)</label><br class="mob_br">
                                             </li>
                                             <li>
-                                                <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Sales Complete</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">Transaction Complete</label>
+                                                <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Deliver</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">Completed</label>
                                             </li>
                                         </ul>
                                     </div>
