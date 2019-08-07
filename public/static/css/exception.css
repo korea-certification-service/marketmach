@@ -15,6 +15,20 @@
 .error_sec .box1 img{width: 100%; max-width: 100px;}
 .error_sec .box2{text-align: center;}
 .error_sec .box2 .btn{font-weight: bold;}
+/**** 신규 page not found ***/
+.notfound_wrap{position: absolute; top: 50%; margin-top: -160px; width: 100%;}
+.notfound_sec{margin: auto; max-width: 720px; height: 320px;}
+.notfound_sec .lft_box{float: left; width: 50%; text-align: right; padding: 50px 80px 0 0;}
+.notfound_sec .rgh_box{float: left; width: 50%;}
+.notfound_sec .rgh_box h1{margin-bottom: 40px; width: 180px;}
+.notfound_sec .rgh_box h2{margin-bottom: 50px; font-size: 20px; color: #246589;}
+.notfound_sec .rgh_box p{margin-bottom: 50px; font-size: 16px;}
+.notfound_sec .rgh_box p:before{margin-bottom: 20px; content: ''; display: block; clear: both; width: 17px; height: 3px; background-color: #000000;}
+.notfound_sec .rgh_box .btn_box{}
+.notfound_sec .rgh_box .btn_box button{font-size: 12px; width: 117px; height: 34px; font-weight: bold;}
+.notfound_sec .rgh_box .btn_box button:nth-of-type(1){border: 2px solid #0d0943;}
+.notfound_sec .rgh_box .btn_box button:nth-of-type(2){background-color: #0d0943; color: #ffffff;}
+
 /********** 로그인 페이지 **********/
 .login_wrap{max-width: 460px; margin: auto;}
 .login_head{padding-top: 50px;}
@@ -131,6 +145,14 @@
     .set_margin > .form-control.w60p { width: 49%; }
     .btn.btn-default { margin-top: 20px; }
     .set_margin > .btn.btn_in_view1 { margin-top: 20px; }
+
+    .notfound_sec .lft_box{padding: 50px 30px 0 0; width: 30%;}
+    .notfound_sec .lft_box img{max-width: 70px;}
+    .notfound_sec .rgh_box{width: 70%;}
+    .notfound_sec .rgh_box h1{width: 140px;}
+    .notfound_sec .rgh_box h2{font-size: 16px;}
+    .notfound_sec .rgh_box p{font-size: 12px;}
+    .notfound_sec .rgh_box .btn_box button{width: 90px; font-size: 10px;}
 }
 @media (max-width: 529px) {
     .set_margin > .dropdown.bootstrap-select { width: 100% !important; }
