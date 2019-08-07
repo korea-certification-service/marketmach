@@ -88,13 +88,7 @@ $(document).ready(function() {
             }
         }).done(function (success) {
             // console.log(success);
-            if(sel_files.length == 0) {
-                submitAction(success.data._id);
-            } else {
-                alert('It is successfully request KYC. Verification KYC will be token a few days.');
-                location.href = '/myPages/user/authPhone';
-            }
-            
+            submitAction(success.data._id);
         }).fail(function (fail) {
             $('#btnSubmit').attr('disabled', false);
             $("#ajaxSpiner").hide(); // spinner
@@ -151,6 +145,12 @@ $(document).ready(function() {
         for(var i=0, len=sel_files.length; i<len; i++) {
             var name = "image";
             if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+        }
+
+        if(sel_files.length == 0) {
+            alert('It is successfully request KYC. Verification KYC will be token a few days.');
+            location.href = '/myPages/user/authPhone';
+            return;
         }
         //console.log(images);
         //ajax 처리
