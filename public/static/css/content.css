@@ -197,7 +197,7 @@
 .btn.btn_more_list{width: 100%; max-width: 100%; border: 1px solid #dbdbdb;}
 /* 버튼: VTR 입장, VTR 거래신청, 바로구매, 수정, 삭제, 연락처 표시, 판매완료, 거래취소, 구매확정, 이의제기 */
 .btn.item_view{display: none;}
-.btn#regVTR{background-color: #d9ddff}
+/* .btn#regVTR{background-color: #d9ddff} */
 .btn.btn_in_view0{background-color: #1e2560; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view1{background-color: #1e2560; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view2{background-color: #28a745; color: #ffffff; font-weight: bold; }
@@ -511,19 +511,38 @@
 /* 커뮤니티 */
 .has_media_icon{}
 .has_media_icon .ico_media{margin-right: 5px; font-size: 18px;}
-.community_sec{margin: auto;max-width: 1000px}
-.community_sec .tit_community{margin: 50px 0 0 0; padding-bottom: 10px; font-size: 18px; color: #000039;}
+.community_sec{margin: 30px auto; max-width: 840px}
+.community_sec .community_tit{margin: 50px 0 20px 0;}
+.community_sec .community_tit h1{float: left;}
+.community_sec .community_tit .community_searchbar{float: right; width: 50%; font-size: 0;}
+.community_sec .community_tit .community_searchbar input[type="text"]{width: calc(100% - 18px); font-size: 14px; border-top: none; border-left: none; border-right: none;}
+.community_sec .community_tit .community_searchbar input[type="button"]{width: 18px; height: 18px; background: url(/static/img/symbol/ico_cmnt_search.png) 0 50% no-repeat; background-size: 18px 18px; border: none;}
+.community_sec .tit_community{ padding-bottom: 10px; font-size: 18px; color: #000039;}
 .community_sec .tit_community:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
-.community_sec .btn_recommendation{display: none; padding: 10px 20px; border-radius: 5px; background-color: #f3f3f3; border: 1px solid #e0e0e0;}
+.community_sec .community_tit button{float: right; width: 80px; margin-left: 10px;}
+.community_sec .btn_recommendation{padding: 10px 20px; border-radius: 5px; border: 1px solid #e0e0e0;}
 .community_sec .btn_recommendation dt{font-size: 14px;}
-.community_sec .btn_recommendation dt i{margin-right: 5px; font-size: 16px;}
-.community_sec .btn_recommendation dd{font-weight: bold; font-size: 20px;}
+.community_sec .btn_recommendation dt i{font-size: 18px; color:#D80A01;}
+.community_sec .btn_recommendation dd{font-weight: bold; font-size: 18px;}
 .community_sec .hasYoutube{display: block;}
 .community_sec .hasYoutube {position: relative;padding-bottom: 56.25%;padding-top: 30px; height: 0; overflow: hidden;}
 .community_sec .hasYoutube iframe,
 .community_sec .hasYoutube object,
 .community_sec .hasYoutube embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
-
+.community_sec .mrg_cell #fullImg{margin: 20px 0; text-align: center;}
+.community_sec .post_title{font-size: 18px; font-weight: 600;}
+.community_sec .community_icon_menu{}
+.community_sec .community_icon_menu li{float: left; margin-left: 2%; margin-bottom: 16px; max-width: 269px; width: 32%; height: 100px; border: solid 1px #c3c3c3; border-radius: 15px; }
+.community_sec .community_icon_menu li:nth-child(3n+1){margin-left: 0;}
+.community_sec .community_icon_menu li:nth-child(1){background: url(/static/img/symbol/ico_cmnt_free.png) 30px 50% no-repeat;}
+.community_sec .community_icon_menu li:nth-child(2){background: url(/static/img/symbol/ico_cmnt_tabloid.png) 30px 50% no-repeat;}
+.community_sec .community_icon_menu li:nth-child(3){background: url(/static/img/symbol/ico_cmnt_event.png) 30px 50% no-repeat;}
+.community_sec .community_icon_menu li:nth-child(4){background: url(/static/img/symbol/ico_cmnt_game.png) 30px 50% no-repeat;}
+.community_sec .community_icon_menu li:nth-child(5){background: url(/static/img/symbol/ico_cmnt_crypto.png) 30px 50% no-repeat;}
+.community_sec .community_icon_menu li:nth-child(n){background-size: 44px 37px;}
+.community_sec .community_icon_menu li a{display: block;  height: 100%;}
+.community_sec .community_icon_menu li a h2{margin-left: 94px; text-align: center; line-height: 100px; font-size: 18px; color: #2c2c2c;}
+.community_sec .community_icon_menu li a h2:before{display: block; content: ''; clear: both; position: absolute; margin-top: 10px; width: 2px; height: 80px; background-color: #c3c3c3;}
 /* BtoC 상세 물품 */
 .item_images_area{margin: 30px 0;}
 .item_images_area .lft_img{float: left; width: 45%;}
@@ -625,6 +644,10 @@
     /*모바일에서 비트베리 coonnect페이지를 보여주기위한 버튼 표시*/
     .m_link_connect { display: inline-block; position: relative; left: 50%; transform: translateX(-50%); margin-bottom: 20px; }
     .m_link_connect.bgc1 { background-color: #1e2560; color: #ffffff; }
+    /* 커뮤니티 */
+    .community_sec .community_icon_menu li:nth-child(n){background-position: 50% 15px; background-size: 44px 37px;}
+    .community_sec .community_icon_menu li a h2{margin-left: 0; padding-top: 65px; line-height: 1; text-align: center; font-size: 16px;}
+    .community_sec .community_icon_menu li a h2:before{display: none;}
 }
 @media (max-width: 576px){
     .mypage_sec .mypage_main_info .lft_area{background-position: 14px 50%;}
@@ -638,6 +661,7 @@
     .coin_certification dt{width: 100%; float: none; text-align: left;}
     .coin_certification dd{float: none; text-align: center;}
     /* 커뮤니티 */
+    .community_sec .community_tit .community_searchbar{float: left; width: 60%;}
     .rep_common > dt{display: block; margin-bottom: 10px;}
     .rep_common > dt .item_txt{margin-bottom: 5px; width: 100%;}
     .rep_common > dt .item_btn{width: 100%; text-align: right;}
@@ -649,8 +673,8 @@
     .bootstrap-select:nth-child(n+2){margin-top: 10px;}
     .sub_container{padding-bottom: 50px;}
     .content_tab_depth1 li a{font-size: 12px;}
-    /**/
     .table_view tbody th{font-size: 12px;}
+    /* 이미지 업로드*/
     .imgs_wrap{position: relative;}
     .imgs_wrap .list_of_thumbnail{width: 120px;}
     .imgs_wrap .thumbnail_btn_list{width: 120px; position: absolute; top: 10px; right: 0;}

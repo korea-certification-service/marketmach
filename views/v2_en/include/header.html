@@ -131,9 +131,9 @@
     }
 
     function loginChecker() {
-        var login = "<%= userId %>";
-        //console.log(login, typeof login);
-        if(login !== "" && login !== "undefined") {
+        var cookie_data = document.cookie;
+        var loginToken = cookie_data.indexOf("loginToken");
+        if(loginToken > -1) {
             //loginChecker();
             openCSChatBot();
         } else {
@@ -145,15 +145,15 @@
     function openCSChatBot() {
         var cookie_data = document.cookie;
         //console.log(cookie_data);
-        var start = cookie_data.indexOf("orange__F");
+        var start = cookie_data.indexOf("loginToken");
         var cValue = '';
         if(start != -1){
-            start += "orange__F".length;
+            start += "loginToken".length;
             var end = cookie_data.indexOf(';', start);
             if(end == -1) end = cookie_data.length;
             cValue = cookie_data.substring(start, end);
 
-            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&orange__F" + cValue;
+            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&loginToken" + cValue +"&userId="+userId;
             if (isMobile()) {
                 window.open(req_url, "CSChatBot");
             } else {
@@ -218,14 +218,6 @@
 
         }
     }
-
-    function goExchange() {
-        alert('Comming soon.');
-        return;
-        //alert("현재 VISA/MASTER 카드 결재 기능을 작업 중에 있습니다. \n 마하 코인 구매를 원하시면 비트코인 또는 이더리움 등의 암호화폐를 이용하여 구매하시기 바랍니다.");
-        //window.open("https://tokensales.marketmach.com","exchange");
-    }
-
 </script>
         <header class="header">
             <div class="top_menu cf">
@@ -233,7 +225,6 @@
                 <span><a href="https://en.marketmach.com" class="lang lang_en">EN</a></span>
                 <ul class="menu_list cf">
                     <li><a href="/gameStation">Game Station</a></li>
-                    <li><a href="javascript:goExchange();">Exchange</a></li> 
                     <li><a href="/howto/trade/vtr">User Guide</a></li>
                     <li><a href="/supports/info">Support</a></li>
                     <li><a href="/myPages/list">My Page</a></li>
@@ -305,11 +296,8 @@
                             <li><a href="https://t.me/marketmachcom" target="_blank">Telegram</a></li>
                         </ul> 
                     </li>
-                    <!-- <li><a href="/shopping/view" class="fcbk">한정 이벤트</a></li> -->
-                    <!-- <li><a href="javascript:goExchange();" class="fcbk">환전소</a></li> -->
-                    <li><a href="http://mymach.creatorlink.net" target="_blank" class="fcbk">Event</a></li>
+                    <!-- <li><a href="http://mymach.creatorlink.net" target="_blank" class="fcbk">Event</a></li> -->
                     <!-- <li><a href="/community/board" class="fcbk">게임소식</a></li> -->
-                    <!-- <li><a href="/gameStation/" class="fcbk">게임스테이션</a></li> -->
                 </ul>
                 <ul class="r_menu cf">
                     <li>
@@ -343,8 +331,8 @@
                                         </dl>                                        
                                         <dl class="available_coin cf">
                                             <dt>MarketMACH Games</dt>
-                                            <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                            <dd><a href="/gameStation/machAdventure/info/"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH Adventure" title="MACH Adventure"></a></dd>
+                                            <dd><a href="/gameStation/superlanding/info/"><img src="/static/img/symbol/app_ico_superlanding.png" alt="Superlanding" title="Superlanding"></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
@@ -392,8 +380,8 @@
                                         </dl>
                                         <dl class="available_coin cf">
                                             <dt>MarketMACH Games</dt>
-                                            <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
+                                            <dd><a href="/gameStation/machAdventure/info/"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH Adventure" title="MACH Adventure"></a></dd>
+                                            <dd><a href="/gameStation/superlanding/info/"><img src="/static/img/symbol/app_ico_superlanding.png" alt="Superlanding" title="Superlanding"></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>

@@ -135,15 +135,16 @@
             getData();
 
             $('#openVTR').on('click', function() {
-                openVTR();
+                //openVTR();
+                location.replace("/buys/vtr/" + itemId);
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/buys/vtr/" + itemId;
+                location.replace("/buys/vtr/" + itemId);
             });
 
             $('#modify').on('click', function() {
-                location.href="/buys/modify/" + itemId;
+                location.replace("/buys/modify/" + itemId);
             });
 
             $('#cancel').on('click', function() {
@@ -224,11 +225,23 @@
 
                 if(success.data.status == "0") {
                     if(userTag == success.data.userTag) {
-                        $('#modify').css('display','inline-block');
-                        $('#remove').css('display','inline-block');
-                    } else {
-                        $('#regVTR').css('display','inline-block');
-                        $('#buynow').css('display','inline-block');
+                        if(buyerTag == "") {
+                            $('#modify').css('display','inline-block');
+                            $('#remove').css('display','inline-block');                            
+                        } else {
+                            $('#openVTR').css('display','inline-block');
+                            $('#cancel').css('display','inline-block');
+                        }
+                    } else {     
+                        if(buyerTag == "") {            
+                            $('#regVTR').css('display','inline-block');
+                            $('#buynow').css('display','inline-block');
+                        } else {
+                            if(userTag == buyerTag || userTag == sellerTag) {
+                                $('#openVTR').css('display','inline-block');
+                                $('#cancel').css('display','inline-block');
+                            }
+                        }
                     }
                 } else if((success.data.status > 0 && success.data.status < 4) || success.data.status == 50) {
                     if(success.data.status == "1" || success.data.status == "50") {
@@ -248,6 +261,7 @@
                             if(userTag != success.data.userTag) {
                                 $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
@@ -258,6 +272,7 @@
                             } else {
                                 $('#cancel').css('display','inline-block');
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                             $('#opposition').css('display','inline-block');
                         }
@@ -308,6 +323,7 @@
             var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
             if(isMobile()) {
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
                 popup.location.href = '/room?' + body;
             } else {
                 window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
@@ -328,7 +344,11 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    location.href = '/buys/detail/' + itemId;
+                    if(success.data.successYn == "Y") {
+                        location.href = '/buys/detail/' + itemId;
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });

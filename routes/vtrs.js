@@ -561,288 +561,370 @@ router.post('/chatbot/', function (req, res, next) {
 });
 
 router.post('/buynow', function (req, res, next) {
-    //sell인 경우에만 동작
-    if (req.body.itemId != null
-        && req.body.from_userId != null
-        && req.body.to_userId != null) {
-
-        let data = {}
-        let itemId = req.body.itemId;
-        let country = dbconfig.country;
-
-        var bitwebResponse = new BitwebResponse();
-        let controllerItems = require('../controllers/items');
-
-        controllerItems.getByItemId(country, itemId, "", "")
-            .then(item => {
-
-                delete req.body['itemId'];
-                item._doc.status = 2;
-                req.body['item'] = item;
-
-                if(item.price != req.body.price) {
-                    item._doc.price = req.body.price;
-                    item._doc.total_price = req.body.price;
-                }
-
-                let controllerUser = require('../controllers/users');
-                let userTags = [req.body.from_userId, req.body.to_userId];
-
-                controllerUser.getByUserTags(country, userTags)
-                    .then((users) => {
-                        let from_findIndex = users.findIndex((group) => {
-                            return group._doc.userTag == req.body.from_userId;
-                        });
-
-                        let to_findIndex = users.findIndex((group) => {
-                            return group._doc.userTag == req.body.to_userId;
-                        });
-
-                        req.body.from_userId = users[from_findIndex];
-                        req.body.to_userId = users[to_findIndex];
-
-                        //휴대전화번호 추가
-                        req.body['seller_phone'] = users[from_findIndex]._doc.phone;
-                        req.body['buyer_phone'] = users[to_findIndex]._doc.phone;
-                        if(item._doc.category == "game") {
-                            req.body['buyer_game_character'] = req.body.game_character;
-                            req.body['seller_game_character'] = item._doc.game_character;
-                        }
-                        let fromUserTag = req.body.to_userId.userTag;
-                        let targetUserTag = item._doc.userTag;
-
-                        req.body['buy_status'] = true;
-                        //req.body['sell_status'] = true;
-                        req.body['completed_buy_date'] = util.formatDate(new Date().toString());
-                        //req.body['completed_sell_date'] = util.formatDate(new Date().toString());
-
-                        controllerVtrs.getByItemId(country, itemId) 
-                            .then(vtr => {
-                                if(vtr == null) {
-                                    controllerUser.getById(country, req.body.to_userId)
-                                        .then(user => {
-                                            let coinId = user._doc.coinId;
-                                            controllerCoins.getByCoinId(country, coinId)
-                                                .then(coin => {
-
-                                                    let user_price = coin.total_mach;
-                                                    if(req.body.cryptoCurrencyCode == "BTC") {
-                                                        user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
-                                                    } else if(req.body.cryptoCurrencyCode == "ETH") {
-                                                        user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
-                                                    }
-
-                                                    user_price = parseFloat((user_price - req.body.price).toFixed(8));
-                                                    if (user_price < 0) {
-                                                        let message = "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
-                                                        if(country == "EN") {
-                                                            message = "The transaction amount can not be greater than the buyer's retention amount.";
-                                                        }
-                                                        let msg = {
-                                                            "status": "fail",
-                                                            "code" : "E002",
-                                                            "msg" : message
-                                                        };
-                                                        bitwebResponse.code = 200;
-                                                        bitwebResponse.data = msg;
-                                                        res.status(200).send(bitwebResponse.create());
-                                                        return;
-                                                    } else {
-                                                        let data = {
-                                                            "roomToken":util.makeToken(),
-                                                            "buyer_id": fromUserTag,
-                                                            "seller_id": targetUserTag,
-                                                            "cmod": "deal",
-                                                            "country":dbconfig.country,
-                                                            "item": item
-                                                        }
-                                                        controllerVtrs.createVtrTemp(data)
-                                                            .then((vtrTemp) => {
-                                                                item['vtrTempId'] = vtrTemp._doc._id;
-                                                                if(item._doc.category == "game") {
-                                                                    req.body['buyer_game_character'] = req.body.buyer_game_character;
-                                                                    item['target_game_character'] = req.body.target_game_character;
-                                                                }
-                                                                controllerVtrs.create(req)
-                                                                    .then(result => {       
-                                                                        controllerItems.updateById(country, itemId, item)
-                                                                            .then(data => {    
-                                                                                let mach_json = {"total_mach": user_price};
-                                                                                if(req.body.cryptoCurrencyCode == "BTC") {
-                                                                                    mach_json = {"total_btc": user_price};
-                                                                                } else if(req.body.cryptoCurrencyCode == "ETH") {
-                                                                                    mach_json = {"total_ether": user_price};
-                                                                                }                    
-                                                                                
-                                                                                controllerCoins.updateTotalCoin(country, coinId, mach_json)
-                                                                                    .then(() => {
-                                                                                        let body3 = {
-                                                                                            "type": "deposit",
-                                                                                            "itemId": result._doc.item._id,                                                                                            
-                                                                                            "vtr": result,
-                                                                                            "cryptoCurrencyCode": req.body.cryptoCurrencyCode,                                                                                           
-                                                                                            "price": req.body.price,
-                                                                                            "reqUser":user._doc._id,
-                                                                                            "regDate": util.formatDate(new Date().toString())
-                                                                                        };
-
-                                                                                        controllerVtrs.createEscrow(country, body3)
-                                                                                            .then(() => {
-                                                                                                //sms 전송
-                                                                                                smsController.sendBuynow(country, fromUserTag, targetUserTag)
-                                                                                                .then(() => {
-                                                                                                    //coin history 저장
-                                                                                                    let coinData = {
-                                                                                                        "extType" : "mach",
-                                                                                                        "coinId" : coinId,
-                                                                                                        "category" : "withdraw",
-                                                                                                        "status" : "success",
-                                                                                                        "currencyCode" : req.body.cryptoCurrencyCode,
-                                                                                                        "amount" : req.body.price,
-                                                                                                        "price" : req.body.price,
-                                                                                                        "regDate" : util.formatDate(new Date().toString())
-                                                                                                    }
-                                                                                                    controllerCoinHistorys.createData(country, coinData);
-
-                                                                                                    //바로구매 후 페르소나에 동기와 요청
-                                                                                                    // let seller_userTag = req.params.userTag;
-                                                                                                    // if(result._doc.item.trade_type == 'sell') {
-                                                                                                    //     seller_userTag = result._doc.item.userTag;
-                                                                                                    // }
-                                                                                                    // let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/buynow';
-
-                                                                                                    // let param = {
-                                                                                                    //     "country": dbconfig.country,
-                                                                                                    //     "vtr_id": result._doc._id.toString(), 
-                                                                                                    //     "mach": req.body.mach,
-                                                                                                    //     "itemId": result._doc.item._id.toString(),
-                                                                                                    //     "from_userId": fromUserTag,
-                                                                                                    //     "to_userId": targetUserTag
-                                                                                                    // };
-
-                                                                                                    // let header = {
-                                                                                                    //     'Content-Type': 'application/json'
-                                                                                                    // };
-
-                                                                                                    // console.log(param);
-
-                                                                                                    // request({uri: url, 
-                                                                                                    //     method:'POST',
-                                                                                                    //     form: param,
-                                                                                                    //     headers: header}, function (error, response, body) {
-                                                                                                    //     if (!error && response.statusCode == 200) {
-                                                                                                    //         console.log('success : ', body);
-                                                                                                    //     } else {
-                                                                                                    //         console.log('error = ' + error);
-                                                                                                    //     }
-                                                                                                    // });
-
-                                                                                                    result._doc['result'] = "success";
-                                                                                                    bitwebResponse.code = 200;
-                                                                                                    bitwebResponse.data = result;
-                                                                                                    res.status(200).send(bitwebResponse.create())
-                                                                                                });
-                                                                                            }).catch((err) => {
-                                                                                            console.error('err=>', err)
-                                                                                            bitwebResponse.code = 500;
-                                                                                            bitwebResponse.message = err;
-                                                                                            res.status(500).send(bitwebResponse.create())
-                                                                                        })
-                                                                                    }).catch((err) => {
-                                                                                    console.error('err=>', err)
-                                                                                    bitwebResponse.code = 500;
-                                                                                    bitwebResponse.message = err;
-                                                                                    res.status(500).send(bitwebResponse.create())
-                                                                                })
-                                                                            }).catch((err) => {
-                                                                            console.error('err=>', err)
-                                                                            bitwebResponse.code = 500;
-                                                                            bitwebResponse.message = err;
-                                                                            res.status(500).send(bitwebResponse.create())
-                                                                        })
-                                                                    }).catch((err) => {
-                                                                    console.error('err=>', err)
-                                                                    bitwebResponse.code = 500;
-                                                                    bitwebResponse.message = err;
-                                                                    res.status(500).send(bitwebResponse.create())
-                                                                })
-                                                            }).catch((err) => {
-                                                            console.error('err=>', err)
-                                                            bitwebResponse.code = 500;
-                                                            bitwebResponse.message = err;
-                                                            res.status(500).send(bitwebResponse.create())
-                                                        })
-                                                    }
-                                                }).catch((err) => {
-                                                console.error('err=>', err)
-                                                bitwebResponse.code = 500;
-                                                bitwebResponse.message = err;
-                                                res.status(500).send(bitwebResponse.create())
-                                            })
-                                        }).catch((err) => {
-                                        console.error('err=>', err)
-                                        bitwebResponse.code = 500;
-                                        bitwebResponse.message = err;
-                                        res.status(500).send(bitwebResponse.create())
-                                    })
-                                } else {
-                                    let message = "해당 아이템은 거래 진행 중입니다. 거래를 진행할 수 없습니다.";
-                                    if(country == "EN") {
-                                        message = "The transaction amount can not be greater than the buyer's retention amount.";
-                                    }
-                                    let msg = {
-                                        "code" : "E001",
-                                        "msg" : message
-                                    };
-                                    bitwebResponse.code = 200;
-                                    bitwebResponse.data = msg;
-                                    res.status(200).send(bitwebResponse.create())
-                                    return;
-                                }
-                            }).catch((err) => {
-                            console.error('err=>', err)
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = err;
-                            res.status(500).send(bitwebResponse.create())
-                        })
-                    }).catch((err) => {
-                    console.error('err=>', err)
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = err;
-                    res.status(500).send(bitwebResponse.create())
-                })
-            }).catch((err) => {
-            console.error('err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
+    var bitwebResponse = new BitwebResponse();
+    let body = {
+        "buyerTag": req.body.to_userId,
+        "sellerTag": req.body.from_userId,
+        "itemId": req.body.itemId,
+        "cryptoCurrencyCode": req.body.cryptoCurrencyCode,
+        "price": req.body.price,
+        "target_game_character": req.body.target_game_character
     }
+    let url = dbconfig.APIServer + "/v2/vtrs/" + body.itemId + "/step/10";
+    let header = {
+        'loginToken': req.cookies.loginToken,
+        'token': dbconfig.APIToken
+    };
+    let country = dbconfig.country;
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body: body,
+        json: true
+    }
+
+    //채팅 서버에서 API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+
+    //sell인 경우에만 동작
+    // if (req.body.itemId != null
+    //     && req.body.from_userId != null
+    //     && req.body.to_userId != null) {
+
+    //     let data = {}
+    //     let itemId = req.body.itemId;
+    //     let country = dbconfig.country;
+
+    //     var bitwebResponse = new BitwebResponse();
+    //     let controllerItems = require('../controllers/items');
+
+    //     controllerItems.getByItemId(country, itemId, "", "")
+    //         .then(item => {
+
+    //             delete req.body['itemId'];
+    //             item._doc.status = 2;
+    //             req.body['item'] = item;
+
+    //             if(item.price != req.body.price) {
+    //                 item._doc.price = req.body.price;
+    //                 item._doc.total_price = req.body.price;
+    //             }
+
+    //             let controllerUser = require('../controllers/users');
+    //             let userTags = [req.body.from_userId, req.body.to_userId];
+
+    //             controllerUser.getByUserTags(country, userTags)
+    //                 .then((users) => {
+    //                     let from_findIndex = users.findIndex((group) => {
+    //                         return group._doc.userTag == req.body.from_userId;
+    //                     });
+
+    //                     let to_findIndex = users.findIndex((group) => {
+    //                         return group._doc.userTag == req.body.to_userId;
+    //                     });
+
+    //                     req.body.from_userId = users[from_findIndex];
+    //                     req.body.to_userId = users[to_findIndex];
+
+    //                     //휴대전화번호 추가
+    //                     req.body['seller_phone'] = users[from_findIndex]._doc.phone;
+    //                     req.body['buyer_phone'] = users[to_findIndex]._doc.phone;
+    //                     if(item._doc.category == "game") {
+    //                         req.body['buyer_game_character'] = req.body.game_character;
+    //                         req.body['seller_game_character'] = item._doc.game_character;
+    //                     }
+    //                     let fromUserTag = req.body.to_userId.userTag;
+    //                     let targetUserTag = item._doc.userTag;
+
+    //                     req.body['buy_status'] = true;
+    //                     //req.body['sell_status'] = true;
+    //                     req.body['completed_buy_date'] = util.formatDate(new Date().toString());
+    //                     //req.body['completed_sell_date'] = util.formatDate(new Date().toString());
+
+    //                     controllerVtrs.getByItemId(country, itemId) 
+    //                         .then(vtr => {
+    //                             if(vtr == null) {
+    //                                 controllerUser.getById(country, req.body.to_userId)
+    //                                     .then(user => {
+    //                                         let coinId = user._doc.coinId;
+    //                                         controllerCoins.getByCoinId(country, coinId)
+    //                                             .then(coin => {
+
+    //                                                 let user_price = coin.total_mach;
+    //                                                 if(req.body.cryptoCurrencyCode == "BTC") {
+    //                                                     user_price = coin.total_btc == undefined ? 0 : coin.total_btc;
+    //                                                 } else if(req.body.cryptoCurrencyCode == "ETH") {
+    //                                                     user_price = coin.total_ether == undefined ? 0 : coin.total_ether;
+    //                                                 }
+
+    //                                                 user_price = parseFloat((user_price - req.body.price).toFixed(8));
+    //                                                 if (user_price < 0) {
+    //                                                     let message = "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+    //                                                     if(country == "EN") {
+    //                                                         message = "The transaction amount can not be greater than the buyer's retention amount.";
+    //                                                     }
+    //                                                     let msg = {
+    //                                                         "status": "fail",
+    //                                                         "code" : "E002",
+    //                                                         "msg" : message
+    //                                                     };
+    //                                                     bitwebResponse.code = 200;
+    //                                                     bitwebResponse.data = msg;
+    //                                                     res.status(200).send(bitwebResponse.create());
+    //                                                     return;
+    //                                                 } else {
+    //                                                     let data = {
+    //                                                         "roomToken":util.makeToken(),
+    //                                                         "buyer_id": fromUserTag,
+    //                                                         "seller_id": targetUserTag,
+    //                                                         "cmod": "deal",
+    //                                                         "country":dbconfig.country,
+    //                                                         "item": item
+    //                                                     }
+    //                                                     controllerVtrs.createVtrTemp(data)
+    //                                                         .then((vtrTemp) => {
+    //                                                             item['vtrTempId'] = vtrTemp._doc._id;
+    //                                                             if(item._doc.category == "game") {
+    //                                                                 req.body['buyer_game_character'] = req.body.buyer_game_character;
+    //                                                                 item['target_game_character'] = req.body.target_game_character;
+    //                                                             }
+    //                                                             controllerVtrs.create(req)
+    //                                                                 .then(result => {       
+    //                                                                     controllerItems.updateById(country, itemId, item)
+    //                                                                         .then(data => {    
+    //                                                                             let mach_json = {"total_mach": user_price};
+    //                                                                             if(req.body.cryptoCurrencyCode == "BTC") {
+    //                                                                                 mach_json = {"total_btc": user_price};
+    //                                                                             } else if(req.body.cryptoCurrencyCode == "ETH") {
+    //                                                                                 mach_json = {"total_ether": user_price};
+    //                                                                             }                    
+                                                                                
+    //                                                                             controllerCoins.updateTotalCoin(country, coinId, mach_json)
+    //                                                                                 .then(() => {
+    //                                                                                     let body3 = {
+    //                                                                                         "type": "deposit",
+    //                                                                                         "itemId": result._doc.item._id,                                                                                            
+    //                                                                                         "vtr": result,
+    //                                                                                         "cryptoCurrencyCode": req.body.cryptoCurrencyCode,                                                                                           
+    //                                                                                         "price": req.body.price,
+    //                                                                                         "reqUser":user._doc._id,
+    //                                                                                         "regDate": util.formatDate(new Date().toString())
+    //                                                                                     };
+
+    //                                                                                     controllerVtrs.createEscrow(country, body3)
+    //                                                                                         .then(() => {
+    //                                                                                             //sms 전송
+    //                                                                                             smsController.sendBuynow(country, fromUserTag, targetUserTag)
+    //                                                                                             .then(() => {
+    //                                                                                                 //coin history 저장
+    //                                                                                                 let coinData = {
+    //                                                                                                     "extType" : "mach",
+    //                                                                                                     "coinId" : coinId,
+    //                                                                                                     "category" : "withdraw",
+    //                                                                                                     "status" : "success",
+    //                                                                                                     "currencyCode" : req.body.cryptoCurrencyCode,
+    //                                                                                                     "amount" : req.body.price,
+    //                                                                                                     "price" : req.body.price,
+    //                                                                                                     "regDate" : util.formatDate(new Date().toString())
+    //                                                                                                 }
+    //                                                                                                 controllerCoinHistorys.createData(country, coinData);
+
+    //                                                                                                 //바로구매 후 페르소나에 동기와 요청
+    //                                                                                                 // let seller_userTag = req.params.userTag;
+    //                                                                                                 // if(result._doc.item.trade_type == 'sell') {
+    //                                                                                                 //     seller_userTag = result._doc.item.userTag;
+    //                                                                                                 // }
+    //                                                                                                 // let url = dbconfig.chatbot_base_url + 'api/v1/vtrs/trade/buynow';
+
+    //                                                                                                 // let param = {
+    //                                                                                                 //     "country": dbconfig.country,
+    //                                                                                                 //     "vtr_id": result._doc._id.toString(), 
+    //                                                                                                 //     "mach": req.body.mach,
+    //                                                                                                 //     "itemId": result._doc.item._id.toString(),
+    //                                                                                                 //     "from_userId": fromUserTag,
+    //                                                                                                 //     "to_userId": targetUserTag
+    //                                                                                                 // };
+
+    //                                                                                                 // let header = {
+    //                                                                                                 //     'Content-Type': 'application/json'
+    //                                                                                                 // };
+
+    //                                                                                                 // console.log(param);
+
+    //                                                                                                 // request({uri: url, 
+    //                                                                                                 //     method:'POST',
+    //                                                                                                 //     form: param,
+    //                                                                                                 //     headers: header}, function (error, response, body) {
+    //                                                                                                 //     if (!error && response.statusCode == 200) {
+    //                                                                                                 //         console.log('success : ', body);
+    //                                                                                                 //     } else {
+    //                                                                                                 //         console.log('error = ' + error);
+    //                                                                                                 //     }
+    //                                                                                                 // });
+
+    //                                                                                                 result._doc['result'] = "success";
+    //                                                                                                 bitwebResponse.code = 200;
+    //                                                                                                 bitwebResponse.data = result;
+    //                                                                                                 res.status(200).send(bitwebResponse.create())
+    //                                                                                             });
+    //                                                                                         }).catch((err) => {
+    //                                                                                         console.error('err=>', err)
+    //                                                                                         bitwebResponse.code = 500;
+    //                                                                                         bitwebResponse.message = err;
+    //                                                                                         res.status(500).send(bitwebResponse.create())
+    //                                                                                     })
+    //                                                                                 }).catch((err) => {
+    //                                                                                 console.error('err=>', err)
+    //                                                                                 bitwebResponse.code = 500;
+    //                                                                                 bitwebResponse.message = err;
+    //                                                                                 res.status(500).send(bitwebResponse.create())
+    //                                                                             })
+    //                                                                         }).catch((err) => {
+    //                                                                         console.error('err=>', err)
+    //                                                                         bitwebResponse.code = 500;
+    //                                                                         bitwebResponse.message = err;
+    //                                                                         res.status(500).send(bitwebResponse.create())
+    //                                                                     })
+    //                                                                 }).catch((err) => {
+    //                                                                 console.error('err=>', err)
+    //                                                                 bitwebResponse.code = 500;
+    //                                                                 bitwebResponse.message = err;
+    //                                                                 res.status(500).send(bitwebResponse.create())
+    //                                                             })
+    //                                                         }).catch((err) => {
+    //                                                         console.error('err=>', err)
+    //                                                         bitwebResponse.code = 500;
+    //                                                         bitwebResponse.message = err;
+    //                                                         res.status(500).send(bitwebResponse.create())
+    //                                                     })
+    //                                                 }
+    //                                             }).catch((err) => {
+    //                                             console.error('err=>', err)
+    //                                             bitwebResponse.code = 500;
+    //                                             bitwebResponse.message = err;
+    //                                             res.status(500).send(bitwebResponse.create())
+    //                                         })
+    //                                     }).catch((err) => {
+    //                                     console.error('err=>', err)
+    //                                     bitwebResponse.code = 500;
+    //                                     bitwebResponse.message = err;
+    //                                     res.status(500).send(bitwebResponse.create())
+    //                                 })
+    //                             } else {
+    //                                 let message = "해당 아이템은 거래 진행 중입니다. 거래를 진행할 수 없습니다.";
+    //                                 if(country == "EN") {
+    //                                     message = "The transaction amount can not be greater than the buyer's retention amount.";
+    //                                 }
+    //                                 let msg = {
+    //                                     "code" : "E001",
+    //                                     "msg" : message
+    //                                 };
+    //                                 bitwebResponse.code = 200;
+    //                                 bitwebResponse.data = msg;
+    //                                 res.status(200).send(bitwebResponse.create())
+    //                                 return;
+    //                             }
+    //                         }).catch((err) => {
+    //                         console.error('err=>', err)
+    //                         bitwebResponse.code = 500;
+    //                         bitwebResponse.message = err;
+    //                         res.status(500).send(bitwebResponse.create())
+    //                     })
+    //                 }).catch((err) => {
+    //                 console.error('err=>', err)
+    //                 bitwebResponse.code = 500;
+    //                 bitwebResponse.message = err;
+    //                 res.status(500).send(bitwebResponse.create())
+    //             })
+    //         }).catch((err) => {
+    //         console.error('err=>', err)
+    //         bitwebResponse.code = 500;
+    //         bitwebResponse.message = err;
+    //         res.status(500).send(bitwebResponse.create())
+    //     })
+    // }
 })
 
 router.put('/:itemId/trade/:tradeType', function (req, res, next) {
-
-    // "vtrId": "5bc9a10c8f8b950ffe068dfa"
-    let sampleJson =
-        {
-            "status": true
-        }
-
     var bitwebResponse = new BitwebResponse();
-    
-    let country = dbconfig.country;
-        controllerVtrs.updateStatusByItemId(country, req)
-            .then((result) => {
-                let data = {}
-                bitwebResponse.code = 200;
-                bitwebResponse.data = result;
-                res.status(200).send(bitwebResponse.create())
-            }).catch((err) => {
-            console.error('err=>', err)
+    let itemId = req.params.itemId;
+    let tradeType = -1;
+    if(req.params.tradeType == "buy") {
+        tradeType = 2
+    } else if(req.params.tradeType == "sell") {
+        tradeType = 3
+    } else if(req.params.tradeType == "confirm") {
+        tradeType = 4
+    }
+
+    let url = dbconfig.APIServer + "/v2/vtrs/" + itemId + "/step/" + tradeType;
+    let header = {
+        'loginToken': req.cookies.loginToken,
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header
+    }
+
+    //채팅 서버에서 API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
             bitwebResponse.code = 500;
-            bitwebResponse.message = err;
+            bitwebResponse.message = error;
             res.status(500).send(bitwebResponse.create())
-        })
+        }
+    });
+
+    // // "vtrId": "5bc9a10c8f8b950ffe068dfa"
+    // let sampleJson =
+    //     {
+    //         "status": true
+    //     }
+
+    // var bitwebResponse = new BitwebResponse();
+    
+    // let country = dbconfig.country;
+    //     controllerVtrs.updateStatusByItemId(country, req)
+    //         .then((result) => {
+    //             let data = {}
+    //             bitwebResponse.code = 200;
+    //             bitwebResponse.data = result;
+    //             res.status(200).send(bitwebResponse.create())
+    //         }).catch((err) => {
+    //         console.error('err=>', err)
+    //         bitwebResponse.code = 500;
+    //         bitwebResponse.message = err;
+    //         res.status(500).send(bitwebResponse.create())
+    //     })
 })
 
 router.put('/chatbot/:vtrId/trade/:tradeType', function (req, res, next) {
@@ -966,21 +1048,54 @@ router.delete('/chatbot/cancel/:vtrId/:userId', function (req, res, next) {
 router.delete('/cancel/:itemId/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
-    let userId = req.params.userId;
-    let country = dbconfig.country;
+    let body = {
+        "reqUserTag": req.params.userId
+    }
 
-    controllerVtrs.deleteVtrsByItemId(country, itemId, userId)
-        .then((result) => {
-            let data = {}
+    let url = dbconfig.APIServer + "/v2/vtrs/" + itemId + "/step/15";
+    let header = {
+        'loginToken': req.cookies.loginToken,
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
+
+    //채팅 서버에서 API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
             bitwebResponse.code = 200;
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+
+    // controllerVtrs.deleteVtrsByItemId(country, itemId, userId)
+    //     .then((result) => {
+    //         let data = {}
+    //         bitwebResponse.code = 200;
+    //         bitwebResponse.data = result;
+    //         res.status(200).send(bitwebResponse.create())
+    //     }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })
 });
 
 router.put('/opposition/:itemId', function (req, res, next) {

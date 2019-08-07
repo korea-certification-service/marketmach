@@ -21,10 +21,9 @@
         var $plus_amount = 0;//교환 금액 값을 넣기위한 jquery엘리먼트
         var $total_mach_amount;//교환 후 나의 지갑 잔액 값을 넣기위한 jquery엘리먼트
 
-        getRate();
+        var select_value = 1000;
         
         $(document).ready(function(){
-            var select_value = 0;
 
             $game_amount = $("#game_amount");
             $minus_amount = $("#minus_amount");
@@ -34,9 +33,8 @@
             $plus_amount = $("#plus_amount");
             $total_mach_amount = $("#total_mach_amount");
 
-            getUesrGameInfo();
-            getCoin();
-            
+            getRate();
+
             $('[name=coin]').on("change", function(e){
                 select_value = $(e.target).val();
                 calculate(mach_rate, gamecoin_rate, select_value);
@@ -44,7 +42,7 @@
 
             $("#doExchange").on("click", function(){
                 var result = calculate(mach_rate, gamecoin_rate, select_value);
-                var _confirm = confirm(result.confirm.from+"MC을"+result.confirm.to+"MACH으로 교환하시겠습니까?");
+                var _confirm = confirm(result.confirm.from+"몽키코인을"+result.confirm.to+"마하로 교환하시겠습니까?");
                 console.log(result.body);
                 if( result.confirm.after < 0 ) {
                     alert("보유중인 게임코인값이 부족합니다");
@@ -84,21 +82,16 @@
             //     $(e.target).parent("li").addClass("on");
             // });
         });
-        function getRate(option){
-            /**
-            *option = {
-                url: API주소
-
-            }
-            *
-            * 
-            */
+        function getRate(){
             $.ajax({
                 method: "POST",
                 url: "/v1/gameCenter/games/list"
             }).done(function (success) {
                 mach_rate = success.data.list[0].mach_rate;
                 gamecoin_rate = success.data.list[0].gamecoin_rate;
+
+                getCoin();
+
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -112,6 +105,9 @@
                 $("#mach").html(total_mach + " <span>MACH</span>");
                 $("#mach_amount").html(total_mach);
                 $("#total_mach_amount").html(total_mach);
+
+                getUesrGameInfo();
+
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -127,6 +123,8 @@
                     $("#game_coin").text(my_game_coin);
                     $("#game_amount").html(my_game_coin);
                     $("#total_game_amount").html(my_game_coin);
+
+                    calculate(mach_rate, gamecoin_rate, select_value);
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -141,8 +139,9 @@
 
             reteResult = sVal * mRate;
 
-            plus_amountResult = reteResult + total_mach;
             minus_amountResult = my_game_coin - sVal;
+
+            plus_amountResult = reteResult + total_mach;
 
             $("#calc_result_game").html(select_value + " <span>MC</span>");
             $("#calc_result_mach").html(reteResult + " MACH");
@@ -251,11 +250,11 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;게임자산 -> MACH</span></h1>
+                        <h1 class="tit_mypage">교환하기<span>게임자산 &#8594; MACH</span></h1>
                         <div class="mypage_main_info cf gameStation_mywallet">
                             <div class="lft_area">
                                 <p>
-                                    <em id="game_name">마하 어드벤쳐</em><br>
+                                    <em id="game_name">마하 어드벤처</em><br>
                                     <em id="game_coin" class="color-0a73b8">0</em> MC 
                                 </p>
                             </div>
@@ -282,7 +281,6 @@
                                         <td>
                                             <div class="dib_220">
                                                 <select class="custom-select" name="coin">
-                                                    <option value="0" selected>0 MC</option>
                                                     <option value="1000">1000 MC</option>
                                                     <option value="5000">5000 MC</option>
                                                     <option value="10000">10000 MC</option>

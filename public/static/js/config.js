@@ -1,5 +1,5 @@
 var __config = {
 	"str": {
-		"chatbot_url": "http://13.209.227.60:4100",
+		"chatbot_url": "http://localhost:4100",
     }
 }

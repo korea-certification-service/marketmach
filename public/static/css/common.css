@@ -539,7 +539,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
     .header .nav > .nav_menu > li > .depth2.show{height: auto;}
-    .header .nav > .nav_menu > li > .depth2 > li{width: 50%; text-align: center;}
+    .header .nav > .nav_menu > li > .depth2 > li{/*width: 50%;*/}
 
     .assets_trade_sec .bd_area{padding-bottom: 0;}
     .item_trade_sec .trade_list .table th{padding: 0 6px; height: 46px; font-size: 13px;}

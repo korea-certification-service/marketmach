@@ -5,16 +5,19 @@
 </head>
 <body>
 <div id="wrap" class="wrap">
-    <div class="error_sec_wrap">
-        <section class="error_sec">
-            <h1>요청하신 페이지를 찾을 수 없습니다</h1>
-            <p>입력하신 URL이 잘못되었거나 잘못된 요청입니다.</p>
-            <div class="box1">
-                <img src="/static/img/sub/prepared_machbot.png" alt="">
+    <div class="notfound_wrap">
+        <section class="notfound_sec cf">
+            <div class="lft_box">
+                <img src="/static/img/symbol/symbol_bird.gif" alt="">
             </div>
-            <div class="box2">
-                <button class="btn bgc4" onclick="history.back();">이전 페이지</button>
-                <button class="btn bgc2" onclick="location.href='/main';">메인 페이지</button>
+            <div class="rgh_box">
+                <h1><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
+                <h2>요청하신 페이지를 찾을 수 없습니다</h2>
+                <p>입력하신 URL이 잘못되었거나 잘못된 요청입니다.</p>
+                <div class="btn_box">
+                    <button class="btn" onclick="history.back();">뒤로가기</button>
+                    <button class="btn" onclick="location.href='/main';">메인으로</button>
+                </div>
             </div>
         </section>
     </div>

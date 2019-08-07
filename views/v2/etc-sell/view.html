@@ -163,11 +163,12 @@
             getData();
 
             $('#openVTR').on('click', function() {
-                openVTR();
+                //openVTR();
+                location.replace("/etc-sells/vtr/" + itemId);
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/etc-sells/vtr/" + itemId;
+                location.replace("/etc-sells/vtr/" + itemId);
             });
 
             $('#buynow, #pointBuynow').on('click', function() {
@@ -289,13 +290,24 @@
 
                 if(success.data.status == "0") {
                     if(userTag == success.data.userTag) {
-                        $('#modify').css('display','inline-block');
-                        $('#remove').css('display','inline-block');
-                    } else {
-                        if(success.data.userTag !== "machprime") $('#regVTR').css('display','inline-block');
-                        $('#buynow').css('display','inline-block');
-                        $('#pointBuynow').css('display','inline-block');
-                    }
+                        if(buyerTag == "") {
+                            $('#modify').css('display','inline-block');
+                            $('#remove').css('display','inline-block');                            
+                        } else {
+                            $('#openVTR').css('display','inline-block');
+                            $('#cancel').css('display','inline-block');
+                        }
+                    } else {        
+                        if(buyerTag == "") {                         
+                            if(success.data.userTag !== "machprime") $('#regVTR').css('display','inline-block');
+                            $('#buynow').css('display','inline-block');
+                        } else {
+                            if(userTag == buyerTag || userTag == sellerTag) {
+                                $('#openVTR').css('display','inline-block');
+                                $('#cancel').css('display','inline-block');
+                            }
+                        } 
+                    }  
                 } else if((success.data.status > 0 && success.data.status < 4) || success.data.status == 50) {
                     if(success.data.status == "1" || success.data.status == "50") {
                         if(success.data.vtr_btn_active) {
@@ -314,6 +326,7 @@
                             if(userTag == success.data.userTag) {
                                 $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
@@ -324,6 +337,7 @@
                             } else {
                                 $('#cancel').css('display','inline-block');
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                             $('#opposition').css('display','inline-block');
                         }
@@ -369,7 +383,7 @@
         }
 
         function buynow() {
-            location.href='/etc-sells/buynow/' + itemId;
+            location.replace('/etc-sells/buynow/' + itemId);
         }
 
         function removeItem() {
@@ -408,6 +422,7 @@
             var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
             if(isMobile()) {
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
                 popup.location.href = '/room?' + body;
             } else {
                 window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
@@ -428,7 +443,11 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    location.href = '/etc-sells/detail/' + itemId;
+                    if(success.data.successYn == "Y") {
+                        location.href = '/etc-sells/detail/' + itemId;
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });

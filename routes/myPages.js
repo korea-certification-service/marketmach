@@ -825,7 +825,7 @@ router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res,
             arrDepth:[6,3]
         });     
     } else {
-        res.render('v2_en/myPage/auth_phone', {
+        res.render('v2_en/myPage/checkKyc', {
             title: 'Bitweb user grade',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -837,6 +837,20 @@ router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res,
             arrDepth:[6,3]
         });
     }
+});
+
+router.get('/user/kyc',sessionChecker.sessionChecker2, function (req, res, next) {
+    res.render('v2_en/myPage/auth_phone', {
+        title: 'Bitweb user grade',
+        userId: req.session.userId,
+        coinId: req.session.coinId,
+        pointId: req.session.pointId,
+        userTag: req.session.userTag,
+        authPhone: req.session.authPhone,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        arrDepth:[6,3]
+    });
 });
 
 router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, next) {

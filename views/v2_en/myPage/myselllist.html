@@ -236,9 +236,9 @@
                                     if(buyList[i].status ==1) {
                                         result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel<br>Trade</button>';    
                                     } else if(buyList[i].status ==2) {
-                                        if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
+                                        // if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade<br>(refund)</button>';
-                                        }
+                                        // }
                                     } else if(buyList[i].status ==3){
                                         result +=   '<button class="btn btn_in_view10" id="oppisitionItem" onclick="oppisitionItem(\''+itemId+'\');">dispute</button>';
                                     } else if(buyList[i].status == 5) {
@@ -277,7 +277,7 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('Do you want to purchase confirmation?');
+            var confirms = confirm('Do you want to Pay(Escrow)?');
             if(confirms) {
                 var data = {
                     "status": true
@@ -352,8 +352,12 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    alert("Transaction canceled.");
-                    getItemList();
+                    if(success.data.successYn == "Y") {
+                        alert("Transaction canceled.");
+                        getItemList();
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
@@ -508,8 +512,8 @@
                                             <li>
                                                 <input type="radio" name="status" id="all" value=""><label for="all">All</label><br class="mob_br">
                                                 <input type="radio" name="status" id="regist" value="0"><label for="regist">Available</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Request</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Purchase Confirm</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Transaction Request</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Pay(Escrow)</label><br class="mob_br">
                                             </li>
                                             <li>
                                                 <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Complete Sales</label><br class="mob_br">
@@ -569,7 +573,7 @@
                         </div>
                         
                         <div class="img_info_sec">
-                            <!-- <img src="/static/img/sub/safety_transaction_information.jpg" alt=""> -->
+                            <img src="/static/img/en/en_safety_transaction_information.jpg" alt="">
                         </div>
 
                         <!-- 모달창 -->

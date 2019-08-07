@@ -48,6 +48,7 @@ router.get('/trade/list/', function (req, res, next) {
         res.render('v2/gameStation/tradelist', {
             title: 'Bitweb Main',
             userId: req.session.userId,
+            userName: req.session.userName,
             coinId: req.session.coinId,
             authPhone: req.session.authPhone,
             pointId: req.session.pointId,
@@ -60,6 +61,7 @@ router.get('/trade/list/', function (req, res, next) {
         res.render('v2_point/gameStation/tradelist', {
             title: 'Bitweb Main',
             userId: req.session.userId,
+            userName: req.session.userName,
             coinId: req.session.coinId,
             authPhone: req.session.authPhone,
             pointId: req.session.pointId,
@@ -72,6 +74,7 @@ router.get('/trade/list/', function (req, res, next) {
         res.render('v2_en/gameStation/tradelist', {
             title: 'Bitweb Main',
             userId: req.session.userId,
+            userName: req.session.userName,
             coinId: req.session.coinId,
             authPhone: req.session.authPhone,
             pointId: req.session.pointId,
