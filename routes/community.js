@@ -244,7 +244,7 @@ router.get('/list', function (req, res, next) {
     let body = {
         "param":{
             "country": dbconfig.country,
-            'type': { $regex: type, $options: 'i' }
+            'type': type
         },
         "option":{
             "perPage":perPage,
@@ -253,11 +253,7 @@ router.get('/list', function (req, res, next) {
     }
 
     if(req.query.title != undefined) {
-        if(type == "movie") {
-            body['title'] ={ $regex: req.query.title, $options: 'i' }
-        } else {
-            body['$or']= [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}]
-        }
+        body['param']['$or']= [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}]
     };
     
     request({uri: url, 
