@@ -47,6 +47,7 @@
             }).done(function (success) {
                 console.log(success.data);
                 pageIdx = success.pageIdx;
+                setCommunityNotices(success.data.notices);
                 setCommunitys(success.data.list);
                 if(success.data.count < 20) {
                     $('#more_search').hide();
@@ -56,6 +57,32 @@
             }).fail(function (fail) {
                 console.log(fail);
             })
+        }
+
+        function setCommunityNotices(data) {
+            var result="";
+            
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var notice = data[i].notice == true ? "공지" : "";
+                var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
+                var reporter = data[i].reporter;
+                var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
+                var regDate = data[i].regDate.substring(2, 10);
+                var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
+
+                result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
+                            '<td>'+notice+'</td>' +
+                            '<td class="tal">' +
+                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                                '</div>' +
+                            '</td>' +
+                            '<td>'+ reporter +'</td>' +
+                            '<td>'+ count +'</td>' +
+                            '<td>'+ regDate +'</td>' +
+                        '</tr>';
+            }
+            $('#community_list').html(result);
         }
 
         function setCommunitys(data) {
@@ -74,7 +101,7 @@
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
                 result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td>'+type.text+'</td>' +
+                            '<td></td>' +
                             '<td class="tal">' +
                                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
                                 '</div>' +
@@ -131,7 +158,7 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>분류</th>
+                                        <th>공지</th>
                                         <th>제목</th>
                                         <th>작성자</th>
                                         <th>좋아요</th>
