@@ -53,7 +53,7 @@
                 recommanded = success.data.recommandedUser;
                 var recommandCount = success.data.recommandCount;
                 var image = "";
-                var movieUrl = (success.data.movieUrl != "" && success.data.movieUrl != undefined) ? success.data.movieUrl : "";
+                var movieUrl = (success.data.movieUrl != "" && success.data.movieUrl != undefined) ? "<div class='hasYoutube'>"+success.data.movieUrl+"</div>" : "";
                 for(var i=0;i<success.data.images.length; i++) {
                     image += "<div style='text-align: center; margin-bottom:10px;'><img style='align: center;' src='" + success.data.images[i].path + "'></div>";
                 }
