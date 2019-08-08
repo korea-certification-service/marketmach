@@ -64,14 +64,15 @@
             
             for(var i=0; i<data.length; i++) {
                 var id = data[i]._id;
-                var notice = data[i].notice == true ? "공지" : "";
+                var notice = data[i].notice == true ? "<span class='span_noti'>공지</span>" : "";
+                var noticeClass = data[i].notice == true ? "tr_notice" : "";
                 var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
                 var reporter = data[i].reporter;
                 var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
+                result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
                             '<td>'+notice+'</td>' +
                             '<td class="tal">' +
                                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
@@ -139,7 +140,7 @@
                     <section class="board_sec community_sec">
                         <div class="community_tit cf">
                             <h1 class="tit_community">커뮤니티</h1> 
-                            <button class="btn btn-success" id="register">등록</button>
+                            <button class="btn btn_nv" id="register">등록</button>
                             <div class="community_searchbar">
                                 <input type="text" class="form-control" id="title">
                                 <input type="button" class="btn_search" id="btn_search">
@@ -156,7 +157,7 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>공지</th>
+                                        <th>분류</th>
                                         <th>제목</th>
                                         <th>작성자</th>
                                         <th>좋아요</th>

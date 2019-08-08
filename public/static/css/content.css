@@ -108,6 +108,8 @@
 .table_list tbody td .btn_cmm_bd{}
 .table_list tbody tr:hover{background-color: #fff5d9;}
 .table_list tbody tr{cursor: pointer;}
+.table_list tbody .tr_notice{}
+.table_list tbody .tr_notice td .span_noti{padding: 4px 8px; background-color: #F05825; color: #fff; border-radius: 4px;}
 .table_list .col5_1{width: 160px;}
 .table_list .col5_2{}
 .table_list .col5_3{width: 110px;}

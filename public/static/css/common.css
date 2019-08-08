@@ -48,7 +48,11 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_go_detail:hover{color: #333;}
 .btn.btn_more_list:hover{color: #666;}
 .btn.btn_go_list{background-color: #17a2b8; color: #ffffff;}
-.btn.btn_blln{border: 1px solid #0975b8; color: #0975b8; background-color: #ffffff;}
+.btn.btn_blln{border: 2px solid #0975b8; background-color: #ffffff; font-weight: 600;}
+.btn.btn_nvln{border: 2px solid #0d0943; background-color: #ffffff; font-weight: 600;}
+.btn.btn_nv{background-color: #0d0943; color: #ffffff; font-weight: 600;}
+.btn.btn_nv:hover, .btn_blln:hover, .btn_nvln:hover{color: inherit;}
+.btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 /********** Common **********/
 .cf:after{display: block; content: ''; clear: both;}
 .fll{float: left;}
