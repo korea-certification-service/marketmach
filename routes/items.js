@@ -13,7 +13,7 @@ const controllerVtrs = require('../controllers/vtrs')
 const controllerCms = require('../controllers/cms')
 const shortUrl = require('node-url-shortener')
 var dbconfig = require('../config/dbconfig');
-const request = require("request");
+const request = require('request-promise-native');
 var controllerNotices = require('../controllers/notices');
 
 router.get('/', function (req, res, next) {
@@ -642,6 +642,7 @@ router.post('/', function (req, res, next) {
         data['total_point'] = req.body.point * req.body.count;
 
         var bitwebResponse = new BitwebResponse();
+        let input_text = req.body.title;
 
         controllerItems.createByItem(country, data)
             .then(result => {
@@ -721,6 +722,115 @@ router.post('/', function (req, res, next) {
             res.status(500).send(bitwebResponse.create())
         })
 
+        // ATS 기능 구현을 위한 prototype 구현
+        // request({
+        //     uri: "https://www.googleapis.com/language/translate/v2?key=AIzaSyCh4pRdojrMcG6xeuG6ufB7hDRLpKRzP3g",
+        //     method: "POST",
+        //     qs: {
+        //         target: 'en',
+        //         format: 'html',
+        //         q: input_text
+        //     },
+        // })
+        // .then(title => {
+        //     // let regExp = /[\{\}\[\]\/.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\"]/gi;
+        //     // let title_en_sentence = JSON.parse(title).data.translations[0].translatedText.replace(/&#39;/gi,"'").replace(regExp, "").toLowerCase();
+        //     req.body['title_en'] = JSON.parse(title).data.translations[0].translatedText;
+        //     input_text = req.body.desc;
+
+        //     request({
+        //         uri: "https://www.googleapis.com/language/translate/v2?key=AIzaSyCh4pRdojrMcG6xeuG6ufB7hDRLpKRzP3g",
+        //         method: "POST",
+        //         qs: {
+        //             target: 'en',
+        //             format: 'html',
+        //             q: input_text
+        //         },
+        //     })
+        //     .then(desc => {
+        //         // let regExp = /[\{\}\[\]\/.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\"]/gi;
+        //         // let desc_en_sentence = JSON.parse(desc).data.translations[0].translatedText.replace(/&#39;/gi,"'").replace(regExp, "").toLowerCase();
+        //         req.body['desc_en'] = JSON.parse(desc).data.translations[0].translatedText;
+
+        //         controllerItems.createByItem(country, data)
+        //             .then(result => {
+        //                 if(dbconfig.bonus.firstItem > 0) {
+        //                     //최초 게시글인 경우 1마하를 준다.
+        //                     controllerItems.getItemCountByUserTag(country, data.userTag)
+        //                         .then(count => {
+        //                             if(count == 1) {
+        //                                 controllerUsers.getByUserTag(country, data.userTag)
+        //                                     .then(user => {
+        //                                         controllerCoins.getByCoinId(country, user._doc.coinId)
+        //                                             .then(coin => {
+        //                                                 if(coin._doc.firstItem == undefined) {
+        //                                                     let data = {"total_mach" : coin._doc.total_mach + dbconfig.bonus.firstItem, "firstItem": true};
+        //                                                     controllerCoins.updateById(country, user._doc.coinId, data)
+        //                                                         .then(() => {
+                                                                    
+        //                                                             let data10 = {
+        //                                                                 "extType":"mach",
+        //                                                                 "coinId": user._doc.coinId,
+        //                                                                 "category": "event-firstItem",          
+        //                                                                 "status": "success",
+        //                                                                 "currencyCode": "MACH",
+        //                                                                 "amount": dbconfig.bonus.firstItem,
+        //                                                                 "mach": dbconfig.bonus.firstItem,
+        //                                                                 "regDate": util.formatDate(new Date().toString())  
+        //                                                             }
+                                                
+        //                                                             controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data10);
+                                                                    
+        //                                                             bitwebResponse.code = 200;
+        //                                                             bitwebResponse.data = result;
+        //                                                             res.status(200).send(bitwebResponse.create())
+        //                                                         }).catch((err) => {
+        //                                                         // console.error('err=>', err)
+        //                                                         bitwebResponse.code = 500;
+        //                                                         bitwebResponse.message = err;
+        //                                                         res.status(500).send(bitwebResponse.create())
+        //                                                     })
+        //                                                 } else {
+        //                                                     bitwebResponse.code = 200;
+        //                                                     bitwebResponse.data = result;
+        //                                                     res.status(200).send(bitwebResponse.create())
+        //                                                 }
+        //                                             }).catch((err) => {
+        //                                             // console.error('err=>', err)
+        //                                             bitwebResponse.code = 500;
+        //                                             bitwebResponse.message = err;
+        //                                             res.status(500).send(bitwebResponse.create())
+        //                                         })
+        //                                     }).catch((err) => {
+        //                                     // console.error('err=>', err)
+        //                                     bitwebResponse.code = 500;
+        //                                     bitwebResponse.message = err;
+        //                                     res.status(500).send(bitwebResponse.create())
+        //                                 })
+        //                             } else {
+        //                                 bitwebResponse.code = 200;
+        //                                 bitwebResponse.data = result;
+        //                                 res.status(200).send(bitwebResponse.create())
+        //                             }
+        //                         }).catch((err) => {
+        //                         console.error('err=>', err)
+        //                         bitwebResponse.code = 500;
+        //                         bitwebResponse.message = err;
+        //                         res.status(500).send(bitwebResponse.create())
+        //                     })
+        //                 } else {
+        //                     bitwebResponse.code = 200;
+        //                     bitwebResponse.data = result;
+        //                     res.status(200).send(bitwebResponse.create())
+        //                 }
+        //             }).catch((err) => {
+        //             console.error('err=>', err)
+        //             bitwebResponse.code = 500;
+        //             bitwebResponse.message = err;
+        //             res.status(500).send(bitwebResponse.create())
+        //         })
+        //     });
+        // });
     }
 });
 
