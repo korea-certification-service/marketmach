@@ -167,7 +167,7 @@
                 if(sel_files.length > 0) {
                     submitAction(success.data._id);
                 } else {
-                    location.href = '/community/board';
+                    history.back(-1);
                 }
 
             }).fail(function (fail) {
@@ -194,7 +194,7 @@
             }).done(function (success) {
                 //console.log(success);
                 $("#ajaxSpiner").hide(); // spinner
-                location.href = '/community/board';
+                history.back(-1);
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $("#ajaxSpiner").hide(); // spinner
