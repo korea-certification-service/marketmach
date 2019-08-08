@@ -18,14 +18,9 @@
             $('#btn_search').click(function() {
                 $("#community_list").html('');
                 pageIdx = 0;
-                type = $('[name=type]:checked').val();
                 title = $('#title').val();
 
                 getCommunityList();
-            });
-
-            $("input[name='type']").on('change', function() {
-                $('#btn_search').trigger('click');
             });
 
             $('#title').on("keydown", function(e) {
@@ -33,24 +28,26 @@
                     $('#btn_search').trigger('click');
                 }
             });
+
+            $('#register').on('click', function() {
+                location.href = '/community/register';
+            })
         });
 
         function getCommunityList() {
             var query = "/v1/community/list?pageIdx=" + pageIdx;
-            if(type != "") {
-                query += "&type=" + type;
-            }
-
-            if(title != undefined) {
-                query += "&title=" + title;
-            }
+            query += "&type=" + type;
+            
+            if(title != "") query += "&title=" + title;
 
             $.ajax({
                 method: "GET",
                 url: query,
             }).done(function (success) {
                 console.log(success.data);
+                addClassCommunityLeftMenu("$list");
                 pageIdx = success.pageIdx;
+                setCommunityNotices(success.data.notices);
                 setCommunitys(success.data.list);
                 if(success.data.count < 20) {
                     $('#more_search').hide();
@@ -62,10 +59,37 @@
             })
         }
 
+        function setCommunityNotices(data) {
+            var result="";
+            
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var notice = data[i].notice == true ? "<span class='span_noti'>Notice</span>" : "";
+                var noticeClass = data[i].notice == true ? "tr_notice" : "";
+                var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
+                var reporter = data[i].reporter;
+                var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
+                var regDate = data[i].regDate.substring(2, 10);
+                var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
+
+                result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
+                            '<td>'+notice+'</td>' +
+                            '<td class="tal">' +
+                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                                '</div>' +
+                            '</td>' +
+                            '<td>'+ reporter +'</td>' +
+                            '<td>'+ count +'</td>' +
+                            '<td>'+ regDate +'</td>' +
+                        '</tr>';
+            }
+            $('#community_list').html(result);
+        }
+
         function setCommunitys(data) {
             var result="";
             if(data.length == 0) {
-                result = '<tr><td colspan="4">공지사항 내역이 없습니다.</td></tr>';
+                result = '<tr><td colspan="4">No exist.</td></tr>';
             }
 
             for(var i=0; i<data.length; i++) {
@@ -73,15 +97,18 @@
                 var type = getCommunityType(data[i].type);
                 var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
                 var reporter = data[i].reporter;
+                var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
                 var regDate = data[i].regDate.substring(2, 10);
+                var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
                 result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td>'+type.text+'</td>' +
+                            '<td></td>' +
                             '<td class="tal">' +
-                                '<div class="ellipse" style="width: 100%">' + title +
+                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
                                 '</div>' +
                             '</td>' +
                             '<td>'+ reporter +'</td>' +
+                            '<td>'+ count +'</td>' +
                             '<td>'+ regDate +'</td>' +
                         '</tr>';
             }
@@ -105,79 +132,49 @@
     <!-- content_wrap -->
     <div class="content_wrap">
         <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/community_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <section class="board_sec community_sec">
+                        <div class="community_tit cf">
+                            <h1 class="tit_community">Community</h1> 
+                            <button class="btn btn_nv" id="register">write</button>
+                            <div class="community_searchbar">
+                                <input type="text" class="form-control" id="title">
+                                <input type="button" class="btn_search" id="btn_search">
+                            </div>   
+                        </div>                       
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list has_media_icon table">
+                                <colgroup class="colgroup_community_list">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>ID</th>
+                                        <th>Like</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="community_list">
+                                </tbody>
+                            </table>
+                        </div>
 
-            <section class="board_sec">
-                <div class="board_tit cf">
-                    <h1>게임소식</h1>
-                    <button class="btn btn-success" id="register">등록</button>
+                        <div class="btn_align_c">
+                            <button class="btn btn_more_list" id="more_search">more 20</button>
+                        </div>
+                    </section>
                 </div>
-                <div class="search_filter">
-                    <ul class="">
-                        <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">분류</h2>
-                            <div class="check_filter col-sm-10 col-xs-12">
-                                <input type="radio" name="type" id="all" value="" checked><label for="all">전체</label>
-                                <input type="radio" name="type" id="board" value="board"><label for="board">게시글</label>
-                                <input type="radio" name="type" id="game" value="game"><label for="game">게임 공략</label>
-                                <input type="radio" name="type" id="movie" value="movie"><label for="movie">동영상</label>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <h2 class="col-sm-2 col-xs-12">검색</h2>
-                            <div class="col-sm-10 col-xs-12">
-                                <div class="w100p-120px">
-                                    <input type="text" class="form-control" id="title">
-                                </div>
-                                <div class="mob_100p_tar">
-                                    <input type="button" class="btn btn-primary" id="btn_search" value="검색">
-                                </div>
-                            </div>
-                        </li>                        
-                    </ul>
-                </div>
-                
-                <div class="table_wrap table-responsive">
-                    <table class="table_list has_media_icon table">
-                        <colgroup class="colgroup_community_list">
-                            <col class="col4_1">
-                            <col class="col4_2">
-                            <col class="col4_3">
-                            <col class="col4_4">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>분류</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>등록일</th>
-                            </tr>
-                        </thead>
-                        <tbody id="community_list">
-                            <!-- <tr onclick="">
-                                <td>동영상</td>
-                                <td>
-                                    <div class="ellipse"><i class="ico_media material-icons">live_tv</i>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat dolore itaque, illo enim dolorum molestiae consequuntur nemo minima labore quo incidunt rem,</div>
-                                </td>
-                                <td>김마하</td>
-                                <td>19/04/11</td>
-                            </tr>
-                            <tr onclick="location.href='/v2/community/detail'">
-                                <td>일반</td>
-                                <td>                           
-                                    <div class="ellipse">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat dolore itaque, illo enim dolorum molestiae consequuntur nemo minima labore quo incidunt rem,</div>
-                                </td>
-                                <td>김마하</td>
-                                <td>19/04/11</td>
-                            </tr> -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="btn_align_c">
-                    <button class="btn btn_more_list" id="more_search">20개 더보기</button>
-                </div>
-            </section>
-
+            </div>
         </div>
     </div>
     

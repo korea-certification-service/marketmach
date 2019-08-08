@@ -439,9 +439,11 @@ function hash(value) {
 }
 
 function addClassCommunityLeftMenu(type) {
+    if(type==="$list") type = window.location.href.match(/[\w]*$/g)[0];
+    
     var $li = $(".sub_lft_menu .depth1 > li");
     for (var i = 0; i < $li.length; i++) {
         var href = $li.eq(i).children("a").attr("href");
-       if(type === href.match(/[\w]*$/g)[0]) $li.eq(i).addClass("on");
+        if(type === href.match(/[\w]*$/g)[0]) $li.eq(i).addClass("on");
     }
 }

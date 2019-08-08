@@ -45,7 +45,7 @@
                 url: query,
             }).done(function (success) {
                 // console.log(success.data);
-                addClassCommunityLeftMenu(success.data.list[0].type);
+                addClassCommunityLeftMenu("$list");
                 pageIdx = success.pageIdx;
                 setCommunityNotices(success.data.notices);
                 setCommunitys(success.data.list);
@@ -89,7 +89,7 @@
         function setCommunitys(data) {
             var result="";
             if(data.length == 0) {
-                result = '<tr><td colspan="4">검색 된 글이 없습니다.</td></tr>';
+                result = '<tr><td colspan="5">검색 된 글이 없습니다.</td></tr>';
             }
 
             for(var i=0; i<data.length; i++) {

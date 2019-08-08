@@ -22,7 +22,7 @@
                 <div class="sub_content">
                     <section class="community_sec">
                         <div class="community_tit cf">
-                            <h1 class="tit_community">커뮤니티</h1>    
+                            <h1 class="tit_community">Community</h1>    
                         </div>                 
                         <div class="table_wrap table-responsive">
                             <table class="table">
@@ -32,31 +32,31 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th>카테고리</th>
+                                        <th>Category</th>
                                         <td>
                                             <div id="virture_h" class="virture_h">
-                                                <select class="form-control" id="type" data-live-search="true">
-                                                    <option value="free">자유게시판</option>
-                                                    <option value="tabloid">찌라시</option>
-                                                    <option value="event">이벤트</option>
-                                                    <option value="game">게임</option>
-                                                    <option value="cryptocurrency">암호화폐</option>
+                                                <select class="selectpicker" id="type" data-live-search="true">
+                                                    <option value="free">General</option>
+                                                    <option value="tabloid">Tabloid Tail</option>
+                                                    <option value="event">Event</option>
+                                                    <option value="game">Game</option>
+                                                    <option value="cryptocurrency">Cryptocurrency</option>
                                                 </select>                                        
                                             </div>
                                         </td>
                                     </tr>                            
                                     <tr>
-                                        <th>제목</th>
+                                        <th>Title</th>
                                         <td><input type="text" id="title" class="form-control"></td>
                                     </tr>
                                     <tr>
-                                        <th>내용</th>
+                                        <th>Content</th>
                                         <td>
                                             <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>상품이미지</th>
+                                        <th>Image</th>
                                         <td>
                                             <div class="product_img_list">
                                                 <div class="imgs_wrap">
@@ -68,11 +68,11 @@
                                                         <li></li>
                                                     </ul>
                                                     <ul class="thumbnail_btn_list cf">
-                                                        <li><label for="input_imgs0" class="label_input_imgs">이미지 선택</label></li>
-                                                        <li><label for="input_imgs1" class="label_input_imgs">이미지 선택</label></li>
-                                                        <li><label for="input_imgs2" class="label_input_imgs">이미지 선택</label></li>
-                                                        <li><label for="input_imgs3" class="label_input_imgs">이미지 선택</label></li>
-                                                        <li><label for="input_imgs4" class="label_input_imgs">이미지 선택</label></li>
+                                                        <li><label for="input_imgs0" class="label_input_imgs">Select IMG</label></li>
+                                                        <li><label for="input_imgs1" class="label_input_imgs">Select IMG</label></li>
+                                                        <li><label for="input_imgs2" class="label_input_imgs">Select IMG</label></li>
+                                                        <li><label for="input_imgs3" class="label_input_imgs">Select IMG</label></li>
+                                                        <li><label for="input_imgs4" class="label_input_imgs">Select IMG</label></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -81,7 +81,7 @@
                                     <tr class="mrg_cell">
                                         <td colspan="2">
                                             <div class="input_wrap">
-                                                <span>고화질 이미지를 업로드시 대기시간이 오래걸립니다.</span>
+                                                <span>It takes a long time to upload a high-quality image.</span>
 
                                                 <input type="file" class="input_imgs" id="input_imgs0" index="0" accept="image/*"/>
                                                 <input type="file" class="input_imgs" id="input_imgs1" index="1" accept="image/*"/>
@@ -93,17 +93,17 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>동영상</th>
-                                        <td><input type="text" id="movieURL" class="form-control" placeholder="youtube url을 입력해주세요."></td>
+                                        <th>Youtube</th>
+                                        <td><input type="text" id="movieURL" class="form-control" placeholder=""></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                             
                         <div class="btn_align_c">
-                            <button class="btn btn_in_view1" id="btnSubmit">등록하기</button>
+                            <button class="btn btn_in_view1" id="btnSubmit">Write</button>
                         </div>
-                    </section>            
+                    </section>
                 </div>
             </div>
         </div>
@@ -215,10 +215,10 @@
 
         function submit(arrImages) {
             if ($("#title").val() == "") {
-                alert('제목을 입력하세요.');
+                alert('Please enter a title.');
                 return false;
             } else if ($("#content").val() == "") {
-                alert('내용을 입력하세요.');
+                alert('Please enter a content.');
                 return false;
             } 
 
@@ -226,8 +226,10 @@
                 "reporter": "<%=userTag%>",
                 "type": $('#type').val(),
                 "title":$("#title").val(),
-                "content": $("#content").val(),
-                "movieUrl": $("#movieURL").val()
+                "content": $("#content").val()
+            }
+            if($("#movieURL").val() != "") {
+                data['movieUrl'] = $("#movieURL").val()
             }
 
             if(arrImages.length > 0) {
