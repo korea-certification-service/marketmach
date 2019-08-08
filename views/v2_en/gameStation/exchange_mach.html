@@ -43,13 +43,13 @@
             $("#doExchange").on("click", function(){
                 var result = calculate(mach_rate, gamecoin_rate, select_value);
                 console.log(result.body);
-                var _confirm = confirm("Do you want to "+ result.confirm.from+"MACH to "+result.confirm.to+"MC coins?");
+                var _confirm = confirm("Do you want to exchange "+ result.confirm.from+"MACH for "+result.confirm.to+"MC coins?");
                 if( result.confirm.after < 0 ) {
                     alert("It is not enough MACH.");
                     return;
                 }
                 if(select_value == 0) {
-                    alert("Please select the balance you want to exchange.");
+                    alert("Please select the amount you want to exchange.");
                     return;
                 }
                 if(_confirm){
