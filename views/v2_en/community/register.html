@@ -94,7 +94,7 @@
                                     </tr>
                                     <tr>
                                         <th>Youtube</th>
-                                        <td><input type="text" id="movieURL" class="form-control" placeholder=""></td>
+                                        <td><input type="text" id="movieURL" class="form-control" placeholder="paste youtube embed code"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -167,7 +167,8 @@
                 if(sel_files.length > 0) {
                     submitAction(success.data._id);
                 } else {
-                    location.href = '/community/board';
+                    // location.href = '/community/board';
+                    history.back();
                 }
 
             }).fail(function (fail) {
@@ -194,7 +195,8 @@
             }).done(function (success) {
                 //console.log(success);
                 $("#ajaxSpiner").hide(); // spinner
-                location.href = '/community/board';
+                // location.href = '/community/board';
+                history.back();
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $("#ajaxSpiner").hide(); // spinner
