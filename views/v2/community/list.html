@@ -45,7 +45,7 @@
                 url: query,
             }).done(function (success) {
                 // console.log(success.data);
-                addClassCommunityLeftMenu(success.data.list[0].type);
+                addClassCommunityLeftMenu("$list");
                 pageIdx = success.pageIdx;
                 setCommunityNotices(success.data.notices);
                 setCommunitys(success.data.list);

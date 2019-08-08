@@ -6,6 +6,7 @@
         var communityId = "<%= communityId %>";
         var userTag = "<%= userTag %>";
         var replyCount = 0;
+        var recommanded = false;
 
         $(document).ready(function() {
             getDetail();
@@ -16,10 +17,23 @@
 
             $('#add_reply').on('click', function() {
                 if(userTag == "") {
-                    alert("You need to sign up for writing comment.");
+                    alert("댓글 작성을 위해 로그인이 필요합니다.");
                     location.href = "/login";
                 }
             });
+
+            $('.btn_recommendation').on('click', function() {
+                if(userTag == "") {
+                    alert("추천 클릭을 위해 로그인이 필요합니다.");
+                    location.href = "/login";
+                } else {
+                    callRecommand();
+                }
+            })
+
+            $('#modify').on('click', function() {
+                location.replace('/community/modify/' + communityId);
+            })
         });
 
         function getDetail() {
@@ -28,23 +42,30 @@
                 url: "/community/detail/" + communityId,
             }).done(function (success) {
                 console.log(success.data);
+                addClassCommunityLeftMenu(success.data.type);
                 var type = getCommunityType(success.data.type);
                 var title = success.data.title;
                 var reporter = success.data.reporter;
                 var regDate = success.data.regDate.substring(2, 10);
-                var content = success.data.type == 'movie' ? success.data.content : "<div>" + replaceDesc(success.data.content) + "</div>";
-                var movieUrl = success.data.movieUrl;
+                var content = "<div>" + replaceDesc(success.data.content) + "</div>";                
                 var replys = success.data.reply;
-                var image = success.data.images.length ==0 ? "" : "<div style='text-align: center;'><img style='align: center;' src='" + success.data.images[0].path + "'></div>";
+                replyCount = success.data.replyCount;
+                recommanded = success.data.recommandedUser;
+                var recommandCount = success.data.recommandCount;
+                var image = "";
+                var movieUrl = (success.data.movieUrl != "" && success.data.movieUrl != undefined) ? "<iframe width='100%' height='500px;' src=\'" + movieUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>": "";
+                for(var i=0;i<success.data.images.length; i++) {
+                    image += "<div style='text-align: center; margin-bottom:10px;'><img style='align: center;' src='" + success.data.images[i].path + "'></div>";
+                }
 
                 $('#title').text(title);   
-                if(success.data.type == 'movie') {
-                    $('#content').addClass("hasYoutube").html("<iframe width='100%' height='100%' src=\'" + movieUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>");   
-                } else {
-                    $('#content').html(image + content);   
+                $('#content').html(image + movieUrl + content);   
+                $('#recommandCount').text(recommandCount);
+                if(userTag == reporter) {
+                    $('#modify').show();   
                 }
-                replyCount = replys.length;
                 getReply(replys);
+                ToggleRecommandIcon(recommanded);
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -53,7 +74,7 @@
         function getReply(replys) {
             var strDOM = "";
             if(replys.length == 0) {
-                $('.reply_list').html("<li>No exist comments.</li>");
+                $('.reply_list').html("<li>등록된 댓글이 없습니다.</li>");
                 return;
             }
 
@@ -68,8 +89,8 @@
                                         '</div>';
                 if(replys[i].reporter == userTag) {
                     strDOM +=   '<div class="item_btn" id="item_btn_'+replys[i]._id+'">' + 
-                                    '<button class="fc3" onclick="modifyReply(\''+replys[i]._id+'\')">Edit</button>' + 
-                                    '<button class="fcrd" onclick="deleteReply(\''+replys[i]._id+'\')">Delete</button>' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+replys[i]._id+'\')">수정</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+replys[i]._id+'\')">삭제</button>' + 
                                 '</div>'; 
                 }
                 strDOM +=        '</dt>' +
@@ -85,7 +106,7 @@
 
         function addReply() {
             if($('#add_reply').val() == "") {
-                alert('Please enter a comment.');
+                alert('내용을 입력하세요.');
                 return;
             }
 
@@ -123,8 +144,8 @@
                                             '<span class="rep_date">'+reply.regDate+'</span>' + 
                                         '</div>';
                 strDOM +=   '<div class="item_btn" id="item_btn_'+reply._id+'">' + 
-                                    '<button class="fc3" onclick="modifyReply(\''+reply._id+'\')">Edit</button>' + 
-                                    '<button class="fcrd" onclick="deleteReply(\''+reply._id+'\')">Delete</button>' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+reply._id+'\')">수정</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+reply._id+'\')">삭제</button>' + 
                                 '</div>'; 
                 strDOM +=        '</dt>' +
                                     '<input type="hidden" id="hid_content'+reply._id+'" value="'+reply.content+'">' + 
@@ -147,7 +168,7 @@
 
         function modifyReply(id) {
             $('#modify_area' +id).html('<textarea id="modify_reply" class="form-control" maxlength="300" style="height: 80px">'+$('#hid_content'+id).val()+'</textarea>');
-            $('#modify_area' +id).append('<div class="item_btn"><button class="fc3" onclick="update(\''+id+'\')">Save</button><button class="fcrd" onclick="initContent(\''+id+'\')">Cancel</button></div>');
+            $('#modify_area' +id).append('<div class="item_btn"><button class="fc3" onclick="update(\''+id+'\')">저장</button><button class="fcrd" onclick="initContent(\''+id+'\')">취소</button></div>');
             $('#item_btn_'+id).hide();
         }
 
@@ -186,7 +207,7 @@
         }
 
         function deleteReply(id) {
-            var confirmYn = confirm('Do you want delete comment?');
+            var confirmYn = confirm('정말로 삭제하시겠습니까?');
             if(confirmYn) {
                 console.log(id);
 
@@ -205,6 +226,44 @@
                 })
             }
         }
+
+        function callRecommand() {
+            var recommandYn = "N";
+            if(!recommanded) {
+                recommandYn = "Y";
+            }
+            var data = {
+                "reqUser":userTag
+            }
+
+            $.ajax({
+                method: "PUT",
+                url: "/v1/community/detail/" + communityId + "/" + recommandYn,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $(".btn_recommendation").attr('disabled', true);
+                }
+            }).done(function (success) {
+                console.log(success);
+                recommanded = success.data.recommandedUser;
+                var recommandCount = success.data.recommandCount;
+                $('#recommandCount').text(recommandCount);
+                $(".btn_recommendation").attr('disabled', false);
+                ToggleRecommandIcon(recommanded);
+            }).fail(function (fail) {
+                $(".btn_recommendation").attr('disabled', false);
+            })
+        }
+
+        function ToggleRecommandIcon(recommanded) {
+            if(recommanded) {
+                $("#recommandIcon").text("favorite");
+            } else {
+                $("#recommandIcon").text("favorite_border");
+            }
+        }
     </script>
 </head>
 <body>
@@ -219,154 +278,73 @@
     <!-- content_wrap -->
     <div class="content_wrap">
         <div class="sub_container container">
-
-            <section class="community_sec">
-                <h1 class="tit_community">Games</span></h1>                    
-                <div class="table_wrap table-responsive">
-                    <table class="table_view table">
-                        <colgroup>
-                            <col class="col1_1">
-                        </colgroup>
-                        <tbody>                           
-                            <tr>
-                                <td id="title"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div id="content" class="">
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tac">
-                    <button class="btn_recommendation">
-                        <dl>
-                            <dt><i class="material-icons">thumb_up</i>추천</dt>
-                            <dd>0</dd>
-                        </dl>
-                    </button>
-                </div>
-                    
-                <div class="tar">
-                    <button class="btn btn_go_list" onclick="history.back();">Go Back</button>
-                </div>
-
-                <!-- 댓글 입력란 -->
-                <div class="reply_write">
-                    <div class="item_txt">
-                        <textarea name="" id="add_reply" class="form-control" maxlength="300" style="height: 80px"></textarea>
-                    </div>
-                    <div class="item_btn">
-                        <button class="btn bggr2" id="addReply">Add</button>
-                    </div>
-                </div>
-
-                <!-- 댓글 리스트 -->
-                <div class="reply_list">
-                    <ul>
-                        <!-- <li>
-                            <dl class="rep_origin rep_common">
-                                <dt>
-                                    <div class="item_txt">
-                                        <i class="material-icons">account_circle</i>
-                                        <span class="rep_name">베타맨</span>
-                                        <span class="rep_date">2019-03-17</span>
-                                    </div>
-                                    <div class="item_btn">
-                                        <button class="fc3">추천 0</button>
-                                        <button class="fcrd">비추 0</button>
-                                    </div>
-                                </dt>
-                                <dd>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit ullam aperiam vitae numquam reprehenderit voluptatibus ad iusto impedit earum laborum quae, accusantium quisquam perferendis vero, ducimus odio voluptatem inventore labore.
-                                </dd>
-                            </dl>
-                            <ul class="rep_in_rep">
-                                <li>
-                                    <dl class="rep_repeat rep_common">
-                                        <dt>
-                                            <div class="item_txt">
-                                                <i class="material-icons">account_circle</i>
-                                                <span class="rep_name">베타맨</span>
-                                                <span class="rep_date">2019-03-17</span>
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/community_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <section class="community_sec">
+                        <div class="community_tit cf">
+                            <h1 class="tit_community">커뮤니티</h1>    
+                            <button class="btn btn_nvln" id="modify">수정</button>                
+                        </div>
+                        
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col1_1">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <td id="title" class="post_title"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div id="content" class="">
                                             </div>
-                                            <div class="item_btn">
-                                                <button class="fc3">추천 0</button>
-                                                <button class="fcrd">비추 0</button>
-                                            </div>
-                                        </dt>
-                                        <dd>
-                                            댓글의 댓글
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="rep_repeat rep_common">
-                                        <dt>
-                                            <div class="item_txt">
-                                                <i class="material-icons">account_circle</i>
-                                                <span class="rep_name">베타맨</span>
-                                                <span class="rep_date">2019-03-17</span>
-                                            </div>
-                                            <div class="item_btn">
-                                                <button class="fc3">추천 0</button>
-                                                <button class="fcrd">비추 0</button>
-                                            </div>
-                                        </dt>
-                                        <dd>
-                                            댓글의 댓글
-                                        </dd>
-                                    </dl>
-                                </li>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            </ul>                          
-                        </li>
-                        <li>
-                            <dl class="rep_origin rep_common">
-                                <dt>
-                                    <div class="item_txt">
-                                        <i class="material-icons">account_circle</i>
-                                        <span class="rep_name">베타맨</span>
-                                        <span class="rep_date">2019-03-17</span>
-                                    </div>
-                                    <div class="item_btn">
-                                        <button class="fc3">추천 0</button>
-                                        <button class="fcrd">비추 0</button>
-                                    </div>
-                                </dt>
-                                <dd>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit ullam aperiam vitae numquam reprehenderit voluptatibus ad iusto impedit earum laborum quae, accusantium quisquam perferendis vero, ducimus odio voluptatem inventore labore.
-                                </dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="rep_origin rep_common">
-                                <dt>
-                                    <div class="item_txt">
-                                        <i class="material-icons">account_circle</i>
-                                        <span class="rep_name">베타맨</span>
-                                        <span class="rep_date">2019-03-17</span>
-                                    </div>
-                                    <div class="item_btn">
-                                        <button class="fc3">추천 0</button>
-                                        <button class="fcrd">비추 0</button>
-                                    </div>
-                                </dt>
-                                <dd>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit ullam aperiam vitae numquam reprehenderit voluptatibus ad iusto impedit earum laborum quae, accusantium quisquam perferendis vero, ducimus odio voluptatem inventore labore.
-                                </dd>
-                            </dl>
-                        </li> -->
-                    </ul>
+                        <div class="tac">
+                            <button class="btn_recommendation">
+                                <dl>
+                                    <dt><i id="recommandIcon" class="material-icons">favorite_border</i></dt>
+                                    <dd id="recommandCount">0</dd>
+                                </dl>
+                            </button>
+                        </div>
+                            
+                        <div class="tar">
+                            <button class="btn btn_go_list" onclick="history.back();">목록</button>
+                        </div>
+
+                        <div class="module_comment">
+                            <!-- 댓글 입력란 -->
+                            <div class="reply_write">
+                                <div class="item_txt">
+                                    <textarea name="" id="add_reply" class="form-control" maxlength="300" style="height: 80px"></textarea>
+                                </div>
+                                <div class="item_btn">
+                                    <button class="btn btn_nv" id="addReply">등록</button>
+                                </div>
+                            </div>
+
+                            <!-- 댓글 리스트 -->
+                            <div class="reply_list">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>            
                 </div>
-            </section>            
-
+            </div>
         </div>
     </div>
     
     <% include ../include/footer.html %>
 </div>
 </body>
+</html>
