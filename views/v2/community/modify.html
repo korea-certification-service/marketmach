@@ -35,7 +35,7 @@
                                         <th>카테고리</th>
                                         <td>
                                             <div id="virture_h" class="virture_h">
-                                                <select class="selectpicker" id="type" data-live-search="true">
+                                                <select class="form-control" id="type" data-live-search="true">
                                                     <option value="free">자유게시판</option>
                                                     <option value="tabloid">찌라시</option>
                                                     <option value="event">이벤트</option>
@@ -226,10 +226,8 @@
                 "reporter": "<%=userTag%>",
                 "type": $('#type').val(),
                 "title":$("#title").val(),
-                "content": $("#content").val()
-            }
-            if($("#movieURL").val() != "") {
-                data['movieUrl'] = $("#movieURL").val()
+                "content": $("#content").val(),
+                "movieUrl": $("#movieURL").val()
             }
 
             if(arrImages.length > 0) {
