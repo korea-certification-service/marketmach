@@ -16,15 +16,15 @@
             });
 
             $('#add_reply').on('click', function() {
-                if(userTag == "") {
-                    alert("You need to sign in required to comment.");
+                if(userTag == "") { 
+                    alert("Please login for comment."); // 댓글 작성을 위해 로그인이 필요합니다.
                     location.href = "/login";
                 }
             });
 
             $('.btn_recommendation').on('click', function() {
                 if(userTag == "") {
-                    alert("You need to sign in clicked to like it.");
+                    alert("Please login for recommendation."); // 추천 클릭을 위해 로그인이 필요합니다.
                     location.href = "/login";
                 } else {
                     callRecommand();
