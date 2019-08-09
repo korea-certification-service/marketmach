@@ -291,7 +291,10 @@
                             '                                    height=750');
                     }
                 }
-                location.replace("/otc-buys/detail/" + itemId);
+
+                if(!isExplorer()) {
+                    location.replace("/otc-buys/detail/" + itemId);
+                }
             }
         }
     </script>

@@ -322,7 +322,10 @@
                             '                                    height=750');
                     }
                 }
-                location.replace("/otc-sells/detail/" + itemId);
+
+                if(!isExplorer()) {
+                    location.replace("/otc-sells/detail/" + itemId);
+                }
             }
         }
     </script>

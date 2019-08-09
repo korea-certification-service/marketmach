@@ -299,7 +299,10 @@
                             '                                    height=750');
                     }
                 }
-                location.replace("/etc-buys/detail/" + itemId);
+
+                if(!isExplorer()) {
+                    location.replace("/etc-buys/detail/" + itemId);
+                }
             }
         }
     </script>

@@ -312,7 +312,9 @@
                     }     
                 }
 
-                location.replace("/buys/detail/" + itemId);
+                if(!isExplorer()) {
+                    location.replace("/buys/detail/" + itemId);
+                }
             }
         }
     </script>

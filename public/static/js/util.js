@@ -43,6 +43,15 @@ function isPc() {
     }
 }
 
+function isExplorer() {
+    var agent = navigator.userAgent.toLowerCase();
+    if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function fnMove() {
     var offset = $(".dorne-welcome-area").offset();
     $('html, body').animate({scrollTop : offset.top - 50}, 100);

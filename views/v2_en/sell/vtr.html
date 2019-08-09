@@ -364,7 +364,10 @@
                             '                                    height=750');
                     }
                 }
-                location.replace("/sells/detail/" + itemId);
+
+                if(!isExplorer()) {
+                    location.replace("/sells/detail/" + itemId);
+                }
             }
         }
     </script>

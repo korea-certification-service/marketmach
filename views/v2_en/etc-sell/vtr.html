@@ -341,7 +341,10 @@
                             '                                    height=750');
                     }
                 }
-                location.replace("/etc-sells/detail/" + itemId);
+
+                if(!isExplorer()) {
+                    location.replace("/etc-sells/detail/" + itemId);
+                }
             }
         }
     </script>
