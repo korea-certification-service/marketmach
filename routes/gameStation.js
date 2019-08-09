@@ -43,7 +43,7 @@ router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
     }
 });
 
-router.get('/trade/list/', function (req, res, next) {
+router.get('/trade/list/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/tradelist', {
             title: 'Bitweb Main',
@@ -86,7 +86,7 @@ router.get('/trade/list/', function (req, res, next) {
     }
 });
 
-router.get('/trade/assets/', function (req, res, next) {
+router.get('/trade/assets/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/gameassetstomach', {
             title: 'Bitweb Main',
@@ -126,7 +126,7 @@ router.get('/trade/assets/', function (req, res, next) {
     }
 });
 
-router.get('/trade/exchange_assets/', function (req, res, next) {
+router.get('/trade/exchange_assets/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/exchange_gameassets', {
             title: 'Bitweb Main',
@@ -166,7 +166,7 @@ router.get('/trade/exchange_assets/', function (req, res, next) {
     }
 });
 
-router.get('/trade/mach/', function (req, res, next) {
+router.get('/trade/mach/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/machtogameassets', {
             title: 'Bitweb Main',
@@ -206,7 +206,7 @@ router.get('/trade/mach/', function (req, res, next) {
     }
 });
 
-router.get('/trade/exchange_mach/', function (req, res, next) {
+router.get('/trade/exchange_mach/', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/exchange_mach', {
             title: 'Bitweb Main',
