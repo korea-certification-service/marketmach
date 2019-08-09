@@ -46,6 +46,7 @@
     "popper.js": "^1.14.7",
     "promise": "^8.0.1",
     "pug": "2.0.0-beta11",
+    "request-promise-native": "^1.0.7",
     "sweetalert": "^2.1.2",
     "unix-timestamp": "^0.2.0",
     "web3": "0.20.3"

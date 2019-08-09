@@ -72,7 +72,7 @@ router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, ne
 
 router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/tc-buy/register', {
+        res.render('v2/otc-buy/register', {
             title: 'Bitweob Main', userId: req.session.userId, coinId: req.session.coinId,
             userTag: req.session.userTag, country:req.session.country,
             pointId: req.session.pointId,
@@ -81,7 +81,7 @@ router.get('/register', sessionChecker.sessionChecker2, function (req, res, next
             useBlockchain:dbconfig.useBlockchain
         });
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/tc-buy/register', {
+        res.render('v2_point/otc-buy/register', {
             title: 'Bitweob Main', userId: req.session.userId, coinId: req.session.coinId,
             userTag: req.session.userTag, country:req.session.country,
             pointId: req.session.pointId,
