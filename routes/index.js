@@ -251,21 +251,21 @@ router.get('/page',function(req,res,next){
 
 router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/find/findId', {title: 'Bitweb Find ID'});
+        res.render('v2/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/find/findId', {title: 'Bitweb Find ID'});
+        res.render('v2_point/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else {
-        res.render('v2_en/find/findId', {title: 'Bitweb Find ID'});
+        res.render('v2_en/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     }
 });
 
 router.get('/findPassword', sessionChecker.sessionChecker, function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/find/findPassword', {title: 'Bitweb Find Password'});
+        res.render('v2/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/find/findPassword', {title: 'Bitweb Find Password'});
+        res.render('v2_point/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else {
-        res.render('v2_en/find/findPassword', {title: 'Bitweb Find Password'});
+        res.render('v2_en/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     }
 });
 

@@ -5,6 +5,7 @@
     <script type="text/javascript">
         var popup;
         var currencyCode="+82";
+        var token = "<%=token%>";
 
         $(document).ready(function() {
             $('#authPhone').on('click',function(){
@@ -98,7 +99,8 @@
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
-                'phone': $("#phone").val()
+                'phone': $("#phone").val(),
+                'token': token
             }
 
             $.ajax({
