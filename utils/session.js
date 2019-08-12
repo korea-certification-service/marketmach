@@ -1,4 +1,6 @@
 var dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
+let tokenValue = token.makeLoginToken(loginToken);
 var sessionChecker = (req, res, next) => {
     console.log('sessionID =>', req.sessionID);
     console.log('session.userTag =>', req.session.userTag);
@@ -6,20 +8,18 @@ var sessionChecker = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        res.cookie("loginToken", tokenValue, {
+            domain: 'marketmach.com',
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
 
+        res.cookie("loginToken", tokenValue, {
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
         //로그인한 경우
         if(req.session.active===false){
             //이메일인증 안한 경우
             //res.redirect("/emailAuth");
-            res.cookie("loginToken", tokenValue, {
-                domain: 'marketmach.com',
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-
-            res.cookie("loginToken", tokenValue, {
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-
             next();
         }else{
             //이메일 인증 한 경우
@@ -41,22 +41,21 @@ var sessionChecker2 = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        res.cookie("loginToken", tokenValue, {
+            domain: 'marketmach.com',
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
+
+        res.cookie("loginToken", tokenValue, {
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
         //로그인한 경우
         if(req.session.active===false){
             //이메일인증 안한 경우
             //res.redirect("/emailAuth");
             next();
         }else{
-            //이메일 인증 한 경우
-            res.cookie("loginToken", tokenValue, {
-                domain: 'marketmach.com',
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-
-            res.cookie("loginToken", tokenValue, {
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-            
+            //이메일 인증 한 경우            
             next();
         }
     }else {
@@ -88,6 +87,14 @@ var sessionChecker3 = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        res.cookie("loginToken", tokenValue, {
+            domain: 'marketmach.com',
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
+
+        res.cookie("loginToken", tokenValue, {
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
         //로그인 한 경우
         next();
     }else {
@@ -103,6 +110,15 @@ var adultChecker = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        res.cookie("loginToken", tokenValue, {
+            domain: 'marketmach.com',
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
+
+        res.cookie("loginToken", tokenValue, {
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
+        
         //로그인한 경우
         if(req.session.active===false){
             //이메일인증 안한 경우
@@ -111,15 +127,6 @@ var adultChecker = (req, res, next) => {
         } else if(req.session.teenager==true&&req.session.country=="KR"){
             //성인인증 안한 경우
             //res.redirect("/adults");
-            res.cookie("loginToken", tokenValue, {
-                domain: 'marketmach.com',
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-
-            res.cookie("loginToken", tokenValue, {
-                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-            });
-            
             next();
         } else if(req.session.teenager == false&&req.session.country=="KR"){
             res.redirect('/main');
