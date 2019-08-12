@@ -1,6 +1,6 @@
 var dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
-let tokenValue = token.makeLoginToken(loginToken);
+
 var sessionChecker = (req, res, next) => {
     console.log('sessionID =>', req.sessionID);
     console.log('session.userTag =>', req.session.userTag);
@@ -8,6 +8,8 @@ var sessionChecker = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        var loginToken = req.session.loginToken;
+        let tokenValue = token.makeLoginToken(loginToken);
         res.cookie("loginToken", tokenValue, {
             domain: 'marketmach.com',
             expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
@@ -41,6 +43,9 @@ var sessionChecker2 = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        var loginToken = req.session.loginToken;
+        let tokenValue = token.makeLoginToken(loginToken);
+        
         res.cookie("loginToken", tokenValue, {
             domain: 'marketmach.com',
             expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
@@ -87,6 +92,9 @@ var sessionChecker3 = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        var loginToken = req.session.loginToken;
+        let tokenValue = token.makeLoginToken(loginToken);
+        
         res.cookie("loginToken", tokenValue, {
             domain: 'marketmach.com',
             expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
@@ -187,6 +195,17 @@ var registerSuccessChecker = (req, res, next) => {
     console.log('session.userId =>', req.session.userId);
 
     if (req.session.userTag) {
+        var loginToken = req.session.loginToken;
+        let tokenValue = token.makeLoginToken(loginToken);
+        
+        res.cookie("loginToken", tokenValue, {
+            domain: 'marketmach.com',
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
+
+        res.cookie("loginToken", tokenValue, {
+            expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+        });
         //로그인한 경우
         next()
     }else {
