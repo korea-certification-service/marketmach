@@ -568,7 +568,8 @@ router.post('/buynow', function (req, res, next) {
         "itemId": req.body.itemId,
         "cryptoCurrencyCode": req.body.cryptoCurrencyCode,
         "price": req.body.price,
-        "target_game_character": req.body.target_game_character
+        "target_game_character": req.body.target_game_character,
+        "country": dbconfig.country
     }
     let url = dbconfig.APIServer + "/v2/vtrs/" + body.itemId + "/step/10";
     let header = {
