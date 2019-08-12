@@ -623,8 +623,9 @@
 
         function routeLink() {
             var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
+            
             if(prevPath != "etc-sells") {
-                location.replace("http://"+location.host + "/etc-sells?category=etc&trade_type=sell");
+                location.href = "/etc-sells?category=etc&trade_type=sell";
             } else {
                 history.back();
             }

@@ -633,7 +633,7 @@
             var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
 
             if(prevPath != "sells") {
-                location.replace("http://"+location.host + "/sells?category=game&trade_type=sell");
+                location.href = "/sells?category=game&trade_type=sell";
             } else {
                 history.back();
             }
