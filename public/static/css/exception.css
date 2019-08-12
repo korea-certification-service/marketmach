@@ -145,7 +145,7 @@
     .set_margin > .form-control.w60p { width: 49%; }
     .btn.btn-default { margin-top: 20px; }
     .set_margin > .btn.btn_in_view1 { margin-top: 20px; }
-
+    .find_info_sec .tab_find_info{width: 100%;}
     .notfound_sec .lft_box{padding: 50px 30px 0 0; width: 30%;}
     .notfound_sec .lft_box img{max-width: 70px;}
     .notfound_sec .rgh_box{width: 70%;}
