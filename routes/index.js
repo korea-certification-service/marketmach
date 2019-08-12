@@ -333,21 +333,21 @@ router.get('/signup', function (req, res, next) {
         res.redirect('/agreement');
         next();
     } else {
-        controllerUsers.getByPhone(data.country, data.phone) 
+        controllerUsers.getByPhone(data.country, {$regex: data.phone, $options: 'i' }) 
         .then((user) => {
             if(user == null) {
                 // 블랙리스트 명단에 있는지 체크
                 let condition = {
                     "birth": data.birth,
                     "userName": data.username,
-                    "phone": data.phone
+                    "phone": {$regex: data.phone, $options: 'i' }
                 }
                 controllerUsers.getBlackList(data.country, condition)
                 .then((blacklist) => {
                     if(blacklist.length == 0) {
                         //탈퇴 회원인데 30일이내에 재가입하는지 여부 체크
                         let withdrawCondition = {
-                            "phone": data.phone
+                            "phone": {$regex: data.phone, $options: 'i' }
                         }
                         controllerUsers.getWithdrawUser(data.country, withdrawCondition)
                         .then(withdraws => {
