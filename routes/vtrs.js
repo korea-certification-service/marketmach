@@ -1049,7 +1049,8 @@ router.delete('/cancel/:itemId/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
     let body = {
-        "reqUserTag": req.params.userId
+        "reqUserTag": req.params.userId,
+        "country": dbconfig.country
     }
 
     let url = dbconfig.APIServer + "/v2/vtrs/" + itemId + "/step/15";
