@@ -11,6 +11,15 @@ var sessionChecker = (req, res, next) => {
         if(req.session.active===false){
             //이메일인증 안한 경우
             //res.redirect("/emailAuth");
+            res.cookie("loginToken", tokenValue, {
+                domain: 'marketmach.com',
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+
+            res.cookie("loginToken", tokenValue, {
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+
             next();
         }else{
             //이메일 인증 한 경우
@@ -39,6 +48,15 @@ var sessionChecker2 = (req, res, next) => {
             next();
         }else{
             //이메일 인증 한 경우
+            res.cookie("loginToken", tokenValue, {
+                domain: 'marketmach.com',
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+
+            res.cookie("loginToken", tokenValue, {
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+            
             next();
         }
     }else {
@@ -93,6 +111,15 @@ var adultChecker = (req, res, next) => {
         } else if(req.session.teenager==true&&req.session.country=="KR"){
             //성인인증 안한 경우
             //res.redirect("/adults");
+            res.cookie("loginToken", tokenValue, {
+                domain: 'marketmach.com',
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+
+            res.cookie("loginToken", tokenValue, {
+                expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+            });
+            
             next();
         } else if(req.session.teenager == false&&req.session.country=="KR"){
             res.redirect('/main');
