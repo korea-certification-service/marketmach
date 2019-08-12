@@ -205,7 +205,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_sch_sec li{float: left;}
 .mob_header .mob_sch_sec li:nth-child(1){}
 .mob_header .mob_sch_sec li:nth-child(1) img{width: 35.5px;}
-.mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 72px);}
+.mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 77px);}
 .mob_header .mob_sch_sec li:nth-child(2) h1{text-align: center;}
 .mob_header .mob_sch_sec li:nth-child(2) h1 img{width: 112px;}
 .mob_header .mob_sch_sec li:nth-child(3){}
