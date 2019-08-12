@@ -112,8 +112,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .sch_sec .search_bar{float: left; margin-top: 26px; width: calc(100% - 360px); position: relative; display: none; }
 .header .sch_sec .search_bar .ipt_search_bar{float: left; padding-left: 10px; width: calc(100% - 50px); height: 50px; border: 3px solid #000039;}
 .header .sch_sec .search_bar .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: #000039 url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 16.5px 15px; border:none;}
-.header .sch_sec .chatbot{position: absolute; right: 60px; top: 15px; /*float: left; margin: 15px 0 0 20px; width: 90px;*/}
-.header .sch_sec .chatbot img{width: 37px;}
+.header .sch_sec .chatbot{float: left; width: 150px;}
+.header .sch_sec .chatbot a{display: block; margin: 20px 0 0 20px;}
+.header .sch_sec .chatbot img{width: 125px;}
 /* pc nav */
 .header .nav{height: 50px;}
 .header .nav > .nav_menu{}
