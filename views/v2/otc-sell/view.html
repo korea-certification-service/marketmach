@@ -123,7 +123,7 @@
                 <!--// 상품정보 : 이미지 업로드 UI 포함 -->
 
                 <div class="tar">
-                    <a href="javascript:history.back()" class="btn btn_go_list">목록</a>
+                    <a href="javascript:routeLink()" class="btn btn_go_list">목록</a>
                     <!-- [모듈] 댓글모듈 -->
                     <% include ../include/modules/comment.html %>
                 </div>
@@ -623,6 +623,16 @@
             }).fail(function (fail) {
                 console.log(fail);
             });
+        }
+        function routeLink() {
+            var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
+
+            if(prevPath != "otc-sells") {
+                location.replace("http://"+location.host + "/otc-sells?category=otc&trade_type=sell");
+            } else {
+                history.back();
+            }
+            
         }
     </script>
 
