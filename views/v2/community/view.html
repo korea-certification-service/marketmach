@@ -166,6 +166,7 @@
                 if(replyCount == 0) {
                     $('.reply_list').html('');    
                 }
+                replyCount++;
                 $('.reply_list').prepend(strDOM);
                 $('#add_reply').val('');
                 $('#addReply').attr('disabled', false);

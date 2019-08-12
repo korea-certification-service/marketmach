@@ -94,7 +94,10 @@
                                     </tr>
                                     <tr>
                                         <th>동영상</th>
-                                        <td><input type="text" id="movieURL" class="form-control" placeholder="youtube url을 입력해주세요."></td>
+                                        <td>
+                                            <input type="text" id="movieURL" class="form-control" placeholder="youtube url을 입력해주세요.">
+                                            <p class="fcrd">※동영상 링크 입력 시 유튜브에서 제공하는 공유 URL 링크를 복사 후 입력하세요.</p>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -142,10 +145,8 @@
                 "reporter": "<%=userTag%>",
                 "type": $('#type').val(),
                 "title":$("#title").val(),
-                "content": $("#content").val()
-            }
-            if($("#movieURL").val() != "") {
-                data['movieURL'] = $("#movieURL").val()
+                "content": $("#content").val(),
+                "movieUrl": $("#movieURL").val()
             }
 
             $.ajax({
@@ -167,7 +168,7 @@
                 if(sel_files.length > 0) {
                     submitAction(success.data._id);
                 } else {
-                    history.back(-1);
+                    location.href = "/community/board/" + $('#type').val();
                 }
 
             }).fail(function (fail) {
@@ -194,7 +195,7 @@
             }).done(function (success) {
                 //console.log(success);
                 $("#ajaxSpiner").hide(); // spinner
-                history.back(-1);
+                location.href = "/community/board/" + $('#type').val();
             }).fail(function (fail) {
                 console.log('실패',fail);
                 $("#ajaxSpiner").hide(); // spinner

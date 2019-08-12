@@ -349,8 +349,12 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    alert("거래가 취소되었습니다.");
-                    getItemList();
+                    if(success.data.successYn == "Y") {
+                        alert("거래 취소가 완료되었습니다.");
+                        getItemList();
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
