@@ -224,13 +224,23 @@ app.use(function (err, req, res, next) {
     } else {
     }
 
-    res.render('v2/error/error', {
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        authPhone: req.session.authPhone,
-        title: 'Error'});
+    if(dbconfig.country == "KR" || dbconfig.country == "POINT") {
+        res.render('v2/error/error', {
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            authPhone: req.session.authPhone,
+            title: 'Error'});
+    } else {
+        res.render('v2_en/error/error', {
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            authPhone: req.session.authPhone,
+            title: 'Error'});
+    }
 });
 
 // let bitcore_lib = require('./utils/bitcore_lib');
