@@ -132,7 +132,7 @@
             var data;
             if (coin == "BTC") {
                 price = parseFloat((mach - (mach * btc_fee)).toFixed(8));
-                data = mach + " BTC - "+(btc_fee * 100)+"% = " + price + " BTC  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                data = mach + " BTC - "+(btc_fee * 100)+"% = " + price + " BTC  <span class='fcrd'>※3% 에스크로 수수료 발생</span>";
                 $("#my_amount").html(numberWithCommas(total_btc)  + "<span>BTC</span>");
                 $("#calculate").html(data);
                 $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
@@ -141,7 +141,7 @@
                 $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " BTC");
             } else if (coin == "ETH") {
                 price = parseFloat((mach - (mach * ether_fee)).toFixed(8));
-                data = mach + " ETH - "+(ether_fee * 100)+"% = " + price + " ETH  <span class='fcrd'>※1.6% 출금 수수료 발생</span>";
+                data = mach + " ETH - "+(ether_fee * 100)+"% = " + price + " ETH  <span class='fcrd'>※3% 에스크로 수수료 발생</span>";
                 $("#my_amount").html(numberWithCommas(total_ether)  + "<span>ETH</span>");
                 $("#calculate").html(data);
                 $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
