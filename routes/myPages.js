@@ -596,85 +596,85 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
 });
 
 
-router.get('/point/exchange/deposit', sessionChecker.sessionChecker2, function (req, res, next) {
-    if(dbconfig.country == "KR") {
-        res.render('v2/myPage/point/exchange_deposit', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,4]
-        }); 
-    } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/myPage/point/exchange_deposit', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,4]
-        });         
-    } else {
-        res.render('v2_en/myPage/point/exchange_deposit', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,4]
-        }); 
-    }
-});
+// router.get('/point/exchange/deposit', sessionChecker.sessionChecker2, function (req, res, next) {
+//     if(dbconfig.country == "KR") {
+//         res.render('v2/myPage/point/exchange_deposit', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,4]
+//         }); 
+//     } else if(dbconfig.country == "POINT") {
+//         res.render('v2_point/myPage/point/exchange_deposit', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,4]
+//         });         
+//     } else {
+//         res.render('v2_en/myPage/point/exchange_deposit', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,4]
+//         }); 
+//     }
+// });
 
-router.get('/point/exchange/withdraw', sessionChecker.sessionChecker2, function (req, res, next) {
-    if(dbconfig.country == "KR") {
-        res.render('v2/myPage/point/exchange_withdraw', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,5]
-        }); 
-    } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/myPage/point/exchange_withdraw', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,5]
-        });      
-    } else {
-        res.render('v2_en/myPage/point/exchange_withdraw', {
-            title: 'Bitweb Point Exchange',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            fee: dbconfig.fee.exchange.point.deposit,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,5]
-        }); 
-    }
-});
+// router.get('/point/exchange/withdraw', sessionChecker.sessionChecker2, function (req, res, next) {
+//     if(dbconfig.country == "KR") {
+//         res.render('v2/myPage/point/exchange_withdraw', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,5]
+//         }); 
+//     } else if(dbconfig.country == "POINT") {
+//         res.render('v2_point/myPage/point/exchange_withdraw', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,5]
+//         });      
+//     } else {
+//         res.render('v2_en/myPage/point/exchange_withdraw', {
+//             title: 'Bitweb Point Exchange',
+//             userId: req.session.userId,userTag:req.session.userTag,
+//             coinId: req.session.coinId,
+//             pointId: req.session.pointId,
+//             fee: dbconfig.fee.exchange.point.deposit,
+//             authPhone: req.session.authPhone,
+//             usePoint:dbconfig.usePoint,
+//             useBlockchain:dbconfig.useBlockchain,
+//             arrDepth:[5,5]
+//         }); 
+//     }
+// });
 
 router.get('/user/checkPassword', sessionChecker.sessionChecker2, function (req, res, next) {
     if(dbconfig.country == "KR") {

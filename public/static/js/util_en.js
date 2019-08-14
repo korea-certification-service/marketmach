@@ -401,9 +401,9 @@ function resetSearchFilter(selector) {
 
 function openVtrInfo() {
     if (isMobile()) {
-        window.open("/static/html/vtrInfo.html", "VtrInfo", "toolbar=yes,scrollbars=yes,resizable=no,top=0,left=50%,width=400,height=520");
+        window.open("/static/html/vtrInfo_en.html", "VtrInfo", "toolbar=yes,scrollbars=yes,resizable=no,top=0,left=50%,width=400,height=520");
     } else {
-        window.open("/static/html/vtrInfo.html", "VtrInfo", "toolbar=yes,scrollbars=yes,resizable=no,top=0,left=50%,width=800,height=1100");
+        window.open("/static/html/vtrInfo_en.html", "VtrInfo", "toolbar=yes,scrollbars=yes,resizable=no,top=0,left=50%,width=800,height=1100");
     }
 }
 
