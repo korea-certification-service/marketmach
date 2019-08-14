@@ -1,21 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () { 
     
-    var data = [];
-    getData("games");
+    // var data = [];
+    // getData("games");
     
-    function getData(path){
-        $.ajax({
-            url: '/v1/'+path,
-            success: function(dt){
-                if(path == "games") {
-                    data.games = dt.data;
-                } else if(path == "assets") {
-                    data.assets = dt.data;
-                }
-                showLeftList();
-            }
-        })   
-    }
+    // function getData(path){
+    //     $.ajax({
+    //         url: '/v1/'+path,
+    //         success: function(dt){
+    //             if(path == "games") {
+    //                 data.games = dt.data;
+    //             } else if(path == "assets") {
+    //                 data.assets = dt.data;
+    //             }
+    //             showLeftList();
+    //         }
+    //     })   
+    // }
 
 
     var srchSelect = document.querySelector(".srch_select");
@@ -33,132 +33,132 @@ document.addEventListener("DOMContentLoaded", function () {
     var inputSetTimeOut;
 
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
-    srchInput.addEventListener("input", function(event){
+    // srchInput.addEventListener("input", function(event){
 
-        var that = this;
+    //     var that = this;
 
-        clearTimeout(inputSetTimeOut);
+    //     clearTimeout(inputSetTimeOut);
 
-        inputSetTimeOut = setTimeout(function(){
+    //     inputSetTimeOut = setTimeout(function(){
  
-            var val = that.value;
-            var srchVal = val.split(' ');
+    //         var val = that.value;
+    //         var srchVal = val.split(' ');
     
-            var step01Rge = new RegExp(srchVal[0], "g");
-            var step02Reg = new RegExp(srchVal[1], "g");
+    //         var step01Rge = new RegExp(srchVal[0], "g");
+    //         var step02Reg = new RegExp(srchVal[1], "g");
     
-            var _arr;
+    //         var _arr;
 
-            srchDel.style.display = "block"; 
+    //         srchDel.style.display = "block"; 
 
-            //카테고리박스 초기화
-            removeList(leftUl);
-            removeList(rightUl);
+    //         //카테고리박스 초기화
+    //         removeList(leftUl);
+    //         removeList(rightUl);
     
-            //카테고리박스 사이즈 초기화
-            setSize(1);
+    //         //카테고리박스 사이즈 초기화
+    //         setSize(1);
     
-            //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
-            if( seletedValue == "games" ) { //게임자산일때
+    //         //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
+    //         if( seletedValue == "games" ) { //게임자산일때
                 
-                //게임이름 또는 서버명으로 검색할때
-                data.games.forEach(function(el){ 
+    //             //게임이름 또는 서버명으로 검색할때
+    //             data.games.forEach(function(el){ 
 
-                    if( el.game_name.match(step01Rge) != null && val != "" ) { //게임이름으로 검색할때
+    //                 if( el.game_name.match(step01Rge) != null && val != "" ) { //게임이름으로 검색할때
     
-                        addList(el.game_name, leftUl);
+    //                     addList(el.game_name, leftUl);
                             
 
-                    } else {
+    //                 } else {
 
-                        el.servers.forEach(function(e) { //서버명으로 검색할때
+    //                     el.servers.forEach(function(e) { //서버명으로 검색할때
 
-                            if(e.match(step01Rge) != null && val != "") {
+    //                         if(e.match(step01Rge) != null && val != "") {
 
-                                addList(el.game_name+">"+e, leftUl, "game_with_server");
+    //                             addList(el.game_name+">"+e, leftUl, "game_with_server");
 
-                            }
+    //                         }
     
-                        });
+    //                     });
 
-                    } 
+    //                 } 
 
-                });
+    //             });
 
-                //게임이름과 서버명으로 검색했을때
-                if( srchVal[1] != undefined && srchVal[0] != " " ) {
+    //             //게임이름과 서버명으로 검색했을때
+    //             if( srchVal[1] != undefined && srchVal[0] != " " ) {
 
-                    removeList(rightUl);
-                    setSize(0);
+    //                 removeList(rightUl);
+    //                 setSize(0);
                     
-                    _arr = data.games.filter(function(el){
-                        return el.game_name == srchVal[0]; //검색한 게임이름을 가지고있는 객체를 반환
-                    });
+    //                 _arr = data.games.filter(function(el){
+    //                     return el.game_name == srchVal[0]; //검색한 게임이름을 가지고있는 객체를 반환
+    //                 });
 
-                    if( _arr.length == 0 ) { //첫번째 검색어와 일치되는 데이터가 없을때
-                        removeList(leftUl);
-                        removeList(rightUl);
-                        setSize(1);
-                        addList("No Exist.", leftUl, "no_exist");
-                        var NoExist = document.querySelector(".no_exist");
-                        if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
-                        return;
-                    }
+    //                 if( _arr.length == 0 ) { //첫번째 검색어와 일치되는 데이터가 없을때
+    //                     removeList(leftUl);
+    //                     removeList(rightUl);
+    //                     setSize(1);
+    //                     addList("No Exist.", leftUl, "no_exist");
+    //                     var NoExist = document.querySelector(".no_exist");
+    //                     if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
+    //                     return;
+    //                 }
 
-                    _arr[0].servers.forEach(function(el){ //검색한 게임이름을 가지고있는 객체의 servers배열을 탐색하여 리스트추가
+    //                 _arr[0].servers.forEach(function(el){ //검색한 게임이름을 가지고있는 객체의 servers배열을 탐색하여 리스트추가
                         
-                        if( el.match(step02Reg) != null && val != "" ) {
+    //                     if( el.match(step02Reg) != null && val != "" ) {
 
-                            addList(el, rightUl);
+    //                         addList(el, rightUl);
 
-                        }
+    //                     }
 
-                    });
-                }
+    //                 });
+    //             }
     
-            } 
-            // else if( seletedValue == "assets" ) { //현물자산일때
+    //         } 
+    //         // else if( seletedValue == "assets" ) { //현물자산일때
     
-            //     data.assets.forEach(function(el){
+    //         //     data.assets.forEach(function(el){
     
     
-            //         if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
+    //         //         if( el.category1.match(step01Rge) != null && val != "" ) { //검색결과가 존재할때
     
-            //             addList(el.category1, leftUl);
+    //         //             addList(el.category1, leftUl);
     
-            //         }
+    //         //         }
     
-            //     });
+    //         //     });
     
-            // }
+    //         // }
 
-            if(  val == "" ){ //사용자가 텍스트를 모두 지웠을때
+    //         if(  val == "" ){ //사용자가 텍스트를 모두 지웠을때
 
-                srchDel.style.display = "none";
-                showLeftList();
+    //             srchDel.style.display = "none";
+    //             showLeftList();
 
-            }
+    //         }
 
-            //검색결과없음 표시
-            if(leftUl.childElementCount == 0){
+    //         //검색결과없음 표시
+    //         if(leftUl.childElementCount == 0){
 
-                addList("검색결과가 없습니다", leftUl, "no_exist");
+    //             addList("검색결과가 없습니다", leftUl, "no_exist");
 
-                var NoExist = document.querySelector(".no_exist");
+    //             var NoExist = document.querySelector(".no_exist");
 
-            } else if(leftUl.childElementCount != 0 && NoExist ){
+    //         } else if(leftUl.childElementCount != 0 && NoExist ){
 
-                leftUl.removeChild( NoExist );
+    //             leftUl.removeChild( NoExist );
 
-            }
+    //         }
 
-            if( leftUl.childNodes[0] ) { leftUl.childNodes[0].classList.add("clicked"); }
-            if( rightUl.childNodes[0] ) { rightUl.childNodes[0].classList.add("clicked"); }
+    //         if( leftUl.childNodes[0] ) { leftUl.childNodes[0].classList.add("clicked"); }
+    //         if( rightUl.childNodes[0] ) { rightUl.childNodes[0].classList.add("clicked"); }
     
-        }, 250);
+    //     }, 250);
         
 
-    });
+    // });
     
     //[ 키다운 이벤트 ] : 방향키에 따라 리스트를 강조 및 스크롤 조절, 스페이스와 엔터 키를 인식하여 다음카테고리 요소를 보여줌
     // srchInput.addEventListener("keydown", function(e){
@@ -191,10 +191,10 @@ document.addEventListener("DOMContentLoaded", function () {
         
     // });
 
-    //[ 클릭 이벤트 ] : 왼쪽 카테고리에 리스트 추가
+    //[ 클릭 이벤트 ] : input태그에 placeholder를 select 카테고리에 맞게 문구 변경.
     srchSelect.addEventListener("change",function(e){
         srchBoxWrap.style.display = "none";
-
+        console.log(srchSelect.value);
         if(srchSelect.value == "games"){
             srchInput.setAttribute("placeholder", "Search Game or Server Name.");
         } else if(srchSelect.value == "assets"){
@@ -205,38 +205,38 @@ document.addEventListener("DOMContentLoaded", function () {
         
     });
 
-    //[ 클릭 이벤트 ] : 왼쪽 카테고리를 클릭하면 해당 카테고리에 맞는 리스트를 오른쪽에 추가
-    leftUl.addEventListener("click", function(e){
-        if( e.target.classList[0] == "game_with_server" ) {
-            return;
-        }
-        showRightList(e);
-    });
+    // //[ 클릭 이벤트 ] : 왼쪽 카테고리를 클릭하면 해당 카테고리에 맞는 리스트를 오른쪽에 추가
+    // leftUl.addEventListener("click", function(e){
+    //     if( e.target.classList[0] == "game_with_server" ) {
+    //         return;
+    //     }
+    //     showRightList(e);
+    // });
 
-    //[ 클릭 이벤트 ] : 검색창 초기화
-    srchDel.addEventListener("click", function(){
-        srchDel.style.display = "none";
-        srchInput.value = "";
-        showLeftList();
-    });
+    // //[ 클릭 이벤트 ] : 검색창 초기화
+    // srchDel.addEventListener("click", function(){
+    //     srchDel.style.display = "none";
+    //     srchInput.value = "";
+    //     showLeftList();
+    // });
 
-    //[ 클릭 이벤트 ] : 검색가이드박스를 보여주거나 없애줌
-    document.addEventListener("click", function(e){
+    // //[ 클릭 이벤트 ] : 검색가이드박스를 보여주거나 없애줌
+    // document.addEventListener("click", function(e){
         
-        if( e.target.offsetParent &&
-            (srchSelect.value == "games" && e.target.id == "search_item_name" ||
-            srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap")
-        ){
+    //     if( e.target.offsetParent &&
+    //         (srchSelect.value == "games" && e.target.id == "search_item_name" ||
+    //         srchSelect.value == "games" && e.target.offsetParent.className == "srch_bottomWrap")
+    //     ){
 
-            srchBoxWrap.style.display = "block";
+    //         srchBoxWrap.style.display = "block";
 
-        } else {
+    //     } else {
 
-            srchBoxWrap.style.display = "none";
+    //         srchBoxWrap.style.display = "none";
 
-        }
+    //     }
 
-    });
+    // });
 
 
     /****************************

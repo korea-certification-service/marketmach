@@ -91,7 +91,7 @@
                 gamecoin_rate = success.data.list[0].gamecoin_rate;
 
                 getCoin();
-
+                
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -255,13 +255,13 @@
                             <div class="lft_area">
                                 <p>
                                     <em id="game_name">마하 어드벤처</em><br>
-                                    <em id="game_coin" class="color-0a73b8">0</em> MC 
+                                    <em id="game_coin" class="color-0a73b8">0</em> MC
                                 </p>
                             </div>
                             <div class="rgh_area">
                                 <a href="/myPages/wallet/info">
                                     <em>나의지갑 잔액</em>
-                                    <p id="mach"><span>MACH</span></p>
+                                    <p id="mach">0 <span>MACH</span></p>
                                 </a>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
                                 <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
