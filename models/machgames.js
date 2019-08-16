@@ -9,7 +9,8 @@ var machgamesSchema = new Schema({
     iconImgUrl: String,
     regDate: String,
     mach_rate: Number,
-    gamecoin_rate: Number
+    gamecoin_rate: Number,
+    issueAmount: Number
 });
 
 module.exports = machgamesSchema;

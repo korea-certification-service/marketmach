@@ -7,21 +7,31 @@
         var userId = "<%=userId%>";
 
         $(document).ready(function() {
-           getUesrGameInfo();
+            getRate();
         });
    
-        function getUesrGameInfo() {
-           $.ajax({
-               method: "GET",
-               url: "/v1/gameCenter/"+userId+"/info"
-           }).done(function (success) {
-               console.log(success.data);
-               if(success.data != null) {
-                   $("#mcs1_coin").text(success.data.total_mcs1_coin);
-               }
-           }).fail(function (fail) {
-               console.log(fail);
-           })
+        // function getUesrGameInfo() {
+        //    $.ajax({
+        //        method: "GET",
+        //        url: "/v1/gameCenter/"+userId+"/info"
+        //    }).done(function (success) {
+        //        console.log(success.data);
+        //        if(success.data != null) {
+        //            $("#mcs1_coin").text(success.data.total_mcs1_coin);
+        //        }
+        //    }).fail(function (fail) {
+        //        console.log(fail);
+        //    })
+        // }
+        function getRate(option){
+            $.ajax({
+                method: "POST",
+                url: "/v1/gameCenter/games/list"
+            }).done(function (success) {
+                $('#exchangeableMach').text(numberWithCommas(success.data.list[0].issueAmount));
+            }).fail(function (fail) {
+                console.log(fail);
+            })
         }
    </script>
 <body>
@@ -56,11 +66,10 @@
                                     <div class="gst_gametemplet">
                                         <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
                                         <div class="coin_value">
-                                            <em>보관중인 몽키코인</em>
+                                            <em>마하 어드벤쳐</em>
                                             <div>
-                                                <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
                                                 <p>
-                                                    <span id="mcs1_coin">0</span>
+                                                    총 교한 가능 MACH : <span id="exchangeableMach"></span>
                                                 </p>
                                             </div>
                                         </div>
