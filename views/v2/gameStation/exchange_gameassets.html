@@ -89,7 +89,7 @@
             }).done(function (success) {
                 mach_rate = success.data.list[0].mach_rate;
                 gamecoin_rate = success.data.list[0].gamecoin_rate;
-
+                $('#exchangeableMach').text(numberWithCommas(success.data.list[0].issueAmount));
                 getCoin();
                 
             }).fail(function (fail) {
@@ -102,9 +102,9 @@
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
                 total_mach = success.data.total_mach;
-                $("#mach").html(total_mach + " <span>MACH</span>");
-                $("#mach_amount").html(total_mach);
-                $("#total_mach_amount").html(total_mach);
+                $("#mach").html(numberWithCommas(total_mach) + " <span>MACH</span>");
+                $("#mach_amount").html(numberWithCommas(total_mach));
+                $("#total_mach_amount").html(numberWithCommas(total_mach));
 
                 getUesrGameInfo();
 
@@ -120,9 +120,9 @@
                 if(success.data != null) {
                     console.log("getUserGameinfo =>"+success.data);
                     my_game_coin = success.data.total_mcs1_coin;
-                    $("#game_coin").text(my_game_coin);
-                    $("#game_amount").html(my_game_coin);
-                    $("#total_game_amount").html(my_game_coin);
+                    $("#game_coin").text(numberWithCommas(my_game_coin));
+                    $("#game_amount").html(numberWithCommas(my_game_coin));
+                    $("#total_game_amount").html(numberWithCommas(my_game_coin));
 
                     calculate(mach_rate, gamecoin_rate, select_value);
                 }
@@ -143,16 +143,16 @@
 
             plus_amountResult = reteResult + total_mach;
 
-            $("#calc_result_game").html(select_value + " <span>MC</span>");
-            $("#calc_result_mach").html(reteResult + " MACH");
+            $("#calc_result_game").html(numberWithCommas(select_value) + " <span>MC</span>");
+            $("#calc_result_mach").html(numberWithCommas(reteResult) + " MACH");
 
-            $game_amount.html(my_game_coin);//보유중인 게임코인 값
-            $minus_amount.html(sVal);//빼는 게임코인 값
-            $total_game_amount.html(minus_amountResult);//최종 게임코인 값
+            $game_amount.html(numberWithCommas(my_game_coin));//보유중인 게임코인 값
+            $minus_amount.html(numberWithCommas(sVal));//빼는 게임코인 값
+            $total_game_amount.html(numberWithCommas(minus_amountResult));//최종 게임코인 값
 
-            $mach_amount.html(total_mach);//보유중인 마하 값
-            $plus_amount.html(reteResult);//더해지는 마하 값
-            $total_mach_amount.html(plus_amountResult);//최종 마하 값
+            $mach_amount.html(numberWithCommas(total_mach));//보유중인 마하 값
+            $plus_amount.html(numberWithCommas(reteResult));//더해지는 마하 값
+            $total_mach_amount.html(numberWithCommas(plus_amountResult));//최종 마하 값
 
             return {
                 body:{
@@ -276,6 +276,12 @@
                                     <col class="col2_2">
                                 </colgroup>
                                 <tbody>
+                                    <tr>
+                                        <th>총 교환가능 MACH</th>
+                                        <td>
+                                            <span id="exchangeableMach"></span>
+                                        </td>
+                                    </tr> 
                                     <tr>
                                         <th>교환 게임자산</th>
                                         <td>
