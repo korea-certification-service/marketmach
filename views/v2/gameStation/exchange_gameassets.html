@@ -89,7 +89,7 @@
             }).done(function (success) {
                 mach_rate = success.data.list[0].mach_rate;
                 gamecoin_rate = success.data.list[0].gamecoin_rate;
-
+                $('#exchangeableMach').text(numberWithCommas(success.data.list[0].issueAmount));
                 getCoin();
                 
             }).fail(function (fail) {
@@ -276,6 +276,12 @@
                                     <col class="col2_2">
                                 </colgroup>
                                 <tbody>
+                                    <tr>
+                                        <th>총 교한 가능 MACH</th>
+                                        <td>
+                                            <span id="exchangeableMach"></span>
+                                        </td>
+                                    </tr> 
                                     <tr>
                                         <th>교환 게임자산</th>
                                         <td>

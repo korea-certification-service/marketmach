@@ -21,8 +21,8 @@
 .gst_gametemplet .coin_value > div { margin-top: 4px; }
 .gst_gametemplet .coin_value div::after { content:""; display: block; clear: both; }
 .gst_gametemplet .coin_value div > img { float: left; width: 30px; height: 30px; margin-right: 10px; } 
-.gst_gametemplet .coin_value div > p { float: left; }
-.gst_gametemplet .coin_value div p > span { color: #000; color: #0a73b8; font-size: 18px; }
+.gst_gametemplet .coin_value div > p { float: left;color: #1e2560}
+.gst_gametemplet .coin_value div p > span { color: #000; color: #0a73b8; font-weight: bold;}
 
 /*[모듈] 지갑정보*/
 .gameStation_sec .gameStation_mywallet .lft_area {
@@ -174,7 +174,8 @@
 /*machtogameassets.html*/
 
 /*exchange_mach.html*/
-
+.gameStation_sec .table_account tbody th{min-width: 155px;}
+.gameStation_sec .table_account tbody #exchangeableMach {color: #0a73b8;font-weight: bold;}
 /*machadventurelist.html*/
 
 /*infoboard.html*/
