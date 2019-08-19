@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
-const dbconfig = require('../config/dbconfig')
+const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
 router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
@@ -35,7 +35,7 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/detail/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-buy/view', {
@@ -70,7 +70,7 @@ router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-buy/register', {
             title: 'Bitweob Main', userId: req.session.userId, coinId: req.session.coinId,
@@ -101,7 +101,7 @@ router.get('/register', sessionChecker.sessionChecker2, function (req, res, next
     }
 });
 
-router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-buy/modify', {
@@ -131,7 +131,7 @@ router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/vtr/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-buy/vtr', {
@@ -162,7 +162,7 @@ router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next)
 });
 
 //CHATBOT 용 수정 페이지
-router.get('/chatbot/:country/:itemId', function (req, res, next) {
+router.get('/chatbot/:country/:itemId', token.checkLoginToken, function (req, res, next) {
     let country = req.params.country;
     let id = req.params.itemId;
     let userId = req.query.userId;

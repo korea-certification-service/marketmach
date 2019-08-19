@@ -22,11 +22,11 @@
             });
 
             $('#connect').on('click',function() {
-                connect();
+                ajaxLoginYnCheck(connect);
             });
 
             $('#disconnect').on('click',function() {
-                disconnect();
+                ajaxLoginYnCheck(disconnect);
             });
 
             _PopupUI.closeAfterClick();

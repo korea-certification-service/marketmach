@@ -127,7 +127,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submitAction(communityId); // 수정은 이미지 업로드 먼저 실행
+                ajaxLoginYnCheck(submitAction); // 수정은 이미지 업로드 먼저 실행
             });
 
             getDetail();
@@ -177,7 +177,7 @@
             })
         }
 
-        function submitAction(id) {
+        function submitAction() {
             console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
@@ -193,7 +193,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/v1/community/"+id+"/images",
+                url: "/v1/community/"+communityId+"/images",
                 processData: false,
                 contentType: false,
                 data: images

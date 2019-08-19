@@ -1,12 +1,8 @@
 var express = require('express');
 var router = express.Router();
-let db = require('../utils/db');
-var machUsers = require('../services/users');
-var machEthers = require('../services/ethers');
-var datetime = require('node-datetime');
-var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
-const dbconfig = require('../config/dbconfig')
+const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
 router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
@@ -39,7 +35,7 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/detail/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/buy/view', {
@@ -73,7 +69,7 @@ router.get('/detail/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/register', token.checkLoginAndAdultToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/buy/register', {
             title: 'Bitweb Main', userId: req.session.userId, 
@@ -110,7 +106,7 @@ router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
     }
 });
 
-router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/modify/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/buy/modify', {
@@ -142,7 +138,7 @@ router.get('/modify/:id', sessionChecker.adultChecker, function (req, res, next)
     }
 });
 
-router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/vtr/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/buy/vtr', {
@@ -175,7 +171,7 @@ router.get('/vtr/:id', sessionChecker.adultChecker, function (req, res, next) {
 });
 
 //CHATBOT 용 수정 페이지
-router.get('/chatbot/:country/:itemId', function (req, res, next) {
+router.get('/chatbot/:country/:itemId', token.checkLoginAndAdultToken, function (req, res, next) {
     let country = req.params.country;
     let id = req.params.itemId;
     let userId = req.query.userId;

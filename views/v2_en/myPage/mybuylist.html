@@ -207,7 +207,7 @@
                                     } else if(buyList[i].status ==3){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">Complete<br>Transaction</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel<br>Transcation(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==101) {
@@ -221,7 +221,7 @@
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="pointTradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">Complete<br>Transaction</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
                                             result +=   '<button class="btn btn_in_view8" id="pointCancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel<br>Transcation(refund)</button>';
                                         }
                                     }
@@ -274,92 +274,101 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('Do you want to Pay(Escrow)?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            event.stopPropagation();
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to Pay(Escrow)?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/buy",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/buy",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
 
         function sellComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete sales?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function tradeComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete a transaction?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete a transaction?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('The transaction is complete.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('The transaction is complete.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function cancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to cancel a transaction?');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    if(success.data.successYn == "Y") {
-                        alert("Transaction canceled.");
-                        getItemList();
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to cancel a transaction?');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        if(success.data.successYn == "Y") {
+                            alert("Transaction canceled.");
+                            getItemList();
+                        } else {
+                            alert(success.data.msg);
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function oppisitionItem(itemId) {
@@ -392,62 +401,68 @@
 
         function pointCancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to cancel a transaction?');
-            console.log('준비중');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to cancel a transaction?');
+                console.log('준비중');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function pointSellComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete sales?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointTradeComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete a transaction?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete a transaction?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointShowPhone(itemId) {

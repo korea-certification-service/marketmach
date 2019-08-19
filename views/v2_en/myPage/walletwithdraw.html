@@ -42,7 +42,7 @@
             });
 
             $("#confirmWithdraw").on("click", function() {
-                reqWithdraw();
+                ajaxLoginYnCheck(reqWithdraw);
             });
 
             $("select[name=coin]").on('change', function() {

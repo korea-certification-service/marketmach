@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var sessionChecker = require('../utils/session');
 var controllerUsers = require('../controllers/users');
-const dbconfig = require('../config/dbconfig')
+const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
 router.get('/', function (req, res, next) {
     if(dbconfig.country == "KR") {
@@ -35,7 +36,7 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/detail/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/view', {
@@ -65,7 +66,7 @@ router.get('/detail/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/register', {
             title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
@@ -96,7 +97,7 @@ router.get('/register', sessionChecker.sessionChecker2, function (req, res, next
     }
 });
 
-router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/modify', {
@@ -128,7 +129,7 @@ router.get('/modify/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/buynow/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/buynow/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/buynow', {
@@ -160,7 +161,7 @@ router.get('/buynow/:id', sessionChecker.sessionChecker2, function (req, res, ne
     }
 });
 
-router.get('/buynow/point/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/buynow/point/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/buynow_point', {
@@ -190,7 +191,7 @@ router.get('/buynow/point/:id', sessionChecker.sessionChecker2, function (req, r
     }
 });
 
-router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/vtr/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/vtr', {
@@ -221,7 +222,7 @@ router.get('/vtr/:id', sessionChecker.sessionChecker2, function (req, res, next)
 });
 
 //CHATBOT 용 수정 페이지
-router.get('/chatbot/:country/:itemId', function (req, res, next) {
+router.get('/chatbot/:country/:itemId', token.checkLoginToken, function (req, res, next) {
     let country = req.params.country;
     let id = req.params.itemId;
     let userId = req.query.userId;
@@ -263,7 +264,7 @@ router.get('/chatbot/:country/:itemId', function (req, res, next) {
     }
 });
 
-router.get('/registers', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/registers', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/test_register', {
             title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,

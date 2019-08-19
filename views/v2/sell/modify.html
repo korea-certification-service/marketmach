@@ -168,7 +168,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
+                ajaxLoginYnCheck(submitAction); // 수정은 이미지 업로드 먼저 실행
             });
 
             $("#item-game-name").on('change', function() {

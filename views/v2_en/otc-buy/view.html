@@ -142,11 +142,11 @@
             });
 
             $('#cancel').on('click', function() {
-                cancelItem();
+                ajaxLoginYnCheck(cancelItem);
             });
 
             $('#confirm').on('click', function() {
-                confirmItem();
+                ajaxLoginYnCheck(confirmItem);
             });
 
             $('#opposition').on('click', function() {
@@ -154,15 +154,15 @@
             });
 
             $('#remove').on('click', function() {
-                removeItem();
+                ajaxLoginYnCheck(removeItem);
             });
 
             $('#buyComplete').on('click', function() {
-                buyComplete();
+                ajaxLoginYnCheck(buyComplete);
             });
 
             $('#sellComplete').on('click', function() {
-                sellComplete();
+                ajaxLoginYnCheck(sellComplete);
             });
 
             $('#showPhone').on('click', function() {

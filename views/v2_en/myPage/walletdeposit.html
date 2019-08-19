@@ -54,7 +54,7 @@
             _PopupUI.closeAfterClick();
 
             $("#resultDeposit").on("click", function() {
-                resultDeposit();
+                ajaxLoginYnCheck(resultDeposit);
             });
 
             $("select[name=coin]").on('change', function() {

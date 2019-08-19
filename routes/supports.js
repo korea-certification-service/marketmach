@@ -3,6 +3,7 @@ var router = express.Router();
 var machUsers = require('../services/users');
 var sessionChecker=require('../utils/session');
 const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
 router.get('/info', function (req, res, next) {
     if(dbconfig.country == "KR") {
@@ -281,7 +282,7 @@ router.get('/faq', function (req, res, next) {
     }
 });
 
-router.get('/opposition/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/register', {
             title: 'Bitweb Support',
@@ -324,7 +325,7 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
     }
 });
 
-router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/list', {
             title: 'Bitweb Support',
@@ -367,7 +368,7 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
     }
 });
 
-router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/view', {
             title: 'Bitweb Support',
@@ -407,7 +408,7 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
     }
 });
 
-router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/modify', {
             title: 'Bitweb Support',
@@ -453,7 +454,7 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
     }
 });
 
-router.get('/private/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/register', {
             title: 'Bitweb Support',
@@ -493,7 +494,7 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
     }
 });
 
-router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/list', {
             title: 'Bitweb Support',
@@ -536,7 +537,7 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
     }
 });
 
-router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/detail/:personalId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/view', {
             title: 'Bitweb Support',
@@ -579,7 +580,7 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
     }
 });
 
-router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/modify/:personalId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/modify', {
             title: 'Bitweb Support',
@@ -622,7 +623,7 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
     }
 });
 
-router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/reqGames', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/reqGames', {
             title: 'Bitweb Support',

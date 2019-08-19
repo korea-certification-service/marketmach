@@ -43,7 +43,7 @@
 
             $("#confirmWithdraw").on("click", function() {
                 $(this).attr("disabled","true");
-                reqWithdraw();
+                ajaxLoginYnCheck(reqWithdraw);
             });
 
             $("select[name=coin]").on('change', function() {

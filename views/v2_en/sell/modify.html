@@ -167,7 +167,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
+                ajaxLoginYnCheck(submitAction); // 수정은 이미지 업로드 먼저 실행
             });
 
             $("#item-game-name").on('change', function() {
@@ -407,7 +407,7 @@
             })
         }
     
-        function submitAction(id) {
+        function submitAction() {
             console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
@@ -418,7 +418,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/v1/items/"+id+"/images",
+                url: "/v1/items/"+itemId+"/images",
                 processData: false,
                 contentType: false,
                 data: images

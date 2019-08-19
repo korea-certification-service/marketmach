@@ -41,37 +41,7 @@
             });
 
             $("#doExchange").on("click", function(){
-                var result = calculate(mach_rate, gamecoin_rate, select_value);
-                var _confirm = confirm(result.confirm.from+"몽키코인을"+result.confirm.to+"마하로 교환하시겠습니까?");
-                console.log(result.body);
-                if( result.confirm.after < 0 ) {
-                    alert("보유중인 게임코인값이 부족합니다");
-                    return;
-                }
-                if(select_value == 0) {
-                    alert("교환하고싶은 금액을 선택해주세요.");
-                    return;
-                }
-                if(_confirm){
-                    $.ajax({
-                        method: "POST",
-                        url: "/v1/gameCenter/"+userId+"/exchange/mach",
-                        data: result.body
-                    }).done(function(success){
-                        var res = success.data;
-                        if(res.successYn == "N"){
-                            alert(res.msg);
-                        } else if(res.successYn == "Y") {
-                            alert("교환이 완료되었습니다.");
-                            location.reload();
-                        }
-                    }).fail(function(fail) {
-                        console.log(fail);
-                    });
-                } else {
-                    console.log("취소")
-                }
-                
+                ajaxLoginYnCheck(submit);
             });
 
             //교환내역 스크립트
@@ -82,6 +52,40 @@
             //     $(e.target).parent("li").addClass("on");
             // });
         });
+
+        function submit() {
+            var result = calculate(mach_rate, gamecoin_rate, select_value);
+            var _confirm = confirm(result.confirm.from+"몽키코인을"+result.confirm.to+"마하로 교환하시겠습니까?");
+            console.log(result.body);
+            if( result.confirm.after < 0 ) {
+                alert("보유중인 게임코인값이 부족합니다");
+                return;
+            }
+            if(select_value == 0) {
+                alert("교환하고싶은 금액을 선택해주세요.");
+                return;
+            }
+            if(_confirm){
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/gameCenter/"+userId+"/exchange/mach",
+                    data: result.body
+                }).done(function(success){
+                    var res = success.data;
+                    if(res.successYn == "N"){
+                        alert(res.msg);
+                    } else if(res.successYn == "Y") {
+                        alert("교환이 완료되었습니다.");
+                        location.reload();
+                    }
+                }).fail(function(fail) {
+                    console.log(fail);
+                });
+            } else {
+                console.log("취소")
+            }
+        }
+
         function getRate(){
             $.ajax({
                 method: "POST",

@@ -16,19 +16,10 @@ let client_secret = 'Q352gLIubZ';
 let state = "RAMDOM_STATE";
 let redirectURI = encodeURI(dbconfig.naver_login_url);
 let api_url = "";
+var token = require('../utils/token');
 
 
 router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
-    //IE로 접속한 경우 지원하지 않는 페이지로 redirect처리한다.
-    // if(req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("Trident") > -1) {
-    //     res.render('notsupport', {title: 'Bitweb Main'});
-    // } else {
-    //     res.render('main/index', {
-    //         title: 'Bitweb Main',
-    //         usePoint:dbconfig.usePoint,
-    //         useBlockchain:dbconfig.useBlockchain
-    //     }); 
-    // }
 
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
@@ -68,15 +59,6 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain
         });
     }
-
-    // res.render('v2/error/coming_soon', {
-    //     title: 'Bitweb Main',
-    //     userId: req.session.userId,
-    //     coinId: req.session.coinId,
-    //     authPhone: req.session.authPhone,
-    //     usePoint:dbconfig.usePoint,
-    //     useBlockchain:dbconfig.useBlockchain
-    // });
 });
 
 router.get('/nodev_index', function (req, res, next) {
@@ -114,20 +96,6 @@ router.get('/nodev_index', function (req, res, next) {
 });
 
 router.get('/main', function (req, res, next) {
-    // console.log("session => ",req.session);
-    // console.log("cookei => ",req.cookies);
-
-    //IE로 접속한 경우 지원하지 않는 페이지로 redirect처리한다.
-    // if(req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("Trident") > -1) {
-    //     res.render('notsupport', {title: 'Bitweb Main'});
-    // } else {
-    //     res.render('main/index', {
-    //         title: 'Bitweb Main',
-    //         usePoint:dbconfig.usePoint,
-    //         useBlockchain:dbconfig.useBlockchain
-    //     });
-    // }
-
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||
@@ -166,15 +134,6 @@ router.get('/main', function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain
         });
     }
-
-    // res.render('v2/error/coming_soon', {
-    //     title: 'Bitweb Main',
-    //     userId: req.session.userId,
-    //     coinId: req.session.coinId,
-    //     authPhone: req.session.authPhone,
-    //     usePoint:dbconfig.usePoint,
-    //     useBlockchain:dbconfig.useBlockchain
-    // });
 });
 
 router.get('/currency', function (req, res, next) {
@@ -211,7 +170,7 @@ router.get('/currency', function (req, res, next) {
     }
 });
 
-router.get('/login', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/login', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/login', {title: 'Bitweb Main'});
     } else if(dbconfig.country == "POINT") {
@@ -249,7 +208,7 @@ router.get('/page',function(req,res,next){
     res.render('common/pagination');
 });
 
-router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/findId', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
@@ -259,7 +218,7 @@ router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
     }
 });
 
-router.get('/findPassword', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/findPassword', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
@@ -372,7 +331,12 @@ router.get('/signup', function (req, res, next) {
                                     }
                                 }
                             }
-                        })
+                        }).catch((err) => {
+                            console.error('err=>', err)
+                            bitwebResponse.code = 500;
+                            bitwebResponse.message = err;
+                            res.status(500).send(bitwebResponse.create())
+                        });
                     } else {
                         if(dbconfig.country =="KR") {
                             data['id'] = blacklist[0]._doc._id;
@@ -391,7 +355,12 @@ router.get('/signup', function (req, res, next) {
                             res.render('v2_en/login/blacklist', data);
                         }
                     }
-                })
+                }).catch((err) => {
+                    console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                });
             } else {
                 data['id'] = user._doc._id;
                 data['userTag'] = user._doc.userTag;
@@ -527,7 +496,7 @@ router.get('/noResult', function (req, res, next) {
     }
 });
 
-router.get("/signupSuccess", sessionChecker.registerSuccessChecker, function (req, res, next) {
+router.get("/signupSuccess", function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
     } else if(dbconfig.country == "POINT") {
@@ -561,7 +530,7 @@ router.get("/google2def744eaae3698d.html", function (req, res, next) {
     res.render('google2def744eaae3698d', {title: 'private'});
 });
 
-router.get('/room', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/room', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr', {
             title: 'Bitweb VTR',
@@ -639,7 +608,7 @@ router.get('/chatbot/login', function (req, res, next) {
     res.render('login/chatbot_login', {title: 'Bitweb Main', chatbot_url: dbconfig.chatbot_url});
 });
 
-router.get("/checkUrl", sessionChecker.sessionChecker3, function (req, res, next) {
+router.get("/checkUrl", token.checkLoginToken, function (req, res, next) {
     let cookie_data = req.cookies.key;
     let start = cookie_data.indexOf("orange__F");
     let cValue = '';
@@ -935,6 +904,10 @@ router.post('/fileuploads',  function (req, res, next) {
         bitwebResponse.data = data;
         res.status(200).send(bitwebResponse.create())
     });
+});
+
+router.get('/v1/ajaxLoginYnCheck', function (req, res, next) {
+    token.checkLoginTokenAjax(req, res, next);
 });
 
 function eventDay(req, res, next) {

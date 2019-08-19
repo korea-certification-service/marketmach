@@ -133,7 +133,7 @@ router.get('/board/detail/:communityId', function (req, res, next) {
     }
 });
 
-router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/register', {
             title: 'Bitweb Main', 
@@ -176,7 +176,7 @@ router.get('/register', sessionChecker.adultChecker, function (req, res, next) {
     }
 });
 
-router.get('/modify/:communityId', sessionChecker.adultChecker, function (req, res, next) {
+router.get('/modify/:communityId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/modify', {
             title: 'Bitweb Main', 
@@ -221,15 +221,6 @@ router.get('/modify/:communityId', sessionChecker.adultChecker, function (req, r
     });
     }
 });
-
-
-// router.get('/movie', function (req, res, next) {
-//     res.render('community/movie/list', {title: 'Bitweb Main', pageIdx: req.query.pageIdx});
-// });
-
-// router.get('/movie/detail', function (req, res, next) {
-//     res.render('community/movie/detail', {title: 'Bitweb Main'});
-// });
 
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
@@ -377,7 +368,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
-router.put('/:communityId', function (req, res, next) {
+router.put('/:communityId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
     let url = dbconfig.APIServer + "/v2/community/" + communityId;
@@ -410,7 +401,7 @@ router.put('/:communityId', function (req, res, next) {
     });
 });
 
-router.post('/:communityId/images', function (req, res, next) {
+router.post('/:communityId/images', token.checkLoginToken, function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -500,7 +491,7 @@ router.post('/:communityId/images', function (req, res, next) {
 
 });
 
-router.post('/reply', function (req, res, next) {
+router.post('/reply', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/community/reply";
     let header = { 
@@ -530,7 +521,7 @@ router.post('/reply', function (req, res, next) {
     });
 });
 
-router.put('/reply/:replyId', function (req, res, next) {
+router.put('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId
 
@@ -564,7 +555,7 @@ router.put('/reply/:replyId', function (req, res, next) {
     });
 });
 
-router.delete('/reply/:replyId', function (req, res, next) {
+router.delete('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId;
 
@@ -593,7 +584,7 @@ router.delete('/reply/:replyId', function (req, res, next) {
     });
 });
 
-router.put('/reply/:replyId/:recommandYn', function (req, res, next) {
+router.put('/reply/:replyId/:recommandYn', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId;
     let recommandYn = req.params.recommandYn;

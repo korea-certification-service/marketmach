@@ -16,7 +16,7 @@
             })
             
             $("#confirmDeposit").on("click", function() {
-                reqDeposit();
+                ajaxLoginYnCheck(reqDeposit);
             });
 
             getPoint();
@@ -42,9 +42,6 @@
         });
 
         function happyomoneyLogin() {
-            alert('준비중입니다.');
-            return;
-
             var loginInfo = {
                 'authType':'ID',
                 "authValue":$('#happymoneyId').val(),

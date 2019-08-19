@@ -12,7 +12,7 @@
             getDetail();
 
             $('#addReply').on('click',function(){
-                addReply();
+                ajaxLoginYnCheck(addReply);
             });
 
             $('#add_reply').on('click', function() {
@@ -27,7 +27,7 @@
                     alert("추천 클릭을 위해 로그인이 필요합니다.");
                     location.href = "/login";
                 } else {
-                    callRecommand();
+                    ajaxLoginYnCheck(callRecommand);
                 }
             })
 
@@ -181,16 +181,22 @@
             $('#item_btn_'+id).hide();
         }
 
+        var replyId;
         function update(id) {
+            replyId = id;
+            ajaxLoginYnCheck(updateReply);
+        }
+
+        function updateReply() {
             var data = {
                 "content": $('#modify_reply').val()
             }
 
-            console.log(id, data);
+            console.log(replyId, data);
 
             $.ajax({
                 method: "PUT",
-                url: "/v1/community/reply/" + id,
+                url: "/v1/community/reply/" + replyId,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(data),
@@ -199,7 +205,7 @@
                 }
             }).done(function (success) {
                 console.log(success);
-                initContent(id, success.data.content)
+                initContent(replyId, success.data.content)
                 $(".item_btn button").attr('disabled', false);
             }).fail(function (fail) {
                 $(".item_btn button").attr('disabled', false);
@@ -216,24 +222,26 @@
         }
 
         function deleteReply(id) {
-            var confirmYn = confirm('정말로 삭제하시겠습니까?');
-            if(confirmYn) {
-                console.log(id);
+            ajaxLoginYnCheck(function() {
+                var confirmYn = confirm('정말로 삭제하시겠습니까?');
+                if(confirmYn) {
+                    console.log(id);
 
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/community/reply/" + id,
-                    beforeSend: function (xhr) {
-                        $(".item_btn button").attr('disabled', true);
-                    }
-                }).done(function (success) {
-                    console.log(success);
-                    location.href = '/community/board/detail/' + communityId;
-                    $(".item_btn button").attr('disabled', false);
-                }).fail(function (fail) {
-                    $(".item_btn button").attr('disabled', false);
-                })
-            }
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/community/reply/" + id,
+                        beforeSend: function (xhr) {
+                            $(".item_btn button").attr('disabled', true);
+                        }
+                    }).done(function (success) {
+                        console.log(success);
+                        location.href = '/community/board/detail/' + communityId;
+                        $(".item_btn button").attr('disabled', false);
+                    }).fail(function (fail) {
+                        $(".item_btn button").attr('disabled', false);
+                    })
+                }
+            });
         }
 
         function callRecommand() {

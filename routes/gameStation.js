@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var sessionChecker = require('../utils/session');
+var token = require('../utils/token');
 
-router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/gamestation',{
             title: 'Bitweb Main',
@@ -43,7 +44,7 @@ router.get('/', sessionChecker.sessionChecker2, function (req, res, next) {
     }
 });
 
-router.get('/trade/list/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/tradelist', {
             title: 'Bitweb Main',
@@ -86,7 +87,7 @@ router.get('/trade/list/', sessionChecker.sessionChecker2, function (req, res, n
     }
 });
 
-router.get('/trade/assets/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/gameassetstomach', {
             title: 'Bitweb Main',
@@ -126,7 +127,7 @@ router.get('/trade/assets/', sessionChecker.sessionChecker2, function (req, res,
     }
 });
 
-router.get('/trade/exchange_assets/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/exchange_gameassets', {
             title: 'Bitweb Main',
@@ -166,7 +167,7 @@ router.get('/trade/exchange_assets/', sessionChecker.sessionChecker2, function (
     }
 });
 
-router.get('/trade/mach/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/trade/mach/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/machtogameassets', {
             title: 'Bitweb Main',
@@ -206,7 +207,7 @@ router.get('/trade/mach/', sessionChecker.sessionChecker2, function (req, res, n
     }
 });
 
-router.get('/trade/exchange_mach/', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/exchange_mach', {
             title: 'Bitweb Main',
