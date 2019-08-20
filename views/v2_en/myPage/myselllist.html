@@ -210,7 +210,7 @@
                                     } else if(buyList[i].status ==3){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">Complete<br>Trade</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {            
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade<br>(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==101) {
@@ -224,7 +224,7 @@
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">Complete<br>Trade</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {            
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel Trade<br>(refund)</button>';
                                         }
                                     }

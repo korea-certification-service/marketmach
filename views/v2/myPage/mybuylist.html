@@ -204,7 +204,7 @@
                                     } else if(buyList[i].status ==3){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">거래완료</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
                                     } else if(buyList[i].status ==101) {
@@ -218,7 +218,7 @@
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="pointTradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">거래완료</button>';
-                                        } else {    
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {        
                                             result +=   '<button class="btn btn_in_view8" id="pointCancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
                                     }
