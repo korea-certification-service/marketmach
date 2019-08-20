@@ -79,11 +79,10 @@
 /* vtr : .table_view .col2_1 */
 .table .colgroup_etc-buys_vtr .col2_1{}
 
-/********** 환전소 **********/
-
-
 /********** 커뮤니티 **********/
 /* list */
+.table .colgroup_community_list .col5_1{width: 50px;}
+.table .colgroup_community_list .col5_4{width: 90px;}
 .table .colgroup_community_list .col4_1{width: 80px;}
 .table .colgroup_community_list .col4_2{}
 .table .colgroup_community_list .col4_3{width: 100px;}
