@@ -39,7 +39,6 @@ function checkLoginToken(req, res, next) {
         // let decryptValue = CryptoJS.AES.decrypt(value, passphrase);
         // let loginToken = decryptValue.toString(CryptoJS.enc.Utf8);
         let condition = {
-            'country': country,
             'loginToken': value
         }
         controllerUsers.detail(country, condition)
@@ -123,7 +122,6 @@ function checkLoginAndAdultToken(req, res, next) {
 
     if(value) {
         let condition = {
-            'country': country,
             'loginToken': value
         }
         controllerUsers.detail(country, condition)
@@ -200,7 +198,6 @@ function checkLoginTokenAjax(req, res, next) {
 
     if(value) {
         let condition = {
-            'country': country,
             'loginToken': value
         }
         controllerUsers.detail(country, condition)
