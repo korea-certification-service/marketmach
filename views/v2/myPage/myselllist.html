@@ -299,9 +299,9 @@
         }
 
         function sellComplete(itemId) {
-            event.stopPropagation();
-            var confirms = confirm('판매 완료 하시겠습니까?');
+            event.stopPropagation();            
             ajaxLoginYnCheck(function() {
+                var confirms = confirm('판매 완료 하시겠습니까?');
                 if(confirms) {
                     var data = {
                         "status": true

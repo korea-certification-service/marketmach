@@ -6,8 +6,6 @@ function count (data, option) {
             data
         )
             .limit(100)
-            .skip(option.pageIdx * option.perPage)
-            .sort({regDate:'desc'})
             .exec(function (err, faqs) {
                 if (err) {
                     // console.error(err)

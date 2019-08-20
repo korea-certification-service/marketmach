@@ -408,7 +408,7 @@
             })
         }
     
-        function submitAction(id) {
+        function submitAction() {
             console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
@@ -419,7 +419,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/v1/items/"+id+"/images",
+                url: "/v1/items/"+itemId+"/images",
                 processData: false,
                 contentType: false,
                 data: images
