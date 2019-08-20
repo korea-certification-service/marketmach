@@ -180,7 +180,17 @@
             getData();
 
             $("#btnSubmit").on('click', function() {
-                ajaxLoginYnCheck(openVTR);
+                if(isMobile()) {
+                    var cookie_data = document.cookie;
+                    var loginToken = cookie_data.indexOf("loginToken");
+                    if(loginToken > -1) {
+                        openVTR();
+                    } else {
+                        location.href = "/login";
+                    }
+                } else {
+                    ajaxLoginYnCheck(openVTR);
+                }
             });
         });
 

@@ -19,7 +19,7 @@ let api_url = "";
 var token = require('../utils/token');
 
 
-router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
+router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
