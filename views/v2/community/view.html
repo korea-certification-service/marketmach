@@ -70,7 +70,8 @@
                 $('#content').html(image + movieUrl + content);   
                 $('#recommandCount').text(recommandCount);
                 if(userTag == reporter) {
-                    $('#modify').show();   
+                    $('#modify').show();  
+                    $('#delete').show(); 
                 }
                 getReply(replys);
                 ToggleRecommandIcon(recommanded);
@@ -302,8 +303,9 @@
                 <div class="sub_content">
                     <section class="community_sec">
                         <div class="community_tit cf">
-                            <h1 class="tit_community">커뮤니티</h1>    
-                            <button class="btn btn_nvln item_view" id="modify">수정</button>                
+                            <h1 class="tit_community">커뮤니티111</h1>    
+                            <button class="btn btn_nvln item_view" id="delete">삭제</button>   
+                            <button class="btn btn_nvln item_view" id="modify">수정</button>
                         </div>
                         
                         <div class="table_wrap table-responsive">
