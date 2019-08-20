@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
 router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
