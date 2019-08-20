@@ -48,7 +48,7 @@
                 var type = getCommunityType(success.data.type);
                 var title = success.data.title;
                 var reporter = success.data.reporter;
-                var regDate = success.data.regDate.substring(2, 10);
+                var regDate = success.data.regDate.substring(2);
                 var content = "<div>" + replaceDesc(success.data.content) + "</div>";                
                 var replys = success.data.reply;
                 replyCount = success.data.replyCount;
@@ -68,7 +68,9 @@
                     image += "<div style='text-align: center; margin-bottom:10px;'><img style='align: center;' src='" + success.data.images[i].path + "'></div>";
                 }
 
-                $('#title').text(title);   
+                $('#title').text(title);
+                $('#writer').text(reporter);   
+                $('#date').text(regDate);    
                 $('#content').html(image + movieUrl + content);   
                 $('#recommandCount').text(recommandCount);
                 if(userTag == reporter) {
@@ -313,8 +315,15 @@
                                         <td id="title" class="post_title"></td>
                                     </tr>
                                     <tr>
+                                        <td class="td_writer_date">
+                                            <span id="writer" class="cmnt_writer"></span>
+                                            <span class="cmnt_bdr"></span>
+                                            <span id="date" class="cmnt_date"></span>
+                                        </td>
+                                    </tr>                                    
+                                    <tr>
                                         <td>
-                                            <div id="content" class="">
+                                            <div id="content" class="cmnt_content">
                                             </div>
                                         </td>
                                     </tr>
