@@ -95,7 +95,7 @@ router.get('/nodev_index', function (req, res, next) {
     }
 });
 
-router.get('/main', function (req, res, next) {
+router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||

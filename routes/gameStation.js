@@ -247,7 +247,7 @@ router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, n
     }
 });
 
-router.get('/machAdventure/info/', function (req, res, next) {
+router.get('/machAdventure/info/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/machadventureinfo', {
             title: 'Bitweb Main',
@@ -287,7 +287,7 @@ router.get('/machAdventure/info/', function (req, res, next) {
     }
 });
 
-router.get('/superlanding/info/', function (req, res, next) {
+router.get('/superlanding/info/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/superlandinginfo', {
             title: 'Bitweb Main',
@@ -328,7 +328,7 @@ router.get('/superlanding/info/', function (req, res, next) {
 });
 
 //////
-router.get('/machAdventure/myGame/', function (req, res, next) {
+router.get('/machAdventure/myGame/',token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/myMachAdventure', {
             title: 'Bitweb Main',
@@ -368,7 +368,7 @@ router.get('/machAdventure/myGame/', function (req, res, next) {
     }
 });
 
-router.get('/superlanding/myGame/', function (req, res, next) {
+router.get('/superlanding/myGame/', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/gameStation/mySuperlanding', {
             title: 'Bitweb Main',

@@ -5,7 +5,7 @@ var sessionChecker=require('../utils/session');
 const dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
 
-router.get('/info', function (req, res, next) {
+router.get('/info', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/info', {
             title: 'Bitweb Support',
@@ -42,7 +42,7 @@ router.get('/info', function (req, res, next) {
     }
 });
 
-router.get('/notice', function (req, res, next) {
+router.get('/notice', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/list', {
             title: 'Bitweb Support',
@@ -82,7 +82,7 @@ router.get('/notice', function (req, res, next) {
     }
 });
 
-router.get('/notice/detail', function (req, res, next) {
+router.get('/notice/detail', token.checkLoginTokenNoSignIn,  function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/detail', {
             title: 'Bitweb Support',
@@ -122,7 +122,7 @@ router.get('/notice/detail', function (req, res, next) {
     }
 });
 
-router.get('/event', function (req, res, next) {
+router.get('/event', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/now', {
             title: 'Bitweb Support',
@@ -162,7 +162,7 @@ router.get('/event', function (req, res, next) {
     }
 });
 
-router.get('/event/past', function (req, res, next) {
+router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/past', {
             title: 'Bitweb Support',
@@ -202,7 +202,7 @@ router.get('/event/past', function (req, res, next) {
     }
 });
 
-router.get('/event/detail/:eventId', function (req, res, next) {
+router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/detail', {
             title: 'Bitweb Support',
@@ -242,7 +242,7 @@ router.get('/event/detail/:eventId', function (req, res, next) {
     }
 });
 
-router.get('/faq', function (req, res, next) {
+router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/faq', {
             title: 'Bitweb Support',

@@ -8,7 +8,7 @@ var token = require('../utils/token');
 const BitwebResponse = require('../utils/BitwebResponse');
 const utils = require('../utils/util');
 
-router.get('/board', function (req, res, next) {
+router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/community', {
             title: 'Bitweb Main', 
@@ -51,7 +51,7 @@ router.get('/board', function (req, res, next) {
     }
 });
 
-router.get('/board/:type', function (req, res, next) {
+router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/list', {
             title: 'Bitweb Main', 
@@ -94,7 +94,7 @@ router.get('/board/:type', function (req, res, next) {
     }
 });
 
-router.get('/board/detail/:communityId', function (req, res, next) {
+router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/view', {
             title: 'Bitweb Main',

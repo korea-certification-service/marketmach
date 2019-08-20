@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 
-router.get('/trade/vtr', function (req, res, next) {
+router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/tradevtr', {
             title: 'Bitweb Main', 
@@ -39,7 +39,7 @@ router.get('/trade/vtr', function (req, res, next) {
     }
 });
 
-router.get('/trade/buynow', function (req, res, next) {
+router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/tradebuynow', {
             title: 'Bitweb Main', 
@@ -76,7 +76,7 @@ router.get('/trade/buynow', function (req, res, next) {
     }
 });
 
-router.get('/buymach/wallet', function (req, res, next) {
+router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachwallet', {
             title: 'Bitweb Main', 
@@ -113,7 +113,7 @@ router.get('/buymach/wallet', function (req, res, next) {
     }
 });
 
-router.get('/buymach/buy', function (req, res, next) {
+router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachbuy', {
             title: 'Bitweb Main', 
@@ -150,7 +150,7 @@ router.get('/buymach/buy', function (req, res, next) {
     }
 });
 
-router.get('/buymach/deposit', function (req, res, next) {
+router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachdeposit', {
             title: 'Bitweb Main', 
@@ -187,7 +187,7 @@ router.get('/buymach/deposit', function (req, res, next) {
     }
 });
 
-router.get('/buymach/withdraw', function (req, res, next) {
+router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachwithdraw', {
             title: 'Bitweb Main', 
@@ -224,7 +224,7 @@ router.get('/buymach/withdraw', function (req, res, next) {
     }
 });
 
-router.get('/safeTrade/escrow', function (req, res, next) {
+router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safeTradeescrow', {
             title: 'Bitweb Main', 
@@ -261,7 +261,7 @@ router.get('/safeTrade/escrow', function (req, res, next) {
     }
 });
 
-router.get('/safeTrade/cuation', function (req, res, next) {
+router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safeTradecuation', {
             title: 'Bitweb Main', 
@@ -298,7 +298,7 @@ router.get('/safeTrade/cuation', function (req, res, next) {
     }
 });
 
-router.get('/etc/csbot', function (req, res, next) {
+router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/etccsbot', {
             title: 'Bitweb Main', 
@@ -332,7 +332,7 @@ router.get('/etc/csbot', function (req, res, next) {
     }
 });
 
-router.get('/etc/fee', function (req, res, next) {
+router.get('/etc/fee', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/etcfee', {
             title: 'Bitweb Main', 
@@ -364,18 +364,6 @@ router.get('/etc/fee', function (req, res, next) {
             usePoint:dbconfig.usePoint
         });
     }
-});
-
-router.get('/trading', function (req, res, next) {
-    res.end('trading');
-});
-
-router.get('/deposition', function (req, res, next) {
-    res.end('deposition');
-});
-
-router.get('/opposition', function (req, res, next) {
-    res.end('opposition');
 });
 
 module.exports = router;

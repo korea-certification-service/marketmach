@@ -4,7 +4,7 @@ var controllerUsers = require('../controllers/users');
 const dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
 
-router.get('/', function (req, res, next) {
+router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-buy/list', {
             userId: req.session.userId, coinId: req.session.coinId,pointId: req.session.pointId,userTag:req.session.userTag,
