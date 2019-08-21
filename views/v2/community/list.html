@@ -16,7 +16,7 @@
             });
             
             $('#btn_search').click(function() {
-                $("#community_list").html('');
+                // $("#community_list").html('');
                 $("#cmnt_list").html('');
                 pageIdx = 0;
                 title = $('#title').val();
@@ -73,16 +73,16 @@
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td>'+notice+'</td>' +
-                            '<td class="tal">' +
-                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
-                                '</div>' +
-                            '</td>' +
-                            '<td>'+ reporter +'</td>' +
-                            '<td>'+ count +'</td>' +
-                            '<td>'+ regDate +'</td>' +
-                        '</tr>';
+                // result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
+                //             '<td>'+notice+'</td>' +
+                //             '<td class="tal">' +
+                //                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                //                 '</div>' +
+                //             '</td>' +
+                //             '<td>'+ reporter +'</td>' +
+                //             '<td>'+ count +'</td>' +
+                //             '<td>'+ regDate +'</td>' +
+                //         '</tr>';
 
                 list += '<li class="li_noti" onclick="javascript:showDetail(\''+id+'\')">'
                 list += '<div></div>'
@@ -92,7 +92,7 @@
                 list += '<div>'+ regDate + '</div>'
                 list += '</li>'
             }
-            $('#community_list').html(result);
+            // $('#community_list').html(result);
             $('#cmnt_list').html(list);
         }
 
@@ -112,26 +112,26 @@
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td></td>' +
-                            '<td class="tal">' +
-                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
-                                '</div>' +
-                            '</td>' +
-                            '<td>'+ reporter +'</td>' +
-                            '<td>'+ count +'</td>' +
-                            '<td>'+ regDate +'</td>' +
-                        '</tr>';
+                // result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
+                //             '<td></td>' +
+                //             '<td class="tal">' +
+                //                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                //                 '</div>' +
+                //             '</td>' +
+                //             '<td>'+ reporter +'</td>' +
+                //             '<td>'+ count +'</td>' +
+                //             '<td>'+ regDate +'</td>' +
+                //         '</tr>';
 
                 list += '<li onclick="javascript:showDetail(\''+id+'\')">'
                 list += '<div></div>'
-                list += '<div class="ellipse">' + title + replyCount + '</div>'
+                list += '<div class="ellipse">' + title + '<em>' + replyCount + '</em>' + '</div>'
                 list += '<div>'+ reporter + '</div>'
                 list += '<div>'+ count + '</div>'
                 list += '<div>'+ regDate + '</div>'
                 list += '</li>'
             }
-            $('#community_list').append(result);
+            // $('#community_list').append(result);
             $('#cmnt_list').append(list);
         }
 
@@ -176,63 +176,9 @@
                             </dt>
                             <dd>
                                 <ul id="cmnt_list" class="w_wrap">
-                                    <li class="li_noti">
-                                        <div></div>
-                                        <div class="ellipse">글 제목입니다.글 제목입니다.글 제목입니다.글 제목입니다.글 제목입니다.글 제목입니다.글 제목입니다.글 제목입니다.</div>
-                                        <div>testkcs</div>
-                                        <div>0</div>
-                                        <div>19/08/20</div>
-                                    </li>
-                                    <li>
-                                        <div></div>
-                                        <div class="ellipse">글 제목입니다.</div>
-                                        <div>testkcs</div>
-                                        <div>0</div>
-                                        <div>19/08/20</div>
-                                    </li>
-                                    <li>
-                                        <div></div>
-                                        <div class="ellipse">글 제목입니다.</div>
-                                        <div>testkcs</div>
-                                        <div>0</div>
-                                        <div>19/08/20</div>
-                                    </li>
-                                    <li>
-                                        <div></div>
-                                        <div class="ellipse">글 제목입니다.</div>
-                                        <div>testkcs</div>
-                                        <div>0</div>
-                                        <div>19/08/20</div>
-                                    </li>
                                 </ul>
                             </dd>
                         </dl>
-                        <br>
-                        <br>
-                        <br>
-
-                        <div class="table_wrap table-responsive">
-                            <table class="table_list has_media_icon table">
-                                <colgroup class="colgroup_community_list">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>좋아요</th>
-                                        <th>등록일</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="community_list">
-                                </tbody>
-                            </table>
-                        </div>
 
                         <div class="btn_align_c">
                             <button class="btn btn_more_list" id="more_search">20개 더보기</button>
