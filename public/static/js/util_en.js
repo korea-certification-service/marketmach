@@ -432,3 +432,18 @@ function addClassCommunityLeftMenu(type) {
         if(type === href.match(/[\w]*$/g)[0]) $li.eq(i).addClass("on");
     }
 }
+
+function ajaxLoginYnCheck(callback) {
+    $.ajax({
+        method: "GET",
+        url: "/v1/ajaxLoginYnCheck"        
+    }).done(function (success) {
+        if(success.data.loginYn == "Y") {
+            callback();
+        } else {
+            location.replace('/login');
+        }
+    }).fail(function (fail) {
+        location.replace('/login');
+    })
+}
