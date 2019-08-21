@@ -566,7 +566,7 @@
 .responsive_table_style dd > ul > li:after{display: block; clear: both; content: '';} 
 .responsive_table_style dd > ul > li{border-top: 1px solid #dee2e6;}
 .responsive_table_style dd > ul > li:hover{cursor: pointer;}
-.responsive_table_style dd > ul > .li_noti{background: #eff4f7;}
+.responsive_table_style dd > ul > .li_noti{background: #fafdff;}
 .responsive_table_style dd > ul > .li_noti > div:first-child{background: url(/static/img/symbol/ico_board_notice.png) 50% 50% no-repeat; background-size: 18px 18px;}
 .responsive_table_style dd > ul > li > div{float: left;}
 /* BtoC 상세 물품 */
