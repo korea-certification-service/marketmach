@@ -370,6 +370,14 @@ router.get('/signup', function (req, res, next) {
                                     } else {
                                         res.render('v2_en/login/withdraw', data);
                                     }
+                                } else {
+                                    if(dbconfig.country =="KR") {
+                                        res.render('v2/login/signup', data);
+                                    } else if(dbconfig.country == "POINT") {
+                                        res.render('v2_point/login/signup',data);
+                                    } else {
+                                        res.render('v2_en/login/signup', data);
+                                    }
                                 }
                             }
                         }).catch((err) => {
