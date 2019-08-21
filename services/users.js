@@ -205,12 +205,13 @@ function getUserByIdAndPassword (data) {
     })
 }
 
-function getUserByTagAndEmail (userTag, email) {
+function getUserByTagAndEmail (userTag, email, phone) {
     return new Promise((resolve, reject) => {
         Users.findOne(
             {$or: [
             {"userTag":userTag},
             {"email": email},
+            {"phone": phone},
             ]},
             function(err, user) {
                 if (err) {

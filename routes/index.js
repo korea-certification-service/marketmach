@@ -372,7 +372,12 @@ router.get('/signup', function (req, res, next) {
                                     }
                                 }
                             }
-                        })
+                        }).catch((err) => {
+                            console.error('err=>', err)
+                            bitwebResponse.code = 500;
+                            bitwebResponse.message = err;
+                            res.status(500).send(bitwebResponse.create())
+                        });
                     } else {
                         if(dbconfig.country =="KR") {
                             data['id'] = blacklist[0]._doc._id;
@@ -391,7 +396,12 @@ router.get('/signup', function (req, res, next) {
                             res.render('v2_en/login/blacklist', data);
                         }
                     }
-                })
+                }).catch((err) => {
+                    console.error('err=>', err)
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create())
+                });
             } else {
                 data['id'] = user._doc._id;
                 data['userTag'] = user._doc.userTag;
