@@ -383,11 +383,9 @@
                 url: "/v1/vtrs/item/" + itemId
             }).done(function (success) {
                 //console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);
@@ -470,11 +468,9 @@
                 url: "/v1/tradePoints/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);

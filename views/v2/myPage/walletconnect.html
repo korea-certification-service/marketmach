@@ -41,8 +41,8 @@
                 auth_code = success.data.code;
                 $('#view_auth_code').html('<em class="fcrd">'+auth_code+'</em>');
                 $('#connect').show();
-                _PopupUI.showWithDim(function(){
-                    $("#btnmCloseModal").focus();
+                _PopupUI.showWithDim(function() {
+                    // callback
                 });
             }).fail(function (fail) {
                 console.log(fail);
