@@ -244,13 +244,13 @@ router.post('/user/checkAuthNo', function(req,res,next) {
         'country': country,
         'countryCode':req.body.countryCode,
         'phone': req.body.phone,
-        'authCode': req.body.authNo
+        // 'authCode': req.body.authNo
     }
 
     controllerOccupancyPhones.detail(country,condition)
     .then((authInfo) => {
         let result = {};
-        if(authInfo == null) {
+        if(authInfo._doc.authCode != req.body.authNo) {
             result = {
                 "successYn": "fail",
                 "msg": "인증번호가 유효하지 않습니다. 인증번호를 다시 받으세요."
