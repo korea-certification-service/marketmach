@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <script>
+        var myCurrency;
+        document.querySelector("#floatingInfoBox").setAttribute("ismain", "true");
+
+        $(document).ready(function () {
+            loadItemsAll();
+            if("<%=useBlockchain%>"=="Y") {
+                loadCurrencyData();
+            }
+
+            if(userId != "" && authPhone == "") {
+                // 메인 전용 팝업 로직
+                // $(".dim_all_area").show();
+                // $("body").css("position", "fixed");
+            }
+        });
+        
+        function loadCurrencyData() {
+            var loadText = '<div class="coin_load_text cf">';
+                loadText += '<em>COIN 시세를 불러오는 중입니다.</em>';
+                loadText += '<div class="lds-facebook"><div></div><div></div><div></div></div>';
+                loadText += '</div>';
+                $('.slick_coin_quotes').slick('slickAdd', loadText);
+                
+            var currency_url = "/v1/charts/currency/5";
+            var currency = function () {
+                $.ajax({
+                    method: "GET",
+                    url: currency_url,
+                }).done(function (success) {
+                    //console.log(success);
+                    loadCurrency(success.data);
+                }).fail(function (fail) {
+                    console.log('system error : ', fail);
+                });
+            };
+            if(myCurrency != undefined) {
+                clearInterval(myCurrency);
+            }
+
+            currency();
+            //myCurrency = setInterval(currency, 1000 * 60);
+            //console.log(myCurrency);
+        }
+        function loadCurrency(data) {
+
+            var chartTotalData = data;
+            var currency_result = "";
+
+            for (var i = 0; i < chartTotalData.length; i++) {
+                if(chartTotalData[i].data.binance.change_percent > 0) {
+                    currency_result += '<div class="">' +
+                    '<dl class="cf">' +
+                        '<dt><em class="ico_coin '+chartTotalData[i].type.toLowerCase()+'"></em>'+chartTotalData[i].type+'</dt>' +
+                        '<dd class="fcrd">$'+chartTotalData[i].data.binance.usd_price+'<em>'+chartTotalData[i].data.binance.change_percent+'%</em></dd>' +
+                    '</dl>' +
+                '</div>';
+                } else {
+                    currency_result += '<div class="">' +
+                    '<dl class="cf">' +
+                        '<dt><em class="ico_coin '+chartTotalData[i].type.toLowerCase()+'"></em>'+chartTotalData[i].type+'</dt>' +
+                        '<dd class="fc3">$'+chartTotalData[i].data.binance.usd_price+'<em>'+chartTotalData[i].data.binance.change_percent+'%</em></dd>' +
+                    '</dl>' +
+                '</div>';
+                }
+                
+            }
+
+            $('.slick_coin_quotes').slick('slickRemove', null, null, true);
+            $('.slick_coin_quotes').slick('slickAdd', currency_result);
+        }
+
+        function loadItemsAll() {
+            var url = "/v1/items/all";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                var strDOM = '';
+                var game_buys = success.data.game_buys;
+                var game_sells = success.data.game_sells;
+                var etc_buys = success.data.etc_buys;
+                var etc_sells = success.data.etc_sells;
+                var prime_services = success.data.primes;
+                var cms = success.data.cms;
+                var movies = success.data.movies;
+                var boards = success.data.boards;
+                var otc_buys = success.data.otc_buys;
+                var otc_sells = success.data.otc_sells;
+                var notices = success.data.notices;
+                
+                console.log(success);
+
+                setPrimeService(prime_services);
+                // setGameSellList(game_sells);
+                // setGameBuyList(game_buys);
+                setEtcSellList(etc_sells);
+                setOtcBuyList(otc_buys);
+                setOtcSellList(otc_sells);
+                setNoticeList(notices);
+                setCommunityMovie(movies);
+                setCommunityBoard(boards);
+            }).fail(function (fail) {
+                console.log('system error : ', fail);
+            })
+        }
+
+        function setPrimeService(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var trade_type = replaceType(data[i].trade_type);
+                var price = numberWithCommas(data[i].total_price);
+                var point = numberWithCommas(data[i].total_point);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                var title = data[i].title;
+                var money = point + '<span>Point</span>';
+                if("<%=useBlockchain%>" =='Y') {
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                }
+
+                result += '<div>' +
+                    '<img src="/static/img/main/monkey_face.png" alt="원숭이아이콘" class="img_monkey">' +
+                    '<dl class="card_ui '+trade_type.title_bg_class+'">' +
+                        '<dt class="'+trade_type.title_class+'">' + trade_type.title + '</dt>' +
+                        '<dd>' +
+                            '<a href="/sells/detail/'+itemId+'">' +
+                                '<ul>' +
+                                    '<li class="cf">' +
+                                        '<em>'+item_type.text+'</em>' +
+                                        '<strong class="fc1">'+money+'</strong>' +
+                                        '</li>' +
+                                        '<li>'+game_server+'</li>' +
+                                        '<li>'+title+'</li>' +
+                                    '</ul>' +
+                                '</a>' +
+                            '</dd>' +
+                        '</dl>' +
+                    '</div>';
+            }
+
+            $('.slick_primezone').slick('slickRemove', null, null, true);
+            $('.slick_primezone').slick('slickAdd', result);
+        }
+        /*
+        function setGameSellList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var price = numberWithCommas(data[i].total_price);
+                var point = numberWithCommas(data[i].total_point);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                var money = point + ' Point';
+                if("<%=useBlockchain%>" =='Y') {
+                    money = price + ' ' + cryptoCurrencyCode;
+                }
+                
+                result += '<tr>' + 
+                        '<td>'+item_type.text+'</td>' + 
+                        '<td>'+game_server+'</td>' + 
+                        '<td><div class="ellipse"><a href="/sells/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+money+'</td>' + 
+                    '</tr>';
+            }
+            $('#sell_list').html(result);
+        }
+
+        function setGameBuyList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var item_type = getItemType(data[i].type);
+                var price = numberWithCommas(data[i].total_price);
+                var point = numberWithCommas(data[i].total_point);
+                var game_server = data[i].game_name + '>' + data[i].game_server;
+                var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                var money = point + ' Point';
+                if("<%=useBlockchain%>" =='Y') {
+                    money = price + ' ' + cryptoCurrencyCode;
+                }
+                
+                result += '<tr>' + 
+                        '<td>'+item_type.text+'</td>' + 
+                        '<td>'+game_server+'</td>' + 
+                        '<td><div class="ellipse"><a href="/buys/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+money+'</td>' + 
+                    '</tr>';
+            }
+            $('#buy_list').html(result);
+        }
+        */
+
+        function setOtcSellList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var price = numberWithCommas(data[i].total_price);
+                var point = numberWithCommas(data[i].total_point);
+                var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                var money = point + ' Point';
+                if("<%=useBlockchain%>" =='Y') {
+                    money = price + ' ' + cryptoCurrencyCode;
+                }
+                
+                result += '<tr>' + 
+                        '<td><div class="ellipse"><a href="/otc-sells/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+money+'</td>' + 
+                    '</tr>';
+            }
+            $('#otc_sell_list').html(result);
+        }
+
+        function setOtcBuyList(data) {
+            var result = "";
+
+            for(var i=0; i<data.length; i++) {
+                var itemId = data[i]._id;
+                var price = numberWithCommas(data[i].total_price);
+                var point = numberWithCommas(data[i].total_point);
+                var title = data[i].title;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                var money = point + ' Point';
+                if("<%=useBlockchain%>" =='Y') {
+                    money = price + ' ' + cryptoCurrencyCode;
+                }
+                
+                result += '<tr>' + 
+                        '<td><div class="ellipse"><a href="/otc-buys/detail/'+itemId+'">'+title+'</a></div></td>' + 
+                        '<td>'+money+'</td>' + 
+                    '</tr>';
+            }
+            $('#otc_buy_list').html(result);
+        }
+
+        function setNoticeList(data) {
+            var result = "";
+
+            console.log(data)
+
+            for(var i=0; i<data.length; i++) {
+                var noticeId = data[i]._id;
+                var title = data[i].title;
+                
+                result += '<li><div class="ellipse noti_ell"><a href="/supports/notice/detail?noticeId='+noticeId+'">'+title+'</a></div></li>'
+            }
+            $('#notice_list').html(result);
+        }
+
+        function setEtcSellList(data) {
+            var result = "";
+
+            if(data.length > 0) {
+                for(var i=0; i<1; i++) {
+                    var itemId = data[i]._id;
+                    var item_type = getItemType(data[i].type);
+                    var price = numberWithCommas(data[i].total_price);
+                    var point = numberWithCommas(data[i].total_point);
+                    var image_src;
+                    if(data[i].images[0] === undefined || data[i].images[0] === "") {
+                        image_src = "/static/img/sub/no_image.png";
+                    } else {
+                        image_src = data[i].images[0].path;
+                    }
+                    var title = data[i].title;
+                    var regDate = data[i].regDate;
+                    var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                    var money = point + '<span>Point</span>';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                    }
+                    
+                    result += 
+                    '<div class="bd_area">' +
+                        '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
+                            '<img src="'+image_src+'" alt="">' +
+                        '</div>' +
+                        '<dl>' +
+                            '<dt>' +
+                                '<div class="assets_tit_txt ellipse">'+title+'</div>' +
+                            '</dt>' +
+                            '<dd class="cf">' +
+                                '<div class="money_txt">'+money+'</div>' +
+                                '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
+                            '</dd>' +
+                        '</dl></a>' +
+                    '</div>';
+                }
+            }
+            $('#assetsTrade').html(result);
+        }
+
+        function setCommunityMovie(data) {
+            var result = "";
+            for(var i=0; i<data.length; i++) {
+                var movie_img = data[i].images[0].path;
+                var title = data[i].title;
+                var movieUrl = data[i].movieUrl;
+                result += '<div class="media_img">' +
+                                '<a href="'+movieUrl+'" target="_blank">' +
+                                    '<img src="'+movie_img+'" alt="">' +
+                                    '<h2 class="ellipse">'+title+'</h2>' +
+                                '</a>' +
+                            '</div>';
+            }
+
+            $('.media_img_wrap').html(result);
+        }
+
+        function setCommunityBoard(data) {
+            var result = "";
+            for(var i=0; i<data.length; i++) {
+                var title = data[i].title;
+                result += '<li class="ellipse">'+title+'</li>';
+            }
+
+            $('#community_boards').html(result);
+        }
+    </script>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="visual_wrap">
+            <section class="visual_sec">
+                <h1 class="blind">Main Banners</h1>
+                <div class="slick_visual">
+                    <div class="visual_img">
+                        <div class="pc_img">
+                            <img src="/static/img/en/en_main_visual04.jpg" alt="Listing">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/en/en_mob_main_visual04.jpg" alt="Listing">
+                        </div>
+                    </div>             
+                    <div class="visual_img">
+                        <a href="/gameStation/superlanding/info/">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual03.jpg" alt="2nd Game">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual03.jpg" alt="2nd Game">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="visual_img">
+                        <a href="/gameStation/machAdventure/info/">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual02.jpg" alt="1st Game">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual02.jpg" alt="1st Game">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="visual_img">
+                        <a href="/howto/trade/vtr">
+                            <div class="pc_img">
+                                <img src="/static/img/main/main_visual01.jpg" alt="Open Beta">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/mob/m_main_visual01.jpg" alt="Open Beta">
+                            </div>
+                        </a> 
+                    </div>                                             
+                </div>
+                <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="4">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Listing</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>2nd Game</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>1st Game</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>Open Beta</em></div></div>
+                </div>
+            </section>
+        </div>
+        <div class="container renewer_container">
+            <section class="w100p_banner">
+                <h1 class="blind">advertise</h1>
+                <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
+                    <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
+                </a>
+                <a class="mob_show" href="https://t.me/marketmachcom" target="_blank">
+                    <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
+                </a>
+            </section>
+
+            <section>
+                <h1 class="tit_main_sec">ASSET</h1>
+                <div class="photo_list">
+                    <ul id="list">
+                        <li class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
+                                            class="ico_trade state_step ico_direct">직거래</em><a
+                                            href="/etc-sells/detail/5d5b5c89b60bff4a68936256"><img
+                                                src="https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.png-1566268554045"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d5b5c89b60bff4a68936256">자산 테스트</a><span
+                                                    class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">10<span>MACH</span></div>
+                                            <div class="time_txt">19/08/20</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
+                                            class="ico_trade state_step ico_delivery_payment">착불거래</em><a
+                                            href="/etc-sells/detail/5d59f7756aff8f408afdb337"><img
+                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566177141327"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f7756aff8f408afdb337">[도서]_잡지</a><span
+                                                    class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">3<span>MACH</span></div>
+                                            <div class="time_txt">19/08/19</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
+                                            class="ico_trade state_step ico_delivery_free">무료배송</em><a
+                                            href="/etc-sells/detail/5d59f7066aff8f408afdb335"><img
+                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566177030757"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f7066aff8f408afdb335">키링 판매해요</a><span
+                                                    class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">10<span>MACH</span></div>
+                                            <div class="time_txt">19/08/19</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
+                                            class="ico_trade state_step ico_direct">직거래</em><a
+                                            href="/etc-sells/detail/5d59f6b5d4a56b350f8a6458"><img
+                                                src="https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.jpg-1566176949279"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f6b5d4a56b350f8a6458">신청</a><span
+                                                    class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">1<span>MACH</span></div>
+                                            <div class="time_txt">19/08/19</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
+                                            class="ico_trade state_step ico_direct">직거래</em><a
+                                            href="/etc-sells/detail/5d59f6a46aff8f408afdb333"><img
+                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566176932663"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f6a46aff8f408afdb333">[도서]_가까이서 보는
+                                                    미술관</a><span class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">12<span>MACH</span></div>
+                                            <div class="time_txt">19/08/19</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
+                                            class="ico_trade state_step ico_direct">직거래</em><a
+                                            href="/etc-sells/detail/5d4cfc31f619c7732f4c50bd"><img
+                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.png-1565326385336"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d4cfc31f619c7732f4c50bd">아기 옷 팝니다</a><span
+                                                    class="reply_num">(1)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">5<span>MACH</span></div>
+                                            <div class="time_txt">19/08/09</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
+                                            class="ico_trade state_step ico_direct">직거래</em><a
+                                            href="/etc-sells/detail/5d4cfc07f619c7732f4c50a6"><img
+                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpeg-1565326343873"
+                                                alt=""></a></div>
+                                    <dl>
+                                        <dt>
+                                            <div class="ellipse"><a href="/etc-sells/detail/5d4cfc07f619c7732f4c50a6">충전기 팝니다</a><span
+                                                    class="reply_num">(0)</span></div>
+                                        </dt>
+                                        <dd class="cf">
+                                            <div class="money_txt">5<span>MACH</span></div>
+                                            <div class="time_txt">19/08/09</div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="img_list_box">
+                                    <div class="view_more">
+                                        <a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- OTC 판매/구매 -->
+            <section class="secOtc item_trade_sec col-lg-12">
+                <h1 class="tit_main_sec">OTC</h1>
+                <h2 class="item_sell_tit on">
+                    <button class="btnOtc btn_show_list on">Sales</button>
+                    <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
+                </h2>
+                <div class="otc_sell otc_table_wrap trade_list toggleTable">              
+                    <table class="main_list_table">
+                        <colgroup class="colgroup_main_otc">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="otc_sell_list">                               
+                        </tbody>
+                    </table>
+                </div>
+                <h2 class="item_buy_tit">
+                    <button class="btnOtc btn_show_list">Purchase</button>
+                    <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
+                </h2>
+                <div class="otc_buy otc_table_wrap trade_list toggleTable">
+                    <table class="main_list_table">
+                        <colgroup class="colgroup_main_otc">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>                            
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="otc_buy_list">
+                        </tbody>
+                    </table>                           
+                </div>             
+            </section>
+            <!--// OTC 아이템 판매/구매 -->
+
+            <div class="w100p_banner">
+                <a class="mob_hide" href="http://bitweb.co.kr" target="_blank">
+                    <img src="/static/img/en/en_main_content_banner03.jpg" alt="bitweb PC">
+                </a>
+                <a class="mob_show" href="http://bitweb.co.kr" target="_blank">
+                    <img src="/static/img/en/en_mob_main_banner03.jpg" alt="bitweb mobile">
+                </a>
+            </div>
+
+            <div class="row">
+                <section class="media_sec col-lg-12">
+                    <h1 class="tit_main_sec">COMMUNITY</h1>
+                    <div class="bd_area">
+                        <div class="media_img_wrap cf">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="main_3n1n_wrap">
+                <section class="notice_sec">
+                    <h1 class="">Notice</h1>
+                    <ul id="notice_list" class="noti_list">
+                    </ul>
+                    <div class="noti_btm_media">
+                        <ul class="cf">
+                            <li><a href="https://www.facebook.com/MarketMACH" target="_blank"><img src="/static/img/symbol/ico_noti_media_facebook.png" alt="facebook"></a></li>
+                            <li><a href="https://twitter.com/MACH99077436" target="_blank"><img src="/static/img/symbol/ico_noti_media_twitter.png" alt="twitter"></a></li>
+                            <li><a href="https://www.youtube.com/channel/UC0d7GufTm0iG1IX_Lenp11w?feature=embeds_subscribe_title" target="_blank"><img src="/static/img/symbol/ico_noti_media_youtube.png" alt="youtube"></a></li>
+                            <li><a href="https://medium.com/@kdi_35594" target="_blank"><img src="/static/img/symbol/ico_noti_media_medium.png" alt="facebook"></a></li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="guide_sec">
+                    <a href="">
+                        <h1>MarketMAC<br>How to use<br>Guide</h1>
+                        <div class="ico_round ico_guide01"></div>
+                    </a>
+                </section>
+                <section class="guide_sec">
+                    <a href="">
+                        <h1>MarketMAC<br>Safty trading<br>Guide</h1>
+                        <div class="ico_round ico_guide02"></div>
+                    </a>
+                </section>
+            </div>
+        </div>
+        <!--// bootstrap container -->
+    </div>
+    <!--// content_wrap -->
+
+    <!-- 모달창 -->
+    <div class="dim_all_area" style="display: none">
+        <article class="modal_bitberry_deposit">
+            <br>
+            <h1>Need to auth phone</h1>
+            <p>Need to auth phone [My Page->My Account].</p>
+            <button id="gotoUserInfo" class="btn btn-danger">OK</button>
+        </article>
+    </div>
+    <% include ../include/footer.html %>
+</div>
+</body>
