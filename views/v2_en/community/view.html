@@ -35,6 +35,11 @@
                 location.replace('/community/modify/' + communityId);
             })
 
+            $('#delete').on('click', function() {
+                ajaxLoginYnCheck(deleteCommunity);
+            })
+
+
             // $('#content iframe').attr({"width":"100%", "":""})
         });
 
@@ -280,6 +285,32 @@
                 $("#recommandIcon").text("favorite_border");
             }
         }
+
+        function deleteCommunity() {
+            var confirmYn = confirm('Do you want to delete?');
+            if(confirmYn) {
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/community/" + communityId,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        $("#delete").attr('disabled', true);
+                        $("#ajaxSpiner").show(); // spinner
+                        var pos = $("#spinnerTarget").offset().top - 100;
+                        $("html, body").animate({
+                            "scrollTop":pos
+                        },0);
+                    }
+                }).done(function (success) {
+                    // console.log(success);
+                    location.href = '/community/board/free';
+
+                }).fail(function (fail) {
+                    $('#delete').attr('disabled', false);
+                })
+            }
+        }
+
     </script>
 </head>
 <body>

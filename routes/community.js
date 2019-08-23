@@ -401,6 +401,35 @@ router.put('/:communityId', token.checkLoginToken, function (req, res, next) {
     });
 });
 
+router.delete('/:communityId', token.checkLoginToken, function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let communityId = req.params.communityId;
+
+    let url = dbconfig.APIServer + "/v2/community/" + communityId;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    
+    request({uri: url, 
+            method:'DELETE',
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+});
+
 router.post('/:communityId/images', token.checkLoginToken, function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
