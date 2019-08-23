@@ -106,7 +106,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.price).toFixed(8));
                     } else {
-                        sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                        sellEscrowMach = parseFloat((sellEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
                 }
 
@@ -118,7 +118,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.price).toFixed(8));
                     } else {
-                        buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                        buyEscrowMach = parseFloat((buyEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
                 }
             }
