@@ -258,9 +258,9 @@
         function setNoticeList(data) {
             var result = "";
 
-            console.log(data)
+            // console.log(data)
 
-            for(var i=0; i<data.length; i++) {
+            for(var i=0; i<5; i++) {
                 var noticeId = data[i]._id;
                 var title = data[i].title;
                 
@@ -272,12 +272,17 @@
         function setEtcSellList(data) {
             var result = "";
 
+            console.log(data)
+
             if(data.length > 0) {
-                for(var i=0; i<1; i++) {
+                // data.length = 4
+                for(var i=0; i<data.length; i++) {
                     var itemId = data[i]._id;
                     var item_type = getItemType(data[i].type);
                     var price = numberWithCommas(data[i].total_price);
                     var point = numberWithCommas(data[i].total_point);
+                    var status = getStatus(data[i].status);
+                    var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
                     var image_src;
                     if(data[i].images[0] === undefined || data[i].images[0] === "") {
                         image_src = "/static/img/sub/no_image.png";
@@ -285,28 +290,38 @@
                         image_src = data[i].images[0].path;
                     }
                     var title = data[i].title;
-                    var regDate = data[i].regDate;
+                    var regDate = data[i].regDate.substring(2, 10);
                     var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                     var money = point + '<span>Point</span>';
                     if("<%=useBlockchain%>" =='Y') {
                         money = price + '<span>'+cryptoCurrencyCode+'</span>';
                     }
+
+                    if(i % 4 === 0) result += '<li class="row">'
                     
-                    result += 
-                    '<div class="bd_area">' +
-                        '<a href="/etc-sells/detail/'+itemId+'"><div class="assets_img">' +
-                            '<img src="'+image_src+'" alt="">' +
-                        '</div>' +
-                        '<dl>' +
-                            '<dt>' +
-                                '<div class="assets_tit_txt ellipse">'+title+'</div>' +
-                            '</dt>' +
-                            '<dd class="cf">' +
-                                '<div class="money_txt">'+money+'</div>' +
-                                '<div class="time_txt">'+regDate.substring(2,10)+'</div>' +
-                            '</dd>' +
-                        '</dl></a>' +
-                    '</div>';
+                    result += '<div class="col-lg-3 col-md-6 col-xs-12">'
+                            +     '<div class="img_list_box">'
+                            +        '<div class="photo_frame">'
+                            +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                            +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                            +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                            +        '</div>'
+                            +        '<dl>'
+                            +            '<dt>'
+                            +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                            +             '<dd class="cf">'
+                            +                '<div class="money_txt">'+money+'</div>'
+                            +                '<div class="time_txt">'+regDate+'</div>'
+                            +            '</dd>'
+                            +        '</dl>'
+                            +    '</div>'
+                            + '</div>'
+                    if(i===data.length -1) {
+                        result += '<div class="col-md-3 col-sm-6 col-xs-12"><div class="img_list_box"><div class="view_more">'
+                                + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
+                                + '</div></div></div>'
+                    }
+                    if(i % 4 === 3) result += '</li>'
                 }
             }
             $('#assetsTrade').html(result);
@@ -409,151 +424,7 @@
             <section>
                 <h1 class="tit_main_sec">ASSET</h1>
                 <div class="photo_list">
-                    <ul id="list">
-                        <li class="row">
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
-                                            class="ico_trade state_step ico_direct">직거래</em><a
-                                            href="/etc-sells/detail/5d5b5c89b60bff4a68936256"><img
-                                                src="https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.png-1566268554045"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d5b5c89b60bff4a68936256">자산 테스트</a><span
-                                                    class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">10<span>MACH</span></div>
-                                            <div class="time_txt">19/08/20</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
-                                            class="ico_trade state_step ico_delivery_payment">착불거래</em><a
-                                            href="/etc-sells/detail/5d59f7756aff8f408afdb337"><img
-                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566177141327"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f7756aff8f408afdb337">[도서]_잡지</a><span
-                                                    class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">3<span>MACH</span></div>
-                                            <div class="time_txt">19/08/19</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
-                                            class="ico_trade state_step ico_delivery_free">무료배송</em><a
-                                            href="/etc-sells/detail/5d59f7066aff8f408afdb335"><img
-                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566177030757"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f7066aff8f408afdb335">키링 판매해요</a><span
-                                                    class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">10<span>MACH</span></div>
-                                            <div class="time_txt">19/08/19</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
-                                            class="ico_trade state_step ico_direct">직거래</em><a
-                                            href="/etc-sells/detail/5d59f6b5d4a56b350f8a6458"><img
-                                                src="https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.jpg-1566176949279"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f6b5d4a56b350f8a6458">신청</a><span
-                                                    class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">1<span>MACH</span></div>
-                                            <div class="time_txt">19/08/19</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step1">거래가능</em><em
-                                            class="ico_trade state_step ico_direct">직거래</em><a
-                                            href="/etc-sells/detail/5d59f6a46aff8f408afdb333"><img
-                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpg-1566176932663"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d59f6a46aff8f408afdb333">[도서]_가까이서 보는
-                                                    미술관</a><span class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">12<span>MACH</span></div>
-                                            <div class="time_txt">19/08/19</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
-                                            class="ico_trade state_step ico_direct">직거래</em><a
-                                            href="/etc-sells/detail/5d4cfc31f619c7732f4c50bd"><img
-                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.png-1565326385336"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d4cfc31f619c7732f4c50bd">아기 옷 팝니다</a><span
-                                                    class="reply_num">(1)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">5<span>MACH</span></div>
-                                            <div class="time_txt">19/08/09</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="photo_frame"><em class="ico_trade state_possible step2">거래중</em><em
-                                            class="ico_trade state_step ico_direct">직거래</em><a
-                                            href="/etc-sells/detail/5d4cfc07f619c7732f4c50a6"><img
-                                                src="https://s3.ap-northeast-2.amazonaws.com/local-mymach.asia/items/img_id_0.jpeg-1565326343873"
-                                                alt=""></a></div>
-                                    <dl>
-                                        <dt>
-                                            <div class="ellipse"><a href="/etc-sells/detail/5d4cfc07f619c7732f4c50a6">충전기 팝니다</a><span
-                                                    class="reply_num">(0)</span></div>
-                                        </dt>
-                                        <dd class="cf">
-                                            <div class="money_txt">5<span>MACH</span></div>
-                                            <div class="time_txt">19/08/09</div>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="img_list_box">
-                                    <div class="view_more">
-                                        <a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                    <ul id="assetsTrade">
                     </ul>
                 </div>
             </section>
@@ -639,13 +510,13 @@
                 </section>
                 <section class="guide_sec">
                     <a href="">
-                        <h1>MarketMAC<br>How to use<br>Guide</h1>
+                        <h1>MarketMACH<br>How to use<br>Guide</h1>
                         <div class="ico_round ico_guide01"></div>
                     </a>
                 </section>
                 <section class="guide_sec">
                     <a href="">
-                        <h1>MarketMAC<br>Safty trading<br>Guide</h1>
+                        <h1>MarketMACH<br>Safty trading<br>Guide</h1>
                         <div class="ico_round ico_guide02"></div>
                     </a>
                 </section>
