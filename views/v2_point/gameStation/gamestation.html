@@ -3,6 +3,26 @@
 <head>
     <% include ../include/head.html %>
 </head>
+<script>
+     var userId = "<%=userId%>";
+     $(document).ready(function() {
+        getUesrGameInfo();
+     });
+
+     function getUesrGameInfo() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/gameCenter/"+userId+"/info"
+        }).done(function (success) {
+            console.log(success.data);
+            if(success.data != null) {
+                $("#mcs1_coin").text(success.data.total_mcs1_coin);
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        })
+     }
+</script>
 <body>
 <div id="wrap" class="wrap">
     <!-- header -->
@@ -22,23 +42,41 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec gameStation_gamestation">
-                        <article class="gameStation_article">
-                            <h1 class="gameStation_title">마하어드벤쳐</h1>
+                        <h1 class="tit_mypage">상장 게임</h1>
+                        <article class="gameStation_article exist_game">
+                            <h1 class="gameStation_title">마하 어드벤처</h1>
+                            <img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/gamestation/MACH_Adventure.png" alt="마하어드벤쳐 이미지">
                             <div class="gameStation_contents">
-                                <img src="" alt="마하어드벤쳐 이미지">
-                                <br>
                                 <em>보관중인 몽키코인</em>
-                                <p><img src="" alt="코인이미지"/><span>10,213</span></p>
-                                <a href="machAdventure/info/">마하 어드벤쳐<br>정보게시판</a>
+                                <p><img src="https://op-mach-bucket.s3.ap-northeast-2.amazonaws.com/gamestation/monkey_coin.png" alt="코인이미지"/><span id="mcs1_coin">0</span></p>
                             </div>
                             <div class="gameStation_store">
-                                <a href="https://itunes.apple.com/kr/app/mach-adventure/id1465065764?mt=8">
+                                <a href="https://itunes.apple.com/kr/app/mach-adventure/id1465065764?mt=8" target="_blank">
                                     <img src="/static/img/symbol/btn_download_apple.png" alt="" class="store_image">
                                 </a>
-                                <a href="https://play.google.com/store/apps/details?id=com.kcs.machadventure">
+                                <a href="https://play.google.com/store/apps/details?id=com.kcs.machadventure" target="_blank">
                                     <img src="/static/img/symbol/btn_download_google.png" alt="" class="store_image">
                                 </a>
                             </div>
+                        </article>
+                        <article class="gameStation_article coming_soon">
+                            <h1 class="gameStation_title">슈퍼 랜딩</h1>
+                            <img src="/static/img/mob/m_main_visual17.jpg" alt="마하어드벤쳐 이미지">
+                            <div class="gameStation_contents">
+                                <em>IOS 곧 지원 할 예정입니다!</em>
+                            </div>
+                            <div class="gameStation_store">
+                                <a href="javascript:" target="_blank" class="link_wait_a_minute">
+                                    <img src="/static/img/symbol/btn_download_apple.png" alt="app store" class="store_image">
+                                </a>
+                                <a href="https://play.google.com/store/apps/details?id=com.pang.spld.google&hl=ko" target="_blank">
+                                    <img src="/static/img/symbol/btn_download_google.png" alt="play store" class="store_image">
+                                </a>
+                            </div>
+                        </article>
+                        <article class="gameStation_article">
+                            <h1 class="gameStation_title">상장예정</h1>
+                            <div class="plus_icon"><i class="material-icons">add_circle</i></div>
                         </article>
                         <article class="gameStation_article">
                             <h1 class="gameStation_title">상장예정</h1>

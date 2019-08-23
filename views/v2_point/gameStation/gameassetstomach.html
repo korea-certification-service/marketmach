@@ -3,6 +3,37 @@
 <head>
     <% include ../include/head.html %>
 </head>
+    <script>
+        var userId = "<%=userId%>";
+
+        $(document).ready(function() {
+            getRate();
+        });
+   
+        // function getUesrGameInfo() {
+        //    $.ajax({
+        //        method: "GET",
+        //        url: "/v1/gameCenter/"+userId+"/info"
+        //    }).done(function (success) {
+        //        console.log(success.data);
+        //        if(success.data != null) {
+        //            $("#mcs1_coin").text(success.data.total_mcs1_coin);
+        //        }
+        //    }).fail(function (fail) {
+        //        console.log(fail);
+        //    })
+        // }
+        function getRate(option){
+            $.ajax({
+                method: "POST",
+                url: "/v1/gameCenter/games/list"
+            }).done(function (success) {
+                $('#exchangeableMach').text(numberWithCommas(success.data.list[0].issueAmount));
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+   </script>
 <body>
 <div id="wrap" class="wrap">
     <!-- header -->
@@ -22,7 +53,7 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;게임자산 -> MACH</span></h1>
+                        <h1 class="tit_mypage">교환하기<span>게임자산 &#8594; MACH</span></h1>
                         <div class="gst_exchangeguide">
                             <p>
                                 <em>게임자산을 MACH로</em><br>
@@ -35,11 +66,10 @@
                                     <div class="gst_gametemplet">
                                         <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
                                         <div class="coin_value">
-                                            <em>보관중인 몽키코인</em>
+                                            <em>마하 어드벤쳐</em>
                                             <div>
-                                                <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
                                                 <p>
-                                                    <span>10,213</span> 
+                                                    총 교환 가능 MACH: <span id="exchangeableMach"></span>
                                                 </p>
                                             </div>
                                         </div>

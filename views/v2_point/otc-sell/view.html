@@ -154,6 +154,8 @@
         var vtrTempId;
         var tradePointId;
         var sel_files = [];
+        var buyerTag;
+        var sellerTag;
     
         $(document).ready(function() {
             $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
@@ -164,11 +166,12 @@
             getData();
 
             $('#openVTR').on('click', function() {
-                openVTR();
+                //openVTR();
+                location.replace("/otc-sells/vtr/" + itemId);
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/otc-sells/vtr/" + itemId;
+                location.replace("/otc-sells/vtr/" + itemId);
             });
 
             $('#buynow').on('click', function() {
@@ -176,7 +179,7 @@
             });
 
             $('#pointBuynow').on('click', function() {
-                location.href='/otc-sells/buynow/point/' + itemId;
+                location.replace('/otc-sells/buynow/point/' + itemId);
             });
 
             $('#modify').on('click', function() {
@@ -184,19 +187,19 @@
             });
 
             $('#cancel').on('click', function() {
-                cancelItem();
+                ajaxLoginYnCheck(cancelItem);
             });
 
             $('#pointCancel').on('click', function() {
-                pointCancelItem();
+                ajaxLoginYnCheck(pointCancelItem);
             });
 
             $('#confirm').on('click', function() {
-                confirmItem();
+                ajaxLoginYnCheck(confirmItem);
             });
 
             $('#pointConfirm').on('click', function() {
-                pointConfirmItem();
+                ajaxLoginYnCheck(pointConfirmItem);
             });
 
             $('#opposition').on('click', function() {
@@ -204,19 +207,19 @@
             });
 
             $('#remove').on('click', function() {
-                removeItem();
+                ajaxLoginYnCheck(removeItem);
             });
 
             $('#buyComplete').on('click', function() {
-                buyComplete();
+                ajaxLoginYnCheck(buyComplete);
             });
 
             $('#sellComplete').on('click', function() {
-                sellComplete();
+                ajaxLoginYnCheck(sellComplete);
             });
 
             $('#pointSellComplete').on('click', function() {
-                pointSellComplete();
+                ajaxLoginYnCheck(pointSellComplete);
             });
 
             $('#showPhone').on('click', function() {
@@ -257,6 +260,8 @@
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
+                sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 
                 if(success.data.images.length === 0) {
                     $(".trForDel").remove();
@@ -288,12 +293,24 @@
 
                 if(success.data.status == "0") {
                     if(userTag == success.data.userTag) {
-                        $('#modify').css('display','inline-block');
-                        $('#remove').css('display','inline-block');
-                    } else {
-                        if(success.data.userTag !== "machprime") $('#regVTR').css('display','inline-block');
-                        $('#buynow').css('display','inline-block');
-                        $('#pointBuynow').css('display','inline-block');
+                        if(buyerTag == "") {
+                            $('#modify').css('display','inline-block');
+                            $('#remove').css('display','inline-block');                            
+                        } else {
+                            $('#openVTR').css('display','inline-block');
+                            $('#cancel').css('display','inline-block');
+                        }
+                    } else {       
+                        if(buyerTag == "") {                         
+                            if(success.data.userTag !== "machprime") $('#regVTR').css('display','inline-block');
+                            $('#buynow').css('display','inline-block');
+                            $('#pointBuynow').css('display','inline-block');
+                        } else {
+                            if(userTag == buyerTag || userTag == sellerTag) {
+                                $('#openVTR').css('display','inline-block');
+                                $('#cancel').css('display','inline-block');
+                            }
+                        } 
                     }
                 } else if((success.data.status > 0 && success.data.status < 4) || success.data.status == 50) {
                     if(success.data.status == "1" || success.data.status == "50") {
@@ -313,6 +330,7 @@
                             if(userTag == success.data.userTag) {
                                 $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
@@ -323,6 +341,7 @@
                             } else {
                                 $('#cancel').css('display','inline-block');
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                             $('#opposition').css('display','inline-block');
                         }
@@ -342,8 +361,8 @@
                         if(success.data.point_btn_active) {
                             if(userTag == success.data.userTag) {
                                 $('#pointSellComplete').css('display','inline-block');
-                                $('#pointCancel').css('display','inline-block');
                             }
+                            $('#pointCancel').css('display','inline-block');
                             $('#pointShowPhone').css('display','inline-block');
                         }
                     } else if(success.data.status == "103") {
@@ -368,7 +387,7 @@
         }
 
         function buynow() {
-            location.href='/otc-sells/buynow/' + itemId;
+            location.replace('/otc-sells/buynow/' + itemId);
         }
 
         function removeItem() {
@@ -386,22 +405,38 @@
         }
 
         function openVTR() {
+            // var popup;
+            // if (isMobile()) {
+            //     popup = window.open('about:blank', "room" + roomToken);
+            // }
+            // var url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            // if(isMobile()) {
+            //     popup.location.href = url;
+            // } else {
+            //     window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+            //         '                                    location=no,\n' +
+            //         '                                    status=no,\n' +
+            //         '                                    menubar=no,\n' +
+            //         '                                    scrollbars=yes,\n' +
+            //         '                                    resizable=yes,\n' +
+            //         '                                    width=550,\n' +
+            //         '                                    height=850');
+            // }
             var popup;
-            if (isMobile()) {
-                popup = window.open('about:blank', "room" + roomToken);
-            }
-            var url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
             if(isMobile()) {
-                popup.location.href = url;
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+                popup.location.href = '/room?' + body;
             } else {
-                window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+                window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
                     '                                    location=no,\n' +
                     '                                    status=no,\n' +
                     '                                    menubar=no,\n' +
                     '                                    scrollbars=yes,\n' +
                     '                                    resizable=yes,\n' +
                     '                                    width=550,\n' +
-                    '                                    height=850');
+                    '                                    height=750');
             }
         }
 
@@ -412,7 +447,11 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    location.href = '/otc-sells/detail/' + itemId;
+                    if(success.data.successYn == "Y") {
+                        location.href = '/otc-sells/detail/' + itemId;
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
@@ -580,6 +619,16 @@
             }).fail(function (fail) {
                 console.log(fail);
             });
+        }
+        function routeLink() {
+            var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
+
+            if(prevPath != "otc-sells") {
+                location.href = "/otc-sells?category=otc&trade_type=sell";
+            } else {
+                history.back();
+            }
+            
         }
     </script>
 

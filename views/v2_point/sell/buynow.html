@@ -200,7 +200,7 @@
                     return;
                 }
 
-                buynow();
+                ajaxLoginYnCheck(buynow);
             });
 
             $("#pointBuynow").on('click', function() {
@@ -209,7 +209,7 @@
                     return;
                 }
 
-                pointBuynow();
+                ajaxLoginYnCheck(pointBuynow);
             });
 
             getData();
@@ -279,7 +279,7 @@
                     $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
                 }
                 if("<%=usePoint%>" == 'Y') { 
-                    $(".txt_point").html(numberWithCommas(point) + "<span>Point</span>");
+                    $(".txt_point").html(point + "<span>Point</span>");
                 }
                 $(".item_desc").html(desc);
                 $("#fullImg").html(img1th);

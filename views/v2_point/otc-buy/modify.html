@@ -99,7 +99,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submit();
+                ajaxLoginYnCheck(submit);
             });
 
             getData();
@@ -137,14 +137,8 @@
             if ($("#title").val() == "") {
                 alert('거래제목을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('거래 가격을 입력하세요.');
-                return false;
             } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
                 alert('거래 가격(Point)을 입력하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
                 return false;
             } else if(!checkValidDecimal($("#point").val())) {
                 alert('거래 가격(Point)을 숫자로 입력하세요.');

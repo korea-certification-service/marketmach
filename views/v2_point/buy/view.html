@@ -112,7 +112,7 @@
                 <!--// 상품정보 : 이미지 업로드 UI 포함 -->
 
                 <div class="tar">
-                    <a href="javascript:history.back()" class="btn btn_go_list">목록</a>
+                    <a href="javascript:routeLink()" class="btn btn_go_list">목록</a>
                     <!-- [모듈] 댓글모듈 -->
                     <% include ../include/modules/comment.html %>
                 </div>
@@ -139,28 +139,31 @@
         var itemId = "<%= id %>";
         var roomToken;
         var vtrTempId;
+        var buyerTag;
+        var sellerTag;
     
         $(document).ready(function() {
             getData();
 
             $('#openVTR').on('click', function() {
-                openVTR();
+                //openVTR();
+                location.replace("/buys/vtr/" + itemId);
             });
 
             $('#regVTR').on('click', function() {
-                location.href="/buys/vtr/" + itemId;
+                location.replace("/buys/vtr/" + itemId);
             });
 
             $('#modify').on('click', function() {
-                location.href="/buys/modify/" + itemId;
+                location.replace("/buys/modify/" + itemId);
             });
 
             $('#cancel').on('click', function() {
-                cancelItem();
+                ajaxLoginYnCheck(cancelItem);
             });
 
             $('#confirm').on('click', function() {
-                confirmItem();
+                ajaxLoginYnCheck(confirmItem);
             });
 
             $('#opposition').on('click', function() {
@@ -168,15 +171,15 @@
             });
 
             $('#remove').on('click', function() {
-                removeItem();
+                ajaxLoginYnCheck(removeItem);
             });
 
             $('#buyComplete').on('click', function() {
-                buyComplete();
+                ajaxLoginYnCheck(buyComplete);
             });
 
             $('#sellComplete').on('click', function() {
-                sellComplete();
+                ajaxLoginYnCheck(sellComplete);
             });
 
             $('#showPhone').on('click', function() {
@@ -212,7 +215,9 @@
                 var desc = replaceDesc(success.data.desc == undefined ? '' : success.data.desc);
                 var game_character = success.data.game_character;
                 var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
-                
+                buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
+                sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
+                                
                 $(".view_emphasis").text(item_type.text);
                 $(".posting_date").text("등록일 : " + regDate);
                 $(".item_title").text(title);
@@ -231,11 +236,23 @@
 
                 if(success.data.status == "0") {
                     if(userTag == success.data.userTag) {
-                        $('#modify').css('display','inline-block');
-                        $('#remove').css('display','inline-block');
-                    } else {
-                        $('#regVTR').css('display','inline-block');
-                        $('#buynow').css('display','inline-block');
+                        if(buyerTag == "") {
+                            $('#modify').css('display','inline-block');
+                            $('#remove').css('display','inline-block');                            
+                        } else {
+                            $('#openVTR').css('display','inline-block');
+                            $('#cancel').css('display','inline-block');
+                        }
+                    } else {     
+                        if(buyerTag == "") {            
+                            $('#regVTR').css('display','inline-block');
+                            $('#buynow').css('display','inline-block');
+                        } else {
+                            if(userTag == buyerTag || userTag == sellerTag) {
+                                $('#openVTR').css('display','inline-block');
+                                $('#cancel').css('display','inline-block');
+                            }
+                        }
                     }
                 } else if((success.data.status > 0 && success.data.status < 4) || success.data.status == 50) {
                     if(success.data.status == "1" || success.data.status == "50") {
@@ -255,6 +272,7 @@
                             if(userTag != success.data.userTag) {
                                 $('#sellComplete').css('display','inline-block');                                
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#cancel').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                         }
@@ -265,6 +283,7 @@
                             } else {
                                 $('#cancel').css('display','inline-block');
                             }
+                            $('#openVTR').css('display','inline-block');
                             $('#showPhone').css('display','inline-block');
                             $('#opposition').css('display','inline-block');
                         }
@@ -294,22 +313,38 @@
         }
 
         function openVTR() {
+            // var popup;
+            // if (isMobile()) {
+            //     popup = window.open('about:blank', "room" + roomToken);
+            // }
+            // let url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            // if(isMobile()) {
+            //     popup.location.href = url;
+            // } else {
+            //     window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+            //         '                                    location=no,\n' +
+            //         '                                    status=no,\n' +
+            //         '                                    menubar=no,\n' +
+            //         '                                    scrollbars=yes,\n' +
+            //         '                                    resizable=yes,\n' +
+            //         '                                    width=550,\n' +
+            //         '                                    height=850');
+            // }
             var popup;
-            if (isMobile()) {
-                popup = window.open('about:blank', "room" + roomToken);
-            }
-            let url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+            var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
             if(isMobile()) {
-                popup.location.href = url;
+                popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+                popup.location.href = '/room?' + body;
             } else {
-                window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+                window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
                     '                                    location=no,\n' +
                     '                                    status=no,\n' +
                     '                                    menubar=no,\n' +
                     '                                    scrollbars=yes,\n' +
                     '                                    resizable=yes,\n' +
                     '                                    width=550,\n' +
-                    '                                    height=850');
+                    '                                    height=750');
             }
         }
 
@@ -320,7 +355,11 @@
                     method: "DELETE",
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    location.href = '/buys/detail/' + itemId;
+                    if(success.data.successYn == "Y") {
+                        location.href = '/buys/detail/' + itemId;
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
@@ -413,6 +452,16 @@
             }).fail(function (fail) {
                 console.log(fail);
             });
+        }
+        function routeLink() {
+            var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
+
+            if(prevPath != "buys") {
+                location.href = "/buys?category=game&trade_type=buy";
+            } else {
+                history.back();
+            }
+            
         }
     </script>
 

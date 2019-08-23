@@ -3,6 +3,7 @@
 <head>
     <% include ../../include/head.html %>
     <script>
+        var pageIdx = "<%=pageIdx%>"
         $(document).ready(function() {
             $('.board_detail').css('display','none');
             getNotices();
@@ -11,7 +12,7 @@
         function getNotices() {
             $.ajax({
                 method: "GET",
-                url: "/v1/notices/list?perPage=20",
+                url: "/v1/notices/list?pageIdx="+(pageIdx == "" ? 0 : pageIdx)+"&perPage=20",
             }).done(function (success) {
                 console.log(success.data);
                 setNotices(success.data.list);
