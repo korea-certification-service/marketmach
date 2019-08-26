@@ -100,11 +100,12 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .top_menu .lang_cn{background: url("/static/img/symbol/flag_china.png") 0 50% no-repeat; background-size: 24px 24px;}
 
 .header .top_menu .menu_list{float: right;}
-.header .top_menu .menu_list > li{float: left; padding: 13px 0; }
-.header .top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-right: 1px solid #929292;}
-.header .top_menu .menu_list > li .menu_logout{border-right: none;}
-.header .top_menu .menu_list > li:nth-child(6) > a{border-right: none;}
-.header .top_menu .menu_list > li:last-child > a{visibility: hidden; color: #fff; border: none;}
+.header .top_menu .menu_list > li{float: left; padding: 13px 0;}
+.header .top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-left: 1px solid #929292;}
+.header .top_menu .menu_list > li:first-child > a{border-left: none;}
+.header .top_menu .menu_list > li:last-child{padding: 0;}
+.header .top_menu .menu_list > li:last-child > a{color: #fff; border: none;}
+.header .top_menu .menu_list > li.point_mall{padding: 13px 0; background-color: #1e2560; }
 
 .header .sch_sec{position: relative; height: 105px;}
 .header .sch_sec .h_logo{float: left; margin-top: 30px; width: 210px; text-align: center;}

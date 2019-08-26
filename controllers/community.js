@@ -84,20 +84,16 @@ function list(req) {
     })
 }
 
-function listMain(country, type, title) {
+function listMain(country) {
     return new Promise((resolve, reject) => {
         let country = dbconfig.country;
-        let data = {'type': type};
+        let data = {
+            '$and': [{'movieUrl':{$exists:true}}, {'movieUrl':{$ne: ""}}]
+        };
         let option = {
             "perPage": 3,
             "pageIdx": 0
         };
-        if(title != undefined) {
-            data = {
-                'type': type,
-                $or: [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }} ]
-            }
-        }
 
         if(country == "KR") {
             data['country'] = {$exists: false};
@@ -106,7 +102,7 @@ function listMain(country, type, title) {
         }
 
         db.connectDB(country)
-            .then(() => bitwebCommunity.search(data, option))
+            .then(() => bitwebCommunity.searchMain(data, option))
             .then((result) => {
                 console.log('result=>' , result);
                 resolve(result)
