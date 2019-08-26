@@ -47,13 +47,11 @@
 .header.member_header h1 a{display: block;}
 .header.member_header h1 a img{height: 30px;}
 .header.member_header .mb_top_menu{height: auto; padding: 30px 0 20px; box-sizing: border-box; border: 1px solid #c1c1c1; border-right: none; border-left: none;}
-.header.member_header .mb_top_menu li:nth-child(3) a{border-right: none;}
 .header.member_header .mb_top_menu .menu_list{float: right;}
 .header.member_header .mb_top_menu .menu_list > li{float: left; padding: 13px 0; }
-.header.member_header .mb_top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-right: 1px solid #929292;}
-.header.member_header .mb_top_menu .menu_list > li .menu_logout{border-right: none;}
-.header.member_header .mb_top_menu .menu_list > li:nth-child(4) > a{border-right: none;}
-.header.member_header .mb_top_menu .menu_list > li:last-child > a{visibility: hidden; color: #fff; border: none;}
+.header.member_header .mb_top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-left: 1px solid #929292;}
+.header.member_header .mb_top_menu .menu_list > li .menu_logout{border-left: none;}
+.header.member_header .mb_top_menu .menu_list > li:first-child > a{border-left: none;}
 
 /*** content common ***/
 .member_content{min-height: calc(100% - 353px);}
