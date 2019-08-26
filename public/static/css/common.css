@@ -468,7 +468,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* 공지사항 */
 .noti_area{}
 .noti_area .main_tit_notice{background: url(/static/img/main/ico_notice.png) 0 13px no-repeat; background-size: 20px 20px;}
-.noti_area .bd_area{height: 230px; border: 1px solid #ced4da;}
+.noti_area .bd_area{height: 230px; border: 1px solid #ced4da; overflow: scroll;}
 .noti_area .bd_area .noti_list{margin-top: 40px; padding: 0 10px;}
 .noti_area .bd_area .noti_list li{margin-bottom: 14px;}
 .noti_area .bd_area .noti_list li a{color: #333;}
