@@ -50,7 +50,7 @@
                 var title = success.data.title;
                 var reporter = success.data.reporter;
                 var regDate = success.data.regDate.substring(2);
-                var content = "<div>" + replaceDesc(success.data.content) + "</div>";                
+                var content = "<div>" + replaceDesc(success.data.content == undefined ? "" : success.data.content) + "</div>";                
                 var replys = success.data.reply;
                 replyCount = success.data.replyCount;
                 recommanded = success.data.recommandedUser;
