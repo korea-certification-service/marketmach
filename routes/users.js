@@ -621,7 +621,7 @@ router.post('/login', function (req, res, next) {
                                 //     });
                                 // }
 
-                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active}
+                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active, "originalUrl":req.session.originalUrl == undefined ? "/main" : req.session.originalUrl}
                                 bitwebResponse.code = 200;
                                 bitwebResponse.data = resData;
                                 res.status(200).send(bitwebResponse.create())
