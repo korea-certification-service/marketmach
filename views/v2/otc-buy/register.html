@@ -53,7 +53,7 @@
                                     <p class="fcrd">※ 1MACH = 1$</p>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>거래가격(Point)</th>
                                 <td>
                                     <div class="no_w100p_wrap">
@@ -61,7 +61,7 @@
                                         <em class="fc2" id="currencyName"></em>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>상세정보</th>
                                 <td>
@@ -107,14 +107,8 @@
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
-                alert('거래 가격(Point)을 입력하세요.');
-                return false;
             } else if(!checkValidDecimal($("#price").val())) {
                 alert('거래 가격을 숫자로 입력하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#point").val())) {
-                alert('거래 가격(Point)을 숫자로 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
