@@ -171,6 +171,7 @@ function checkLoginToken(req, res, next) {
     } else {
         console.error('login token error => No exist.');
         // logger.addLog(country, req.originalUrl, value, "No exist.");
+        req.session.originalUrl = req.originalUrl;
         res.redirect('/login');
     }
 }
@@ -258,6 +259,7 @@ function checkLoginAndAdultToken(req, res, next) {
     } else {
         console.error('login token error => No exist.');
         // logger.addLog(country, req.originalUrl, value, "No exist.");
+        req.session.originalUrl = req.originalUrl;
         res.redirect('/login');
     }
 }
@@ -305,7 +307,8 @@ function checkLoginTokenAjax(req, res, next) {
                         "userId": user._id, 
                         "active": user.active,
                         "userInfo": user,
-                        "agreement": agreement
+                        "agreement": agreement,
+                        "originalUrl":req.session.originalUrl == undefined ? "/main" : req.session.originalUrl
                     }
 
                     bitwebResponse.code = 200;

@@ -44,7 +44,7 @@
                 data: JSON.stringify(data)
 
             }).done(function (success) {
-                location.href='/';
+                location.href=success.data.originalUrl;
             }).fail(function (fail) {
                 if (fail.status == 403) {
                     alert('아이디 또는 패스워드가 일치하지 않습니다.');
