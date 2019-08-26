@@ -520,6 +520,7 @@
 .community_sec .community_tit .community_searchbar input[type="text"]{width: calc(100% - 18px); font-size: 14px; border-top: none; border-left: none; border-right: none;}
 .community_sec .community_tit .community_searchbar input[type="button"]{width: 18px; height: 18px; background: url(/static/img/symbol/ico_cmnt_search.png) 0 50% no-repeat; background-size: 18px 18px; border: none;}
 .community_sec .tit_community{ padding-bottom: 10px; font-size: 18px; color: #000039;}
+.community_sec .tit_community span {font-size: 14px; font-weight: normal;}
 .community_sec .tit_community:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
 .community_sec .community_tit button{float: right; width: 80px; margin-left: 10px;}
 .community_sec .btn_recommendation{padding: 10px 20px; border-radius: 5px; border: 1px solid #e0e0e0;}

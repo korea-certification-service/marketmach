@@ -8,6 +8,8 @@
         var title = "<%= title %>";
 
         $(document).ready(function() {
+            setSubTitle();
+
             getCommunityList();
 
             $('#more_search').click(function() {
@@ -33,6 +35,7 @@
             $('#register').on('click', function() {
                 location.href = '/community/register';
             })
+
         });
 
         function getCommunityList() {
@@ -138,6 +141,25 @@
         function showDetail(id) {
             location.href="/community/board/detail/" + id;
         }
+        
+        function setSubTitle() {
+            var subTitle_regExp = location.pathname.match(/[\w]*$/ig)[0];
+            var subTitle = '';
+
+            if(subTitle_regExp == "free") {
+                subTitle = "자유게시판";
+            } else if(subTitle_regExp == "tabloid") {
+                subTitle = "찌라시";
+            } else if(subTitle_regExp == "event") {
+                subTitle = "이벤트";
+            } else if(subTitle_regExp == "game") {
+                subTitle = "게임";
+            } else if(subTitle_regExp == "cryptocurrency") {
+                subTitle = "암호화폐";
+            }
+
+            $(".tit_sub").text(subTitle);
+        }
     </script>
 </head>
 <body>
@@ -159,7 +181,10 @@
                 <div class="sub_content">
                     <section class="board_sec community_sec">
                         <div class="community_tit cf">
-                            <h1 class="tit_community">커뮤니티</h1> 
+                            <h1 class="tit_community">
+                                커뮤니티
+                                <span class="tit_sub"></span>
+                            </h1> 
                             <button class="btn btn_nv" id="register">등록</button>
                             <div class="community_searchbar">
                                 <input type="text" class="form-control" id="title">
