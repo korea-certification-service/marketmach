@@ -48,7 +48,7 @@ var userValidate = (req, res, next) => {
         valid = util.checkPassword(body.password);
         msg = "비밀번호는 6~20자의 영문+숫자 or 특수문자를 사용해 주세요.";
         if(country == "EN") {
-            msg = "Please enter 8 ~ 16 characters in english+numeric or special characters.";
+            msg = "Please enter 6~20 characters in english+numeric or special characters.";
         }
         return _resultValidate(valid, msg, res, next);
     }

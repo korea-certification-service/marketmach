@@ -87,9 +87,7 @@ function list(req) {
 function listMain(country) {
     return new Promise((resolve, reject) => {
         let country = dbconfig.country;
-        let data = {
-            '$and': [{'movieUrl':{$exists:true}}, {'movieUrl':{$ne: ""}}]
-        };
+        let data = {};
         let option = {
             "perPage": 3,
             "pageIdx": 0

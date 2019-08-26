@@ -231,6 +231,9 @@
             if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
                 alert("입력하신 패스워드를 다시 입력하세요.");
                 return false;
+            } else if(!checkPassword($("#passwordConfirm").val())) {
+                alert("비밀번호는 6~20자의 영문+숫자 or 특수문자를 사용해 주세요.");
+                return false;
             } else if($("#password").val() != $("#passwordConfirm").val()) {
                 alert("패스워드가 일치하지 않습니다.\n다시 입력하세요.");
                 return false;
@@ -245,6 +248,14 @@
                 return false;
             }
 
+            return true;
+        }
+
+        function checkPassword(value) {
+            let idReg = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+            if( !idReg.test( value ) ) {
+                return false;
+            }
             return true;
         }
         
