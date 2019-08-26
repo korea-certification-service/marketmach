@@ -270,7 +270,7 @@
 
         function setEtcSellList(data) {
             var result = "";
-            console.log(data)
+            // console.log(data)
             if(data.length > 0) {
                 for(var i=0; i<data.length; i++) {
                     var itemId = data[i]._id;
@@ -286,7 +286,7 @@
                         image_src = data[i].images[0].path;
                     }
                     var title = data[i].title;
-                    var regDate = data[i].regDate;
+                    var regDate = data[i].regDate.substring(2, 10);
                     var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                     var money = point + '<span>Point</span>';
                     if("<%=useBlockchain%>" =='Y') {
