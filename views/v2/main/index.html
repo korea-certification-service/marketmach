@@ -111,7 +111,7 @@
                 setOtcSellList(otc_sells);
                 setNoticeList(notices);
                 setCommunityMovie(movies);
-                setCommunityBoard(boards);
+                // setCommunityBoard(boards);
             }).fail(function (fail) {
                 console.log('system error : ', fail);
             })
@@ -314,11 +314,11 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/sub/no_image.png" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +
-                                '<a href="'+movieUrl+'" target="_blank">' +
+                                '<a href="community/board/detail/'+data[i]._id+'">' +
                                     '<img src="'+movie_img+'" alt="">' +
                                     '<h2 class="ellipse">'+title+'</h2>' +
                                 '</a>' +
