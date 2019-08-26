@@ -17,7 +17,7 @@
 .renewer_container .main_3n1n_wrap > section:nth-child(1){margin-left: 0;}
 .renewer_container .notice_sec{position: relative; padding: 0 18px; height: 400px; border: 1px solid #ced4da;}
 .renewer_container .notice_sec h1{padding-top: 35px;}
-.renewer_container .notice_sec .noti_list{margin-top: 40px;}
+.renewer_container .notice_sec .noti_list{margin-top: 40px; height: 200px; overflow-y: scroll;}
 .renewer_container .notice_sec .noti_list li{margin-bottom: 14px;}
 .renewer_container .notice_sec .noti_list li a{color: #333;}
 .renewer_container .notice_sec .noti_btm_media{position: absolute; bottom: 0; left: 5%; width: 90%; text-align: center; font-size: 0; border-top: 1px solid #ced4da;}
