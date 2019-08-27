@@ -55,11 +55,12 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     let coinType = req.params.coinType;
     let condition = {
         $or: [{"from_userId": userId}, {"to_userId": userId}],
-        "item.status":[2,3],
+        "item.status":[2,3, 102, 103],
         "completed": {$exists: false}
     }
     var bitwebResponse = new BitwebResponse();
     if(coinType == "point") {
+        condition['item.category'] = ['game','etc'];
         controllerPointTrades.getTradingItems(country, condition)
         .then(pointTrades => {
             let buyEscrow = 0;
