@@ -314,7 +314,7 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images.length == 0 ? "/static/img/sub/no_image.png" : data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +

@@ -326,7 +326,7 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images.length == 0 ? "/static/img/sub/no_image.png" : data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +
@@ -361,17 +361,17 @@
                     <div class="visual_img">
                         <a href="/howto/trade/vtr">
                             <div class="pc_img">
-                                <img src="/static/img/main/main_visual01.jpg" alt="그랜드 오픈">
+                                <img src="/static/img/pointmall/point_visual01.jpg" alt="그랜드 오픈">
                             </div>
                             <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual01.jpg" alt="그랜드 오픈">
+                                <img src="/static/img/pointmall/m_point_visual01.jpg" alt="그랜드 오픈">
                             </div>
                         </a> 
                     </div>                                      
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
                 <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마켓마하 오픈베타</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>포인트몰 오픈</em></div></div>
                 </div>
             </section>
         </div>
