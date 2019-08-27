@@ -47,7 +47,7 @@ function searchMain (data, option) {
         )
         .limit(option.perPage)
         .skip(option.pageIdx * option.perPage)
-        .sort({recommand:'desc', regDate:'desc'})
+        .sort({recommandCount:'desc', regDate:'desc'})
         .exec(function (err, list) {
             if (err) {
                 // console.error(err)
