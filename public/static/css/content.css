@@ -506,7 +506,12 @@
 .howto_sec .content_tab_depth2 li:nth-child(n+3){border-top: none;}
 .howto_sec .content_tab_depth2 li a{display: block; color: #666666;}
 .howto_sec .tit_howto{padding-bottom: 10px; font-weight: bold; font-size: 16px; color: #1e2560; border-bottom: 2px solid #1e2560;}
-.howto_sec{}
+.howto_sec .tab_menu{margin: 80px 0 60px 0;}
+.howto_sec .tab_menu li{float: left; border-bottom: 1px solid #ced4da; background-color: #f9f9f9;}
+.howto_sec .tab_menu li a{display: block; height: 40px; line-height: 40px; text-align: center; font-size: 14px; font-weight: 600; color: #000000; }
+.howto_sec .tab_menu li.on{border: 1px solid #ced4da; border-bottom: none; background-color: #ffffff;}
+.howto_sec .tab_menu li.on h1{display: inline-block; border-bottom: 3px solid #000; padding-bottom: 9px;}
+.howto_sec .tab_menu .nth2 li{width: 50%;}
 .howto_sec .legal_txt_wrap{margin: 30px 0; padding: 25px;}
 .howto_sec .legal_txt_wrap .textarea_legal{padding: 10px; width: 100%; background-color: #ffffff; border: 1px solid #dbdbdb;}
 

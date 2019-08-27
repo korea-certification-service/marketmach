@@ -40,6 +40,42 @@ router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next
     }
 });
 
+router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint
+        });         
+    } else {
+        res.render('v2_en/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint
+        });
+    }
+});
 router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safty_trade', {
