@@ -12,7 +12,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/etc-sell/list', {
@@ -21,7 +22,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/etc-sell/list', {
@@ -30,7 +32,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
 });
@@ -57,11 +60,12 @@ router.get('/detail/:id', token.checkLoginToken, function (req, res, next) {
         });         
     } else {
         res.render('v2_en/etc-sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
+            userTag: req.session.userTag, country:req.session.country,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
     }
 });
 
@@ -118,11 +122,12 @@ router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
         });         
     } else {
         res.render('v2_en/etc-sell/modify', {title: 'Bitweb Main',id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag:req.session.userTag, country:req.session.country,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
+            userTag:req.session.userTag, country:req.session.country,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
     }
 });
 
@@ -254,11 +259,12 @@ router.get('/registers', token.checkLoginToken, function (req, res, next) {
         });         
     } else {
         res.render('v2_en/etc-sell/test_register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
+            userTag: req.session.userTag, country:req.session.country,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
     }
 });
 

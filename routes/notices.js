@@ -4,11 +4,6 @@ var dbconfig = require('../config/dbconfig');
 var noticeController = require('../controllers/notices');
 var BitwebResponse = require('../utils/BitwebResponse')
 
-
-router.get('/', function (req, res, next) {
-    res.render('notices/list', {title: 'Bitweb Main', pageIdx: req.query.pageIdx});
-});
-
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     noticeController.count(req)

@@ -12,7 +12,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/etc-buy/list', {
@@ -21,7 +22,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/etc-buy/list', {
@@ -30,7 +32,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
 });

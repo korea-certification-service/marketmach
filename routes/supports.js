@@ -15,7 +15,8 @@ router.get('/info', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/info', {
@@ -26,7 +27,8 @@ router.get('/info', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });       
     } else{
         res.render('v2_en/support/info', {
@@ -37,7 +39,8 @@ router.get('/info', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     }
 });
@@ -53,7 +56,8 @@ router.get('/notice', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/notice/list', {
@@ -65,7 +69,8 @@ router.get('/notice', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/support/notice/list', {
@@ -77,7 +82,8 @@ router.get('/notice', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
@@ -93,7 +99,8 @@ router.get('/notice/detail', token.checkLoginTokenNoSignIn,  function (req, res,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/notice/detail', {
@@ -105,7 +112,8 @@ router.get('/notice/detail', token.checkLoginTokenNoSignIn,  function (req, res,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });    
     } else{
         res.render('v2_en/support/notice/detail', {
@@ -117,7 +125,8 @@ router.get('/notice/detail', token.checkLoginTokenNoSignIn,  function (req, res,
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
@@ -133,7 +142,8 @@ router.get('/event', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/now', {
@@ -145,7 +155,8 @@ router.get('/event', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/event/now', {
@@ -157,7 +168,8 @@ router.get('/event', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
@@ -173,7 +185,8 @@ router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/past', {
@@ -185,7 +198,8 @@ router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/event/past', {
@@ -197,7 +211,8 @@ router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
@@ -213,7 +228,8 @@ router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/detail', {
@@ -225,7 +241,8 @@ router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/event/detail', {
@@ -237,7 +254,8 @@ router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
@@ -253,7 +271,8 @@ router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/faq', {
@@ -265,7 +284,8 @@ router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/faq', {
@@ -277,7 +297,8 @@ router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     }
 });
@@ -294,7 +315,8 @@ router.get('/opposition/register', token.checkLoginToken, function (req, res, ne
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/register', {
@@ -307,7 +329,8 @@ router.get('/opposition/register', token.checkLoginToken, function (req, res, ne
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/opposition/register', {
@@ -320,7 +343,8 @@ router.get('/opposition/register', token.checkLoginToken, function (req, res, ne
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     }
 });
@@ -337,7 +361,8 @@ router.get('/opposition/list', token.checkLoginToken, function (req, res, next) 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/list', {
@@ -350,7 +375,8 @@ router.get('/opposition/list', token.checkLoginToken, function (req, res, next) 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/opposition/list', {
@@ -363,7 +389,8 @@ router.get('/opposition/list', token.checkLoginToken, function (req, res, next) 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
@@ -379,7 +406,8 @@ router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/view', {
@@ -391,7 +419,8 @@ router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/opposition/view', {
@@ -403,7 +432,8 @@ router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
@@ -421,7 +451,8 @@ router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/modify', {
@@ -435,7 +466,8 @@ router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/opposition/modify', {
@@ -449,7 +481,8 @@ router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
@@ -465,7 +498,8 @@ router.get('/private/register', token.checkLoginToken, function (req, res, next)
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/register', {
@@ -477,7 +511,8 @@ router.get('/private/register', token.checkLoginToken, function (req, res, next)
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/private/register', {
@@ -489,7 +524,8 @@ router.get('/private/register', token.checkLoginToken, function (req, res, next)
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     }
 });
@@ -506,7 +542,8 @@ router.get('/private/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/list', {
@@ -519,7 +556,8 @@ router.get('/private/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/private/list', {
@@ -532,7 +570,8 @@ router.get('/private/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
@@ -549,7 +588,8 @@ router.get('/private/detail/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/view', {
@@ -562,7 +602,8 @@ router.get('/private/detail/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/support/private/view', {
@@ -575,7 +616,8 @@ router.get('/private/detail/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
@@ -592,7 +634,8 @@ router.get('/private/modify/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/modify', {
@@ -605,7 +648,8 @@ router.get('/private/modify/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/private/modify', {
@@ -618,7 +662,8 @@ router.get('/private/modify/:personalId', token.checkLoginToken, function (req, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
@@ -633,7 +678,8 @@ router.get('/reqGames', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/reqGames', {
@@ -644,7 +690,8 @@ router.get('/reqGames', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/reqGames', {
@@ -655,7 +702,8 @@ router.get('/reqGames', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });
     }
 });
