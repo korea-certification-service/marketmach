@@ -39,6 +39,26 @@ function search (data, option) {
     })
 }
 
+
+function searchMain (data, option) {
+    return new Promise((resolve, reject) => {
+        Community.find(
+            data
+        )
+        .limit(option.perPage)
+        .skip(option.pageIdx * option.perPage)
+        .sort({recommandCount:'desc', regDate:'desc'})
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            console.log('search done: ' + list)
+            resolve(list)
+        })
+    })
+}
+
 function getById (id) {
     return new Promise((resolve, reject) => {
         Community.findOne(
@@ -159,6 +179,7 @@ function deleteReply(replyId) {
 }
 
 exports.search = search;
+exports.searchMain = searchMain;
 exports.getById = getById;
 exports.update = update;
 exports.count = count;

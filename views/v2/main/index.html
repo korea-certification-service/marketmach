@@ -111,7 +111,7 @@
                 setOtcSellList(otc_sells);
                 setNoticeList(notices);
                 setCommunityMovie(movies);
-                setCommunityBoard(boards);
+                // setCommunityBoard(boards);
             }).fail(function (fail) {
                 console.log('system error : ', fail);
             })
@@ -314,11 +314,11 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +
-                                '<a href="'+movieUrl+'" target="_blank">' +
+                                '<a href="community/board/detail/'+data[i]._id+'">' +
                                     '<img src="'+movie_img+'" alt="">' +
                                     '<h2 class="ellipse">'+title+'</h2>' +
                                 '</a>' +
@@ -347,6 +347,26 @@
                 <h1 class="blind">메인 비주얼 이미지 영역</h1>
                 <div class="slick_visual">
                     <div class="visual_img">
+                        <a href="/supports/notice/detail?noticeId=5d632ec159011316ab4b943d">
+                        <div class="pc_img">
+                            <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/mob/m_main_visual19.jpg" alt="ONTology">
+                        </div>
+                        </a>
+                    </div>                  
+                    <div class="visual_img">
+                        <a href="/howto/vtr_chatbot">
+                        <div class="pc_img">
+                            <img src="/static/img/main/main_visual20.jpg" alt="VTR&Chatbot">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/mob/m_main_visual20.jpg" alt="VTR&Chatbot">
+                        </div>
+                        </a>
+                    </div>                  
+                    <div class="visual_img">
                         <a href="/supports/notice/detail?noticeId=5d539109ab10534a6a6226ee">
                         <div class="pc_img">
                             <img src="/static/img/main/main_visual18.jpg" alt="마하코인 상장">
@@ -356,26 +376,6 @@
                         </div>
                         </a>
                     </div>                    
-                    <!-- <div class="visual_img">
-                        <a href="http://bit.ly/2JsCDwQ" target="_blank">
-                            <div class="pc_img">
-                                <img src="/static/img/main/main_visual15.jpg" alt="LATOKEN">
-                            </div>
-                            <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual15.jpg" alt="LATOKEN">
-                            </div>
-                        </a>
-                    </div>        
-                    <div class="visual_img">
-                        <a href="/supports/notice/detail?noticeId=5d1db5ac5e0698631cae511d">
-                            <div class="pc_img">
-                                <img src="/static/img/main/main_visual14.jpg" alt="마하코인 2차 IEO">
-                            </div>
-                            <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual14.jpg" alt="마하코인 2차 IEO">
-                            </div>
-                        </a>
-                    </div> -->
                     <div class="visual_img">
                         <a href="/gameStation/superlanding/info">
                             <div class="pc_img">
@@ -395,7 +395,7 @@
                                 <img src="/static/img/mob/m_main_visual01.jpg" alt="그랜드 오픈">
                             </div>
                         </a> 
-                    </div>                                      
+                    </div>
                     <!--
                     <div class="visual_img">
                         <div class="visual_txt">
@@ -413,8 +413,10 @@
                     -->                                                
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
-                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="3">
-                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>마하코인 상장</em></div></div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>ONTology</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>VTR&Chatbot</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마하코인 상장</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>2nd MACH Game</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>마켓마하 오픈베타</em></div></div>
                 </div>
@@ -608,7 +610,7 @@
             <div class="row">
                 <!-- 동영상 -->
                 <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_media">동영상</h1>
+                    <h1 class="tit_main_sec main_tit_media">커뮤니티</h1>
                     <div class="bd_area">
                         <div class="media_img_wrap cf">
                         </div>

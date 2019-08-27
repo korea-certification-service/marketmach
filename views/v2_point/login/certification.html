@@ -4,6 +4,7 @@
     <% include ../include/head.html %>
     <script type="text/javascript">
         var currencyCode="+82";
+        var token = "<%=token%>";
     
         $(document).ready(function() {
             $('.menu_login').show();
@@ -73,7 +74,8 @@
             } else if($("#defaultReal").val() == "") {
                 alert("자동입력 방지 문자를 입력하세요.");
                 return;
-            } else if(hash($("#defaultReal").val()) != $("#defaultReal").realperson('getHash')) {
+            } else if(hash($("#defaultReal").val().toUpperCase()) != $("#defaultReal").realperson('getHash')) {
+                console.log(hash($("#defaultReal").val()), $("#defaultReal").realperson('getHash'));
                 alert("자동입력 방지 문자 값이 틀립니다. 다시입력하세요.");
                 $('#defaultReal').val('');
                 $(".realperson-regen").trigger('click');
@@ -83,7 +85,8 @@
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
-                'phone': $("#phone").val()
+                'phone': $("#phone").val(),
+                "token": token
             }
 
             $.ajax({
@@ -102,10 +105,7 @@
                 $('#phone').prop('readonly', true);
                 $('#currencyType').prop('readonly', true);
                 $(".realperson-regen").trigger('click');
-                $('#defaultReal').val('');
-                if($(this).text() == "인증코드 재전송" ) {
-                    alert("인증코드가 재전송 되었습니다.");
-                }
+                $('#defaultReal').val('');                
             }).fail(function (fail) {
                 console.log(fail);
                 alert("전송중 문제가 발생하였습니다. 전화번호가 올바르게 입력되었는지 확인하시기 바랍니다.\n 문제가 계속 발생될 경우 관리자에게 문의하세요.");
@@ -163,7 +163,7 @@
                         <input type="text" class="form-control w80p" id="phone" placeholder="전화 번호 입력" maxlength="24"> 
                     </div>
                     <div class="submit_ctc_code_top no_w100p_wrap">
-                        <input type="text" class="form-control" id="defaultReal" max="6" placeholder="자동입력 방지 문자 입력">
+                        <input type="text" class="form-control" style="text-transform: uppercase;" id="defaultReal" max="6" placeholder="자동입력 방지 문자 입력">
                     </div>
                     <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">인증코드 전송</button>
                 </div>

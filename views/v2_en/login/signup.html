@@ -77,8 +77,18 @@
         }
 
         function signup() {
+            if($("#username").val() == "") {
+                alert("Enter Name.");
+                return;
+            }
+
+            if($("input[name=password]").val() == "") {
+                alert("Enter Password.");
+                return;
+            }
+
             if($("input[name=passwordConfirm]").val() == "") {
-                alert("enter Password again."); // 입력하신 패스워드를 다시 입력하세요
+                alert("Enter Password again."); // 입력하신 패스워드를 다시 입력하세요
                 return;
             }
 
@@ -239,7 +249,7 @@
                             </tr>
                             <tr>
                                 <th>Password</th>
-                                <td><input type="password" autocomplete="new-password" class="form-control" name="password" placeholder="8~16 characters english + number or special character."></td>
+                                <td><input type="password" autocomplete="new-password" class="form-control" name="password" placeholder="6~20 characters english + number or special character."></td>
                             </tr>
                             <tr>
                                 <th>Password(confirm)</th>

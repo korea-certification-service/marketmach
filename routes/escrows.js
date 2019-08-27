@@ -55,11 +55,16 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     let coinType = req.params.coinType;
     let condition = {
         $or: [{"from_userId": userId}, {"to_userId": userId}],
-        "item.status":[2,3],
+        "item.status":[2,3, 102, 103],
         "completed": {$exists: false}
     }
     var bitwebResponse = new BitwebResponse();
     if(coinType == "point") {
+        if(dbconfig.country == 'KR') {
+            condition['item.country'] = {$exists:false};
+        } else {
+            condition['item.country'] = dbconfig.country;
+        }
         controllerPointTrades.getTradingItems(country, condition)
         .then(pointTrades => {
             let buyEscrow = 0;
@@ -89,6 +94,11 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
             res.status(500).send(bitwebResponse.create())
         })
     } else {
+        if(dbconfig.country == 'KR') {
+            condition['item.country'] = {$exists:false};
+        } else {
+            condition['item.country'] = dbconfig.country;
+        }
         controllerVtrs.getTradingItems(country, condition)
         .then(vtrs => {
             let buyEscrowBtc = 0;
@@ -106,7 +116,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.price).toFixed(8));
                     } else {
-                        sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                        sellEscrowMach = parseFloat((sellEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
                 }
 
@@ -118,7 +128,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.price).toFixed(8));
                     } else {
-                        buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.mach).toFixed(8));
+                        buyEscrowMach = parseFloat((buyEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
                 }
             }

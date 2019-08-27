@@ -318,7 +318,7 @@
 					},
 					"placeholder": {
 						"placeholder1": "구매하고 싶은 게임 아이템",
-						"placeholder2": "거래가 가능한 게임의 케릭터명",
+						"placeholder2": "거래가 가능한 게임의 캐릭터명",
 						"placeholder3": "원하는 구매 MACH 가격",
 						"placeholder4": "원하는 구매 포인트 가격",
 						"placeholder5": "거래에 필요한 내용",
@@ -501,7 +501,7 @@
 					},
 					"placeholder": {
 						"placeholder1": "판매하고 싶은 게임 아이템",
-						"placeholder2": "거래가 가능한 게임의 케릭터명",
+						"placeholder2": "거래가 가능한 게임의 캐릭터명",
 						"placeholder3": "원하는 판매 MACH 가격",
 						"placeholder4": "원하는 판매 포인트 가격",
 						"placeholder5": "거래에 필요한 내용",
@@ -544,7 +544,7 @@
 					},
 					"placeholder": {
 						"placeholder1": "판매하고 싶은 게임 아이템",
-						"placeholder2": "거래가 가능한 게임의 케릭터명",
+						"placeholder2": "거래가 가능한 게임의 캐릭터명",
 						"placeholder3": "원하는 판매 MACH 가격",
 						"placeholder4": "원하는 판매 포인트 가격",
 						"placeholder5": "거래에 필요한 내용",

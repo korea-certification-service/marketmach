@@ -597,7 +597,8 @@ router.post('/login', function (req, res, next) {
                                 let cookie_string = userTag+'|'+ loginToken; // "|" 로 구분
                                 let orange__F = CryptoJS.AES.encrypt(cookie_string, key, {iv:iv}); // 쿠키명 = orange__T
                                 orange__F = orange__F.ciphertext.toString(CryptoJS.enc.Base64);  //and the ciphertext put to base64
-                                let tokenValue = token.makeLoginToken(loginToken);
+                                // let tokenValue = token.makeLoginToken(loginToken);
+                                let tokenValue = loginToken;
                                 res.cookie("loginToken", tokenValue, {
                                     domain: 'marketmach.com',
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
@@ -620,7 +621,7 @@ router.post('/login', function (req, res, next) {
                                 //     });
                                 // }
 
-                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active}
+                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active, "originalUrl":req.session.originalUrl == undefined ? "/main" : req.session.originalUrl}
                                 bitwebResponse.code = 200;
                                 bitwebResponse.data = resData;
                                 res.status(200).send(bitwebResponse.create())

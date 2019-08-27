@@ -95,7 +95,7 @@
     
         $(document).ready(function() {
             $("#btnSubmit").on('click', function(){
-                submit();
+                ajaxLoginYnCheck(submit);
             });
         });
 
@@ -107,14 +107,8 @@
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
                 alert('거래 가격을 입력하세요.');
                 return false;
-            } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
-                alert('거래 가격(Point)을 입력하세요.');
-                return false;
             } else if(!checkValidDecimal($("#price").val())) {
                 alert('거래 가격을 숫자로 입력하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#point").val())) {
-                alert('거래 가격(Point)을 숫자로 입력하세요.');
                 return false;
             } else if ($("#desc").val() == "") {
                 alert('상세 정보를 입력하세요.');
@@ -134,7 +128,7 @@
             data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
             data["price"] = $("#price").val();
             data["currency"]="POINT";
-            data["point"]=$("#point").val();
+            data["point"]= 0;
 
             console.log(data);
             

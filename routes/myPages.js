@@ -6,8 +6,9 @@ var machEthers = require('../services/ethers');
 var datetime = require('node-datetime');
 var sessionChecker=require('../utils/session');
 const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
-router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mypage', {
             title: 'Bitweb MyPage',
@@ -18,7 +19,8 @@ router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mypage', {
@@ -30,7 +32,8 @@ router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/mypage', {
@@ -42,12 +45,13 @@ router.get('/list', sessionChecker.sessionChecker2, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/buy/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/buy/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mybuylist', {
             title: 'Bitweb MyPage',
@@ -62,7 +66,8 @@ router.get('/buy/list', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mybuylist', {
@@ -78,7 +83,8 @@ router.get('/buy/list', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/mybuylist', {
@@ -94,12 +100,13 @@ router.get('/buy/list', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/sell/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/sell/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/myselllist', {
             title: 'Bitweb MyPage',
@@ -114,7 +121,8 @@ router.get('/sell/list', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myselllist', {
@@ -130,7 +138,8 @@ router.get('/sell/list', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/myselllist', {
@@ -146,12 +155,13 @@ router.get('/sell/list', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/cancel/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/cancel/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mycancellist', {
             title: 'Bitweb MyPage',
@@ -165,7 +175,8 @@ router.get('/cancel/list', sessionChecker.sessionChecker2, function (req, res, n
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycancellist', {
@@ -195,12 +206,13 @@ router.get('/cancel/list', sessionChecker.sessionChecker2, function (req, res, n
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/wallet/info', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/walletinfo', {
             title: 'Bitweb Wallet Info',
@@ -211,7 +223,8 @@ router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, n
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/walletinfo', {
@@ -223,7 +236,8 @@ router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, n
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/walletinfo', {
@@ -235,12 +249,13 @@ router.get('/wallet/info', sessionChecker.sessionChecker2, function (req, res, n
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/walletconnect', {
             title: 'Bitweb Wallet Info',
@@ -251,7 +266,8 @@ router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/walletconnect', {
@@ -263,7 +279,8 @@ router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/myPage/walletconnect', {
@@ -275,12 +292,13 @@ router.get('/wallet/connect', sessionChecker.sessionChecker2, function (req, res
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });
     }
 });
 
-router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         if(req.session.bitberry_token == "") {
             res.render('v2/myPage/walletconnect', {
@@ -292,7 +310,8 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2/myPage/walletdeposit', {
@@ -307,7 +326,8 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }
     } else if(dbconfig.country == "POINT") {
@@ -321,7 +341,8 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_point/myPage/walletdeposit', {
@@ -336,7 +357,8 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }        
     } else {
@@ -350,7 +372,8 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_en/myPage/walletdeposit', {
@@ -365,14 +388,15 @@ router.get('/wallet/deposit', sessionChecker.sessionChecker2, function (req, res
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }
     }
     
 });
 
-router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         if(req.session.bitberry_token == "") {
             res.render('v2/myPage/walletconnect', {
@@ -385,7 +409,8 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2/myPage/walletwithdraw', {
@@ -402,7 +427,8 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }
     } else if(dbconfig.country == "POINT") {
@@ -418,7 +444,8 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_point/myPage/walletwithdraw', {
@@ -435,7 +462,8 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }       
     } else {
@@ -450,7 +478,8 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_en/myPage/walletwithdraw', {
@@ -466,13 +495,14 @@ router.get('/wallet/withdraw', sessionChecker.sessionChecker2, function (req, re
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }
     }
 });
 
-router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/point/info', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/info', {
             title: 'Bitweb Wallet Info',
@@ -482,7 +512,8 @@ router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/info', {
@@ -493,7 +524,8 @@ router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/point/info', {
@@ -504,12 +536,13 @@ router.get('/point/info', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/point/deposit', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/deposit', {
             title: 'Bitweb Wallet Deposit',
@@ -521,7 +554,8 @@ router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         }); 
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/deposit', {
@@ -534,7 +568,8 @@ router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });    
     } else {
         res.render('v2_en/myPage/point/deposit', {
@@ -547,12 +582,13 @@ router.get('/point/deposit', sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         }); 
     }
 });
 
-router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/point/withdraw', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/point/withdraw', {
             title: 'Bitweb Point Withdraw',
@@ -564,7 +600,8 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         }); 
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/withdraw', {
@@ -577,7 +614,8 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/myPage/point/withdraw', {
@@ -590,7 +628,8 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         }); 
     }
 });
@@ -676,7 +715,7 @@ router.get('/point/withdraw', sessionChecker.sessionChecker2, function (req, res
 //     }
 // });
 
-router.get('/user/checkPassword', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/checkPassword', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mycheckPassword', {
             title: 'Bitweb user info',
@@ -687,7 +726,8 @@ router.get('/user/checkPassword', sessionChecker.sessionChecker2, function (req,
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycheckPassword', {
@@ -699,7 +739,8 @@ router.get('/user/checkPassword', sessionChecker.sessionChecker2, function (req,
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/mycheckPassword', {
@@ -711,12 +752,13 @@ router.get('/user/checkPassword', sessionChecker.sessionChecker2, function (req,
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/info', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/myinfo', {
             title: 'Bitweb user info',
@@ -728,7 +770,8 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myinfo', {
@@ -741,7 +784,8 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/myPage/myinfo', {
@@ -754,12 +798,13 @@ router.get('/user/info', sessionChecker.sessionChecker2, function (req, res, nex
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/voucher', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/myvoucher', {
             title: 'Bitweb user grade',
@@ -770,7 +815,8 @@ router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, 
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myvoucher', {
@@ -782,7 +828,8 @@ router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, 
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/myvoucher', {
@@ -794,12 +841,13 @@ router.get('/user/voucher', sessionChecker.sessionChecker2, function (req, res, 
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/auth_phone', {
             title: 'Bitweb user grade',
@@ -810,7 +858,8 @@ router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/auth_phone', {
@@ -822,7 +871,8 @@ router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/checkKyc', {
@@ -834,12 +884,13 @@ router.get('/user/authPhone',sessionChecker.sessionChecker2, function (req, res,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });
     }
 });
 
-router.get('/user/kyc',sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/kyc',token.checkLoginToken, function (req, res, next) {
     res.render('v2_en/myPage/auth_phone', {
         title: 'Bitweb user grade',
         userId: req.session.userId,
@@ -849,11 +900,12 @@ router.get('/user/kyc',sessionChecker.sessionChecker2, function (req, res, next)
         authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,
-        arrDepth:[6,3]
+        arrDepth:[6,3],
+        country:req.session.country
     });
 });
 
-router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mygrade', {
             title: 'Bitweb user grade',
@@ -864,7 +916,8 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mygrade', {
@@ -876,7 +929,8 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/myPage/mygrade', {
@@ -888,46 +942,10 @@ router.get('/user/grade', sessionChecker.sessionChecker2, function (req, res, ne
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });
     }
-});
-
-router.get('/myRegisterHistory',sessionChecker.sessionChecker2, function (req, res, next) {
-    res.render('myPage/myRegisterHistory', {
-        title: 'Bitweb Main',
-        id:req.session.userId,
-        userTag:req.session.userTag,
-        authPhone: req.session.authPhone,
-        category:req.query.category,
-        pageIdx:req.query.pageIdx,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
-});
-
-router.get('/myDealHistory',sessionChecker.sessionChecker2, function (req, res, next) {
-    res.render('myPage/myDealHistory', {
-        title: 'Bitweb Main',
-        id:req.session.userId,
-        userTag:req.session.userTag,
-        authPhone: req.session.authPhone,
-        category:req.query.category,
-        pageIdx:req.query.pageIdx,
-        country:req.session.country,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
-});
-
-router.get('/myInfo',sessionChecker.sessionChecker2, function (req, res, next) {
-    res.render('myPage/myInfo', {
-        title: 'Bitweb Main',
-        id:req.session.userId,
-        userTag:req.session.userTag,
-        authPhone: req.session.authPhone,
-        country:req.session.country,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain
-    });
 });
 
 module.exports = router;

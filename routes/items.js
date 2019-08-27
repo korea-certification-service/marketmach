@@ -136,7 +136,7 @@ router.get('/all', function (req, res, next) {
     let category = "game";
     let trade_type = "buy";
     let pageIdx = 0;
-    let perPage = 5;
+    let perPage = 7;
     let data = {};
 
     data['trade_type'] = trade_type;
@@ -153,20 +153,25 @@ router.get('/all', function (req, res, next) {
     controllerItems.getItemByRequired(country, data)
         .then(game_buys => {
             data['trade_type'] = "sell";
+            data['perPage'] = 5;
             controllerItems.getItemByRequired(country, data)
                 .then(game_sells => {
                     data['category'] = "etc";
                     data['trade_type'] = "buy";
+                    data['perPage'] = 5;
                     controllerItems.getItemByRequired(country, data)
                         .then(etc_buys => {
                             data['trade_type'] = "sell";
+                            data['perPage'] = 7;
                             controllerItems.getItemByRequired(country, data)
                                 .then(etc_sells => {
                                     data['category'] = "otc";
                                     data['trade_type'] = "buy";
+                                    data['perPage'] = 5;
                                     controllerItems.getItemByRequired(country, data)
                                         .then(otc_buys => {
                                             data['trade_type'] = "sell";
+                                            data['perPage'] = 5;
                                             controllerItems.getItemByRequired(country, data)
                                                 .then(otc_sells => {
                                                     data['category'] = "game";
@@ -175,47 +180,38 @@ router.get('/all', function (req, res, next) {
                                                     data['primeService'] = "Y";
                                                     controllerItems.getItemByRequired(country, data)
                                                         .then(primes => {
-                                                            controllerCommunity.listMain(country, 'movie')
+                                                            controllerCommunity.listMain(country)
                                                                 .then(movies => {
-                                                                    controllerCommunity.listMain(country, 'board')
-                                                                        .then(boards => {
-                                                                            controllerCms.getCmsList(country)
-                                                                                .then((cms) => {
-                                                                                    req["query"]["perPage"] = perPage;
-                                                                                    controllerNotices.list(req)
-                                                                                        .then(notices => {
-                                                                                            let result = {
-                                                                                                "game_buys" : game_buys,
-                                                                                                "game_sells" : game_sells,
-                                                                                                "etc_buys" : etc_buys,
-                                                                                                "etc_sells" : etc_sells,
-                                                                                                "otc_buys" : otc_buys,
-                                                                                                "otc_sells" : otc_sells,
-                                                                                                "primes": primes,
-                                                                                                "cms": cms,
-                                                                                                "boards": boards,
-                                                                                                "movies": movies,
-                                                                                                "notices": notices
-                                                                                            }
-                                                                                            console.log('test=>', result)
-                                                                                            bitwebResponse.code = 200;
-                                                                                            bitwebResponse.data = result;
-        
-                                                                                            let jsonResult = bitwebResponse.create();
-        
-                                                                                            if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
-                                                                                            if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
-        
-                                                                                            jsonResult['pageIdx'] = data.pageIdx;
-                                                                                            jsonResult['perPage'] = data.perPage;
-        
-                                                                                            res.status(200).send(jsonResult)
-                                                                                        }).catch((err) => {
-                                                                                        console.error('err=>', err)
-                                                                                        bitwebResponse.code = 500;
-                                                                                        bitwebResponse.message = err;
-                                                                                        res.status(500).send(bitwebResponse.create())
-                                                                                    })
+                                                                    controllerCms.getCmsList(country)
+                                                                        .then((cms) => {
+                                                                            req["query"]["perPage"] = perPage;
+                                                                            controllerNotices.list(req)
+                                                                                .then(notices => {
+                                                                                    let result = {
+                                                                                        "game_buys" : game_buys,
+                                                                                        "game_sells" : game_sells,
+                                                                                        "etc_buys" : etc_buys,
+                                                                                        "etc_sells" : etc_sells,
+                                                                                        "otc_buys" : otc_buys,
+                                                                                        "otc_sells" : otc_sells,
+                                                                                        "primes": primes,
+                                                                                        "cms": cms,
+                                                                                        "movies": movies,
+                                                                                        "notices": notices
+                                                                                    }
+                                                                                    console.log('test=>', result)
+                                                                                    bitwebResponse.code = 200;
+                                                                                    bitwebResponse.data = result;
+
+                                                                                    let jsonResult = bitwebResponse.create();
+
+                                                                                    if (data.pageIdx != undefined) data.pageIdx = pageIdx ? data.pageIdx : 0
+                                                                                    if (data.perPage != undefined) data.perPage = perPage ? data.perPage : 10
+
+                                                                                    jsonResult['pageIdx'] = data.pageIdx;
+                                                                                    jsonResult['perPage'] = data.perPage;
+
+                                                                                    res.status(200).send(jsonResult)
                                                                                 }).catch((err) => {
                                                                                 console.error('err=>', err)
                                                                                 bitwebResponse.code = 500;

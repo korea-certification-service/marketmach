@@ -16,19 +16,10 @@ let client_secret = 'Q352gLIubZ';
 let state = "RAMDOM_STATE";
 let redirectURI = encodeURI(dbconfig.naver_login_url);
 let api_url = "";
+var token = require('../utils/token');
 
 
-router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
-    //IE로 접속한 경우 지원하지 않는 페이지로 redirect처리한다.
-    // if(req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("Trident") > -1) {
-    //     res.render('notsupport', {title: 'Bitweb Main'});
-    // } else {
-    //     res.render('main/index', {
-    //         title: 'Bitweb Main',
-    //         usePoint:dbconfig.usePoint,
-    //         useBlockchain:dbconfig.useBlockchain
-    //     }); 
-    // }
+router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
@@ -45,7 +36,8 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/main/index', {
@@ -55,7 +47,8 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/main/index', {
@@ -65,18 +58,10 @@ router.get('/', sessionChecker.originUrlYn, function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
-
-    // res.render('v2/error/coming_soon', {
-    //     title: 'Bitweb Main',
-    //     userId: req.session.userId,
-    //     coinId: req.session.coinId,
-    //     authPhone: req.session.authPhone,
-    //     usePoint:dbconfig.usePoint,
-    //     useBlockchain:dbconfig.useBlockchain
-    // });
 });
 
 router.get('/nodev_index', function (req, res, next) {
@@ -88,7 +73,8 @@ router.get('/nodev_index', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/main/nodev_index', {
@@ -98,7 +84,8 @@ router.get('/nodev_index', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/main/nodev_index', {
@@ -108,26 +95,13 @@ router.get('/nodev_index', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
 });
 
-router.get('/main', function (req, res, next) {
-    // console.log("session => ",req.session);
-    // console.log("cookei => ",req.cookies);
-
-    //IE로 접속한 경우 지원하지 않는 페이지로 redirect처리한다.
-    // if(req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("Trident") > -1) {
-    //     res.render('notsupport', {title: 'Bitweb Main'});
-    // } else {
-    //     res.render('main/index', {
-    //         title: 'Bitweb Main',
-    //         usePoint:dbconfig.usePoint,
-    //         useBlockchain:dbconfig.useBlockchain
-    //     });
-    // }
-
+router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||
@@ -143,7 +117,8 @@ router.get('/main', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/main/index', {
@@ -153,7 +128,8 @@ router.get('/main', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/main/index', {
@@ -163,18 +139,10 @@ router.get('/main', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
-
-    // res.render('v2/error/coming_soon', {
-    //     title: 'Bitweb Main',
-    //     userId: req.session.userId,
-    //     coinId: req.session.coinId,
-    //     authPhone: req.session.authPhone,
-    //     usePoint:dbconfig.usePoint,
-    //     useBlockchain:dbconfig.useBlockchain
-    // });
 });
 
 router.get('/currency', function (req, res, next) {
@@ -186,7 +154,8 @@ router.get('/currency', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/main/currency', {
@@ -196,7 +165,8 @@ router.get('/currency', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/main/currency', {
@@ -206,12 +176,13 @@ router.get('/currency', function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
 });
 
-router.get('/login', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/login', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/login', {title: 'Bitweb Main'});
     } else if(dbconfig.country == "POINT") {
@@ -228,28 +199,7 @@ router.get('/logout', function (req, res, next) {
     res.redirect('/');
 });
 
-router.get('/header', function (req, res, next) {
-    res.render('common/header', {
-        title: 'Bitweb Header',
-        userId: req.session.userId,
-        userTag: req.session.userTag,
-        country: dbconfig.country,
-        pointId: req.session.pointId,
-        chatbot_url: dbconfig.chatbot_url,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-    });
-});
-
-router.get('/footer', function (req, res, next) {
-    res.render('common/footer', {title: 'Bitweb Footer', country: dbconfig.country});
-});
-
-router.get('/page',function(req,res,next){
-    res.render('common/pagination');
-});
-
-router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/findId', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
@@ -259,7 +209,7 @@ router.get('/findId', sessionChecker.sessionChecker, function (req, res, next) {
     }
 });
 
-router.get('/findPassword', sessionChecker.sessionChecker, function (req, res, next) {
+router.get('/findPassword', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
@@ -545,7 +495,7 @@ router.get('/noResult', function (req, res, next) {
     }
 });
 
-router.get("/signupSuccess", sessionChecker.registerSuccessChecker, function (req, res, next) {
+router.get("/signupSuccess", function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
     } else if(dbconfig.country == "POINT") {
@@ -559,18 +509,6 @@ router.get("/emailAuth", sessionChecker.emailAuthChecker, function (req, res, ne
     res.render('login/emailAuth', {title: 'Bitweb sign up success', userId: req.session.userId});
 });
 
-router.get("/policy", function (req, res, next) {
-    res.render('policy/policy', {title: 'Policy'});
-});
-
-router.get("/private", function (req, res, next) {
-    res.render('policy/private', {title: 'private'});
-});
-
-router.get("/teenager", function (req, res, next) {
-    res.render('policy/teenager', {title: 'private'});
-});
-
 router.get("/naveraf72822281097f80bf131c58b3c9abdb.html", function (req, res, next) {
     res.render('naveraf72822281097f80bf131c58b3c9abdb', {title: 'private'});
 });
@@ -579,7 +517,7 @@ router.get("/google2def744eaae3698d.html", function (req, res, next) {
     res.render('google2def744eaae3698d', {title: 'private'});
 });
 
-router.get('/room', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/room', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr', {
             title: 'Bitweb VTR',
@@ -653,11 +591,7 @@ router.get('/sms/room', function (req, res, next) {
     }
 });
 
-router.get('/chatbot/login', function (req, res, next) {
-    res.render('login/chatbot_login', {title: 'Bitweb Main', chatbot_url: dbconfig.chatbot_url});
-});
-
-router.get("/checkUrl", sessionChecker.sessionChecker3, function (req, res, next) {
+router.get("/checkUrl", token.checkLoginToken, function (req, res, next) {
     let cookie_data = req.cookies.key;
     let start = cookie_data.indexOf("orange__F");
     let cValue = '';
@@ -953,6 +887,10 @@ router.post('/fileuploads',  function (req, res, next) {
         bitwebResponse.data = data;
         res.status(200).send(bitwebResponse.create())
     });
+});
+
+router.get('/v1/ajaxLoginYnCheck', function (req, res, next) {
+    token.checkLoginTokenAjax(req, res, next);
 });
 
 function eventDay(req, res, next) {

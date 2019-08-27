@@ -3,8 +3,9 @@ var router = express.Router();
 var machUsers = require('../services/users');
 var sessionChecker=require('../utils/session');
 const dbconfig = require('../config/dbconfig');
+var token = require('../utils/token');
 
-router.get('/info', function (req, res, next) {
+router.get('/info', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/info', {
             title: 'Bitweb Support',
@@ -14,7 +15,8 @@ router.get('/info', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/info', {
@@ -25,7 +27,8 @@ router.get('/info', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });       
     } else{
         res.render('v2_en/support/info', {
@@ -36,12 +39,13 @@ router.get('/info', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/notice', function (req, res, next) {
+router.get('/notice', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/list', {
             title: 'Bitweb Support',
@@ -52,7 +56,8 @@ router.get('/notice', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/notice/list', {
@@ -64,7 +69,8 @@ router.get('/notice', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/support/notice/list', {
@@ -76,12 +82,13 @@ router.get('/notice', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/notice/detail', function (req, res, next) {
+router.get('/notice/detail', token.checkLoginTokenNoSignIn,  function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/notice/detail', {
             title: 'Bitweb Support',
@@ -92,7 +99,8 @@ router.get('/notice/detail', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/notice/detail', {
@@ -104,7 +112,8 @@ router.get('/notice/detail', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });    
     } else{
         res.render('v2_en/support/notice/detail', {
@@ -116,12 +125,13 @@ router.get('/notice/detail', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/event', function (req, res, next) {
+router.get('/event', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/now', {
             title: 'Bitweb Support',
@@ -132,7 +142,8 @@ router.get('/event', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/now', {
@@ -144,7 +155,8 @@ router.get('/event', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/event/now', {
@@ -156,12 +168,13 @@ router.get('/event', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/event/past', function (req, res, next) {
+router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/past', {
             title: 'Bitweb Support',
@@ -172,7 +185,8 @@ router.get('/event/past', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/past', {
@@ -184,7 +198,8 @@ router.get('/event/past', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/event/past', {
@@ -196,12 +211,13 @@ router.get('/event/past', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/event/detail/:eventId', function (req, res, next) {
+router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/event/detail', {
             title: 'Bitweb Support',
@@ -212,7 +228,8 @@ router.get('/event/detail/:eventId', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/detail', {
@@ -224,7 +241,8 @@ router.get('/event/detail/:eventId', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/event/detail', {
@@ -236,12 +254,13 @@ router.get('/event/detail/:eventId', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/faq', function (req, res, next) {
+router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/faq', {
             title: 'Bitweb Support',
@@ -252,7 +271,8 @@ router.get('/faq', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/faq', {
@@ -264,7 +284,8 @@ router.get('/faq', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/faq', {
@@ -276,12 +297,13 @@ router.get('/faq', function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     }
 });
 
-router.get('/opposition/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/register', {
             title: 'Bitweb Support',
@@ -293,7 +315,8 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/register', {
@@ -306,7 +329,8 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/opposition/register', {
@@ -319,12 +343,13 @@ router.get('/opposition/register', sessionChecker.sessionChecker2, function (req
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/list', {
             title: 'Bitweb Support',
@@ -336,7 +361,8 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/list', {
@@ -349,7 +375,8 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/opposition/list', {
@@ -362,12 +389,13 @@ router.get('/opposition/list', sessionChecker.sessionChecker2, function (req, re
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/view', {
             title: 'Bitweb Support',
@@ -378,7 +406,8 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/view', {
@@ -390,7 +419,8 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/opposition/view', {
@@ -402,12 +432,13 @@ router.get('/opposition/detail/:oppositionId', sessionChecker.sessionChecker2, f
             oppositionId: req.params.oppositionId,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/opposition/modify', {
             title: 'Bitweb Support',
@@ -420,7 +451,8 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/modify', {
@@ -434,7 +466,8 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/opposition/modify', {
@@ -448,12 +481,13 @@ router.get('/opposition/modify/:oppositionId', sessionChecker.sessionChecker2, f
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,2]
+            arrDepth:[4,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/private/register', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/register', {
             title: 'Bitweb Support',
@@ -464,7 +498,8 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/register', {
@@ -476,7 +511,8 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/support/private/register', {
@@ -488,12 +524,13 @@ router.get('/private/register', sessionChecker.sessionChecker2, function (req, r
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     }
 });
 
-router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/list', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/list', {
             title: 'Bitweb Support',
@@ -505,7 +542,8 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/list', {
@@ -518,7 +556,8 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/support/private/list', {
@@ -531,12 +570,13 @@ router.get('/private/list', sessionChecker.sessionChecker2, function (req, res, 
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/detail/:personalId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/view', {
             title: 'Bitweb Support',
@@ -548,7 +588,8 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/view', {
@@ -561,7 +602,8 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/support/private/view', {
@@ -574,12 +616,13 @@ router.get('/private/detail/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/private/modify/:personalId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/private/modify', {
             title: 'Bitweb Support',
@@ -591,7 +634,8 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/modify', {
@@ -604,7 +648,8 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/private/modify', {
@@ -617,12 +662,13 @@ router.get('/private/modify/:personalId', sessionChecker.sessionChecker2, functi
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });
     }
 });
 
-router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next) {
+router.get('/reqGames', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/support/reqGames', {
             title: 'Bitweb Support',
@@ -632,7 +678,8 @@ router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/reqGames', {
@@ -643,7 +690,8 @@ router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/support/reqGames', {
@@ -654,7 +702,8 @@ router.get('/reqGames', sessionChecker.sessionChecker2, function (req, res, next
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,0]
+            arrDepth:[6,0],
+            country:req.session.country
         });
     }
 });

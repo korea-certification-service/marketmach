@@ -18,7 +18,7 @@
             }
 
             if(category == "") {
-                category = "game";
+                category = "etc";
             }
 
             getItemList();
@@ -210,7 +210,7 @@
                                     } else if(buyList[i].status ==3){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="tradeComplete(\''+itemId+'\');">Complete<br>Trade</button>';
-                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {            
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel Trade<br>(refund)</button>';
                                         }
                                     } else if(buyList[i].status ==101) {
@@ -224,7 +224,7 @@
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">Complete<br>Trade</button>';
-                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {            
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel Trade<br>(refund)</button>';
                                         }
                                     }
@@ -277,91 +277,100 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('Do you want to Pay(Escrow)?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            event.stopPropagation();
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to Pay(Escrow)?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/buy",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/buy",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function sellComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete sales?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function tradeComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete a transaction?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete a transaction?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('The transaction is complete.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('The transaction is complete.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function cancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to cancel a transaction?');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    if(success.data.successYn == "Y") {
-                        alert("Transaction canceled.");
-                        getItemList();
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to cancel a transaction?');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        if(success.data.successYn == "Y") {
+                            alert("Transaction canceled.");
+                            getItemList();
+                        } else {
+                            alert(success.data.msg);
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function oppisitionItem(itemId) {
@@ -378,11 +387,9 @@
                 url: "/v1/vtrs/item/" + itemId
             }).done(function (success) {
                 //console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);
@@ -394,63 +401,69 @@
 
         function pointCancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to cancel a transaction?');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    alert("Transaction canceled.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to cancel a transaction?');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        alert("Transaction canceled.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function pointSellComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete sales?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointTradeComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function(){
+                var confirms = confirm('Do you want to complete sales?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('The transaction is complete.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('The transaction is complete.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointShowPhone(itemId) {
@@ -460,11 +473,9 @@
                 url: "/v1/tradePoints/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);
@@ -500,8 +511,8 @@
                                 <li class="row">
                                     <h2 class="col-sm-2 col-xs-12">Goods Type</h2>
                                     <div class="check_filter col-sm-10 col-xs-12">
-                                        <input type="radio" name="category" id="game" value="game" checked><label for="game">Game Item</label>
-                                        <input type="radio" name="category" id="etc" value="etc"><label for="etc">Asset Trading</label>
+                                        <!-- <input type="radio" name="category" id="game" value="game" checked><label for="game">Game Item</label> -->
+                                        <input type="radio" name="category" id="etc" value="etc" checked><label for="etc">Asset Trading</label>
                                         <input type="radio" name="category" id="otc" value="otc"><label for="otc">OTC Trading</label>
                                     </div>
                                 </li>
@@ -512,12 +523,12 @@
                                             <li>
                                                 <input type="radio" name="status" id="all" value=""><label for="all">All</label><br class="mob_br">
                                                 <input type="radio" name="status" id="regist" value="0"><label for="regist">Available</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Transaction Request</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrStart" value="1"><label for="vtrStart">Start</label><br class="mob_br">
                                                 <input type="radio" name="status" id="vtrBuy" value="2"><label for="vtrBuy">Pay(Escrow)</label><br class="mob_br">
                                             </li>
                                             <li>
-                                                <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Complete Sales</label><br class="mob_br">
-                                                <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">Complete Transaction</label>
+                                                <input type="radio" name="status" id="vtrSell" value="3"><label for="vtrSell">Deliver</label><br class="mob_br">
+                                                <input type="radio" name="status" id="vtrConfirm" value="4"><label for="vtrConfirm">Completed</label>
                                             </li>
                                         </ul>
                                     </div>

@@ -2,11 +2,6 @@ var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 
-
-router.get('/', function (req, res, next) {
-    res.render('agreement/agreement', {title: 'Bitweb Main', danal_url: dbconfig.danal_url});
-});
-
 router.get('/use', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/agreements/use', {

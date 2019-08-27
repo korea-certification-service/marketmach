@@ -41,38 +41,39 @@
             });
 
             $("#doExchange").on("click", function(){
-                var result = calculate(mach_rate, gamecoin_rate, select_value);
-                console.log(result.body);
-                var _confirm = confirm("Do you want to exchange "+ result.confirm.from+"MACH for "+result.confirm.to+"MC coins?");
-                if( result.confirm.after < 0 ) {
-                    alert("It is not enough MACH.");
-                    return;
-                }
-                if(select_value == 0) {
-                    alert("Please select the amount you want to exchange.");
-                    return;
-                }
-                if(_confirm){
-                    $.ajax({
-                        method: "POST",
-                        url: "/v1/gameCenter/"+userId+"/exchange/gamecoin",
-                        data: result.body
-                    }).done(function(success){
-                        var res = success.data;
-                        if(res.successYn == "N"){
-                            alert(res.msg);
-                        } else if(res.successYn == "Y") {
-                            alert("The exchange is complete.");
-                            location.reload();
-                        }
-                    }).fail(function(fail) {
-                        console.log(fail);
-                    });
-                } else {
-                    $('[name=coin]').attr("selected")
-                    console.log("취소")
-                }
-                
+                ajaxLoginYnCheck(function(){
+                    var result = calculate(mach_rate, gamecoin_rate, select_value);
+                    console.log(result.body);
+                    var _confirm = confirm("Do you want to exchange "+ result.confirm.from+"MACH for "+result.confirm.to+"MC coins?");
+                    if( result.confirm.after < 0 ) {
+                        alert("It is not enough MACH.");
+                        return;
+                    }
+                    if(select_value == 0) {
+                        alert("Please select the amount you want to exchange.");
+                        return;
+                    }
+                    if(_confirm){
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/gameCenter/"+userId+"/exchange/gamecoin",
+                            data: result.body
+                        }).done(function(success){
+                            var res = success.data;
+                            if(res.successYn == "N"){
+                                alert(res.msg);
+                            } else if(res.successYn == "Y") {
+                                alert("The exchange is complete.");
+                                location.reload();
+                            }
+                        }).fail(function(fail) {
+                            console.log(fail);
+                        });
+                    } else {
+                        $('[name=coin]').attr("selected")
+                        console.log("취소")
+                    }
+                });
             });
 
             //교환내역 스크립트

@@ -35,7 +35,8 @@ router.get('/4', function (req, res, next) {
     sex: "남자",
     commId:"test",
     foreigner: "korean",
-    pushMarketing: "true"
+    pushMarketing: "true",
+    countryCode: "KR",
     });
 });
 router.get('/5', function (req, res, next) {

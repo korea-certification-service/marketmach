@@ -164,7 +164,7 @@
         });
 
         $("#btnSubmit").on('click', function(){
-            submit();
+            ajaxLoginYnCheck(submit);
         });
 
         $("#game-name").on('change', function() {
@@ -240,7 +240,7 @@
             alert('거래제목을 입력하세요.');
             return false;
         } else if ($("#game_character").val() == "") {
-            alert('판매자 케릭터명을 입력하세요.');
+            alert('판매자 캐릭터명을 입력하세요.');
             return false;
         } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
             alert('거래 가격을 입력하세요.');

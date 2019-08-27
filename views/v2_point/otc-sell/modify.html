@@ -140,7 +140,7 @@
             });
 
             $("#btnSubmit").on('click', function(){
-                submitAction(itemId); // 수정은 이미지 업로드 먼저 실행
+                ajaxLoginYnCheck(submitAction); // 수정은 이미지 업로드 먼저 실행
             });
 
             getData();
@@ -197,14 +197,8 @@
             if ($("#title").val() == "") {
                 alert('거래제목을 입력하세요.');
                 return false;
-            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('거래 가격을 입력하세요.');
-                return false;
             } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
                 alert('거래 가격(Point)을 입력하세요.');
-                return false;
-            } else if(!checkValidDecimal($("#price").val())) {
-                alert('거래 가격을 숫자로 입력하세요.');
                 return false;
             } else if(!checkValidDecimal($("#point").val())) {
                 alert('거래 가격(Point)을 숫자로 입력하세요.');
@@ -258,7 +252,7 @@
             })
         }
 
-        function submitAction(id) {
+        function submitAction() {
             //console.log("업로드 파일 갯수 : "+sel_files.length);
             var images = new FormData();
     
@@ -270,7 +264,7 @@
             //ajax 처리
             $.ajax({
                 method: "POST",
-                url: "/v1/items/"+id+"/images",
+                url: "/v1/items/"+itemId+"/images",
                 processData: false,
                 contentType: false,
                 data: images

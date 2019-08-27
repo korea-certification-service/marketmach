@@ -3,6 +3,27 @@
 <head>
     <% include ../include/head.html %>
 </head>
+    <script>
+        var userId = "<%=userId%>";
+
+        $(document).ready(function() {
+            getUesrGameInfo();
+        });
+   
+        function getUesrGameInfo() {
+           $.ajax({
+               method: "GET",
+               url: "/v1/gameCenter/"+userId+"/info"
+           }).done(function (success) {
+               console.log(success.data);
+               if(success.data != null) {
+                   $("#mcs1_coin").text(success.data.total_mcs1_coin);
+               }
+           }).fail(function (fail) {
+               console.log(fail);
+           })
+        }
+   </script>
 <body>
 <div id="wrap" class="wrap">
     <!-- header -->
@@ -22,7 +43,7 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;MACH -> 게임자산</span></h1>
+                        <h1 class="tit_mypage">교환하기<span> MACH &#8594; 게임자산</span></h1>
                         <div class="gst_exchangeguide">
                             <p>
                                 <em>MACH를 게임자산으로</em><br>
@@ -33,13 +54,13 @@
                             <dd>
                                 <a href="/gameStation/trade/exchange_mach/">
                                     <div class="gst_gametemplet">
-                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
+                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤처" title="마하 어드벤처">
                                         <div class="coin_value">
-                                            <em>보관중인 몽키코인</em>
+                                            <em>마하 어드벤처</em>
                                             <div>
-                                                <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
+                                                <img src="/static/img/symbol/Img_GameCoin1.png" />
                                                 <p>
-                                                    <span>10,213</span> 
+                                                    <span id="mcs1_coin"></span>
                                                 </p>
                                             </div>
                                         </div>

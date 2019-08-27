@@ -5,10 +5,7 @@
     var selecValue;
 
     $(document).ready(function(){
-        
-        if(location.pathname == "/main") {
-            selecValue = "games";
-        } else if(location.pathname == "/sells") {
+        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/sells") {
             selecValue = "games";
         } else if(location.pathname == "/etc-sells") {
             selecValue = "assets";
@@ -18,6 +15,7 @@
 
         $(".srch_select, .m_srch_select").on("change", function(){
             selecValue = $(this).val();
+            $("#search_item_name").val("");
         }); 
 
         $("#search_item_name, #m_search_item_name").keydown(function(key){ //엔터키 눌렀을때
@@ -42,8 +40,8 @@
             _mainSearch(key.currentTarget);
         });
 
-        $(".srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
-            _mainSearch(e.target);
+        $(".srch_box_left, .srch_box_right").on("click", function(e){ //두번째 카테고리를 눌렀을때
+            _mainSearch(e.target, e.currentTarget);
         });
 
         if(game_name != undefined) {
@@ -57,23 +55,22 @@
 
         if(userId !== "") {
             $("#btnInfoBox").on('click', function(key){
-                getCoinMain();
+                getPointMain();
                 getItemCountMain();
             });
         }
     });
 
-    function _mainSearch(target) {
+    function _mainSearch(target, currentTarget) {
 
         if( 
             target.id == 'main_search' || 
             target.id == 'search_item_name' ||
             target.id == 'm_main_search' || 
-            target.id == 'm_search_item_name'
+            target.id == 'm_search_item_name' //검색버튼또는 엔터키를 눌렀을때
         ) {
             var games;
             if(selecValue == "games"){ //게임자산일떄
-                console.log("게임");
                 games = isPc() == true ? $("#search_item_name").val().split(' ') : $("#m_search_item_name").val().split(' ');
                 var srchBoxLeftClassName = $(".srch_box_left ul li, .m_srch_box_left ul li")[0].classList[0];
 
@@ -92,31 +89,28 @@
                     }
                 }
             } else { //현물, OTC일떄
-                console.log("자산, otc");
                 games = isPc() == true ? $("#search_item_name").val() : $("#m_search_item_name").val();
             }
-            console.log(games);
             _doSearch(game_name, game_server, games);
             
         } else if( target.nodeName == 'LI' ) { //리스트를 클릭했을때
 
-            // if(target.parentElement.parentElement.className == "srch_box_left" && target.classList[0] != "game_with_server"){
-            //     return;
-            // }
-            if(target.classList[0] == "game_with_server" ){
-                var searchValue = target.innerText.split(">");
-                var game_name = searchValue[0]
-                var game_server = searchValue[1];
-            } else {
+            if(currentTarget.classList[0] == "srch_box_left") { //왼쪽 리스트일때
+                if(target.classList[0] == "game_with_server"){
+                    var searchValue = target.innerText.split(">");
+                    var game_name = searchValue[0]
+                    var game_server = searchValue[1];
+                } else {
+                    return;
+                }
+            }
+            if(currentTarget.classList[0] == "srch_box_right") { //오른쪽 리스트일때
                 var game_name = $(".srch_box_left .clicked")[0].innerText;
                 var game_server = target.innerText == "서버전체" ? "" : target.innerText;
             }
             _doSearch(game_name, game_server);
         } 
-        // else {
-        //     console.log(1);
-        //     searchMain('sell');
-        // }
+
     }
 
     function _doSearch(game_name, game_server, games){
@@ -132,9 +126,11 @@
     }
 
     function loginChecker() {
-        var login = "<%= userId %>";
+        // var login = "<%= userId %>";
         //console.log(login, typeof login);
-        if(login !== "" && login !== "undefined") {
+        var cookie_data = document.cookie;
+        var loginToken = cookie_data.indexOf("loginToken");
+        if(loginToken > -1) {
             //loginChecker();
             openCSChatBot();
         } else {
@@ -143,18 +139,18 @@
         }
     }
 
-    function openCSChatBot() {
+    function openCSChatBot(loginToken) {
         var cookie_data = document.cookie;
         //console.log(cookie_data);
-        var start = cookie_data.indexOf("orange__F");
+        var start = cookie_data.indexOf("loginToken");
         var cValue = '';
         if(start != -1){
-            start += "orange__F".length;
+            start += "loginToken".length;
             var end = cookie_data.indexOf(';', start);
             if(end == -1) end = cookie_data.length;
             cValue = cookie_data.substring(start, end);
 
-            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&orange__F" + cValue;
+            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&loginToken" + cValue +"&userId="+userId;
             if (isMobile()) {
                 window.open(req_url, "CSChatBot");
             } else {
@@ -164,8 +160,8 @@
                     '                              menubar=no,\n' +
                     '                              scrollbars=no,\n' +
                     '                              resizable=no,\n' +
-                    '                              width=520,\n' +
-                    '                              height=750');
+                    '                              width=340,\n' +
+                    '                              height=600');
             }
         } else {
             location.href = "/logout";
@@ -186,7 +182,7 @@
         var type = "";
         var title = "";
         var query;
- 
+
         if(selecValue == "games") {
             if( search_item_name != undefined ){
                 if(search_item_name.length > 2) {
@@ -219,42 +215,23 @@
 
         }
     }
-
-    function goExchange() {
-        alert('기능 개선 중입니다.');
-        return;
-        //alert("현재 VISA/MASTER 카드 결재 기능을 작업 중에 있습니다. \n 마하 코인 구매를 원하시면 비트코인 또는 이더리움 등의 암호화폐를 이용하여 구매하시기 바랍니다.");
-        //window.open("https://tokensales.marketmach.com","exchange");
-    }
-
 </script>
         <header class="header">
             <div class="top_menu cf">
-                <span><a href="" class="lang lang_kr">한국어</a></span>
                 <ul class="menu_list cf">
-                    <!-- <li><a href="javascript:goExchange();">환전소</a></li>  -->
                     <li><a href="/howto/trade/vtr">이용안내</a></li>
-                    <li><a href="/supports/info">고객센터</a></li>
-                    <li><a href="/myPages/list">나의 페이지</a></li>
                     <li><a class="menu_login" href="/login">로그인</a></li>
                     <li><a class="menu_logout" href="/logout">로그아웃</a></li>
-                    <li class="bgc2"><a href="">캐시거래소</a></li>
+                    <li><a href=""></a></li>
                 </ul>
             </div>
             <section class="sch_sec cf">
                 <h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
                 
-                <!-- <div class="search_bar cf">
-                    <input type="text" class="ipt_search_bar" id="search_item_name" placeholder="게임명과 서버명 입력  ex)로스트아크 이그하람" autocomplete="off">
-                    <input type="button" class="btn_search bgc1" id="main_search" value="검색" autocomplete=off>
-                </div> -->
-
                 <% include modules/search_guide.html %>
                 
                 <div class="chatbot jumpBot">
-                    <%if(useBlockchain == 'Y') {%>
-                    <!-- <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a> -->
-                    <%}%>
+                    <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
                 </div>
             </section>
             <nav class="nav cf">
@@ -262,21 +239,15 @@
                     <li>
                         <button class="hasDepth2">판매등록</button>
                         <ul class="depth2 cf">
-                            <li><a href="/sells/register">게임아이템</a></li>
+                            <li><a href="javascript:checkTeenager('/sells/register');">게임아이템</a></li>
                             <li><a href="/etc-sells/register">자산거래</a></li>
-                            <%if(useBlockchain == 'Y') {%>  
-                            <!-- <li><a href="/otc-sells/register">OTC거래</a></li> -->
-                            <%}%>
                         </ul>
                     </li>
                     <li>
                         <button class="hasDepth2">구매등록</button>
                         <ul class="depth2 cf">
-                            <li><a href="/buys/register">게임아이템</a></li>
+                            <li><a href="javascript:checkTeenager('/buys/register');">게임아이템</a></li>
                             <li><a href="/etc-buys/register">자산거래</a></li>
-                            <%if(useBlockchain == 'Y') {%>  
-                            <!-- <li><a href="/otc-buys/register">OTC거래</a></li> -->
-                            <%}%>
                         </ul>                    
                     </li>
                 </ul>
@@ -295,29 +266,11 @@
                             <li><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></li>
                         </ul>  
                     </li>    
-                    <%if(useBlockchain == 'Y') {%>  
-                    <!-- <li>
-                        <button class="hasDepth2">OTC거래</button>
-                        <ul class="depth2 cf">
-                            <li><a href="/otc-sells?category=otc&trade_type=sell">팝니다</a></li>
-                            <li><a href="/otc-buys?category=otc&trade_type=buy">삽니다</a></li>
-                        </ul>  
-                    </li>                   -->
-                    <%}%>
-                    <!-- <li>
-                        <button class="hasDepth2">커뮤니티</button>
-                        <ul class="depth2 cf">
-                            <li><a href="https://open.kakao.com/o/gD3UkX4" target="_blank">카톡1</a></li>
-                            <li><a href="https://open.kakao.com/o/gLyYRupb" target="_blank">카톡2</a></li>
-                            <li><a href="https://t.me/marketmachcom" target="_blank">텔레그램1</a></li>
-                        </ul> 
-                    </li> -->
-                    <%if(useBlockchain == 'Y') {%> 
-                    <!-- <li><a href="/shopping/view" class="fcbk">한정 이벤트</a></li> -->
-                    <%}%>
-                    <!-- <li><a href="javascript:goExchange();" class="fcbk">환전소</a></li> -->
-                    <li><a href="/community/board" class="fcbk">게임소식</a></li>
-                    <!-- <li><a href="/gameStation/" class="fcbk">게임스테이션</a></li> -->
+                    <li>
+                        <a href="/community/board" class="fcbk">커뮤니티</a>
+                    </li>
+                    <li><a href="/myPages/list" class="fcbk">나의 페이지</a></li>
+                    <li><a href="/supports/info" class="fcbk">고객센터</a></li> 
                 </ul>
                 <ul class="r_menu cf">
                     <li>
@@ -326,47 +279,13 @@
                             <%# 로그인 전 %>
                             <div class="beforeLoginBox">
                                 <ul>
-                                    <li class="top_area cf">
+                                    <li class="top_area cf" style="border:none;">
                                         <button class="btn bgc3" onclick="location.href='/login';">로그인</button>
                                         <ul class="cf link_login_info">
                                             <li><a href="/findId">아이디·비밀번호 찾기</a></li>
                                             <li><a href="/agreement">회원가입</a></li>
                                         </ul>
                                     </li>
-                                    <li class="mdl_area">
-                                        <p>마켓마하가 궁금하세요?</p>
-                                        <a class="btn bgc2" href="https://mymach.io" target="_blank">마켓마하 소개</a>
-                                    </li>
-                                    <%if(useBlockchain == 'Y') {%>
-                                    <!-- <li class="btm_area">   
-                                        <dl class="available_coin cf">
-                                            <dt>마켓마하 상장코인</dt>
-                                            <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="마하코인" title="마하코인"></a></dd>
-                                            <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
-                                            <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                        </dl>                                        
-                                        <dl class="available_coin cf">
-                                            <dt>마켓마하 상장 게임</dt>
-                                            <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                        </dl>                                   
-                                        
-                                            <br>
-                                            <img src="/static/img/main/account_banner.jpeg" alt="계좌번호 설명">
-                                       
-                                    </li> -->
-                                    <%}%>  
                                 </ul>
                             </div>
                             <%#  로그인 후 %>
@@ -384,42 +303,10 @@
                                     </li>
                                     <li class="mdl_area">                                        
                                         <em>나의 포인트 잔액</em>
-                                        <p class="fc2 total_point">100 <span>Point</span></p>
+                                        <p class="fc2 total_point">0 <span>Point</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
                                     </li>
-                                    <%if(useBlockchain == 'Y') {%>
-                                    <!-- <li class="btm_area">
-                                        <dl class="available_coin cf">
-                                            <dt>마켓마하 상장코인</dt>
-                                            <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
-                                            <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
-                                            <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                        </dl>
-                                        <dl class="available_coin cf">
-                                            <dt>마켓마하 상장 게임</dt>
-                                            <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐"></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                            <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                        </dl>
-                                        
-                                        <br>
-                                        <img src="/static/img/main/account_banner.jpeg" alt="계좌번호 설명">
-                                            <button class="btn bgc4" onclick="location.href='/myPages/list';">나의 페이지</button>
-                                            <button class="btn bgc3" onclick="location.href='/supports/info';">고객센터</button>
-                                       
-                                    </li> -->
-                                    <%}%>
                                 </ul>
                             </div>
                         </div>  

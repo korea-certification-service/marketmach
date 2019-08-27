@@ -187,19 +187,19 @@
             });
 
             $('#cancel').on('click', function() {
-                cancelItem();
+                ajaxLoginYnCheck(cancelItem);
             });
 
             $('#pointCancel').on('click', function() {
-                pointCancelItem();
+                ajaxLoginYnCheck(pointCancelItem);
             });
 
             $('#confirm').on('click', function() {
-                confirmItem();
+                ajaxLoginYnCheck(confirmItem);
             });
 
             $('#pointConfirm').on('click', function() {
-                pointConfirmItem();
+                ajaxLoginYnCheck(pointConfirmItem);
             });
 
             $('#opposition').on('click', function() {
@@ -207,19 +207,19 @@
             });
 
             $('#remove').on('click', function() {
-                removeItem();
+                ajaxLoginYnCheck(removeItem);
             });
 
             $('#buyComplete').on('click', function() {
-                buyComplete();
+                ajaxLoginYnCheck(buyComplete);
             });
 
             $('#sellComplete').on('click', function() {
-                sellComplete();
+                ajaxLoginYnCheck(sellComplete);
             });
 
             $('#pointSellComplete').on('click', function() {
-                pointSellComplete();
+                ajaxLoginYnCheck(pointSellComplete);
             });
 
             $('#showPhone').on('click', function() {
@@ -591,11 +591,9 @@
                 url: "/v1/vtrs/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);
@@ -611,11 +609,9 @@
                 url: "/v1/tradePoints/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);

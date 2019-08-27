@@ -3,6 +3,110 @@
 <head>
     <% include ../include/head.html %>
 </head>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+
+        $(document).ready(function() {
+            getCoin();
+            getUesrGameInfo();
+
+            //교환내역 스크립트
+            getExchangeHistory("all");
+            $(".tab_board.ul_li3n.cf").on("click", function(e){
+                $(e.currentTarget).children("li").removeClass('on');
+                console.log($(e.target));
+                $(e.target).parent("li").addClass("on");
+            });
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                total_mach = success.data.total_mach;
+                $("#mach").html(total_mach + " <span>MACH</span>");
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+        function getUesrGameInfo() {
+           $.ajax({
+               method: "GET",
+               url: "/v1/gameCenter/"+userId+"/info"
+           }).done(function (success) {
+               if(success.data != null) {
+                   $("#mcs1_coin").text(success.data.total_mcs1_coin);
+                   console.log(success);
+               }
+           }).fail(function (fail) {
+               console.log(fail);
+           })
+        }
+        
+        //교환내역에 쓰일 함수
+        function getExchangeHistory(category) {
+            if(category == "all") {
+                req = { "category": category }
+            } else if(category == "exchange-mach") {
+                req = { "category": category }
+            } else if(category == "exchange-gamecoin") {
+                req = { "category": category }
+            }
+            console.log(userId);
+            $.ajax({
+               method: "POST",
+               url: "/v1/gameCenter/"+userId+"/exchange/history",
+               data: req
+            }).done(function (success) {
+                var count = success.data.count;
+                var list = success.data.list;
+                var rows = "";
+
+                console.log(list);
+
+                $("#wallet_historys").empty();
+                if(list.length === 0) { //내역이 없을때
+                    $("#wallet_historys").append("<tr><td colspan='3'>내역이 존재하지 않습니다.</td></tr>");
+                } else { //내역이 있을때
+                    list.forEach(function(el){
+                        if(el.game == "mcs1"){ //몽키코인에 관한 내역일때
+                            appendHistoryRow(el,"MC", "fcor");
+                        }
+                    });
+                }
+           }).fail(function (fail) {
+               console.log(fail);
+           });
+
+            /**
+             * 교환내역을 추가하는 로컬 함수
+             * @param {object} el forEach가 참조중인 요소 
+             * @param {string} currencyType 게임코인종류에 따라 붙을 접미사 대문자
+             * @param {string} color 게임코인 폰트색깔 common.css에 있는 font color에 클래스명을 사용
+            */
+           function appendHistoryRow(el, currencyType, color) { 
+                var from;
+                var to;
+                var tr = '';
+                if(el.category == "exchange-mach") {
+                    from = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                    to = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                } else if(el.category == "exchange-gamecoin" ) {
+                    from = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                    to = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                }
+                tr = '<tr>'+
+                        '<td>'+from+'</td>'+
+                        '<td>'+to+'</td>'+
+                        '<td>'+el.regDate+'</td>'+
+                    '</tr>';
+                rows = tr;
+                $("#wallet_historys").append(rows);
+           }
+        }
+   </script>
 <body>
 <div id="wrap" class="wrap">
     <!-- header -->
@@ -22,33 +126,36 @@
                 <div class="sub_content">
                     <!-- gameStation -->
                     <section class="gameStation_sec mypage_sec">
-                        <h1 class="tit_mypage">교환하기<span>&nbsp;&nbsp;교환내역 보기</span></h1>
+                        <h1 class="tit_mypage">교환하기<span> 교환내역 보기</span></h1>
                         <div class="mypage_main_info cf">
                             <div class="lft_area">
-                                <em>게임스테이션 로고가 들어갈 자리</em>
+                                <p>
+                                    <em id="username"></em> 님의 회원등급은<br>
+                                    <em id="" class="grade_color1">일반</em> 등급입니다.
+                                </p>
                                 <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
                             </div>
                             <div class="rgh_area">
-                                <a href="">
+                                <a href="/myPages/wallet/info">
                                     <em>나의지갑 잔액</em>
                                     <p id="mach"><span>MACH</span></p>
                                 </a>
-                                <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
-                                <button class="btn bgc3" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">MACH입금</button>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">MACH출금</button>
                             </div>
                         </div>
                         <h1 class="tit_mypage">마켓마하 상장 게임</h1>
                         <dl class="gst_gametable cf">
                             <dd>
-                                <a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5">
+                                <a href="/gameStation/machAdventure/info">
                                     <div class="gst_gametemplet">
-                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤쳐" title="마하 어드벤쳐">
+                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤처" title="마하 어드벤처">
                                         <div class="coin_value">
                                             <em>보관중인 몽키코인</em>
                                             <div>
                                                 <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
                                                 <p>
-                                                    <span>10,213</span> 
+                                                    <span id="mcs1_coin">0</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -62,60 +169,41 @@
                             <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
                         </dl>
                         <div class="btn_align_c mb50">
-                            <button class="btn bgc1" id="deposit">게임자산 -> MACH</button>
-                            <button class="btn bgc3" id="withdraw">MACH -> 게임자산</button>
+                            <a href="/gameStation/trade/assets" class="btn bgc1">게임자산 &#8594; MACH</a>
+                            <a href="/gameStation/trade/mach" class="btn bgc3">MACH &#8594; 게임자산</a>
+                            <!-- <button class="btn bgc1" id="deposit">게임자산 -> MACH</button>
+                            <button class="btn bgc3" id="withdraw">MACH -> 게임자산</button> -->
                         </div>
                         <div>
                             <div class="board_tit cf">
                                 <h1 class="tit_mypage">교환내역<span><span id="category1"></h1>
                             </div>
-                            <div class="search_filter">
-                                <ul class="">
-                                    <li class="row">
-                                        <h2 class="col-sm-2 col-xs-12">교환유형</h2>
-                                        <div class="check_filter col-sm-10 col-xs-12">
-                                            <input type="radio" name="status" id="trade_all" value="" checked><label for="trade_all">전체</label>
-                                            <input type="radio" name="status" id="trade_start" value="0"><label for="trade_start">게임자산 -> MACH</label>
-                                            <input type="radio" name="status" id="trading" value="1"><label for="trading">MACH -> 게임자산</label>
-                                        </div>
-                                    </li>
-                                    <li class="row">
-                                        <h2 class="col-sm-2 col-xs-12">게임검색</h2>
-                                        <div class="col-sm-10 col-xs-12">
-                                            <div class="w100p-120px">
-                                                <input type="text" class="form-control" id="item_title">
-                                            </div>
-                                            <div class="mob_100p_tar">
-                                                <input type="button" class="btn btn-primary" id="btn_search" value="검색">
-                                            </div>
-                                        </div>
-                                    </li>                        
-                                </ul>
-                            </div>
-                
+                            <ul class="tab_board ul_li3n cf">
+                                <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">전체 내역</a></li>
+                                <li id="his_game"><a href="javascript:getExchangeHistory('exchange-mach');">게임자산</a></li>
+                                <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-gamecoin');">MACH</a></li>  
+                            </ul>
                             <div class="table_wrap table-responsive">
-                                <table class="table_list has_etc_icon table">
-                                    <colgroup class="colgroup_etc-buy_list">
-                                        <col class="col4_1">
-                                        <col class="col4_2">
-                                        <col class="col4_3">
-                                        <col class="col4_4">
+                                <table class="table_wallet table">
+                                    <colgroup class="colgroup_walletinfo">
+                                        <!-- <col class="col5_1">
+                                        <col class="col5_2">
+                                        <col class="col5_3">
+                                        <col class="col5_4">
+                                        <col class="col5_5"> -->
                                     </colgroup>
-                                    <thead>
+                                    <thead id="wallet_historys_column">
                                         <tr>
-                                            <th>게임</th>
-                                            <th>유형</th>
-                                            <th>내용</th>
-                                            <th>일시</th>
+                                            <th>보낸금액</th>
+                                            <th>받은금액</th>
+                                            <th>일자</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="list">
+                                    <tbody id="wallet_historys">
+                                        
                                     </tbody>
-                                </table>                 
-                            </div>
-                            <div class="btn_align_c">
-                                <button class="btn btn_more_list" id="more_search">20개 더보기</button>
-                            </div>                            
+                                </table>
+                            </div>                         
                         </div> 
                     </section>
                     <!--// gameStation -->

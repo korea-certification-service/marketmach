@@ -10,8 +10,23 @@
             voucherHistory();
             $('#voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
             $('#voucherCopy').on('click', function(){
-                copyUrl(); 
+                //copyUrl(); 
             });
+
+            /*
+            var str = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n회원추천하고 또 1마하 득! \n친구 추천을 받으시면 최대 100MACH까지 드립니다.\n\n';
+            str += 'https://www.marketmach.com/agreement?recommander=' + userTag;
+            $('#copyTxt').val(str);
+
+            var clipboard = new ClipboardJS('#voucherCopy');
+            clipboard.on('success', function(e) {
+                alert("추천 URL이 복사되었습니다.");
+            });
+            */
+
+            $('#voucherCopy').on('click', function(){
+                $('#m_voucherCopy').click(); 
+            }); 
         });
 
         function voucherHistory() {
@@ -19,7 +34,7 @@
                 method: "GET",
                 url: "/v1/coins/historys/" + coinId + "/list"
             }).done(function (success) {
-                console.log(success);
+                //console.log(success);
                 
             }).fail(function (fail) {
                 console.log(fail);
@@ -27,7 +42,7 @@
         }
 
         function copyUrl() {
-            var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n 아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n 회원추천하고 또 1마하 득! \n 친구 추천을 받으시면 최대 100MACH까지 드립니다.\n';
+            // var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n회원추천하고 또 1마하 득! \n친구 추천을 받으시면 최대 100MACH까지 드립니다.\n\n';
             var str = $('#voucherUrl').val();
             var t = document.createElement("textarea");
             document.body.appendChild(t);
@@ -38,8 +53,6 @@
             alert("copied");
         }
     </script>
-
-  
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -72,8 +85,10 @@
                                     <tr>
                                         <th class="fc2">추천 URL</th>
                                         <td>
-                                            <input id="voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                                            <input type="button" class="btn btn-info" id="voucherCopy" value="Copy">
+                                            <input type="text" id="voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
+                                            <button type="button" class="btn btn-info" id="voucherCopy">Copy</button>
+                                            <!-- <input type="button" class="btn btn-info" id="voucherCopy" value="Copy" data-clipboard-action="cut" data-clipboard-target="#copyTxt">
+                                            <textarea id="copyTxt" style="width: 1px; height: 1px;"></textarea> -->
                                         </td>
                                     </tr>         
                                 </tbody>

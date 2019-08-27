@@ -32,67 +32,69 @@ $(document).ready(function() {
     getKyc();
 
     $("#btnSubmit").on("click", function(){
-        if($firstName.val() == "") {
-            return alert("Please input your first name.");
-        }
-        if($surname.val() == "") {
-            return alert("Please input your surname.");
-        }
-        if($dataOfBirth.val() == "") {
-            return alert("Please input your date of birth.");
-        }
-        if($authImage.val() == "" && newKyc == true) {
-            return alert("Please upload your image.");
-        }
-        if($uniqueNo.val() == "") {
-            return alert("Please input the No.");
-        }
-        if($issueDate.val() == "") {
-            return alert("Please input the issue date.");
-        }
-
-        //////////////////submit code 작성 라인////////////////////
-        var reqData = {
-            'firstName': $('#surname').val(),
-            'lastName': $('#firstName').val(),
-            'middleName': $('#middleName').val(),
-            'gender': $('#selectSex').val(),
-            'birth': $('#dataOfBirth').val(),
-            'type': $('#selectType').val(),
-            'idNo': $('#uniqueNo').val(),
-            'issueDate':$('#issueDate').val(),
-            'userTag': userTag,
-            'userId': userId
-        }
-        
-        var method = "POST";
-        var url = "/v1/kycs";
-        if(!newKyc) {
-            method = "PUT";
-            url = "/v1/kycs/" + userId;
-        }
-
-        $.ajax({
-            method: method,
-            url: url,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(reqData),
-            beforeSend: function (xhr) {
-                $("#btnSubmit").attr('disabled', true);
-                $("#ajaxSpiner").show(); // spinner
-                var pos = $("#spinnerTarget").offset().top - 100;
-                $("html, body").animate({
-                    "scrollTop":pos
-                },0);
+        ajaxLoginYnCheck(function(){
+            if($firstName.val() == "") {
+                return alert("Please input your first name.");
             }
-        }).done(function (success) {
-            // console.log(success);
-            submitAction(success.data._id);
-        }).fail(function (fail) {
-            $('#btnSubmit').attr('disabled', false);
-            $("#ajaxSpiner").hide(); // spinner
-        })
+            if($surname.val() == "") {
+                return alert("Please input your surname.");
+            }
+            if($dataOfBirth.val() == "") {
+                return alert("Please input your date of birth.");
+            }
+            if($authImage.val() == "" && newKyc == true) {
+                return alert("Please upload your image.");
+            }
+            if($uniqueNo.val() == "") {
+                return alert("Please input the No.");
+            }
+            if($issueDate.val() == "") {
+                return alert("Please input the issue date.");
+            }
+
+            //////////////////submit code 작성 라인////////////////////
+            var reqData = {
+                'firstName': $('#surname').val(),
+                'lastName': $('#firstName').val(),
+                'middleName': $('#middleName').val(),
+                'gender': $('#selectSex').val(),
+                'birth': $('#dataOfBirth').val(),
+                'type': $('#selectType').val(),
+                'idNo': $('#uniqueNo').val(),
+                'issueDate':$('#issueDate').val(),
+                'userTag': userTag,
+                'userId': userId
+            }
+            
+            var method = "POST";
+            var url = "/v1/kycs";
+            if(!newKyc) {
+                method = "PUT";
+                url = "/v1/kycs/" + userId;
+            }
+
+            $.ajax({
+                method: method,
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                submitAction(success.data._id);
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner
+            })
+        });
     });
 
     function getKyc() {

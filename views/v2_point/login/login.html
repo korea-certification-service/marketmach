@@ -44,7 +44,7 @@
                 data: JSON.stringify(data)
 
             }).done(function (success) {
-                location.href='/';
+                location.href=success.data.originalUrl;
             }).fail(function (fail) {
                 if (fail.status == 403) {
                     alert('아이디 또는 패스워드가 일치하지 않습니다.');
@@ -82,6 +82,27 @@
             window.open(url, 'naverloginpop', 'titlebar=1, resizable=1, scrollbars=yes, width=600, height=550');
         };
         //]]>
+        $(function(){
+            $("#password").on("keypress", function(e){
+                caps_lock(e);
+            });
+            function caps_lock(e) {
+                var keyCode = 0;
+                var shiftKey = false;
+                keyCode = e.keyCode;
+                shiftKey = e.shiftKey;
+                $errCapslock = $("#errCapslock");
+                if (((keyCode >= 65 && keyCode <= 90) && !shiftKey)
+                        || ((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
+                    $errCapslock.show();
+                    setTimeout(function(){
+                        $errCapslock.hide();
+                    }, 2000);
+                } else {
+                    $errCapslock.hide();
+                }
+            }
+        });
     </script>
 </head>
 <body>
@@ -101,7 +122,12 @@
 
         <input class="login_ipt" type="text" name="id" id="userId" placeholder="아이디">
         <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="비밀번호">
-
+        <div class="capslock_sec" id="errCapslock">
+            <div class="alert_box">
+                <p><strong>Caps Lock</strong>이 켜져 있습니다.</p>
+            </div>
+            <span class="box_point"></span>
+        </div>
         <!--
             <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
         -->

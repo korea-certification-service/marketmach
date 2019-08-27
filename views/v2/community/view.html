@@ -12,7 +12,7 @@
             getDetail();
 
             $('#addReply').on('click',function(){
-                addReply();
+                ajaxLoginYnCheck(addReply);
             });
 
             $('#add_reply').on('click', function() {
@@ -27,15 +27,18 @@
                     alert("추천 클릭을 위해 로그인이 필요합니다.");
                     location.href = "/login";
                 } else {
-                    callRecommand();
+                    ajaxLoginYnCheck(callRecommand);
                 }
             })
 
             $('#modify').on('click', function() {
                 location.replace('/community/modify/' + communityId);
             })
-        });
 
+            $('#delete').on('click', function() {
+                ajaxLoginYnCheck(deleteCommunity);
+            })
+        });
         function getDetail() {
             $.ajax({
                 method: "GET",
@@ -46,8 +49,8 @@
                 var type = getCommunityType(success.data.type);
                 var title = success.data.title;
                 var reporter = success.data.reporter;
-                var regDate = success.data.regDate.substring(2, 10);
-                var content = "<div>" + replaceDesc(success.data.content) + "</div>";                
+                var regDate = success.data.regDate.substring(2);
+                var content = "<div>" + replaceDesc(success.data.content == undefined ? "" : success.data.content) + "</div>";                
                 var replys = success.data.reply;
                 replyCount = success.data.replyCount;
                 recommanded = success.data.recommandedUser;
@@ -67,10 +70,13 @@
                 }
 
                 $('#title').text(title);   
+                $('#writer').text(reporter);   
+                $('#date').text(regDate);   
                 $('#content').html(image + movieUrl + content);   
                 $('#recommandCount').text(recommandCount);
                 if(userTag == reporter) {
-                    $('#modify').show();   
+                    $('#modify').show();  
+                    $('#delete').show(); 
                 }
                 getReply(replys);
                 ToggleRecommandIcon(recommanded);
@@ -181,16 +187,22 @@
             $('#item_btn_'+id).hide();
         }
 
+        var replyId;
         function update(id) {
+            replyId = id;
+            ajaxLoginYnCheck(updateReply);
+        }
+
+        function updateReply() {
             var data = {
                 "content": $('#modify_reply').val()
             }
 
-            console.log(id, data);
+            console.log(replyId, data);
 
             $.ajax({
                 method: "PUT",
-                url: "/v1/community/reply/" + id,
+                url: "/v1/community/reply/" + replyId,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(data),
@@ -199,7 +211,7 @@
                 }
             }).done(function (success) {
                 console.log(success);
-                initContent(id, success.data.content)
+                initContent(replyId, success.data.content)
                 $(".item_btn button").attr('disabled', false);
             }).fail(function (fail) {
                 $(".item_btn button").attr('disabled', false);
@@ -216,24 +228,26 @@
         }
 
         function deleteReply(id) {
-            var confirmYn = confirm('정말로 삭제하시겠습니까?');
-            if(confirmYn) {
-                console.log(id);
+            ajaxLoginYnCheck(function() {
+                var confirmYn = confirm('정말로 삭제하시겠습니까?');
+                if(confirmYn) {
+                    console.log(id);
 
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/community/reply/" + id,
-                    beforeSend: function (xhr) {
-                        $(".item_btn button").attr('disabled', true);
-                    }
-                }).done(function (success) {
-                    console.log(success);
-                    location.href = '/community/board/detail/' + communityId;
-                    $(".item_btn button").attr('disabled', false);
-                }).fail(function (fail) {
-                    $(".item_btn button").attr('disabled', false);
-                })
-            }
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/community/reply/" + id,
+                        beforeSend: function (xhr) {
+                            $(".item_btn button").attr('disabled', true);
+                        }
+                    }).done(function (success) {
+                        console.log(success);
+                        location.href = '/community/board/detail/' + communityId;
+                        $(".item_btn button").attr('disabled', false);
+                    }).fail(function (fail) {
+                        $(".item_btn button").attr('disabled', false);
+                    })
+                }
+            });
         }
 
         function callRecommand() {
@@ -273,6 +287,31 @@
                 $("#recommandIcon").text("favorite_border");
             }
         }
+
+        function deleteCommunity() {
+            var confirmYn = confirm('삭제 하시겠습니까?');
+            if(confirmYn) {
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/community/" + communityId,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        $("#delete").attr('disabled', true);
+                        $("#ajaxSpiner").show(); // spinner
+                        var pos = $("#spinnerTarget").offset().top - 100;
+                        $("html, body").animate({
+                            "scrollTop":pos
+                        },0);
+                    }
+                }).done(function (success) {
+                    // console.log(success);
+                    location.href = '/community/board/free';
+
+                }).fail(function (fail) {
+                    $('#delete').attr('disabled', false);
+                })
+            }
+        }
     </script>
 </head>
 <body>
@@ -295,7 +334,8 @@
                     <section class="community_sec">
                         <div class="community_tit cf">
                             <h1 class="tit_community">커뮤니티</h1>    
-                            <button class="btn btn_nvln item_view" id="modify">수정</button>                
+                            <button class="btn btn_nvln item_view" id="delete">삭제</button>   
+                            <button class="btn btn_nvln item_view" id="modify">수정</button>
                         </div>
                         
                         <div class="table_wrap table-responsive">
@@ -308,8 +348,15 @@
                                         <td id="title" class="post_title"></td>
                                     </tr>
                                     <tr>
+                                        <td class="td_writer_date">
+                                            <span id="writer" class="cmnt_writer"></span>
+                                            <span class="cmnt_bdr"></span>
+                                            <span id="date" class="cmnt_date"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
-                                            <div id="content" class="">
+                                            <div id="content" class="cmnt_content"></div>
                                             </div>
                                         </td>
                                     </tr>

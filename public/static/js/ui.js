@@ -433,6 +433,10 @@ var _PopupUI = {
         var dim = document.querySelector(".dim_all_area");
         dim.style.display = "block";
         body.style.position = "relative"; 
+
+        var lastY = document.querySelector(".modal_bitberry_deposit").offsetTop;
+        window.scrollTo(0, lastY); 
+
         //console.log("콜백 전")
         if(fnCallback !== undefined && typeof fnCallback === "function") fnCallback();       
     },
@@ -444,7 +448,7 @@ var _PopupUI = {
         body.style.position = "static";
 
         if(fnCallback !== undefined && typeof fnCallback === "function") fnCallback();   
-    }
+    },
 }
 
 

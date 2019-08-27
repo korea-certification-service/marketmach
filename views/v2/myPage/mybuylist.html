@@ -218,7 +218,7 @@
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view9" id="pointTradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">거래완료</button>';
-                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {        
+                                        } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                             result +=   '<button class="btn btn_in_view8" id="pointCancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
                                     }
@@ -271,93 +271,102 @@
         }
 
         function buyComplete(itemId) {
-            var confirms = confirm('구매 확인 하시겠습니까?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            event.stopPropagation();
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('구매 확인 하시겠습니까?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/buy",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/buy",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
 
         function sellComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('판매 완료 하시겠습니까?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('판매 완료 하시겠습니까?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매확정이 완료되면 거래가 완료됩니다.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('판매자가 판매 완료하였습니다.\r구매자의 구매확정이 완료되면 거래가 완료됩니다.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function tradeComplete(itemId) {
             event.stopPropagation();
-            var confirms = confirm('거래 완료 하시겠습니까?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('거래 완료 하시겠습니까?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('거래가 완료되었습니다.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('거래가 완료되었습니다.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function cancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    //alert("거래가 취소되었습니다.");
-                    if(success.data.successYn == "Y") {
-                        alert("거래 취소가 완료되었습니다.");
-                        getItemList();
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        //alert("거래가 취소되었습니다.");
+                        if(success.data.successYn == "Y") {
+                            alert("거래 취소가 완료되었습니다.");
+                            getItemList();
+                        } else {
+                            alert(success.data.msg);
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function oppisitionItem(itemId) {
@@ -374,11 +383,9 @@
                 url: "/v1/vtrs/item/" + itemId
             }).done(function (success) {
                 //console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);
@@ -390,62 +397,68 @@
 
         function pointCancelItem(itemId) {
             event.stopPropagation();
-            var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
-            console.log('준비중');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+                console.log('준비중');
+                if(confirms) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            });
         }
 
         function pointSellComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('판매 완료 하시겠습니까?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('판매 완료 하시겠습니까?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointTradeComplete(tradePointId) {
             event.stopPropagation();
-            var confirms = confirm('거래 완료 하시겠습니까?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            ajaxLoginYnCheck(function() {
+                var confirms = confirm('거래 완료 하시겠습니까?');
+                if(confirms) {
+                    var data = {
+                        "status": true
+                    }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            });
         }
 
         function pointShowPhone(itemId) {
@@ -455,11 +468,9 @@
                 url: "/v1/tradePoints/item/" + itemId
             }).done(function (success) {
                 console.log(success.data);
-                var $body = $("body");
-                var $dim = $(".dim_all_area");
-                $dim.show();
-                $("#btnmCloseModal").focus();
-                $body.css("position", "fixed");
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
                 $("#to_userTag").text(success.data.buyer_id);                
                 $("#fromPhone").text(success.data.seller_phone);
                 $("#from_userTag").text(success.data.seller_id);

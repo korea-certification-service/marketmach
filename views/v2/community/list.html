@@ -8,6 +8,8 @@
         var title = "<%= title %>";
 
         $(document).ready(function() {
+            setSubTitle();
+
             getCommunityList();
 
             $('#more_search').click(function() {
@@ -16,7 +18,8 @@
             });
             
             $('#btn_search').click(function() {
-                $("#community_list").html('');
+                // $("#community_list").html('');
+                $("#cmnt_list").html('');
                 pageIdx = 0;
                 title = $('#title').val();
 
@@ -32,6 +35,7 @@
             $('#register').on('click', function() {
                 location.href = '/community/register';
             })
+
         });
 
         function getCommunityList() {
@@ -61,10 +65,10 @@
 
         function setCommunityNotices(data) {
             var result="";
-            
+            var list = '';
             for(var i=0; i<data.length; i++) {
                 var id = data[i]._id;
-                var notice = data[i].notice == true ? "<span class='span_noti'>공지</span>" : "";
+                var notice = data[i].notice == true ? "<span class='span_noti'></span>" : "";
                 var noticeClass = data[i].notice == true ? "tr_notice" : "";
                 var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
                 var reporter = data[i].reporter;
@@ -72,22 +76,32 @@
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td>'+notice+'</td>' +
-                            '<td class="tal">' +
-                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
-                                '</div>' +
-                            '</td>' +
-                            '<td>'+ reporter +'</td>' +
-                            '<td>'+ count +'</td>' +
-                            '<td>'+ regDate +'</td>' +
-                        '</tr>';
+                // result+= '<tr class="' + noticeClass + '" onclick="javascript:showDetail(\''+id+'\')">' +
+                //             '<td>'+notice+'</td>' +
+                //             '<td class="tal">' +
+                //                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                //                 '</div>' +
+                //             '</td>' +
+                //             '<td>'+ reporter +'</td>' +
+                //             '<td>'+ count +'</td>' +
+                //             '<td>'+ regDate +'</td>' +
+                //         '</tr>';
+
+                list += '<li class="li_noti" onclick="javascript:showDetail(\''+id+'\')">'
+                list += '<div></div>'
+                list += '<div>' + '<span class="ellipse">' + title + '</span>' + '<em>' + replyCount + '</em>' + '</div>'
+                list += '<div>'+ reporter + '</div>'
+                list += '<div>'+ count + '</div>'
+                list += '<div>'+ regDate + '</div>'
+                list += '</li>'
             }
-            $('#community_list').html(result);
+            // $('#community_list').html(result);
+            $('#cmnt_list').html(list);
         }
 
         function setCommunitys(data) {
             var result="";
+            var list="";
             if(data.length == 0) {
                 result = '<tr><td colspan="5">검색 된 글이 없습니다.</td></tr>';
             }
@@ -101,22 +115,50 @@
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
-                            '<td></td>' +
-                            '<td class="tal">' +
-                                '<div class="ellipse" style="width: 100%">' + title + replyCount +
-                                '</div>' +
-                            '</td>' +
-                            '<td>'+ reporter +'</td>' +
-                            '<td>'+ count +'</td>' +
-                            '<td>'+ regDate +'</td>' +
-                        '</tr>';
+                // result+= '<tr onclick="javascript:showDetail(\''+id+'\')">' +
+                //             '<td></td>' +
+                //             '<td class="tal">' +
+                //                 '<div class="ellipse" style="width: 100%">' + title + replyCount +
+                //                 '</div>' +
+                //             '</td>' +
+                //             '<td>'+ reporter +'</td>' +
+                //             '<td>'+ count +'</td>' +
+                //             '<td>'+ regDate +'</td>' +
+                //         '</tr>';
+
+                list += '<li onclick="javascript:showDetail(\''+id+'\')">'
+                list += '<div></div>'
+                list += '<div>' + '<span class="ellipse">' + title + '</span>' + '<em>' + replyCount + '</em>' + '</div>'
+                list += '<div>'+ reporter + '</div>'
+                list += '<div>'+ count + '</div>'
+                list += '<div>'+ regDate + '</div>'
+                list += '</li>'
             }
-            $('#community_list').append(result);
+            // $('#community_list').append(result);
+            $('#cmnt_list').append(list);
         }
 
         function showDetail(id) {
             location.href="/community/board/detail/" + id;
+        }
+        
+        function setSubTitle() {
+            var subTitle_regExp = location.pathname.match(/[\w]*$/ig)[0];
+            var subTitle = '';
+
+            if(subTitle_regExp == "free") {
+                subTitle = "자유게시판";
+            } else if(subTitle_regExp == "tabloid") {
+                subTitle = "찌라시";
+            } else if(subTitle_regExp == "event") {
+                subTitle = "이벤트";
+            } else if(subTitle_regExp == "game") {
+                subTitle = "게임";
+            } else if(subTitle_regExp == "cryptocurrency") {
+                subTitle = "암호화폐";
+            }
+
+            $(".tit_sub").text(subTitle);
         }
     </script>
 </head>
@@ -139,35 +181,29 @@
                 <div class="sub_content">
                     <section class="board_sec community_sec">
                         <div class="community_tit cf">
-                            <h1 class="tit_community">커뮤니티</h1> 
+                            <h1 class="tit_community">
+                                커뮤니티
+                                <span class="tit_sub"></span>
+                            </h1> 
                             <button class="btn btn_nv" id="register">등록</button>
                             <div class="community_searchbar">
                                 <input type="text" class="form-control" id="title">
                                 <input type="button" class="btn_search" id="btn_search">
                             </div>   
-                        </div>                       
-                        <div class="table_wrap table-responsive">
-                            <table class="table_list has_media_icon table">
-                                <colgroup class="colgroup_community_list">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>분류</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>좋아요</th>
-                                        <th>등록일</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="community_list">
-                                </tbody>
-                            </table>
-                        </div>
+                        </div> 
+                        <dl class="responsive_table_style">
+                            <dt class="w_wrap">
+                                <div>&nbsp;</div>
+                                <div>제목</div>
+                                <div>작성자</div>
+                                <div>좋아요</div>
+                                <div>등록일</div>
+                            </dt>
+                            <dd>
+                                <ul id="cmnt_list" class="w_wrap">
+                                </ul>
+                            </dd>
+                        </dl>
 
                         <div class="btn_align_c">
                             <button class="btn btn_more_list" id="more_search">20개 더보기</button>

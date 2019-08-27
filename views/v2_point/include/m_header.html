@@ -5,8 +5,10 @@
     var userTag = "<%=userTag%>"
     var authPhone = "<%=authPhone%>";
     var game_name;
-        
+    
     $(document).ready(function(){
+        var agent = navigator.userAgent.toLowerCase();
+        //console.log(agent);
         if("<%=userId%>"=="") {
             $('.menu_login').css('display', 'inline-block');
             $('.menu_logout').css('display', 'none');
@@ -35,12 +37,18 @@
             $(".recommendUrl").css({display: "block"});
         }
         
-        //voucherHistory();
-        $('#m_voucherUrl').val('https://www.marketmach.com/agreement?recommander=' + userTag);
-        $('#m_voucherCopy').on('click', function(){
-            console.log(1);
-            copyUrl(); 
-        });
+        $('#btnRecomandation').on('click', function(){
+            $('#m_voucherCopy').click(); 
+        }); 
+
+        var str = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n회원추천하고 또 1마하 득! \n친구 추천을 받으시면 최대 100MACH까지 드립니다.\n\n';
+        str += 'https://www.marketmach.com/agreement?recommander=' + userTag;
+        $('#m_copyTxt').val(str);
+
+        var m_voucherCopy = new ClipboardJS('#m_voucherCopy');
+        m_voucherCopy.on('success', function(e) {
+            alert("추천 URL이 복사되었습니다.");
+        });        
     });
 
     function getCoinMain() {
@@ -90,18 +98,6 @@
     }
 
     /*모바일 네비게이션의 추천URL로직*/
-    // function voucherHistory() {
-    //         $.ajax({
-    //             method: "GET",
-    //             url: "/v1/coins/historys/" + coinId + "/list"
-    //         }).done(function (success) {
-    //             console.log(success);
-                
-    //         }).fail(function (fail) {
-    //             console.log(fail);
-    //         });
-    //     }
-
     function copyUrl() {
         var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n 아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n 회원추천하고 또 1마하 득! \n 친구 추천을 받으시면 최대 100MACH까지 드립니다.\n';
         var str = $('#m_voucherUrl').val();
@@ -158,7 +154,6 @@
                     <select class="srch_select m_srch_select">
                         <option value="games">게임아이템</option>
                         <option value="assets">자산거래</option>
-                        <!-- <option value="otc">OTC거래</option> -->
                     </select>
                     <input class="srch_input ipt_search_bar" id="m_search_item_name" type="text" placeholder="게임검색이 가능합니다." autocomplete="off"/>
                     <input type="button" class="btn_search bgc1 .btn_search" id="m_main_search" value="검색" autocomplete=off>
@@ -195,16 +190,8 @@
                             <tr>
                                 <th><button class="btnMobMenu btn_mob_menu">게임아이템</button></th>
                                 <th><button class="btnMobMenu btn_mob_menu">자산거래</button></th>                                
-                                <%if(useBlockchain == 'Y') {%>
-                                <!-- <th><button class="btnMobMenu btn_mob_menu">OTC거래</button></th> -->
-                                <%}%>
-                                <!-- <th><button class="btnMobMenu btn_mob_menu">커뮤니티</button></th> -->
-                                <%if(useBlockchain == 'Y') {%>
-                                <!-- <th><a href="/shopping/view">한정 이벤트</a></th>  -->
-                                <%}%>
-                                <!-- <th><a href="/gameStation/" class="fcbk">게임스테이션</a></th> -->
-                                <th><a href="/community/board" class="fcbk">게임소식</a></th>
-                                <!-- <th><a href="javascript:alert('기능 개선 중입니다.');" target="_blank">전소</a></th> -->
+                                <th><a href="/community/board" class="fcbk">커뮤니티</a></th>
+                                <th><a href="/mypages/list" class="fcbk">나의 페이지</a></th>
                                 <th></th>
                             </tr>
                         </tbody>
@@ -215,19 +202,13 @@
                 <dl class="lft_menu">
                     <dt class="fc2">판매등록</dt>
                     <dd>
-                        <a href="/sells/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="javascript:checkTeenager('/sells/register');" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">자산거래</a>
-                        <%if(useBlockchain == 'Y') {%>
-                        <!-- <a href="/otc-sells/register" class="bgc2 mob_rnd_btn">OTC거래</a> -->
-                        <%}%>
                     </dd>
                     <dt class="fc2">구매등록</dt>
                     <dd>
-                        <a href="/buys/register" class="bgc2 mob_rnd_btn">게임아이템</a>
+                        <a href="javascript:checkTeenager('/buys/register');" class="bgc2 mob_rnd_btn">게임아이템</a>
                         <a href="/etc-buys/register" class="bgc2 mob_rnd_btn">자산거래</a>
-                        <%if(useBlockchain == 'Y') {%>
-                        <!-- <a href="/otc-buys/register" class="bgc2 mob_rnd_btn">OTC거래</a> -->
-                        <%}%>
                     </dd>
                 </dl>
                 <dl class="rgh_menu">
@@ -241,24 +222,7 @@
                         <a href="/etc-sells?category=etc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
                         <a href="/etc-buys?category=etc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a>
                     </dd>
-                </dl>
-                <dl class="rgh_menu">
-                    <dd>
-                        <%if(useBlockchain == 'Y') {%>
-                        <!-- <a href="/otc-sells?category=otc&trade_type=sell" class="bgc2 mob_rnd_btn">판매</a>
-                        <a href="/otc-buys?category=otc&trade_type=buy" class="bgc2 mob_rnd_btn">구매</a> -->
-                        <%}%>
-                    </dd>
-                </dl>               
-                <dl class="rgh_menu">
-                    <dd>
-                        <%if(useBlockchain == 'Y') {%>
-                        <!-- <a href="https://open.kakao.com/o/gD3UkX4" target="_blank" class="bgc2 mob_rnd_btn">카톡1</a>
-                        <a href="https://open.kakao.com/o/gLyYRupb" target="_blank" class="bgc2 mob_rnd_btn">카톡2</a>
-                        <a href="https://t.me/marketmachcom" target="_blank" class="bgc2 mob_rnd_btn">텔레그램1</a> -->
-                        <%}%>
-                    </dd>
-                </dl>
+                </dl>                
             </div>
         </nav>
 
@@ -267,12 +231,12 @@
             <nav class="hamburger_menu">            
                 <div class="m_nav_head cf">
                     <ul class="cf">
-                        <li><img src="/static/img/main/ico_korea.png" alt="한국"></li>
-                        <li><button class="btn_lang">한국</button></li>
-                        <li class="recommendUrl">
+                        <li onclick="location.href='https://ko.marketmach.com'"><img src="/static/img/symbol/flag_korea.png" alt="KR"><span><a class="lang">한국</a></span></li>
+                        <li onclick="location.href='https://en.marketmach.com'"><img src="/static/img/symbol/flag_usa.png" alt="EN"><span><a class="lang">영어</a></span></li>
+                        <!-- <li class="recommendUrl">
                             <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                            <input type="button" class="btn btn-info btn btn-success recomandation" id="m_voucherCopy" value="추천URL">
-                        </li>
+                            <button type="button" class="btn btn-success recomandation" id="btnRecomandation">추천URL</button>
+                        </li> -->
                         <li>
                             <button id="btnCloseMobSideMenu" class="menu-trigger on">
                                 <span></span>
@@ -320,60 +284,13 @@
                                         </div>
                                     </li>
                                     <li class="mdl_area">                                        
-                                        <%if(useBlockchain == 'Y') {%>
-                                        <!-- <em>나의지갑 잔액</em>
-                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
-                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button> -->
-                                        <%} else if(useBlockchain == 'N' && usePoint == 'Y') { %>
                                         <em>나의 포인트 잔액</em>
                                         <p class="fc2 total_point">0 <span>Point</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/deposit';">Point입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/point/withdraw';">Point출금</button>
-                                        <%}%>
                                     </li>
                                 </ul>
-                                <!-- <dl class="block_menu cf">
-                                    <dt>게임아이템</dt>
-                                    <dd><a href="/sells/register">판매등록</a></dd>
-                                    <dd><a href="/buys/register">구매등록</a></dd>
-                                    <dd><a href="/sells?category=game&trade_type=sell">팝니다</a></dd>
-                                    <dd><a href="/buys?category=game&trade_type=buy">삽니다</a></dd>
-                                </dl>                    
-                                <dl class="block_menu cf">
-                                    <dt>자산거래</dt>
-                                    <dd><a href="/etc-sells/register">판매등록</a></dd>
-                                    <dd><a href="/etc-buys/register">구매등록</a></dd>
-                                    <dd><a href="/etc-sells?category=etc&trade_type=sell">팝니다</a></dd>
-                                    <dd><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></dd>
-                                </dl>                     -->
                             </div>
-                        </li>
-                        <li>
-                            <%if(useBlockchain == 'Y') {%>
-                            <!-- <dl class="available_coin cf">
-                                <dt>마켓마하 상장 코인</dt>
-                                <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
-                                <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
-                                <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                            </dl> -->
-                            <%}%>
-                            <dl class="available_coin cf">
-                                <dt>마켓마하 상장 게임</dt>
-                                <dd><a href="/supports/notice/detail?noticeId=5cb992d51e9f4a605ffa83e5"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH" title="몽키 클래시 사가"></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                                <dd><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></dd>
-                            </dl>
                         </li>
                         <li><a href="/supports/info" class="btn_1depth">고객센터</a></li>
                         <li><a href="/howto/trade/vtr" class="btn_1depth">이용안내</a></li>
@@ -383,6 +300,7 @@
             </nav>
         </div>
     </header>
+
     <script>
     var userId = "<%=userId%>";  
     if("<%=userId%>"!="") {

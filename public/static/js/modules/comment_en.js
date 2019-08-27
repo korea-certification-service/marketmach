@@ -5,7 +5,7 @@ $(document).ready(function() {
     getDetail();
 
     $('#addReply').on('click',function(){
-        addReply();
+        ajaxLoginYnCheck(addReply);
     });
 
     $('#add_reply').on('click', function() {
@@ -131,28 +131,30 @@ function modifyReply(id) {
 }
 
 function update(id) {
-    var data = {
-        "content": $('#modify_reply').val()
-    }
-
-    console.log(id, data);
-
-    $.ajax({
-        method: "PUT",
-        url: "/v1/items/reply/" + id,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: JSON.stringify(data),
-        beforeSend: function (xhr) {
-            $(".item_btn button").attr('disabled', true);
+    ajaxLoginYnCheck(function(){
+        var data = {
+            "content": $('#modify_reply').val()
         }
-    }).done(function (success) {
-        console.log(success);
-        initContent(id, success.data.content)
-        $(".item_btn button").attr('disabled', false);
-    }).fail(function (fail) {
-        $(".item_btn button").attr('disabled', false);
-    })
+
+        console.log(id, data);
+
+        $.ajax({
+            method: "PUT",
+            url: "/v1/items/reply/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                $(".item_btn button").attr('disabled', true);
+            }
+        }).done(function (success) {
+            console.log(success);
+            initContent(id, success.data.content)
+            $(".item_btn button").attr('disabled', false);
+        }).fail(function (fail) {
+            $(".item_btn button").attr('disabled', false);
+        })
+    });
 }
 
 function initContent(id,content) {
@@ -165,22 +167,24 @@ function initContent(id,content) {
 }
 
 function deleteReply(id) {
-    var confirmYn = confirm('Do you want to delete comment?');
-    if(confirmYn) {
-        console.log(id);
+    ajaxLoginYnCheck(function(){
+        var confirmYn = confirm('Do you want to delete comment?');
+        if(confirmYn) {
+            console.log(id);
 
-        $.ajax({
-            method: "DELETE",
-            url: "/v1/items/reply/" + id,
-            beforeSend: function (xhr) {
-                $(".item_btn button").attr('disabled', true);
-            }
-        }).done(function (success) {
-            console.log(success);            
-            location.reload();
-            $(".item_btn button").attr('disabled', false);
-        }).fail(function (fail) {
-            $(".item_btn button").attr('disabled', false);
-        })
-    }
+            $.ajax({
+                method: "DELETE",
+                url: "/v1/items/reply/" + id,
+                beforeSend: function (xhr) {
+                    $(".item_btn button").attr('disabled', true);
+                }
+            }).done(function (success) {
+                console.log(success);            
+                location.reload();
+                $(".item_btn button").attr('disabled', false);
+            }).fail(function (fail) {
+                $(".item_btn button").attr('disabled', false);
+            })
+        }
+    });
 }
