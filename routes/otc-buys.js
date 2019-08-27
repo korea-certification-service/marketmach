@@ -12,7 +12,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/otc-buy/list', {
@@ -21,7 +22,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/otc-buy/list', {
@@ -30,7 +32,8 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country
         });
     }
 });
@@ -123,11 +126,12 @@ router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
         });        
     } else {
         res.render('v2_en/otc-buy/modify', {title: 'Bitweb Main',id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag:req.session.userTag, country:req.session.country,
-        pointId: req.session.pointId,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain});
+            userTag:req.session.userTag, country:req.session.country,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain
+        });
     }
 });
 
@@ -157,7 +161,8 @@ router.get('/vtr/:id', token.checkLoginToken, function (req, res, next) {
             pointId: req.session.pointId,
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain});
+            useBlockchain:dbconfig.useBlockchain
+        });
     }
 });
 
@@ -192,11 +197,12 @@ router.get('/chatbot/:country/:itemId', token.checkLoginToken, function (req, re
                     });      
                 } else {
                     res.render('v2_en/otc-buy/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-                    userTag:userTag, country: country,
-                    pointId: req.session.pointId,
-                    authPhone: req.session.authPhone,
-                    usePoint:dbconfig.usePoint,
-                    useBlockchain:dbconfig.useBlockchain});
+                        userTag:userTag, country: country,
+                        pointId: req.session.pointId,
+                        authPhone: req.session.authPhone,
+                        usePoint:dbconfig.usePoint,
+                        useBlockchain:dbconfig.useBlockchain
+                    });
                 }
             }).catch((err) => {
             console.error('err=>', err)

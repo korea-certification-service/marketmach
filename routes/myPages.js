@@ -19,7 +19,8 @@ router.get('/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mypage', {
@@ -31,7 +32,8 @@ router.get('/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/mypage', {
@@ -43,7 +45,8 @@ router.get('/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[0,0]
+            arrDepth:[0,0],
+            country:req.session.country
         });
     }
 });
@@ -63,7 +66,8 @@ router.get('/buy/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mybuylist', {
@@ -79,7 +83,8 @@ router.get('/buy/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/mybuylist', {
@@ -95,7 +100,8 @@ router.get('/buy/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[2,0]
+            arrDepth:[2,0],
+            country:req.session.country
         });
     }
 });
@@ -115,7 +121,8 @@ router.get('/sell/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myselllist', {
@@ -131,7 +138,8 @@ router.get('/sell/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/myselllist', {
@@ -147,7 +155,8 @@ router.get('/sell/list', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[1,0]
+            arrDepth:[1,0],
+            country:req.session.country
         });
     }
 });
@@ -166,7 +175,8 @@ router.get('/cancel/list', token.checkLoginToken, function (req, res, next) {
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycancellist', {
@@ -196,7 +206,8 @@ router.get('/cancel/list', token.checkLoginToken, function (req, res, next) {
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[3,0]
+            arrDepth:[3,0],
+            country:req.session.country
         });
     }
 });
@@ -212,7 +223,8 @@ router.get('/wallet/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/walletinfo', {
@@ -224,7 +236,8 @@ router.get('/wallet/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/walletinfo', {
@@ -236,7 +249,8 @@ router.get('/wallet/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,1]
+            arrDepth:[4,1],
+            country:req.session.country
         });
     }
 });
@@ -252,7 +266,8 @@ router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/walletconnect', {
@@ -264,7 +279,8 @@ router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/myPage/walletconnect', {
@@ -276,7 +292,8 @@ router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
             bitberry_token: req.session.bitberry_token,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[4,4]
+            arrDepth:[4,4],
+            country:req.session.country
         });
     }
 });
@@ -293,7 +310,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2/myPage/walletdeposit', {
@@ -308,7 +326,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }
     } else if(dbconfig.country == "POINT") {
@@ -322,7 +341,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_point/myPage/walletdeposit', {
@@ -337,7 +357,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }        
     } else {
@@ -351,7 +372,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 bitberry_token: req.session.bitberry_token,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_en/myPage/walletdeposit', {
@@ -366,7 +388,8 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
                 mach_fee: dbconfig.fee.coin.mach.deposit,
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
-                arrDepth:[4,2]
+                arrDepth:[4,2],
+                country:req.session.country
             });
         }
     }
@@ -386,7 +409,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2/myPage/walletwithdraw', {
@@ -403,7 +427,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }
     } else if(dbconfig.country == "POINT") {
@@ -419,7 +444,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_point/myPage/walletwithdraw', {
@@ -436,7 +462,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
                 token:dbconfig.APIToken,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }       
     } else {
@@ -451,7 +478,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,4]
+                arrDepth:[4,4],
+                country:req.session.country
             });
         } else {
             res.render('v2_en/myPage/walletwithdraw', {
@@ -467,7 +495,8 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
                 usePoint:dbconfig.usePoint,
                 useBlockchain:dbconfig.useBlockchain,
                 kyc: req.session.kyc,
-                arrDepth:[4,3]
+                arrDepth:[4,3],
+                country:req.session.country
             });
         }
     }
@@ -483,7 +512,8 @@ router.get('/point/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/info', {
@@ -494,7 +524,8 @@ router.get('/point/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/point/info', {
@@ -505,7 +536,8 @@ router.get('/point/info', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,1]
+            arrDepth:[5,1],
+            country:req.session.country
         });
     }
 });
@@ -522,7 +554,8 @@ router.get('/point/deposit', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         }); 
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/deposit', {
@@ -535,7 +568,8 @@ router.get('/point/deposit', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         });    
     } else {
         res.render('v2_en/myPage/point/deposit', {
@@ -548,7 +582,8 @@ router.get('/point/deposit', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,2]
+            arrDepth:[5,2],
+            country:req.session.country
         }); 
     }
 });
@@ -565,7 +600,8 @@ router.get('/point/withdraw', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         }); 
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/point/withdraw', {
@@ -578,7 +614,8 @@ router.get('/point/withdraw', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/myPage/point/withdraw', {
@@ -591,7 +628,8 @@ router.get('/point/withdraw', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[5,3]
+            arrDepth:[5,3],
+            country:req.session.country
         }); 
     }
 });
@@ -688,7 +726,8 @@ router.get('/user/checkPassword', token.checkLoginToken, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycheckPassword', {
@@ -700,7 +739,8 @@ router.get('/user/checkPassword', token.checkLoginToken, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });      
     } else {
         res.render('v2_en/myPage/mycheckPassword', {
@@ -712,7 +752,8 @@ router.get('/user/checkPassword', token.checkLoginToken, function (req, res, nex
             userTag: req.session.userTag,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     }
 });
@@ -729,7 +770,8 @@ router.get('/user/info', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myinfo', {
@@ -742,7 +784,8 @@ router.get('/user/info', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });        
     } else {
         res.render('v2_en/myPage/myinfo', {
@@ -755,7 +798,8 @@ router.get('/user/info', token.checkLoginToken, function (req, res, next) {
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             token:dbconfig.APIToken,
-            arrDepth:[6,1]
+            arrDepth:[6,1],
+            country:req.session.country
         });
     }
 });
@@ -771,7 +815,8 @@ router.get('/user/voucher', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myvoucher', {
@@ -783,7 +828,8 @@ router.get('/user/voucher', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/myvoucher', {
@@ -795,7 +841,8 @@ router.get('/user/voucher', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,2]
+            arrDepth:[6,2],
+            country:req.session.country
         });
     }
 });
@@ -811,7 +858,8 @@ router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/auth_phone', {
@@ -823,7 +871,8 @@ router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });     
     } else {
         res.render('v2_en/myPage/checkKyc', {
@@ -835,7 +884,8 @@ router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,3]
+            arrDepth:[6,3],
+            country:req.session.country
         });
     }
 });
@@ -850,7 +900,8 @@ router.get('/user/kyc',token.checkLoginToken, function (req, res, next) {
         authPhone: req.session.authPhone,
         usePoint:dbconfig.usePoint,
         useBlockchain:dbconfig.useBlockchain,
-        arrDepth:[6,3]
+        arrDepth:[6,3],
+        country:req.session.country
     });
 });
 
@@ -865,7 +916,8 @@ router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mygrade', {
@@ -877,7 +929,8 @@ router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });       
     } else {
         res.render('v2_en/myPage/mygrade', {
@@ -889,7 +942,8 @@ router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
             authPhone: req.session.authPhone,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[6,4]
+            arrDepth:[6,4],
+            country:req.session.country
         });
     }
 });

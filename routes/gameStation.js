@@ -15,7 +15,8 @@ router.get('/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [0,0]
+            arrDepth: [0,0],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/gamestation', {
@@ -27,7 +28,8 @@ router.get('/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [0,0]
+            arrDepth: [0,0],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/gamestation', {
@@ -39,7 +41,8 @@ router.get('/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [0,0]
+            arrDepth: [0,0],
+            country:req.session.country
         });
     }
 });
@@ -56,7 +59,8 @@ router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,1]
+            arrDepth: [1,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/tradelist', {
@@ -69,7 +73,8 @@ router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,1]
+            arrDepth: [1,1],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/tradelist', {
@@ -82,7 +87,8 @@ router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,1]
+            arrDepth: [1,1],
+            country:req.session.country
         });
     }
 });
@@ -98,7 +104,8 @@ router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/gameassetstomach', {
@@ -110,7 +117,8 @@ router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/gameassetstomach', {
@@ -122,7 +130,8 @@ router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });
     }
 });
@@ -138,7 +147,8 @@ router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/exchange_gameassets', {
@@ -150,7 +160,8 @@ router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/exchange_gameassets', {
@@ -162,7 +173,8 @@ router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,2]
+            arrDepth: [1,2],
+            country:req.session.country
         });
     }
 });
@@ -190,7 +202,8 @@ router.get('/trade/mach/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,3]
+            arrDepth: [1,3],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/machtogameassets', {
@@ -202,7 +215,8 @@ router.get('/trade/mach/', token.checkLoginToken, function (req, res, next) {
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,3]
+            arrDepth: [1,3],
+            country:req.session.country
         });
     }
 });
@@ -218,7 +232,8 @@ router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,3]
+            arrDepth: [1,3],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/exchange_mach', {
@@ -230,7 +245,8 @@ router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,3]
+            arrDepth: [1,3],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/exchange_mach', {
@@ -242,7 +258,8 @@ router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [1,3]
+            arrDepth: [1,3],
+            country:req.session.country
         });
     }
 });
@@ -258,7 +275,8 @@ router.get('/machAdventure/info/', token.checkLoginTokenNoSignIn, function (req,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,1]
+            arrDepth: [2,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/machadventureinfo', {
@@ -270,7 +288,8 @@ router.get('/machAdventure/info/', token.checkLoginTokenNoSignIn, function (req,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,1]
+            arrDepth: [2,1],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/machadventureinfo', {
@@ -282,7 +301,8 @@ router.get('/machAdventure/info/', token.checkLoginTokenNoSignIn, function (req,
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,1]
+            arrDepth: [2,1],
+            country:req.session.country
         });
     }
 });
@@ -298,7 +318,8 @@ router.get('/superlanding/info/', token.checkLoginTokenNoSignIn, function (req, 
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,1]
+            arrDepth: [3,1],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/superlandinginfo', {
@@ -310,7 +331,8 @@ router.get('/superlanding/info/', token.checkLoginTokenNoSignIn, function (req, 
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,1]
+            arrDepth: [3,1],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/superlandinginfo', {
@@ -322,7 +344,8 @@ router.get('/superlanding/info/', token.checkLoginTokenNoSignIn, function (req, 
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,1]
+            arrDepth: [3,1],
+            country:req.session.country
         });
     }
 });
@@ -339,7 +362,8 @@ router.get('/machAdventure/myGame/',token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,2]
+            arrDepth: [2,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/myMachAdventure', {
@@ -351,7 +375,8 @@ router.get('/machAdventure/myGame/',token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,2]
+            arrDepth: [2,2],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/myMachAdventure', {
@@ -363,7 +388,8 @@ router.get('/machAdventure/myGame/',token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [2,2]
+            arrDepth: [2,2],
+            country:req.session.country
         });
     }
 });
@@ -379,7 +405,8 @@ router.get('/superlanding/myGame/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,2]
+            arrDepth: [3,2],
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/gameStation/mySuperlanding', {
@@ -391,7 +418,8 @@ router.get('/superlanding/myGame/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,2]
+            arrDepth: [3,2],
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/gameStation/mySuperlanding', {
@@ -403,7 +431,8 @@ router.get('/superlanding/myGame/', token.checkLoginToken, function (req, res, n
             useBlockchain: dbconfig.useBlockchain,
             usePoint: dbconfig.usePoint,
             userTag: req.session.userTag,
-            arrDepth: [3,2]
+            arrDepth: [3,2],
+            country:req.session.country
         });
     }
 });

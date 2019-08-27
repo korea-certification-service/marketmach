@@ -21,6 +21,7 @@ router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/community', {
@@ -34,6 +35,7 @@ router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/community/community', {
@@ -47,6 +49,7 @@ router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     }
 });
@@ -64,6 +67,7 @@ router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, ne
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/list', {
@@ -77,6 +81,7 @@ router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, ne
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/community/list', {
@@ -90,6 +95,7 @@ router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, ne
             type: req.params.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     }
 });
@@ -105,7 +111,8 @@ router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function
             useBlockchain:dbconfig.useBlockchain,
             communityId: req.params.communityId,
             userTag: req.session.userTag,
-            authPhone: req.session.authPhone
+            authPhone: req.session.authPhone,
+            country:req.session.country,
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/view', {
@@ -116,7 +123,8 @@ router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function
             useBlockchain:dbconfig.useBlockchain,
             communityId: req.params.communityId,
             userTag: req.session.userTag,
-            authPhone: req.session.authPhone
+            authPhone: req.session.authPhone,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/community/view', {
@@ -128,7 +136,8 @@ router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function
             useBlockchain:dbconfig.useBlockchain,
             communityId: req.params.communityId,
             userTag: req.session.userTag,
-            authPhone: req.session.authPhone
+            authPhone: req.session.authPhone,
+            country:req.session.country
         });
     }
 });
@@ -145,7 +154,8 @@ router.get('/register', token.checkLoginToken, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain,
             type: req.query.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/register', {
@@ -158,7 +168,8 @@ router.get('/register', token.checkLoginToken, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain,
             type: req.query.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/community/register', {
@@ -171,7 +182,8 @@ router.get('/register', token.checkLoginToken, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain,
             type: req.query.type,
             title: req.query.title,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     }
 });
@@ -189,7 +201,8 @@ router.get('/modify/:communityId', token.checkLoginToken, function (req, res, ne
             type: req.query.type,
             title: req.query.title,
             pageIdx: req.query.pageIdx,
-            communityId: req.params.communityId
+            communityId: req.params.communityId,
+            country:req.session.country
     });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/community/modify', {
@@ -203,7 +216,8 @@ router.get('/modify/:communityId', token.checkLoginToken, function (req, res, ne
             type: req.query.type,
             title: req.query.title,
             communityId: req.params.communityId,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/community/modify', {
@@ -217,7 +231,8 @@ router.get('/modify/:communityId', token.checkLoginToken, function (req, res, ne
             type: req.query.type,
             title: req.query.title,
             communityId: req.params.communityId,
-            pageIdx: req.query.pageIdx
+            pageIdx: req.query.pageIdx,
+            country:req.session.country
     });
     }
 });
