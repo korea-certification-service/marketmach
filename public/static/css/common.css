@@ -478,9 +478,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .noti_area .noti_btm_media li:first-child{margin-left: 0;}
 .noti_area .noti_btm_media li img{width: 40px;}
 
-/* 동영상 */
+/* 커뮤니티 */
 .media_sec{margin-bottom: 30px; }
-.media_sec .main_tit_media{margin: auto; width: 75px; background: url(/static/img/main/ico_video.png) 0 13px no-repeat; background-size: 18px 18px;}
+.media_sec .main_tit_media{margin: auto; width: 80px; background: url(/static/img/main/ico_video.png) 0 13px no-repeat; background-size: 18px 18px;}
 .media_sec .plus_link{margin-top: 10px;}
 .media_sec .bd_area{border: 1px solid #ced4da; background-color: #f8f9fa;}
 .media_sec .media_tit{text-align: center; /*padding-left: 10px;*/ height: 40px; line-height: 40px; background-color: #f0f0f0; font-size: 16px;}
