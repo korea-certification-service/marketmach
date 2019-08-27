@@ -60,7 +60,11 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     }
     var bitwebResponse = new BitwebResponse();
     if(coinType == "point") {
-        condition['item.category'] = ['game','etc'];
+        if(dbconfig.country == 'KR') {
+            condition['item.country'] = {$exists:false};
+        } else {
+            condition['item.country'] = dbconfig.country;
+        }
         controllerPointTrades.getTradingItems(country, condition)
         .then(pointTrades => {
             let buyEscrow = 0;
@@ -90,6 +94,11 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
             res.status(500).send(bitwebResponse.create())
         })
     } else {
+        if(dbconfig.country == 'KR') {
+            condition['item.country'] = {$exists:false};
+        } else {
+            condition['item.country'] = dbconfig.country;
+        }
         controllerVtrs.getTradingItems(country, condition)
         .then(vtrs => {
             let buyEscrowBtc = 0;
