@@ -604,9 +604,9 @@ router.post('/login', function (req, res, next) {
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
 
-                                res.cookie("loginToken", tokenValue, {
-                                    expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-                                });
+                                // res.cookie("loginToken", tokenValue, {
+                                //     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                                // });
 
                                 // if (remember) {
                                 //     res.cookie("remember", remember , {

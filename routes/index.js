@@ -195,15 +195,15 @@ router.get('/login', function (req, res, next) {
 router.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.clearCookie("orange__F");
-    // res.clearCookie("loginToken");
+    res.clearCookie("loginToken");
     // cookie 삭제를 위한 expire 조정
-    res.cookie("loginToken", {
-        expires: Date.now(),
-    });
-    res.cookie("loginToken", {
-        domain: 'marketmach.com',
-        expires: Date.now(),
-    });
+    // res.cookie("loginToken", {
+    //     expires: Date.now(),
+    // });
+    // res.cookie("loginToken", {
+    //     domain: 'marketmach.com',
+    //     expires: Date.now(),
+    // });
     res.redirect('/');
 });
 
