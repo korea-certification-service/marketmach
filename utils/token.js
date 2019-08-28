@@ -40,7 +40,7 @@ function checkLoginTokenNoSignIn(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
+                    res.cookie("loginToken1", value, {
                         domain: 'marketmach.com',
                         expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     });
@@ -125,7 +125,7 @@ function checkLoginToken(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
+                    res.cookie("loginToken1", value, {
                         domain: 'marketmach.com',
                         expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     });
@@ -209,7 +209,7 @@ function checkLoginAndAdultToken(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
+                    res.cookie("loginToken1", value, {
                         domain: 'marketmach.com',
                         expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     });
