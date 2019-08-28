@@ -196,6 +196,7 @@ router.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.clearCookie("orange__F");
     res.clearCookie("loginToken");
+    res.clearCookie("loginToken");
     res.redirect('/');
 });
 
