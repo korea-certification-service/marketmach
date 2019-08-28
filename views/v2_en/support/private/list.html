@@ -66,22 +66,28 @@
                 method: "GET",
                 url: "/v1/personal/list/" + userTag
             }).done(function (success) {
-                console.log(success.data);
+                // console.log(success.data);
                 var personalList = success.data.list;
                 var result = "";
-                for(var i=0; i<personalList.length; i++) {
-                    result += '<tr onclick="location.href=\'/supports/private/detail/'+personalList[i]._id+'\';">' +
-                                    '<td class="tal">' +
-                                        getPersonalType(personalList[i].type).text + 
-                                    '</td>' +
-                                    '<td class="tal">' +
-                                        '<div class="ellipse" style="width:100%;">' +
-                                            personalList[i].title + 
-                                        '</div>' +
-                                    '</td>' +
-                                    '<td class="ico_q">'+(personalList[i].reply == undefined ? 'Q' : 'A')+'</td>' +
-                                    '<td>'+personalList[i].regDate.substring(2, 10)+'</td>' +
-                                '</tr>';
+                if(personalList.length > 0) {
+                    for(var i=0; i<personalList.length; i++) {
+                        result += '<tr onclick="location.href=\'/supports/private/detail/'+personalList[i]._id+'\';">' +
+                                        '<td class="tal">' +
+                                            getPersonalType(personalList[i].type).text + 
+                                        '</td>' +
+                                        '<td class="tal">' +
+                                            '<div class="ellipse" style="width:100%;">' +
+                                                personalList[i].title + 
+                                            '</div>' +
+                                        '</td>' +
+                                        '<td class="ico_q">'+(personalList[i].reply == undefined ? 'Q' : 'A')+'</td>' +
+                                        '<td>'+personalList[i].regDate.substring(2, 10)+'</td>' +
+                                    '</tr>';
+                    }
+                } else {
+                    result += '<tr>'
+                            + '<td colspan="3">No exist.</td>'
+                            + '<tr>';
                 }
                 $('#personal_list').html(result);
                 getPaging(success.data.count);
