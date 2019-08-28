@@ -196,7 +196,7 @@ router.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.clearCookie("orange__F");
     res.clearCookie("loginToken");
-    res.clearCookie("loginToken1");
+    res.clearCookie("loginToken",{domain:'marketmach.com'});
     // cookie 삭제를 위한 expire 조정
     // res.cookie("loginToken1", {
     //     domain: 'marketmach.com',

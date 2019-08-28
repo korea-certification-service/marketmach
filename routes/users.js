@@ -599,7 +599,7 @@ router.post('/login', function (req, res, next) {
                                 orange__F = orange__F.ciphertext.toString(CryptoJS.enc.Base64);  //and the ciphertext put to base64
                                 // let tokenValue = token.makeLoginToken(loginToken);
                                 let tokenValue = loginToken;
-                                res.cookie("loginToken1", tokenValue, {
+                                res.cookie("loginToken", tokenValue, {
                                     domain: 'marketmach.com',
                                     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                                 });
