@@ -29,7 +29,7 @@
 .renewer_container .main_3n1n_wrap > section:nth-child(2){background-color: #cad4d9;}
 .renewer_container .main_3n1n_wrap > section:nth-child(3){background-color: #e9ebdd;}
 .renewer_container .guide_sec{}
-.renewer_container .guide_sec a{color: #000000;}
+.renewer_container .guide_sec a{display: block; height: 100%; color: #000000;}
 .renewer_container .guide_sec h1{padding: 35px 0 20px 45px; line-height: 1.4;}
 .renewer_container .guide_sec .ico_round{margin-right: 5%; float: right; width: 135px; height: 135px; border-radius: 50%;}
 .renewer_container .guide_sec .ico_guide01{background: #fff url(/static/img/symbol/ico_guide01.png) 50% 50% no-repeat; background-size: 190px 200px;}
