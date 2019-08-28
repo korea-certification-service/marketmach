@@ -198,6 +198,7 @@
                     })
                     .fail(function (fail) {
                         console.log(fail);
+                        alert("아이디, 이메일 또는 연락처가 이미 사용중입니다.");
                         $('#signup').prop('disabled', false);
                     });
                 } else {

@@ -153,20 +153,25 @@ router.get('/all', function (req, res, next) {
     controllerItems.getItemByRequired(country, data)
         .then(game_buys => {
             data['trade_type'] = "sell";
+            data['perPage'] = 5;
             controllerItems.getItemByRequired(country, data)
                 .then(game_sells => {
                     data['category'] = "etc";
                     data['trade_type'] = "buy";
+                    data['perPage'] = 5;
                     controllerItems.getItemByRequired(country, data)
                         .then(etc_buys => {
                             data['trade_type'] = "sell";
+                            data['perPage'] = 7;
                             controllerItems.getItemByRequired(country, data)
                                 .then(etc_sells => {
                                     data['category'] = "otc";
                                     data['trade_type'] = "buy";
+                                    data['perPage'] = 5;
                                     controllerItems.getItemByRequired(country, data)
                                         .then(otc_buys => {
                                             data['trade_type'] = "sell";
+                                            data['perPage'] = 5;
                                             controllerItems.getItemByRequired(country, data)
                                                 .then(otc_sells => {
                                                     data['category'] = "game";

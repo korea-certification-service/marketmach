@@ -357,11 +357,11 @@ router.post('/', function (req, res, next) {
         //total_point 컬럼 생성
         if(points == undefined) points = {"total_point": 0};
 
-        controllerUsers.getByUserTagAndEmail(country, req.body.userTag, req.body.email)
+        controllerUsers.getByUserTagAndEmail(country, req.body.userTag, req.body.email, req.body.phone)
             .then(result=> {
 
                 if (result != null) {
-                    let error = "userTag 혹은 userEmail에 이미 사용중입니다."
+                    let error = "userTag 혹은 userEmail 또는 전화번호가 이미 사용중입니다."
                     bitwebResponse.code = 403;
                     bitwebResponse.message = error;
                     res.status(403).send(bitwebResponse.create())

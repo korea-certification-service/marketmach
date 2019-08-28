@@ -172,11 +172,11 @@ function getByUserEmail(country, email) {
     })
 }
 
-function getByUserTagAndEmail(country, userTag, email) {
+function getByUserTagAndEmail(country, userTag, email, phone) {
     return new Promise((resolve, reject) => {
 
         db.connectDB(country)
-            .then(() => bitwebUsers.getUserByTagAndEmail(userTag, email))
+            .then(() => bitwebUsers.getUserByTagAndEmail(userTag, email, phone))
             .then((result) => {
                 console.log('result=>' , result);
                 resolve(result)

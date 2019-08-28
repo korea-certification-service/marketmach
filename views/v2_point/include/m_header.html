@@ -72,9 +72,9 @@
             url: "/v1/points/" + pointId
         }).done(function (success) {
             if (success.data.total_point != null) {
-                $(".total_point").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
+                $(".total_point").html("<a href='/myPages/point/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
             } else {
-                $(".total_point").html("<a href='/myPages/wallet/info'>0<span>Point</span></a>");
+                $(".total_point").html("<a href='/myPages/point/info'>0<span>Point</span></a>");
             }
         }).fail(function (fail) {
             console.log(fail);

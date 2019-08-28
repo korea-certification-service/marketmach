@@ -198,6 +198,7 @@
                     })
                     .fail(function (fail) {
                         console.log(fail);
+                        alert("It is already use ID, Email or Phone.");
                         $('#signup').prop('disabled', false);
                     });
                 } else {
