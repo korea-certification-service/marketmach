@@ -40,14 +40,14 @@ function checkLoginTokenNoSignIn(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
-                        domain: 'marketmach.com',
-                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-                    });
-            
                     // res.cookie("loginToken", value, {
+                    //     domain: 'marketmach.com',
                     //     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     // });
+            
+                    res.cookie("loginToken", value, {
+                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                    });
 
                     req.session.userTag = user.userTag;
                     req.session.userId = user._id;
@@ -125,14 +125,14 @@ function checkLoginToken(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
-                        domain: 'marketmach.com',
-                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-                    });
-            
                     // res.cookie("loginToken", value, {
+                    //     domain: 'marketmach.com',
                     //     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     // });
+            
+                    res.cookie("loginToken", value, {
+                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                    });
 
                     req.session.userTag = user.userTag;
                     req.session.userId = user._id;
@@ -209,14 +209,14 @@ function checkLoginAndAdultToken(req, res, next) {
                 }
                 controllerAgreements.detail(country, search)
                 .then((agreement) => {
-                    res.cookie("loginToken", value, {
-                        domain: 'marketmach.com',
-                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
-                    });
-            
                     // res.cookie("loginToken", value, {
+                    //     domain: 'marketmach.com',
                     //     expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
                     // });
+            
+                    res.cookie("loginToken", value, {
+                        expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                    });
 
                     req.session.userTag = user.userTag;
                     req.session.userId = user._id;
