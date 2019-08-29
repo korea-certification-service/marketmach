@@ -83,6 +83,34 @@ router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, ne
     }
 });
 
+router.get('/happymoney_to_point', token.checkLoginTokenNoSignIn, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/howto/happymoney_to_point', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/howto/happymoney_to_point', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });         
+    }
+});
+
 router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safty_trade', {
