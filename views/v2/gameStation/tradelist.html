@@ -6,8 +6,10 @@
     <script>
         var userId = "<%=userId%>";
         var coinId = "<%=coinId%>";
+        var userName = "<%=userName%>";
 
         $(document).ready(function() {
+            $('#username').text(userName);
             getCoin();
             getUesrGameInfo();
 
