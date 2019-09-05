@@ -134,7 +134,7 @@ function checkStrNum(value) {
 }
 
 function checkPassword(value) {
-    let idReg = /^.*(?=.{8,16})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+    let idReg = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
     if( !idReg.test( value ) ) {
         return false;
     }

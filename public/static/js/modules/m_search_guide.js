@@ -195,11 +195,11 @@ document.addEventListener("DOMContentLoaded", function () {
         srchBoxWrap.style.display = "none";
 
         if(srchSelect.value == "games"){
-            srchInput.setAttribute("placeholder", "게임검색이 가능합니다.");
+            srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
         } else if(srchSelect.value == "assets"){
-            srchInput.setAttribute("placeholder", "자산검색이 가능합니다.");
+            srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다.");
+            srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
         }
         
     });

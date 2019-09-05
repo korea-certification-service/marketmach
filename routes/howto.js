@@ -13,7 +13,8 @@ router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/tradevtr', {
@@ -24,7 +25,8 @@ router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/tradevtr', {
@@ -35,8 +37,77 @@ router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
+    }
+});
+
+router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });         
+    } else {
+        res.render('v2_en/howto/vtr_chatbot', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });
+    }
+});
+
+router.get('/happymoney_to_point', token.checkLoginTokenNoSignIn, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/howto/happymoney_to_point', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/howto/happymoney_to_point', {
+            title: 'Bitweb Main', 
+            userTag:req.session.userTag,
+            userId: req.session.userId, 
+            coinId: req.session.coinId, 
+            authPhone: req.session.authPhone, 
+            pointId: req.session.pointId,
+            useBlockchain:dbconfig.useBlockchain, 
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
+        });         
     }
 });
 
@@ -50,7 +121,8 @@ router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/safty_trade', {
@@ -61,7 +133,8 @@ router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/safty_trade', {
@@ -72,7 +145,8 @@ router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId,
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -87,7 +161,8 @@ router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, n
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/tradebuynow', {
@@ -98,7 +173,8 @@ router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, n
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/tradebuynow', {
@@ -109,7 +185,8 @@ router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, n
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -124,7 +201,8 @@ router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res,
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/buymachwallet', {
@@ -135,7 +213,8 @@ router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res,
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/buymachwallet', {
@@ -146,7 +225,8 @@ router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res,
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -161,7 +241,8 @@ router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/buymachbuy', {
@@ -172,7 +253,8 @@ router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/buymachbuy', {            
@@ -183,7 +265,8 @@ router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, ne
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -198,7 +281,8 @@ router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res
             authPhone: req.session.authPhone,
              pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/buymachdeposit', {
@@ -209,7 +293,8 @@ router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res
             authPhone: req.session.authPhone,
              pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/buymachdeposit', {
@@ -220,7 +305,8 @@ router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res
             authPhone: req.session.authPhone,
              pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });   
     }
 });
@@ -235,7 +321,8 @@ router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone,
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/buymachwithdraw', {
@@ -246,7 +333,8 @@ router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone,
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/buymachwithdraw', {
@@ -257,7 +345,8 @@ router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone,
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain,
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -272,7 +361,8 @@ router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/safeTradeescrow', {
@@ -283,7 +373,8 @@ router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/safeTradeescrow', {
@@ -294,7 +385,8 @@ router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, re
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -309,7 +401,8 @@ router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, r
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/safeTradecuation', {
@@ -320,7 +413,8 @@ router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, r
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/safeTradecuation', {
@@ -331,7 +425,8 @@ router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, r
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -345,7 +440,8 @@ router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/etccsbot', {
@@ -355,7 +451,8 @@ router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/etccsbot', {
@@ -365,7 +462,8 @@ router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });
@@ -379,7 +477,8 @@ router.get('/etc/fee', token.checkLoginTokenNoSignIn, function (req, res, next) 
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/howto/etcfee', {
@@ -389,7 +488,8 @@ router.get('/etc/fee', token.checkLoginTokenNoSignIn, function (req, res, next) 
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });         
     } else {
         res.render('v2_en/howto/etcfee', {
@@ -399,7 +499,8 @@ router.get('/etc/fee', token.checkLoginTokenNoSignIn, function (req, res, next) 
             authPhone: req.session.authPhone, 
             pointId: req.session.pointId, 
             useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint
+            usePoint:dbconfig.usePoint,
+            country:req.session.country
         });
     }
 });

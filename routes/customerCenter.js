@@ -4,11 +4,6 @@ var dbconfig = require('../config/dbconfig');
 var customerCenterController = require('../controllers/customerCenter');
 var BitwebResponse = require('../utils/BitwebResponse')
 
-
-router.get('/', function (req, res, next) {
-    res.render('faq/list', {title: 'Bitweb Main', pageIdx: req.query.pageIdx});
-});
-
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     customerCenterController.count(req)

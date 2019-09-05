@@ -69,8 +69,20 @@
                             
                             // 이미지 업로드 실행
                             img.toBlob(function(blob){
-                                var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
-
+                                function blobToFile(theBlob, fileName) {
+                                    var b = theBlob;
+                                    b.lastModifiedDate = new Date();
+                                    b.name = fileName;
+                                    return b;
+                                }
+                                var createdFile;
+                                if (navigator.msSaveBlob) {
+                                    createdFile = new Blob([blob], {type: fileType});
+                                    createdFile = blobToFile(createdFile, "img_id_"+index+"."+fileExte);
+                                } else {
+                                    createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+                                }
+                                
                                 var objImgInfo = {"index": index, "name": "img_id_"+index, "value": createdFile};
                                 /*
                                 if(sel_files.length === 0) {
@@ -196,8 +208,20 @@
                             
                             // 이미지 업로드 실행
                             img.toBlob(function(blob){
-                                var createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
-
+                                function blobToFile(theBlob, fileName) {
+                                    var b = theBlob;
+                                    b.lastModifiedDate = new Date();
+                                    b.name = fileName;
+                                    return b;
+                                }
+                                var createdFile;
+                                if (navigator.msSaveBlob) {
+                                    createdFile = new Blob([blob], {type: fileType});
+                                    createdFile = blobToFile(createdFile, "img_id_"+index+"."+fileExte);
+                                } else {
+                                    createdFile = new File([blob], "img_id_"+index+"."+fileExte, {type: fileType});
+                                }
+                                
                                 sel_files.push({
                                     "index": index,
                                     "name": "img_id_"+index,

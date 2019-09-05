@@ -4,7 +4,7 @@
     <% include ../include/head.html %>
 </head>
 <body>
-<div id="wrap" class="wrap">
+<div id="wrap" class="wrap point_wrap">
     <!-- header -->
     <div class="header_wrap">
         <% include ../include/header.html %>
@@ -270,7 +270,7 @@
 
         function setEtcSellList(data) {
             var result = "";
-            console.log(data)
+            // console.log(data)
             if(data.length > 0) {
                 for(var i=0; i<data.length; i++) {
                     var itemId = data[i]._id;
@@ -286,7 +286,7 @@
                         image_src = data[i].images[0].path;
                     }
                     var title = data[i].title;
-                    var regDate = data[i].regDate;
+                    var regDate = data[i].regDate.substring(2, 10);
                     var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                     var money = point + '<span>Point</span>';
                     if("<%=useBlockchain%>" =='Y') {
@@ -326,7 +326,7 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images.length == 0 ? "/static/img/sub/no_image.png" : data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +
@@ -361,17 +361,28 @@
                     <div class="visual_img">
                         <a href="/howto/trade/vtr">
                             <div class="pc_img">
-                                <img src="/static/img/main/main_visual01.jpg" alt="그랜드 오픈">
+                                <img src="/static/img/pointmall/point_visual03.jpg" alt="그랜드 오픈">
                             </div>
                             <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual01.jpg" alt="그랜드 오픈">
+                                <img src="/static/img/pointmall/m_point_visual03.jpg" alt="그랜드 오픈">
                             </div>
                         </a> 
-                    </div>                                      
+                    </div>
+                    <div class="visual_img">
+                        <a href="/howto/happymoney_to_point">
+                            <div class="pc_img">
+                                <img src="/static/img/pointmall/point_visual02.jpg" alt="해피포인트">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/pointmall/m_point_visual02.jpg" alt="해피포인트몰">
+                            </div>
+                        </a> 
+                    </div>                                                                     
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
-                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>마켓마하 오픈베타</em></div></div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="2">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>포인트몰 오픈</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>해피머니</em></div></div>
                 </div>
             </section>
         </div>
@@ -394,61 +405,59 @@
                 </div>
             </section>
 
-            <div class="img_banner_sec row">
-                <!-- 게임 아이템 판매/구매 -->
-                <section class="secGame item_trade_sec col-lg-12">
-                    <h1 class="tit_main_sec">게임아이템</h1>
-                    <h2 class="item_sell_tit on">
-                        <button class="btnGame btn_show_list on">판매</button>
-                        <a class="detail_link" href="/sells?category=game&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>
-                    </h2>
-                    <div class="item_sell item_table_wrap trade_list toggleTable">              
-                        <table class="main_list_table">
-                            <colgroup class="colgroup_main_gameitem">
-                                <col class="col4_1">
-                                <col class="col4_2">
-                                <col class="col4_3">
-                                <col class="col4_4">
-                            </colgroup>
-                            <thead>
-                                <tr class="active">
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sell_list">                               
-                            </tbody>
-                        </table>
-                    </div>
-                    <h2 class="item_buy_tit">
-                        <button class="btnGame btn_show_list">구매</button>
-                        <a class="detail_link" href="/buys?category=game&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>
-                    </h2>
-                    <div class="item_buy item_table_wrap trade_list toggleTable">
-                        <table class="main_list_table">
-                            <colgroup class="colgroup_main_gameitem">
-                                <col class="col4_1">
-                                <col class="col4_2">
-                                <col class="col4_3">
-                                <col class="col4_4">
-                            </colgroup>                            
-                            <thead>
-                                <tr>
-                                    <th>종류</th>
-                                    <th>게임명>서버명</th>
-                                    <th>제 목</th>
-                                    <th>거래가격</th>
-                                </tr>
-                            </thead>
-                            <tbody id="buy_list">
-                            </tbody>
-                        </table>                           
-                    </div>             
-                </section>
-                <!--// 게임 아이템 판매/구매 -->
-            </div>   
+            <!-- 게임 아이템 판매/구매 -->
+            <section class="secGame item_trade_sec col-lg-12">
+                <h1 class="tit_main_sec">게임아이템</h1>
+                <h2 class="item_sell_tit on">
+                    <button class="btnGame btn_show_list on">판매</button>
+                    <a class="detail_link" href="/sells?category=game&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>
+                </h2>
+                <div class="item_sell item_table_wrap trade_list toggleTable">              
+                    <table class="main_list_table">
+                        <colgroup class="colgroup_main_gameitem">
+                            <col class="col4_1">
+                            <col class="col4_2">
+                            <col class="col4_3">
+                            <col class="col4_4">
+                        </colgroup>
+                        <thead>
+                            <tr class="active">
+                                <th>종류</th>
+                                <th>게임명>서버명</th>
+                                <th>제 목</th>
+                                <th>거래가격</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sell_list">                               
+                        </tbody>
+                    </table>
+                </div>
+                <h2 class="item_buy_tit">
+                    <button class="btnGame btn_show_list">구매</button>
+                    <a class="detail_link" href="/buys?category=game&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>
+                </h2>
+                <div class="item_buy item_table_wrap trade_list toggleTable">
+                    <table class="main_list_table">
+                        <colgroup class="colgroup_main_gameitem">
+                            <col class="col4_1">
+                            <col class="col4_2">
+                            <col class="col4_3">
+                            <col class="col4_4">
+                        </colgroup>                            
+                        <thead>
+                            <tr>
+                                <th>종류</th>
+                                <th>게임명>서버명</th>
+                                <th>제 목</th>
+                                <th>거래가격</th>
+                            </tr>
+                        </thead>
+                        <tbody id="buy_list">
+                        </tbody>
+                    </table>                           
+                </div>             
+            </section>
+            <!--// 게임 아이템 판매/구매 -->
   
             <!-- <section class="w100p_banner row">
                 <div class="col-lg-12">
@@ -460,60 +469,32 @@
                     </a>
                 </div>
             </section> -->
+
             <div class="row">
                 <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec">인기 동영상</h1>
+                    <h1 class="tit_main_sec">커뮤니티</h1>
                     <div class="bd_area">
                         <div class="media_img_wrap cf">
                         </div>
                     </div>
                 </section>
             </div>
-            <!-- <div class="row">
-                <section class="company_sec col-lg-12">
-                    <h1 class="tit_main_sec main_tit_company">상장매체</h1>
-                    <div class="bd_area">
-                        <div class="cpn_box_wrap cf">
-                            <div class="cpn_box"><a href="http://bitweb.co.kr/" target="_blank"><img src="/static/img/main/logo_bitweb.png" alt="비트웹" title="비트웹"></a></div>
-                            <div class="cpn_box"><a href="http://www.blockchaintoday.co.kr/" target="_blank"><img src="/static/img/main/logo_today.png" alt="블록체인투데이" title="블록체인투데이"></a></div>
-                            <div class="cpn_box"><a href="https://bctimes.co.kr/" target="_blank"><img class="img_vac" src="/static/img/main/logo_times.png" alt="블록체인타임즈" title="블록체인타임즈"></a></div>
-                            <div class="cpn_box"><a href="http://gameabout.com/" target="_blank"><img src="/static/img/main/logo_gameabout.png" alt="게임어바웃" title="게임어바웃"></a></div>
-                            <div class="cpn_box"><a href="http://www.coinvoice.kr/" target="_blank"><img src="/static/img/main/logo_coinvoice.png" alt="코인보이스" title="코인보이스"></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                            <div class="cpn_box"><a class="noCursor" href="javascript:return false" target="_blank"><i class="material-icons">add_circle</i></a></div>
-                        </div>
-                    </div>
-                </section>                   
-            </div> -->
            
             <div class="main_3n1n_wrap">
                 <section class="notice_sec">
                     <h1 class="">공지사항</h1>
                     <ul id="notice_list" class="noti_list">
                     </ul>
-                    <div class="noti_btm_media">
-                        <ul class="cf">
-                            <li><a href="https://www.facebook.com/MarketMACH" target="_blank"><img src="/static/img/symbol/ico_noti_media_facebook.png" alt="facebook"></a></li>
-                            <li><a href="https://twitter.com/MACH99077436" target="_blank"><img src="/static/img/symbol/ico_noti_media_twitter.png" alt="twitter"></a></li>
-                            <li><a href="https://www.youtube.com/channel/UC0d7GufTm0iG1IX_Lenp11w?feature=embeds_subscribe_title" target="_blank"><img src="/static/img/symbol/ico_noti_media_youtube.png" alt="youtube"></a></li>
-                            <li><a href="https://medium.com/@kdi_35594" target="_blank"><img src="/static/img/symbol/ico_noti_media_medium.png" alt="facebook"></a></li>
-                        </ul>
-                    </div>
                 </section>
                 <section class="guide_sec">
                     <a href="/howto/trade/vtr">
-                        <h1>마켓마하<br>포인트몰 가이드</h1>
+                        <h1>포인트몰<br>이용 가이드</h1>
                         <div class="ico_round ico_guide01"></div>
                     </a>
                 </section>
                 <section class="guide_sec">
-                    <a href="/howto/safty_trade">
-                        <h1>마켓마하<br>바로구매 가이드</h1>
+                    <a href="/howto/trade/buynow">
+                        <h1>포인트몰<br>바로구매 가이드</h1>
                         <div class="ico_round ico_guide02"></div>
                     </a>
                 </section>

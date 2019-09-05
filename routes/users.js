@@ -357,11 +357,11 @@ router.post('/', function (req, res, next) {
         //total_point 컬럼 생성
         if(points == undefined) points = {"total_point": 0};
 
-        controllerUsers.getByUserTagAndEmail(country, req.body.userTag, req.body.email)
+        controllerUsers.getByUserTagAndEmail(country, req.body.userTag, req.body.email, req.body.phone)
             .then(result=> {
 
                 if (result != null) {
-                    let error = "userTag 혹은 userEmail에 이미 사용중입니다."
+                    let error = "userTag 혹은 userEmail 또는 전화번호가 이미 사용중입니다."
                     bitwebResponse.code = 403;
                     bitwebResponse.message = error;
                     res.status(403).send(bitwebResponse.create())
@@ -621,7 +621,7 @@ router.post('/login', function (req, res, next) {
                                 //     });
                                 // }
 
-                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active}
+                                let resData = {"userTag": result.userTag, "userId": result._id, "active": result.active, "originalUrl":req.session.originalUrl == undefined ? "/main" : req.session.originalUrl}
                                 bitwebResponse.code = 200;
                                 bitwebResponse.data = resData;
                                 res.status(200).send(bitwebResponse.create())

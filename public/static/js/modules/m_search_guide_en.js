@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         removeList(leftUl);
                         removeList(rightUl);
                         setSize(1);
-                        addList("검색결과가 없습니다", leftUl, "no_exist");
+                        addList("No exists.", leftUl, "no_exist");
                         var NoExist = document.querySelector(".no_exist");
                         if(leftUl.childNodes[0]) { leftUl.childNodes[0].classList.add("clicked"); }
                         return;
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if(srchSelect.value == "assets"){
             srchInput.setAttribute("placeholder", "Search Asset.");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "Search OTC");
+            srchInput.setAttribute("placeholder", "Search OTC.");
         }
         
     });

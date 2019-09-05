@@ -272,7 +272,7 @@
         function setEtcSellList(data) {
             var result = "";
 
-            console.log(data)
+            // console.log(data)
 
             if(data.length > 0) {
                 // data.length = 4
@@ -330,7 +330,7 @@
         function setCommunityMovie(data) {
             var result = "";
             for(var i=0; i<data.length; i++) {
-                var movie_img = data[i].images.length == 0 ? "/static/img/sub/no_image.png" : data[i].images[0].path;
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 result += '<div class="media_img">' +
@@ -362,6 +362,16 @@
             <section class="visual_sec">
                 <h1 class="blind">Main Banners</h1>
                 <div class="slick_visual">
+                    <div class="visual_img">
+                        <a href="/supports/notice/detail?noticeId=5d637e3f59011316ab4b943e">
+                        <div class="pc_img">
+                            <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/mob/m_main_visual19.jpg" alt="ONTology">
+                        </div>
+                        </a>
+                    </div>   
                     <div class="visual_img">
                         <div class="pc_img">
                             <img src="/static/img/en/en_main_visual04.jpg" alt="Listing">
@@ -402,8 +412,9 @@
                     </div>                                             
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
-                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="4">
-                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Listing</em></div></div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>ONTology</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>Listing</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>2nd Game</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>1st Game</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>Open Beta</em></div></div>
@@ -486,7 +497,7 @@
 
             <div class="row">
                 <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec">Favorite Movies</h1>
+                    <h1 class="tit_main_sec">Community</h1>
                     <div class="bd_area">
                         <div class="media_img_wrap cf">
                         </div>
@@ -515,8 +526,8 @@
                     </a>
                 </section>
                 <section class="guide_sec">
-                    <a href="/howto/safty_trade">
-                        <h1>MarketMACH<br>Safty trading<br>Guide</h1>
+                    <a href="/howto/trade/buynow">
+                        <h1>MarketMACH<br>Trading process<br>Guide</h1>
                         <div class="ico_round ico_guide02"></div>
                     </a>
                 </section>

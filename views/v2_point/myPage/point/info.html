@@ -51,8 +51,8 @@
                 //buy_total_escrow: 바로구매 에스크로 출금한 총 금액
                 //sell_total_escrow: 에스크로 거래 완료 시 받을 총 금액
                 //console.log(success.data);
-                $("#sellPoint").text(success.data.sell_total_escrow_point);
-                $("#buyPoint").text(success.data.buy_total_escrow_point);
+                $("#sellPoint").text(numberWithCommas(success.data.sell_total_escrow_point));
+                $("#buyPoint").text(numberWithCommas(success.data.buy_total_escrow_point));
             }).fail(function (fail) {
                 console.log(fail);
             });

@@ -72,9 +72,9 @@
             url: "/v1/points/" + pointId
         }).done(function (success) {
             if (success.data.total_point != null) {
-                $(".total_point").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
+                $(".total_point").html("<a href='/myPages/point/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
             } else {
-                $(".total_point").html("<a href='/myPages/wallet/info'>0<span>Point</span></a>");
+                $(".total_point").html("<a href='/myPages/point/info'>0<span>Point</span></a>");
             }
         }).fail(function (fail) {
             console.log(fail);
@@ -191,7 +191,7 @@
                                 <th><button class="btnMobMenu btn_mob_menu">게임아이템</button></th>
                                 <th><button class="btnMobMenu btn_mob_menu">자산거래</button></th>                                
                                 <th><a href="/community/board" class="fcbk">커뮤니티</a></th>
-                                <th><a href="/mypages/list" target="_blank" class="fcbk">나의 페이지</a></th>
+                                <th><a href="/mypages/list" class="fcbk">나의 페이지</a></th>
                                 <th></th>
                             </tr>
                         </tbody>
