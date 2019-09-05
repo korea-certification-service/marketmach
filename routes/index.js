@@ -18,6 +18,17 @@ let redirectURI = encodeURI(dbconfig.naver_login_url);
 let api_url = "";
 var token = require('../utils/token');
 
+router.get('/ontology', function (req, res, next) {
+    if(dbconfig.country =="KR") {
+        res.render('v2/common/ontology', {title: 'Bitweb Main'});
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2/common/ontology', {title: 'Bitweb Main'});
+        // res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+    } else {
+        res.render('v2/common/ontology', {title: 'Bitweb Main'});
+        // res.render('v2_en/login/login', {title: 'Bitweb Main'});
+    }
+});
 
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 

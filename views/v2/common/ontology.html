@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" sizes="128x128" href="/image/favicon.png">
+    <title>Title</title>
+    <!-- npm js -->
+    <script src="/jquery/jquery.js"></script>
+    <script src="/popper/popper.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+    <script src="/select/bootstrap-select.min.js"></script>
+    <script src="/static/js/util.js"></script>
+    <script src="/ontology-dapi/lib/browser.js"></script>
+    <script src="/cyanobridge/lib/browser.js"></script>
+    <script>
+        // mobile
+        var client;
+        
+        $(document).ready(function() {    
+            if(isPc()) {
+                // pc
+                client = dApi.client;        
+                client.registerClient({});
+            } else {
+                // mobile
+                client = CyanoMobile.client;        
+                client.registerClient();
+            }
+
+            $('#getAccount').on('click', function() {
+                getAccount();
+            });
+        });
+
+        async function getAccount() {
+            const params = {
+                dappName: 'MarketMACH',
+                dappIcon: 'https://www.marketmach.com/static/img/h_logo.png' // some url points to the dapp icon
+            }
+
+            try {
+                const result1 = await client.api.asset.getAccount(params);
+                const result2 = await client.api.identity.getIdentity(params);
+                console.log(result1, result2);
+            } catch(err) {
+                console.log(err)
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="getAccount">get Account</button>
+</body>
+</html>
