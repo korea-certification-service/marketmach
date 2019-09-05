@@ -32,25 +32,94 @@
             $('#getAccount').on('click', function() {
                 getAccount();
             });
+
+            $('#getBalance').on('click', function() {
+                getBalance();
+            });
+
+            $('#sendTransaction').on('click', function() {
+                sendTransaction();
+            });
         });
 
         async function getAccount() {
-            const params = {
+            var params = {
                 dappName: 'MarketMACH',
                 dappIcon: 'https://www.marketmach.com/static/img/h_logo.png' // some url points to the dapp icon
             }
 
             try {
-                const result1 = await client.api.asset.getAccount(params);
-                const result2 = await client.api.identity.getIdentity(params);
+                var result1 = await client.api.asset.getAccount(params);
+                var result2 = await client.api.identity.getIdentity(params);
                 console.log(result1, result2);
+                $('#resultAddress').text(result1);
+                $('#ontId').text(result2);
             } catch(err) {
+                alert('에러 발생');
                 console.log(err)
             }
+        }
+
+        async function getBalance() {
+            var address = $('#address').val();
+            try {
+                var balance = await client.api.network.getBalance({ address: address});
+                $('#fromAddress').val(address);
+                $('#ontResult').text(balance.ONT);
+                $('#ongResult').text(balance.ONG);
+                console.log(balance);
+            } catch(err) {
+                alert('에러 발생');
+                console.log(err)
+            }
+        }
+
+        async function sendTransaction() {
+            var fromAddress = $('#fromAddress').val();
+            var to = $('#toAddress').val();
+            var asset = $("#type").val();
+            var amount = $("#amount").val();
+            var reqData = {
+                to,
+                asset,
+                amount
+            }
+            console.log(reqData);
+            try {
+                var result = await client.api.asset.send(reqData);
+                $('#txHash').text(result);
+                console.log(result);
+                alert('전송 성공');
+            } catch (err) {
+                alert('에러 발생');
+                console.log(err);
+            }
+
         }
     </script>
 </head>
 <body>
-    <button id="getAccount">get Account</button>
+    <div>
+        <p>Get Account & ONT ID</p>
+        <button id="getAccount">get Account</button>
+        <p>Address : <span id="resultAddress"></span></p>
+        <p>ONT ID : <span id="ontId"></span></p>
+    </div>
+    <div>
+        <p>Get Balance</p>
+        <input type="text" id="address" style="width:500px;">
+        <button id="getBalance">get Balance</button>
+        <p>ONT : <span id="ontResult"></span></p>
+        <p>ONG : <span id="ongResult"></span></p>
+    </div>
+    <div>
+        <p>Send Transaction</p>
+        <p>From : <input type="text" id="fromAddress" style="width:500px;"></p>
+        <p>To : <input type="text" id="toAddress" style="width:500px;"></p>
+        <p>Type : <select id="type"><option value="ONT">ONT</option><option value="ONG">ONG</option></select></p>
+        <p>Amount: <input type="text" id="amount" style="width:500px;"></p>
+        <button id="sendTransaction">send Transaction</button>
+        <p>Tx Hash: <span id="txHash"></span></p>
+    </div>
 </body>
 </html>

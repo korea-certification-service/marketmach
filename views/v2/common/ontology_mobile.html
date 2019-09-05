@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="/jquery/jquery.js"></script>
+	</head>
+<body>
+<div id="wrap">
+	<div><a href='javascript:callApp();'>일반 앱 호출</a></div>
+	<div id="div_app"></div>
+</div>
+<script>
+
+function callApp(){    
+	// var appstoreUrl = "앱이 설치되지 않았을 때 보낼 URL"; 
+    // callApp2(appstoreUrl);    
+    var param = {
+        "action": "getAccount",
+        "id": "10ba038e-48da-487b-96e8-8d3b99b6d18a",
+        "version": "v1.0.0",
+        "params": {
+            "dappName": "MarketMACH",
+            "dappIcon": ""
+        }
+    }
+    var url = "ontprovider://ont.io?param=" + btoa(encodeURIComponent(JSON.stringify(param)));
+	$("#div_app").html("<iframe id='frm' src='"+url+"' width=0 height=0 frameborder=0></iframe>");
+	setTimeout(function(){
+		var div = $("#div_app");
+		var iframe = $("#frm");
+		if(iframe.length > 0){
+			iframe.remove();
+		}
+	},1000);
+}
+
+function callApp2(appstoreUrl) { 
+    var clickedAt = new Date();                                         
+    setTimeout(function() { 
+        if (new Date() - clickedAt < 2000){ 
+            //아래 confirm이 있을때는 앱을 실행하고 나서 돌아오면 또 confirm메시지가 출력되기때문에 주석처리함
+            //if (window.confirm("앱북 최신 버전이 설치되어 있지 않습니다.   \n설치페이지로 이동하시겠습니까?")){
+                location.href = appstoreUrl; 
+            //}
+            }
+    }, 500);
+}
+</script>
+</body>
+</html>
