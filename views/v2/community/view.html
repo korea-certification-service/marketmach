@@ -126,7 +126,7 @@
 
             var data = {
                 "communityId": communityId,
-                "content": $('#add_reply').val(),
+                "content": $('#add_reply').val().replace(/\"/g,"&quot;"),
                 "count": 0,
                 "reporter": userTag,
                 "recommandCount": 0,
@@ -195,7 +195,7 @@
 
         function updateReply() {
             var data = {
-                "content": $('#modify_reply').val()
+                "content": $('#modify_reply').val().replace(/\"/g,"&quot;"),
             }
 
             console.log(replyId, data);

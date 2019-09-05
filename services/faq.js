@@ -6,7 +6,7 @@ function count (data, option) {
             data
         )
             .limit(100)
-            .skip(option.pageIdx * option.perPage)
+            // .skip(option.pageIdx * option.perPage)
             .sort({regDate:'desc'})
             .exec(function (err, faqs) {
                 if (err) {
@@ -25,7 +25,7 @@ function search (data, option) {
             data
         )
         .limit(option.perPage)
-        .skip(option.pageIdx * option.perPage)
+        // .skip(option.pageIdx * option.perPage)
         .sort({regDate:'desc'})
         .exec(function (err, faqs) {
             if (err) {
