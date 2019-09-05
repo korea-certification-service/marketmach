@@ -70,7 +70,7 @@ function addReply() {
 
     var data = {
         "itemId": itemId,
-        "content": $('#add_reply').val(),
+        "content": $('#add_reply').val().replace(/\"/g,"&quot;"),
         "count": 0,
         "reporter": userTag,
         "recommandCount": 0,
@@ -133,7 +133,7 @@ function modifyReply(id) {
 function update(id) {
     ajaxLoginYnCheck(function(){
         var data = {
-            "content": $('#modify_reply').val()
+            "content": $('#modify_reply').val().replace(/\"/g,"&quot;"),
         }
     
         console.log(id, data);
