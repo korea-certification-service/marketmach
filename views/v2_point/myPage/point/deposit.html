@@ -125,9 +125,9 @@
             var data;
             var strFee = $("#depositType").val() == "happymoney" ? "("+(fee * 100)+"% 전환 수수료 차감)" : "";
             price = point - fee_amount;
-            data = point + " KRW = " + price + " Point " + strFee;
+            $('#depositType').val() == 'bank_account' ? data = point + " KRW = " + price + " Point " + strFee : data = point + " Cash = " + price + " Point " + strFee;
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
-            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>KRW</span>");
+            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>Cash</span>");
             $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
             $("#plus_amount").text(numberWithCommas(price));
             $("#total_amount").text(numberWithCommas(total_point + price));
