@@ -150,7 +150,7 @@ $(document).ready(function() {
         }
 
         if(sel_files.length == 0) {
-            alert('It is successfully request KYC. Verification KYC will be token a few days.');
+            alert('Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. ');
             location.href = '/myPages/user/authPhone';
             return;
         }
@@ -165,7 +165,7 @@ $(document).ready(function() {
         }).done(function (success) {
             //console.log(success);
             $("#ajaxSpiner").hide(); // spinner
-            alert('It is successfully request KYC. Verification KYC will be token a few days.');
+            alert('Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. ');
             location.href = '/myPages/user/authPhone';
         }).fail(function (fail) {
             console.log('실패',fail);
