@@ -79,17 +79,7 @@
                 $('#defaultReal').val('');
                 $(".realperson-regen").trigger('click');
                 return;
-            }
-
-            if($("#phone").val() == "") {
-                alert("Please input the phone number.");
-                return;
-            } else if(hash($("#defaultReal").val()) != $("#defaultReal").realperson('getHash')) {
-                alert("The auto-input prevention character value is incorrect. Please re-enter it.");
-                $('#defaultReal').val('');
-                $(".realperson-regen").trigger('click');
-                return;
-            }
+            } 
             
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
