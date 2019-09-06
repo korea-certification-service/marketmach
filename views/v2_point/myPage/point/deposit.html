@@ -59,6 +59,7 @@
                 payKey = success.data.result.payKey;
                 $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + 'Happy Cash');
                 $(".hideBeforeLogin").show();
+                $('#happymoneyLogin').hide();
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -192,6 +193,7 @@
                     } 
                 }).fail(function (fail) {
                     console.log(fail);
+                    alert("해피캐시 결제 중 문제가 발생 하였습니다. 문제가 계속 발생될 경우 해피머니 관리자에게 문의하시기 바랍니다.");
                 });
             }
         }
