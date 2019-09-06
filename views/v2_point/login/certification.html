@@ -75,7 +75,6 @@
                 alert("자동입력 방지 문자를 입력하세요.");
                 return;
             } else if(hash($("#defaultReal").val().toUpperCase()) != $("#defaultReal").realperson('getHash')) {
-                console.log(hash($("#defaultReal").val()), $("#defaultReal").realperson('getHash'));
                 alert("자동입력 방지 문자 값이 틀립니다. 다시입력하세요.");
                 $('#defaultReal').val('');
                 $(".realperson-regen").trigger('click');
