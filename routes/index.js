@@ -204,7 +204,8 @@ router.get('/login', function (req, res, next) {
 });
 
 router.get('/logout', function (req, res, next) {    
-    req.body['sessionToken'] = "";
+    req.params['userId'] = req.session.userId;
+    req.body['loginToken'] = "";
     controllerUsers.update(req)
     .then((result) => {
         req.session.destroy();
