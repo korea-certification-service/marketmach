@@ -231,7 +231,7 @@
             if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
                 alert("Please enter the password again.");
                 return false;
-            } else if(!checkPassword($("#passwordConfirm").val())) {
+            } else if($("#password").val() != "" && ($("#password").val().length <= 5 || checkPassword($("#password").val()) == false)) {
                 alert("Please enter 6~20 characters in english+numeric or special characters.");
                 return false;
             } else if($("#password").val() != $("#passwordConfirm").val()) {
