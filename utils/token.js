@@ -32,6 +32,17 @@ function checkLoginTokenNoSignIn(req, res, next) {
         controllerUsers.detail(country, condition)
         .then(user => {
             if(user == null) {
+                req.session.userTag = "";
+                req.session.userId = "";
+                req.session.userName = "";
+                req.session.coinId = "";
+                req.session.pointId = "";
+                req.session.active = "";
+                req.session.country = "";
+                req.session.teenager = "";
+                req.session.authPhone = "";
+                req.session.bitberry_token = "";
+                req.session.kyc = "";
                 // logger.addLog(country, req.originalUrl, value, user);
                 next();
             } else {
