@@ -44,14 +44,14 @@
             _mainSearch(e.target, e.currentTarget);
         });
 
-        if(game_name != undefined) {
-            //console.log(game_name);
-            if(isPc()) {
-                $('#search_item_name').val(game_name + ' ' + (game_server == "undefined" ? "" : game_server) + ' ' + (title == "undefined" ? "" : title));
-            } else {
-                $('#m_search_item_name').val(game_name + ' ' + (game_server == "undefined" ? "" : game_server) + ' ' + (title == "undefined" ? "" : title));
-            }
-        }
+        // if(game_name != undefined) {
+        //     //console.log(game_name);
+        //     if(isPc()) {
+        //         $('#search_item_name').val(game_name + ' ' + (game_server == "undefined" ? "" : game_server) + ' ' + (title == "undefined" ? "" : title));
+        //     } else {
+        //         $('#m_search_item_name').val(game_name + ' ' + (game_server == "undefined" ? "" : game_server) + ' ' + (title == "undefined" ? "" : title));
+        //     }
+        // }
 
         if(userId !== "") {
             $("#btnInfoBox").on('click', function(key){
