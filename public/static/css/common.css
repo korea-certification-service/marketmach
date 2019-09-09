@@ -489,8 +489,13 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .media_sec .media_img_wrap .media_img:hover{box-shadow: 0 0 16px 0 rgba(0,0,0,.16); transition: all .2s linear;}
 .media_sec .media_img_wrap .media_img:first-child{margin-left: 0;}
 .media_sec .media_img_wrap .media_img a{display: block; text-align: center;}
-.media_sec .media_img_wrap .media_img img{max-height: 150px;}
-.media_sec .media_img_wrap .media_img h2{margin-top: 10px; text-align: center; color: #222222; font-weight: bold;}
+.media_sec .media_img_wrap .media_img .cmnt_photo{width: 100%; height: 160px; line-height: 160px; overflow: hidden; background-color: #000000;}
+.media_sec .media_img_wrap .media_img .cmnt_title{position: relative; padding-top: 10px; background-color: #ffffff;}
+.media_sec .media_img_wrap .media_img .cmnt_title:after{position: absolute; top: -20px; right: 55px; border: 10px solid transparent; border-bottom-color:#fff; clear: both; content: '';}
+.media_sec .media_img_wrap .media_img .cmnt_title h2{color: #222222; font-weight: bold;}
+.media_sec .media_img_wrap .media_img .cmnt_title .cmnt_info{padding-top: 10px; text-align: left; color: #333;}
+.media_sec .media_img_wrap .media_img .cmnt_title .cmnt_info span:nth-child(1){margin-right: 10px;}
+.media_sec .media_img_wrap .media_img .cmnt_title .cmnt_info span:nth-child(2){padding-left: 18px; background: url(/static/img/symbol/ico_view.png) 0 50% no-repeat; background-size: 16px 10px;}
 
 /* 게임뉴스 */
 .gamenews_sec{display: none;}
@@ -617,7 +622,14 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .primezone_sec .slick_primezone .card_ui dt{padding-top: 25px;}
     .primezone_sec .slick_primezone .card_ui dd li:nth-child(1) strong{font-size: 20px;}
     /* community */
-    .media_sec .media_img_wrap .media_img{}
+    .media_sec .media_img_wrap .media_img{margin: 0 0 20px 0; width: 100%;}
+    .media_sec .media_img_wrap .media_img:last-child{margin: 0;}
+    .media_sec .media_img_wrap .media_img .cmnt_photo{float: left; margin-right: 10px; width: 100px; height: 50px; line-height: initial; overflow: hidden;}
+    .media_sec .media_img_wrap .media_img .cmnt_photo img{max-height:initial; vertical-align: top;}
+    .media_sec .media_img_wrap .media_img .cmnt_title{padding-top: 0; float: left; width: calc(100% - 110px); background: transparent;}
+    .media_sec .media_img_wrap .media_img .cmnt_title:after{display: none;}
+    .media_sec .media_img_wrap .media_img .cmnt_title h2{text-align: left;}
+    .media_sec .media_img_wrap .media_img .cmnt_title .cmnt_info{}
     /**/
     .item_trade_sec h2 button{font-size: 14px;}
     .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}

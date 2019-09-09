@@ -329,10 +329,16 @@
                 var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
-                result += '<div class="media_img">' +
-                                '<a href="community/board/detail/'+data[i]._id+'">' +
-                                    '<img src="'+movie_img+'" alt="">' +
-                                    '<h2 class="ellipse">'+title+'</h2>' +
+                var recommandCount = data[i].recommandCount ? data[i].recommandCount : 0;
+                result +=   '<div class="media_img">' +
+                                '<a class="cf" href="community/board/detail/'+data[i]._id+'">' +
+                                    '<div class="cmnt_photo">' +
+                                        '<img src="'+movie_img+'" alt="">' +
+                                    '</div>' +
+                                    '<div class="cmnt_title">' +
+                                        '<h2 class="ellipse">'+title+'</h2>' +
+                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].count+'</span></p>' +
+                                    '</div>' +
                                 '</a>' +
                             '</div>';
             }
