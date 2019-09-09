@@ -178,6 +178,22 @@ function deleteReply(replyId) {
     })
 }
 
+function searchReply(data) {
+    return new Promise((resolve, reject) => {
+        Reply.find(
+            data
+        )
+        .sort({regDate:'desc'})
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            resolve(list)
+        })
+    })
+}
+
 exports.search = search;
 exports.searchMain = searchMain;
 exports.getById = getById;
@@ -188,3 +204,4 @@ exports.getReplyById = getReplyById;
 exports.addReply = addReply;
 exports.updateReply = updateReply;
 exports.deleteReply = deleteReply;
+exports.searchReply = searchReply;
