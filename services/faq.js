@@ -24,7 +24,7 @@ function search (data, option) {
         Faq.find(
             data
         )
-        .limit(option.perPage)
+        // .limit(option.perPage)
         // .skip(option.pageIdx * option.perPage)
         .sort({regDate:'desc'})
         .exec(function (err, faqs) {
