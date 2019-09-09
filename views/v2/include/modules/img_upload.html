@@ -143,11 +143,19 @@
         $('#' + index).remove();
         $('#input_imgs'+idx).val("");
 
-        console.log("sel length : ",sel_files);
+        // console.log("sel length : ",sel_files);
 
         // 풀이미지 썸네일 로직 추가
-        var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-        $("#fullImg").html(img1th)
+        $("#fullImg > img").attr("src", "");
+        var $listOfThumbnail = $("#listOfThumbnail li");
+        for (var j = 0; j < listOfThumbnail.length; j++) {
+            if(listOfThumbnail.eq(j).children().length === 1) {
+                var src = listOfThumbnail.eq(j).children().attr("src");
+                $("#fullImg > img").attr("src", src);
+                break;
+            }
+        }
+        
     }    
 </script>    
 <% } else if(pageName === "modify") {%>
@@ -280,8 +288,15 @@
         //console.log("sel length : ",sel_files);
 
         // 풀이미지 썸네일 로직 추가
-        var img1th = $(".imgs_wrap > .thumbnail_box:eq(0) img").clone();
-        $("#fullImg").html(img1th)
+        $("#fullImg > img").attr("src", "");
+        var $listOfThumbnail = $("#listOfThumbnail li");
+        for (var j = 0; j < listOfThumbnail.length; j++) {
+            if(listOfThumbnail.eq(j).children().length === 1) {
+                var src = listOfThumbnail.eq(j).children().attr("src");
+                $("#fullImg > img").attr("src", src);
+                break;
+            }
+        }
     }        
 </script>
 <% } %>
