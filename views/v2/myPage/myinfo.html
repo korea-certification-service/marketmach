@@ -231,7 +231,7 @@
             if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
                 alert("입력하신 패스워드를 다시 입력하세요.");
                 return false;
-            } else if(!checkPassword($("#passwordConfirm").val())) {
+            } else if($("#password").val() != "" && ($("#password").val().length <= 5 || checkPassword($("#password").val()) == false)) {
                 alert("비밀번호는 6~20자의 영문+숫자 or 특수문자를 사용해 주세요.");
                 return false;
             } else if($("#password").val() != $("#passwordConfirm").val()) {

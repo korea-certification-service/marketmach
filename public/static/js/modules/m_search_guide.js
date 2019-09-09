@@ -31,6 +31,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var inputSetTimeOut;
 
+    switch(location.pathname) {
+        case '/sells' :
+            srchInput.setAttribute("placeholder", "게임검색이 가능합니다");
+            break;
+        case '/etc-sells' :
+            srchInput.setAttribute("placeholder", "자산검색이 가능합니다");
+            break;
+        case '/otc-sells' :
+            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다");
+            break;
+    }
+
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     srchInput.addEventListener("input", function(event){
 
@@ -195,11 +207,11 @@ document.addEventListener("DOMContentLoaded", function () {
         srchBoxWrap.style.display = "none";
 
         if(srchSelect.value == "games"){
-            srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
+            srchInput.setAttribute("placeholder", "게임검색이 가능합니다");
         } else if(srchSelect.value == "assets"){
-            srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
+            srchInput.setAttribute("placeholder", "자산검색이 가능합니다");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
+            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다");
         }
         
     });

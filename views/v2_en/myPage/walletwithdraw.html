@@ -17,7 +17,7 @@
         
         $(document).ready(function() {
             if("<%=kyc%>" == "false") {
-                alert('It is scheduled to open after KYC policy is confirmed.');
+                alert('Identity verification(KYC) is required for withdrawal.');
                 //location.replace('/myPages/user/authPhone');
                 location.replace('/myPages/user/kyc');
             }

@@ -74,22 +74,12 @@
             } else if($("#defaultReal").val() == "") {
                 alert("Please enter a auto-input prevention character.");
                 return;
-            } else if(hash($("#defaultReal").val()) != $("#defaultReal").realperson('getHash')) {
+            } else if(hash($("#defaultReal").val().toUpperCase()) != $("#defaultReal").realperson('getHash')) {
                 alert("The auto-input prevention character value is incorrect. Please re-enter it.");
                 $('#defaultReal').val('');
                 $(".realperson-regen").trigger('click');
                 return;
-            }
-
-            if($("#phone").val() == "") {
-                alert("Please input the phone number.");
-                return;
-            } else if(hash($("#defaultReal").val()) != $("#defaultReal").realperson('getHash')) {
-                alert("The auto-input prevention character value is incorrect. Please re-enter it.");
-                $('#defaultReal').val('');
-                $(".realperson-regen").trigger('click');
-                return;
-            }
+            } 
             
             $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
@@ -172,7 +162,7 @@
                         <input type="text" class="form-control w100p" id="phone" placeholder="your phone number. ex)01012345678" maxlength="24"> 
                     </div>
                     <div class="submit_ctc_code_top no_w100p_wrap">
-                        <input type="text" class="form-control" id="defaultReal" max="6" placeholder="Input a auto-input prevention.">
+                        <input type="text" class="form-control" id="defaultReal" max="6" style="text-transform: uppercase;" placeholder="Input a auto-input prevention.">
                     </div>
                     <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">Send</button>
                 </div>

@@ -18,6 +18,17 @@ let redirectURI = encodeURI(dbconfig.naver_login_url);
 let api_url = "";
 var token = require('../utils/token');
 
+router.get('/ontology', function (req, res, next) {
+    if(dbconfig.country =="KR") {
+        res.render('v2/common/ontology_mobile', {title: 'Bitweb Main'});
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2/common/ontology', {title: 'Bitweb Main'});
+        // res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+    } else {
+        res.render('v2/common/ontology', {title: 'Bitweb Main'});
+        // res.render('v2_en/login/login', {title: 'Bitweb Main'});
+    }
+});
 
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
@@ -192,21 +203,20 @@ router.get('/login', function (req, res, next) {
     }
 });
 
-router.get('/logout', function (req, res, next) {
-    req.session.destroy();
-    res.clearCookie("orange__F");
-    res.clearCookie("loginToken");
-    res.clearCookie("loginToken",{domain:'marketmach.com'});
-    // cookie 삭제를 위한 expire 조정
-    // res.cookie("loginToken1", {
-    //     domain: 'marketmach.com',
-    //     expires: Date.now(),
-    // });
-    // res.cookie("loginToken", {
-    //     expires: Date.now(),
-    // });
-    
-    res.redirect('/');
+router.get('/logout', function (req, res, next) {    
+    req.params['userId'] = req.session.userId;
+    req.body['loginToken'] = "";
+    controllerUsers.update(req)
+    .then((result) => {
+        req.session.destroy();
+        res.clearCookie("orange__F");
+        res.clearCookie("loginToken");
+        res.clearCookie("loginToken",{domain:'marketmach.com'});
+        
+        res.redirect('/');
+    }).catch(error => {
+        res.redirect('/');
+    });
 });
 
 router.get('/findId', function (req, res, next) {

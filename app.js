@@ -132,6 +132,12 @@ app.use('/blockchain', express.static(__dirname + '/blockchain')); // redirect J
 // roboto
 app.use("/robots.txt",express.static(__dirname+'/public/static/robots.txt'));
 
+// Ontology interface modules
+// cyanobridge : mobile
+// ontology-dapi : web
+app.use('/cyanobridge', express.static(__dirname + '/node_modules/cyanobridge'));
+app.use('/ontology-dapi', express.static(__dirname + '/node_modules/ontology-dapi'));
+
 //language
 app.get('/KR',function(req,res){
     //res.cookie('lang','bitweb_ko');

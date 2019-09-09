@@ -59,6 +59,7 @@
                 payKey = success.data.result.payKey;
                 $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + 'Happy Cash');
                 $(".hideBeforeLogin").show();
+                $('#happymoneyLogin').hide();
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -124,9 +125,9 @@
             var data;
             var strFee = $("#depositType").val() == "happymoney" ? "("+(fee * 100)+"% 전환 수수료 차감)" : "";
             price = point - fee_amount;
-            data = point + " KRW = " + price + " Point " + strFee;
+            $('#depositType').val() == 'bank_account' ? data = point + " KRW = " + price + " Point " + strFee : data = point + " Cash = " + price + " Point " + strFee;
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
-            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>KRW</span>");
+            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>Cash</span>");
             $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
             $("#plus_amount").text(numberWithCommas(price));
             $("#total_amount").text(numberWithCommas(total_point + price));
@@ -192,6 +193,7 @@
                     } 
                 }).fail(function (fail) {
                     console.log(fail);
+                    alert("해피캐시 결제 중 문제가 발생 하였습니다. 문제가 계속 발생될 경우 해피머니 관리자에게 문의하시기 바랍니다.");
                 });
             }
         }
