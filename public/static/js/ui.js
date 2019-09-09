@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 var MainUi = {
     isMobSideMenu: false,
     init: function(){
-        this.disableShowCode();
+        // this.disableShowCode();
         this.floatHeader();
         this.navMenu();
         this.navHiddenMenu();
