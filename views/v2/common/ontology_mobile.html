@@ -3,49 +3,65 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<script src="/jquery/jquery.js"></script>
+        <script src="/jquery/jquery.js"></script>
+        <script src="/cyanobridge/lib/browser.js"></script>
 	</head>
 <body>
 <div id="wrap">
-	<div><a href='javascript:callApp();'>일반 앱 호출</a></div>
-	<div id="div_app"></div>
+	<div><button href='callApp();'>Call App</button></div>
+	<div id="div_app">
+        <iframe id='frm' width=0 height=0 frameborder=0></iframe>
+    </div>
 </div>
 <script>
+    var client = CyanoMobile.client;        
+    client.registerClient();
+    $(document).ready(function() {    
+        getProvider();
+    });
 
-function callApp(){    
-	// var appstoreUrl = "앱이 설치되지 않았을 때 보낼 URL"; 
-    // callApp2(appstoreUrl);    
-    var param = {
-        "action": "getAccount",
-        "id": "10ba038e-48da-487b-96e8-8d3b99b6d18a",
-        "version": "v1.0.0",
-        "params": {
-            "dappName": "MarketMACH",
-            "dappIcon": ""
+    async function getProvider() {
+        try {
+            const res = await client.api.provider.getProvider();
+            console.log(res)
+            alert(res);
+        } catch(err) {
+            console.log(err)
+            alert(err);
         }
     }
-    var url = "ontprovider://ont.io?param=" + btoa(encodeURIComponent(JSON.stringify(param)));
-	$("#div_app").html("<iframe id='frm' src='"+url+"' width=0 height=0 frameborder=0></iframe>");
-	setTimeout(function(){
-		var div = $("#div_app");
-		var iframe = $("#frm");
-		if(iframe.length > 0){
-			iframe.remove();
-		}
-	},1000);
-}
 
-function callApp2(appstoreUrl) { 
-    var clickedAt = new Date();                                         
-    setTimeout(function() { 
-        if (new Date() - clickedAt < 2000){ 
-            //아래 confirm이 있을때는 앱을 실행하고 나서 돌아오면 또 confirm메시지가 출력되기때문에 주석처리함
-            //if (window.confirm("앱북 최신 버전이 설치되어 있지 않습니다.   \n설치페이지로 이동하시겠습니까?")){
-                location.href = appstoreUrl; 
-            //}
-            }
-    }, 500);
-}
+    async function getIdentity() {
+        const params = {
+            dappName: 'My dapp',
+            dappIcon: '' // some url points to the dapp icon
+        }
+        try {
+        const res = await client.api.identity.getIdentity(params);
+            console.log(res);
+            alert(res);
+        } catch(err) {
+            console.log(err);
+            alert(err);
+        }
+    }
+
+    async function transaction() {
+        const params = {
+            from: 'AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz',// Sender's address
+            to: 'AXK2KtCfcJnSMyRzSwTuwTKgNrtx5aXfFX', // Receiver's address
+            asset: 'ONG', // Asset type. ONT or ONG
+            amount: 1000000000,// Amount to send.The value can be 'number' or 'string'
+            gasPrice: 500,
+            gasLimit: 20000
+        }
+        try {
+        const res = await client.api.asset.transfer(params);
+            console.log(res)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 </script>
 </body>
 </html>
