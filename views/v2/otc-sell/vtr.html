@@ -262,45 +262,8 @@
             var confirmYn = confirm('VTR에 접속하시겠습니까?');
 
             if(confirmYn) {
-                // roomToken = makeToken1();
-                // if (isMobile()) {
-                //     popup = window.open('about:blank', "room" + roomToken);
-                // }
-
-                // var body = {
-                //     "user_id": userTag,
-                //     "roomToken": roomToken,
-                //     "buyer_id": userTag,
-                //     "seller_id": from_userTag,
-                //     "status": 50,
-                //     "cmod": "deal"
-                // };
-
-                // $.ajax({
-                //     method: "PUT",
-                //     url: "/v1/items/updateStatus/" + itemId,
-                //     contentType: "application/json; charset=utf-8",
-                //     dataType: "json",
-                //     data: JSON.stringify(body),
-                // }).done(function (data) {
-                //     console.log(data);
-                //     if(isMobile()) {
-                //         popup.location.href = data.data;
-                //     } else {
-                //         window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
-                //             '                                    location=no,\n' +
-                //             '                                    status=no,\n' +
-                //             '                                    menubar=no,\n' +
-                //             '                                    scrollbars=yes,\n' +
-                //             '                                    resizable=yes,\n' +
-                //             '                                    width=550,\n' +
-                //             '                                    height=750');
-                //     }
-                //     location.href = "/otc-sells/detail/" + itemId;
-                // }).fail(function (fail) {
-                //     console.log(fail);
-                // });
                 if(buyerTag == "") {
+                    //최초 삽니다 페이지에서 판매자가 처음으로 VTR 요청할 경우 roomToken은 userTag -> from_userTag -> itemId 순으로 생성함.
                     var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
 
                     if(isMobile()) {
@@ -317,6 +280,7 @@
                             '                                    height=750');
                     }
                 } else {
+                    //이후 DB에서 roomToken 관련 정보를 가져와서 VTR 오픈
                     var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
                     if(isMobile()) {

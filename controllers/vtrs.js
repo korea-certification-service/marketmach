@@ -163,11 +163,11 @@ function getVtrTemp(req) {
     })
 }
 
-function getVtrTempByItemId(country, itemId) {
+function getVtrTempByItemId(country, itemId, userTag) {
     return new Promise((resolve, reject) => {
 
         db.connectDB(country)
-            .then(() => bitwebVtrs.getTempByItemId(itemId))
+            .then(() => bitwebVtrs.getVtrTempByItemId(itemId, userTag))
             .then((result) => {
                 console.log('result=>' , result);
                 resolve(result)

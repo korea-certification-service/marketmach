@@ -525,13 +525,21 @@ router.get('/service/:itemId', function (req, res, next) {
                             .then(coin => {
                                 controllerPoints.getByPointId(country, user._doc.pointId)
                                     .then(point => {
-                                        controllerVtrs.getVtrTempByItemId(country, itemId) 
+                                        controllerVtrs.getVtrTempByItemId(country, itemId, userTag) 
                                         .then(vtrTemp => {
-                                            let result = item;
-                                            result['_doc']['phone'] = user._doc.phone;
-                                            result['_doc']['total_coins'] = coin;
-                                            result['_doc']['total_point'] = point._doc.total_point;
-                                            result['_doc']['vtrTemp'] = vtrTemp;
+                                            let result = item;                                            
+                                            result._doc['phone'] = user._doc.phone;
+                                            result._doc['total_coins'] = coin;
+                                            result._doc['total_point'] = point._doc.total_point;
+                                            if(vtrTemp != null) {
+                                                result._doc['vtrList'] = vtrTemp;
+                                                let index = vtrTemp.findIndex(function(group) {
+                                                    return (group._doc.buyer_id == userTag || group._doc.seller_id == userTag);
+                                                })
+                                                if(index != -1) {
+                                                    result._doc['vtrTemp'] = vtrTemp[index];
+                                                }
+                                            }
 
                                             bitwebResponse.code = 200;
                                             bitwebResponse.data = result;

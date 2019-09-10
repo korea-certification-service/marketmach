@@ -974,6 +974,7 @@ router.delete('/:vtrId', function (req, res, next) {
     }
 })
 
+//안씀
 router.delete('/chatbot/:country/:itemId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = req.params.country;
@@ -1051,6 +1052,7 @@ router.delete('/cancel/:itemId/:userId', function (req, res, next) {
     let itemId = req.params.itemId;
     let body = {
         "reqUserTag": req.params.userId,
+        "roomToken": req.body.roomToken,
         "country": dbconfig.country
     }
 
@@ -1085,19 +1087,6 @@ router.delete('/cancel/:itemId/:userId', function (req, res, next) {
             res.status(500).send(bitwebResponse.create())
         }
     });
-
-    // controllerVtrs.deleteVtrsByItemId(country, itemId, userId)
-    //     .then((result) => {
-    //         let data = {}
-    //         bitwebResponse.code = 200;
-    //         bitwebResponse.data = result;
-    //         res.status(200).send(bitwebResponse.create())
-    //     }).catch((err) => {
-    //     console.error('err=>', err)
-    //     bitwebResponse.code = 500;
-    //     bitwebResponse.message = err;
-    //     res.status(500).send(bitwebResponse.create())
-    // })
 });
 
 router.put('/opposition/:itemId', function (req, res, next) {

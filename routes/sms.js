@@ -131,7 +131,7 @@ router.post('/url_test', function(req, res, next) {
     });
 });
 
-
+//안씀
 router.get('/vtr/notification/:country/:itemId/:userTag', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -139,7 +139,7 @@ router.get('/vtr/notification/:country/:itemId/:userTag', function(req, res, nex
     let itemId = req.params.itemId;
     let fromUserTag = req.params.userTag;
 
-    controllerVtrs.getVtrTempByItemId(country, itemId)
+    controllerVtrs.getVtrTempByItemId(country, itemId, req.session.userTag)
         .then((vtrTemp) => {
             let targetUserTag = "";
             if(vtrTemp._doc.buyer_id != fromUserTag) {

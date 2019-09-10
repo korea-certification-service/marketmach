@@ -117,6 +117,25 @@ function getTempByItemId(itemId) {
     })
 }
 
+function getVtrTempByItemId(itemId, userTag) {
+    return new Promise((resolve, reject) => {
+        VtrTemps.find(
+        {
+            "item._id": itemId,
+            $or: [ { "buyer_id": userTag }, { "seller_id": userTag } ]
+        })
+        .sort({"item.status":1})
+        .exec(function(err, vtr) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            //console.log('getByItemId done: ' + vtr)
+            resolve(vtr)
+        })
+    })
+}
+
 function getVtrByIdAndPassword (data) {
     return new Promise((resolve, reject) => {
         Vtrs.findOne(
@@ -438,6 +457,7 @@ exports.getVtrTemp = getVtrTemp;
 exports.getVtrById = getVtrById;
 exports.getByItemId = getByItemId;
 exports.getTempByItemId = getTempByItemId;
+exports.getVtrTempByItemId = getVtrTempByItemId;
 exports.getVtrByIdAndPassword = getVtrByIdAndPassword;
 exports.getVtrByEmail = getVtrByEmail;
 exports.getItemIdsByUserId = getItemIdsByUserId;
