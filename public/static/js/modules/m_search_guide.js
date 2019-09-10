@@ -32,13 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var inputSetTimeOut;
 
     switch(location.pathname) {
-        case '/sells' :
+        case '/sells':
+        case '/buys' :
             srchInput.setAttribute("placeholder", "게임검색이 가능합니다");
             break;
-        case '/etc-sells' :
+        case '/etc-sells':
+        case '/etc-buys' :
             srchInput.setAttribute("placeholder", "자산검색이 가능합니다");
             break;
-        case '/otc-sells' :
+        case '/otc-sells':
+        case '/otc-buys' :
             srchInput.setAttribute("placeholder", "OTC검색이 가능합니다");
             break;
     }

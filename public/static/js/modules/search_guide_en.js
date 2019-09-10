@@ -32,6 +32,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var inputSetTimeOut;
 
+    switch(location.pathname) {
+        case '/sells':
+        case '/buys' :
+            srchInput.setAttribute("placeholder", "Search Game or Server Name.");
+            break;
+        case '/etc-sells':
+        case '/etc-buys' :
+            srchInput.setAttribute("placeholder", "Search Asset.");
+            break;
+        case '/otc-sells':
+        case '/otc-buys' :
+            srchInput.setAttribute("placeholder", "Search OTC.");
+            break;
+    }
+
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     // srchInput.addEventListener("input", function(event){
 
