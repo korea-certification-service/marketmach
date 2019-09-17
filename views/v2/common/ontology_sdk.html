@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+        <script src="/jquery/jquery.js"></script>
+        <script src="/ontology-ts-sdk/lib/browser.js"></script>
+	</head>
+<body>
+<div id="wrap">
+    <div><button onclick='sendTransaction();'>ONT Transaction</button></div>
+    <div><button onclick='finalTransaction();'>Final Transaction</button></div>
+	<div id="div_app">
+        <iframe id='frm' width=0 height=0 frameborder=0></iframe>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {    
+        //getProvider();
+    });
+
+    function sendTransaction() {
+        //supppose we have an account with enough ONT and ONG
+        //Sender's address
+        const from = new Ont.Crypto.Address('ASfhmxjR2h83HxCEdSxRXh4wCrSBNEE2pf');
+        //Receiver's address
+        const to = new Ont.Crypto.Address('ATXRZuezstRnfFq54SJGeCpQ3gG5KaXrWi');
+        //Amount to send
+        const amount = 3
+        //Asset type
+        const assetType = 'ONT'
+        //Gas price and gas limit are to compute the gas costs of the transaction.
+        const gasPrice = '500';
+        const gasLimit = '20000';
+        const payer = from;
+        const privateKey = new Ont.Crypto.PrivateKey('76ea4dfe7fb4330c6501b2b57b0b0bd337ed073e23dd1077510359ff15251ee8');
+        //Payer's address to pay for the transaction gas
+        var tx = Ont.OntAssetTxBuilder.makeTransferTx(assetType, from, to, amount, gasPrice, gasLimit, payer);
+        Ont.TransactionBuilder.signTransaction(tx, privateKey)
+        var rest = new Ont.RestClient('http://polaris1.ont.io:20334');
+        rest.sendRawTransaction(tx.serialize())
+        .then(res => {
+            console.log(res)	
+        }).catch(err => {
+            console.log(err)	
+        })
+    }
+
+    function finalTransaction() {
+
+    }
+</script>
+</body>
+</html>

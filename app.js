@@ -137,6 +137,7 @@ app.use("/robots.txt",express.static(__dirname+'/public/static/robots.txt'));
 // ontology-dapi : web
 app.use('/cyanobridge', express.static(__dirname + '/node_modules/cyanobridge'));
 app.use('/ontology-dapi', express.static(__dirname + '/node_modules/ontology-dapi'));
+app.use('/ontology-ts-sdk', express.static(__dirname + '/node_modules/ontology-ts-sdk'));
 
 //language
 app.get('/KR',function(req,res){

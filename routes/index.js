@@ -29,6 +29,15 @@ router.get('/ontology', function (req, res, next) {
         // res.render('v2_en/login/login', {title: 'Bitweb Main'});
     }
 });
+router.get('/ontology/sdk', function (req, res, next) {
+    if(dbconfig.country =="KR") {
+        res.render('v2/common/ontology_sdk', {title: 'Bitweb Main'});
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2/common/ontology_sdk', {title: 'Bitweb Main'});
+    } else {
+        res.render('v2/common/ontology_sdk', {title: 'Bitweb Main'});
+    }
+});
 
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
