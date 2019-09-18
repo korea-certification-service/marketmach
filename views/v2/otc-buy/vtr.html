@@ -122,7 +122,10 @@
                     <li>※ [Coin 입금] 버튼 또는 [나의페이지-지갑관리]에서 Coin을 입금하실 수 있습니다.</li>
                 </ul>
                 <div class="btn_align_c">
-                    <button class="btn btn_in_view2" onclick="openVtrInfo()">VTR 안내</button>
+                    <!-- <button class="btn btn_in_view2" onclick="openVtrInfo()">VTR 안내</button> -->
+                    <select id="selectTradeUser" class="select_trade_user">
+                        <option value="">거래상대방 선택</option>
+                    </select>
                     <button class="btn btn_in_view1" id="btnSubmit">VTR 입장하기</button>
                 </div>
                 <!--// 회색테이블 -->
@@ -142,6 +145,7 @@
         var total_mach;
         var buyerTag;
         var sellerTag;
+        var trade_type; // 게시글 거래타입
     
         $(document).ready(function() {
             getData();
@@ -159,6 +163,10 @@
                     ajaxLoginYnCheck(openVTR);
                 }
             });
+
+            $(document).on('change', '#selectTradeUser', function(){
+
+            });
         });
 
         function getData() {
@@ -166,7 +174,7 @@
                 method: "GET",
                 url: "/v1/items/service/" + itemId
             }).done(function (success) {
-                //console.log(success);
+                console.log(success);
                 
                 itemId = success.data._id;
                 var regDate = success.data.regDate;
@@ -185,6 +193,7 @@
                 sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 total_mach = success.data.total_coins.total_mach;
                 var item_user_price = numberWithCommas(total_mach);
+                trade_type = success.data.trade_type;
                 if(cryptoCurrencyCode == "BTC") {
                     var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
                     item_user_price = numberWithCommas(coin_price);
@@ -215,6 +224,24 @@
                 $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
                 $(".item_status").addClass(status.className).text(status.text);
+
+                // 멀티채팅방 구현을 위한 거래자 리스트 select box 노출
+                var vtrList = success.data.vtrList;
+                if(userTag === to_userTag){
+                    if(vtrList.length !== 0){
+                        for (var i = 0; i < vtrList.length; i++) {
+                            if(trade_type === "buy"){
+                                var opt = $('<option value="'+vtrList[i].seller_id+'">'+vtrList[i].seller_id+'</option>');
+                            } else {
+                                var opt = $('<option value="'+vtrList[i].buyer_id+'">'+vtrList[i].buyer_id+'</option>');
+                            }
+                            
+                            $("#selectTradeUser").append(opt);
+                        }
+                    }
+                } else {
+                    $("#selectTradeUser").hide();
+                }
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -229,12 +256,11 @@
 
             var confirmYn = confirm('VTR에 접속하시겠습니까?');
 
-            if(confirmYn) {                
+            if(confirmYn) {      
                 if(buyerTag == "") {
-                    //최초 삽니다 페이지에서 판매자가 처음으로 VTR 요청할 경우 roomToken은 to_userTag -> userTag -> itemId 순으로 생성함.
                     var body = "itemId="+itemId+"&buyerTag="+to_userTag+"&sellerTag="+userTag;
-
                     if(isMobile()) {
+                        //최초 삽니다 페이지에서 판매자가 처음으로 VTR 요청할 경우 roomToken은 to_userTag -> userTag -> itemId 순으로 생성함.
                         popup = window.open('about:blank', "room" + to_userTag+"|"+userTag+"|"+itemId);
                         popup.location.href = '/room?' + body;
                     } else {
@@ -248,10 +274,19 @@
                             '                                    height=750');
                     }
                 } else {
-                    //이후 DB에서 roomToken 관련 정보를 가져와서 VTR 오픈
-                    var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+                    if($("#selectTradeUser").val() === "") {
+                        alert("거래하실 상대방을 선택해주세요")
+                        return;
+                    }    
 
+                    // console.log(to_userTag, buyerTag, sellerTag);
+                    sellerTag = $("#selectTradeUser").val();
+                    // console.log(sellerTag);
+                    
+                    var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+                    // return;
                     if(isMobile()) {
+                        //이후 DB에서 roomToken 관련 정보를 가져와서 VTR 오픈
                         popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
                         popup.location.href = '/room?' + body;
                     } else {
