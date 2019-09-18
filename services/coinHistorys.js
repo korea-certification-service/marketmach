@@ -519,6 +519,20 @@ function getCoinHistoryExtByCoinId (condition, option) {
     })
 }
 
+function getCountCoinHistoryExtByCoinId (condition) {
+    return new Promise((resolve, reject) => {
+        CoinHistorys.count(condition)
+            .exec(function (err, coinHistorys) {
+                if (err) {
+                    console.error(err)
+                    reject(err)
+                }
+                resolve(coinHistorys)
+            }
+        )
+    })
+}
+
 function getCoinHistorys(data, option) {
     return new Promise((resolve, reject) => {
         CoinHistorys.find(data)
@@ -530,8 +544,33 @@ function getCoinHistorys(data, option) {
                 console.error(err)
                 reject(err)
             }
-            console.log('getCoinHistorys done: ' + coinHistorys)
             resolve(coinHistorys)
+        })
+    })
+}
+
+function getCoinHistory(data) {
+    return new Promise((resolve, reject) => {
+        CoinHistorys.findOne(data)
+        .exec(function (err, coinHistory) {
+            if (err) {
+                console.error(err)
+                reject(err)
+            }
+            resolve(coinHistory)
+        })
+    })
+}
+
+function removeCoinHistory(condition) {
+    return new Promise((resolve, reject) => {
+        CoinHistorys.findOneAndRemove(condition)
+        .exec(function (err, coinHistory) {
+            if (err) {
+                console.error(err)
+                reject(err)
+            }
+            resolve(coinHistory)
         })
     })
 }
@@ -567,3 +606,6 @@ exports.getDepositHistorybyCoinId = getDepositHistorybyCoinId;
 exports.getDepositHistoryCountbyCoinId = getDepositHistoryCountbyCoinId;
 exports.getCoinHistoryExtByCoinId = getCoinHistoryExtByCoinId;
 exports.getCoinHistorys = getCoinHistorys;
+exports.getCoinHistory = getCoinHistory;
+exports.getCountCoinHistoryExtByCoinId = getCountCoinHistoryExtByCoinId;
+exports.removeCoinHistory = removeCoinHistory;

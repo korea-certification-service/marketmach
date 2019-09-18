@@ -139,6 +139,9 @@ app.use('/cyanobridge', express.static(__dirname + '/node_modules/cyanobridge'))
 app.use('/ontology-dapi', express.static(__dirname + '/node_modules/ontology-dapi'));
 app.use('/ontology-ts-sdk', express.static(__dirname + '/node_modules/ontology-ts-sdk'));
 
+//qrcode-generator
+app.use('/qrcode-generator', express.static(__dirname + '/node_modules/qrcode-generator'));
+
 //language
 app.get('/KR',function(req,res){
     //res.cookie('lang','bitweb_ko');

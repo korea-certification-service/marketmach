@@ -12,6 +12,7 @@ var util = require('../utils/util');
 var request = require('request');
 let dbconfig = require('../config/dbconfig');
 var Ont = require('ontology-ts-sdk');
+let scheduler = require('../utils/scheduler');
 
 router.get('/airdrop', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
@@ -1176,7 +1177,81 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
     });
 });
 
-//ont wallet 처리
+
+//ONT wallet 입금 요청 처리
+router.post('/ontwallet/deposit', function(req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+
+    if(req.session.userTag == undefined) {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    if(dbconfig.APIToken != req.body.token) {
+        //console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    let country = dbconfig.country;
+    let userTag = req.session.userTag;
+    let condition = {
+        'userTag': userTag
+    }
+    
+    controllerUsers.getByUserInfo(country, condition)
+        .then((user) => {
+            let amount = req.body.mach;
+            let data = {
+                "extType":"ontwallet",
+                "coinId": user._doc.coinId,
+                "category": 'deposit',          
+                "status": false,
+                "currencyCode": 'ONT',
+                "amount": amount,
+                "price": amount,
+                "regDate": util.formatDate(new Date().toString())  
+            }
+
+            controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
+            .then(coinHistory => {
+                controllerCoinHistorys.getCountCoinHistoryExtByCoinId(country, {"coinId":user._doc.coinId.toString()})
+                .then(count => {
+                    let jsonData = {}
+                    jsonData['coinId'] = coinHistory._doc.coinId;
+                    jsonData['historyId'] = coinHistory._doc._id;                    
+                    jsonData['historyCount'] = count;
+                    jsonData['regDate'] = util.getUnixTime(coinHistory._doc.regDate);
+                    jsonData['coinType'] = "ont";                    
+                    jsonData['price'] = amount;
+                    jsonData['fromAddress'] = req.body.fromAddress;
+                    scheduler.ontJob(jsonData);
+
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = coinHistory;
+                    res.status(200).send(bitwebResponse.create());
+                }).catch(err => {
+                    bitwebResponse.code = 500;
+                    bitwebResponse.message = err;
+                    res.status(500).send(bitwebResponse.create());
+                });
+            }).catch(err => {
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create());
+            });
+        }).catch(err => {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create());
+    });
+});
+
+//ont wallet 출금 처리
 router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;

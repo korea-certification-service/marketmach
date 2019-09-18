@@ -38,6 +38,11 @@ function formatDate2 (date) {
     return getDate + getTime;
 }
 
+function getUnixTime(date) {
+    var d = new Date(date);
+    return d.getTime() / 1000;
+}
+
 function dateDiff(_date1, _date2) {
     var diffDate_1 = _date1 instanceof Date ? _date1 : new Date(_date1);
     var diffDate_2 = _date2 instanceof Date ? _date2 : new Date(_date2);
@@ -162,3 +167,4 @@ exports.checkEmail = checkEmail;
 exports.checkAdult = checkAdult;
 exports.makeNumber = makeNumber;
 exports.dateDiff = dateDiff;
+exports.getUnixTime = getUnixTime;

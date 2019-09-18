@@ -476,6 +476,42 @@ function getCoinHistorys(country, data, option) {
     })
 }
 
+function getCountCoinHistoryExtByCoinId(country, condition) {
+    return new Promise((resolve , reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoinHistorys.getCountCoinHistoryExtByCoinId(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function updateCoinHistory(country, condition, data) {
+    return new Promise((resolve , reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoinHistorys.updateCoinHistoryById(condition, data))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+function removeCoinHistory(country, condition) {
+    return new Promise((resolve , reject) => {
+        db.connectDB(country)
+            .then(() => bitwebCoinHistorys.removeCoinHistory(condition))
+            .then((result) => {
+                resolve(result)
+            }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 exports.createCoinHistoryExtByCoinId = createCoinHistoryExtByCoinId;
 exports.getDepositHistorys = getDepositHistorys;
 exports.getWithdrawHistorys = getWithdrawHistorys;
@@ -493,3 +529,6 @@ exports.getDepositHistorybyCoinId = getDepositHistorybyCoinId;
 exports.getDepositHistoryCountbyCoinId = getDepositHistoryCountbyCoinId;
 exports.getCoinHistoryExtByCoinId = getCoinHistoryExtByCoinId;
 exports.getCoinHistorys = getCoinHistorys;
+exports.getCountCoinHistoryExtByCoinId = getCountCoinHistoryExtByCoinId;
+exports.updateCoinHistory = updateCoinHistory;
+exports.removeCoinHistory = removeCoinHistory;

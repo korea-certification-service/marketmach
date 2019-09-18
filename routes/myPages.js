@@ -340,8 +340,11 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
             btc_fee: dbconfig.fee.coin.btc.deposit,
             ether_fee: dbconfig.fee.coin.ether.deposit,
             mach_fee: dbconfig.fee.coin.mach.deposit,
+            ont_fee: dbconfig.fee.coin.ont.deposit,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
+            toAddress:dbconfig.ontology.address,
             arrDepth:[4,2],
             country:req.session.country
         });
@@ -386,8 +389,11 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
             btc_fee: dbconfig.fee.coin.btc.deposit,
             ether_fee: dbconfig.fee.coin.ether.deposit,
             mach_fee: dbconfig.fee.coin.mach.deposit,
+            ont_fee: dbconfig.fee.coin.ont.deposit,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
+            toAddress:dbconfig.ontology.address,
             arrDepth:[4,2],
             country:req.session.country
         });      
@@ -432,8 +438,11 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
             btc_fee: dbconfig.fee.coin.btc.deposit,
             ether_fee: dbconfig.fee.coin.ether.deposit,
             mach_fee: dbconfig.fee.coin.mach.deposit,
+            ont_fee: dbconfig.fee.coin.ont.deposit,
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
+            toAddress:dbconfig.ontology.address,
             arrDepth:[4,2],
             country:req.session.country
         });
