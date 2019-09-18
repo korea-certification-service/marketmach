@@ -40,8 +40,10 @@
         var rest = new Ont.RestClient('http://polaris1.ont.io:20334');
         rest.sendRawTransaction(tx.serialize())
         .then(res => {
+            alert('success');
             console.log(res)	
         }).catch(err => {
+            alert('error');
             console.log(err)	
         })
     }

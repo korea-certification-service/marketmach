@@ -53,6 +53,10 @@ router.get('/:coinId/list', function (req, res, next) {
         "pageIdx": 10
     };
 
+    if(extType == 'all') {
+        extType = ['bitberry','ontwallet'];
+    }
+
     if(trade_type == "event") {
         trade_type = ['deposit','event-signup','event-recommander','event-airdrop', 'exchange-deposit', 'event-etc'];
     } else if(trade_type == "bitberry_deposit") {

@@ -11,6 +11,7 @@ var unixtime = require('unix-timestamp');
 var util = require('../utils/util');
 var request = require('request');
 let dbconfig = require('../config/dbconfig');
+var Ont = require('ontology-ts-sdk');
 
 router.get('/airdrop', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
@@ -1149,6 +1150,174 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
                             console.log('error = ' + response.statusCode);
                         }
                     });
+            } else {
+                bitwebResponse.code = 200;
+                let message = "해당 사용자는 출금이 불가능합니다. 자세한 문의는 관리자에게 문의하세요.";
+                if(country == "EN") {
+                    message = "This user can not withdraw MACH. For more information, please contact the administrator.";
+                }
+                bitwebResponse.data = {
+                    "code": "N",
+                    "msg": message
+                };
+                res.status(200).send(bitwebResponse.create());
+            }
+        }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        });
+    }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    });
+});
+
+//ont wallet 처리
+router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let country = dbconfig.country;
+    if(req.session.userId == undefined) {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자 요청";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    if(dbconfig.APIToken != req.body.token) {
+        //console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    controllerUsers.getById(country, req.session.userId)
+    .then(user => {
+        let condition = {
+            "userName": user._doc.userName,
+            "birth": user._doc.birth
+        }
+        controllerUsers.getBlackList(country, condition) 
+        .then(blackLists => {
+            if(blackLists.length == 0) {
+                let coinType = req.params.coinType;
+                let country = dbconfig.country;
+                //let coinId = req.session.coinId == undefined ? req.body.coinId : req.session.coinId;
+                let userTag = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+
+                controllerCoins.getByCoinId(country, user._doc.coinId)
+                .then(coin => {
+                    let total_price = coin._doc.total_ont == undefined ? 0 : coin._doc.total_ont;
+                    if(coinType == "ETH") {
+                        total_price = coin._doc.total_ether == undefined ? 0 : coin._doc.total_ether;
+                    } else if(coinType == "BTC") {
+                        total_price = coin._doc.total_btc == undefined ? 0 : coin._doc.total_btc;
+                    }
+
+                    if(total_price < req.body.amount) {
+                        bitwebResponse.code = 200;
+                        bitwebResponse.message = {
+                            "code": "E001",
+                            "msg": "사용자 코인이 출금금액 보다 적습니다."
+                        };
+                        res.status(200).send(bitwebResponse.create());
+                        return;
+                    }
+
+                    let amount = req.body.amount;
+                    let fee_rate = parseFloat((amount * dbconfig.fee.coin.ont.withdraw).toFixed(8));
+                    amount = parseFloat((amount - 1).toFixed(8));
+                    //각 코인별로 출금
+                    if(coinType == "ETH") {
+                        fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.withdraw).toFixed(8));
+                        amount = parseFloat((amount - fee_rate).toFixed(8));
+                    } else if(coinType == "BTC") {
+                        fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.withdraw).toFixed(8));
+                        amount = parseFloat((amount - fee_rate).toFixed(8));
+                    } 
+
+                    let update_data = {
+                        "total_ont": parseFloat((coin._doc.total_ont - parseFloat((amount + fee_rate).toFixed(8))).toFixed(8))
+                    }
+                    if(coinType == "BTC") {
+                        update_data = {
+                            "total_btc": parseFloat((coin._doc.total_btc - req.body.amount).toFixed(8))
+                        }
+                    } else if(coinType == "ETH") {
+                        update_data = {
+                            "total_ether":  parseFloat((coin._doc.total_ether - req.body.amount).toFixed(8))
+                        }
+                    }
+                    
+                    controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
+                    .then(u_coin => {
+                        //supppose we have an account with enough ONT and ONG
+                        //Sender's address
+                        const from = new Ont.Crypto.Address(dbconfig.ontology.address);
+                        //Receiver's address
+                        const to = new Ont.Crypto.Address(req.body.toAddress);
+                        //Asset type
+                        const assetType = 'ONT'
+                        //Gas price and gas limit are to compute the gas costs of the transaction.
+                        const gasPrice = dbconfig.ontology.gasPrice;
+                        const gasLimit = dbconfig.ontology.gasLimit;
+                        const payer = from;
+                        const privateKey = new Ont.Crypto.PrivateKey(dbconfig.ontology.privateKey);
+                        //Payer's address to pay for the transaction gas
+                        const tx = Ont.OntAssetTxBuilder.makeTransferTx(assetType, from, to, amount, gasPrice, gasLimit, payer);
+                        Ont.TransactionBuilder.signTransaction(tx, privateKey)
+                        const rest = new Ont.RestClient(dbconfig.ontology.restUrl);
+                        rest.sendRawTransaction(tx.serialize())
+                        .then(result => {
+                            console.log('success : ', result);
+
+                            let data = {
+                                "extType": "ontwallet",
+                                "coinId": user._doc.coinId,
+                                "category": "withdraw",          
+                                "status": 'success',
+                                "currencyCode": coinType,
+                                "amount": amount,
+                                "price": amount,
+                                "regDate": util.formatDate(new Date().toString())  
+                            }
+
+                            controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data);
+                            
+                            let feePercentage = dbconfig.fee.coin.ont.withdraw;
+                            if(coinType == "BTC") {
+                                feePercentage = dbconfig.fee.coin.btc.withdraw;
+                            } else if(coinType == "ETH") {
+                                feePercentage = dbconfig.fee.coin.ether.withdraw;
+                            }
+
+                            let feeHistory = {
+                                userId: user._doc._id,
+                                currency: coinType,
+                                type: "withdraw",
+                                amount: fee_rate,
+                                fee: feePercentage,
+                                regDate: util.formatDate(new Date().toString())  
+                            }
+                            controllerFeeHistorys.add(country, feeHistory);
+                            bitwebResponse.code = 200;
+                            bitwebResponse.data = u_coin;
+                            res.status(200).send(bitwebResponse.create())
+                        }).catch(err => {
+                            bitwebResponse.code = 500;
+                            bitwebResponse.message = err;
+                            res.status(500).send(bitwebResponse.create());
+                        });
+                    }) .catch(err => {
+                        bitwebResponse.code = 500;
+                        bitwebResponse.message = err;
+                        res.status(500).send(bitwebResponse.create());
+                    });
+                });
             } else {
                 bitwebResponse.code = 200;
                 let message = "해당 사용자는 출금이 불가능합니다. 자세한 문의는 관리자에게 문의하세요.";

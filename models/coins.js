@@ -10,6 +10,7 @@ var coinsSchema = new Schema({
     output_total_mach: Number,
     total_btc: Number,
     total_ether: Number,
+    total_ont: Number,
     // historys: [String],
     // ether_historys: [String],           //ether를 입금 했을때
     // btc_historys: [String],             //btc를 입금 했을때

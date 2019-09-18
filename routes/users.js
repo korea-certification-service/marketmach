@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bitcore = require('bitcore-lib');
+// const bitcore = require('bitcore-lib');
 const request = require('request');
 const Address = require('bitcore-explorers/node_modules/bitcore-lib/lib/address');
 const ripemd160 = require('ripemd160');
@@ -18,7 +18,7 @@ var controllerItems = require('../controllers/items');
 var CryptoJS = require("crypto-js");
 var md5 = require('md5');
 var token = require('../utils/token');
-let networks = dbconfig.testnet.network == "testnet" ? bitcore.Networks.testnet : bitcore.Networks.mainnet;
+// let networks = dbconfig.testnet.network == "testnet" ? bitcore.Networks.testnet : bitcore.Networks.mainnet;
 
 router.post('/list', function (req, res, next) {
     let country = dbconfig.country;
