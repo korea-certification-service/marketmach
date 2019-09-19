@@ -101,6 +101,12 @@
 
             getCoin();
             getCoinHistory('bitberry_deposit','all');
+
+            var ontClipboard = new ClipboardJS('#btnOntCopy');
+            ontClipboard.on('success', function(e) {
+                alert("주소가 복사되었습니다.");
+                e.clearSelection();
+            });
         });
 
         function getCoin() {
@@ -433,7 +439,7 @@
                                 </tbody>
                             </table>
                         </div>
-
+                        AVq9oq4jfJWZN3ASZmFw9xvgdnw6nZ7Y6v
                         <div class="table_wrap mb50">
                             <h2 class="tit_mypage dot_tit">결제정보</h2>
                             <table class="table_payment_info table">
@@ -474,12 +480,16 @@
                                 <div id="ontWalletArea">
                                     <h1>ONT 입금</h1>
                                     <p>QR Code를 찍으시거나 아래 주소를 복사 후 입금하세요.</p>
-                                    <div id="qrcodeValue"></div>
-                                    <input type="text" id="toAddress" style="width:300px;" readonly>
+                                    <div id="qrcodeValue" class="ont_qrcode_wrap"></div>
+                                    <div class="cf ont_addr_sec">
+                                        <input type="text" id="toAddress" class="ipt_ont_addr" readonly>
+                                        <button class="btn_ont_copy" id="btnOntCopy" data-clipboard-target="#toAddress">copy</button>
+                                    </div>
                                     <!-- <button id="resultDeposit" class="btn btn-danger">확인</button> -->
                                 </div>
                             </article>
                         </div>
+
                         <h2 class="tit_mypage dot_tit">비트베리 입금 내역</h2>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">

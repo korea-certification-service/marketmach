@@ -385,6 +385,10 @@
 .dim_all_area .modal_bitberry_deposit h1{margin-top: 10px; font-size: 24px; text-align: center;}
 .dim_all_area .modal_bitberry_deposit p{margin: 30px 0; font-size: 14px; color: #888888;}
 .dim_all_area .modal_bitberry_deposit button:last-child{}
+.dim_all_area .modal_bitberry_deposit .ont_addr_sec .ipt_ont_addr{float: left; width: 220px; height: 30px; font-size: 11px;}
+.dim_all_area .modal_bitberry_deposit .ont_addr_sec .btn_ont_copy{float: left; width: 40px; height: 30px; border: none; background-color: #31acca; color:#fff;}
+.dim_all_area .modal_bitberry_deposit .ont_qrcode_wrap{margin-bottom: 10px;}
+.dim_all_area .modal_bitberry_deposit .ont_qrcode_wrap img{width: 85px; height: 85px;}
 /** 지갑관리 **/
 /* 비트베리 연결 */
 .mypage_sec .connected_box{}

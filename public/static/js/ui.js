@@ -39,7 +39,8 @@ var MainUi = {
             }
         });
     
-        document.oncontextmenu=function(){return false;} // 마우스 오른쪽
+        // 이거하면 모바일에서 붙여넣기가 안됨
+        // document.oncontextmenu=function(){return false;} // 마우스 오른쪽
     },
     floatHeader: function() {
         var lastPos = 0;

@@ -47,7 +47,7 @@
     "passport-local": "^1.0.0",
     "popper.js": "^1.14.7",
     "promise": "^8.0.1",
-    "pug": "2.0.0-beta11",
+    "pug": "^2.0.4",
     "qrcode-generator": "^1.4.4",
     "request-promise-native": "^1.0.7",
     "sweetalert": "^2.1.2",
