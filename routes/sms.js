@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let request = require('request');
 let smsController = require('../controllers/sms');
 let controllerItems = require('../controllers/items')
 var controllerOccupancyPhones = require('../controllers/occurpancyPhones');
@@ -186,55 +187,89 @@ router.get('/vtr/notification/:country/:itemId/:userTag', function(req, res, nex
     })
 });
 
-router.post('/user/checkPhone', function(req,res,next) {
+router.post('/user/checkMobile', function(req,res,next) {
+    // var bitwebResponse = new BitwebResponse();
+    // let country = dbconfig.country;
+    // let authCode = util.makeNumber();
+    // if(dbconfig.APIToken != req.body.token) {
+    //     //console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = "이상 사용자";
+    //     res.status(500).send(bitwebResponse.create());
+    //     return;
+    // }
+
+    // let reqData = {
+    //     'country': country,
+    //     'countryCode':req.body.countryCode,
+    //     'phone': req.body.phone,
+    //     'authCode': authCode,
+    //     'regDate': util.formatDate(new Date().toString())
+    // }
+
+    // //긴급 패치
+    // if(req.body.countryCode == "+7") {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = "이상 사용자";
+    //     res.status(500).send(bitwebResponse.create())
+    // }
+
+    // controllerOccupancyPhones.add(country, reqData)
+    // .then(() => {
+    //     //SMS인증 후 인증번호 회신
+    //     reqData['message'] = "" + reqData.authCode + " - " + smsContent.authSms[country];
+    //     smsController.sendSmsCommon(reqData)
+    //     .then((result) => {
+    //         bitwebResponse.code = 200;
+    //         bitwebResponse.data = result;
+    //         res.status(200).send(bitwebResponse.create())
+    //     }).catch((err) => {
+    //         console.error('err=>', err)
+    //         bitwebResponse.code = 500;
+    //         bitwebResponse.message = err;
+    //         res.status(500).send(bitwebResponse.create())
+    //     })
+    // }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })    
+    
     var bitwebResponse = new BitwebResponse();
-    let country = dbconfig.country;
-    let authCode = util.makeNumber();
-    if(dbconfig.APIToken != req.body.token) {
-        //console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
-        res.status(500).send(bitwebResponse.create());
-        return;
+    let body = req.body;
+
+    let url = dbconfig.APIServer + "/v2/sms/user/checkMobile";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
     }
 
-    let reqData = {
-        'country': country,
-        'countryCode':req.body.countryCode,
-        'phone': req.body.phone,
-        'authCode': authCode,
-        'regDate': util.formatDate(new Date().toString())
-    }
-
-    //긴급 패치
-    if((req.body.countryCode + req.body.phone) == "+79852194205" || (req.body.countryCode + req.body.phone) == "+79238283330") {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
-        res.status(500).send(bitwebResponse.create())
-    }
-
-    controllerOccupancyPhones.add(country, reqData)
-    .then(() => {
-        //SMS인증 후 인증번호 회신
-        reqData['message'] = "" + reqData.authCode + " - " + smsContent.authSms[country];
-        smsController.sendSmsCommon(reqData)
-        .then((result) => {
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
             bitwebResponse.code = 200;
             bitwebResponse.data = result;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-            console.error('err=>', err)
+        } else {
+            console.error('err=>', error)
             bitwebResponse.code = 500;
-            bitwebResponse.message = err;
+            bitwebResponse.message = error;
             res.status(500).send(bitwebResponse.create())
-        })
-    }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })     
+        }
+    });
 })
 
 router.post('/user/checkAuthNo', function(req,res,next) {
