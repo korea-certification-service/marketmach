@@ -25,6 +25,9 @@ var MainUi = {
     disableShowCode: function() {
         var isCtrl = false;
         var isAlt = false;
+        var device = navigator.userAgent;
+        var computer = "win16|win32|win64|mac|macintel";
+
         document.addEventListener("keydown", function(e) {
             if(e.keyCode == 17 || e.keyCode == 91 || e.keyCode == 93) isCtrl = true;
             if(e.keyCode == 18) isAlt = true;
@@ -38,9 +41,21 @@ var MainUi = {
                 e.returnValue = false;
             }
         });
+
+        if(navigator.platform){
+            if(0 > computer.indexOf(navigator.platform.toLowerCase())){
+                //alert("Mobile");
+
+                if(device.indexOf("iPhone") > 0) { //alert("iPhone");
+                }else if(device.indexOf("Android") > 0) { //alert("Android");
+                }
     
-        // 이거하면 모바일에서 붙여넣기가 안됨
-        // document.oncontextmenu=function(){return false;} // 마우스 오른쪽
+            }else{
+                // PC에서 마우스 오른쪽 막음
+                document.oncontextmenu=function(){return false;} // 마우스 오른쪽
+            }
+        }
+        
     },
     floatHeader: function() {
         var lastPos = 0;
