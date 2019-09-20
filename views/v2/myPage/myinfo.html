@@ -19,7 +19,6 @@
         var total_mach = 0;
         var currencyCode="";
         var checkAuthNoYn = true;
-        var token = "<%=token%>";
         
         $(document).ready(function() {
             loadData();
@@ -329,13 +328,12 @@
             $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
             var reqData = {
                 'countryCode':$("#currencyType").val(),
-                'phone': $("#phone").val(),
-                'token': token
+                'phone': $("#phone").val()
             }
 
             $.ajax({
                 method: "POST",
-                url: "/v1/sms/user/checkPhone",
+                url: "/v1/sms/user/checkMobile",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(reqData),
