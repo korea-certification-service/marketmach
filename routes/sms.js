@@ -251,6 +251,14 @@ router.post('/user/checkMobile', function(req,res,next) {
         json: true
     }
 
+    //긴급 패치
+    if(req.body.countryCode == "+7") {
+        console.error('err=>', err)
+        bitwebResponse.code = 200;
+        bitwebResponse.data = "";
+        res.status(200).send(bitwebResponse.create())
+    }
+
     //API 서버로 내부 call요청한다.
     request(reqs, function (error, response, body) {  
         console.log(error, response, body);
