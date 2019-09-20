@@ -12,8 +12,10 @@
         var btc_fee = "<%=btc_fee%>";
         var ether_fee = "<%=ether_fee%>";
         var mach_fee = "<%=mach_fee%>";
+        var ont_fee = "<%=ont_fee%>";
         var fee;
         var rate;
+        var token = "<%=token%>";
         
         $(document).ready(function() {
             if("<%=kyc%>" == "false") {
@@ -47,18 +49,25 @@
 
             $("select[name=coin]").on('change', function() {
                 if($("select[name=coin] option:selected").val() == "BTC") {
+                    $('#showOntAddress').hide();
                     total_price = total_btc;
                 } else if($("select[name=coin] option:selected").val() == "ETH") {
+                    $('#showOntAddress').hide();
                     total_price = total_ether;
+                } else if($("select[name=coin] option:selected").val() == "ONT") {
+                    $('#showOntAddress').show();
+                    total_price = total_ont;
                 } else {
+                    $('#showOntAddress').hide();
                     total_price = total_mach;
                 }
                 $('[name=amount]').val("0");
                 calculate();
             })
 
+            $('#showOntAddress').hide();
             getCoin();
-            getCoinHistory('bitberry_withdraw','bitberry');
+            getCoinHistory('bitberry_withdraw','all');
         });
 
         function getCoin() {
@@ -66,6 +75,8 @@
                 method: "GET",
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
+                var ont_address = success.data.ont_address == undefined ? "" : success.data.ont_address;
+                $('#address').val(ont_address);
                 var coin = $("select[name=coin] option:selected").val();
                 total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
                 //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
@@ -78,6 +89,12 @@
                 $("#ethTotal").html(numberWithCommas(total_ether));                        
                 $("#my_amount").html(numberWithCommas(success.data.total_ether)  + "<span>ETH</span>");
                 $("#total_amount").html(numberWithCommas(total_ether) + " ETH");
+
+                total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;                        
+                //$("#ont").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                $("#ontTotal").html(numberWithCommas(total_ont));
+                $("#my_amount").html(numberWithCommas(success.data.total_ont)  + "<span>ONT</span>");
+                $("#total_amount").html(numberWithCommas(total_ont) + " ONT");
                 
                 total_mach = success.data.total_mach;                        
                 //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
@@ -147,6 +164,17 @@
                 $("#exchange_amount").html(price+' <span>'+coin+'</span>');
                 $("#plus_amount").html(mach + " ETH");
                 $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " ETH");
+            } else if (coin == "ONT") {
+                price = parseFloat((mach - (mach * ont_fee)).toFixed(8));
+                var ontIncludeFee = parseFloat(((mach - 1) + (mach * ont_fee)).toFixed(8));
+                ontIncludeFee = ontIncludeFee == -1 ? 0 : ontIncludeFee;
+                data = mach + " ONT - "+(ont_fee * 100)+"% = " + ontIncludeFee + " ONT  <span class='fcrd'>※"+(ont_fee * 100)+"% 에스크로 수수료 발생</span>";
+                $("#my_amount").html(numberWithCommas(total_ont)  + "<span>ONT</span>");
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(mach+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(Math.floor(ontIncludeFee)+' <span>'+coin+'</span>');
+                $("#plus_amount").html(ontIncludeFee + " ONT");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price - ontIncludeFee).toFixed(8))) + " ONT");
             } else if (coin == "MACH") {
                 price = parseFloat(mach.toFixed(8));
                 data = mach + " MACH = " + price + " MACH";
@@ -160,7 +188,8 @@
         }
 
         function reqWithdraw() {
-            if(bitberry_token == "") {
+            var coin = $("select[name=coin] option:selected").val();
+            if(coin != "ONT" && bitberry_token == "") {
                 alert("Connection with Bitberry is required.");
                 location.href = '/myPages/wallet/connect';
                 return;
@@ -182,28 +211,48 @@
             // }
 
             var data = {
-                "amount": Number($("input[name=amount]").val())
+                "amount": Number($("input[name=amount]").val()),
+                "token": token,
             };
+
+            var url = "/v1/coins/wallets/"+coin+"/withdraw";
+            if(coin == "ONT") {
+                if($('#address').val() == "") {
+                    alert("지갑 주소를 입력해 주세요.");
+                    return;
+                }
+
+                if($('[name=amount]').val() < 2) {
+                    alert('The minimum withdrawal amount is from 2 ONT.');
+                    $("#confirmWithdraw").attr("disabled", false);
+                    return;
+                }
+
+                url = "/v1/coins/wallets/"+coin+"/withdraw/ontwallet";
+                data['toAddress'] = $('#address').val();
+            } 
 
             $.ajax({
                 method: "POST",
-                url: "/v1/coins/wallets/"+$("select[name=coin] option:selected").val()+"/withdraw",
+                url: url,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(data)
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == undefined) {
-                    alert('MACH withdrawal has been processed successfully.');
+                    alert('Coin withdraw has been processed successfully.');
                     // getCoin();
                     // getCoinHistory('withdraw');
                     location.href = "/myPages/wallet/withdraw";
                 } else {
                     alert(success.data.msg);
+                    $("#confirmWithdraw").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
-                alert('There was a problem during the process. \n If the problem persists, please contact administrators.');
+                alert('There was a problem during the process. \n If the problem persists, please contact administrators')
+                $("#confirmWithdraw").attr("disabled", false);
             });
         }
     </script>
@@ -246,17 +295,19 @@
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
-                                    <col class="col4_1">
-                                    <col class="col4_2">
-                                    <col class="col4_3">
-                                    <col class="col4_4">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th>Coin</th>
-                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="MACH"></th>
+                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
+                                        <th>ONT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -265,6 +316,7 @@
                                         <td id="machTotal"></td>
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
+                                        <td id="ontTotal"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -292,12 +344,20 @@
                                                 <select class="custom-select" name="coin" onchange="calculate()">
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
+                                                    <option value="ONT">ONT</option>
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>
                                             <br class="mob_br"><span class="fcrd">※ Please select coin to withdraw.</span>
                                         </td>
                                     </tr>  
+                                    <tr id="showOntAddress">
+                                        <th>Address</th>
+                                        <td>
+                                            <input type="text" class="form-control" name="address" id="address" min="" value="" placeholder="Input ONT Address.">
+                                            <br class="mob_br"><span class="fcrd">※Your ONT Address.</span>
+                                        </td>
+                                    </tr> 
                                     <tr>
                                         <th>Amount</th>
                                         <td>

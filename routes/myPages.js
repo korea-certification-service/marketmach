@@ -606,6 +606,7 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
             usePoint:dbconfig.usePoint,
             useBlockchain:dbconfig.useBlockchain,
             kyc: req.session.kyc,
+            token:dbconfig.APIToken,
             arrDepth:[4,3],
             country:req.session.country
         });

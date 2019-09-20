@@ -104,9 +104,12 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
             let buyEscrowBtc = 0;
             let buyEscrowEth = 0;
             let buyEscrowMach = 0;
+            let buyEscrowOnt = 0;
             let sellEscrowBtc = 0;
             let sellEscrowEth = 0;
             let sellEscrowMach = 0;
+            let sellEscrowOnt = 0;
+            
             for(var i in vtrs) {
                 if(vtrs[i]._doc.from_userId == userId) {
                     if(vtrs[i]._doc.cryptoCurrencyCode == "BTC") {
@@ -115,6 +118,8 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                         sellEscrowEth = parseFloat((sellEscrowEth + vtrs[i]._doc.price).toFixed(8));
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         sellEscrowMach = parseFloat((sellEscrowMach + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONT") {
+                        sellEscrowOnt = parseFloat((sellEscrowOnt + vtrs[i]._doc.price).toFixed(8));
                     } else {
                         sellEscrowMach = parseFloat((sellEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
@@ -127,6 +132,8 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                         buyEscrowEth = parseFloat((buyEscrowEth + vtrs[i]._doc.price).toFixed(8));
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "MACH") {
                         buyEscrowMach = parseFloat((buyEscrowMach + vtrs[i]._doc.price).toFixed(8));
+                    } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONT") {
+                        buyEscrowOnt = parseFloat((buyEscrowOnt + vtrs[i]._doc.price).toFixed(8));
                     } else {
                         buyEscrowMach = parseFloat((buyEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
@@ -137,9 +144,11 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                 "buy_total_escrow_btc": buyEscrowBtc,
                 "buy_total_escrow_eth": buyEscrowEth,
                 "buy_total_escrow_mach": buyEscrowMach,
+                "buy_total_escrow_ont": buyEscrowOnt,
                 "sell_total_escrow_btc": sellEscrowBtc,
                 "sell_total_escrow_eth": sellEscrowEth,
-                "sell_total_escrow_mach": sellEscrowMach
+                "sell_total_escrow_mach": sellEscrowMach,
+                "sell_total_escrow_ont": sellEscrowOnt
             }
             bitwebResponse.code = 200;
             bitwebResponse.data = result;

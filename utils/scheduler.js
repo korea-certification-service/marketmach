@@ -51,7 +51,7 @@ function ontJob(data) {
                         if(txnList[i].TransferList[0].FromAddress == fromAddress) {
                             let amount = parseInt(txnList[0].TransferList[0].Amount);
                             let data = {
-                                "status": true,
+                                "status": "success",
                                 "amount": amount,
                                 "price": amount,
                                 "regDate": util.formatDate(new Date().toString())  
@@ -64,7 +64,8 @@ function ontJob(data) {
                                 controllerCoins.getByCoinId(country, coinId)
                                 .then(coin => {
                                     let update_data = {
-                                        "total_ont": parseFloat((coin._doc.total_ont + amount).toFixed(8))
+                                        "total_ont": parseFloat((coin._doc.total_ont + amount).toFixed(8)),
+                                        "ont_address": fromAddress
                                     }
                                     if(coinType == "btc") {
                                         let total_btc = coin._doc.total_btc == undefined ? 0 :  coin._doc.total_btc;

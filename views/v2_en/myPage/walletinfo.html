@@ -36,6 +36,7 @@
                 $("#machTotal").text(success.data.total_mach == undefined ? 0 : success.data.total_mach);
                 $("#btcTotal").text(success.data.total_btc == undefined ? 0 : success.data.total_btc);
                 $("#ethTotal").text(success.data.total_ether == undefined ? 0 : success.data.total_ether);
+                $("#ontTotal").text(success.data.total_ont == undefined ? 0 : success.data.total_ont);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -52,6 +53,8 @@
                 $("#machBuyEth").text(success.data.buy_total_escrow_eth);
                 $("#machSellMach").text(success.data.sell_total_escrow_mach);
                 $("#machBuyMach").text(success.data.buy_total_escrow_mach);
+                $("#machSellOnt").text(success.data.sell_total_escrow_ont);
+                $("#machBuyOnt").text(success.data.buy_total_escrow_ont);
                 //console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
@@ -225,10 +228,11 @@
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
-                                    <col class="col4_1">
-                                    <col class="col4_2">
-                                    <col class="col4_3">
-                                    <col class="col4_4">
+                                    <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -236,6 +240,7 @@
                                         <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
+                                        <th>ONT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,18 +249,21 @@
                                         <td id="machTotal"></td>
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
+                                        <td id="ontTotal"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Expected<br>Deposit</th>
                                         <td id="machSellMach"></td>
                                         <td id="machSellBtc"></td>
                                         <td id="machSellEth"></td>
+                                        <td id="machSellOnt"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Withdraw</th>
                                         <td id="machBuyMach"></td>
                                         <td id="machBuyBtc"></td>
                                         <td id="machBuyEth"></td>
+                                        <td id="machBuyOnt"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -284,7 +292,7 @@
                                     <tr>
                                         <th>Wallet</th>
                                         <th>Statement</th>
-                                        <th>Status</th>
+                                        <th>Desc</th>
                                         <th>Status</th>
                                         <th>Date</th>
                                     </tr>
