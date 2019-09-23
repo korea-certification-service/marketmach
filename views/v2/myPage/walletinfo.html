@@ -109,6 +109,12 @@
                             result +=   '<td class="td_exchange_coin">' + 
                                         '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
                                     '</td>';
+                        } else if(extType == "ontwallet") {
+                            result += '<td><img src="/static/img/symbol/symbol_ont_wallet.png" alt="mach wallet"></td>';
+                            result += '<td>'+category.text+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
                         } else {
                             result += '<td><img src="/static/img/symbol/symbol_mach_wallet.png" alt="mach wallet"></td>';
                             result += '<td>'+category.text+'</td>';
@@ -240,7 +246,7 @@
                                         <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
-                                        <th>ONT</th>
+                                        <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

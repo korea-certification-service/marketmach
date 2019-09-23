@@ -39,8 +39,8 @@ function ontJob(data) {
                 if(txnList == 0) {
                     if (jobCount == endJobCount) {
                         console.log('End jobCount==>', jobCount);
-                        //등록된 coinHistory 삭제
-                        controllerCoinHistorys.removeCoinHistory(country,{"_id": historyId});
+                        //등록된 coinHistory 삭제(일단 주석 처리)
+                        //controllerCoinHistorys.removeCoinHistory(country,{"_id": historyId});
                         job.cancel();
                         return;
                     }
