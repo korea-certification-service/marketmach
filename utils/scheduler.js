@@ -39,8 +39,8 @@ function ontJob(data) {
                 if(txnList == 0) {
                     if (jobCount == endJobCount) {
                         console.log('End jobCount==>', jobCount);
-                        //등록된 coinHistory 삭제
-                        controllerCoinHistorys.removeCoinHistory(country, historyId);
+                        //등록된 coinHistory 삭제(일단 주석 처리)
+                        //controllerCoinHistorys.removeCoinHistory(country,{"_id": historyId});
                         job.cancel();
                         return;
                     }
@@ -63,8 +63,9 @@ function ontJob(data) {
 
                                 controllerCoins.getByCoinId(country, coinId)
                                 .then(coin => {
+                                    let total_ont = coin._doc.total_ont == undefined ? 0 : coin._doc.total_ont;
                                     let update_data = {
-                                        "total_ont": parseFloat((coin._doc.total_ont + amount).toFixed(8)),
+                                        "total_ont": parseFloat((total_ont + amount).toFixed(8)),
                                         "ont_address": fromAddress
                                     }
                                     if(coinType == "btc") {
