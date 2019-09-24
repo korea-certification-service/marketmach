@@ -162,7 +162,7 @@ router.get('/all', function (req, res, next) {
                     controllerItems.getItemByRequired(country, data)
                         .then(etc_buys => {
                             data['trade_type'] = "sell";
-                            data['perPage'] = 7;
+                            data['perPage'] = 8;
                             controllerItems.getItemByRequired(country, data)
                                 .then(etc_sells => {
                                     data['category'] = "otc";

@@ -147,7 +147,7 @@ function getDelivery(value, category) {
         };
     } else if(value == "free_delivery") {
         return {
-            'text': 'Free Delivery',
+            'text': 'Prepaid',
             'number': 2,
             'className': 'ico_delivery_free'
         };
@@ -160,7 +160,7 @@ function getDelivery(value, category) {
             };
         } else {
             return {
-                'text': 'Pay on Delivery',
+                'text': 'Collect',
                 'number': 3,
                 'className': 'ico_delivery_payment'
             };
