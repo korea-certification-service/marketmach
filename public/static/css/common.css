@@ -190,10 +190,6 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_nav .mob_dep1_menu .scroll_area{height: 60px; overflow-x: scroll;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu{table-layout: fixed; width: 100%;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th{width: 90px; height: 40px; text-align: center;}
-.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(1){width: 60px;}
-.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(2){width: 40px;}
-.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(3){width: 100px;}
-.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(4){width: 100px;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th .btn_mob_menu{width: 100%; height: 40px; font-weight: bold; color: #000039; border: none; background: none;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th a{color: #444; font-weight: normal;}
 /* mobile nav 2depth menu */
@@ -276,7 +272,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .block_menu dd a {padding: 8px 0; display: block; color: #000000;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin{}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dt{padding: 6px 0; color: #1e2560;   text-align: center;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd{float: left; width: 25%; height: 37px; line-height: 35px; border-top: 1px solid #dbdbdb; border-right: 1px solid #dbdbdb;  text-align: center; box-sizing: border-box;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd{float: left; width: 25%; height: 37px; line-height: 35px; border-top: 1px solid #dbdbdb; border-right: 1px solid #dbdbdb; border-bottom: 1px solid #dbdbdb;  text-align: center; box-sizing: border-box;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(1){border-left: 1px solid #dbdbdb; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(5n){border-left: 1px solid #dbdbdb; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(n+5){border-bottom: 1px solid #dbdbdb}

@@ -1,0 +1,10 @@
+@charset "utf-8";
+/*
+* KCS: http://www.onlykcs.com/
+* since: 20190311 
+* Author: Jongmin Kim
+*/
+.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(1){width: 60px;}
+.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(2){width: 40px;}
+.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(3){width: 100px;}
+.mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(4){width: 100px;}
