@@ -17,6 +17,7 @@
 .primezone_sec .slick_primezone .card_ui dt{ font-size: 14px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc1{line-height: 1.5; padding-top: 20px;}
 .primezone_sec .slick_primezone .card_ui dt.bgc3{line-height: 1.2; padding-top: 8px;}
+
 /* mobile nav */
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(1){width: 60px;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(2){width: 40px;}

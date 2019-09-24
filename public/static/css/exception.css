@@ -45,7 +45,7 @@
 .header.member_header{}
 .header.member_header h1{float: left; padding-left: 20px;}
 .header.member_header h1 a{display: block;}
-.header.member_header h1 a img{height: 30px;}
+.header.member_header h1 a img{height: 45px;}
 .header.member_header .mb_top_menu{height: auto; padding: 30px 0 20px; box-sizing: border-box; border: 1px solid #c1c1c1; border-right: none; border-left: none;}
 .header.member_header .mb_top_menu .menu_list{float: right;}
 .header.member_header .mb_top_menu .menu_list > li{float: left; padding: 13px 0; }
