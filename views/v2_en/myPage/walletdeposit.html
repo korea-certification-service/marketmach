@@ -18,7 +18,6 @@
         var ont_fee = parseFloat("<%=ont_fee%>");
         var rate;
         var toAddress = "<%=toAddress%>";
-        var token = "<%=token%>";
         
         $(document).ready(function() {
             if(bitberry_token != undefined && bitberry_token != "") {
@@ -235,7 +234,6 @@
 
             var data = {
                 "mach": Number($("input[name=amount]").val()),
-                "token": token
             };
 
             if(coin == "ONT") {

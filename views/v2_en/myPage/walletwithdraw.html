@@ -15,7 +15,6 @@
         var ont_fee = "<%=ont_fee%>";
         var fee;
         var rate;
-        var token = "<%=token%>";
         
         $(document).ready(function() {
             if("<%=kyc%>" == "false") {
@@ -212,7 +211,6 @@
 
             var data = {
                 "amount": Number($("input[name=amount]").val()),
-                "token": token,
             };
 
             var url = "/v1/coins/wallets/"+coin+"/withdraw";
