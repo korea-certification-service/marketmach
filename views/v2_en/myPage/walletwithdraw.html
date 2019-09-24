@@ -167,7 +167,7 @@
                 price = parseFloat((mach - (mach * ont_fee)).toFixed(8));
                 var ontIncludeFee = parseFloat(((mach - 1) + (mach * ont_fee)).toFixed(8));
                 ontIncludeFee = ontIncludeFee == -1 ? 0 : ontIncludeFee;
-                data = mach + " ONT - "+(ont_fee * 100)+"% = " + ontIncludeFee + " ONT  <span class='fcrd'>※"+(ont_fee * 100)+"% 에스크로 수수료 발생</span>";
+                data = mach + " ONT - "+(ont_fee * 100)+"% = " + ontIncludeFee + " ONT  <span class='fcrd'>※"+(ont_fee * 100)+"% Excluded escrow fee.</span>";
                 $("#my_amount").html(numberWithCommas(total_ont)  + "<span>ONT</span>");
                 $("#calculate").html(data);
                 $("#Withdraw_amount").html(mach+' <span>'+coin+'</span>');
@@ -396,10 +396,10 @@
                                 </tbody>
                             </table>
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="confirmWithdraw">Bitberry<br class="mob_br"> Withdrawal Request</button>
+                                <button class="btn btn_in_view1" id="confirmWithdraw">Withdrawal Request</button>
                             </div>                            
                         </div>
-                        <h2 class="tit_mypage dot_tit">Bitberry Withdrawal Statement</h2>
+                        <h2 class="tit_mypage dot_tit">Withdrawal Statement</h2>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>
