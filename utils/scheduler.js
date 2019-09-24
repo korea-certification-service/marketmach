@@ -102,6 +102,7 @@ function ontJob(data) {
                             });
                         }
                     }
+                    jobCount++;
                 }
             } else {
                 console.log("can't find block information in ontology!")
