@@ -101,7 +101,7 @@
                 var otc_sells = success.data.otc_sells;
                 var notices = success.data.notices;
                 
-                console.log(success);
+                // console.log(success);
 
                 setPrimeService(prime_services);
                 setGameSellList(game_sells);
@@ -257,7 +257,7 @@
         function setNoticeList(data) {
             var result = "";
 
-            console.log(data)
+            // console.log(data)
 
             for(var i=0; i<data.length; i++) {
                 var noticeId = data[i]._id;

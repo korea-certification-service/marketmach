@@ -272,7 +272,7 @@
         function setEtcSellList(data) {
             var result = "";
 
-            // console.log(data)
+            console.log(data)
 
             if(data.length > 0) {
                 // data.length = 4
@@ -297,9 +297,9 @@
                         money = price + '<span>'+cryptoCurrencyCode+'</span>';
                     }
 
-                    if(i % 4 === 0) result += '<li class="row">'
+                    if(i % 4 === 0) result += '<li class="li_asset cf">'
                     
-                    result += '<div class="col-lg-3 col-md-6 col-xs-12">'
+                    result += '<div class="asset_once">'
                             +     '<div class="img_list_box">'
                             +        '<div class="photo_frame">'
                             +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
@@ -316,11 +316,12 @@
                             +        '</dl>'
                             +    '</div>'
                             + '</div>'
-                    if(i===data.length -1) {
-                        result += '<div class="col-md-3 col-sm-6 col-xs-12"><div class="img_list_box"><div class="view_more">'
-                                + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
-                                + '</div></div></div>'
-                    }
+                    // VIEW MORE 버튼 빼버림
+                    // if(i===data.length -1) {
+                    //     result += '<div class="asset_once"><div class="img_list_box"><div class="view_more">'
+                    //             + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
+                    //             + '</div></div></div>'
+                    // }
                     if(i % 4 === 3) result += '</li>'
                 }
             }
@@ -342,7 +343,7 @@
                                     '</div>' +
                                     '<div class="cmnt_title">' +
                                         '<h2 class="ellipse">'+title+'</h2>' +
-                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].count+'</span></p>' +
+                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].replyCount+'</span></p>' +
                                     '</div>' +
                                 '</a>' +
                             '</div>';
@@ -428,7 +429,7 @@
                 </div>
             </section>
         </div>
-        <div class="container renewer_container">
+        <div class="renewer_container">
             <section class="w100p_banner">
                 <h1 class="blind">advertise</h1>
                 <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
@@ -440,56 +441,79 @@
             </section>
 
             <section>
-                <h1 class="tit_main_sec">ASSET</h1>
-                <div class="photo_list">
-                    <ul id="assetsTrade">
-                    </ul>
+                <div class="main_inner_wrap">
+                    <h1 class="tit_main_sec">ASSET</h1>
+                    <div class="photo_list">
+                        <ul id="assetsTrade">
+                        </ul>
+                    </div>
+                    <div class="hashtag_category_wrap cf">
+                        <!-- <button class="btn_hash_all">ALL</button> -->
+                        <ul class="hashtag_category cf">
+                            <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
+                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
+                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Male"><span>Male</span></a></li>
+                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
+                            <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Beauty"><span>Beauty</span></a></li>
+                            <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Baby"><span>Baby</span></a></li>
+                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Sports"><span>Sports</span></a></li>
+                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Electronic"><span>Electronic</span></a></li>
+                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Living"><span>Living</span></a></li>
+                            <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Book/Ticket"><span>Book/Ticket</span></a></li>
+                            <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Hobby"><span>Hobby</span></a></li>
+                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
+                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
+                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
             <!-- OTC 판매/구매 -->
-            <section class="secOtc item_trade_sec col-lg-12">
-                <h1 class="tit_main_sec">OTC</h1>
-                <h2 class="item_sell_tit on">
-                    <button class="btnOtc btn_show_list on">Sales</button>
-                    <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
-                </h2>
-                <div class="otc_sell otc_table_wrap trade_list toggleTable">              
-                    <table class="main_list_table">
-                        <colgroup class="colgroup_main_otc">
-                            <col class="col2_1">
-                            <col class="col2_2">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="otc_sell_list">                               
-                        </tbody>
-                    </table>
-                </div>
-                <h2 class="item_buy_tit">
-                    <button class="btnOtc btn_show_list">Purchase</button>
-                    <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
-                </h2>
-                <div class="otc_buy otc_table_wrap trade_list toggleTable">
-                    <table class="main_list_table">
-                        <colgroup class="colgroup_main_otc">
-                            <col class="col2_1">
-                            <col class="col2_2">
-                        </colgroup>                            
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="otc_buy_list">
-                        </tbody>
-                    </table>                           
-                </div>             
+            <section class="secOtc item_trade_sec">
+                <div class="main_inner_wrap">
+                    <h1 class="tit_main_sec">OTC</h1>
+                    <h2 class="item_sell_tit on">
+                        <button class="btnOtc btn_show_list on">Sales</button>
+                        <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
+                    </h2>
+                    <div class="otc_sell otc_table_wrap trade_list toggleTable">              
+                        <table class="main_list_table">
+                            <colgroup class="colgroup_main_otc">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otc_sell_list">                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 class="item_buy_tit">
+                        <button class="btnOtc btn_show_list">Purchase</button>
+                        <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
+                    </h2>
+                    <div class="otc_buy otc_table_wrap trade_list toggleTable">
+                        <table class="main_list_table">
+                            <colgroup class="colgroup_main_otc">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>                            
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otc_buy_list">
+                            </tbody>
+                        </table>                           
+                    </div>
+                </div>                             
             </section>
             <!--// OTC 아이템 판매/구매 -->
 
@@ -502,15 +526,15 @@
                 </a>
             </div>
 
-            <div class="row">
-                <section class="media_sec col-lg-12">
+            <section class="media_sec">
+                <div class="main_inner_wrap">
                     <h1 class="tit_main_sec">Community</h1>
                     <div class="bd_area">
                         <div class="media_img_wrap cf">
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
 
             <div class="main_3n1n_wrap">
                 <section class="notice_sec">
