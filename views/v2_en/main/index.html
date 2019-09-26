@@ -260,7 +260,8 @@
 
             // console.log(data)
 
-            for(var i=0; i<data.length; i++) {
+            var len = 3; // data.length
+            for(var i=0; i<len; i++) {
                 var noticeId = data[i]._id;
                 var title = data[i].title;
                 
@@ -371,6 +372,16 @@
                 <h1 class="blind">Main Banners</h1>
                 <div class="slick_visual">
                     <div class="visual_img">
+                        <a href="/howto/trade/vtr">
+                            <div class="pc_img">
+                                <img src="/static/img/main/main_visual05.jpg" alt="Open Beta">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/mob/m_main_visual05.jpg" alt="Open Beta">
+                            </div>
+                        </a> 
+                    </div>                    
+                    <div class="visual_img">
                         <a href="/supports/notice/detail?noticeId=5d637e3f59011316ab4b943e">
                         <div class="pc_img">
                             <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
@@ -407,17 +418,7 @@
                                 <img src="/static/img/en/en_mob_main_visual02.jpg" alt="1st Game">
                             </div>
                         </a>
-                    </div>
-                    <div class="visual_img">
-                        <a href="/howto/trade/vtr">
-                            <div class="pc_img">
-                                <img src="/static/img/main/main_visual01.jpg" alt="Open Beta">
-                            </div>
-                            <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual01.jpg" alt="Open Beta">
-                            </div>
-                        </a> 
-                    </div>                                             
+                    </div>                                         
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
                 <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
@@ -430,7 +431,7 @@
             </section>
         </div>
         <div class="renewer_container">
-            <section class="w100p_banner">
+            <!-- <section class="w100p_banner">
                 <h1 class="blind">advertise</h1>
                 <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
                     <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
@@ -438,39 +439,40 @@
                 <a class="mob_show" href="https://t.me/marketmachcom" target="_blank">
                     <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                 </a>
-            </section>
+            </section> -->
 
-            <section>
+            <section class="section_asset">
                 <div class="main_inner_wrap">
-                    <h1 class="tit_main_sec">ASSET</h1>
+                    <h1 class=""><img src="/static/img/main/tit_asset.png" alt="ASSET"></h1>
                     <div class="photo_list">
                         <ul id="assetsTrade">
                         </ul>
                     </div>
-                    <div class="hashtag_category_wrap cf">
-                        <!-- <button class="btn_hash_all">ALL</button> -->
-                        <ul class="hashtag_category cf">
-                            <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
-                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
-                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Male"><span>Male</span></a></li>
-                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
-                            <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Beauty"><span>Beauty</span></a></li>
-                            <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Baby"><span>Baby</span></a></li>
-                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Sports"><span>Sports</span></a></li>
-                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Electronic"><span>Electronic</span></a></li>
-                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Living"><span>Living</span></a></li>
-                            <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Book/Ticket"><span>Book/Ticket</span></a></li>
-                            <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Hobby"><span>Hobby</span></a></li>
-                            <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
-                            <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
-                            <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
-                        </ul>
-                    </div>
                 </div>
             </section>
-
+            <section class="section_hashtag">
+                <div class="main_inner_wrap hashtag_category_wrap">
+                    <ul class="hashtag_category cf">
+                        <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Male"><span>Male</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Beauty"><span>Beauty</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Baby"><span>Baby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Sports"><span>Sports</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Electronic"><span>Electronic</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Living"><span>Living</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Book/Ticket"><span>Book/Ticket</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Hobby"><span>Hobby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
+                    </ul>
+                </div>
+            </section>
+                
             <!-- OTC 판매/구매 -->
-            <section class="secOtc item_trade_sec">
+            <!-- <section class="secOtc item_trade_sec">
                 <div class="main_inner_wrap">
                     <h1 class="tit_main_sec">OTC</h1>
                     <h2 class="item_sell_tit on">
@@ -514,8 +516,17 @@
                         </table>                           
                     </div>
                 </div>                             
-            </section>
+            </section> -->
             <!--// OTC 아이템 판매/구매 -->
+
+            <!-- 커뮤니티ㅏ 베스트 -->
+            <section class="section_community">
+                <div class="main_inner_wrap">
+                    <h1 class=""><img src="/static/img/main/tit_community.png" alt="Community"></h1>
+                    <div class="media_img_wrap cf">
+                    </div>
+                </div>
+            </section>
 
             <div class="w100p_banner">
                 <a class="mob_hide" href="http://bitweb.co.kr" target="_blank">
@@ -525,17 +536,24 @@
                     <img src="/static/img/en/en_mob_main_banner03.jpg" alt="bitweb mobile">
                 </a>
             </div>
-
-            <section class="media_sec">
-                <div class="main_inner_wrap">
-                    <h1 class="tit_main_sec">Community</h1>
-                    <div class="bd_area">
-                        <div class="media_img_wrap cf">
+            
+            <div class="noti_hot_section_wrap">
+                <div class="main_inner_wrap dfb">
+                    <section class="section_notice">
+                        <h1>NOTICE</h1>
+                        <div class="line_box">
+                            <ul id="notice_list" class="noti_list">
+                            </ul>
                         </div>
-                    </div>
+                    </section>
+                    <section class="section_hotmenu">
+                        <h1>HOT MENU</h1>
+                        <img src="https://via.placeholder.com/385x200/D12C71/FFF?text=BANNER1" alt="">
+                        <img src="https://via.placeholder.com/385x200/D12C71/FFF?text=BANNER2" alt="">
+                    </section>
                 </div>
-            </section>
-
+            </div>
+        <!--
             <div class="main_3n1n_wrap">
                 <section class="notice_sec">
                     <h1 class="">Notice</h1>
@@ -563,6 +581,7 @@
                     </a>
                 </section>
             </div>
+        -->
         </div>
         <!--// bootstrap container -->
     </div>
