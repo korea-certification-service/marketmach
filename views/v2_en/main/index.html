@@ -103,12 +103,12 @@
                 
                 console.log(success);
 
-                setPrimeService(prime_services);
+                // setPrimeService(prime_services);
                 // setGameSellList(game_sells);
                 // setGameBuyList(game_buys);
                 setEtcSellList(etc_sells);
-                setOtcBuyList(otc_buys);
-                setOtcSellList(otc_sells);
+                // setOtcBuyList(otc_buys);
+                // setOtcSellList(otc_sells);
                 setNoticeList(notices);
                 setCommunityMovie(movies);
                 // setCommunityBoard(boards);
@@ -157,7 +157,7 @@
             $('.slick_primezone').slick('slickRemove', null, null, true);
             $('.slick_primezone').slick('slickAdd', result);
         }
-        /*
+
         function setGameSellList(data) {
             var result = "";
 
@@ -209,7 +209,6 @@
             }
             $('#buy_list').html(result);
         }
-        */
 
         function setOtcSellList(data) {
             var result = "";
@@ -422,7 +421,7 @@
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
                 <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
-                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>ONTology</em></div></div>
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Grand Open</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>Listing</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>2nd Game</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>1st Game</em></div></div>
@@ -443,7 +442,7 @@
 
             <section class="section_asset">
                 <div class="main_inner_wrap">
-                    <h1 class=""><img src="/static/img/main/tit_asset.png" alt="ASSET"></h1>
+                    <h1 class=""><img src="/static/img/en/title_asset_en.png" alt="ASSET"></h1>
                     <div class="photo_list">
                         <ul id="assetsTrade">
                         </ul>
@@ -467,6 +466,7 @@
                         <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
                         <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
+                        <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>
                     </ul>
                 </div>
             </section>
@@ -519,10 +519,10 @@
             </section> -->
             <!--// OTC 아이템 판매/구매 -->
 
-            <!-- 커뮤니티ㅏ 베스트 -->
+            <!-- 커뮤니티 베스트 -->
             <section class="section_community">
                 <div class="main_inner_wrap">
-                    <h1 class=""><img src="/static/img/main/tit_community.png" alt="Community"></h1>
+                    <h1 class=""><img src="/static/img/en/title_community_en.png" alt="Community"></h1>
                     <div class="media_img_wrap cf">
                     </div>
                 </div>
@@ -553,35 +553,6 @@
                     </section>
                 </div>
             </div>
-        <!--
-            <div class="main_3n1n_wrap">
-                <section class="notice_sec">
-                    <h1 class="">Notice</h1>
-                    <ul id="notice_list" class="noti_list">
-                    </ul>
-                    <div class="noti_btm_media">
-                        <ul class="cf">
-                            <li><a href="https://www.facebook.com/MarketMACH" target="_blank"><img src="/static/img/symbol/ico_noti_media_facebook.png" alt="facebook"></a></li>
-                            <li><a href="https://twitter.com/MACH99077436" target="_blank"><img src="/static/img/symbol/ico_noti_media_twitter.png" alt="twitter"></a></li>
-                            <li><a href="https://www.youtube.com/channel/UC0d7GufTm0iG1IX_Lenp11w?feature=embeds_subscribe_title" target="_blank"><img src="/static/img/symbol/ico_noti_media_youtube.png" alt="youtube"></a></li>
-                            <li><a href="https://medium.com/@kdi_35594" target="_blank"><img src="/static/img/symbol/ico_noti_media_medium.png" alt="facebook"></a></li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="guide_sec">
-                    <a href="/howto/trade/vtr">
-                        <h1>MarketMACH<br>How to use<br>Guide</h1>
-                        <div class="ico_round ico_guide01"></div>
-                    </a>
-                </section>
-                <section class="guide_sec">
-                    <a href="/howto/trade/buynow">
-                        <h1>MarketMACH<br>Trading process<br>Guide</h1>
-                        <div class="ico_round ico_guide02"></div>
-                    </a>
-                </section>
-            </div>
-        -->
         </div>
         <!--// bootstrap container -->
     </div>
