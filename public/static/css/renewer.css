@@ -51,7 +51,7 @@
 .section_community .media_img_wrap .media_img img:hover{transform: scale(1.05); transition: all .12s linear;}
 .section_community .media_img_wrap .media_img:first-child{margin-left: 0;}
 .section_community .media_img_wrap .media_img a{display: block; text-align: center;}
-.section_community .media_img_wrap .media_img .cmnt_photo{width: 100%; height: 160px; line-height: 160px; overflow: hidden; background-color: #000000;}
+.section_community .media_img_wrap .media_img .cmnt_photo{width: 100%; height: 160px; line-height: 160px; overflow: hidden; background-color: #fff;}
 .section_community .media_img_wrap .media_img .cmnt_title{position: relative; padding: 15px 20px; background-color: #ffffff;}
 .section_community .media_img_wrap .media_img .cmnt_title:after{position: absolute; top: -20px; right: 55px; border: 10px solid transparent; border-bottom-color:#fff; clear: both; content: '';}
 .section_community .media_img_wrap .media_img .cmnt_title h2{color: #222222; font-weight: bold;}

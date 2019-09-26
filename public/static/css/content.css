@@ -154,7 +154,7 @@
 .photo_list li .img_list_box dt a{color: #333333;}
 .photo_list li .img_list_box dt .reply_num{color: #0a73b8;}
 .photo_list li .img_list_box dd{}
-.photo_list li .img_list_box dd .money_txt{float: left; font-size: 16px; font-weight: bold; color: #1e2560;}
+.photo_list li .img_list_box dd .money_txt{float: left; font-size: 15px; font-weight: bold; color: #1e2560;}
 .photo_list li .img_list_box dd .money_txt span{margin-left: 5px; font-size: 10px;}
 .photo_list li .img_list_box dd .time_txt{float: right; font-weight: bold; color: #777;}
 .photo_list li .img_list_box dd .price_txt{text-align: left; font-size: 14px; font-weight: bold; color: #1e2560;}
