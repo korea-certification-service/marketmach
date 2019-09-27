@@ -246,7 +246,7 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == undefined) {
-                    alert('MACH 출금이 정상적으로 처리되었습니다.');
+                    alert(coin + ' 출금이 정상적으로 처리되었습니다.');
                     // getCoin();
                     // getCoinHistory('withdraw');
                     location.href = "/myPages/wallet/withdraw";
@@ -403,10 +403,10 @@
                                 </tbody>
                             </table>
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="confirmWithdraw">비트베리<br class="mob_br"> 출금요청</button>
+                                <button class="btn btn_in_view1" id="confirmWithdraw">출금요청</button>
                             </div>                            
                         </div>
-                        <h2 class="tit_mypage">비트베리 출금 내역</h2>
+                        <h2 class="tit_mypage">출금 내역</h2>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>
