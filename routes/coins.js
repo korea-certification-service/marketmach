@@ -930,6 +930,7 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
     }
 
     let body = req.body;
+    body['country'] = dbconfig.country;
     req.body['userId'] = req.session.userId;
     req.body['coinType'] = req.params.coinType;
     req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
@@ -978,6 +979,7 @@ router.post('/ontwallet/deposit', function(req, res, next) {
     }
 
     let body = req.body;
+    body['country'] = dbconfig.country;
     req.body['coinType'] = req.params.coinType;
     req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
 
@@ -1024,6 +1026,7 @@ router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
     }
 
     let body = req.body;
+    body['country'] = dbconfig.country;
     req.body['userId'] = req.session.userId;
     req.body['coinType'] = req.params.coinType;
     req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
