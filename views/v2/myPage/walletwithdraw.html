@@ -227,11 +227,11 @@
                     return;
                 }
 
-                if($('[name=amount]').val() < 2) {
-                    alert('ONT는 자연수만 출금 가능합니다. 최소 출금 금액은 2 ONT 부터입니다.');
-                    $("#confirmWithdraw").attr("disabled", false);
-                    return;
-                }
+                // if($('[name=amount]').val() < 2) {
+                //     alert('ONT는 자연수만 출금 가능합니다. 최소 출금 금액은 2 ONT 부터입니다.');
+                //     $("#confirmWithdraw").attr("disabled", false);
+                //     return;
+                // }
 
                 url = "/v1/coins/wallets/"+coin+"/withdraw/ontwallet";
                 data['toAddress'] = $('#address').val();
