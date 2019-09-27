@@ -67,12 +67,12 @@
 .noti_hot_section_wrap h1{margin-bottom: 10px; font-size: 20px;}
 .noti_hot_section_wrap .section_notice{width: 32%;}
 .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 51.5%; height: 0; overflow: hidden; box-sizing: border-box; border: 1px solid #d2d2d2;}
-.noti_hot_section_wrap .section_notice .noti_list{padding: 40px 20px 25px 20px;}
-.noti_hot_section_wrap .section_notice .noti_list li{margin-bottom: 15px;}
+.noti_hot_section_wrap .section_notice .noti_list{padding: 28px 20px 25px 20px;}
+.noti_hot_section_wrap .section_notice .noti_list li{margin-bottom: 8px;}
 .noti_hot_section_wrap .section_notice .noti_list li a{color: #333333;}
 .noti_hot_section_wrap .section_hotmenu{width: 68%; font-size: 0;}
 .noti_hot_section_wrap .section_hotmenu h1{padding-left: 2.8%;}
-.noti_hot_section_wrap .section_hotmenu img{width: 47.2%; max-height: 200px; margin-left: 2.8%;}
+.noti_hot_section_wrap .section_hotmenu a{display: inline-block; width: 47.2%; max-height: 200px; margin-left: 2.8%;}
 
 /* 기존 공지사항: 다 만들고 지우기 */
 .renewer_container .main_3n1n_wrap{max-width: 1200px; margin: 0 auto 100px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
@@ -106,15 +106,22 @@
 }
 @media (max-width: 767px){
 .renewer_container{padding: 0 10px;}
+.renewer_container .photo_list{padding-top: 95px;}
+.hashtag_category_wrap{padding-bottom: 80px;}
+.section_hashtag{background-size: 50px 25px; margin: -25px 0 170px 0;}
 .section_community .media_img_wrap .media_img{margin-left: 0%; margin-bottom: 20px; width: 100%;}
 .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
-.noti_hot_section_wrap .section_notice{margin-bottom: 20px; width: 100%;}
+.noti_hot_section_wrap .section_notice{margin-bottom: 80px; width: 100%;}
 .noti_hot_section_wrap .section_hotmenu{width: 100%;}
 .noti_hot_section_wrap .section_hotmenu h1{padding-left: 0;}
-.noti_hot_section_wrap .section_hotmenu img{margin-left: 0; width: 49%;}
-.noti_hot_section_wrap .section_hotmenu img:first-of-type{margin-right: 2%;}
-
+.noti_hot_section_wrap .section_hotmenu a{margin-left: 0; width: 49%;}
+.noti_hot_section_wrap .section_hotmenu a:first-of-type{margin-right: 2%;}
 }
 @media (max-width: 576px){
-
+.renewer_container .w100p_banner{margin: 62.5px auto 50px;}
+.section_asset h1{top: -82px;}
+.section_asset h1 img{width: 150px;}
+.section_asset{margin-top: 120px; background-size: 50px 20px;}
+.section_community h1{top: -70px;}
+.section_community h1 img{width: 150px;}
 }
