@@ -221,11 +221,11 @@
                     return;
                 }
 
-                if($('[name=amount]').val() < 2) {
-                    alert('The minimum withdrawal amount is from 2 ONT.');
-                    $("#confirmWithdraw").attr("disabled", false);
-                    return;
-                }
+                // if($('[name=amount]').val() < 2) {
+                //     alert('The minimum withdrawal amount is from 2 ONT.');
+                //     $("#confirmWithdraw").attr("disabled", false);
+                //     return;
+                // }
 
                 url = "/v1/coins/wallets/"+coin+"/withdraw/ontwallet";
                 data['toAddress'] = $('#address').val();

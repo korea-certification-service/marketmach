@@ -200,7 +200,7 @@
                     total_mach = coin_price;
                 } else if(cryptoCurrencyCode == "ONT") {
                     var coin_price = success.data.total_coins.total_ont == undefined ? 0 : success.data.total_coins.total_ont;
-                    item_user_price = numberWithCommas(success.data.total_coins.total_ont);
+                    item_user_price = numberWithCommas(coin_price);
                     total_mach = coin_price;
                 } 
 
