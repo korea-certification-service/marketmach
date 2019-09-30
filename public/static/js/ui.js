@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 var MainUi = {
     isMobSideMenu: false,
     init: function(){
-        //this.disableShowCode();
+        // this.disableShowCode();
         this.floatHeader();
         this.navMenu();
         this.navHiddenMenu();
@@ -364,7 +364,7 @@ var MainUi = {
                 if(eTarget.classList[3] === "toggleTable"){
                     for(var j=0; j < len; j++){
                         document.querySelectorAll(_obj.sec + " .toggleTable")[j].style.display="none";
-                        document.querySelectorAll(_obj.sec + " > h2")[j].classList.remove("on");
+                        document.querySelectorAll(_obj.sec + " h2")[j].classList.remove("on");
                         document.querySelectorAll(_obj.sec + " "+_obj.btn)[j].classList.remove("on");
                     }
                     eTarget.style.display="block"; // trade_list

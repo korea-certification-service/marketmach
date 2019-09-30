@@ -1,3 +1,6 @@
+<style>
+.mob_header .mob_sch_sec li:nth-child(1){visibility: hidden;}
+</style>
 <script>
     var coinId = "<%=coinId%>";
     var pointId = "<%=pointId%>";
@@ -139,8 +142,8 @@
         <!-- 모바일 검색영역 -->
         <section class="mob_sch_sec">
             <ul class="mob_top_menu cf">
-                <li><a href="javascript:loginChecker()"><img src="/static/img/symbol/ani_blue_bird.gif" alt="MACH bot"></a></li>
-                <li><h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1></li>
+                <li><a href="javascript:loginChecker()"><img src="/static/img/main/chatbot_mac.png" alt="MACH bot"></a></li>
+                <li><h1 class="h_logo"><a href="/main"><img src="/static/img/pointmall/pointmall_logo.png" alt="MACH"></a></h1></li>
                 <li>
                     <button id="btnHamburger" class="menu-trigger">
                         <span></span>
@@ -231,9 +234,9 @@
             <nav class="hamburger_menu">            
                 <div class="m_nav_head cf">
                     <ul class="cf">
-                        <li onclick="location.href='https://ko.marketmach.com'"><img src="/static/img/symbol/flag_korea.png" alt="KR"><span><a class="lang">한국</a></span></li>
+                        <!-- <li onclick="location.href='https://ko.marketmach.com'"><img src="/static/img/symbol/flag_korea.png" alt="KR"><span><a class="lang">한국</a></span></li>
                         <li onclick="location.href='https://en.marketmach.com'"><img src="/static/img/symbol/flag_usa.png" alt="EN"><span><a class="lang">영어</a></span></li>
-                        <!-- <li class="recommendUrl">
+                        <li class="recommendUrl">
                             <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
                             <button type="button" class="btn btn-success recomandation" id="btnRecomandation">추천URL</button>
                         </li> -->

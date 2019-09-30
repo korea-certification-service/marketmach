@@ -11,15 +11,16 @@
         var total_ether = 0;
         var total_mach = 0;
         var total_ont = 0;
+        var total_ong = 0;
         var walletId;
         var transfer_request_id;
         var btc_fee = parseFloat("<%=btc_fee%>");
         var ether_fee = parseFloat("<%=ether_fee%>");
         var mach_fee = parseFloat("<%=mach_fee%>");
         var ont_fee = parseFloat("<%=ont_fee%>");
+        var ong_fee = parseFloat("<%=ong_fee%>");
         var rate;
         var toAddress = "<%=toAddress%>";
-        var token = "<%=token%>";
         
         $(document).ready(function() {
             if(bitberry_token != undefined && bitberry_token != "") {
@@ -78,6 +79,11 @@
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
+                } else if($("select[name=coin] option:selected").val() == "ONG") {
+                    $('#showOntAddress').show();
+                    $('#bitberryArea').hide();
+                    $('#ontWalletArea').show();
+                    total_price = total_ong;
                 } else {
                     $('#showOntAddress').hide();
                     $('#bitberryArea').show();
@@ -134,6 +140,12 @@
                 $("#ontTotal").html(numberWithCommas(total_ont));
                 $("#my_amount").html(numberWithCommas(success.data.total_ont)  + "<span>ONT</span>");
                 $("#total_amount").html(numberWithCommas(total_ont) + " ONT");
+
+                total_ong = success.data.total_ong == undefined ? 0 : success.data.total_ong;    
+                //$("#ont").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");                    
+                $("#ongTotal").html(numberWithCommas(total_ong));
+                $("#my_amount").html(numberWithCommas(success.data.total_ong)  + "<span>ONG</span>");
+                $("#total_amount").html(numberWithCommas(total_ong) + " ONG");
                 
                 total_mach = success.data.total_mach;                        
                 //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
@@ -208,6 +220,14 @@
                 $("#exchange_amount").html(price+' <span>'+coin+'</span>');
                 $("#plus_amount").html(mach + " ONT");
                 $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " ONT");
+            } else if(coin == "ONG") {
+                price = parseFloat((mach - (mach * ong_fee)).toFixed(8));
+                $("#my_amount").html(numberWithCommas(total_ong)  + "<span>ONG</span>");
+                $("#calculate").html(data);
+                $("#deposit_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ONG");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " ONG");
             } else if (coin == "MACH") {
                 price = parseFloat(mach.toFixed(8));
                 data = mach + " MACH = " + price + " MACH";
@@ -221,8 +241,9 @@
         }
 
         function reqDeposit() {
+            $("#confirmDeposit").attr("disabled", true);
             var coin = $("select[name=coin] option:selected").val();
-            if(coin != "ONT" && bitberry_token == "") {
+            if((coin != "ONT"&& coin != "ONG") && bitberry_token == "") {
                 alert("비트베리 앱에서 연동이 필요합니다.");
                 location.href = '/myPages/wallet/connect';
                 return;
@@ -230,17 +251,20 @@
             
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
                 alert("Coin 금액을 입력하세요.");
+                $("#confirmDeposit").attr("disabled", false);
                 return;
             }
 
             var data = {
                 "mach": Number($("input[name=amount]").val()),
-                "token": token
+                "cryptoCurrencyCode":coin
+
             };
 
-            if(coin == "ONT") {
+            if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
                     alert("지갑 주소를 입력해 주세요.");
+                    $("#confirmDeposit").attr("disabled", false);
                     return;
                 }
                 data['fromAddress'] = $('#address').val();
@@ -258,6 +282,7 @@
                 }).fail(function (fail) {
                     console.log(fail);
                     alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
                 $.ajax({
@@ -276,6 +301,7 @@
                 }).fail(function (fail) {
                     console.log(fail);
                     alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             }
         }
@@ -316,9 +342,11 @@
                     location.href = "/myPages/wallet/deposit";
                 } else {
                     alert(success.data.msg);
+                    $("#confirmDeposit").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
+                $("#confirmDeposit").attr("disabled", false);
             });
         }
     </script>
@@ -362,11 +390,12 @@
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -375,6 +404,7 @@
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
                                         <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
+                                        <th><img src="/static/img/symbol/symbol_ong.png" alt="ONG" title="ONG"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -384,6 +414,7 @@
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
                                         <td id="ontTotal"></td>
+                                        <td id="ongTotal"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -412,6 +443,7 @@
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="ONT">ONT</option>
+                                                    <option value="ONG">ONG</option>
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>
@@ -465,7 +497,7 @@
                                 </tbody>
                             </table>
                             <div class="btn_align_c">
-                                <button class="btn btn_in_view1" id="confirmDeposit">비트베리<br class="mob_br"> 입금요청</button>
+                                <button class="btn btn_in_view1" id="confirmDeposit">입금요청</button>
                             </div>                            
                         </div>
                         <!-- 모달창 -->
@@ -490,7 +522,7 @@
                             </article>
                         </div>
 
-                        <h2 class="tit_mypage dot_tit">비트베리 입금 내역</h2>
+                        <h2 class="tit_mypage dot_tit">입금 내역</h2>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>

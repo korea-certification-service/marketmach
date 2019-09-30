@@ -226,16 +226,16 @@
                 </ul>
             </div>
             <section class="sch_sec cf">
-                <h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1>
+                <h1 class="h_logo point_logo"><a href="/main"><img src="/static/img/pointmall/pointmall_logo.png" alt="MACH"></a></h1>
                 
                 <% include modules/search_guide.html %>
                 
-                <div class="chatbot jumpBot">
+                <!-- <div class="chatbot jumpBot">
                     <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/ani_bot.gif" alt="챗봇"></a>
-                </div>
+                </div> -->
             </section>
             <nav class="nav cf">
-                <ul class="l_menu nav_menu cf bgc1">
+                <ul class="l_menu nav_menu cf">
                     <li>
                         <button class="hasDepth2">판매등록</button>
                         <ul class="depth2 cf">
@@ -274,13 +274,13 @@
                 </ul>
                 <ul class="r_menu cf">
                     <li>
-                        <button id="btnInfoBox" class="btn_info_box">▼</button>
+                        <button id="btnInfoBox" class="btn_info_box"></button>
                         <div style="display:none" id="floatingInfoBox" class="floating_info_box">
                             <%# 로그인 전 %>
                             <div class="beforeLoginBox">
                                 <ul>
                                     <li class="top_area cf" style="border:none;">
-                                        <button class="btn bgc3" onclick="location.href='/login';">로그인</button>
+                                        <a class="btn" href="/login">로그인</a>
                                         <ul class="cf link_login_info">
                                             <li><a href="/findId">아이디·비밀번호 찾기</a></li>
                                             <li><a href="/agreement">회원가입</a></li>

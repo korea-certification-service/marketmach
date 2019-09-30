@@ -1,64 +1,10 @@
 @charset "utf-8";
-@import url("renewer.css");
 /*
 * KCS: http://www.onlykcs.com/
-* since: 201905024 
+* since: 20190311 
 * Author: Jongmin Kim
 */
-
-/********** main **********/
-.header .nav > .l_menu > li > button{font-size: 14px;}
-.header .nav > .l_menu > li:nth-child(2) > button{margin-left: 7px;}
-.header .nav > .c_menu > li{width: 20%;}
-.header .nav > .c_menu > li > button{font-size: 14px;}
-.header .nav > .c_menu > li > a{font-size: 14px;}
-.header .nav > .r_menu > li .beforeLoginBox .mdl_area p{font-size: 13px;}
-.header .nav > .r_menu > li .floating_info_box .btn{font-size: 12px;}
-.primezone_sec .slick_primezone .card_ui dt{ font-size: 14px;}
-.primezone_sec .slick_primezone .card_ui dt.bgc1{line-height: 1.5; padding-top: 20px;}
-.primezone_sec .slick_primezone .card_ui dt.bgc3{line-height: 1.2; padding-top: 8px;}
-/* mobile nav */
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(1){width: 60px;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(2){width: 40px;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(3){width: 100px;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu th:nth-child(4){width: 100px;}
-/**********  sub **********/
-.mob_depth2_menu li a{font-size: 12px;}
-.sub_container .btn{font-size: 12px;}
-.sub_lft_menu > .depth1 > li > a{font-size: 12px;}
-.content_tab_depth1 li{width: 33.33%;}
-.photo_list li .img_list_box .ico_trade{width: 85px; font-size: 11px;}
-.table_list.has_game_icon .btn_cmm_bd{width: 85px; font-size: 13px; margin-right: 15px;}
-.btn_adjust .btn{padding: 4px 8px;}
-/**********  hide button **********/
-/*
-#regVTR{display: none !important;}
-*/
-
-/*walletconnect페이지속 fc2클래스를 가진 태그 문자개행 방지*/
-.coin_certification dt { width: 155px; }
-
-/*버튼내부 텍스트 개행방지*/
-.btn_align_c button {max-width: 280px;}
-
-/*플러스 아이콘 가운데 정렬*/
-.em_calc_ico {line-height: 22px;}
-
-/* main colgroup */
-.colgroup_main_gameitem .col4_1{width: 80px;}
-/* sub colgroup */
-.table .colgroup_dispute .col3_2{width: 65px;}
-.support_sec .table_view .col2_1{width: 110px;}
-.table .colgroup_mypage .col3_1{width: 150px;}
-/********** Mobile MarkUp CSS **********/
-@media (max-width: 1199px){
-
-}
-@media (max-width: 992px){
-}
-@media (max-width: 767px){
-.table .colgroup_mypage .col3_1{width: 80px;}
-}
-@media (max-width: 576px){
-
-}

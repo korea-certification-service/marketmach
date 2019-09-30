@@ -147,7 +147,7 @@ function getDelivery(value, category) {
         };
     } else if(value == "free_delivery") {
         return {
-            'text': 'Free Delivery',
+            'text': 'Prepaid',
             'number': 2,
             'className': 'ico_delivery_free'
         };
@@ -160,7 +160,7 @@ function getDelivery(value, category) {
             };
         } else {
             return {
-                'text': 'Pay on Delivery',
+                'text': 'Collect',
                 'number': 3,
                 'className': 'ico_delivery_payment'
             };
@@ -454,5 +454,41 @@ function isExplorer() {
         return true;
     } else {
         return false;
+    }
+}
+
+function setEtcCategory() {
+    function getQuerystring(paramName) {
+        var _tempUrl = window.location.search.substring(1);
+        var _tempArray = _tempUrl.split('&');
+        try {
+            for(var i = 0; _tempArray.length; i++) {
+                var _keyValuePair = _tempArray[i].split('=');
+                if(_keyValuePair[0] == paramName){
+                    return decodeURI(_keyValuePair[1]);
+                }
+            }
+        } catch(e){
+            if(e instanceof TypeError) {
+                // console.log("파라미터에 값이 없음")
+            } else {
+                // console.log("그 외 에러")
+            }
+            return null;
+        }
+    }
+
+    var category1Result = getQuerystring("category1");
+    if(category1Result !== null) {
+        $("#category1").text(category1Result);
+        setTimeout(function(){
+            // $(".filter-option-inner-inner").text(category1Result);
+            // var li = $(".dropdown-menu li");
+            // for (var i = 0; i < li.length; i++) {
+            //     if(li.children("a").text() === category1Result) {
+            //         li.children("a").addClass("active").addClass("selected")
+            //     }
+            // }
+        },300)
     }
 }

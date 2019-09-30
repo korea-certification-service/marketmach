@@ -429,7 +429,11 @@
             if(confirms) {
                 $.ajax({
                     method: "DELETE",
-                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
+                    dataType: "json",
+                    data: {
+                        "roomToken":buyerTag+"|"+sellerTag+"|"+itemId
+                    }
                 }).done(function (success) {
                     if(success.data.successYn == "Y") {
                         location.href = '/etc-sells/detail/' + itemId;

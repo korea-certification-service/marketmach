@@ -103,12 +103,12 @@
                 
                 console.log(success);
 
-                setPrimeService(prime_services);
+                // setPrimeService(prime_services);
                 // setGameSellList(game_sells);
                 // setGameBuyList(game_buys);
                 setEtcSellList(etc_sells);
-                setOtcBuyList(otc_buys);
-                setOtcSellList(otc_sells);
+                // setOtcBuyList(otc_buys);
+                // setOtcSellList(otc_sells);
                 setNoticeList(notices);
                 setCommunityMovie(movies);
                 // setCommunityBoard(boards);
@@ -157,7 +157,7 @@
             $('.slick_primezone').slick('slickRemove', null, null, true);
             $('.slick_primezone').slick('slickAdd', result);
         }
-        /*
+
         function setGameSellList(data) {
             var result = "";
 
@@ -209,7 +209,6 @@
             }
             $('#buy_list').html(result);
         }
-        */
 
         function setOtcSellList(data) {
             var result = "";
@@ -260,7 +259,8 @@
 
             // console.log(data)
 
-            for(var i=0; i<data.length; i++) {
+            var len = 5; // data.length
+            for(var i=0; i<len; i++) {
                 var noticeId = data[i]._id;
                 var title = data[i].title;
                 
@@ -272,7 +272,7 @@
         function setEtcSellList(data) {
             var result = "";
 
-            // console.log(data)
+            console.log(data)
 
             if(data.length > 0) {
                 // data.length = 4
@@ -297,9 +297,9 @@
                         money = price + '<span>'+cryptoCurrencyCode+'</span>';
                     }
 
-                    if(i % 4 === 0) result += '<li class="row">'
+                    if(i % 4 === 0) result += '<li class="li_asset cf">'
                     
-                    result += '<div class="col-lg-3 col-md-6 col-xs-12">'
+                    result += '<div class="asset_once">'
                             +     '<div class="img_list_box">'
                             +        '<div class="photo_frame">'
                             +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
@@ -316,11 +316,12 @@
                             +        '</dl>'
                             +    '</div>'
                             + '</div>'
-                    if(i===data.length -1) {
-                        result += '<div class="col-md-3 col-sm-6 col-xs-12"><div class="img_list_box"><div class="view_more">'
-                                + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
-                                + '</div></div></div>'
-                    }
+                    // VIEW MORE 버튼 빼버림
+                    // if(i===data.length -1) {
+                    //     result += '<div class="asset_once"><div class="img_list_box"><div class="view_more">'
+                    //             + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
+                    //             + '</div></div></div>'
+                    // }
                     if(i % 4 === 3) result += '</li>'
                 }
             }
@@ -342,7 +343,7 @@
                                     '</div>' +
                                     '<div class="cmnt_title">' +
                                         '<h2 class="ellipse">'+title+'</h2>' +
-                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].count+'</span></p>' +
+                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].replyCount+'</span></p>' +
                                     '</div>' +
                                 '</a>' +
                             '</div>';
@@ -370,23 +371,25 @@
                 <h1 class="blind">Main Banners</h1>
                 <div class="slick_visual">
                     <div class="visual_img">
-                        <a href="/supports/notice/detail?noticeId=5d637e3f59011316ab4b943e">
-                        <div class="pc_img">
-                            <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
-                        </div>
-                        <div class="mob_img">
-                            <img src="/static/img/mob/m_main_visual19.jpg" alt="ONTology">
-                        </div>
-                        </a>
-                    </div>   
+                        <a href="/howto/trade/vtr">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual05.jpg" alt="Open Beta">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual05.jpg" alt="Open Beta">
+                            </div>
+                        </a> 
+                    </div>                            
                     <div class="visual_img">
-                        <div class="pc_img">
-                            <img src="/static/img/en/en_main_visual04.jpg" alt="Listing">
-                        </div>
-                        <div class="mob_img">
-                            <img src="/static/img/en/en_mob_main_visual04.jpg" alt="Listing">
-                        </div>
-                    </div>             
+                        <a href="/gameStation/machAdventure/info/">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual06.jpg" alt="1st Game">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual06.jpg" alt="1st Game">
+                            </div>
+                        </a>
+                    </div>      
                     <div class="visual_img">
                         <a href="/gameStation/superlanding/info/">
                             <div class="pc_img">
@@ -398,38 +401,27 @@
                         </a>
                     </div>
                     <div class="visual_img">
-                        <a href="/gameStation/machAdventure/info/">
-                            <div class="pc_img">
-                                <img src="/static/img/en/en_main_visual02.jpg" alt="1st Game">
-                            </div>
-                            <div class="mob_img">
-                                <img src="/static/img/en/en_mob_main_visual02.jpg" alt="1st Game">
-                            </div>
+                        <a href="/supports/notice/detail?noticeId=5d637e3f59011316ab4b943e">
+                        <div class="pc_img">
+                            <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/mob/m_main_visual19.jpg" alt="ONTology">
+                        </div>
                         </a>
-                    </div>
-                    <div class="visual_img">
-                        <a href="/howto/trade/vtr">
-                            <div class="pc_img">
-                                <img src="/static/img/main/main_visual01.jpg" alt="Open Beta">
-                            </div>
-                            <div class="mob_img">
-                                <img src="/static/img/mob/m_main_visual01.jpg" alt="Open Beta">
-                            </div>
-                        </a> 
-                    </div>                                             
+                    </div>                                     
                 </div>
                 <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
-                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="5">
-                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>ONTology</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>Listing</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>2nd Game</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>1st Game</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>Open Beta</em></div></div>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="4">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Grand Open</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>MACH ADVENTURE</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>SuperLanding</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>ONT Tokken</em></div></div>
                 </div>
             </section>
         </div>
-        <div class="container renewer_container">
-            <section class="w100p_banner">
+        <div class="renewer_container">
+            <!-- <section class="w100p_banner">
                 <h1 class="blind">advertise</h1>
                 <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
                     <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
@@ -437,61 +429,95 @@
                 <a class="mob_show" href="https://t.me/marketmachcom" target="_blank">
                     <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
                 </a>
-            </section>
+            </section> -->
 
-            <section>
-                <h1 class="tit_main_sec">ASSET</h1>
-                <div class="photo_list">
-                    <ul id="assetsTrade">
+            <section class="section_asset">
+                <div class="main_inner_wrap">
+                    <h1 class=""><img src="/static/img/en/title_asset_en.png" alt="ASSET"></h1>
+                    <div class="photo_list">
+                        <ul id="assetsTrade">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section class="section_hashtag">
+                <div class="main_inner_wrap hashtag_category_wrap">
+                    <ul class="hashtag_category cf">
+                        <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Male"><span>Male</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Beauty"><span>Beauty</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Baby"><span>Baby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Sports"><span>Sports</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Electronic"><span>Electronic</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Living"><span>Living</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Book/Ticket"><span>Book/Ticket</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Hobby"><span>Hobby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
+                        <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>
                     </ul>
                 </div>
             </section>
-
+                
             <!-- OTC 판매/구매 -->
-            <section class="secOtc item_trade_sec col-lg-12">
-                <h1 class="tit_main_sec">OTC</h1>
-                <h2 class="item_sell_tit on">
-                    <button class="btnOtc btn_show_list on">Sales</button>
-                    <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
-                </h2>
-                <div class="otc_sell otc_table_wrap trade_list toggleTable">              
-                    <table class="main_list_table">
-                        <colgroup class="colgroup_main_otc">
-                            <col class="col2_1">
-                            <col class="col2_2">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="otc_sell_list">                               
-                        </tbody>
-                    </table>
-                </div>
-                <h2 class="item_buy_tit">
-                    <button class="btnOtc btn_show_list">Purchase</button>
-                    <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
-                </h2>
-                <div class="otc_buy otc_table_wrap trade_list toggleTable">
-                    <table class="main_list_table">
-                        <colgroup class="colgroup_main_otc">
-                            <col class="col2_1">
-                            <col class="col2_2">
-                        </colgroup>                            
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="otc_buy_list">
-                        </tbody>
-                    </table>                           
-                </div>             
-            </section>
+            <!-- <section class="secOtc item_trade_sec">
+                <div class="main_inner_wrap">
+                    <h1 class="tit_main_sec">OTC</h1>
+                    <h2 class="item_sell_tit on">
+                        <button class="btnOtc btn_show_list on">Sales</button>
+                        <a class="detail_link" href="/otc-sells?category=otc&trade_type=sell"><img src="/static/img/main/ico_view.png" alt=""></a>                        
+                    </h2>
+                    <div class="otc_sell otc_table_wrap trade_list toggleTable">              
+                        <table class="main_list_table">
+                            <colgroup class="colgroup_main_otc">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otc_sell_list">                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 class="item_buy_tit">
+                        <button class="btnOtc btn_show_list">Purchase</button>
+                        <a class="detail_link" href="/otc-buys?category=otc&trade_type=buy"><img src="/static/img/main/ico_view.png" alt=""></a>      
+                    </h2>
+                    <div class="otc_buy otc_table_wrap trade_list toggleTable">
+                        <table class="main_list_table">
+                            <colgroup class="colgroup_main_otc">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>                            
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otc_buy_list">
+                            </tbody>
+                        </table>                           
+                    </div>
+                </div>                             
+            </section> -->
             <!--// OTC 아이템 판매/구매 -->
+
+            <!-- 커뮤니티 베스트 -->
+            <section class="section_community">
+                <div class="main_inner_wrap">
+                    <h1 class=""><img src="/static/img/en/title_community_en.png" alt="Community"></h1>
+                    <div class="media_img_wrap cf">
+                    </div>
+                </div>
+            </section>
 
             <div class="w100p_banner">
                 <a class="mob_hide" href="http://bitweb.co.kr" target="_blank">
@@ -501,43 +527,26 @@
                     <img src="/static/img/en/en_mob_main_banner03.jpg" alt="bitweb mobile">
                 </a>
             </div>
-
-            <div class="row">
-                <section class="media_sec col-lg-12">
-                    <h1 class="tit_main_sec">Community</h1>
-                    <div class="bd_area">
-                        <div class="media_img_wrap cf">
+            
+            <div class="noti_hot_section_wrap">
+                <div class="main_inner_wrap dfb">
+                    <section class="section_notice">
+                        <h1>NOTICE</h1>
+                        <div class="line_box">
+                            <ul id="notice_list" class="noti_list">
+                            </ul>
                         </div>
-                    </div>
-                </section>
-            </div>
-
-            <div class="main_3n1n_wrap">
-                <section class="notice_sec">
-                    <h1 class="">Notice</h1>
-                    <ul id="notice_list" class="noti_list">
-                    </ul>
-                    <div class="noti_btm_media">
-                        <ul class="cf">
-                            <li><a href="https://www.facebook.com/MarketMACH" target="_blank"><img src="/static/img/symbol/ico_noti_media_facebook.png" alt="facebook"></a></li>
-                            <li><a href="https://twitter.com/MACH99077436" target="_blank"><img src="/static/img/symbol/ico_noti_media_twitter.png" alt="twitter"></a></li>
-                            <li><a href="https://www.youtube.com/channel/UC0d7GufTm0iG1IX_Lenp11w?feature=embeds_subscribe_title" target="_blank"><img src="/static/img/symbol/ico_noti_media_youtube.png" alt="youtube"></a></li>
-                            <li><a href="https://medium.com/@kdi_35594" target="_blank"><img src="/static/img/symbol/ico_noti_media_medium.png" alt="facebook"></a></li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="guide_sec">
-                    <a href="/howto/trade/vtr">
-                        <h1>MarketMACH<br>How to use<br>Guide</h1>
-                        <div class="ico_round ico_guide01"></div>
-                    </a>
-                </section>
-                <section class="guide_sec">
-                    <a href="/howto/trade/buynow">
-                        <h1>MarketMACH<br>Trading process<br>Guide</h1>
-                        <div class="ico_round ico_guide02"></div>
-                    </a>
-                </section>
+                    </section>
+                    <section class="section_hotmenu">
+                        <h1>HOT MENU</h1>
+                        <a href="/supports/event">
+                            <img src="/static/img/main/img_btn_event.jpg" alt="event">
+                        </a>
+                        <a href="/gameStation">
+                            <img src="/static/img/main/img_btn_game.jpg" alt="gamestation">
+                        </a>
+                    </section>
+                </div>
             </div>
         </div>
         <!--// bootstrap container -->

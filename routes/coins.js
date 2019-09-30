@@ -876,83 +876,45 @@ router.post('/wallets/:walletId/entries', function (req, res, next) {
 //비트베리 API - 사용자 입금 처리 (호출 시 사용자의 비트베리 앱으로 승인 요청)
 router.post('/wallets/:coinType/deposit', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-    
-    let url = dbconfig.bitberry.url + "/v2/wallets";
-    let coinType = req.params.coinType;
+    if(req.session.userId == undefined) {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자 요청";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    let body = req.body;
+    req.body['coinType'] = req.params.coinType;
+    req.body['bitberry_token'] = req.session.bitberry_token == undefined ? req.body.bitberry_token : req.session.bitberry_token;
+
+    let url = dbconfig.APIServer + "/v2/coin/bitberry/deposit";
     let header = {
-        'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey,
-        'X-Partner-User-Token': req.session.bitberry_token == undefined ? req.body.bitberry_token : req.session.bitberry_token
+        'token': dbconfig.APIToken
     };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
 
-    request({uri: url, 
-        method:'GET',
-        headers: header}, function (error, response, body) {
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
         if (!error && response.statusCode == 200) {
-            let result = JSON.parse(body);
-            console.log('success : ', body);
-
-            let findIndex = result.items.findIndex(function(group){
-                return group.currency_code == coinType;
-            });
-
-            let walletId = result.items[findIndex].id;
-            let amount = req.body.mach;
-            //각 코인별로 출금
-            if(result.items[findIndex].currency_code == "ETH") {
-                let fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.deposit).toFixed(8));
-                amount = parseFloat((amount - fee_rate).toFixed(8));
-            } else if(result.items[findIndex].currency_code == "BTC") {
-                let fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.deposit).toFixed(8));
-                amount = parseFloat((amount - fee_rate).toFixed(8));
-            } else {
-                let fee_rate = parseFloat((amount * dbconfig.fee.coin.mach.deposit).toFixed(8));
-                amount = parseFloat((amount - fee_rate).toFixed(8));
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
             }
             
-            //시세 계산 해서 mach 넣기
-            // if(result.items[findIndex].currency_code == "ETH") {
-            //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-            //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-            //     amount = total_amount + fee_rate;
-            // } else if(result.items[findIndex].currency_code == "BTC") {
-            //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-            //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-            //     amount = total_amount + fee_rate;
-            // }
-            
-            url = dbconfig.bitberry.url + "/v2/wallets/" + walletId + '/transfer_requests/withdraw';
-            let param = {
-                'amount': amount,
-                'order_id': coinType + util.makeToken(), //프롣트에서 랜덤하게 생성?
-                'item_name': "MarketMACH 입금", //프론트에서 넘김 : mach 입금
-                'order_type': "charge", //프론트에서 넘김 : charge, withdraw,
-                //'completion_callback_url': req.body.completion_callback_url //callbackURL
-            };
-
-            request({uri: url, 
-                    method:'POST',
-                    form: param, 
-                    headers: header}, function (error, response, body) {
-                if (!error && response.statusCode == 201) {
-                    let result = JSON.parse(body);
-                    console.log('success : ', body);
-                    result['walletId'] = walletId;
-                    result['transfer_request_id'] = result.id;
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = result;
-                    res.status(200).send(bitwebResponse.create())
-                } else {
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = error;
-                    console.log('error = ' + response.statusCode);
-                    res.status(500).send(bitwebResponse.create())
-                }
-            });
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
         } else {
+            console.error('err=>', error)
             bitwebResponse.code = 500;
             bitwebResponse.message = error;
             res.status(500).send(bitwebResponse.create())
-            console.log('error = ' + response.statusCode);
         }
     });
 });
@@ -960,7 +922,6 @@ router.post('/wallets/:coinType/deposit', function (req, res, next) {
 //비트베리 API - 회사 지갑에서 출금 처리 (호출 시 사용자의 비트베리 앱으로 전송)
 router.post('/wallets/:coinType/withdraw', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-    let country = dbconfig.country;
     if(req.session.userId == undefined) {
         bitwebResponse.code = 500;
         bitwebResponse.message = "이상 사용자 요청";
@@ -968,212 +929,41 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
         return;
     }
 
-    if(dbconfig.APIToken != req.body.token) {
-        //console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
-        res.status(500).send(bitwebResponse.create());
-        return;
+    let body = req.body;
+    body['country'] = dbconfig.country;
+    req.body['userId'] = req.session.userId;
+    req.body['coinType'] = req.params.coinType;
+    req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+
+    let url = dbconfig.APIServer + "/v2/coin/bitberry/withdraw";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
     }
 
-    controllerUsers.getById(country, req.session.userId)
-    .then(user => {
-        let condition = {
-            "userName": user._doc.userName,
-            "birth": user._doc.birth
-        }
-        controllerUsers.getBlackList(country, condition) 
-        .then(blackLists => {
-            if(blackLists.length == 0) {
-                let url = dbconfig.bitberry.url + "/v2/partner_app/wallets";
-                let coinType = req.params.coinType;
-                let header = {
-                    'Authorization': 'Bearer ' + dbconfig.bitberry.apiKey
-                };
-
-                request({uri: url, 
-                    method:'GET',
-                    headers: header}, function (error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                        let result = JSON.parse(body);
-                        console.log('success : ', body);
-
-                        let findIndex = result.items.findIndex(function(group){
-                            return group.currency_code == coinType;
-                        });
-
-                        let walletId = result.items[findIndex].id;
-                        let url = dbconfig.bitberry.url + "/v2/wallets/" + walletId + '/airdrop';
-                        let country = dbconfig.country;
-                        let coinId = req.session.coinId == undefined ? req.body.coinId : req.session.coinId;
-                        let userTag = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
-
-                        controllerUsers.getByUserTag(country, userTag)
-                            .then(user => {
-                                controllerCoins.getByCoinId(country, user._doc.coinId)
-                                .then(coin => {
-                                    let total_price = coin._doc.total_mach == undefined ? 0 : coin._doc.total_mach;
-                                    if(result.items[findIndex].currency_code == "ETH") {
-                                        total_price = coin._doc.total_ether == undefined ? 0 : coin._doc.total_ether;
-                                    } else if(result.items[findIndex].currency_code == "BTC") {
-                                        total_price = coin._doc.total_btc == undefined ? 0 : coin._doc.total_btc;
-                                    }
-
-                                    if(total_price < req.body.amount) {
-                                        bitwebResponse.code = 200;
-                                        bitwebResponse.message = {
-                                            "code": "E001",
-                                            "msg": "사용자 코인이 출금금액 보다 적습니다."
-                                        };
-                                        res.status(200).send(bitwebResponse.create());
-                                        return;
-                                    }
-
-                                    let amount = req.body.amount;
-                                    let fee_rate = parseFloat((amount * dbconfig.fee.coin.mach.withdraw).toFixed(8));
-                                    amount = parseFloat((amount - fee_rate).toFixed(8));
-                                    //각 코인별로 출금
-                                    if(result.items[findIndex].currency_code == "ETH") {
-                                        fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.withdraw).toFixed(8));
-                                        amount = parseFloat((amount - fee_rate).toFixed(8));
-                                    } else if(result.items[findIndex].currency_code == "BTC") {
-                                        fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.withdraw).toFixed(8));
-                                        amount = parseFloat((amount - fee_rate).toFixed(8));
-                                    } 
-                                    
-                                    //시세 계산 해서 mach 출금
-                                    // if(result.items[findIndex].currency_code == "ETH") {
-                                    //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                                    //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                                    //     amount = total_amount - fee_rate;
-                                    // } else if(result.items[findIndex].currency_code == "BTC") {
-                                    //     let total_amount = parseFloat((amount / req.body.rate).toFixed(8));
-                                    //     let fee_rate = parseFloat((total_amount * req.body.fee).toFixed(8));
-                                    //     amount = total_amount - fee_rate;
-                                    // }
-
-                                    let phone = (user._doc.phone.substring(0,1) == "0") ? user._doc.phone.substr(1) : user._doc.phone;
-                                    let param = {
-                                        'amount': amount,
-                                        'memo':'withdraw from mach',
-                                        'phone_number': user._doc.countryCode + phone
-                                    };
-                
-                                    request({uri: url, 
-                                            method:'POST',
-                                            form: param, 
-                                            headers: header}, function (error, response, body) {
-                                        if (!error && response.statusCode == 201) {
-                                            let result = JSON.parse(body);
-                                            console.log('success : ', body);
-                
-                                            let amount = Math.abs(result.amount);
-                                            let mach = req.body.mach;
-                                            
-                                            
-                                            let data = {
-                                                "extType": "bitberry",
-                                                "coinId": user._doc.coinId,
-                                                "category": "withdraw",          
-                                                "status": result.status,
-                                                "currencyCode": result.currency_code,
-                                                "amount": req.body.amount,
-                                                "price": req.body.amount,
-                                                "regDate": util.formatDate(new Date().toString())  
-                                            }
-                
-                                            controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
-                                                .then(coinHistory => {
-                                                    controllerCoins.getByCoinId(country, user._doc.coinId)
-                                                        .then(coin => {
-                                                            let update_data = {
-                                                                "total_mach": parseFloat((coin._doc.total_mach - req.body.amount).toFixed(8))
-                                                            }
-                                                            if(result.currency_code == "BTC") {
-                                                                update_data = {
-                                                                    "total_btc": parseFloat((coin._doc.total_btc - req.body.amount).toFixed(8))
-                                                                }
-                                                            } else if(result.currency_code == "ETH") {
-                                                                update_data = {
-                                                                    "total_ether":  parseFloat((coin._doc.total_ether - req.body.amount).toFixed(8))
-                                                                }
-                                                            }
-                                                            
-                                                            controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
-                                                                .then(u_coin => {
-                                                                    if(coinType != "MACH") {
-                                                                        let feePercentage = (coinType == "BTC" ? dbconfig.fee.coin.btc.withdraw : dbconfig.fee.coin.ether.withdraw) 
-                                                                        let feeHistory = {
-                                                                            userId: user._doc._id,
-                                                                            currency: coinType,
-                                                                            type: "withdraw",
-                                                                            amount: fee_rate,
-                                                                            fee: feePercentage,
-                                                                            regDate: util.formatDate(new Date().toString())  
-                                                                        }
-                                                                        controllerFeeHistorys.add(country, feeHistory);
-                                                                    }
-                                                                    bitwebResponse.code = 200;
-                                                                    bitwebResponse.data = u_coin;
-                                                                    res.status(200).send(bitwebResponse.create())
-                                                                }).catch(err => {
-                                                                    bitwebResponse.code = 500;
-                                                                    bitwebResponse.message = err;
-                                                                    res.status(500).send(bitwebResponse.create());
-                                                                });
-                                                        }) .catch(err => {
-                                                            bitwebResponse.code = 500;
-                                                            bitwebResponse.message = err;
-                                                            res.status(500).send(bitwebResponse.create());
-                                                        });
-                                                }).catch(err => {
-                                                    bitwebResponse.code = 500;
-                                                    bitwebResponse.message = err;
-                                                    res.status(500).send(bitwebResponse.create());
-                                                });
-                                        } else {
-                                            console.log('error = ' + response.statusCode);
-                                            bitwebResponse.code = 500;
-                                            bitwebResponse.message = error;
-                                            res.status(500).send(bitwebResponse.create())    
-                                        }
-                                    });
-                                });
-                            }).catch((err) => {
-                                bitwebResponse.code = 500;
-                                bitwebResponse.message = err;
-                                res.status(500).send(bitwebResponse.create())
-                            });
-                        } else {
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = error;
-                            res.status(500).send(bitwebResponse.create())
-                            console.log('error = ' + response.statusCode);
-                        }
-                    });
-            } else {
-                bitwebResponse.code = 200;
-                let message = "해당 사용자는 출금이 불가능합니다. 자세한 문의는 관리자에게 문의하세요.";
-                if(country == "EN") {
-                    message = "This user can not withdraw MACH. For more information, please contact the administrator.";
-                }
-                bitwebResponse.data = {
-                    "code": "N",
-                    "msg": message
-                };
-                res.status(200).send(bitwebResponse.create());
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
             }
-        }).catch((err) => {
-            console.error('err=>', err)
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
             bitwebResponse.code = 500;
-            bitwebResponse.message = err;
+            bitwebResponse.message = error;
             res.status(500).send(bitwebResponse.create())
-        });
-    }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
+        }
     });
 });
 
@@ -1181,80 +971,6 @@ router.post('/wallets/:coinType/withdraw', function (req, res, next) {
 //ONT wallet 입금 요청 처리
 router.post('/ontwallet/deposit', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
-
-    if(req.session.userTag == undefined) {
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create());
-        return;
-    }
-
-    if(dbconfig.APIToken != req.body.token) {
-        //console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
-        res.status(500).send(bitwebResponse.create());
-        return;
-    }
-
-    let country = dbconfig.country;
-    let userTag = req.session.userTag;
-    let condition = {
-        'userTag': userTag
-    }
-    
-    controllerUsers.getByUserInfo(country, condition)
-        .then((user) => {
-            let amount = req.body.mach;
-            let data = {
-                "extType":"ontwallet",
-                "coinId": user._doc.coinId,
-                "category": 'deposit',          
-                "status": false,
-                "currencyCode": 'ONT',
-                "amount": amount,
-                "price": amount,
-                "regDate": util.formatDate(new Date().toString())  
-            }
-
-            controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
-            .then(coinHistory => {
-                controllerCoinHistorys.getCountCoinHistoryExtByCoinId(country, {"coinId":user._doc.coinId.toString()})
-                .then(count => {
-                    let jsonData = {}
-                    jsonData['coinId'] = coinHistory._doc.coinId;
-                    jsonData['historyId'] = coinHistory._doc._id;                    
-                    jsonData['historyCount'] = count;
-                    jsonData['regDate'] = util.getUnixTime(coinHistory._doc.regDate);
-                    jsonData['coinType'] = "ont";                    
-                    jsonData['price'] = amount;
-                    jsonData['fromAddress'] = req.body.fromAddress;
-                    scheduler.ontJob(jsonData);
-
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = coinHistory;
-                    res.status(200).send(bitwebResponse.create());
-                }).catch(err => {
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = err;
-                    res.status(500).send(bitwebResponse.create());
-                });
-            }).catch(err => {
-                bitwebResponse.code = 500;
-                bitwebResponse.message = err;
-                res.status(500).send(bitwebResponse.create());
-            });
-        }).catch(err => {
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create());
-    });
-});
-
-//ont wallet 출금 처리
-router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
-    var bitwebResponse = new BitwebResponse();
-    let country = dbconfig.country;
     if(req.session.userId == undefined) {
         bitwebResponse.code = 500;
         bitwebResponse.message = "이상 사용자 요청";
@@ -1262,160 +978,88 @@ router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
         return;
     }
 
-    if(dbconfig.APIToken != req.body.token) {
-        //console.error('err=>', err)
+    let body = req.body;
+    body['country'] = dbconfig.country;
+    req.body['coinType'] = req.body.cryptoCurrencyCode;
+    req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+
+    let url = dbconfig.APIServer + "/v2/coin/ontwallet/deposit";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
+
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+});
+
+//ont wallet 출금 처리
+router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    if(req.session.userId == undefined) {
         bitwebResponse.code = 500;
-        bitwebResponse.message = "이상 사용자";
+        bitwebResponse.message = "이상 사용자 요청";
         res.status(500).send(bitwebResponse.create());
         return;
     }
 
-    controllerUsers.getById(country, req.session.userId)
-    .then(user => {
-        let condition = {
-            "userName": user._doc.userName,
-            "birth": user._doc.birth
-        }
-        controllerUsers.getBlackList(country, condition) 
-        .then(blackLists => {
-            if(blackLists.length == 0) {
-                let coinType = req.params.coinType;
-                let country = dbconfig.country;
-                //let coinId = req.session.coinId == undefined ? req.body.coinId : req.session.coinId;
-                let userTag = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+    let body = req.body;
+    body['country'] = dbconfig.country;
+    req.body['userId'] = req.session.userId;
+    req.body['coinType'] = req.body.cryptoCurrencyCode;
+    req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
 
-                controllerCoins.getByCoinId(country, user._doc.coinId)
-                .then(coin => {
-                    let total_price = coin._doc.total_ont == undefined ? 0 : coin._doc.total_ont;
-                    if(coinType == "ETH") {
-                        total_price = coin._doc.total_ether == undefined ? 0 : coin._doc.total_ether;
-                    } else if(coinType == "BTC") {
-                        total_price = coin._doc.total_btc == undefined ? 0 : coin._doc.total_btc;
-                    }
+    let url = dbconfig.APIServer + "/v2/coin/ontwallet/withdraw";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
 
-                    if(total_price < req.body.amount) {
-                        bitwebResponse.code = 200;
-                        bitwebResponse.message = {
-                            "code": "E001",
-                            "msg": "사용자 코인이 출금금액 보다 적습니다."
-                        };
-                        res.status(200).send(bitwebResponse.create());
-                        return;
-                    }
-
-                    let amount = req.body.amount;
-                    let fee_rate = parseFloat((amount * dbconfig.fee.coin.ont.withdraw).toFixed(8));
-                    amount = parseFloat((amount - 1).toFixed(8));
-                    //각 코인별로 출금
-                    if(coinType == "ETH") {
-                        fee_rate = parseFloat((amount * dbconfig.fee.coin.ether.withdraw).toFixed(8));
-                        amount = parseFloat((amount - fee_rate).toFixed(8));
-                    } else if(coinType == "BTC") {
-                        fee_rate = parseFloat((amount * dbconfig.fee.coin.btc.withdraw).toFixed(8));
-                        amount = parseFloat((amount - fee_rate).toFixed(8));
-                    } 
-
-                    let update_data = {
-                        "total_ont": parseFloat((coin._doc.total_ont - parseFloat((amount + fee_rate).toFixed(8))).toFixed(8))
-                    }
-                    if(coinType == "BTC") {
-                        update_data = {
-                            "total_btc": parseFloat((coin._doc.total_btc - req.body.amount).toFixed(8))
-                        }
-                    } else if(coinType == "ETH") {
-                        update_data = {
-                            "total_ether":  parseFloat((coin._doc.total_ether - req.body.amount).toFixed(8))
-                        }
-                    }
-                    
-                    controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
-                    .then(u_coin => {
-                        //supppose we have an account with enough ONT and ONG
-                        //Sender's address
-                        const from = new Ont.Crypto.Address(dbconfig.ontology.address);
-                        //Receiver's address
-                        const to = new Ont.Crypto.Address(req.body.toAddress);
-                        //Asset type
-                        const assetType = 'ONT'
-                        //Gas price and gas limit are to compute the gas costs of the transaction.
-                        const gasPrice = dbconfig.ontology.gasPrice;
-                        const gasLimit = dbconfig.ontology.gasLimit;
-                        const payer = from;
-                        const privateKey = new Ont.Crypto.PrivateKey(dbconfig.ontology.privateKey);
-                        //Payer's address to pay for the transaction gas
-                        const tx = Ont.OntAssetTxBuilder.makeTransferTx(assetType, from, to, amount, gasPrice, gasLimit, payer);
-                        Ont.TransactionBuilder.signTransaction(tx, privateKey)
-                        const rest = new Ont.RestClient(dbconfig.ontology.restUrl);
-                        rest.sendRawTransaction(tx.serialize())
-                        .then(result => {
-                            console.log('success : ', result);
-
-                            let data = {
-                                "extType": "ontwallet",
-                                "coinId": user._doc.coinId,
-                                "category": "withdraw",          
-                                "status": 'success',
-                                "currencyCode": coinType,
-                                "amount": amount,
-                                "price": amount,
-                                "regDate": util.formatDate(new Date().toString())  
-                            }
-
-                            controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data);
-                            
-                            let feePercentage = dbconfig.fee.coin.ont.withdraw;
-                            if(coinType == "BTC") {
-                                feePercentage = dbconfig.fee.coin.btc.withdraw;
-                            } else if(coinType == "ETH") {
-                                feePercentage = dbconfig.fee.coin.ether.withdraw;
-                            }
-
-                            let feeHistory = {
-                                userId: user._doc._id,
-                                currency: coinType,
-                                type: "withdraw",
-                                amount: fee_rate,
-                                fee: feePercentage,
-                                regDate: util.formatDate(new Date().toString())  
-                            }
-                            controllerFeeHistorys.add(country, feeHistory);
-                            bitwebResponse.code = 200;
-                            bitwebResponse.data = u_coin;
-                            res.status(200).send(bitwebResponse.create())
-                        }).catch(err => {
-                            bitwebResponse.code = 500;
-                            bitwebResponse.message = err;
-                            res.status(500).send(bitwebResponse.create());
-                        });
-                    }) .catch(err => {
-                        bitwebResponse.code = 500;
-                        bitwebResponse.message = err;
-                        res.status(500).send(bitwebResponse.create());
-                    });
-                });
-            } else {
-                bitwebResponse.code = 200;
-                let message = "해당 사용자는 출금이 불가능합니다. 자세한 문의는 관리자에게 문의하세요.";
-                if(country == "EN") {
-                    message = "This user can not withdraw MACH. For more information, please contact the administrator.";
-                }
-                bitwebResponse.data = {
-                    "code": "N",
-                    "msg": message
-                };
-                res.status(200).send(bitwebResponse.create());
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
             }
-        }).catch((err) => {
-            console.error('err=>', err)
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
             bitwebResponse.code = 500;
-            bitwebResponse.message = err;
+            bitwebResponse.message = error;
             res.status(500).send(bitwebResponse.create())
-        });
-    }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
+        }
     });
 });
 
@@ -1443,9 +1087,13 @@ router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
 
             if(result.status != "success") {
                 bitwebResponse.code = 200;
+                let message = "현재 입금 대기 중입니다. 비트베리앱에서 입금 승인 후 확인버튼을 눌려주세요.";
+                if(country != "KR") {
+                    message = "The coin is waiting for deposit.  Please press the Confirm button after approving the deposit on the Bitberry.";
+                }
                 let noData = {
                     "code": "E001",
-                    "msg": "현재 입금 대기 중입니다. 비트베리앱에서 입금 승인 후 확인버튼을 눌려주세요."
+                    "msg": message
                 }
                 bitwebResponse.data = noData;
                 res.status(200).send(bitwebResponse.create())
@@ -1459,67 +1107,6 @@ router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
                 bitwebResponse.data = result;
                 res.status(200).send(bitwebResponse.create())
             }
-            
-            // controllerUsers.getByUserTag(country, userTag)
-            //     .then((user) => {
-            //         let option = {
-            //             "category": category
-            //         }
-                    
-            //         let amount = Math.abs(result.amount);
-            //         let mach = req.body.mach;
-                    
-            //         let data = {
-            //             "extType":"bitberry",
-            //             "coinId": user._doc.coinId,
-            //             "category": category,          
-            //             "status": result.status,
-            //             "currencyCode": result.currency_code,
-            //             "amount": amount,
-            //             "mach": mach,
-            //             "regDate": util.formatDate(new Date().toString())  
-            //         }
-
-            //         controllerCoinHistorys.createCoinHistoryExtByCoinId(country, data)
-            //             .then(coinHistory => {
-            //                 controllerCoins.getByCoinId(country, user._doc.coinId)
-            //                     .then(coin => {
-            //                         let update_data = {};
-            //                         if(category == "deposit") {
-            //                             update_data = {
-            //                                 "total_mach": coin._doc.total_mach + mach
-            //                             }
-            //                         } else {
-            //                             update_data = {
-            //                                 "total_mach": coin._doc.total_mach - mach
-            //                             }
-            //                         }
-                                    
-            //                         controllerCoins.updateTotalCoin(country, user._doc.coinId, update_data)
-            //                             .then(u_coin => {
-            //                                 bitwebResponse.code = 200;
-            //                                 bitwebResponse.data = u_coin;
-            //                                 res.status(200).send(bitwebResponse.create())
-            //                             }).catch(err => {
-            //                                 bitwebResponse.code = 500;
-            //                                 bitwebResponse.message = err;
-            //                                 res.status(500).send(bitwebResponse.create());
-            //                             });
-            //                     }) .catch(err => {
-            //                         bitwebResponse.code = 500;
-            //                         bitwebResponse.message = err;
-            //                         res.status(500).send(bitwebResponse.create());
-            //                     });
-            //             }).catch(err => {
-            //                 bitwebResponse.code = 500;
-            //                 bitwebResponse.message = err;
-            //                 res.status(500).send(bitwebResponse.create());
-            //             });
-            //     }).catch(err => {
-            //     bitwebResponse.code = 500;
-            //     bitwebResponse.message = err;
-            //     res.status(500).send(bitwebResponse.create());
-            // });
         } else {
             console.log('error = ' + response.statusCode);
             bitwebResponse.code = 500;

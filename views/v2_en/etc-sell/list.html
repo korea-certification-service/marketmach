@@ -31,7 +31,7 @@
             loadGameList();
             getSearchValue();
             search();
-            console.log(title);
+            // console.log(title);
             $('#btn_search').click(function() {
                 getSearchValue();
                 search();
@@ -81,6 +81,7 @@
             //     game_server = $("#game-server option:selected").val();
             // });
             
+            setEtcCategory();
         });
 
         function loadGameList() {
@@ -263,8 +264,8 @@
                             <div class="check_filter col-sm-10 col-xs-12">
                                 <input type="radio" name="item_type" id="all" value="" checked><label for="all">All</label>
                                 <input type="radio" name="item_type" id="direct" value="direct"><label for="direct">Direct Deal</label><br class="mob_br">
-                                <input type="radio" name="item_type" id="free_delivery" value="free_delivery"><label for="free_delivery">Free Delivery</label>
-                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Pay on Delivery</label>
+                                <input type="radio" name="item_type" id="free_delivery" value="free_delivery"><label for="free_delivery">Prepaid</label>
+                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Collect</label>
                             </div>
                         </li>
                         <li class="row">
