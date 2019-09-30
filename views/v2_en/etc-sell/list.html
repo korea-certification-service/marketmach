@@ -31,7 +31,7 @@
             loadGameList();
             getSearchValue();
             search();
-            console.log(title);
+            // console.log(title);
             $('#btn_search').click(function() {
                 getSearchValue();
                 search();
@@ -81,6 +81,7 @@
             //     game_server = $("#game-server option:selected").val();
             // });
             
+            setEtcCategory();
         });
 
         function loadGameList() {
