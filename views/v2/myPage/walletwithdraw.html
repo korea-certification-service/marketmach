@@ -238,6 +238,7 @@
 
             var data = {
                 "amount": Number($("input[name=amount]").val()),
+                "cryptoCurrencyCode":coin
             };
             
             var url = "/v1/coins/wallets/"+coin+"/withdraw";
