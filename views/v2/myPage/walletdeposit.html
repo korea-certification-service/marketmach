@@ -241,6 +241,7 @@
         }
 
         function reqDeposit() {
+            $("#confirmDeposit").attr("disabled", true);
             var coin = $("select[name=coin] option:selected").val();
             if((coin != "ONT"&& coin != "ONG") && bitberry_token == "") {
                 alert("비트베리 앱에서 연동이 필요합니다.");
@@ -250,6 +251,7 @@
             
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
                 alert("Coin 금액을 입력하세요.");
+                $("#confirmDeposit").attr("disabled", false);
                 return;
             }
 
@@ -262,6 +264,7 @@
             if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
                     alert("지갑 주소를 입력해 주세요.");
+                    $("#confirmDeposit").attr("disabled", false);
                     return;
                 }
                 data['fromAddress'] = $('#address').val();
@@ -279,6 +282,7 @@
                 }).fail(function (fail) {
                     console.log(fail);
                     alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
                 $.ajax({
@@ -297,6 +301,7 @@
                 }).fail(function (fail) {
                     console.log(fail);
                     alert('처리 중 문제가 발생하였습니다. \n 문제가 계속 발생될 경우 관리자에게 문의하시기 바랍니다.');
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             }
         }
@@ -337,9 +342,11 @@
                     location.href = "/myPages/wallet/deposit";
                 } else {
                     alert(success.data.msg);
+                    $("#confirmDeposit").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
+                $("#confirmDeposit").attr("disabled", false);
             });
         }
     </script>

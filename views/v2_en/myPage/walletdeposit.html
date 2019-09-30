@@ -241,7 +241,7 @@
         }
 
         function reqDeposit() {
-            
+            $("#confirmDeposit").attr("disabled", true);
             var coin = $("select[name=coin] option:selected").val();
             if((coin != "ONT"&& coin != "ONG") && bitberry_token == "") {
                 alert("Connection with Bitberry is required.");
@@ -251,6 +251,7 @@
             
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
                 alert("Please enter Coin amount.");
+                $("#confirmDeposit").attr("disabled", false);
                 return;
             }
 
@@ -262,6 +263,7 @@
             if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
                     alert("Please innput your ONT Address.");
+                    $("#confirmDeposit").attr("disabled", false);
                     return;
                 }
                 data['fromAddress'] = $('#address').val();
@@ -277,8 +279,9 @@
                         // callback
                     });
                 }).fail(function (fail) {
-                    console.log(fail);
+                    console.log(fail);                    
                     alert('There was a problem during the process. \n If the problem persists, please contact administrators')
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
                 $.ajax({
@@ -296,7 +299,8 @@
                     });
                 }).fail(function (fail) {
                     console.log(fail);
-                    alert('There was a problem during the process. \n If the problem persists, please contact administrators')
+                    alert('There was a problem during the process. \n If the problem persists, please contact administrators');
+                    $("#confirmDeposit").attr("disabled", false);
                 });
             }
         }
@@ -337,9 +341,11 @@
                     location.href = "/myPages/wallet/deposit";
                 } else {
                     alert(success.data.msg);
+                    $("#confirmDeposit").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
+                $("#confirmDeposit").attr("disabled", false);
             });
         }
     </script>
