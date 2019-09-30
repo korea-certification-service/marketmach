@@ -213,7 +213,7 @@
 
         function reqWithdraw() {
             var coin = $("select[name=coin] option:selected").val();
-            if(coin != "ONT" && bitberry_token == "") {
+            if((coin != "ONT" && coin != "ONG") && bitberry_token == "") {
                 alert("비트베리 앱에서 연동이 필요합니다.");
                 location.href = '/myPages/wallet/connect';
                 return;
