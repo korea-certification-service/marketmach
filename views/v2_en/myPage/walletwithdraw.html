@@ -13,6 +13,7 @@
         var ether_fee = "<%=ether_fee%>";
         var mach_fee = "<%=mach_fee%>";
         var ont_fee = "<%=ont_fee%>";
+        var ong_fee = "<%=ong_fee%>";
         var fee;
         var rate;
         
@@ -56,6 +57,9 @@
                 } else if($("select[name=coin] option:selected").val() == "ONT") {
                     $('#showOntAddress').show();
                     total_price = total_ont;
+                } else if($("select[name=coin] option:selected").val() == "ONG") {
+                    $('#showOntAddress').show();
+                    total_price = total_ong;
                 } else {
                     $('#showOntAddress').hide();
                     total_price = total_mach;
@@ -80,28 +84,41 @@
                 total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
                 //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
                 $("#btcTotal").html(numberWithCommas(total_btc));                        
-                $("#my_amount").html(numberWithCommas(success.data.total_btc)  + "<span>BTC</span>");
-                $("#total_amount").html(numberWithCommas(total_btc) + " BTC");
-
+                    
                 total_ether = success.data.total_ether == undefined ? 0 : success.data.total_ether;
                 //$("#mach").html(numberWithCommas(success.data.total_ether == undefined ? 0 : success.data.total_ether) + "<span>ETH</span>");
                 $("#ethTotal").html(numberWithCommas(total_ether));                        
-                $("#my_amount").html(numberWithCommas(success.data.total_ether)  + "<span>ETH</span>");
-                $("#total_amount").html(numberWithCommas(total_ether) + " ETH");
-
+                
                 total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;                        
                 //$("#ont").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
                 $("#ontTotal").html(numberWithCommas(total_ont));
-                $("#my_amount").html(numberWithCommas(success.data.total_ont)  + "<span>ONT</span>");
-                $("#total_amount").html(numberWithCommas(total_ont) + " ONT");
-                
+
+                total_ong = success.data.total_ong == undefined ? 0 : success.data.total_ong;                        
+                //$("#ont").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                $("#ongTotal").html(numberWithCommas(total_ong));
+
                 total_mach = success.data.total_mach;                        
                 //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
                 $("#machTotal").html(numberWithCommas(total_mach));
-                $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
-                $("#total_amount").html(numberWithCommas(total_mach) + " MACH");
 
                 total_price = total_mach;
+                
+                if(coin == "BTC") {
+                    $("#my_amount").html(numberWithCommas(total_btc)  + "<span>BTC</span>");
+                    $("#total_amount").html(numberWithCommas(total_btc) + " BTC");
+                } else if(coin == "ETH") {
+                    $("#my_amount").html(numberWithCommas(total_ether)  + "<span>ETH</span>");
+                    $("#total_amount").html(numberWithCommas(total_ether) + " ETH");
+                } else if(coin == "ONT") {
+                    $("#my_amount").html(numberWithCommas(total_ont)  + "<span>ONT</span>");
+                    $("#total_amount").html(numberWithCommas(total_ont) + " ONT");
+                } else if(coin == "ONG") {
+                    $("#my_amount").html(numberWithCommas(total_ong)  + "<span>ONG</span>");
+                    $("#total_amount").html(numberWithCommas(total_ong) + " ONG");
+                } else {
+                    $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
+                    $("#total_amount").html(numberWithCommas(total_mach) + " MACH");
+                }
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -175,6 +192,15 @@
                 $("#exchange_amount").html(Math.floor(ontIncludeFee)+' <span>'+coin+'</span>');
                 $("#plus_amount").html(valuee + " ONT");
                 $("#total_amount").html(numberWithCommas(parseFloat((total_price - valuee).toFixed(8))) + " ONT");
+            } else if (coin == "ONG") {
+                price = parseFloat((mach - (mach * ong_fee)).toFixed(8));
+                data = mach + " ONG - "+(ong_fee * 100)+"% = " + price + " ONG  <span class='fcrd'>※"+(ong_fee * 100)+"% Excluded escrow fee.(0.01 ONG Excluded Gas fee.)</span>";
+                $("#my_amount").html(numberWithCommas(total_ong)  + "<span>ONG</span>");
+                $("#calculate").html(data);
+                $("#Withdraw_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ONG");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price - mach).toFixed(8))) + " ONG");
             } else if (coin == "MACH") {
                 price = parseFloat(mach.toFixed(8));
                 data = mach + " MACH = " + price + " MACH";
@@ -189,7 +215,7 @@
 
         function reqWithdraw() {
             var coin = $("select[name=coin] option:selected").val();
-            if(coin != "ONT" && bitberry_token == "") {
+            if((coin != "ONT" && coin != "ONG") && bitberry_token == "") {
                 alert("Connection with Bitberry is required.");
                 location.href = '/myPages/wallet/connect';
                 return;
@@ -212,10 +238,11 @@
 
             var data = {
                 "amount": Number($("input[name=amount]").val()),
+                "cryptoCurrencyCode":coin
             };
 
             var url = "/v1/coins/wallets/"+coin+"/withdraw";
-            if(coin == "ONT") {
+            if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
                     alert("지갑 주소를 입력해 주세요.");
                     return;
@@ -294,11 +321,12 @@
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -307,6 +335,7 @@
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
                                         <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
+                                        <th><img src="/static/img/symbol/symbol_ong.png" alt="ONG" title="ONG"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -316,6 +345,7 @@
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
                                         <td id="ontTotal"></td>
+                                        <td id="ongTotal"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -344,6 +374,7 @@
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="ONT">ONT</option>
+                                                    <option value="ONG">ONG</option>
                                                     <option value="MACH" selected>MACH</option>
                                                 </select>
                                             </div>

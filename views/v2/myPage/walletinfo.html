@@ -37,6 +37,7 @@
                 $("#btcTotal").text(success.data.total_btc == undefined ? 0 : success.data.total_btc);
                 $("#ethTotal").text(success.data.total_ether == undefined ? 0 : success.data.total_ether);
                 $("#ontTotal").text(success.data.total_ont == undefined ? 0 : success.data.total_ont);
+                $("#ongTotal").text(success.data.total_ong == undefined ? 0 : success.data.total_ong);
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -55,6 +56,8 @@
                 $("#machBuyMach").text(success.data.buy_total_escrow_mach);
                 $("#machSellOnt").text(success.data.sell_total_escrow_ont);
                 $("#machBuyOnt").text(success.data.buy_total_escrow_ont);
+                $("#machSellOng").text(success.data.sell_total_escrow_ong);
+                $("#machBuyOng").text(success.data.buy_total_escrow_ong);
                 //console.log(success.data);
             }).fail(function (fail) {
                 console.log(fail);
@@ -234,11 +237,12 @@
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
-                                    <col class="col5_1">
-                                    <col class="col5_2">
-                                    <col class="col5_3">
-                                    <col class="col5_4">
-                                    <col class="col5_5">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -247,6 +251,7 @@
                                         <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
                                         <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
                                         <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
+                                        <th><img src="/static/img/symbol/symbol_ong.png" alt="ONG" title="ONG"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -256,6 +261,7 @@
                                         <td id="btcTotal"></td>
                                         <td id="ethTotal"></td>
                                         <td id="ontTotal"></td>
+                                        <td id="ongTotal"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 입금예정</th>
@@ -263,6 +269,7 @@
                                         <td id="machSellBtc"></td>
                                         <td id="machSellEth"></td>
                                         <td id="machSellOnt"></td>
+                                        <td id="machSellOng"></td>
                                     </tr>
                                     <tr>
                                         <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> 출금액</th>
@@ -270,6 +277,7 @@
                                         <td id="machBuyBtc"></td>
                                         <td id="machBuyEth"></td>
                                         <td id="machBuyOnt"></td>
+                                        <td id="machBuyOng"></td>
                                     </tr>
                                 </tbody>
                             </table>
