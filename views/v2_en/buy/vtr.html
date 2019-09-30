@@ -212,7 +212,11 @@
                     var coin_price = success.data.total_coins.total_ont == undefined ? 0 : success.data.total_coins.total_ont;
                     item_user_price = numberWithCommas(coin_price);
                     total_mach = coin_price;
-                } 
+                } else if(cryptoCurrencyCode == "ONG") {
+                    var coin_price = success.data.total_coins.total_ong == undefined ? 0 : success.data.total_coins.total_ong;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                }
                 
                 $(".view_emphasis").text(item_type.text);
                 $(".posting_date").text("Date : " + regDate);
