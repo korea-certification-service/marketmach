@@ -980,7 +980,7 @@ router.post('/ontwallet/deposit', function(req, res, next) {
 
     let body = req.body;
     body['country'] = dbconfig.country;
-    req.body['coinType'] = req.params.coinType;
+    req.body['coinType'] = req.params.cryptoCurrencyCode;
     req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
 
     let url = dbconfig.APIServer + "/v2/coin/ontwallet/deposit";
@@ -1028,7 +1028,7 @@ router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
     let body = req.body;
     body['country'] = dbconfig.country;
     req.body['userId'] = req.session.userId;
-    req.body['coinType'] = req.params.coinType;
+    req.body['coinType'] = req.body.cryptoCurrencyCode;
     req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
 
     let url = dbconfig.APIServer + "/v2/coin/ontwallet/withdraw";
