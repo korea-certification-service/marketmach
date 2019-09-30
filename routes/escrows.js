@@ -148,7 +148,9 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                 "sell_total_escrow_btc": sellEscrowBtc,
                 "sell_total_escrow_eth": sellEscrowEth,
                 "sell_total_escrow_mach": sellEscrowMach,
-                "sell_total_escrow_ont": sellEscrowOnt
+                "sell_total_escrow_ont": sellEscrowOnt,
+                "buy_total_escrow_ong": sellEscrowOng,
+                "sell_total_escrow_ong": sellEscrowOng
             }
             bitwebResponse.code = 200;
             bitwebResponse.data = result;
