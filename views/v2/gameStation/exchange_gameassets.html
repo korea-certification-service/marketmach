@@ -123,7 +123,11 @@
             }).done(function (success) {
                 if(success.data != null) {
                     console.log("getUserGameinfo =>"+success.data);
-                    my_game_coin = success.data.total_mcs1_coin;
+                    if(!success.data.total_mcs1_coin){
+                        my_game_coin = success.data.total_mcs1_coin;
+                    } else {
+                        my_game_coin = 0;
+                    }
                     $("#game_coin").text(numberWithCommas(my_game_coin));
                     $("#game_amount").html(numberWithCommas(my_game_coin));
                     $("#total_game_amount").html(numberWithCommas(my_game_coin));
