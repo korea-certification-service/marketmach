@@ -14,6 +14,7 @@ var pointHistorysSchema = new Schema({
     fee: Number,
     bankAccountType: String,
     bankAccount: String,
+    userName: String,
     regDate: String
 });
 

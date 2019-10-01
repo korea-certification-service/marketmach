@@ -173,6 +173,7 @@ function updateById(country, id, body) {
                                     "point":body.type == "deposit" ? user_amount : body.amount,
                                     "fee": dbconfig.fee.point.deposit,
                                     "status": false,
+                                    "userName": body.username,
                                     "regDate": util.formatDate(new Date().toString())
                                 }
                                 if(body.type == "withdraw") {
