@@ -178,12 +178,25 @@
                     var status = coinHistorys[i].status == "true" ? "success" : coinHistorys[i].status;
                     var regDate = coinHistorys[i].regDate.substr(2);
 
+                    var styleStr = "display:none;";
+                    var btnStr = "";
+                    if(coinHistorys[i].status == "false" && coinHistorys[i].reqDate != undefined) {
+                        var startDate = new Date(coinHistorys[i].reqDate);
+                        var endDate = new Date();
+                        var tmpMin = (endDate.getTime() - startDate.getTime()) / 60000;
+                        if(tmpMin >= 3) {
+                            styleStr = "display:inline-block;"
+                        }
+                        btnStr = '<button class="btn btn_in_view1" id="'+coinHistorys[i]._id+'" style="'+styleStr+'" onclick="retry(\''+coinHistorys[i]._id+'\');">Retry</button>';
+                    }
+
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
                                         '<em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+status+'</td>' + 
                                     '<td>'+regDate.replace(' ','<br>')+'</td>' + 
+                                    '<td>'+btnStr+'</td>'
                                 '</tr>';
                 }
 
@@ -262,7 +275,7 @@
 
             if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
-                    alert("Please innput your ONT Address.");
+                    alert("Please input your ONT Address.");
                     $("#confirmDeposit").attr("disabled", false);
                     return;
                 }
@@ -275,12 +288,18 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    if(success.data.successYn == "N") {
+                        alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");
+                        $("#confirmDeposit").attr("disabled", false);
+                        return;
+                    }
+
                     _PopupUI.showWithDim(function() {
                         // callback
                     });
                 }).fail(function (fail) {
                     console.log(fail);                    
-                    alert('There was a problem during the process. \n If the problem persists, please contact administrators')
+                    alert('There was a problem during the process. \n If the problem persists, please contact administrators.')
                     $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
@@ -345,6 +364,34 @@
                 }
             }).fail(function (fail) {
                 console.log(fail);
+                $("#confirmDeposit").attr("disabled", false);
+            });
+        }
+
+        function retry(historyId) {
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/ontwallet/retry/deposit",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({"historyId": historyId})
+            }).done(function (success) {
+                console.log(success.data);
+                if(success.data.successYn == "N") {
+                    alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");
+                    $("#confirmDeposit").attr("disabled", false);
+                    return;
+                }
+                $('#showOntAddress').show();
+                $('#bitberryArea').hide();
+                $('#ontWalletArea').show();
+                $('#'+historyId).hide();
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
+            }).fail(function (fail) {
+                console.log(fail);                    
+                alert('There was a problem during the process. \n If the problem persists, please contact administrators.')
                 $("#confirmDeposit").attr("disabled", false);
             });
         }
@@ -510,18 +557,24 @@
                             </article>
                         </div>
                         <h2 class="tit_mypage dot_tit">Deposit Statement</h2>
+                        <div>
+                            <br><span class="fcrd">※(ONT, ONG)You have to make deposit within 3 minutes to MarketMACH wallet.</span>
+                            <br><span class="fcrd">※(ONT, ONG)If you have send to coin after 3 minutes later, please click the Retry button.</span>
+                        </div>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>
-                                    <col class="col3_1">
-                                    <col class="col3_2">
-                                    <col class="col3_3">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th>Deposit Amount</th>
                                         <th>Status</th>
                                         <th>Date</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">

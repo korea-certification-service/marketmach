@@ -178,12 +178,25 @@
                     var status = coinHistorys[i].status == "true" ? "success" : coinHistorys[i].status;
                     var regDate = coinHistorys[i].regDate.substr(2);
 
+                    var styleStr = "display:none;";
+                    var btnStr = "";
+                    if(coinHistorys[i].status == "false" && coinHistorys[i].reqDate != undefined) {
+                        var startDate = new Date(coinHistorys[i].reqDate);
+                        var endDate = new Date();
+                        var tmpMin = (endDate.getTime() - startDate.getTime()) / 60000;
+                        if(tmpMin >= 3) {
+                            styleStr = "display:inline-block;"
+                        }
+                        btnStr = '<button class="btn btn_in_view1" id="'+coinHistorys[i]._id+'" style="'+styleStr+'" onclick="retry(\''+coinHistorys[i]._id+'\');">Retry</button>';
+                    }
+
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
                                         '<em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
                                     '</td>' + 
                                     '<td>'+status+'</td>' + 
                                     '<td>'+regDate.replace(' ','<br>')+'</td>' + 
+                                    '<td>'+btnStr+'</td>'
                                 '</tr>';
                 }
 
@@ -276,6 +289,11 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    if(success.data.successYn == "N") {
+                        alert("다른 사용자가 회원님의 지갑으로 입금 요청하였습니다. 관리자에게 문의하신 후 입금하시기 바랍니다.");
+                        $("#confirmDeposit").attr("disabled", false);
+                        return;
+                    }
                     _PopupUI.showWithDim(function() {
                         // callback
                     });
@@ -349,6 +367,35 @@
                 $("#confirmDeposit").attr("disabled", false);
             });
         }
+
+        function retry(historyId) {
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/ontwallet/retry/deposit",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({"historyId": historyId})
+            }).done(function (success) {
+                console.log(success.data);
+                if(success.data.successYn == "N") {
+                    alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");
+                    $("#confirmDeposit").attr("disabled", false);
+                    return;
+                }
+                $('#showOntAddress').show();
+                $('#bitberryArea').hide();
+                $('#ontWalletArea').show();
+                $('#'+historyId).hide();
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
+            }).fail(function (fail) {
+                console.log(fail);                    
+                alert('There was a problem during the process. \n If the problem persists, please contact administrators.')
+                $("#confirmDeposit").attr("disabled", false);
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -523,18 +570,24 @@
                         </div>
 
                         <h2 class="tit_mypage dot_tit">입금 내역</h2>
+                        <div>
+                            <br><span class="fcrd">※(ONT, ONG)입금 요청 후 3분 이내 입금하셔야 마켓마하 지갑에 입금됩니다.</span>
+                            <br><span class="fcrd">※(ONT, ONG)3분이 경과한 후 입금하신 경우에는 재시도 버튼을 클릭해 주세요.</span>
+                        </div>
                         <div class="table_wrap table-responsive">
                             <table class="table_wallet table">
                                 <colgroup>
-                                    <col class="col3_1">
-                                    <col class="col3_2">
-                                    <col class="col3_3">
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th>입금액</th>
                                         <th>처리상태</th>
                                         <th>일자</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="wallet_historys">
