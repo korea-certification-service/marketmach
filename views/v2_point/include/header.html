@@ -5,10 +5,10 @@
     var selecValue;
 
     $(document).ready(function(){
-        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/sells") {
-            selecValue = "games";
-        } else if(location.pathname == "/etc-sells") {
+        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/etc-sells") {
             selecValue = "assets";
+        } else if(location.pathname == "/sells") {
+            selecValue = "games";
         } else if(location.pathname == "/otc-sells") {
             selecValue = "otc";
         }
@@ -22,7 +22,7 @@
             if(key.keyCode==13){
                 //selecValue = selecValue;
                 if(selecValue == "games") {
-                    if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                    if( $(".srch_box_left ul li").hasClass("no_exist")){
                         return;
                     }
                 }
@@ -31,9 +31,9 @@
         });
 
         $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
-            //selecValue = selecValue;
+            selecValue = selecValue;
             if(selecValue == "games") {
-                if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                if( $(".srch_box_left ul li").hasClass("no_exist")){
                     return;
                 }
             }
