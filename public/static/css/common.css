@@ -372,10 +372,16 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .renewer_container .photo_list li .view_more a{display: block; text-align: center; color: #000000;}
 .renewer_container .photo_list li .view_more a em{display: block; padding-top: 50px; font-size: 45px; line-height: 1; font-weight: 100;}
 .renewer_container .photo_list li .view_more a span{display: block; padding-top: 30px; font-size: 18px;}
-.renewer_container .photo_list li .img_list_box{border:none; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); border-radius: 10px; overflow: hidden; background-color: #fff;}
+.renewer_container .photo_list li .img_list_box{border:none; border-radius: 0px; overflow: hidden; background-color: #fff; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);}
 .renewer_container .photo_list li .img_list_box:hover{box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.35);}
 .renewer_container .photo_list li .img_list_box .state_possible{display: none;}
-.renewer_container .photo_list li .img_list_box .state_step{left: 10px;}
+.renewer_container .photo_list li .img_list_box .state_step{top: 0; left: 0px; padding: 15px 0 0 0; width: 50px; height: 50px; border-radius: 0; background-image: url(/static/img/symbol/ico_star.png); background-position: 50% 4px; background-repeat: no-repeat;}
+
+.renewer_container .ico_direct{background-color: #ff07ff;}
+.renewer_container .ico_delivery_free{background-color:#832ce5 ;}
+.renewer_container .ico_delivery_payment{background-color:  #4c4bf4;}
+
+
 /* 해시태크 형태 카테고리 */
 .section_hashtag{padding-top: 110px; margin: -50px 0 260px 0; background: url(/static/img/main/pattern_triangle.png) 0 0 repeat-x;}
 .hashtag_category_wrap{padding-bottom: 100px; background: #fff  url(/static/img/main/line_btm_asset.png) 50% 100% no-repeat;}

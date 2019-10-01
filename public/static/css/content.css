@@ -136,7 +136,7 @@
 .photo_list li .img_list_box:hover{box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.35);}
 .photo_list li .img_list_box .photo_frame{text-align: center; height: 200px; overflow: hidden;}
 .photo_list li .img_list_box .photo_frame > a{display: block; width: 100%; height: 100%; line-height: 200px;}
-.photo_list li .img_list_box .ico_trade{position: absolute; top: 10px; display: block; width: 75px; padding: 5px 0; border-radius: 6px; text-align: center; font-weight: bold; font-size: 12px;}
+.photo_list li .img_list_box .ico_trade{position: absolute; top: 10px; display: block; width: 75px; padding: 5px 0; border-radius: 6px; text-align: center; font-weight: bold; line-height: 1.3; font-size: 12px;}
 .photo_list li .img_list_box .state_possible{left: 10px; border: 1px solid #1e2560; color: #1e2560; background-color: #fff;}
 .photo_list li .img_list_box .state_step{right: 10px;}
 .photo_list li .img_list_box .step1{}
