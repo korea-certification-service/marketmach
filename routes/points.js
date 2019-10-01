@@ -9,6 +9,7 @@ const BitwebResponse = require('../utils/BitwebResponse')
 const util = require('../utils/util')
 const request = require('request');
 const dbconfig = require('../config/dbconfig');
+const smsController = require('../controllers/sms');
 
 router.get('/:pointId', function (req, res, next) {
     // res.send('respond with a resource');
@@ -78,9 +79,37 @@ router.put('/:pointId', function (req, res, next) {
 
     controllerPoints.updateById(country, pointId, body)
         .then((result) => {
-            bitwebResponse.code = 200;
-            bitwebResponse.data = result;
-            res.status(200).send(bitwebResponse.create())
+            //관리자 sms전송 기능 추가
+            let url = dbconfig.APIServer + "/v2/sms/notification/point";
+            let header = {
+                'token': dbconfig.APIToken
+            };
+            let reqs = {uri: url, 
+                method:'POST',
+                headers: header,
+                body:body,
+                json: true
+            }
+
+            //API 서버로 내부 call요청한다.
+            request(reqs, function (error, response, body) {  
+                console.log(error, response, body);
+                if (!error && response.statusCode == 200) {
+                    //let result = body.data;
+                    if(typeof(body) == "string") {
+                        result = JSON.parse(body).data;
+                    }
+                    
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = result;
+                    res.status(200).send(bitwebResponse.create())
+                } else {
+                    console.error('err=>', error)
+                    bitwebResponse.code = 200;
+                    bitwebResponse.data = result;
+                    res.status(200).send(bitwebResponse.create())
+                }
+            });
         }).catch((err) => {
         console.error('err=>', err)
         bitwebResponse.code = 500;

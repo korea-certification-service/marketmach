@@ -148,6 +148,11 @@
                 return;
             }
 
+            if($("#username").val() == "") {
+                alert("입금자명을 입력하세요.");
+                return;
+            }
+
             var confirmYn = confirm("입금을 요청 하시겠습니까?");
             if(confirmYn) {
                 var data = {
@@ -155,7 +160,8 @@
                     "amount": Number(amount),
                     "extType":$("#depositType").val(),
                     "type":"deposit",
-                    "amountCurrency":"KRW"
+                    "amountCurrency":"KRW",
+                    "username":$("#username").val()
                 };
                 let url = "/v1/points/" + pointId;
                 var method = "PUT";
@@ -279,6 +285,10 @@
                                                     <br class="mob_br"><span class="fcrd">※입금을 원하는 포인트 금액</span>
                                                 </td>
                                             </tr>  
+                                            <tr>
+                                                <th>입금자명</th>
+                                                <td><input type="text" class="form-control" id="username" value="" placeholder="입금자명 입력"></td>
+                                            </tr> 
                                             <tr>
                                                 <th>입금 계좌번호</th>
                                                 <td><em>국민은행 584101-01-214594 한국인증서비스(주)</em></td>
