@@ -451,9 +451,9 @@
                     url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    data: {
+                    data: JSON.stringify({
                         "roomToken":buyerTag+"|"+sellerTag+"|"+itemId
-                    }                  
+                    })               
                 }).done(function (success) {
                     if(success.data.successYn == "Y") {
                         location.href = '/sells/detail/' + itemId;
