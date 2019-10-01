@@ -51,8 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
     }
 
+    srchInput.addEventListener("click", function() {
+        showLeftList();
+    })
+
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     srchInput.addEventListener("input", function(event){
+        showLeftList();
         var that = this;
 
         clearTimeout(inputSetTimeOut);
@@ -75,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
             //카테고리박스 사이즈 초기화
             setSize(1);
-    
+            alert(seletedValue);
             //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
             if( seletedValue == "games" ) { //게임자산일때
                 

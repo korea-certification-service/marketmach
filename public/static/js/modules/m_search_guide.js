@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
     }
 
+    srchInput.addEventListener("click", function() {
+        showLeftList();
+    })
+    
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     srchInput.addEventListener("input", function(event){
 
