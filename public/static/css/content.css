@@ -637,6 +637,9 @@
 .otc_table td .ellipse{width: calc(100% - 30px)}
 .otc_table tbody td:first-child{text-align: left;}
 
+
+/* 광고 */
+.sub_container ins{margin-top: 30px;}
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
