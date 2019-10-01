@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
             //카테고리박스 사이즈 초기화
             setSize(1);
-            alert(seletedValue);
             //왼쪽 카테고리에 리스트 추가 게임이름 또는 서버명으로 검색했을때
             if( seletedValue == "games" ) { //게임자산일때
                 
