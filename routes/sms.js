@@ -239,6 +239,7 @@ router.post('/user/checkMobile', function(req,res,next) {
     
     var bitwebResponse = new BitwebResponse();
     let body = req.body;
+    body['country'] = dbconfig.country;
 
     let url = dbconfig.APIServer + "/v2/sms/user/checkMobile";
     let header = {
