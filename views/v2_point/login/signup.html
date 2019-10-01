@@ -107,10 +107,10 @@
                 return;
             }
 
-            if($('#recommander').val() != "" && $('#recommander').val() == $("input[name=id]").val()) {
-                alert("등록할 ID로 추천인을 넣을 수 없습니다.");
-                return;
-            }
+            // if($('#recommander').val() != "" && $('#recommander').val() == $("input[name=id]").val()) {
+            //     alert("등록할 ID로 추천인을 넣을 수 없습니다.");
+            //     return;
+            // }
 
             var birth = "<%=birth%>";
             var year = birth.substr(0,4);
@@ -153,9 +153,9 @@
                 signUpForm.agreements.pushMarketing = "true";
             }
 
-            if($('#recommander').val() != "") {
-                signUpForm['recommander'] = $('#recommander').val();
-            }
+            // if($('#recommander').val() != "") {
+            //     signUpForm['recommander'] = $('#recommander').val();
+            // }
 
             $('#signup').prop('disabled', true);
 
@@ -273,7 +273,7 @@
                         </tbody>
                     </table>
                 </div> 
-                <h1>정보입력 <em class="fcor">(선택)</em></h1>
+                <!-- <h1>정보입력 <em class="fcor">(선택)</em></h1>
                 <div class="table_wrap table-responsive">
                     <table class="table_view table">
                         <colgroup class="colgroup_signup">
@@ -294,7 +294,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div> 
+                </div>  -->
                 <div class="btn_align_c">
                     <button class="btn btn_in_view1" id="signup">회원가입</button>
                 </div>                    
