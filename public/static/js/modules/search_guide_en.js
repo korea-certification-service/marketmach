@@ -36,14 +36,17 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/sells':
         case '/buys' :
             srchInput.setAttribute("placeholder", "Search Game or Server Name.");
+            document.querySelector(".srch_select option[value='games']").setAttribute("selected", "selected");
             break;
         case '/etc-sells':
         case '/etc-buys' :
             srchInput.setAttribute("placeholder", "Search Asset.");
+            document.querySelector(".srch_select option[value='assets']").setAttribute("selected", "selected");
             break;
         case '/otc-sells':
         case '/otc-buys' :
             srchInput.setAttribute("placeholder", "Search OTC.");
+            document.querySelector(".srch_select option[value='otc']").setAttribute("selected", "selected");
             break;
     }
 

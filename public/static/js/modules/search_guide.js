@@ -37,17 +37,19 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/sells':
         case '/buys' :
             srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
+            document.querySelector(".srch_select option[value='games']").setAttribute("selected", "selected");
             break;
         case '/etc-sells':
         case '/etc-buys' :
             srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
+            document.querySelector(".srch_select option[value='assets']").setAttribute("selected", "selected");
             break;
         case '/otc-sells':
         case '/otc-buys' :
             srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
+            document.querySelector(".srch_select option[value='otc']").setAttribute("selected", "selected");
             break;
     }
-
 
     //[ 인풋 이벤트 ] : 왼쪽 카테고리에 검색어에 해당하는 리스트 추가
     srchInput.addEventListener("input", function(event){
