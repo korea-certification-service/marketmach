@@ -236,6 +236,12 @@
             //     return;
             // }
 
+            var confirmYn = confirm("출금 요청 하시겠습니까?");
+            if(!confirmYn) {
+                $("#confirmDeposit").attr("disabled", false);
+                return;
+            }
+
             var data = {
                 "amount": Number($("input[name=amount]").val()),
                 "cryptoCurrencyCode":coin
