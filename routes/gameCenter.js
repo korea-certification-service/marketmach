@@ -424,21 +424,28 @@ router.get('/:userId/info', function(req, res, next) {
 
     controllerGameCenter.getByUserId(country, userId)
     .then(userGameCenter => {
-        let condition = {
-            "gameCenterId": userGameCenter._doc._id
-        }
-        controllerGameCenter.getRecords(country, condition)
-        .then(gameRecords => {
-            userGameCenter._doc['gameRecords'] = gameRecords;
+        if(userGameCenter == null) {
             bitwebResponse.code = 200;
             bitwebResponse.data = userGameCenter;
             res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-            console.error('user game center err=>', err)
-            bitwebResponse.code = 500;
-            bitwebResponse.message = err;
-            res.status(500).send(bitwebResponse.create())
-        })
+        } else {
+            let condition = {
+                "gameCenterId": userGameCenter._doc._id
+            }
+            controllerGameCenter.getRecords(country, condition)
+            .then(gameRecords => {
+                
+                userGameCenter._doc['gameRecords'] = gameRecords;
+                bitwebResponse.code = 200;
+                bitwebResponse.data = userGameCenter;
+                res.status(200).send(bitwebResponse.create())
+            }).catch((err) => {
+                console.error('user game center err=>', err)
+                bitwebResponse.code = 500;
+                bitwebResponse.message = err;
+                res.status(500).send(bitwebResponse.create())
+            })
+        }
     }).catch((err) => {
         console.error('user game center err=>', err)
         bitwebResponse.code = 500;

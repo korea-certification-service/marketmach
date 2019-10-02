@@ -204,11 +204,23 @@ router.get('/currency', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/login/login', {title: 'Bitweb Main'});
+        if(req.session.userTag == undefined || req.session.userTag == "") {
+            res.render('v2/login/login', {title: 'Bitweb Main'});
+        } else {
+            res.redirect("/main");
+        }
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+        if(req.session.userTag == undefined || req.session.userTag == "") {
+            res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+        } else {
+            res.redirect("/main");
+        }
     } else {
-        res.render('v2_en/login/login', {title: 'Bitweb Main'});
+        if(req.session.userTag == undefined || req.session.userTag == "") {
+            res.render('v2_en/login/login', {title: 'Bitweb Main'});
+        } else {
+            res.redirect("/main");
+        }
     }
 });
 
