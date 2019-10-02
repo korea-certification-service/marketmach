@@ -376,6 +376,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .renewer_container .photo_list li .img_list_box:hover{box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.35);}
 .renewer_container .photo_list li .img_list_box .state_possible{display: none;}
 .renewer_container .photo_list li .img_list_box .state_step{top: 0; left: 0px; padding: 15px 0 0 0; width: 50px; height: 50px; border-radius: 0; background-image: url(/static/img/symbol/ico_star.png); background-position: 50% 4px; background-repeat: no-repeat;}
+.renewer_container .photo_list li .img_list_box .line2{padding-left: 5px; padding-right: 5px;}
 /* 댓글 카운팅 개발 될때까지 가리기*/
 .renewer_container .photo_list li .img_list_box dt .reply_num{display: none;}
 .renewer_container .ico_direct{background-color: #ff07ff;}

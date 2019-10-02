@@ -303,8 +303,12 @@
                             +     '<div class="img_list_box">'
                             +        '<div class="photo_frame">'
                             +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
-                            +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
-                            +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                    if(delivery_type.className === "ico_direct"){
+                        result +=    '<em class="ico_trade state_step line2 '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                    } else {
+                        result +=    '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                    }
+                    result +=        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
                             +        '</div>'
                             +        '<dl>'
                             +            '<dt>'
