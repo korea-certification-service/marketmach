@@ -141,6 +141,11 @@
 .table_wallet .col3_1{}
 .table_wallet .col3_2{width: 100px;}
 .table_wallet .col3_3{width: 100px;}
+/* 지갑관리 - Coin 입금 */
+.table_wallet .col4_1{}
+.table_wallet .col4_2{width: 90px;}
+.table_wallet .col4_3{width: 100px;}
+.table_wallet .col4_4{width: 90px;}
 /*** 포인트관리 - 나의 포인트 정보 ***/
 .table .colgroup_pointinfo .col4_1{width: 100px;}
 .table .colgroup_pointinfo .col4_2{width: 510px;}
