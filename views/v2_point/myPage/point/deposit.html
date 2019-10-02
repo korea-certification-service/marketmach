@@ -129,8 +129,8 @@
             price = point - fee_amount;
             $('#depositType').val() == 'bank_account' ? data = numberWithCommas(point) + " KRW = " + numberWithCommas(price) + " Point " + strFee : data = numberWithCommas(point) + " Cash = " + numberWithCommas(price) + " Point " + strFee;
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
-            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>Cash</span>");
-            $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
+            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(numberWithCommas(point)+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(numberWithCommas(point)+"<span>Cash</span>");
+            $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(numberWithCommas(price)+"<span>Point</span>") : $("#happymoney_exchange_amount").html(numberWithCommas(price)+"<span>Point</span>");
             $("#plus_amount").text(numberWithCommas(price));
             $("#total_amount").text(numberWithCommas(total_point + price));
         }

@@ -111,6 +111,11 @@
                 return;
             }
 
+            if($("#username").val() == "") {
+                alert("예금주를 입력하세요.");
+                return;
+            }
+
             if($("#bank_account").val() == "") {
                 alert("계좌 번호를 입력 하세요.");
                 return;
@@ -125,6 +130,7 @@
                 alert("출금 금액은 최소 10,000KRW 부터 가능합니다.");
                 return;
             }
+            
 
             var confirmYn = confirm("출금을 요청 하시겠습니까?");
             if(confirmYn) {
@@ -135,7 +141,8 @@
                     "type":"withdraw",
                     "amountCurrency":"KRW",
                     "bankAccountType": $("#bank_account_type").val(),
-                    "bankAccount": $("#bank_account").val()
+                    "bankAccount": $("#bank_account").val(),
+                    "username":$("#username").val()
                 };
 
                 console.log(data);
@@ -251,6 +258,10 @@
                                             <br class="mob_br"><span class="fcrd">※ 이체 은행 선택</span>
                                         </td>
                                     </tr>  
+                                    <tr>
+                                        <th>예금주</th>
+                                        <td><input type="text" class="form-control" id="username" value="" placeholder="예금주 입력"></td>
+                                    </tr> 
                                     <tr>
                                         <th>계좌 번호</th>
                                         <td>
