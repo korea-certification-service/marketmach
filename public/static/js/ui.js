@@ -17,10 +17,11 @@ var MainUi = {
         this.navHiddenMenu();
         this.showMobSideMenu();
         this.slickSlide();
-        this.showSiblingNode({btn: ".btnGame", sec: ".secGame"});   // GAME
-        this.showSiblingNode({btn: ".btnOtc", sec: ".secOtc"});     // OTC
-        this.showSiblingNode({btn: ".btnNoti1", sec: ".secNoti1"}); // Notice
-        this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
+        // this.showSiblingNode({btn: ".btnGame", sec: ".secGame"});   // GAME
+        // this.showSiblingNode({btn: ".btnOtc", sec: ".secOtc"});     // OTC
+        // this.showSiblingNode({btn: ".btnNoti1", sec: ".secNoti1"}); // Notice
+        // this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
+        this.linkMACHAdventure();
     },
     disableShowCode: function() {
         var isCtrl = false;
@@ -274,6 +275,7 @@ var MainUi = {
         });
 
         // PRIME ZONE card UI
+        /*
         $('.slick_primezone').slick({
             dots: true,
             speed: 800,
@@ -327,6 +329,7 @@ var MainUi = {
                 }, 
             ]
         });
+        */
         // CI
         $('.ci_area').slick({
             slidesToShow: 6,
@@ -341,16 +344,7 @@ var MainUi = {
                         slidesToShow: 2,
                         slidesToScroll: 2,
                     }
-                }, 
-                /*
-                {
-                    breakpoint: 576,
-                    settings: { 
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    }
                 },
-                */ 
             ]
         });
     },
@@ -373,7 +367,13 @@ var MainUi = {
             });
         }
     },
-    
+    // distinguish device
+    linkMACHAdventure: function() {
+        var a = document.querySelector("#linkMachGame .mob_show")
+        if(a && isIos()) {
+            a.setAttribute("href", "https://itunes.apple.com/kr/app/mach-adventure/id1465065764?mt=8");
+        } 
+    }
 };
 MainUi.init();
 
