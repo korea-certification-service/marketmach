@@ -5,10 +5,10 @@
     var selecValue;
 
     $(document).ready(function(){
-        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/sells") {
-            selecValue = "games";
-        } else if(location.pathname == "/etc-sells") {
+        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/etc-sells") {
             selecValue = "assets";
+        } else if(location.pathname == "/sells") {
+            selecValue = "games";
         } else if(location.pathname == "/otc-sells") {
             selecValue = "otc";
         }
@@ -22,7 +22,7 @@
             if(key.keyCode==13){
                 //selecValue = selecValue;
                 if(selecValue == "games") {
-                    if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                    if( $(".srch_box_left ul li").hasClass("no_exist")){
                         return;
                     }
                 }
@@ -33,7 +33,7 @@
         $("#main_search, #m_main_search").on('click', function(key){ //검색버튼 눌렀을떄
             //selecValue = selecValue;
             if(selecValue == "games") {
-                if( $(".srch_box_left ul li")[0].classList[0] == "no_exist" ){
+                if( $(".srch_box_left ul li").hasClass("no_exist")){
                     return;
                 }
             }
@@ -249,28 +249,21 @@
                     <li>
                         <button class="hasDepth2">판매등록</button>
                         <ul class="depth2 cf">
-                            <li><a href="javascript:checkTeenager('/sells/register');">게임아이템</a></li>
                             <li><a href="/etc-sells/register">자산거래</a></li>
+                            <li><a href="javascript:checkTeenager('/sells/register');">게임아이템</a></li>
                             <li><a href="/otc-sells/register">OTC거래</a></li>
                         </ul>
                     </li>
                     <li>
                         <button class="hasDepth2">구매등록</button>
                         <ul class="depth2 cf">
-                            <li><a href="javascript:checkTeenager('/buys/register');">게임아이템</a></li>
                             <li><a href="/etc-buys/register">자산거래</a></li>
+                            <li><a href="javascript:checkTeenager('/buys/register');">게임아이템</a></li>
                             <li><a href="/otc-buys/register">OTC거래</a></li>
                         </ul>                    
                     </li>
                 </ul>
                 <ul class="c_menu nav_menu cf">
-                    <li>
-                        <button class="hasDepth2">게임아이템</button>
-                        <ul class="depth2 cf">
-                            <li><a href="/sells?category=game&trade_type=sell">팝니다</a></li>
-                            <li><a href="/buys?category=game&trade_type=buy">삽니다</a></li>
-                        </ul>                         
-                    </li>
                     <li>
                         <button class="hasDepth2">자산거래</button>
                         <ul class="depth2 cf">
@@ -278,6 +271,13 @@
                             <li><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></li>
                         </ul>  
                     </li>    
+                    <li>
+                        <button class="hasDepth2">게임아이템</button>
+                        <ul class="depth2 cf">
+                            <li><a href="/sells?category=game&trade_type=sell">팝니다</a></li>
+                            <li><a href="/buys?category=game&trade_type=buy">삽니다</a></li>
+                        </ul>                         
+                    </li>
                     <li>
                         <button class="hasDepth2">OTC거래</button>
                         <ul class="depth2 cf">
