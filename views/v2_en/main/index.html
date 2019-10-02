@@ -361,6 +361,31 @@
 
             $('#community_boards').html(result);
         }
+
+        function makeHasetCategoryList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var arrResult = success.data;
+                var $hashtagCategory = $("#hashtagCategory");
+                // hashtagCategory
+                var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>';
+                for (var i = 0; i < arrResult.length; i++) {
+                    console.log(arrResult[i].category1);
+                    var idx = i + 1
+                    if(idx > 5) {
+                        // idx = idx - (5*1)
+                    } else {
+                        li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+arrResult[i].category1+'"><span>Woman</span></a></li>';
+                    }
+                }
+                li += '<li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>';
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+        // makeHasetCategoryList();
     </script>
     <!--// header -->
 
@@ -393,10 +418,10 @@
                     <div class="visual_img">
                         <a href="/supports/notice/detail?noticeId=5d637e3f59011316ab4b943e">
                         <div class="pc_img">
-                            <img src="/static/img/main/main_visual19.jpg" alt="ONTology">
+                            <img src="/static/img/en/en_main_visual07.jpg" alt="ONTology">
                         </div>
                         <div class="mob_img">
-                            <img src="/static/img/mob/m_main_visual19.jpg" alt="ONTology">
+                            <img src="/static/img/en/en_mob_main_visual07.jpg" alt="ONTology">
                         </div>
                         </a>
                     </div>                                     
@@ -405,7 +430,7 @@
                 <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="3">
                     <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Grand Open</em></div></div>
                     <div class="nav_text_box"><div class="nav_text_box_inner"><em>MACH ADVENTURE</em></div></div>
-                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>ONT Tokken</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>New Token 'ONT'</em></div></div>
                 </div>
             </section>
         </div>
@@ -431,7 +456,7 @@
             </section>
             <section class="section_hashtag">
                 <div class="main_inner_wrap hashtag_category_wrap">
-                    <ul class="hashtag_category cf">
+                    <ul id="hashtagCategory" class="hashtag_category cf">
                         <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
                         <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Male"><span>Male</span></a></li>
