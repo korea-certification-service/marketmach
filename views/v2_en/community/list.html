@@ -46,8 +46,10 @@
             }).done(function (success) {
                 // console.log(success.data);
                 addClassCommunityLeftMenu("$list");
-                pageIdx = success.pageIdx;
-                setCommunityNotices(success.data.notices);
+                // pageIdx = success.pageIdx;
+                if(pageIdx == 0) {
+                    setCommunityNotices(success.data.notices);
+                }
                 setCommunitys(success.data.list);
                 if(success.data.count < 20) {
                     $('#more_search').hide();

@@ -9,6 +9,7 @@
         var price = 0;
         var fee = "<%=fee%>";
         var payKey;
+        var happymoneyBalance = 0;
         
         $(document).ready(function() {
             $('#amount, #happymoneyAmount').on('change',function(e) {
@@ -57,7 +58,8 @@
                 }
 
                 payKey = success.data.result.payKey;
-                $('#happymoneyBalance').text(numberWithCommas(success.data.result.balance) + 'Happy Cash');
+                happymoneyBalance = success.data.result.balance;
+                $('#happymoneyBalance').text(numberWithCommas(happymoneyBalance) + 'Happy Cash');
                 $(".hideBeforeLogin").show();
                 $('#happymoneyLogin').hide();
             }).fail(function (fail) {
@@ -125,10 +127,10 @@
             var data;
             var strFee = $("#depositType").val() == "happymoney" ? "("+(fee * 100)+"% 전환 수수료 차감)" : "";
             price = point - fee_amount;
-            $('#depositType').val() == 'bank_account' ? data = point + " KRW = " + price + " Point " + strFee : data = point + " Cash = " + price + " Point " + strFee;
+            $('#depositType').val() == 'bank_account' ? data = numberWithCommas(point) + " KRW = " + numberWithCommas(price) + " Point " + strFee : data = numberWithCommas(point) + " Cash = " + numberWithCommas(price) + " Point " + strFee;
             $('#depositType').val() == 'bank_account' ? $("#calculate").text(data) : $("#happymoneyCalculate").text(data);
-            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(point+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(point+"<span>Cash</span>");
-            $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(price+"<span>Point</span>") : $("#happymoney_exchange_amount").html(price+"<span>Point</span>");
+            $('#depositType').val() == 'bank_account' ? $("#deposit_amount").html(numberWithCommas(point)+"<span>KRW</span>") : $("#happymoney_deposit_amount").html(numberWithCommas(point)+"<span>Cash</span>");
+            $('#depositType').val() == 'bank_account' ? $("#exchange_amount").html(numberWithCommas(price)+"<span>Point</span>") : $("#happymoney_exchange_amount").html(numberWithCommas(price)+"<span>Point</span>");
             $("#plus_amount").text(numberWithCommas(price));
             $("#total_amount").text(numberWithCommas(total_point + price));
         }
@@ -148,9 +150,16 @@
                 return;
             }
 
-            if($("#username").val() == "") {
-                alert("입금자명을 입력하세요.");
-                return;
+            if($('#depositType').val() == 'bank_account') {
+                if($("#username").val() == "") {
+                    alert("입금자명을 입력하세요.");
+                    return;
+                }
+            } else if($('#depositType').val() == 'happymoney') {
+                if(happymoneyBalance < Number($("#happymoneyAmount").val())) {
+                    alert("입금 잔액이 부족합니다.");
+                    return;
+                }
             }
 
             var confirmYn = confirm("입금을 요청 하시겠습니까?");

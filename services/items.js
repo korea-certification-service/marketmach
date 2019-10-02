@@ -98,10 +98,13 @@ function getItemCount(data) {
             let etc_array_search = [
                 {"trade_type": { $regex: data.trade_type, $options: 'i' }},
                 {"category": { $regex: data.category, $options: 'i' }},
-                {"category1": { $regex: data.category1, $options: 'i' }},
                 //{"category2": { $regex: data.category2, $options: 'i' }},
                 {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
             ]
+
+            if(data['category1'] != "") {
+                etc_array_search.push({"category1": data.category1});
+            }
 
             if (data['primeService'] != undefined && data['primeService'] == "Y") etc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) etc_array_search[0]['status'] = data['status'];
@@ -248,11 +251,14 @@ function getItemByRequired(data) {
 
             let etc_array_search = [
                 {"trade_type": { $regex: data.trade_type, $options: 'i' }},
-                {"category": { $regex: data.category, $options: 'i' }},
-                {"category1": { $regex: data.category1, $options: 'i' }},
+                {"category": { $regex: data.category, $options: 'i' }},                
                 //{"category2": { $regex: data.category2, $options: 'i' }},
                 {$or : [{"title": { $regex: data.title, $options: 'i' }},{"desc": { $regex: data.title, $options: 'i' }}]}
             ]
+
+            if(data['category1'] != "") {
+                etc_array_search.push({"category1": data.category1});
+            }
 
             if (data['primeService'] != undefined && data['primeService'] == "Y") etc_array_search[0]['primeService'] = data['primeService']
             if (data['status'] != undefined) etc_array_search[0]['status'] = data['status'];
