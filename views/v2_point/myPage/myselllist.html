@@ -224,7 +224,9 @@
                                         } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) { 
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
-                                    }
+                                    } else if(buyList[i].status == 104 || buyList[i].status == 105) {
+                                        result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="pointShowPhone(\''+itemId+'\');">연락처 표시</button>';
+                                    } 
                                 result +=  '</div>' + 
                                 '</td>' + 
                                 '<td>'+

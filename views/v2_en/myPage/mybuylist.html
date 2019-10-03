@@ -210,6 +210,8 @@
                                         } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel<br>(refund)</button>';
                                         }
+                                    } else if(buyList[i].status == 4 || buyList[i].status == 5) {
+                                        result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="showPhone(\''+itemId+'\');">View<br>Contact</button>';
                                     } else if(buyList[i].status ==101) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
                                             result +=   '<button class="btn btn_in_view5" id="pointBuyComplete" onclick="pointBuyComplete(\''+itemId+'\');">Pay<br>(Escrow)</button>';
@@ -224,7 +226,9 @@
                                         } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
                                             result +=   '<button class="btn btn_in_view8" id="pointCancelItem" onclick="pointCancelItem(\''+itemId+'\');">Cancel(refund)</button>';
                                         }
-                                    }
+                                    } else if(buyList[i].status == 104 || buyList[i].status == 105) {
+                                        result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="pointShowPhone(\''+itemId+'\');">View<br>Contact</button>';
+                                    } 
                                 result +=  '</div>' + 
                                 '</td>' + 
                                 '<td>'+
