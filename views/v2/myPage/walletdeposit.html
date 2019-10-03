@@ -267,7 +267,7 @@
                 return;
             } 
             
-            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
+            if((coin != "ONT"&& coin != "ONG") && ($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0)) {
                 alert("Coin 금액을 입력하세요.");
                 $("#confirmDeposit").attr("disabled", false);
                 return;
