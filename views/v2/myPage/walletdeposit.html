@@ -299,9 +299,9 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    $("#confirmDeposit").attr("disabled", false);
                     if(success.data.successYn == "N") {
-                        alert("다른 사용자가 회원님의 지갑으로 입금 요청하였습니다. 관리자에게 문의하신 후 입금하시기 바랍니다.");
-                        $("#confirmDeposit").attr("disabled", false);
+                        alert("다른 사용자가 회원님의 지갑으로 입금 요청하였습니다. 관리자에게 문의하신 후 입금하시기 바랍니다.");                        
                         return;
                     }
                     _PopupUI.showWithDim(function() {

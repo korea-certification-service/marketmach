@@ -292,9 +292,9 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    $("#confirmDeposit").attr("disabled", false);
                     if(success.data.successYn == "N") {
-                        alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");
-                        $("#confirmDeposit").attr("disabled", false);
+                        alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");                        
                         return;
                     }
 
