@@ -147,12 +147,12 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .nav > .r_menu > li .btn_info_box:hover{background: url(/static/img/main/ico_btn_my_info_on.png) 50% 50% no-repeat;}
 .header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; top: 50px; right: 0; width: 220px; padding: 5px 15px; text-align: center; background-color: #ffffff; border: 1px solid #ececec; border-radius: 0 0 10px 10px;}
 .header .nav > .r_menu > li .floating_info_box > ul > li{padding: 20px 0;}
-.header .nav > .r_menu > li .floating_info_box .btn{width: 100%;font-size: 12px;font-weight: bold;height: 40px;padding: 10px 0;border-radius: 20px;}
+.header .nav > .r_menu > li .floating_info_box .btn{width: 85%;font-size: 12px;font-weight: bold;height: 40px;padding: 10px 0;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info{padding-top: 15px;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info li:nth-child(1){float: left;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info li:nth-child(2){float: right;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info li a{font-size: 12px; color: #333333;}
-.header .nav > .r_menu > li .floating_info_box .top_area{padding:10px 0; border-bottom: 2px solid #1e2560;}
+.header .nav > .r_menu > li .floating_info_box .top_area{padding:10px 0; border-bottom: 1px solid #1e2560;}
 .header .nav > .r_menu > li .floating_info_box .top_area > div{float: left; width: 50%;}
 .header .nav > .r_menu > li .floating_info_box .top_area > div em{font-size: 16px;}
 .header .nav > .r_menu > li .floating_info_box .top_area > div p a{font-size: 24px; color: #1e2560;}
@@ -165,9 +165,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .nav > .r_menu > li .floating_info_box .mdl_area p a{color: #0a73b8;font-size: 18px;font-weight: bold;}
 .header .nav > .r_menu > li .floating_info_box .mdl_area p a span{font-size: 14px;}
 .header .nav > .r_menu > li .floating_info_box .mdl_area button{width: 48%;}
-.header .nav > .r_menu > li .floating_info_box .btm_area{padding: 5px 0; border-top: 2px solid #1e2560;}
+.header .nav > .r_menu > li .floating_info_box .btm_area{padding: 5px 0; /*border-top: 2px solid #1e2560;*/}
 .header .nav > .r_menu > li .floating_info_box .btm_area button{width: 48%;}
-.header .nav > .r_menu > li .floating_info_box .btm_area .available_coin{}
+.header .nav > .r_menu > li .floating_info_box .btm_area .available_coin{display: none;}
 .header .nav > .r_menu > li .floating_info_box .btm_area dt{padding: 2px 0; color: #1e2560; text-align: center;}
 .header .nav > .r_menu > li .floating_info_box .btm_area dd{float: left; width: 25%; height: 30px; line-height: 28px; text-align: center; border-top: 1px solid #dbdbdb; border-right: 1px solid #dbdbdb; border-bottom: 1px solid #dbdbdb; box-sizing: border-box;}
 .header .nav > .r_menu > li .floating_info_box .btm_area dd:nth-of-type(1){border-left: 1px solid #dbdbdb; }
@@ -495,9 +495,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_listing .listing_game{width: 35%;}
 .footer .ft_listing dt{width: 130px; text-align: center;}
 .footer .ft_listing dd{width: 42px; text-align: center;}
-.footer .ft_listing dd img{width: 27px; filter: grayscale(1);-webkit-filter: grayscale(1); filter: gray;}
+.footer .ft_listing dd img{width: 27px; filter: grayscale(0.8);-webkit-filter: grayscale(0.8); filter: gray;}
 .footer .ft_listing dd img:hover{filter:initial;}
-.footer .ft_listing dd i{line-height: 55px; font-size: 27px; color: #a4a5a6;}
+.footer .ft_listing dd i{line-height: 55px; font-size: 27px; color: #757575;}
 .footer .ft_listing dd i:hover{color: #0a73b8;}
 .footer .ft_menu{height: 70px; line-height: 70px; background-color: #2e2e2e; color: #ffffff;}
 .footer .ft_menu .dfb > div{position: relative; width: 20%; text-align: center;}
@@ -514,7 +514,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_addr .ft_link{margin: 40px 0;}
 .footer .ft_addr .ft_link li{margin-left: 23px;}
 .footer .ft_addr .ft_link li:first-child{margin-left: 0;}
-.footer .ft_addr .ft_link li img{width: 49px; filter: grayscale(1);-webkit-filter: grayscale(1); filter: gray;}
+.footer .ft_addr .ft_link li img{width: 49px; filter: grayscale(0.8);-webkit-filter: grayscale(0.8); filter: gray;}
 .footer .ft_addr .ft_link li img:hover{filter:initial;}
 .footer .ft_addr dd{}
 
