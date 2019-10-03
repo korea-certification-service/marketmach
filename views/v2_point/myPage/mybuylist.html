@@ -221,13 +221,15 @@
                                         } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                             result +=   '<button class="btn btn_in_view8" id="pointCancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
-                                    }
+                                    } else if(buyList[i].status == 104 || buyList[i].status == 105) {
+                                        result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="pointShowPhone(\''+itemId+'\');">연락처 표시</button>';
+                                    } 
                                 result +=  '</div>' + 
                                 '</td>' + 
                                 '<td>'+
                                     '<span>' + regDate + '</span>' + 
                                     '<div class="btn_adjust">';
-                                    if(buyList[i].status ==1) {
+                                    if(buyList[i].status ==1 || buyList[i].status == 50) {
                                         result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소</button>';    
                                     } else if(buyList[i].status ==2) {
                                         //if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
@@ -429,7 +431,7 @@
                         dataType: "json",
                         data: JSON.stringify(data)
                     }).done(function (success) {
-                        alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                        alert('판매자가 판매 완료하였습니다.\r구매자의 거래 완료 버튼을 누르면 거래가 완료됩니다.');
                         getItemList();
                     }).fail(function (fail) {
                         console.log(fail);

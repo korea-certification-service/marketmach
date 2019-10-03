@@ -214,6 +214,7 @@
         }
 
         function reqWithdraw() {
+            $("#confirmWithdraw").attr("disabled", true);
             var coin = $("select[name=coin] option:selected").val();
             if((coin != "ONT" && coin != "ONG") && bitberry_token == "") {
                 alert("Connection with Bitberry is required.");

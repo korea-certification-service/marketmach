@@ -363,9 +363,12 @@
                             $('#opposition').css('display','inline-block');
                         }
                     } 
-                } else if(success.data.status == 4 || success.data.status == 104) {
-                    if(success.data.status == 5 && success.data.vtr_btn_active) {
-                        $('#opposition').css('display','inline-block');
+                } else if(success.data.status > 3) {
+                    if(success.data.vtr_btn_active) {
+                        $('#showPhone').css('display','inline-block');
+                        if(success.data.status == 5) {
+                            $('#opposition').css('display','inline-block');
+                        }
                     }
                 }
             }).fail(function (fail) {

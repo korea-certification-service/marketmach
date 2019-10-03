@@ -250,8 +250,11 @@
                         }
                     }
                 } else if(success.data.status > 3) {
-                    if(success.data.status == 5 && success.data.vtr_btn_active) {
-                        $('#opposition').css('display','inline-block');
+                    if(success.data.vtr_btn_active) {
+                        $('#showPhone').css('display','inline-block');
+                        if(success.data.status == 5) {
+                            $('#opposition').css('display','inline-block');
+                        }
                     }
                 }
             }).fail(function (fail) {

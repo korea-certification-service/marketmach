@@ -18,6 +18,11 @@ router.post('/', function (req, res, next) {
 
     controllerItem.getByItemId(country, itemId, "", "")
         .then(item => {
+            if(item._doc['status'] == 3 || item._doc['status'] == 4) {
+                item._doc['status'] = 5;
+            } else {
+                item._doc['status'] = 105;
+            }
             req.body['item'] = item;
             controllerOpposition.add(req)
                 .then(_result => {

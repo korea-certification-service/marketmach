@@ -281,8 +281,11 @@
                         }
                     }
                 } else if(success.data.status > 3) {
-                    if(success.data.status == 5 && success.data.vtr_btn_active) {
-                        $('#opposition').css('display','inline-block');
+                    if(success.data.vtr_btn_active) {
+                        $('#showPhone').css('display','inline-block');
+                        if(success.data.status == 5) {
+                            $('#opposition').css('display','inline-block');
+                        }
                     }
                 }
             }).fail(function (fail) {
@@ -394,7 +397,7 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('판매자가 판매 완료하였습니다.\r구매자의 구매 완료 버튼을 누르면 거래가 완료됩니다.');
+                    alert('판매자가 판매 완료하였습니다.\r구매자의 거래 완료 버튼을 누르면 거래가 완료됩니다.');
                     location.href = '/etc-buys/detail/' + itemId;
                 }).fail(function (fail) {
                     console.log(fail);
