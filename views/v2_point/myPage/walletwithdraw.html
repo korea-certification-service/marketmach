@@ -16,6 +16,7 @@
         var rate;
         
         $(document).ready(function() {
+            $("#coin").val("MACH");
             if("<%=kyc%>" == "false") {
                 alert('코인 출금을 위해선 본인 인증이 필요합니다.');
                 location.replace('/myPages/user/authPhone');

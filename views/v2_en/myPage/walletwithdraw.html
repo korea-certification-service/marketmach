@@ -18,6 +18,7 @@
         var rate;
         
         $(document).ready(function() {
+            $("#coin").val("MACH");
             if("<%=kyc%>" == "false") {
                 alert('Identity verification(KYC) is required for withdrawal.');
                 //location.replace('/myPages/user/authPhone');
