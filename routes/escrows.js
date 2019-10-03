@@ -56,7 +56,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     let condition = {
         $or: [{"from_userId": userId}, {"to_userId": userId}],
         "item.status":[2,3, 102, 103, 5, 105],
-        "completed": false
+        $or: [{"completed": {$exists: false}}, {"completed": false}]
     }
     var bitwebResponse = new BitwebResponse();
     if(coinType == "point") {
