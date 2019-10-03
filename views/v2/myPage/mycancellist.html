@@ -11,7 +11,7 @@
         
         $(document).ready(function(){
             if(category == "") {
-                category = "game";
+                category = $("input[name='category']:checked").val();
             }
 
             if(category == "game") {
