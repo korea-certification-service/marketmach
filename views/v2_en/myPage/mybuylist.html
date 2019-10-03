@@ -234,7 +234,7 @@
                                 '<td>'+
                                     '<span>' + regDate + '</span>' + 
                                     '<div class="btn_adjust">';
-                                    if(buyList[i].status ==1) {
+                                    if(buyList[i].status ==1 || buyList[i].status == 50) {
                                         result +=       '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">Cancel</button>';    
                                     } else if(buyList[i].status ==2) {
                                         // if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
