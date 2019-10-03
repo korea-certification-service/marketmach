@@ -45,10 +45,10 @@
                 ajaxLoginYnCheck(reqWithdraw);
             });
 
-            $("select[name=coin]").on('change', function() {
-                if($("select[name=coin] option:selected").val() == "BTC") {
+            $("#coin").on('change', function() {
+                if($("#coin").val() == "BTC") {
                     total_price = total_btc;
-                } else if($("select[name=coin] option:selected").val() == "ETH") {
+                } else if($("#coin").val() == "ETH") {
                     total_price = total_ether;
                 } else {
                     total_price = total_mach;
@@ -66,7 +66,7 @@
                 method: "GET",
                 url: "/v1/coins/" + coinId
             }).done(function (success) {
-                var coin = $("select[name=coin] option:selected").val();
+                var coin = $("#coin").val();
                 total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
                 //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
                 $("#btcTotal").html(numberWithCommas(total_btc));                        
@@ -126,7 +126,7 @@
 
         function calculate() {
             var mach = Number($("input[name=amount]").val());
-            var coin = $("select[name=coin] option:selected").val();
+            var coin = $("#coin").val();
             var price = 0;
             var data;
             if (coin == "BTC") {
@@ -190,7 +190,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/v1/coins/wallets/"+$("select[name=coin] option:selected").val()+"/withdraw",
+                url: "/v1/coins/wallets/"+$("#coin").val()+"/withdraw",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(data)
@@ -294,7 +294,7 @@
                                         <th>코인선택</th>
                                         <td>
                                             <div class="dib_220">
-                                                <select class="custom-select" name="coin" onchange="calculate()">
+                                                <select class="custom-select" name="coin" id="coin" onchange="calculate()">
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="MACH" selected>MACH</option>

@@ -62,27 +62,27 @@
                 ajaxLoginYnCheck(resultDeposit);
             });
 
-            $("select[name=coin]").on('change', function() {
+            $("#coin").on('change', function() {
                 //getCoin();
-                if($("select[name=coin] option:selected").val() == "BTC") {
+                if($("#coin").val() == "BTC") {
                     $('#showOntAddress').hide();
                     $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_btc;
-                } else if($("select[name=coin] option:selected").val() == "ETH") {
+                } else if($("#coin").val() == "ETH") {
                     $('#showOntAddress').hide();
                     $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_ether;
-                } else if($("select[name=coin] option:selected").val() == "ONT") {
+                } else if($("#coin").val() == "ONT") {
                     $('#showOntAddress').show();
                     $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
-                } else if($("select[name=coin] option:selected").val() == "ONG") {
+                } else if($("#coin").val() == "ONG") {
                     $('#showOntAddress').show();
                     $('#showAmount').hide();
                     $('#bitberryArea').hide();
@@ -127,7 +127,7 @@
             }).done(function (success) {
                 var ont_address = success.data.ont_address == undefined ? "" : success.data.ont_address;
                 $('#address').val(ont_address);
-                var coin = $("select[name=coin] option:selected").val();
+                var coin = $("#coin").val();
                 total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
                 //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
                 $("#btcTotal").html(numberWithCommas(total_btc));                        
@@ -213,7 +213,7 @@
 
         function calculate() {
             var mach = Number($("input[name=amount]").val());
-            var coin = $("select[name=coin] option:selected").val();
+            var coin = $("#coin").val();
             var price = 0;
             var data;
             if (coin == "BTC") {
@@ -260,7 +260,7 @@
 
         function reqDeposit() {
             $("#confirmDeposit").attr("disabled", true);
-            var coin = $("select[name=coin] option:selected").val();
+            var coin = $("#coin").val();
             if((coin != "ONT"&& coin != "ONG") && bitberry_token == "") {
                 alert("비트베리 앱에서 연동이 필요합니다.");
                 location.href = '/myPages/wallet/connect';
@@ -500,7 +500,7 @@
                                         <th>코인선택</th>
                                         <td>
                                             <div class="dib_220">
-                                                <select class="custom-select" name="coin">
+                                                <select class="custom-select" name="coin" id="coin">
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="ONT">ONT</option>

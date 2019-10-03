@@ -47,17 +47,17 @@
                 ajaxLoginYnCheck(reqWithdraw);
             });
 
-            $("select[name=coin]").on('change', function() {
-                if($("select[name=coin] option:selected").val() == "BTC") {
+            $("#coin").on('change', function() {
+                if($("#coin").val() == "BTC") {
                     $('#showOntAddress').hide();
                     total_price = total_btc;
-                } else if($("select[name=coin] option:selected").val() == "ETH") {
+                } else if($("#coin").val() == "ETH") {
                     $('#showOntAddress').hide();
                     total_price = total_ether;
-                } else if($("select[name=coin] option:selected").val() == "ONT") {
+                } else if($("#coin").val() == "ONT") {
                     $('#showOntAddress').show();
                     total_price = total_ont;
-                } else if($("select[name=coin] option:selected").val() == "ONG") {
+                } else if($("#coin").val() == "ONG") {
                     $('#showOntAddress').show();
                     total_price = total_ong;
                 } else {
@@ -80,7 +80,7 @@
             }).done(function (success) {
                 var ont_address = success.data.ont_address == undefined ? "" : success.data.ont_address;
                 $('#address').val(ont_address);
-                var coin = $("select[name=coin] option:selected").val();
+                var coin = $("#coin").val();
                 total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
                 //$("#mach").html(numberWithCommas(success.data.total_btc == undefined ? 0 : success.data.total_btc) + "<span>BTC</span>");                        
                 $("#btcTotal").html(numberWithCommas(total_btc));                        
@@ -159,7 +159,7 @@
 
         function calculate() {
             var mach = Number($("input[name=amount]").val());
-            var coin = $("select[name=coin] option:selected").val();
+            var coin = $("#coin").val();
             var price = 0;
             var data;
             if (coin == "BTC") {
@@ -215,7 +215,7 @@
 
         function reqWithdraw() {
             $("#confirmWithdraw").attr("disabled", true);
-            var coin = $("select[name=coin] option:selected").val();
+            var coin = $("#coin").val();
             if((coin != "ONT" && coin != "ONG") && bitberry_token == "") {
                 alert("Connection with Bitberry is required.");
                 location.href = '/myPages/wallet/connect';
@@ -371,7 +371,7 @@
                                         <th>Coin</th>
                                         <td>
                                             <div class="dib_220">
-                                                <select class="custom-select" name="coin" onchange="calculate()">
+                                                <select class="custom-select" name="coin" id="coin" onchange="calculate()">
                                                     <option value="BTC">BTC</option>
                                                     <option value="ETH">ETH</option>
                                                     <option value="ONT">ONT</option>
