@@ -123,7 +123,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONT") {
                         sellEscrowOnt = parseFloat((sellEscrowOnt + vtrs[i]._doc.price).toFixed(8));
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONG") {
-                        sellEscrowOng = parseFloat((sellEscrowOnt + vtrs[i]._doc.price).toFixed(8));
+                        sellEscrowOng = parseFloat((sellEscrowOng + vtrs[i]._doc.price).toFixed(8));
                     } else {
                         sellEscrowMach = parseFloat((sellEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
@@ -139,7 +139,7 @@ router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONT") {
                         buyEscrowOnt = parseFloat((buyEscrowOnt + vtrs[i]._doc.price).toFixed(8));
                     } else if(vtrs[i]._doc.cryptoCurrencyCode == "ONG") {
-                        buyEscrowOng = parseFloat((buyEscrowOnt + vtrs[i]._doc.price).toFixed(8));
+                        buyEscrowOng = parseFloat((buyEscrowOng + vtrs[i]._doc.price).toFixed(8));
                     } else {
                         buyEscrowMach = parseFloat((buyEscrowMach + (vtrs[i]._doc.mach == undefined ? 0 : vtrs[i]._doc.mach)).toFixed(8));
                     }
