@@ -66,26 +66,31 @@
                 //getCoin();
                 if($("select[name=coin] option:selected").val() == "BTC") {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_btc;
                 } else if($("select[name=coin] option:selected").val() == "ETH") {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_ether;
                 } else if($("select[name=coin] option:selected").val() == "ONT") {
                     $('#showOntAddress').show();
+                    $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
                 } else if($("select[name=coin] option:selected").val() == "ONG") {
                     $('#showOntAddress').show();
+                    $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ong;
                 } else {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_mach;
@@ -262,18 +267,17 @@
                 return;
             } 
             
-            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
+            if((coin != "ONT"&& coin != "ONG") && ($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0)) {
                 alert("Please enter Coin amount.");
                 $("#confirmDeposit").attr("disabled", false);
                 return;
             }
 
-            var data = {
-                "mach": Number($("input[name=amount]").val()),
-                "cryptoCurrencyCode":coin
-            };
-
             if(coin == "ONT" || coin == "ONG") {
+                var data = {
+                    "mach": 0,
+                    "cryptoCurrencyCode":coin
+                };
                 if($('#address').val() == "") {
                     alert("Please input your ONT Address.");
                     $("#confirmDeposit").attr("disabled", false);
@@ -288,9 +292,9 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    $("#confirmDeposit").attr("disabled", false);
                     if(success.data.successYn == "N") {
-                        alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");
-                        $("#confirmDeposit").attr("disabled", false);
+                        alert("Other user has a request to deposit to your wallet. Please Contact contact administrators.");                        
                         return;
                     }
 
@@ -303,6 +307,10 @@
                     $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
+                var data = {
+                    "mach": Number($("input[name=amount]").val()),
+                    "cryptoCurrencyCode":coin
+                };
                 $.ajax({
                     method: "POST",
                     url: "/v1/coins/wallets/"+coin+"/deposit",
@@ -492,7 +500,7 @@
                                             <br class="mob_br"><span class="fcrd">※Please enter your ONT address to check the coin which has been deposited.</span>
                                         </td>
                                     </tr> 
-                                    <tr>
+                                    <tr id="showAmount">
                                         <th>Amount</th>
                                         <td>
                                             <input type="text" class="form-control" name="amount" id="amount" min="0" value="0">

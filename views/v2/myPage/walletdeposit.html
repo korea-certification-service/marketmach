@@ -66,26 +66,31 @@
                 //getCoin();
                 if($("select[name=coin] option:selected").val() == "BTC") {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_btc;
                 } else if($("select[name=coin] option:selected").val() == "ETH") {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_ether;
                 } else if($("select[name=coin] option:selected").val() == "ONT") {
                     $('#showOntAddress').show();
+                    $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
                 } else if($("select[name=coin] option:selected").val() == "ONG") {
                     $('#showOntAddress').show();
+                    $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ong;
                 } else {
                     $('#showOntAddress').hide();
+                    $('#showAmount').show();
                     $('#bitberryArea').show();
                     $('#ontWalletArea').hide();
                     total_price = total_mach;
@@ -262,7 +267,7 @@
                 return;
             } 
             
-            if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
+            if((coin != "ONT"&& coin != "ONG") && ($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0)) {
                 alert("Coin 금액을 입력하세요.");
                 $("#confirmDeposit").attr("disabled", false);
                 return;
@@ -274,13 +279,12 @@
                 return;
             }
 
-            var data = {
-                "mach": Number($("input[name=amount]").val()),
-                "cryptoCurrencyCode":coin
-
-            };
-
             if(coin == "ONT" || coin == "ONG") {
+                var data = {
+                    "mach": 0,
+                    "cryptoCurrencyCode":coin
+                };
+
                 if($('#address').val() == "") {
                     alert("지갑 주소를 입력해 주세요.");
                     $("#confirmDeposit").attr("disabled", false);
@@ -295,9 +299,9 @@
                     data: JSON.stringify(data)
                 }).done(function (success) {
                     console.log(success.data);
+                    $("#confirmDeposit").attr("disabled", false);
                     if(success.data.successYn == "N") {
-                        alert("다른 사용자가 회원님의 지갑으로 입금 요청하였습니다. 관리자에게 문의하신 후 입금하시기 바랍니다.");
-                        $("#confirmDeposit").attr("disabled", false);
+                        alert("다른 사용자가 회원님의 지갑으로 입금 요청하였습니다. 관리자에게 문의하신 후 입금하시기 바랍니다.");                        
                         return;
                     }
                     _PopupUI.showWithDim(function() {
@@ -309,6 +313,10 @@
                     $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
+                var data = {
+                    "mach": Number($("input[name=amount]").val()),
+                    "cryptoCurrencyCode":coin
+                };
                 $.ajax({
                     method: "POST",
                     url: "/v1/coins/wallets/"+coin+"/deposit",
@@ -510,7 +518,7 @@
                                             <br class="mob_br"><span class="fcrd">※코인의 입금 여부를 확인하기 위하여 지갑 주소를 입력하십시오.</span>
                                         </td>
                                     </tr> 
-                                    <tr>
+                                    <tr id="showAmount">
                                         <th>입금 금액</th>
                                         <td>
                                             <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
