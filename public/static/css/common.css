@@ -42,7 +42,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .table{margin: 0; color: #333333;}
 .table th{vertical-align: middle;}
 .table td{vertical-align: middle;}
-.btn{padding: 0.313rem 0.75rem;}
+.btn{padding: 0.313rem 0.5rem;}
 .btn:hover{color: #ffffff;}
 .btn.btn-default{background-color: #ededed; border: 1px solid #ccc;}
 .btn.btn_go_detail:hover{color: #333;}
@@ -495,8 +495,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_listing .listing_game{width: 35%;}
 .footer .ft_listing dt{width: 135px; text-align: center;}
 .footer .ft_listing dd{width: 42px; text-align: center;}
-.footer .ft_listing dd img{width: 27px; filter: grayscale(0.8);-webkit-filter: grayscale(0.8); filter: gray;}
-.footer .ft_listing dd img:hover{filter:initial;}
+.footer .ft_listing dd img{width: 27px;}
+.footer .ft_listing dd img:hover{transform: scale(1.15); transition: all .12s linear;}
 .footer .ft_listing dd i{line-height: 55px; font-size: 27px; color: #757575;}
 .footer .ft_listing dd i:hover{color: #0a73b8;}
 .footer .ft_menu{height: 70px; line-height: 70px; background-color: #2e2e2e; color: #ffffff;}
@@ -514,8 +514,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_addr .ft_link{margin: 40px 0;}
 .footer .ft_addr .ft_link li{margin-left: 23px;}
 .footer .ft_addr .ft_link li:first-child{margin-left: 0;}
-.footer .ft_addr .ft_link li img{width: 49px; filter: grayscale(0.8);-webkit-filter: grayscale(0.8); filter: gray;}
-.footer .ft_addr .ft_link li img:hover{filter:initial;}
+.footer .ft_addr .ft_link li img{width: 49px;}
+.footer .ft_addr .ft_link li img:hover{transform: scale(1.1); transition: all .12s linear;}
 .footer .ft_addr dd{}
 
 /********** Mobile MarkUp CSS **********/
@@ -581,7 +581,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .footer .ft_menu .dfb > div:nth-child(3){display: block;}
     .footer .ft_addr .ft_logo{display: none;}
     .footer .ft_addr .ft_text{width: 100%; text-align: center;}
-    .footer .ft_addr .ft_text p{padding-left: 0;}
+    .footer .ft_addr .ft_text p{padding-left: 0; padding: 0 20px}
 
 }
 @media (max-width: 576px){
