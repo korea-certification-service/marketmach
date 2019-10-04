@@ -83,12 +83,14 @@
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
+                    $('#coinName').text("ONT");
                 } else if($("#coin").val() == "ONG") {
                     $('#showOntAddress').show();
                     $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ong;
+                    $('#coinName').text("ONG");
                 } else {
                     $('#showOntAddress').hide();
                     $('#showAmount').show();
@@ -554,8 +556,11 @@
                                     <button id="resultDeposit" class="btn btn-danger">Confirm</button>
                                 </div>
                                 <div id="ontWalletArea">
-                                    <h1>ONT Deposit Request</h1>
-                                    <p>Please copy to below address or scan QR Code.</p>
+                                    <h1><span id="coinName">ONT</span> Deposit Request</h1>
+                                    <p>
+                                        Please copy to below address or scan QR Code.<br>
+                                        <span class="fcrd">※ You have to deposit the same coin as you request MarketMACH.</span>
+                                    </p>
                                     <div id="qrcodeValue" class="ont_qrcode_wrap"></div>
                                     <div class="cf ont_addr_sec">
                                         <input type="text" id="toAddress" class="ipt_ont_addr" readonly>

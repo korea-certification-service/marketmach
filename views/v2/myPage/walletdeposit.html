@@ -83,12 +83,14 @@
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ont;
+                    $('#coinName').text("ONT");
                 } else if($("#coin").val() == "ONG") {
                     $('#showOntAddress').show();
                     $('#showAmount').hide();
                     $('#bitberryArea').hide();
                     $('#ontWalletArea').show();
                     total_price = total_ong;
+                    $('#coinName').text("ONG");
                 } else {
                     $('#showOntAddress').hide();
                     $('#showAmount').show();
@@ -572,13 +574,17 @@
                                     <button id="resultDeposit" class="btn btn-danger">확인</button>
                                 </div>
                                 <div id="ontWalletArea">
-                                    <h1>ONT 입금</h1>
-                                    <p>QR Code를 찍으시거나 아래 주소를 복사 후 입금하세요.</p>
+                                    <h1><span id="coinName">ONT</span> 입금</h1>
+                                    <p>
+                                        ※ 입금 요청 코인을 확인하시고 QR코드를 찍으시거나 아래 주소를 복사 후 입금하세요.<br>
+                                        <span class="fcrd">※ 입금 요청 코인과 동일한 코인을 입금해 주셔야 정상 처리됩니다.</span>
+                                    </p>
                                     <div id="qrcodeValue" class="ont_qrcode_wrap"></div>
                                     <div class="cf ont_addr_sec">
                                         <input type="text" id="toAddress" class="ipt_ont_addr" readonly>
                                         <button class="btn_ont_copy" id="btnOntCopy" data-clipboard-target="#toAddress">copy</button>
                                     </div>
+                                    
                                     <!-- <button id="resultDeposit" class="btn btn-danger">확인</button> -->
                                 </div>
                             </article>

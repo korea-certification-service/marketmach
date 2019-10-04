@@ -493,7 +493,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_listing h1{width: 20%; height: 55px; line-height: 55px; text-align: center; color: #ffffff; background-color: #6d6e70;}
 .footer .ft_listing .listing_coin{width: 45%;}
 .footer .ft_listing .listing_game{width: 35%;}
-.footer .ft_listing dt{width: 130px; text-align: center;}
+.footer .ft_listing dt{width: 135px; text-align: center;}
 .footer .ft_listing dd{width: 42px; text-align: center;}
 .footer .ft_listing dd img{width: 27px; filter: grayscale(0.8);-webkit-filter: grayscale(0.8); filter: gray;}
 .footer .ft_listing dd img:hover{filter:initial;}
