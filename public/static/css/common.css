@@ -105,8 +105,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-left: 1px solid #929292;}
 .header .top_menu .menu_list > li:first-child > a{border-left: none;}
 .header .top_menu .menu_list > li:last-child{padding: 0;}
-.header .top_menu .menu_list > li:last-child > a{color: #fff; border: none;}
-.header .top_menu .menu_list > li.point_mall{padding: 13px 0; background-color: #1e2560; }
+.header .top_menu .menu_list > li.point_mall{margin-top: 4px; padding: 9px 0; background-color: #221e1f; border-radius: 20px; }
+.header .top_menu .menu_list > li.point_mall a{color: #ffce41; border: none;}
 
 .header .sch_sec{position: relative; height: 105px;}
 .header .sch_sec .h_logo{float: left; margin-top: 30px; width: 210px; text-align: center;}
@@ -117,7 +117,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .sch_sec .search_bar .btn_search{float: left; width: 50px; height: 50px; text-indent: -99999px; background: #000039 url("/static/img/main/ico_search.png") 50% 50% no-repeat; background-size: 16.5px 15px; border:none;}
 .header .sch_sec .chatbot{float: left; width: 150px;}
 .header .sch_sec .chatbot a{display: block; margin: 30px 0 0 10px;}
-.header .sch_sec .chatbot img{width: 50px;}
+.header .sch_sec .chatbot .chatbot_active{}
+.header .sch_sec .chatbot .chatbot_hover{display: none;}
 /* pc nav */
 .header .nav{height: 50px;}
 .header .nav > .nav_menu{}
@@ -145,7 +146,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .nav > .r_menu > li .notice_number{visibility: hidden; display: inline-block; margin-left: 20px; width: 22px; height: 22px; line-height: 22px; border-radius: 50% 50%; text-align: center; background-color: red; color: #ffffff; font-weight: bold;}
 .header .nav > .r_menu > li .btn_info_box{width: 100%; height: 50px; text-align: center; border: none; outline: none; background: url(/static/img/main/ico_btn_my_info.png) 50% 50% no-repeat;}
 .header .nav > .r_menu > li .btn_info_box:hover{background: url(/static/img/main/ico_btn_my_info_on.png) 50% 50% no-repeat;}
-.header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; top: 50px; right: 0; width: 220px; padding: 5px 15px; text-align: center; background-color: #ffffff; border: 1px solid #ececec; border-radius: 0 0 10px 10px;}
+.header .nav > .r_menu > li .floating_info_box{position: absolute; z-index: 3; top: 50px; right: 0; width: 220px; padding: 5px 15px; text-align: center; background-color: #ffffff; border-radius: 0 0 10px 10px; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);}
 .header .nav > .r_menu > li .floating_info_box > ul > li{padding: 20px 0;}
 .header .nav > .r_menu > li .floating_info_box .btn{width: 85%;font-size: 12px;font-weight: bold;height: 40px;padding: 10px 0;}
 .header .nav > .r_menu > li .floating_info_box .link_login_info{padding-top: 15px;}

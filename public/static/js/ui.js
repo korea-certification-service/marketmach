@@ -22,6 +22,7 @@ var MainUi = {
         // this.showSiblingNode({btn: ".btnNoti1", sec: ".secNoti1"}); // Notice
         // this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
         this.linkMACHAdventure();
+        this.hoverChatbotImg();
     },
     disableShowCode: function() {
         var isCtrl = false;
@@ -373,6 +374,21 @@ var MainUi = {
         if(a && isIos()) {
             a.setAttribute("href", "https://itunes.apple.com/kr/app/mach-adventure/id1465065764?mt=8");
         } 
+    },
+    hoverChatbotImg: function() {
+        var aMachbot = document.getElementById("aMachbot");
+        var active = document.querySelector(".chatbot_active");
+        var hover = document.querySelector(".chatbot_hover");
+        if(aMachbot) {
+            aMachbot.addEventListener("mouseenter", function() {
+                active.style.display = "none";
+                hover.style.display = "inline";
+            });
+            aMachbot.addEventListener("mouseleave", function() {
+                active.style.display = "inline";
+                hover.style.display = "none";
+            });
+        }
     }
 };
 MainUi.init();

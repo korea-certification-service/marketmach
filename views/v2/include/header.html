@@ -226,8 +226,7 @@
                     <li><a href="/myPages/list">나의 페이지</a></li>
                     <li><a class="menu_login" href="/login">로그인</a></li>
                     <li><a class="menu_logout" href="/logout">로그아웃</a></li>
-                    <!-- <li class="point_mall"><a href="https://point.marketmach.com/">포인트몰</a></li> -->
-                    <li class="point_mall"></li>
+                    <li class="point_mall"><a href="https://point.marketmach.com/" target="_blank">포인트몰</a></li>
                 </ul>
             </div>
             <section class="sch_sec cf">
@@ -241,7 +240,10 @@
                 <% include modules/search_guide.html %>
                 
                 <div class="chatbot jumpBot">
-                    <a href="javascript:loginChecker()" class="ico_machbot"><img src="/static/img/main/chatbot_mac.png" alt="챗봇"></a>
+                    <a href="javascript:loginChecker()" class="ico_machbot" id="aMachbot">
+                        <img class="chatbot_active" src="/static/img/main/chatbot_twinkle.gif" alt="chatbot run">
+                        <img class="chatbot_hover" src="/static/img/main/chatbot_bubble.jpg" alt="chatbot say">
+                    </a>
                 </div>
             </section>
             <nav class="nav cf">
