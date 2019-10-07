@@ -76,9 +76,11 @@ router.put('/:pointId', function (req, res, next) {
     let country = dbconfig.country;
     let pointId = req.params.pointId;
     let body = req.body;
-
+    
     controllerPoints.updateById(country, pointId, body)
         .then((result) => {
+            body['userTag'] = req.session.userTag;
+            body['name'] = req.session.userName;
             //관리자 sms전송 기능 추가
             let url = dbconfig.APIServer + "/v2/sms/notification/point";
             let header = {
