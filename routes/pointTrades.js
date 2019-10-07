@@ -250,7 +250,7 @@ router.post('/buynow', function (req, res, next) {
                                                         let msg = {
                                                             "status": "fail",
                                                             "code" : "E002",
-                                                            "msg" : "거래금액이 구매자의 보유 금액보다 클 수 없습니다."
+                                                            "msg" : "거래할 금액이 부족합니다. [나의페이지-코인입금]에서 포인트를 충전할 수 있습니다."
                                                         };
                                                         bitwebResponse.code = 200;
                                                         bitwebResponse.data = msg;
