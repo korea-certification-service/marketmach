@@ -523,7 +523,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_addr .ft_link li img{width: 49px;}
 .footer .ft_addr .ft_link li img:hover{transform: scale(1.1); transition: all .12s linear;}
 .footer .ft_addr dd{}
-
+.footer .ft_rec_url{height: 1px; overflow: hidden; background-color: #424244;}
+.footer #m_copyTxt{opacity: 0;}
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
     .header .nav > .nav_menu > li > .depth2.show{height: auto;}
