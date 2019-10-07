@@ -105,8 +105,12 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .header .top_menu .menu_list > li > a{float: left; padding: 0 9px; line-height: 1; font-size: 12px; color: #666; font-weight: bold; border-left: 1px solid #929292;}
 .header .top_menu .menu_list > li:first-child > a{border-left: none;}
 .header .top_menu .menu_list > li:last-child{padding: 0;}
-.header .top_menu .menu_list > li.point_mall{margin-top: 4px; padding: 9px 0; background-color: #221e1f; border-radius: 20px; }
+.header .top_menu .menu_list > li.point_mall{position: relative; margin-top: 4px; padding: 9px 0; background-color: #221e1f; border-radius: 20px; }
 .header .top_menu .menu_list > li.point_mall a{color: #ffce41; border: none;}
+.header .top_menu .menu_list > li.point_mall p{position: absolute; top: 34px; left: 0%; margin-left: -50px; width: 150px; text-align: center; border: 1px solid #9c9c9c; border-radius: 20px; font-size: 10px;}
+.header .top_menu .menu_list > li.point_mall p:before{position: absolute; left: 73%; top: -6px; width: 6px; height: 6px; background: url("/static/img/main/bubble_edge.png") 0 0 no-repeat; display: block; content:''; clear: both;}
+
+
 
 .header .sch_sec{position: relative; height: 105px;}
 .header .sch_sec .h_logo{float: left; margin-top: 30px; width: 210px; text-align: center;}
@@ -236,7 +240,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* hamberger menu */
 .bg_dim{display: none; position: fixed; overflow: hidden; z-index: 10;  left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);}
 .hamburger_menu{display: none; position: absolute; /*position: fixed; z-index: 4;*/ right: 0;top: 0px; width: 90%; max-width: 414px; height: 100%; overflow-y: scroll;  background-color: #fff; -webkit-overflow-scrolling: touch;}
-.hamburger_menu a.btn{padding: 0 0.75rem;}
+.hamburger_menu a.btn{padding: 0 0.75rem; border-radius: 20px;}
 .hamburger_menu .m_nav_head{height: 40px;}
 .hamburger_menu .m_nav_head li{margin-left: 10px; float: left;}
 .hamburger_menu .m_nav_head li img{width: 23px;}
@@ -255,18 +259,19 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .btn_1depth{display: block; padding-left: 10px; height: 45px; line-height: 45px; font-size: 14px; font-weight: bold; color: #000000; border-bottom: 1px solid #000039; background-color: #eeeeee;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2{text-align: center;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage{display: inline-block; width: 220px;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area{border-bottom: 2px solid #000039;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area{border-bottom: 1px solid #000039;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info{}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li{margin: 0 0 8px 0;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a{height: 40px; line-height: 40px; font-size: 12px;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a{height: 40px; line-height: 40px; font-size: 12px; }
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a.btn{width: 150px; background-color: #1e2560; color: #ffffff; font-weight: bold;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div{float: left; width: 50%; text-align: center;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > em{font-weight: bold;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p{font-weight: bold; font-size: 24px;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p{font-weight: bold; font-size: 24px; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p > span{font-size: 14px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area{padding: 20px 0;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area .btn{height: 40px; }
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area a.btn{line-height: 40px;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > em{display: block; margin: 0 0 5px 0; font-weight: bold;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area a.btn{width: 150px; line-height: 40px; border: 2px solid #ffac44; color: #ffac44; background-color: #ffffff; font-weight: bold;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > em{display: block; margin: 0 0 5px 0; font-weight: normal; font-size: 12px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > p{margin-bottom: 8px; font-weight: bold; font-size: 20px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > p > span{font-size: 14px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .block_menu{background-color: #fff1be;}
