@@ -6,12 +6,12 @@
 
     $(document).ready(function(){
         
-        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/sells") {
-            selecValue = "games";
-        } else if(location.pathname == "/etc-sells") {
+        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/etc-sells") {
             selecValue = "assets";
         } else if(location.pathname == "/otc-sells") {
             selecValue = "otc";
+        } else if(location.pathname == "/sells") {
+            selecValue = "games";
         }
 
         $(".srch_select, .m_srch_select").on("change", function(){
