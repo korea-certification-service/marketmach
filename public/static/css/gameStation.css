@@ -8,7 +8,7 @@
 .gamestation_lft_menu .depth1 > .icon_align { text-align: center; }
 .gamestation_lft_menu .depth1 .icon_align a > .material-icons {font-size: 24px; color: #dcdcdc; }
 .gamestation_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
-.sub_content .gameStation_sec { padding-top: 30px; }
+.sub_content .gameStation_sec {}
 .sub_content .gameStation_sec .tit_mypage > span {margin-left: 10px;}
 .sub_content .gameStation_sec .gameStation_store a{display: inline-block; height: 100%; background-color: #000000; border-radius: 5px;}
 .gameCoinImage { width: 30px; height: 30px; }
