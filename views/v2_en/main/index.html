@@ -25,6 +25,8 @@
                 // $(".dim_all_area").show();
                 // $("body").css("position", "fixed");
             }
+
+            makeHasetCategoryList();
         });
         
         function loadCurrencyData() {
@@ -376,20 +378,18 @@
                 // hashtagCategory
                 var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>';
                 for (var i = 0; i < arrResult.length; i++) {
-                    console.log(arrResult[i].category1);
-                    var idx = i + 1
-                    if(idx > 5) {
-                        // idx = idx - (5*1)
-                    } else {
-                        li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+arrResult[i].category1+'"><span>Woman</span></a></li>';
-                    }
+                    var idx = i % 5 + 1;
+                    li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+encodeURIComponent(arrResult[i].category1_en)+'"><span>'+arrResult[i].category1_en+'</span></a></li>';
                 }
+                // OTC
                 li += '<li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>';
+                // 게임아이템
+                // li += '<li class="li_game"><a href="/sells"><span>게임아이템</span></a></li>';
+                $hashtagCategory.append(li)
             }).fail(function (fail) {
                 console.log(fail);
             })
         }
-        // makeHasetCategoryList();
     </script>
     <!--// header -->
 
@@ -470,7 +470,7 @@
             <section class="section_hashtag">
                 <div class="main_inner_wrap hashtag_category_wrap">
                     <ul id="hashtagCategory" class="hashtag_category cf">
-                        <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
+                        <!-- <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
                         <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Man"><span>Man</span></a></li>
                         <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
@@ -484,7 +484,7 @@
                         <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
                         <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
-                        <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>
+                        <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li> -->
                     </ul>
                 </div>
             </section>

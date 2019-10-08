@@ -25,6 +25,8 @@
                 // $(".dim_all_area").show();
                 // $("body").css("position", "fixed");
             }
+
+            makeHasetCategoryList();
         });
         
         function loadCurrencyData() {
@@ -358,6 +360,29 @@
 
             $('#community_boards').html(result);
         }
+
+        function makeHasetCategoryList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var arrResult = success.data;
+                var $hashtagCategory = $("#hashtagCategory");
+                // hashtagCategory
+                var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>전체</span></a></li>';
+                for (var i = 0; i < arrResult.length; i++) {
+                    var idx = i % 5 + 1;
+                    li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+encodeURIComponent(arrResult[i].category1)+'"><span>'+arrResult[i].category1+'</span></a></li>';
+                }
+                // OTC
+                li += '<li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>';
+                // 게임아이템
+                li += '<li class="li_game"><a href="/sells"><span>게임아이템</span></a></li>';
+                $hashtagCategory.append(li)
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
     </script>
     <!--// header -->
 
@@ -576,8 +601,8 @@
             </section>
             <section class="section_hashtag">
                 <div class="main_inner_wrap hashtag_category_wrap">
-                    <ul class="hashtag_category cf">
-                        <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>전체</span></a></li>
+                    <ul class="hashtag_category cf" id="hashtagCategory">
+                        <!-- <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>전체</span></a></li>
                         <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=여성의류"><span>여성의류</span></a></li>
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=남성의류"><span>남성의류</span></a></li>
                         <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=패션잡화"><span>패션잡화</span></a></li>
@@ -592,7 +617,7 @@
                         <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=차량/용품"><span>차량/용품</span></a></li>
                         <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=기타"><span>기타</span></a></li>
                         <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>
-                        <li class="li_game"><a href="/sells"><span>게임아이템</span></a></li>
+                        <li class="li_game"><a href="/sells"><span>게임아이템</span></a></li> -->
                     </ul>
                 </div>
             </section>
