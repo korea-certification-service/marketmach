@@ -256,9 +256,10 @@
 .sub_lft_menu > .depth1 > li.on > a:after{position: absolute; right: -10px; top: 50%; margin-top: -5px; display: block; content: ''; clear: both; border: 5px solid transparent; border-left: 5px solid #ea4335; }
 .sub_lft_menu > .depth1 > li > a{display: block; padding: 8px 0 8px 25px; font-size: 14px; color: #393939;}
 .sub_lft_menu > .depth1 > li > .dept h2{border-bottom: 1px solid #666;}
-.sub_lft_menu > .depth1 > li > .depth2 > li{}
-.sub_lft_menu > .depth1 > li > .depth2 > li > a{display: block; padding: 8px 0 8px 35px; color: #666666; font-size: 13px; }
-.sub_lft_menu > .depth1 > li > .depth2 > li.on > a{font-weight: bold;  color: #ea4335} 
+.sub_lft_menu > .depth1 > li > .depth2 > li{background: url("/static/img/symbol/ico_leftmenu_dot.png") 34px 50% no-repeat;}
+.sub_lft_menu > .depth1 > li > .depth2 > li > a{display: block; padding: 8px 0 8px 45px; color: #666666; font-size: 13px;}
+.sub_lft_menu > .depth1 > li > .depth2 > li.on{background: url("/static/img/symbol/ico_leftmenu_dot_on.png") 34px 50% no-repeat;}
+.sub_lft_menu > .depth1 > li > .depth2 > li.on > a{font-weight: bold;  color: #ea4335;} 
 .mob_depth2_menu{display: none; margin: 30px 0;}
 .mob_depth2_menu ul{border: 1px solid #000;}
 .mob_depth2_menu li{float: left; padding: 8px 0; width: 50%; box-sizing: border-box; text-align: center;}

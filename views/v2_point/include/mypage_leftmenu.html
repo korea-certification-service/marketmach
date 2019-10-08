@@ -7,29 +7,29 @@
         <%if(useBlockchain =='Y') {%>
         <!-- <li class=><a href="/myPages/wallet/info">지갑관리</a>
             <ul class="depth2">
-                <li class=><a href="/myPages/wallet/info">- 나의 지갑 정보</a></li>
-                <li class=><a href="/mypages/wallet/deposit">- Coin 입금</a></li>
-                <li class=><a href="/myPages/wallet/withdraw">- Coin 출금</a></li>
-                <li class=><a href="/myPages/wallet/connect">- 비트베리 연결</a></li>
+                <li class=><a href="/myPages/wallet/info">나의 지갑 정보</a></li>
+                <li class=><a href="/mypages/wallet/deposit">Coin 입금</a></li>
+                <li class=><a href="/myPages/wallet/withdraw">Coin 출금</a></li>
+                <li class=><a href="/myPages/wallet/connect">비트베리 연결</a></li>
             </ul>
         </li> -->
         <%}%>
         <li class=<%=(arrDepth[0] === 5) ? "on" : "" %>><a href="/myPages/point/info">포인트관리</a>
             <ul class="depth2">
-                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/point/info">- 나의 포인트 정보</a></li>
-                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/mypages/point/deposit">- 포인트 입금</a></li>
-                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/point/withdraw">- 포인트 출금</a></li>
+                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/point/info">나의 포인트 정보</a></li>
+                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/mypages/point/deposit">포인트 입금</a></li>
+                <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/point/withdraw">포인트 출금</a></li>
                 <%if(useBlockchain =='Y') {%>
-                <!-- <li class=><a href="/myPages/point/exchange/deposit">- 포인트 -> MACH 교환</a></li> -->
+                <!-- <li class=><a href="/myPages/point/exchange/deposit">포인트 -> MACH 교환</a></li> -->
                 <%}%>
             </ul>
         </li>
         <li class=<%=(arrDepth[0] === 6) ? "on" : "" %>><a href="/myPages/user/checkPassword">회원정보관리</a>
             <ul class="depth2">
-                <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/user/checkPassword">- 회원정보수정</a></li>
-                <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/user/authPhone">- 휴대폰 본인 인증</a></li>
-                <!-- <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 2) ? "on" : "" %>><a href="/myPages/user/voucher">- 추천 URL</a></li> -->
-                <!-- <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/myPages/user/grade">- 회원등급정보</a></li> -->
+                <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/user/checkPassword">회원정보수정</a></li>
+                <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/user/authPhone">휴대폰 본인 인증</a></li>
+                <!-- <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 2) ? "on" : "" %>><a href="/myPages/user/voucher">추천 URL</a></li> -->
+                <!-- <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/myPages/user/grade">회원등급정보</a></li> -->
             </ul>
         </li>
         <!-- <li class=<%=(arrDepth[0] === 6) ? "on" : "" %>><a href="/howto/trade/vtr">이용안내</a></li> -->
@@ -42,9 +42,9 @@ if(arrDepth[0] === 5){
 %>
 <div class="mob_depth2_menu">
     <ul class="cf">
-        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/point/info">- 나의 포인트 정보</a></li>
-        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/mypages/point/deposit">- 포인트 입금</a></li>
-        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/point/withdraw">- 포인트 출금</a></li> 
+        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/point/info">나의 포인트 정보</a></li>
+        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 2) ? "on" : "" %>><a href="/mypages/point/deposit">포인트 입금</a></li>
+        <li class=<%=(arrDepth[0] === 5 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/point/withdraw">포인트 출금</a></li> 
         <li><a href="javascript:">&nbsp;</a></li> 
     </ul>
 </div>
@@ -53,8 +53,8 @@ if(arrDepth[0] === 5){
 %>
 <div class="mob_depth2_menu">
     <ul class="cf">
-        <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/user/checkPassword">- 회원정보수정</a></li>
-        <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/user/authPhone">- 휴대폰 본인 인증</a></li>
+        <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 1) ? "on" : "" %>><a href="/myPages/user/checkPassword">회원정보수정</a></li>
+        <li class=<%=(arrDepth[0] === 6 && arrDepth[1] === 3) ? "on" : "" %>><a href="/myPages/user/authPhone">휴대폰 본인 인증</a></li>
     </ul>
 </div>
 <%
