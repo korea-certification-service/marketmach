@@ -122,8 +122,8 @@
                 url: "/v1/gameCenter/"+userId+"/info"
             }).done(function (success) {
                 if(success.data != null) {
-                    console.log("getUserGameinfo =>"+success.data);
-                    if(!success.data.total_mcs1_coin){
+                    // console.log("getUserGameinfo =>",success.data);
+                    if(success.data.total_mcs1_coin){
                         my_game_coin = success.data.total_mcs1_coin;
                     } else {
                         my_game_coin = 0;
