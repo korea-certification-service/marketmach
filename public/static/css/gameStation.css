@@ -6,6 +6,7 @@
 
 /***게임스테이션 페이지의 기본css***/
 .gamestation_lft_menu .depth1 > .icon_align { text-align: center; }
+.gamestation_lft_menu .depth1 > .icon_align  a{padding: 0;}
 .gamestation_lft_menu .depth1 .icon_align a > .material-icons {font-size: 24px; color: #dcdcdc; }
 .gamestation_lft_menu .depth1 li a > .MACHAdventure_image { display: inline-block; width: 27px; height: 27px; }
 .sub_content .gameStation_sec {}
