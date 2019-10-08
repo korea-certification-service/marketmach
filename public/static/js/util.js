@@ -201,7 +201,7 @@ function getPersonalType(value) {
         };
     } else if(value == "1") {
         return {
-            'text':'본인확인 및 인증 문의',
+            'text':'인증 문의',
             'className': 'icon1'
         };
     } else if(value == "2") {

@@ -100,18 +100,18 @@
 .table .colgroup_support_notice .col3_3{width: 100px;}
 /***  거래 이의관리 거래 이의내역 ***/
 .table .colgroup_dispute .col3_1{}
-.table .colgroup_dispute .col3_2{width: 50px;}
+.table .colgroup_dispute .col3_2{width: 60px;}
 .table .colgroup_dispute .col3_3{width: 90px;}
 /*** 1:1문의 ***/
 .table .colgroup_myInquiry{}
-.table .colgroup_myInquiry .col4_1{width: 100px;}
+.table .colgroup_myInquiry .col4_1{width: 130px;}
 .table .colgroup_myInquiry .col4_2{}
 .table .colgroup_myInquiry .col4_3{width: 60px;}
 .table .colgroup_myInquiry .col4_4{width: 100px;}
 
 /********** 나의 페이지 **********/
 /*** 메인 ***/
-.table .colgroup_mypage .col3_1{width: 100px;}
+.table .colgroup_mypage .col3_1{width: 110px;}
 /*** 판매관리: .table_list .col5_1 ***/
 .table .colgroup_myselllist .col5_1{}
 /*** 구매관리: .table_list .col5_1 ***/
@@ -152,7 +152,7 @@
 .table .colgroup_pointinfo .col4_3{width: 80px;}
 .table .colgroup_pointinfo .col4_4{width: 150px;}
 .table .colgroup_pointinfo .col3_1{}
-.table .colgroup_pointinfo .col3_2{width: 80px;}
+.table .colgroup_pointinfo .col3_2{width: 90px;}
 .table .colgroup_pointinfo .col3_3{width: 150px;}
 
 /*** 회원정보관리 ***/
