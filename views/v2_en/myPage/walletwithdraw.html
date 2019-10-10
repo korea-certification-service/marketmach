@@ -18,6 +18,8 @@
         var rate;
         
         $(document).ready(function() {
+            //입출금 제한 기능
+            $("#confirmWithdraw").attr("disabled", true);
             $("#coin").val("MACH");
             if("<%=kyc%>" == "false") {
                 alert('Identity verification(KYC) is required for withdrawal.');
