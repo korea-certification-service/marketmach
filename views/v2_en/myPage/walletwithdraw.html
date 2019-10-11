@@ -260,10 +260,7 @@
 
                 url = "/v1/coins/wallets/"+coin+"/withdraw/ontwallet";
                 data['toAddress'] = $('#address').val();
-            } else {
-                alert("Temporarily stop due to Bitberry deposit and withdrawal restrictions.");
-                return;
-            }
+            } 
 
             $.ajax({
                 method: "POST",
