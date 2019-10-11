@@ -318,6 +318,9 @@
                     $("#confirmDeposit").attr("disabled", false);
                 });
             } else {
+                alert("비트베리 입출금 제한으로 일시적으로 중지합니다.");
+                return;
+
                 var data = {
                     "mach": Number($("input[name=amount]").val()),
                     "cryptoCurrencyCode":coin

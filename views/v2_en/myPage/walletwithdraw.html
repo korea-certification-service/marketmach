@@ -248,7 +248,7 @@
             var url = "/v1/coins/wallets/"+coin+"/withdraw";
             if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
-                    alert("지갑 주소를 입력해 주세요.");
+                    alert("Please input your wallet address.");
                     return;
                 }
 
@@ -260,7 +260,10 @@
 
                 url = "/v1/coins/wallets/"+coin+"/withdraw/ontwallet";
                 data['toAddress'] = $('#address').val();
-            } 
+            } else {
+                alert("Temporarily stop due to Bitberry deposit and withdrawal restrictions.");
+                return;
+            }
 
             $.ajax({
                 method: "POST",
