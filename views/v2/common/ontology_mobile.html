@@ -10,9 +10,7 @@
 <div id="wrap">
     <div><input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
 	<div><button onclick='transaction();'>Invoke smart contract</button></div>
-	<div id="div_app">
-        <iframe id='frm' width=0 height=0 frameborder=0></iframe>
-    </div>
+	<div><button onclick='readTransaction();'>Invoke read smart contract</button></div>
 </div>
 <script>
     var client = CyanoMobile.client;        
@@ -116,10 +114,11 @@
         const gasPrice = 500;
         const gasLimit = 20000;
         const payer = $('#toAddress').val();
+        //결과에 따른 메시지 출력
         const config = {
             "login": true,
-            "message": "marketmach test.",
-            "url": "https://www.marketmach.com"  
+            "message": "success to final transaction.",
+            "url": "http://13.209.227.60:3200/ontology/callback"  
         }
         const params = {
             scriptHash,
@@ -136,6 +135,39 @@
         console.log(res);
         } catch(err) {
             console.log(err)
+        }
+    }
+
+    async function readTransaction() {
+        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const operation = 'balanceOf';
+        const args = [{
+            "name": "account",
+            "type" : 'Address',
+            "value": $('#toAddress').val()
+        }]
+        const gasPrice = 500;
+        const gasLimit = 20000;
+        const config = {
+            "login": true,
+            "message": "invoke read smart contract test",
+            "url": ""
+        }
+        const params = {
+            scriptHash,
+            operation,
+            args,
+            gasPrice,
+            gasLimit,
+            config
+        }
+        try{
+            const res = await client.api.smartContract.invokeRead(params);
+            console.log('dapp receive: ' + JSON.stringify(res));
+            let invokeReadRes = JSON.stringify(res);
+            console.log(invokeReadRes);
+        }catch(err) {
+            console.log(err);
         }
     }
 </script>
