@@ -10,11 +10,13 @@
 <div id="wrap">
     <div><input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
     <div><button onclick='transaction();'>Invoke smart contract</button></div>
-    result1:<div id="result1"></div>
+    result:<div id="result1"></div>
+    <div><button onclick='transactionWithout();'>Invoke smart contract without password</button></div>
+    result:<div id="result4"></div>
     <div><button onclick='readTransaction();'>Invoke read smart contract</button></div>
-    result2:<div id="result2"></div>
+    result:<div id="result2"></div>
     <div><button onclick='login();'>Login</button></div>
-    result1:<div id="result3"></div>
+    result:<div id="result3"></div>
 </div>
 <script>
     var client = CyanoMobile.client;        
@@ -154,6 +156,42 @@
 
         try {
         const res = await client.api.smartContract.invoke(params);
+        $('#result1').html(JSON.stringify(res));
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    async function transactionWithout() {
+        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const operation = 'test'
+        const args = [
+            {
+                "type": "String",
+                "value": "helloworld"
+            }
+        ]
+        const gasPrice = 500;
+        const gasLimit = 20000;
+        const payer = $('#toAddress').val();
+        //결과에 따른 메시지 출력
+        const config = {
+            "login": true,
+            "message": "success to final transaction.",
+            "url": "http://13.209.227.60:3200/ontology/callback"  
+        }
+        const params = {
+            scriptHash,
+            operation,
+            args,
+            gasPrice,
+            gasLimit,
+            payer,
+            config
+        }
+
+        try {
+        const res = await client.api.smartContract.invokePasswordFree(params);
         $('#result1').html(JSON.stringify(res));
         } catch(err) {
             console.log(err)
