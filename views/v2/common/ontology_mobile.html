@@ -8,7 +8,8 @@
 	</head>
 <body>
 <div id="wrap">
-	<div><button onclick='transaction();'>Call App</button></div>
+    <div><input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
+	<div><button onclick='transaction();'>Invoke smart contract</button></div>
 	<div id="div_app">
         <iframe id='frm' width=0 height=0 frameborder=0></iframe>
     </div>
@@ -47,104 +48,78 @@
     }
 
     async function transaction() {
-        // const params = {
-        //     from: 'AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz',// Sender's address
-        //     to: 'AXK2KtCfcJnSMyRzSwTuwTKgNrtx5aXfFX', // Receiver's address
-        //     asset: 'ONG', // Asset type. ONT or ONG
-        //     amount: 1000000000,// Amount to send.The value can be 'number' or 'string'
-        //     gasPrice: 500,
-        //     gasLimit: 20000
+        // const test = {
+        //     "_id" : ("5d774ecdd3d131c4c33d75e0"),
+        //     "cryptoCurrencyCode" : "MACH",
+        //     "price" : 109,
+        //     "country" : "KR",
+        //     "from_userId" : ("5c0fe8a63c48f1197a134ae7"),
+        //     "to_userId" : ("5c0fe8113c48f1197a134a92"),
+        //     "seller_phone" : "+82010381340241",
+        //     "buyer_phone" : "+82010381340241",
+        //     "item" : {
+        //         "_id" : ("5d774aa67e1c41bf94a20205"),
+        //         "userTag" : "sellposion",
+        //         "trade_type" : "sell",
+        //         "category" : "otc",
+        //         "title" : "팝니다 테스트",
+        //         "desc" : "111",
+        //         "count" : 1,
+        //         "status" : 4,
+        //         "clicked" : 0,
+        //         "cryptoCurrencyCode" : "MACH",
+        //         "price" : 109,
+        //         "currency" : "POINT",
+        //         "point" : 109111,
+        //         "total_price" : 109,
+        //         "total_point" : 109111,
+        //         "regDate" : "2019/09/10 16:03:02",
+        //         "images" : [ 
+        //             {
+        //                 "_id" : ("5d774aa67e1c41bf94a20206"),
+        //                 "path" : "https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.jpg-1568098982543",
+        //                 "bucket" : "op-mach-bucket/items",
+        //                 "key" : "img_id_0.jpg-1568098982543",
+        //                 "origin_name" : "img_id_0.jpg",
+        //                 "size" : 153622,
+        //                 "mimetype" : "image/jpeg",
+        //                 "regDate" : "NaN/NaN/NaN NaN:NaN:NaN"
+        //             }
+        //         ],
+        //         "__v" : 0,
+        //         "tradePointId" : "5d774c0a7e1c41bf94a2029e",
+        //         "vtrTempId" : "5d774c3cd3d131c4c33d75c2",
+        //         "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205"
+        //     },
+        //     "regDate" : "2019/09/10 16:20:45",
+        //     "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205",
+        //     "__v" : 0,
+        //     "buy_status" : true,
+        //     "completed_buy_date" : "2019/09/10 16:20:48",
+        //     "auto_completed_confirm_date" : "2019/09/17 16:20:51",
+        //     "completed_sell_date" : "2019/09/10 16:20:51",
+        //     "sell_status" : true,
+        //     "completed" : true,
+        //     "completed_confirm_date" : "2019/09/10 16:20:56",
+        //     "completed_date" : "2019/09/10 16:20:56",
+        //     "confirm_status" : true
         // }
-        // try {
-        // const res = await client.api.asset.transfer(params);
-        //     console.log(res)
-        // } catch(err) {
-        //     console.log(err)
-        // }
-        const test = {
-            "_id" : ("5d774ecdd3d131c4c33d75e0"),
-            "cryptoCurrencyCode" : "MACH",
-            "price" : 109,
-            "country" : "KR",
-            "from_userId" : ("5c0fe8a63c48f1197a134ae7"),
-            "to_userId" : ("5c0fe8113c48f1197a134a92"),
-            "seller_phone" : "+82010381340241",
-            "buyer_phone" : "+82010381340241",
-            "item" : {
-                "_id" : ("5d774aa67e1c41bf94a20205"),
-                "userTag" : "sellposion",
-                "trade_type" : "sell",
-                "category" : "otc",
-                "title" : "팝니다 테스트",
-                "desc" : "111",
-                "count" : 1,
-                "status" : 4,
-                "clicked" : 0,
-                "cryptoCurrencyCode" : "MACH",
-                "price" : 109,
-                "currency" : "POINT",
-                "point" : 109111,
-                "total_price" : 109,
-                "total_point" : 109111,
-                "regDate" : "2019/09/10 16:03:02",
-                "images" : [ 
-                    {
-                        "_id" : ("5d774aa67e1c41bf94a20206"),
-                        "path" : "https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.jpg-1568098982543",
-                        "bucket" : "op-mach-bucket/items",
-                        "key" : "img_id_0.jpg-1568098982543",
-                        "origin_name" : "img_id_0.jpg",
-                        "size" : 153622,
-                        "mimetype" : "image/jpeg",
-                        "regDate" : "NaN/NaN/NaN NaN:NaN:NaN"
-                    }
-                ],
-                "__v" : 0,
-                "tradePointId" : "5d774c0a7e1c41bf94a2029e",
-                "vtrTempId" : "5d774c3cd3d131c4c33d75c2",
-                "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205"
-            },
-            "regDate" : "2019/09/10 16:20:45",
-            "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205",
-            "__v" : 0,
-            "buy_status" : true,
-            "completed_buy_date" : "2019/09/10 16:20:48",
-            "auto_completed_confirm_date" : "2019/09/17 16:20:51",
-            "completed_sell_date" : "2019/09/10 16:20:51",
-            "sell_status" : true,
-            "completed" : true,
-            "completed_confirm_date" : "2019/09/10 16:20:56",
-            "completed_date" : "2019/09/10 16:20:56",
-            "confirm_status" : true
-        }
 
-        const scriptHash = 'bd76a5917e0444d4b615b87c5912362164676dc7';
-        const operation = 'transferOng'
+        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const operation = 'test'
         const args = [
-        {
-                "name": "arg0-id",
-                "type":"String",
-                "value": "testValue"
-            }, {
-                "name": "arg1-from",
-                "type":"Address",
-                "value": "ASfhmxjR2h83HxCEdSxRXh4wCrSBNEE2pf"
-            }, {
-                "name": "arg2-to",
-                "type":"Address",
-                "value": "ATXRZuezstRnfFq54SJGeCpQ3gG5KaXrWi"
-            }, {
-                "name": "arg3-int",
-                "type":"Integer",
-                "value": 1
+            {
+                "type": "String",
+                "value": "helloworld"
             }
         ]
         const gasPrice = 500;
         const gasLimit = 20000;
-        const payer = 'ASfhmxjR2h83HxCEdSxRXh4wCrSBNEE2pf';
+        const payer = $('#toAddress').val();
         const config = {
             "login": true,
-            "message": "marketmach test."
+            "message": "marketmach test.",
+            "url": "https://www.marketmach.com"  
         }
         const params = {
             scriptHash,
