@@ -163,11 +163,11 @@
         }
         try{
             const res = await client.api.smartContract.invokeRead(params);
-            console.log('dapp receive: ' + JSON.stringify(res));
+            alert('dapp receive: ' + JSON.stringify(res));
             let invokeReadRes = JSON.stringify(res);
             console.log(invokeReadRes);
         }catch(err) {
-            console.log(err);
+            alert(err);
         }
     }
 </script>
