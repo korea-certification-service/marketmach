@@ -13,6 +13,8 @@
     result1:<div id="result1"></div>
     <div><button onclick='readTransaction();'>Invoke read smart contract</button></div>
     result2:<div id="result2"></div>
+    <div><button onclick='login();'>Login</button></div>
+    result1:<div id="result3"></div>
 </div>
 <script>
     var client = CyanoMobile.client;        
@@ -44,6 +46,24 @@
         } catch(err) {
             console.log(err);
             alert(err);
+        }
+    }
+
+    async function login() {
+        const params = {
+            type: 'account',// account or identity that will sign the message
+            dappName: 'My dapp', // dapp's name
+            dappIcon: 'http://mydapp.com/icon.png', // some url that points to the dapp's icon
+            message: 'test message', // message sent from dapp that will be signed by native client
+            expired: new Date('2019-01-01').getTime(), // expired date of login
+            callback: '' // callback url of dapp
+        }
+        let res;
+        try {
+            let res = await client.api.message.login(params);
+            $('#result3').html(JSON.stringify(res));
+        }catch(err) {
+            console.log(err)
         }
     }
 
