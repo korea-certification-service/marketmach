@@ -9,8 +9,10 @@
 <body>
 <div id="wrap">
     <div><input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
-	<div><button onclick='transaction();'>Invoke smart contract</button></div>
-	<div><button onclick='readTransaction();'>Invoke read smart contract</button></div>
+    <div><button onclick='transaction();'>Invoke smart contract</button></div>
+    <div id="result1"></div>
+    <div><button onclick='readTransaction();'>Invoke read smart contract</button></div>
+    <div id="result2"></div>
 </div>
 <script>
     var client = CyanoMobile.client;        
@@ -132,7 +134,7 @@
 
         try {
         const res = await client.api.smartContract.invoke(params);
-        console.log(res);
+        $('#result1').html(res);
         } catch(err) {
             console.log(err)
         }
@@ -163,9 +165,7 @@
         }
         try{
             const res = await client.api.smartContract.invokeRead(params);
-            alert('dapp receive: ' + JSON.stringify(res));
-            let invokeReadRes = JSON.stringify(res);
-            console.log(invokeReadRes);
+            $('#result2').html(res);
         }catch(err) {
             alert(err);
         }
