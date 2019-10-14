@@ -465,6 +465,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .company_sec .cpn_box a img{max-height: 100%; }
 .company_sec .cpn_box a i{margin-top: 8px; color: #dcdcdc; font-size: 24px;}
 .img_vac{transform: translateY(50%);}
+.img_vac1{transform: translateY(10%);}
+.img_vac2{transform: translateY(20%);}
+.img_vac3{transform: translateY(27%);}
 
 /* 파트너 */
 .partners_ci{padding: 20px 0; width: 100%; text-align: center; background-color: #ececec;}
