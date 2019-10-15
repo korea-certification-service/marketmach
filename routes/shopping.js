@@ -18,6 +18,7 @@ router.get('/view', token.checkLoginToken, function (req, res, next) {
             pointId: req.session.pointId,
             userName: req.session.userName,
             usePoint:dbconfig.usePoint,
+            userTag: req.session.userTag,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain
         });
