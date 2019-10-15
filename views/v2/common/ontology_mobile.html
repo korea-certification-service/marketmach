@@ -8,7 +8,12 @@
 	</head>
 <body>
 <div id="wrap">
-    <div><input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
+    <div>From Address<input type="text" id="toAddress" style="width:300px;" value="AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"></div>
+    <div>To Address<input type="text" id="toAddress1" style="width:300px;" value="ATXRZuezstRnfFq54SJGeCpQ3gG5KaXrWi"></div>
+    <div><select id="type"><option value="ONT">ONT</option><option value="ONG">ONG</option></select></div>
+    <div>Amount<input type="text" id="amount" style="width:300px;" value="0"></div>
+    <div><button onclick='sendAssets();'>Send</button></div>
+    result:<div id="result5"></div>
     <div><button onclick='transaction();'>Invoke smart contract</button></div>
     result:<div id="result1"></div>
     <div><button onclick='transactionWithout();'>Invoke smart contract without password</button></div>
@@ -48,6 +53,23 @@
         } catch(err) {
             console.log(err);
             alert(err);
+        }
+    }
+
+    async function sendAssets() {
+        const params = {
+            from: $('#toAddress').val(),// Sender's address
+            to: $('#toAddress1').val(), // Receiver's address
+            asset: $('#type').val(), // Asset type. ONT or ONG
+            amount: $('#amount').val(),// Amount to send.The value can be 'number' or 'string'
+            gasPrice: 500,
+            gasLimit: 20000
+        }
+        try {
+            const res = await client.api.asset.transfer(params);
+            $('#result5').html(JSON.stringify(res));
+        } catch(err) {
+            console.log(err)
         }
     }
 
@@ -192,7 +214,7 @@
 
         try {
         const res = await client.api.smartContract.invokePasswordFree(params);
-        $('#result1').html(JSON.stringify(res));
+        $('#result4').html(JSON.stringify(res));
         } catch(err) {
             console.log(err)
         }
