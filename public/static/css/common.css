@@ -460,7 +460,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .company_sec .cpn_box{float: left; margin-left: 1%; width: 15.833%;  height: 60px; text-align: center; background-color: #ffffff;}
 .company_sec .cpn_box:nth-of-type(6n+1){margin-left: 0;}
 .company_sec .cpn_box:nth-of-type(n+7){margin-top: 15px;}
-.company_sec .cpn_box a{display: block; padding: 10px 5px; height: 100%; box-sizing: border-box; border: 1px solid #c8c8c8;}
+.company_sec .cpn_box a{display: block; padding: 4px; height: 100%; box-sizing: border-box; border: 1px solid #c8c8c8;}
 .company_sec .cpn_box a:hover{transition: all .2s linear; box-shadow: 5px 5px 3px #0a062c94;}
 .company_sec .cpn_box a img{max-height: 100%; }
 .company_sec .cpn_box a i{margin-top: 8px; color: #dcdcdc; font-size: 24px;}
