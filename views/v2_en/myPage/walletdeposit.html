@@ -33,7 +33,7 @@
 
             $('[name=amount]').on('keyup',function(e) {
                 if($('[name=amount]').val() != "") {
-                    $('#total_amount').text(total_price + parseInt($('[name=amount]').val()));
+                    $('#total_amount').text(total_price + parseFloat($('[name=amount]').val()));
                     calculate();
                 }
             })
@@ -42,6 +42,17 @@
                 /* e(지수), .(소수점) -(마이너스) 예외처리 */
                 if(e.keyCode == 69 || e.keyCode == 189){
                     return false;
+                }
+            });
+
+            $('[name=amount]').on("keypress", function(e){
+                var amount = $('[name=amount]').val();
+                //소수점 자리수 체크
+                if(amount.indexOf('.') != -1) {
+                    var amount_length = amount.substring(amount.indexOf('.') + 1);
+                    if(amount_length.length >= 8) {
+                        return false;
+                    }
                 }
             });
 
