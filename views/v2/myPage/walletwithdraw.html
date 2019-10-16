@@ -38,7 +38,7 @@
 
             $('[name=amount]').on('keyup',function() {
                 if($('[name=amount]').val() != "") {
-                    $('#total_amount').text(total_price - parseInt($('[name=amount]').val()));
+                    $('#total_amount').text(total_price - parseFloat($('[name=amount]').val()));
                     calculate();
                 }
             });
@@ -49,6 +49,17 @@
                     return false;
                 }
             });
+
+            // $('[name=amount]').on("keypress", function(e){
+            //     var amount = $('[name=amount]').val();
+            //     //소수점 자리수 체크
+            //     if(amount.indexOf('.') != -1) {
+            //         var amount_length = amount.substring(amount.indexOf('.') + 1);
+            //         if(amount_length.length >= 8) {
+            //             return false;
+            //         }
+            //     }
+            // });
 
             $("#confirmWithdraw").on("click", function() {
                 $(this).attr("disabled","true");
@@ -401,7 +412,7 @@
                                     <tr>
                                         <th>출금 금액</th>
                                         <td>
-                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
+                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력" onkeypress="return checkDecimal(event)">
                                             <br class="mob_br"><span class="fcrd">※ 출금을 원하는 코인 금액</span>
                                         </td>
                                     </tr>                  
