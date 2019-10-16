@@ -161,3 +161,6 @@ shell/currency.sh
 
 #임시 테스트 폴더 제외처리
 /views/v2/temp/
+
+# 소스 보는법 막기
+disableShowCode.js
