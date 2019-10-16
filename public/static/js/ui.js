@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
 var MainUi = {
     isMobSideMenu: false,
     init: function(){
-        this.disableShowCode();
         this.floatHeader();
         this.navMenu();
         this.navHiddenMenu();
@@ -23,41 +22,6 @@ var MainUi = {
         // this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
         this.linkMACHAdventure();
         this.hoverChatbotImg();
-    },
-    disableShowCode: function() {
-        var isCtrl = false;
-        var isAlt = false;
-        var device = navigator.userAgent;
-        var computer = "win16|win32|win64|mac|macintel";
-
-        document.addEventListener("keydown", function(e) {
-            if(e.keyCode == 17 || e.keyCode == 91 || e.keyCode == 93) isCtrl = true;
-            if(e.keyCode == 18) isAlt = true;
-    
-            if(isCtrl == true && isAlt && e.keyCode == 73) { // command+option+i
-                e.preventDefault();
-                e.returnValue = false;
-            }
-            if(e.keyCode === 123){ // f12
-                e.preventDefault();
-                e.returnValue = false;
-            }
-        });
-
-        if(navigator.platform){
-            if(0 > computer.indexOf(navigator.platform.toLowerCase())){
-                //alert("Mobile");
-
-                if(device.indexOf("iPhone") > 0) { //alert("iPhone");
-                }else if(device.indexOf("Android") > 0) { //alert("Android");
-                }
-    
-            }else{
-                // PC에서 마우스 오른쪽 막음
-                document.oncontextmenu=function(){return false;} // 마우스 오른쪽
-            }
-        }
-        
     },
     floatHeader: function() {
         var lastPos = 0;
