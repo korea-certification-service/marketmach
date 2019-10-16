@@ -46,16 +46,16 @@
                 }
             });
 
-            $('[name=amount]').on("keypress", function(e){
-                var amount = $('[name=amount]').val();
-                //소수점 자리수 체크
-                if(amount.indexOf('.') != -1) {
-                    var amount_length = amount.substring(amount.indexOf('.') + 1);
-                    if(amount_length.length >= 8) {
-                        return false;
-                    }
-                }
-            });
+            // $('[name=amount]').on("keypress", function(e){
+            //     var amount = $('[name=amount]').val();
+            //     //소수점 자리수 체크
+            //     if(amount.indexOf('.') != -1) {
+            //         var amount_length = amount.substring(amount.indexOf('.') + 1);
+            //         if(amount_length.length >= 8) {
+            //             return false;
+            //         }
+            //     }
+            // });
 
             $("#confirmWithdraw").on("click", function() {
                 ajaxLoginYnCheck(reqWithdraw);
@@ -406,7 +406,7 @@
                                     <tr>
                                         <th>Amount</th>
                                         <td>
-                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="금액 입력">
+                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="Input amount" onkeypress="return checkDecimal(event)">
                                             <br class="mob_br"><span class="fcrd">※ Please enter amount you want to withdraw.</span>
                                         </td>
                                     </tr>                  
