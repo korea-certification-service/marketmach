@@ -15,7 +15,8 @@ var pointHistorysSchema = new Schema({
     bankAccountType: String,
     bankAccount: String,
     userName: String,
-    regDate: String
+    regDate: String,
+    memo: String
 });
 
 module.exports = pointHistorysSchema;
