@@ -57,11 +57,15 @@
     }
 
     async function sendAssets() {
+        var amount = $('#amount').val();
+        if($('#type').val() == "ONG") {
+            amount = amount * 1e9;
+        }
         const params = {
             from: $('#toAddress').val(),// Sender's address
             to: $('#toAddress1').val(), // Receiver's address
             asset: $('#type').val(), // Asset type. ONT or ONG
-            amount: $('#amount').val(),// Amount to send.The value can be 'number' or 'string'
+            amount: amount,// Amount to send.The value can be 'number' or 'string'
             gasPrice: 500,
             gasLimit: 20000
         }
@@ -133,7 +137,7 @@
             {
                 "name": "arg0-id",
                 "type": "String",
-                "value": "191017101010011210000000."
+                "value": "2019-10-16 10:00:00 macbook is done deal 1000ONT."
             }, {
                 "name": "arg1-from",
                 "type": "Address",
