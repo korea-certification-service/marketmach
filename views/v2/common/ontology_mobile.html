@@ -57,11 +57,15 @@
     }
 
     async function sendAssets() {
+        var amount = $('#amount').val();
+        if($('#type').val() == "ONG") {
+            amount = amount * 1e9;
+        }
         const params = {
             from: $('#toAddress').val(),// Sender's address
             to: $('#toAddress1').val(), // Receiver's address
             asset: $('#type').val(), // Asset type. ONT or ONG
-            amount: $('#amount').val(),// Amount to send.The value can be 'number' or 'string'
+            amount: amount,// Amount to send.The value can be 'number' or 'string'
             gasPrice: 500,
             gasLimit: 20000
         }
@@ -92,104 +96,84 @@
     }
 
     async function transaction() {
-        // const test = {
-        //     "_id" : ("5d774ecdd3d131c4c33d75e0"),
-        //     "cryptoCurrencyCode" : "MACH",
-        //     "price" : 109,
-        //     "country" : "KR",
-        //     "from_userId" : ("5c0fe8a63c48f1197a134ae7"),
-        //     "to_userId" : ("5c0fe8113c48f1197a134a92"),
-        //     "seller_phone" : "+82010381340241",
-        //     "buyer_phone" : "+82010381340241",
-        //     "item" : {
-        //         "_id" : ("5d774aa67e1c41bf94a20205"),
-        //         "userTag" : "sellposion",
-        //         "trade_type" : "sell",
-        //         "category" : "otc",
-        //         "title" : "팝니다 테스트",
-        //         "desc" : "111",
-        //         "count" : 1,
-        //         "status" : 4,
-        //         "clicked" : 0,
-        //         "cryptoCurrencyCode" : "MACH",
-        //         "price" : 109,
-        //         "currency" : "POINT",
-        //         "point" : 109111,
-        //         "total_price" : 109,
-        //         "total_point" : 109111,
-        //         "regDate" : "2019/09/10 16:03:02",
-        //         "images" : [ 
-        //             {
-        //                 "_id" : ("5d774aa67e1c41bf94a20206"),
-        //                 "path" : "https://op-mach-bucket.s3.amazonaws.com/items/img_id_0.jpg-1568098982543",
-        //                 "bucket" : "op-mach-bucket/items",
-        //                 "key" : "img_id_0.jpg-1568098982543",
-        //                 "origin_name" : "img_id_0.jpg",
-        //                 "size" : 153622,
-        //                 "mimetype" : "image/jpeg",
-        //                 "regDate" : "NaN/NaN/NaN NaN:NaN:NaN"
-        //             }
-        //         ],
-        //         "__v" : 0,
-        //         "tradePointId" : "5d774c0a7e1c41bf94a2029e",
-        //         "vtrTempId" : "5d774c3cd3d131c4c33d75c2",
-        //         "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205"
-        //     },
-        //     "regDate" : "2019/09/10 16:20:45",
-        //     "roomToken" : "skypentum|sellposion|5d774aa67e1c41bf94a20205",
-        //     "__v" : 0,
-        //     "buy_status" : true,
-        //     "completed_buy_date" : "2019/09/10 16:20:48",
-        //     "auto_completed_confirm_date" : "2019/09/17 16:20:51",
-        //     "completed_sell_date" : "2019/09/10 16:20:51",
-        //     "sell_status" : true,
-        //     "completed" : true,
-        //     "completed_confirm_date" : "2019/09/10 16:20:56",
-        //     "completed_date" : "2019/09/10 16:20:56",
-        //     "confirm_status" : true
+        // const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        // const operation = 'transferOng'
+        // const args = [
+        //     {
+        //         type: 'String',
+        //         value: 'hello marketmach'
+        //     }
+        // ]
+        // const gasPrice = 500;
+        // const gasLimit = 20000;
+        // const payer = $('#toAddress').val();
+        // //결과에 따른 메시지 출력
+        // const config = {
+        //     "login": true,
+        //     "message": "success to final transaction.",
+        //     "url": "http://13.209.227.60:3200/ontology/callback"  
+        // }
+        // const params = {
+        //     scriptHash,
+        //     operation,
+        //     args,
+        //     gasPrice,
+        //     gasLimit,
+        //     payer,
+        //     config
         // }
 
-        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
-        const operation = 'test'
+        // try {
+        // const res = await client.api.smartContract.invoke(params);
+        // $('#result1').html(JSON.stringify(res));
+        // } catch(err) {
+        //     console.log(err);
+        //     $('#result1').html(JSON.stringify(err));
+        // }
+
+        const scriptHash = '8b344a43204e60750e7ccc8c1b708a67f88f2c43';
+        const operation = 'transferOng'
         const args = [
             {
                 "name": "arg0-id",
-                "value": "String:191016130000013000000001"
+                "type": "String",
+                "value": "2019-10-16 10:00:00 macbook is done deal 1000ONT."
             }, {
                 "name": "arg1-from",
-                "value": "Address:AMig8NAA8xWhitaLmV1TknXyFG1SNdffay"
+                "type": "Address",
+                "value": $('#toAddress').val()
             }, {
                 "name": "arg2-to",
-                "value": "Address:102f7aee9acd9961e38f6fa5ac46d1c19b3b9306"
+                "type": "Address",
+                "value": $('#toAddress1').val()
             }, {
                 "name": "arg3-int",
-                "value": 191016130000013000000001
+                "type": "Integer",
+                "value": 1
             }
         ]
         const gasPrice = 500;
         const gasLimit = 20000;
         const payer = $('#toAddress').val();
-        //결과에 따른 메시지 출력
         const config = {
             "login": true,
-            "message": "success to final transaction.",
-            "url": "http://13.209.227.60:3200/ontology/callback"  
+            "message": "invoke smart contract test"
         }
         const params = {
-            scriptHash,
-            operation,
-            args,
-            gasPrice,
-            gasLimit,
-            payer,
-            config
-        }
-
+                scriptHash,
+                operation,
+                args,
+                gasPrice,
+                gasLimit,
+                payer,
+                config
+                }
         try {
-        const res = await client.api.smartContract.invoke(params);
-        $('#result1').html(JSON.stringify(res));
+            const res = await client.api.smartContract.invoke(params);
+            $('#result1').html(JSON.stringify(res));
         } catch(err) {
-            console.log(err)
+            console.log(err);
+            $('#result1').html(JSON.stringify(err));
         }
     }
 
@@ -230,7 +214,7 @@
     }
 
     async function readTransaction() {
-        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const scriptHash = '8b344a43204e60750e7ccc8c1b708a67f88f2c43';
         const operation = 'balanceOf';
         const args = [{
             "name": "account",

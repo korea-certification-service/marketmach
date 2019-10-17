@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+        <script src="/jquery/jquery.js"></script>
+        <script src="/cyanobridge/lib/browser.js"></script>
+        <script>
+            var callbackUrl = "<%=callbackUrl%>";
+            var client = CyanoMobile.client;     
+            client.registerClient();
+            $(document).ready(function() {    
+                //getProvider();
+            });
+        
+            async function login() {
+                const params = {
+                    type: 'account',// account or identity that will sign the message
+                    dappName: 'MarketMACH', // dapp's name
+                    dappIcon: 'https://www.marketmach.com/static/img/h_logo.png', // some url that points to the dapp's icon
+                    message: 'MarketMACH Login.', // message sent from dapp that will be signed by native client
+                    expired: new Date().getTime() * 10 * 60 * 60, // expired date of login
+                    callback: callbackUrl + '/v1/ontology/callback/login' // callback url of dapp
+                }
+                try {
+                    let res = await client.api.message.login(params);
+                    $('#result').html(JSON.stringify(res));
+                }catch(err) {
+                    console.log(err);
+                    $('#result').html(JSON.stringify(err));
+                }
+            }
+        </script>
+	</head>
+<body>
+<div id="wrap">
+    <div><button onclick='login();'>ONT ID Login</button></div>
+    result:<div id="result"></div>
+</div>
+</body>
+</html>
