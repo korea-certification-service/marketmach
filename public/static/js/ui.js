@@ -447,7 +447,90 @@ var _PopupUI = {
     },
 }
 
+var _BtoCUI = {
+    actSelectBox: function(opt, callback){
+        var btn = document.querySelector("#"+opt.btn);
+        var ul = document.querySelector("#"+opt.ul);
+        var selectedList = document.querySelector("#"+opt.selectedList);
+        var isOpen = false;
 
+
+        btn.addEventListener("click", function() {
+            
+            // css
+            if (!isOpen) {
+                ul.style.display="block";
+            } else {
+                ul.style.display="none";
+            }
+            isOpen = !isOpen;
+            
+            // logic
+            if (isOpen) {
+                var li = ul.querySelectorAll("li");
+                for (var i = 0; i < li.length; i++) {
+                    li[i].addEventListener("click", function(e) {
+                        
+                        selectedList.firstElementChild.querySelector(".itemTitle").innerText = this.querySelector(".productName").innerText;
+                        selectedList.firstElementChild.querySelector(".item_calc").style.display = "block";
+
+                        closeList();
+                    });
+                }
+            }
+
+            // callback
+            if(callback) callback();
+        });
+
+        function closeList() {
+            isOpen = false;
+            ul.style.display="none";
+        }
+    },
+    numberUtil: function(obj) {
+        var itemLength = document.querySelectorAll(".itemLength");
+        var btnMinus = document.querySelectorAll(".btnMinus");
+        var btnPlus = document.querySelectorAll(".btnPlus");
+        for (var i = 0; i < itemLength.length; i++) {
+            itemLength[i].addEventListener("focusout", function() {
+                if(!numCheck(this.value)){
+                    this.value = "1";
+                    alert("주문 수량은 숫자만 가능합니다");
+                }
+                if(this.value > parseInt(obj.maxLen)) {
+                    alert("최대 주문 수량은 "+obj.maxLen+"개 입니다");
+                    this.value = "1";
+                }
+            });
+
+            var num;
+            btnMinus[i].addEventListener("click", function(e) {
+                //console.log(e.target.nextSibling.nextSibling.value);
+                //e.target.nextSibling.nextSibling.value -= 1;
+                num = parseInt(e.target.nextSibling.nextSibling.value);
+                if(num > 1) {
+                    num -= 1;
+                    e.target.nextSibling.nextSibling.value = num;
+                }
+            });
+            
+            btnPlus[i].addEventListener("click", function(e) {
+                //console.log(e.target.previousSibling.previousSibling.value);
+                //e.target.previousSibling.previousSibling.value += 1;
+                num = parseInt(e.target.previousSibling.previousSibling.value);
+                if(num < parseInt(obj.maxLen)) {
+                    num += 1;
+                    e.target.previousSibling.previousSibling.value = num;
+                } else {
+                    alert(obj.maxLen+"개이상 구매가 불가능한 상품입니다.");
+                }
+            });
+        }
+    }    
+}
+
+/** deprecated: 방탄소년단 핸드크림 로직 */
 var _SelectUI = {
     actSelectBox: function(opt, callback){
         var btn = document.querySelector("#"+opt.btn);

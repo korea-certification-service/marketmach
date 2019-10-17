@@ -2,6 +2,49 @@
 <html>
 <head>
     <% include ../include/head.html %>
+    <script>
+    $(document).ready(function() {
+        takeBtocList();
+    });   
+    function takeBtocList() {
+        var reqData = {
+            "param":{"country":"POINT"},
+            "option": {"pageIdx":0, "perPage":20 }
+        };
+        $.ajax({
+            method: "POST",
+            url: "/shopping/product/list",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(reqData),
+        }).done(function (success) {
+            var res = success.data.list;
+            console.log(res);
+            var html = "";
+            for (var i = 0; i < res.length; i++) {
+                html +=  '<li>'
+                        +   '<a href="/shopping/view/'+res[i]._id+'">'
+                        +       '<div class="img_sec">'
+                        +           '<img src="'+res[i].imageDetail[0]+'" alt="">'
+                        +       '</div>'
+                        +       '<dl>'
+                        +           '<dt>'+res[i].productName+' <em class="tit_new">NEW</em></dt>'
+                        +           '<dd>'
+                        +               '<div class="origin_price">'+numberWithCommas(res[i].originalPrice)+'</div>'
+                        +               '<strong class="price">'+numberWithCommas(res[i].price)+'<span>point</span></strong>'
+                        +               '<em class="percent">'+res[i].percentage+'%</em>'
+                        +           '</dd>'
+                        +       '</dl>'
+                        +   '</a>'
+                        +'</li>'
+            }
+
+            $("#productList").append(html);
+        }).fail(function (fail) {
+            console.log(fail);
+        }); 
+    }
+    </script>
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -35,7 +78,10 @@
                         </ul> 
                     </div>
                     <div class="rgh_content">
-                        <ul class="product_list cf">
+                        <ul id="productList" class="product_list cf">
+
+                        </ul>
+                        <!-- <ul class="product_list cf">
                             <li>
                                 <div class="img_sec">
                                     <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
@@ -114,7 +160,7 @@
                                     </dd>
                                 </dl>
                             </li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </section>
