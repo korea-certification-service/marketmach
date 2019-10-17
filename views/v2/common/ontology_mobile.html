@@ -162,8 +162,10 @@
                 }
         try {
             const res = await client.api.smartContract.invoke(params);
+            $('#result1').html(JSON.stringify(res));
         } catch(err) {
-        ​    console.log(err)
+        ​    console.log(err);
+            $('#result1').html(JSON.stringify(err));
         }
     }
 
