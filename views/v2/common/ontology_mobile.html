@@ -130,17 +130,21 @@
         const scriptHash = '8b344a43204e60750e7ccc8c1b708a67f88f2c43';
         const operation = 'transferOng'
         const args = [
-        {
+            {
                 "name": "arg0-id",
-                "value": "String:hedgsg"
+                "type": "String",
+                "value": "hello marketMACH."
             }, {
                 "name": "arg1-from",
-                "value": "Address:" + $('#toAddress').val()
+                "type": "Address",
+                "value": $('#toAddress').val()
             }, {
                 "name": "arg2-to",
-                "value": "Address:" + $('#toAddress1').val()
+                "type": "Address",
+                "value": $('#toAddress1').val()
             }, {
                 "name": "arg3-int",
+                "type": "Integer",
                 "value": 1
             }
         ]
