@@ -70,6 +70,19 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
             useBlockchain:dbconfig.useBlockchain,
             country:req.session.country
         });         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        //ontology dapp
+        res.render('v2_ont/login', {
+            title: 'Bitweb Main',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            country:req.session.country,
+            callbackUrl: dbconfig.ontology.callbackUrl
+        });         
     } else {
         res.render('v2_en/main/index', {
             title: 'Bitweb Main',
