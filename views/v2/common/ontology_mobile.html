@@ -131,25 +131,12 @@
         //     $('#result1').html(JSON.stringify(err));
         // }
 
-        const scriptHash = '8b344a43204e60750e7ccc8c1b708a67f88f2c43';
-        const operation = 'transferOng'
+        const scriptHash = '2f357e43ffef993c0f198d380fb841356c6e06bf';
+        const operation = 'finalTransaction'
         const args = [
             {
-                "name": "arg0-id",
                 "type": "String",
                 "value": "2019-10-16 10:00:00 macbook is done deal 1000ONT."
-            }, {
-                "name": "arg1-from",
-                "type": "Address",
-                "value": $('#toAddress').val()
-            }, {
-                "name": "arg2-to",
-                "type": "Address",
-                "value": $('#toAddress1').val()
-            }, {
-                "name": "arg3-int",
-                "type": "Integer",
-                "value": 1
             }
         ]
         const gasPrice = 500;
@@ -178,12 +165,12 @@
     }
 
     async function transactionWithout() {
-        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const scriptHash = '2f357e43ffef993c0f198d380fb841356c6e06bf';
         const operation = 'test'
         const args = [
             {
                 "type": "String",
-                "value": "helloworld"
+                "value": "2019-10-16 10:00:00 macbook is done deal 1000ONT."
             }
         ]
         const gasPrice = 500;
@@ -214,7 +201,7 @@
     }
 
     async function readTransaction() {
-        const scriptHash = '8b344a43204e60750e7ccc8c1b708a67f88f2c43';
+        const scriptHash = '2f357e43ffef993c0f198d380fb841356c6e06bf';
         const operation = 'balanceOf';
         const args = [{
             "name": "account",
