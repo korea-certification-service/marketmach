@@ -131,12 +131,14 @@
         //     $('#result1').html(JSON.stringify(err));
         // }
 
-        const scriptHash = 'cd948340ffcf11d4f5494140c93885583110f3e9';
-        const operation = 'test'
+        const scriptHash = '0c7c3432440429fefb744e6d9e25342f692dc704';
+        // const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const operation = 'finalTransaction'
+        //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
         const args = [
             {
                 "type": "String",
-                "value": "helloworld"
+                "value": "20191016100000 macbook is done deal 1000ONT."
             }
         ]
         const gasPrice = 500;
@@ -165,9 +167,10 @@
     }
 
     async function transactionWithout() {
-        // const scriptHash = '0c7c3432440429fefb744e6d9e25342f692dc704';
-        const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
-        const operation = 'Hello'
+        const scriptHash = '0c7c3432440429fefb744e6d9e25342f692dc704';
+        // const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
+        const operation = 'finalTransaction'
+        //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
         const args = [
             {
                 "type": "String",
