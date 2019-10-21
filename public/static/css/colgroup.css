@@ -180,11 +180,12 @@
 }
 
 @media (max-width: 992px){
-
+    .colgroup_buyerlist .col6_6{width: 200px;}
 }
 
 @media (max-width: 767px){
     .table .colgroup_mypage .col3_1{width: 80px;}
+
 }
 
 @media (max-width: 576px){
