@@ -488,6 +488,26 @@ var _BtoCUI = {
             ul.style.display="none";
         }
     },
+    calcAndView: function(obj) {
+        var itemLength = document.querySelector(obj.itemLength);
+        var price = parseInt(obj.price);
+        var resultPrice = obj.resultPrice;
+        // 직접 숫자 입력한 경우
+        itemLength.addEventListener("change", function(e) {
+            console.log(e.currentTarget.value);
+        });
+        // 버튼 누른 경우
+        document.querySelector(".btnPlus").addEventListener("click", function(e) {
+            console.log(parseInt(itemLength.value * price));
+            document.querySelector("#resultPrice").innerText = parseInt(itemLength.value * price);
+        });
+        document.querySelector(".btnMinus").addEventListener("click", function(e) {
+            console.log(parseInt(itemLength.value * price));
+            document.querySelector("#resultPrice").innerText = parseInt(itemLength.value * price);
+        });
+        
+
+    },
     numberUtil: function(obj) {
         var itemLength = document.querySelectorAll(".itemLength");
         var btnMinus = document.querySelectorAll(".btnMinus");

@@ -5,13 +5,9 @@
 <script>
     var productId = "<%= productId %>";
     var country = "<%= country %>";
-    var opt = {btn:"btnSelected", ul:"sltList", selectedList: "selectedList"}
     var reqData = {};
     
     $(document).ready(function() {
-        _BtoCUI.actSelectBox(opt, function(){});
-        _BtoCUI.numberUtil({maxLen: 100});
-    
         getUserInfo();
         getProductDetail();
     });
@@ -34,19 +30,26 @@
         }).done(function (success) {
             var res = success.data;
             var currency = (res.currencyType === "POINT") ? "point" : res.currencyType;
+            var deliveryType = (res.deliveryType === "0") ? "무료배송" : res.deliveryPrice + currency;
             console.log(res);
+            $("#productImg").attr("src", res.imageDetail[0])
             $("#productName").text(res.productName);
             $("#deliveryType").text(convertDeliveryType(res.deliveryType));
             $("#originalPrice").text(res.originalPrice);
             $("#percentage").text(res.percentage+"%");
             $("#price").text(res.price);
+            $("#deliveryType").text(deliveryType);
             $(".currencyCode").text(currency);
             $("#currencyType").val(currency);
 
             res.options.forEach(function(v, i) {
-                var li = '<li><span class="productName">'+v.name+'</span> <span class="priceMach">'+ v.price+'</span></li>';
+                var li = '<li><span class="productName">'+v.name+'</span> <span class="priceMach">'+ v.price+currency+'</span></li>';
                 $("#sltList").append(li);
             });
+
+            var optCalcAndView = {price: res.price, itemLength: ".itemLength", resultPrice: "#resultPrice"};
+            _BtoCUI.numberUtil({maxLen: 100}); // 구매 가능 갯수 넣기
+            _BtoCUI.calcAndView(optCalcAndView); 
         });        
     }
 
@@ -177,63 +180,55 @@
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- list page-->
-            <section class="board_sec">
-                <div class="board_tit cf">
-                    <h1>한정 이벤트<span>상세 물품</span></h1>
-                </div>
-
-                <div class="item_images_area cf">
+            <section class="btc_product_sec">
+                <div class="dfb product_detail">
                     <div class="lft_img">
-                        <img src="/static/img/event/bts_img.jpg" alt="">
+                        <img id="productImg" src="" alt="">
                     </div>
                     <div class="rgh_txt">
-                        <h2 class="iia_title" id="productName"></h2>
-                        <em class="iia_delivery" id="deliveryType"></em>
-                        <div class="iia_money"><span id="originalPrice"></span><span class="currencyCode"></span></div> <div class="iia_percent" id="percentage">%</div>
-                        <em class="iia_price"><span id="price"></span><span class="currencyCode"></span></em>
-                        <div class="choice_method">
-                            <!-- <h3 class="iia_option dib">결제 수단</h3>
-                            <select id="paymentMethod">
-                                <option value="">선택</option>
-                                <option value="mach">MACH</option>
-                                <option value="point">Point</option>
-                            </select> -->
-                            <input type="hidden" id="currencyType" name="">
-                        </div>
-                        <h3 class="iia_option">구매옵션</h3>
-                        <div class="like_select_box">
-                            <button id="btnSelected" class="btn_slt"><em>선택</em><span>▼</span></button>
-                            <div class="slt_sec">
-                                <ul id="sltList">
-                                    <!-- <li><span class="productName">BTS핸드크림</span> <span class="priceMach">30MACH</span><span class="pricePoint">35000point</span></li> -->
-                                    <!-- <li><span class="productName">가영크림</span> <span class="priceMach">1MACH</span><span class="pricePoint">11point</span></li>
-                                    <li><span class="productName">나영크림</span> <span class="priceMach">2MACH</span><span class="pricePoint">22point</span></li>
-                                    <li><span class="productName">다영크림</span> <span class="priceMach">3MACH</span><span class="pricePoint">33point</span></li>
-                                    <li><span class="productName">마영크림</span> <span class="priceMach">4MACH</span><span class="pricePoint">44point</span></li>
-                                    <li><span class="productName">바영크림</span> <span class="priceMach">5MACH</span><span class="pricePoint">55point</span></li>
-                                    <li><span class="productName">사영크림</span> <span class="priceMach">6MACH</span><span class="pricePoint">66point</span></li> -->
+                        <dl>
+                            <dt>
+                                <h1 id="productName"></h1>
+                            </dt>
+                            <dd>
+                                <ul>
+                                    <li class="cf">
+                                        <em class="l_tit">소비자가</em>
+                                        <div class="r_col"><span id="originalPrice"></span><span class="currencyCode"></span></div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">판매가</em>
+                                        <div class="r_col"><span id="price"></span><span class="currencyCode"></span> <span id="percentage"></span></div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">배송구분</em>
+                                        <div class="r_col"><span id="deliveryType"></span></div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">구매옵션</em>
+                                        <div class="r_col buy_opt_wrap">
+                                            <ul id="selectedList">
+                                                <li class="cf">
+                                                    <span class="item_calc">
+                                                        <button class="btnMinus btn_calc">－</button>
+                                                        <input type="text" class="itemLength item_length" maxlength="3" value="1">
+                                                        <button class="btnPlus btn_calc">＋</button>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </div>
+                            </dd>
+                        </dl>
+                        <div class="total_calc">
+                            <em>총 상품금액 </em>
+                            <strong class="calc_price" id="resultPrice"></strong>
+                            <span class="currencyCode"></span>
                         </div>
                     </div>
                 </div>
                 <div class="item_select_area">
-                    <h2 class="btoc_data_tit">선택한 항목</h2>
-                    <div class="selected_item">
-                        <ul id="selectedList">
-                            <li class="cf">
-                                <span class="itemTitle item_title"></span>
-                                &nbsp;
-                                <span class="itemPrice item_price"></span>
-                                <span class="item_calc">
-                                    <button class="btnMinus btn_calc">－</button>
-                                    <input type="text" class="itemLength item_length" maxlength="3" value="1">
-                                    <button class="btnPlus btn_calc">＋</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
                     <h2 class="tit_delivery">배송정보</h2>
                     <table class="table_btoc">
                         <colgroup class="colgroup_btoc">
