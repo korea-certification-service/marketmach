@@ -159,9 +159,15 @@
 /* 회원정보수정: .table_view .col2_1 */
 .table .colgroup_myinfo .col2_1{}
 
+/** **/
+.colgroup_buyerlist .col6_1{width: 150px;}
+.colgroup_buyerlist .col6_2{width: 150px;}
+.colgroup_buyerlist .col6_3{width: 50px;}
+.colgroup_buyerlist .col6_4{width: 80px;}
+.colgroup_buyerlist .col6_5{width: 150px;}
+.colgroup_buyerlist .col6_6{}
 /*** btoc ***/
 .table_btoc .col2_1{width: 158px;}
-
 /********** otc **********/
 .table .colgroup_otc-sells .col4_1{}
 .table .colgroup_otc-sells .col4_2{width: 110px;}

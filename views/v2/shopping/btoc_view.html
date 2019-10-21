@@ -8,6 +8,8 @@
     var reqData = {};
     
     $(document).ready(function() {
+        // resetSearchFilter(".btc_product_sec");
+        $(".itemLength").val("1");
         getUserInfo();
         getProductDetail();
     });
@@ -31,25 +33,31 @@
             var res = success.data;
             var currency = (res.currencyType === "POINT") ? "point" : res.currencyType;
             var deliveryType = (res.deliveryType === "0") ? "무료배송" : res.deliveryPrice + currency;
-            console.log(res);
-            $("#productImg").attr("src", res.imageDetail[0])
+            // console.log(res);
+
+            if(res.leftAmount < 1) $("#purchaseItem").attr("disabled","disabled").text("품절");
+
+            $("#productImg").attr("src", res.thumnail)
             $("#productName").text(res.productName);
             $("#deliveryType").text(convertDeliveryType(res.deliveryType));
-            $("#originalPrice").text(res.originalPrice);
+            $("#originalPrice").text(numberWithCommas(res.originalPrice));
             $("#percentage").text(res.percentage+"%");
-            $("#price").text(res.price);
+            $("#price").text(numberWithCommas(res.price));
             $("#deliveryType").text(deliveryType);
             $(".currencyCode").text(currency);
             $("#currencyType").val(currency);
-
+            $("#imageDetail").attr("src", res.imageDetail[0])
             res.options.forEach(function(v, i) {
                 var li = '<li><span class="productName">'+v.name+'</span> <span class="priceMach">'+ v.price+currency+'</span></li>';
                 $("#sltList").append(li);
             });
 
-            var optCalcAndView = {price: res.price, itemLength: ".itemLength", resultPrice: "#resultPrice"};
-            _BtoCUI.numberUtil({maxLen: 100}); // 구매 가능 갯수 넣기
+            var optCalcAndView = {price: res.price, itemLength: ".itemLength", resultPrice: "#resultPrice", priceForSend:"#priceForSend"};
+            $(optCalcAndView.resultPrice).text(numberWithCommas(res.price));
+
+            _BtoCUI.numberUtil({maxLen: res.leftAmount}); // 구매 가능 갯수 넣기
             _BtoCUI.calcAndView(optCalcAndView); 
+            $("#priceForSend").val(res.price);
         });        
     }
 
@@ -88,9 +96,7 @@
     function validateInfo() {
         var state = false;
 
-        if ($(".itemTitle").text() === "") {
-            alert("구매하실 제품을 선택하세요.");
-        } else if ($("#receiver").val() === "") {
+        if ($("#receiver").val() === "") {
             alert("수령인 성함을 입력하세요.");
         } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
             alert("수령인 연락처를 입력하세요.");
@@ -105,7 +111,6 @@
     
     // API call
     function purchaseItem() {
-
         /*
         "selectedOptions":[
                 {
@@ -123,21 +128,19 @@
         ],
         */
         if(validateInfo()) {
-            var itemLength = parseInt($(".itemLength").val());
             reqData.eventShopId = productId;
             reqData.country = country;
-            reqData.product = $(".itemTitle").text();
+            reqData.productName = $("#productName").text();
             reqData.currencyType = $("#currencyType").val().toUpperCase();
             reqData.selectedOptions = [];
             reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
             reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
             reqData.receiver     = $("#receiver").val();
-            reqData.totalAmount = itemLength;
-            reqData.totalPrice = parseInt($("#price").text().replace(/[^0-9]/g,"")) * itemLength;
-            console.log(reqData);
-
+            reqData.totalAmount = parseInt($(".itemLength").val());
+            reqData.totalPrice = parseInt($("#priceForSend").val());
+            // console.log(reqData);
            
-            return;
+            //return;
 
             $.ajax({
                 method: "POST",
@@ -146,18 +149,20 @@
                 dataType: "json",
                 data: JSON.stringify(reqData)
             }).done(function (success) {
-                if(success.data.successYn){
+                console.log(success)
+                if(success.data.successYn === "Y"){
                     var msg = "정상적으로 구매가 완료되었습니다.\n\n";
-                        msg += "구매하신 제품명: " + reqData.product + "\n";
-                        msg += "구매하신 수량: " + reqData.amount + "\n";
+                        msg += "구매하신 제품명: " + reqData.productName + "\n";
+                        msg += "구매하신 수량: " + reqData.totalAmount + "\n";
                         msg += "받으실분 성함: " + reqData.receiver + "\n";
                         msg += "받으실분 연락처: " + reqData.phone + "\n";
                         msg += "받으실분 주소: " + reqData.address + "\n\n";
                         msg += "입력하신 정보가 잘못되었다면 1:1문의하기를 이용해주세요.";
                     alert(msg);
-                    window.location.href = "/main"
+                    window.location.href = "/myPages/product/list";
                 } else {
                     alert(success.data.msg);
+                    window.location.reload();
                 }
             }).fail(function (fail) {
                 console.log(fail);
@@ -194,11 +199,11 @@
                                 <ul>
                                     <li class="cf">
                                         <em class="l_tit">소비자가</em>
-                                        <div class="r_col"><span id="originalPrice"></span><span class="currencyCode"></span></div>
+                                        <div class="r_col before_price"><span id="originalPrice"></span><span class="currencyCode"></span></div>
                                     </li>
                                     <li class="cf">
                                         <em class="l_tit">판매가</em>
-                                        <div class="r_col"><span id="price"></span><span class="currencyCode"></span> <span id="percentage"></span></div>
+                                        <div class="r_col after_price"><span id="price"></span><span class="currencyCode"></span> <!--<span class="txt_percentage" id="percentage"></span>--></div>
                                     </li>
                                     <li class="cf">
                                         <em class="l_tit">배송구분</em>
@@ -222,9 +227,11 @@
                             </dd>
                         </dl>
                         <div class="total_calc">
-                            <em>총 상품금액 </em>
+                            <em>총 합계금액 </em>
                             <strong class="calc_price" id="resultPrice"></strong>
                             <span class="currencyCode"></span>
+                            <input type="hidden" id="currencyType">
+                            <input type="hidden" id="priceForSend">
                         </div>
                     </div>
                 </div>
@@ -282,10 +289,10 @@
                         </table>
                     </form>
                     <div class="btn_buy_sec">
-                        <button class="btn" onclick="purchaseItem();">구매하기</button>
+                        <button class="btn" id="purchaseItem" onclick="purchaseItem();">구매하기</button>
                     </div>
                     <div class="item_detail_area">
-                        <img src="/static/img/event/bts_detail.jpg" alt="상품설명">
+                        <img id="imageDetail" src="" alt="상품설명">
                     </div>
                 </div>
             </section>

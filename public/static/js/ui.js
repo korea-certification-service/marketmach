@@ -491,19 +491,22 @@ var _BtoCUI = {
     calcAndView: function(obj) {
         var itemLength = document.querySelector(obj.itemLength);
         var price = parseInt(obj.price);
-        var resultPrice = obj.resultPrice;
+        var resultPrice = document.querySelector(obj.resultPrice);
+        var priceForSend = document.querySelector(obj.priceForSend);
         // 직접 숫자 입력한 경우
         itemLength.addEventListener("change", function(e) {
-            console.log(e.currentTarget.value);
+            resultPrice.innerText = numberWithCommas(itemLength.value * price);
         });
         // 버튼 누른 경우
         document.querySelector(".btnPlus").addEventListener("click", function(e) {
-            console.log(parseInt(itemLength.value * price));
-            document.querySelector("#resultPrice").innerText = parseInt(itemLength.value * price);
+            // console.log(itemLength.value * price);
+            resultPrice.innerText = numberWithCommas(itemLength.value * price);
+            priceForSend.value = itemLength.value * price;
         });
         document.querySelector(".btnMinus").addEventListener("click", function(e) {
-            console.log(parseInt(itemLength.value * price));
-            document.querySelector("#resultPrice").innerText = parseInt(itemLength.value * price);
+            // console.log(itemLength.value * price);
+            resultPrice.innerText = numberWithCommas(itemLength.value * price);
+            priceForSend.value = itemLength.value * price;
         });
         
 

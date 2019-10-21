@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+    var reqData = {
+        // "param":{"country":"KR"},
+        "option": {
+                "pageIdx":0,
+                "perPage":20
+        }
+    };
+
+    $(document).ready(function() {
+        getProductInfo();
+    });
+
+    function getProductInfo(){
+        $.ajax({
+            method: "POST",
+            url: "/shopping/buyer/list",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(reqData)
+        }).done(function (success) {
+            console.log(success);
+            var dom = "";
+            //  제품명 가격 갯수 받는이 주소 연락처
+            success.data.list.forEach(function(v, i){
+                dom += "<tr>"
+                dom += "<td>" + v.productName + "</td>"
+                dom += "<td>" + v.totalPrice + " " +v.currencyType+"</td>"
+                dom += "<td>" + v.totalAmount + "</td>"
+                dom += "<td>" + v.receiver + "</td>"
+                dom += "<td>" + v.phone + "</td>"
+                dom += "<td>" + v.address + "</td>"
+                dom += "</tr>"
+            });
+
+            $("#buy_list").append(dom);
+        }).fail(function (fail) {
+            console.log(fail);
+        });    
+    }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">핫딜구매내역</h1>
+
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_buyerlist">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>제품명</th>
+                                        <th>가격</th>
+                                        <th>갯수</th>
+                                        <th>받는이</th>
+                                        <th>연락처</th>
+                                        <th>주소</th> 
+                                    </tr>
+                                </thead>
+                                <tbody id="buy_list">
+                                                              
+                                </tbody>
+                            </table>                 
+                        </div>
+                        <div class="paging_wrap">
+                            <!-- <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button> -->
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+   
+   </script>
+
+    <% include ../../include/footer.html %>
+</div>
+</body>

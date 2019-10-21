@@ -8,7 +8,7 @@
     });   
     function takeBtocList() {
         var reqData = {
-            "param":{"country":"POINT"},
+            // "param":{"country":"POINT"},
             "option": {"pageIdx":0, "perPage":20 }
         };
         $.ajax({
@@ -22,20 +22,30 @@
             console.log(res);
             var html = "";
             for (var i = 0; i < res.length; i++) {
-                html +=  '<li>'
-                        +   '<a href="/shopping/view/'+res[i]._id+'">'
+                if(!res[i].eventEnd){
+                    html +=  '<li>'
+                            +   '<a href="/shopping/view/'+res[i]._id+'">'
+                            +       '<div class="img_sec">'
+                            +           '<img src="'+res[i].thumnail[0]+'" alt="">'
+                            +       '</div>'
+                } else {
+                    html +=  '<li class="soldout">'
+                        // +   '<a href="/shopping/view/'+res[i]._id+'">'
+                        +   '<a href="javascript:alert(\'품절된 상품입니다.\')">'
                         +       '<div class="img_sec">'
-                        +           '<img src="'+res[i].imageDetail[0]+'" alt="">'
+                        +           '<img class="img_grey" src="'+res[i].thumnail[0]+'" alt="">'
                         +       '</div>'
-                        +       '<dl>'
+                }
+
+                    html +=       '<dl>'
                         +           '<dt>'+res[i].productName+' <em class="tit_new">NEW</em></dt>'
                         +           '<dd>'
                         +               '<div class="origin_price">'+numberWithCommas(res[i].originalPrice)+'</div>'
-                        +               '<strong class="price">'+numberWithCommas(res[i].price)+'<span>point</span></strong>'
+                        +               '<strong class="price">'+numberWithCommas(res[i].price)+'<span>'+res[i].currencyType+'</span></strong>'
                         +               '<em class="percent">'+res[i].percentage+'%</em>'
                         +           '</dd>'
                         +       '</dl>'
-                        +   '</a>'
+                        +    '</a>'
                         +'</li>'
             }
 

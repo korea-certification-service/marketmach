@@ -1065,4 +1065,32 @@ router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+router.get('/product/list', token.checkLoginToken, function (req, res, next) {
+    if(dbconfig.country == "KR") {
+        res.render('v2/myPage/product/buyer_list', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[7,0],
+            country:req.session.country
+        });
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/myPage/product/buyer_list', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[7,0],
+            country:req.session.country
+        });      
+    }
+});
+
 module.exports = router;

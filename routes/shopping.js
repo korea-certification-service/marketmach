@@ -109,6 +109,7 @@ router.post('/product/list', function (req, res, next) {
         'token': dbconfig.APIToken
     };
     let body = req.body;
+    body.param = {country: country}
     
     request({uri: url, 
             method:'POST',
@@ -166,7 +167,7 @@ router.get('/product/detail/:productId', function (req, res, next) {
 // 상품 구매 처리
 router.post('/product/buy', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
-    let url = dbconfig.APIServer + "/v2/shops/product/list";
+    let url = dbconfig.APIServer + "/v2/shops/product/buy";
     let country = dbconfig.country;
     if(country != "KR") req.body['country'] = country;
     let header = { 
@@ -174,6 +175,41 @@ router.post('/product/buy', function (req, res, next) {
     };
     let body = req.body;
     
+    request({uri: url, 
+            method:'POST',
+            headers: header,
+            body:body,
+            json:true}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+});
+
+// 상품 구매 확인 페이지
+router.post('/buyer/list', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let url = dbconfig.APIServer + "/v2/shops/buyer/list";
+    let country = dbconfig.country;
+    if(country != "KR") req.body['country'] = country;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    let body = req.body;
+    body.param = {country: country}
+    console.log("###########body", body)
+
     request({uri: url, 
             method:'POST',
             headers: header,
