@@ -171,6 +171,13 @@
         // const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
         const operation = 'finalTransaction'
         //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+        //실제 block에 저장시 16진수(HEX)로 저장함. 추후 SC조회 시 HEX->string으로 변환하여 보여줄 필요 있음
+        //테스트넷
+        //contract list api : https://polarisexplorer.ont.io/v2/contracts/other/{contractAddress}/transactions?page_size=10&page_number=1
+        //contract detail api : https://polaris1.ont.io:10334/api/v1/smartcode/event/txhash/{txHashId}
+        //메인넷
+        //contract list api : https://explorer.ont.io/v2/contracts/other/{contractAddress}/transactions?page_size=10&page_number=1
+        //contract detail api : http://dappnode1.ont.io:10334/api/v1/smartcode/event/txhash/{txHashId}
         const args = [
             {
                 "type": "String",
