@@ -267,6 +267,7 @@ function createWithIds(req, coinId, agreementId, pointId) {
         data['sex'] = req.body.sex;
         data['commId'] = req.body.commId;
         data['foreigner'] = req.body.foreigner;
+        data['ontId'] = req.body.ontId;
         if(req.body.countryCode != undefined) data['countryCode'] = req.body.countryCode;
         if(req.body.phone != undefined) data['phone'] = req.body.phone;
         data['regDate'] = util.formatDate(new Date().toString())

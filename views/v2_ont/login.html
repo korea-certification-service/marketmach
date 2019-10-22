@@ -10,7 +10,7 @@
             var client = CyanoMobile.client;     
             client.registerClient();
             $(document).ready(function() {    
-                //getProvider();
+                
             });
         
             async function login() {
@@ -20,14 +20,30 @@
                     dappIcon: 'https://www.marketmach.com/static/img/h_logo.png', // some url that points to the dapp's icon
                     message: 'MarketMACH Login.', // message sent from dapp that will be signed by native client
                     expired: new Date().getTime() * 10 * 60 * 60, // expired date of login
-                    callback: callbackUrl + '/v1/ontology/callback/login' // callback url of dapp
                 }
                 try {
                     let res = await client.api.message.login(params);
-                    $('#result').html(JSON.stringify(res));
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/ontology/callback/login",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(res)
+                    }).done(function (success) {
+                        if(success.data.exist) {
+                            location.replace('/main');
+                        } else {
+                            location.replace('/ontology_reg_user');
+                            //$('#result').html('ont Id no exist.');   
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                        $('#result').html('System Error.');
+                    })
                 }catch(err) {
                     console.log(err);
-                    $('#result').html(JSON.stringify(err));
+                    $('#result').html('ONT ID is incorrect. Please try again.');
+                    //$('#result').html(JSON.stringify(err));
                 }
             }
         </script>

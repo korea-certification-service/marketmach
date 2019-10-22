@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <script>
+        var myCurrency;
+        document.querySelector("#floatingInfoBox").setAttribute("ismain", "true");
+
+        $(document).ready(function () {
+            loadItemsAll();
+            
+            if(userId != "" && authPhone == "") {
+                // 메인 전용 팝업 로직
+                // $(".dim_all_area").show();
+                // $("body").css("position", "fixed");
+            }
+
+            makeHasetCategoryList();
+        });
+
+        function loadItemsAll() {
+            var url = "/v1/items/all";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                var strDOM = '';
+                var game_buys = success.data.game_buys;
+                var game_sells = success.data.game_sells;
+                var etc_buys = success.data.etc_buys;
+                var etc_sells = success.data.etc_sells;
+                var prime_services = success.data.primes;
+                var cms = success.data.cms;
+                var movies = success.data.movies;
+                var boards = success.data.boards;
+                var otc_buys = success.data.otc_buys;
+                var otc_sells = success.data.otc_sells;
+                var notices = success.data.notices;
+                
+                console.log(success);
+
+                setEtcSellList(etc_sells);
+                setNoticeList(notices);
+                setCommunityMovie(movies);
+            }).fail(function (fail) {
+                console.log('system error : ', fail);
+            })
+        }
+
+        function setNoticeList(data) {
+            var result = "";
+
+            // console.log(data)
+
+            var len = 5; // data.length
+            for(var i=0; i<len; i++) {
+                var noticeId = data[i]._id;
+                var title = data[i].title;
+                
+                result += '<li><div class="ellipse noti_ell"><a href="/supports/notice/detail?noticeId='+noticeId+'">'+title+'</a></div></li>'
+            }
+            $('#notice_list').html(result);
+        }
+
+        function setEtcSellList(data) {
+            var result = "";
+
+            console.log(data)
+
+            if(data.length > 0) {
+                // data.length = 4
+                for(var i=0; i<data.length; i++) {
+                    var itemId = data[i]._id;
+                    var item_type = getItemType(data[i].type);
+                    var price = numberWithCommas(data[i].total_price);
+                    var point = numberWithCommas(data[i].total_point);
+                    var status = getStatus(data[i].status);
+                    var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
+                    var image_src;
+                    if(data[i].images[0] === undefined || data[i].images[0] === "") {
+                        image_src = "/static/img/sub/no_image.png";
+                    } else {
+                        image_src = data[i].images[0].path;
+                    }
+                    var title = data[i].title;
+                    var regDate = data[i].regDate.substring(2, 10);
+                    var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                    var money = point + '<span>Point</span>';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                    }
+
+                    if(i % 4 === 0) result += '<li class="li_asset cf">'
+                    
+                    result += '<div class="asset_once">'
+                            +     '<div class="img_list_box">'
+                            +        '<div class="photo_frame">'
+                            +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                    if(delivery_type.className === "ico_direct"){
+                        result +=    '<em class="ico_trade state_step line2 '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                    } else {
+                        result +=    '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                    }
+                    result +=        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                            +        '</div>'
+                            +        '<dl>'
+                            +            '<dt>'
+                            +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                            +             '<dd class="cf">'
+                            +                '<div class="money_txt">'+money+'</div>'
+                            +                '<div class="time_txt">'+regDate+'</div>'
+                            +            '</dd>'
+                            +        '</dl>'
+                            +    '</div>'
+                            + '</div>'
+                    // VIEW MORE 버튼 빼버림
+                    // if(i===data.length -1) {
+                    //     result += '<div class="asset_once"><div class="img_list_box"><div class="view_more">'
+                    //             + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
+                    //             + '</div></div></div>'
+                    // }
+                    if(i % 4 === 3) result += '</li>'
+                }
+            }
+            $('#assetsTrade').html(result);
+        }
+
+        function setCommunityMovie(data) {
+            console.log(data)
+            var result = "";
+            for(var i=0; i<data.length; i++) {
+                var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
+                var title = data[i].title;
+                var movieUrl = data[i].movieUrl;
+                var recommandCount = data[i].recommandCount ? data[i].recommandCount : 0;
+                result +=   '<div class="media_img">' +
+                                '<a class="cf" href="community/board/detail/'+data[i]._id+'">' +
+                                    '<div class="cmnt_photo">' +
+                                        '<img src="'+movie_img+'" alt="">' +
+                                    '</div>' +
+                                    '<div class="cmnt_title">' +
+                                        '<h2 class="ellipse">'+title+'</h2>' +
+                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].replyCount+'</span></p>' +
+                                    '</div>' +
+                                '</a>' +
+                            '</div>';
+            }
+
+            $('.media_img_wrap').html(result);
+        }
+
+        function makeHasetCategoryList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var arrResult = success.data;
+                var $hashtagCategory = $("#hashtagCategory");
+                // hashtagCategory
+                var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>';
+                for (var i = 0; i < arrResult.length; i++) {
+                    var idx = i % 5 + 1;
+                    li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+encodeURIComponent(arrResult[i].category1_en)+'"><span>'+arrResult[i].category1_en+'</span></a></li>';
+                }
+                // OTC
+                li += '<li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li>';
+                // 게임아이템
+                // li += '<li class="li_game"><a href="/sells"><span>게임아이템</span></a></li>';
+                $hashtagCategory.append(li)
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="visual_wrap">
+            <section class="visual_sec">
+                <h1 class="blind">Main Banners</h1>
+                <div class="slick_visual">
+                    <div class="visual_img">
+                        <a href="/howto/trade/vtr">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual05.jpg" alt="Open Beta">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual05.jpg" alt="Open Beta">
+                            </div>
+                        </a> 
+                    </div>                            
+                    <div class="visual_img">
+                        <a href="/supports/notice/detail?noticeId=5d96f07db74d7d39ac0dee8b">
+                        <div class="pc_img">
+                            <img src="/static/img/en/en_main_visual07.jpg" alt="ONTology">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/en/en_mob_main_visual07.jpg" alt="ONTology">
+                        </div>
+                        </a>
+                    </div>                                     
+                    <div class="visual_img">
+                        <a href="/gameStation/machAdventure/info/">
+                            <div class="pc_img">
+                                <img src="/static/img/en/en_main_visual06.jpg" alt="1st Game">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/en/en_mob_main_visual06.jpg" alt="1st Game">
+                            </div>
+                        </a>
+                    </div> 
+                    <div class="visual_img">
+                        <div class="pc_img">
+                            <img src="/static/img/en/en_main_visual08.jpg" alt="Escrow Fee Free">
+                        </div>
+                        <div class="mob_img">
+                            <img src="/static/img/en/en_mob_main_visual08.jpg" alt="Escrow Fee Free">
+                        </div>
+                    </div>
+                </div>
+                <%# nav-visual-length의 숫자 배너 length에 맞게 적을 것 %>
+                <div class="nav_slick_visual" id="navSlcikVisual" nav-visual-length="4">
+                    <div class="nav_text_box on"><div class="nav_text_box_inner"><em>Grand Open</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>New Coin 'ONT'</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>MACH ADVENTURE</em></div></div>
+                    <div class="nav_text_box"><div class="nav_text_box_inner"><em>Escrow Fee Free</em></div></div>
+                </div>
+            </section>
+        </div>
+        <div class="renewer_container">
+            <!-- <section class="w100p_banner">
+                <h1 class="blind">advertise</h1>
+                <a class="mob_hide" href="https://t.me/marketmachcom" target="_blank">
+                    <img src="/static/img/en/en_main_content_banner04.jpg" alt="마켓마하 오픈채팅 PC">
+                </a>
+                <a class="mob_show" href="https://t.me/marketmachcom" target="_blank">
+                    <img src="/static/img/en/en_mob_main_banner04.jpg" alt="마켓마하 오픈채팅 mobile">
+                </a>
+            </section> -->
+
+            <section class="section_asset">
+                <div class="main_inner_wrap">
+                    <h1 class=""><img src="/static/img/en/title_asset_en.png" alt="ASSET"></h1>
+                    <div class="photo_list">
+                        <ul id="assetsTrade">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section class="section_hashtag">
+                <div class="main_inner_wrap hashtag_category_wrap">
+                    <ul id="hashtagCategory" class="hashtag_category cf">
+                        <!-- <li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>ALL</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Woman"><span>Woman</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Man"><span>Man</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Fashion"><span>Fashion</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Beauty"><span>Beauty</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Baby"><span>Baby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Sports"><span>Sports</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Electronic"><span>Electronic</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Living"><span>Living</span></a></li>
+                        <li class="c4"><a href="/etc-sells?category=etc&trade_type=sell&category1=Book/Ticket"><span>Book/Ticket</span></a></li>
+                        <li class="c5"><a href="/etc-sells?category=etc&trade_type=sell&category1=Hobby"><span>Hobby</span></a></li>
+                        <li class="c1"><a href="/etc-sells?category=etc&trade_type=sell&category1=Toy"><span>Toy</span></a></li>
+                        <li class="c2"><a href="/etc-sells?category=etc&trade_type=sell&category1=Car"><span>Car</span></a></li>
+                        <li class="c3"><a href="/etc-sells?category=etc&trade_type=sell&category1=Other"><span>Other</span></a></li>
+                        <li class="li_otc"><a href="/otc-sells"><span>OTC</span></a></li> -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 커뮤니티 베스트 -->
+            <section class="section_community">
+                <div class="main_inner_wrap">
+                    <h1 class="en_cmnt_tit"><img src="/static/img/en/title_community_en.png" alt="Community"></h1>
+                    <div class="media_img_wrap cf">
+                    </div>
+                </div>
+            </section>
+
+            <div class="w100p_banner">
+                <a class="mob_hide" href="https://www.coingame.com" target="_blank">
+                    <!-- <img src="/static/img/en/en_main_content_banner03.jpg" alt="bitweb PC"> -->
+                    <img src="/static/img/en/en_main_content_banner06.jpg" alt="bitweb PC">
+                </a>
+                <a class="mob_show" href="https://www.coingame.com" target="_blank">
+                    <!-- <img src="/static/img/en/en_mob_main_banner03.jpg" alt="bitweb mobile"> -->
+                    <img src="/static/img/en/en_mob_main_banner05.jpg" alt="bitweb mobile">
+                </a>
+            </div>
+            
+            <div class="noti_hot_section_wrap">
+                <div class="main_inner_wrap dfb">
+                    <section class="section_notice">
+                        <h1>NOTICE</h1>
+                        <div class="line_box">
+                            <ul id="notice_list" class="noti_list">
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="section_hotmenu">
+                        <h1>HOT MENU</h1>
+                        <a href="/supports/event">
+                            <img src="/static/img/main/img_btn_event.jpg" alt="event">
+                        </a>
+                        <a href="/gameStation">
+                            <img src="/static/img/main/img_btn_game.jpg" alt="gamestation">
+                        </a>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!--// bootstrap container -->
+    </div>
+    <!--// content_wrap -->
+
+    <!-- 모달창 -->
+    <div class="dim_all_area" style="display: none">
+        <article class="modal_bitberry_deposit">
+            <!-- <br>
+            <h1>Need to auth phone</h1>
+            <p>Need to auth phone [My Page->My Account].</p>
+            <button id="gotoUserInfo" class="btn btn-danger">OK</button> -->
+        </article>
+    </div>
+    <% include ../include/footer.html %>
+</div>
+</body>

@@ -387,6 +387,10 @@ router.post('/', function (req, res, next) {
                                                 .then(result => {
                                                     if (result._id != null) {
                                                         let pointId = result._id;
+                                                        //ONT ID 추가
+                                                        if(req.session.ontId != undefined) {
+                                                            req.body['ontId'] = req.session.ontId;
+                                                        }
                                                         controllerUsers.createWithIds(req, coinId, agreementId, pointId)
                                                             .then(result => {
 
@@ -412,7 +416,7 @@ router.post('/', function (req, res, next) {
                                                                 req.session.teenager = agreement.teenager;
                                                                 req.session.authPhone = agreement.authPhone;
                                                                 req.session.coinId = result._doc.coinId;
-                                                                req.session.pointId = result._doc.pointId;
+                                                                req.session.pointId = result._doc.pointId;                                                                
                                                                 
                                                                 if(req.body.recommander != undefined) {
                                                                     controllerUsers.getRecommanderCount(country,req.body.recommander)
@@ -575,6 +579,11 @@ router.post('/login', function (req, res, next) {
                 let loginToken = util.makeToken();
                 let data1 = {};
                 data1['loginToken'] = loginToken;
+                //ONT ID가 DB 상에 존재하지 않으면 해당 값을 Update
+                if(result._doc['ontId'] == undefined && req.session.ontId != undefined) {
+                    data1['ontId'] = req.session.ontId;
+                }
+
                 controllerUsers.updateLoginToken(country, result._doc._id, data1)
                     .then(() => {
                         controllerAgreements.getById(country, result._doc.agreementId.toString())
