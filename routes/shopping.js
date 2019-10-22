@@ -37,34 +37,6 @@ router.get('/list', token.checkLoginToken, function (req, res, next) {
     }
 });
 
-router.get('/view', token.checkLoginToken, function (req, res, next) {
-    if(dbconfig.country == "KR") {
-        res.render('v2/shopping/btoc_view', {
-            title: 'Bitweb Shopping',
-            userId: req.session.userId,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            userName: req.session.userName,
-            usePoint:dbconfig.usePoint,
-            userTag: req.session.userTag,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain
-        });
-    } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/shopping/btoc_list', {
-            title: 'Bitweb Shopping',
-            userId: req.session.userId,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            userName: req.session.userName,
-            usePoint:dbconfig.usePoint,
-            userTag: req.session.userTag,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain
-        });
-    }
-});
-
 router.get('/view/:productId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/shopping/btoc_view', {
@@ -81,7 +53,7 @@ router.get('/view/:productId', token.checkLoginToken, function (req, res, next) 
             country: dbconfig.country,
         });
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/shopping/btoc_list', {
+        res.render('v2_point/shopping/btoc_view', {
             title: 'Bitweb Shopping',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -91,7 +63,7 @@ router.get('/view/:productId', token.checkLoginToken, function (req, res, next) 
             userTag: req.session.userTag,
             authPhone: req.session.authPhone,
             useBlockchain:dbconfig.useBlockchain,
-            itemid: req.params.itemid,
+            productId: req.params.productId,
             country: dbconfig.country,
         });
     }
@@ -109,8 +81,10 @@ router.post('/product/list', function (req, res, next) {
         'token': dbconfig.APIToken
     };
     let body = req.body;
-    body.param = {country: country}
-    
+
+    if(body['param'] == undefined) body["param"] = {};
+    body["param"]["country"] = country;
+
     request({uri: url, 
             method:'POST',
             headers: header,
@@ -207,8 +181,11 @@ router.post('/buyer/list', function (req, res, next) {
         'token': dbconfig.APIToken
     };
     let body = req.body;
-    body.param = {country: country}
-    console.log("###########body", body)
+
+    if(body['param'] == undefined) body["param"] = {};
+    body["param"]["country"] = country;
+    body["param"]["userTag"] = req.session.userTag;
+    // console.log("###########body", body)
 
     request({uri: url, 
             method:'POST',

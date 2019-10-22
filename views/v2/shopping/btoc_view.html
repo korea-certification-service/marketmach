@@ -95,8 +95,10 @@
 
     function validateInfo() {
         var state = false;
-
-        if ($("#receiver").val() === "") {
+        if($(".itemLength").val() === "") {
+            alert("주문 수량을 설정하세요");
+        }
+        else if ($("#receiver").val() === "") {
             alert("수령인 성함을 입력하세요.");
         } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
             alert("수령인 연락처를 입력하세요.");
@@ -110,24 +112,19 @@
     }
     
     // API call
-    function purchaseItem() {
+    function purchaseItem(e) {
         /*
         "selectedOptions":[
-                {
+            {
                 "name" : "Bebe 물티슈 500g",
                 "amount": 1,
                 "price" : 1,
                 "total_price": 1
             }, 
-            {
-                "name" : "Bebe 물티슈 300g 1+1",
-                "amount": 2,
-                "price" : 2,
-                "total_price": 2
-            }
         ],
         */
-        if(validateInfo()) {
+       
+       if(validateInfo()) {
             reqData.eventShopId = productId;
             reqData.country = country;
             reqData.productName = $("#productName").text();
@@ -141,32 +138,38 @@
             // console.log(reqData);
            
             //return;
+            var txt = "";
+            txt += "제품명: " + reqData.productName + "\n";
+            txt += "수량: " + reqData.totalAmount + "\n";
+            txt += "받으실분 성함: " + reqData.receiver + "\n";
+            txt += "받으실분 연락처: " + reqData.phone + "\n";
+            txt += "받으실분 주소: " + reqData.address + "\n\n";
+            txt += "입력하신 정보를 확인해주시고 주문하시려면 확인을 눌러주세요. ";
 
-            $.ajax({
-                method: "POST",
-                url: "/shopping/product/buy",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(reqData)
-            }).done(function (success) {
-                console.log(success)
-                if(success.data.successYn === "Y"){
-                    var msg = "정상적으로 구매가 완료되었습니다.\n\n";
-                        msg += "구매하신 제품명: " + reqData.productName + "\n";
-                        msg += "구매하신 수량: " + reqData.totalAmount + "\n";
-                        msg += "받으실분 성함: " + reqData.receiver + "\n";
-                        msg += "받으실분 연락처: " + reqData.phone + "\n";
-                        msg += "받으실분 주소: " + reqData.address + "\n\n";
-                        msg += "입력하신 정보가 잘못되었다면 1:1문의하기를 이용해주세요.";
-                    alert(msg);
-                    window.location.href = "/myPages/product/list";
-                } else {
-                    alert(success.data.msg);
-                    window.location.reload();
-                }
-            }).fail(function (fail) {
-                console.log(fail);
-            });
+            if(confirm(txt)){
+                _PopupUI.toggleSpiner({isActive: true, target: e.currentTarget});
+                $.ajax({
+                    method: "POST",
+                    url: "/shopping/product/buy",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(reqData)
+                }).done(function (success) {
+                    console.log(success)
+                    if(success.data.successYn === "Y"){
+                        var msg = "정상적으로 구매가 완료되었습니다.";
+                        alert(msg);
+                        window.location.href = "/myPages/product/list";
+                    } else {
+                        alert(success.data.msg);
+                        window.location.reload();
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                }).always(function(){
+                    _PopupUI.toggleSpiner({isActive: false});
+                });            
+            }
         }
 
     }    
@@ -289,7 +292,7 @@
                         </table>
                     </form>
                     <div class="btn_buy_sec">
-                        <button class="btn" id="purchaseItem" onclick="purchaseItem();">구매하기</button>
+                        <button class="btn" id="purchaseItem" onclick="purchaseItem(event);">구매하기</button>
                     </div>
                     <div class="item_detail_area">
                         <img id="imageDetail" src="" alt="상품설명">

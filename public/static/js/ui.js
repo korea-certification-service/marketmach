@@ -445,6 +445,24 @@ var _PopupUI = {
 
         if(fnCallback !== undefined && typeof fnCallback === "function") fnCallback();   
     },
+    toggleSpiner: function(obj) {
+        /**
+         * 켤 때 : _PopupUI.toggleSpiner({isActive: true, target: e.currentTarget});
+         * 끌 때 : _PopupUI.toggleSpiner({isActive: false});
+         */
+        if (obj.target) {
+            obj.target.setAttribute("disabled", "disabled"); 
+        }
+
+        var ajaxSpiner = document.getElementById("ajaxSpiner");
+        if(obj.isActive) {
+            ajaxSpiner.style.display = "block";
+            var lastY = document.querySelector(".ajax_spinner_wrap").offsetTop;
+            window.scrollTo(0, lastY-250); 
+        } else {
+            ajaxSpiner.style.display = "none";
+        }
+    }
 }
 
 var _BtoCUI = {
@@ -493,30 +511,33 @@ var _BtoCUI = {
         var price = parseInt(obj.price);
         var resultPrice = document.querySelector(obj.resultPrice);
         var priceForSend = document.querySelector(obj.priceForSend);
-        // 직접 숫자 입력한 경우
-        itemLength.addEventListener("change", function(e) {
+        function fnCommonCallback() {
+            // console.log(itemLength.value * price);
             resultPrice.innerText = numberWithCommas(itemLength.value * price);
+            priceForSend.value = itemLength.value * price;
+        }
+        // 직접 숫자 입력한 경우
+        itemLength.addEventListener("input", function(e) {
+            fnCommonCallback();
         });
+
         // 버튼 누른 경우
         document.querySelector(".btnPlus").addEventListener("click", function(e) {
-            // console.log(itemLength.value * price);
-            resultPrice.innerText = numberWithCommas(itemLength.value * price);
-            priceForSend.value = itemLength.value * price;
+            fnCommonCallback();
         });
         document.querySelector(".btnMinus").addEventListener("click", function(e) {
-            // console.log(itemLength.value * price);
-            resultPrice.innerText = numberWithCommas(itemLength.value * price);
-            priceForSend.value = itemLength.value * price;
+            fnCommonCallback();
         });
-        
-
     },
     numberUtil: function(obj) {
         var itemLength = document.querySelectorAll(".itemLength");
         var btnMinus = document.querySelectorAll(".btnMinus");
         var btnPlus = document.querySelectorAll(".btnPlus");
         for (var i = 0; i < itemLength.length; i++) {
-            itemLength[i].addEventListener("focusout", function() {
+            itemLength[i].addEventListener("input", function() {
+                if(this.value === "0"){
+                    this.value = "1";
+                }
                 if(!numCheck(this.value)){
                     this.value = "1";
                     alert("주문 수량은 숫자만 가능합니다");
