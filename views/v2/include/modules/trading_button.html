@@ -1,4 +1,5 @@
-<% if(tradeType === "buy") {%>
+<%# include('페이지경로', {pageName: 'etc-buys', category: 'etc', tradeType: 'buy'}) %>
+<% if(pageName === "buys" || pageName === "etc-buys" || pageName === "otc-buys") {%>
     <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
     <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청</button>
     <button class="btn item_view btn_in_view3" id="modify">수정</button>
@@ -9,7 +10,7 @@
     <button class="btn item_view btn_in_view8" id="cancel">거래취소</button>
     <button class="btn item_view btn_in_view9" id="confirm">거래완료</button>
     <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
-<% } else if(tradeType === "sell") {%>
+<% } else if(pageName === "sells" || pageName === "etc-sells") {%>
     <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
     <button class="btn item_view btn_in_view1" id="regVTR">VTR 거래신청</button>
     <button class="btn item_view btn_in_view2" id="buynow">바로구매</button>
@@ -21,9 +22,24 @@
     <button class="btn item_view btn_in_view3" id="modify">수정</button>
     <button class="btn item_view btn_in_view4" id="remove">삭제</button>
     <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
-<% } else if(tradeType === "otc-sell") {%>
-
-<% } else if(tradeType === "otc-buy") {%>
+<% } else if(pageName === "otc-sells") {%>
+    <button class="btn item_view btn_in_view0" id="openVTR">VTR 입장</button>
+    <button class="btn item_view btn_in_view1" id="regVTR">VTR<br class="mob_br">거래신청</button>
+    <button class="btn item_view btn_in_view2" id="buynow">바로구매<br class="mob_br">(COIN)</button>
+    <button class="btn item_view btn_in_view5" id="buyComplete">구매확인</button>
+    <button class="btn item_view btn_in_view7" id="sellComplete">판매완료</button>
+    <button class="btn item_view btn_in_view8" id="cancel">거래취소</button>
+    <button class="btn item_view btn_in_view9" id="confirm">거래완료</button>
+    <button class="btn item_view btn_in_view6" id="showPhone">연락처 표시</button>
+    <button class="btn item_view btn_in_view2" id="pointBuynow">바로구매<br class="mob_br">(POINT)</button>
+    <button class="btn item_view btn_in_view7" id="pointSellComplete">판매완료</button>
+    <button class="btn item_view btn_in_view8" id="pointCancel">거래취소</button>
+    <button class="btn item_view btn_in_view9" id="pointConfirm">거래완료</button>
+    <button class="btn item_view btn_in_view6" id="pointShowPhone">연락처 표시</button>
+    <button class="btn item_view btn_in_view3" id="modify">수정</button>
+    <button class="btn item_view btn_in_view4" id="remove">삭제</button>
+    <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
+<% } else {%>
 
 <% } %>
     
@@ -158,7 +174,7 @@ function removeItem() {
             method: "DELETE",
             url: "/v1/items/" + itemId
         }).done(function (success) {
-            location.href = '/<%= pageName %>?category=<%= category %>&trade_type=<%= pageType %>';
+            location.href = '/<%= pageName %>?category=<%= category %>&trade_type=<%= tradeType %>';
         }).fail(function (fail) {
             console.log(fail);
         });
@@ -305,5 +321,53 @@ function pointShowPhone(itemId) {
     }).fail(function (fail) {
         console.log(fail);
     });
+}
+
+function routeLink() {
+    var prevPath = document.referrer.match(/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}(:[0-9]*)?\/[\w|\w-]*/ig)[0].match(/[\w|\w-]*$/ig)[0];
+
+    if(prevPath != "<%= pageName %>") {
+        location.href = "/<%= pageName %>?category=<%= category %>&trade_type=<%= tradeType %>";
+    } else {
+        history.back();
+    }
+}
+
+// deprecated
+
+function openVTR() {
+    // var popup;
+    // if (isMobile()) {
+    //     popup = window.open('about:blank', "room" + roomToken);
+    // }
+    // let url = "/room?roomToken="+roomToken+"&itemId="+itemId+"&user_id="+userTag+"&vtrTempId=" + vtrTempId;
+    // if(isMobile()) {
+    //     popup.location.href = url;
+    // } else {
+    //     window.open(url, "room" + roomToken, 'toolbar=no,\n' +
+    //         '                                    location=no,\n' +
+    //         '                                    status=no,\n' +
+    //         '                                    menubar=no,\n' +
+    //         '                                    scrollbars=yes,\n' +
+    //         '                                    resizable=yes,\n' +
+    //         '                                    width=550,\n' +
+    //         '                                    height=850');
+    // }
+    var popup;
+    var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+
+    if(isMobile()) {
+        popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+        popup.location.href = '/room?' + body;
+    } else {
+        window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
+            '                                    location=no,\n' +
+            '                                    status=no,\n' +
+            '                                    menubar=no,\n' +
+            '                                    scrollbars=yes,\n' +
+            '                                    resizable=yes,\n' +
+            '                                    width=550,\n' +
+            '                                    height=750');
+    }
 }
 </script>
