@@ -22,6 +22,8 @@ router.get('/ontology', function (req, res, next) {
     } else if(dbconfig.country == "POINT") {
         res.render('v2/common/ontology', {title: 'Bitweb Main'});
         // res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+    } if(dbconfig.country =="ONTOLOGY") {
+        res.render('v2/common/ontology_mobile', {title: 'Bitweb Main'});
     } else {
         res.render('v2/common/ontology', {title: 'Bitweb Main'});
         // res.render('v2_en/login/login', {title: 'Bitweb Main'});
@@ -956,6 +958,10 @@ router.post('/fileuploads',  function (req, res, next) {
         bitwebResponse.data = data;
         res.status(200).send(bitwebResponse.create())
     });
+});
+
+router.get('/v1/ajaxLoginYnCheck', function (req, res, next) {
+    token.checkLoginTokenAjax(req, res, next);
 });
 
 module.exports = router;
