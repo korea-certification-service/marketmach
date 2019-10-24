@@ -56,9 +56,6 @@ function dateDiff(_date1, _date2) {
     return diff;
 }
 
-
-출처: https://webinformation.tistory.com/84 [끄적끄적]
-
 function checkAdult (start_date, to_date) {
     var s_d = new Date(start_date);
     var e_d = new Date(to_date);

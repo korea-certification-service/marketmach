@@ -1015,6 +1015,53 @@ router.post('/ontwallet/deposit', function(req, res, next) {
     });
 });
 
+//ONT wallet 입금 요청 처리(온톨로지 전용)
+router.post('/ontwallet/deposit/onto', function(req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    if(req.session.userId == undefined) {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자 요청";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    let body = req.body;
+    body['country'] = dbconfig.country;
+    req.body['coinType'] = req.body.cryptoCurrencyCode;
+    req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+
+    let url = dbconfig.APIServer + "/v2/coin/ontwallet/deposit/onto";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
+
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+});
+
 //ONT wallet 입금 재요청 처리
 router.post('/ontwallet/retry/deposit', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+
+        $(document).ready(function() {
+            if(bitberry_token != undefined && bitberry_token != "") {
+                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');  
+                $('.m_link_connect').addClass("bgc1").text("Disconnect Bitberry");      
+            }
+
+            $('#deposit').on('click', function(){
+                location.href = '/mypages/wallet/deposit';
+            });
+
+            $('#withdraw').on('click', function(){
+                location.href = '/mypages/wallet/withdraw';
+            });
+
+            getCoin();
+            getTotalEscrow();
+            getCoinHistory('event');
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                //$("#mach").html(numberWithCommas(success.data.total_mach) + "<span>MACH</span>");
+                $("#machTotal").text(success.data.total_mach == undefined ? 0 : success.data.total_mach);
+                $("#btcTotal").text(success.data.total_btc == undefined ? 0 : success.data.total_btc);
+                $("#ethTotal").text(success.data.total_ether == undefined ? 0 : success.data.total_ether);
+                $("#ontTotal").text(success.data.total_ont == undefined ? 0 : success.data.total_ont);
+                $("#ongTotal").text(success.data.total_ong == undefined ? 0 : success.data.total_ong);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getTotalEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/total_escrow/coin"
+            }).done(function (success) {
+                $("#machSellBtc").text(success.data.sell_total_escrow_btc);
+                $("#machBuyBtc").text(success.data.buy_total_escrow_btc);
+                $("#machSellEth").text(success.data.sell_total_escrow_eth);
+                $("#machBuyEth").text(success.data.buy_total_escrow_eth);
+                $("#machSellMach").text(success.data.sell_total_escrow_mach);
+                $("#machBuyMach").text(success.data.buy_total_escrow_mach);
+                $("#machSellOnt").text(success.data.sell_total_escrow_ont);
+                $("#machBuyOnt").text(success.data.buy_total_escrow_ont);
+                $("#machSellOng").text(success.data.sell_total_escrow_ong);
+                $("#machBuyOng").text(success.data.buy_total_escrow_ong);
+                //console.log(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoinHistory(trade_type) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type                
+            }).done(function (success) {
+                var col = '<col class="col5_1"><col class="col5_2"><col class="col5_3"><col class="col5_4"><col class="col5_5">';
+                $('.colgroup_walletinfo').html(col);
+              
+                //console.log(success.data);
+                //console.log(success.data);
+                var coinHistorys = success.data;
+                var resultColumn = "<tr>" + 
+                                "<th>Wallet</th>" + 
+                                "<th>Deposit Statement</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
+                            "</tr>";
+                if(trade_type == "withdraw") {
+                    resultColumn = "<tr>" + 
+                                "<th>Wallet</th>" + 
+                                "<th>Withdrawal Statement</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
+                            "</tr>";
+                }
+                var result = ""
+                if(coinHistorys.length == 0) {
+                    result = "<tr><td colspan='5'>No exist.</td></tr>";
+                }
+
+                for(var i=0;i<coinHistorys.length;i++) {
+                    var extType = coinHistorys[i].extType;
+                    var category = getCoinType(coinHistorys[i].category, coinHistorys[i].memo);
+                    var amount = numberWithCommas((coinHistorys[i].price == undefined ? coinHistorys[i].amount : coinHistorys[i].price));
+                    var currency_code = coinHistorys[i].currencyCode;
+                    // var mach = numberWithCommas(coinHistorys[i].mach);
+                    var status = coinHistorys[i].status;
+                    var regDate = coinHistorys[i].regDate.substr(2);
+
+                    result += '<tr>';
+                        if(extType == "bitberry") {
+                            result += '<td><img src="/static/img/sub/logo_bitberry.png" alt="bitberry"></td>';
+                            result += '<td>'+category.text+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
+                        } else if(extType == "ontwallet") {
+                            result += '<td><img src="/static/img/symbol/symbol_ont_wallet.png" alt="mach wallet"></td>';
+                            result += '<td>'+category.text+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
+                        } else {
+                            result += '<td><img src="/static/img/symbol/symbol_mach_wallet.png" alt="mach wallet"></td>';
+                            result += '<td>'+category.text+'</td>';
+                            result +=   '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>';
+                        }
+                        result +=   '<td>'+status+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys_column').html(resultColumn);
+                $('#wallet_historys').html(result);
+
+                if(trade_type == 'event') {
+                    $('#mach_buy').addClass('on');
+                    $('#mach_sell').removeClass('on');
+                    $('#mach_escrow').removeClass('on');
+                } else {
+                    $('#mach_buy').removeClass('on');
+                    $('#mach_sell').addClass('on');
+                    $('#mach_escrow').removeClass('on');
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getEscrow() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/escrows/" + userId + "/list/coin"
+            }).done(function (success) {
+                var col = '<col class="col4_1"><col class="col4_2"><col class="col4_3"><col class="col4_4">';
+                $('.colgroup_walletinfo').html(col);
+
+                var escrows = success.data.list;
+                var resultColumn = "<tr>" + 
+                                "<th>Trade</th>" + 
+                                "<th>Statement</th>" + 
+                                "<th>Status</th>" + 
+                                "<th>Date</th>" + 
+                            "</tr>";
+                var result = "";
+                if(escrows.length == 0) {
+                    result = "<tr><td colspan='4'>No exist.</td></tr>";
+                }
+
+                for(var i=0;i<escrows.length;i++) {
+                    var amount = numberWithCommas(escrows[i].price == undefined ? escrows[i].point : escrows[i].price);
+                    var currency_code = escrows[i].price == undefined ? "Point" : escrows[i].cryptoCurrencyCode;
+                    var type = getEscrowType(escrows[i].type);
+                    var regDate = escrows[i].regDate.substr(2);
+
+                    result += '<tr>' + 
+                                    '<td>Market MACH<br>Trade</td>' +                                     
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc2">'+amount+'<span>'+currency_code+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+type.text+'</td>' + 
+                                    '<td>'+regDate+'</td>' + 
+                                '</tr>';
+                }
+
+                $('#wallet_historys_column').html(resultColumn);
+                $('#wallet_historys').html(result);
+              
+                $('#mach_sell').removeClass('on');
+                $('#mach_buy').removeClass('on');
+                $('#mach_escrow').addClass('on');
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Wallet <span>information</span></h1>
+                            <!-- <div class="bitberry_switch_box">
+                                <div class="bitberry_switch">
+                                    <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
+                                    <a href="/myPages/wallet/connect">
+                                        <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
+                                        <p>OFF</p>
+                                    </a>
+                                </div>
+                                <em>나의지갑 잔액</em>
+                                <p class="fc3" id="mach">100 <span>MACH</span></p>
+                            </div> -->
+                       
+                            
+                        <div class="bitberry_grey_box">
+                            <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
+                        </div>
+                        <a href="/myPages/wallet/connect" class="btn btn_in_view2 m_link_connect">Connect Bitberry</a>
+                        <h2 class="tit_mypage dot_tit">Deposit & Withdraw Statement<span class="escrow_side_tit">* <img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> : Escrow</span></h2>
+                        <div class="table_wrap table_total_escrow_wrap">
+                            <table class="table_total_escrow">
+                                <colgroup class="colgroup_total_escorw">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Coin</th>
+                                        <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th>
+                                        <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
+                                        <th><img src="/static/img/symbol/symbol_ong.png" alt="ONG" title="ONG"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="first_tr">
+                                        <th>My Wallet<br>Balance</th>
+                                        <td id="machTotal"></td>
+                                        <td id="btcTotal"></td>
+                                        <td id="ethTotal"></td>
+                                        <td id="ontTotal"></td>
+                                        <td id="ongTotal"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Expected<br>Deposit</th>
+                                        <td id="machSellMach"></td>
+                                        <td id="machSellBtc"></td>
+                                        <td id="machSellEth"></td>
+                                        <td id="machSellOnt"></td>
+                                        <td id="machSellOng"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><img src="/static/img/symbol/symbol_escrow_sm.png" alt=""> Withdraw</th>
+                                        <td id="machBuyMach"></td>
+                                        <td id="machBuyBtc"></td>
+                                        <td id="machBuyEth"></td>
+                                        <td id="machBuyOnt"></td>
+                                        <td id="machBuyOng"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn_align_c mb50">
+                            <button class="btn bgc1" id="deposit">Deposit Coin</button>
+                            <button class="btn bgc3" id="withdraw">Withdraw Coin</button>
+                        </div>
+
+                        <ul class="tab_board ul_li3n cf">
+                            <li id="mach_buy" class="on"><a href="javascript:getCoinHistory('event');">Deposit</a></li>
+                            <li id="mach_sell"><a href="javascript:getCoinHistory('withdraw');">Withdrawal</a></li>
+                            <li id="mach_escrow"><a href="javascript:getEscrow();">Escrow</a></li>
+                        </ul>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup class="colgroup_walletinfo">
+                                    <!-- <col class="col5_1">
+                                    <col class="col5_2">
+                                    <col class="col5_3">
+                                    <col class="col5_4">
+                                    <col class="col5_5"> -->
+                                </colgroup>
+                                <thead id="wallet_historys_column">
+                                    <tr>
+                                        <th>Wallet</th>
+                                        <th>Statement</th>
+                                        <th>Desc</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>
