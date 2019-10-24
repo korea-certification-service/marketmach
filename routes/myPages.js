@@ -35,6 +35,19 @@ router.get('/list', token.checkLoginToken, function (req, res, next) {
             arrDepth:[0,0],
             country:req.session.country
         });     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/mypage', {
+            title: 'Bitweb MyPage',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userName: req.session.userName,
+            usePoint:dbconfig.usePoint,
+            authPhone: req.session.authPhone,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[0,0],
+            country:req.session.country
+        });     
     } else {
         res.render('v2_en/myPage/mypage', {
             title: 'Bitweb MyPage',
@@ -71,6 +84,23 @@ router.get('/buy/list', token.checkLoginToken, function (req, res, next) {
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mybuylist', {
+            title: 'Bitweb MyPage',
+            pageIdx: req.query.pageIdx,
+            category: req.query.category,
+            status: req.query.status,
+            item_title: req.query.item_title,
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            usePoint:dbconfig.usePoint,
+            authPhone: req.session.authPhone,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[2,0],
+            country:req.session.country
+        });      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/mybuylist', {
             title: 'Bitweb MyPage',
             pageIdx: req.query.pageIdx,
             category: req.query.category,
@@ -141,6 +171,23 @@ router.get('/sell/list', token.checkLoginToken, function (req, res, next) {
             arrDepth:[1,0],
             country:req.session.country
         });     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/myselllist', {
+            title: 'Bitweb MyPage',
+            pageIdx: req.query.pageIdx,
+            category: req.query.category,
+            status: req.query.status,
+            item_title: req.query.item_title,
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            usePoint:dbconfig.usePoint,
+            authPhone: req.session.authPhone,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[1,0],
+            country:req.session.country
+        });     
     } else {
         res.render('v2_en/myPage/myselllist', {
             title: 'Bitweb MyPage',
@@ -180,6 +227,21 @@ router.get('/cancel/list', token.checkLoginToken, function (req, res, next) {
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycancellist', {
+            title: 'Bitweb MyPage',
+            pageIdx: req.query.pageIdx,
+            category: req.query.category,
+            item_title: req.query.item_title,
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            userTag: req.session.userTag,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[3,0]
+        });     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/mycancellist', {
             title: 'Bitweb MyPage',
             pageIdx: req.query.pageIdx,
             category: req.query.category,
@@ -239,6 +301,19 @@ router.get('/wallet/info', token.checkLoginToken, function (req, res, next) {
             arrDepth:[4,1],
             country:req.session.country
         });     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/walletinfo', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            bitberry_token: req.session.bitberry_token,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[4,1],
+            country:req.session.country
+        });     
     } else {
         res.render('v2_en/myPage/walletinfo', {
             title: 'Bitweb Wallet Info',
@@ -282,6 +357,19 @@ router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
             arrDepth:[4,4],
             country:req.session.country
         });       
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/walletconnect', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            bitberry_token: req.session.bitberry_token,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[4,4],
+            country:req.session.country
+        });       
     } else {
         res.render('v2_en/myPage/walletconnect', {
             title: 'Bitweb Wallet Info',
@@ -300,36 +388,6 @@ router.get('/wallet/connect', token.checkLoginToken, function (req, res, next) {
 
 router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2/myPage/walletdeposit', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.deposit,
-        //         ether_fee: dbconfig.fee.coin.ether.deposit,
-        //         mach_fee: dbconfig.fee.coin.mach.deposit,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,2],
-        //         country:req.session.country
-        //     });
-        // }
         res.render('v2/myPage/walletdeposit', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -350,36 +408,6 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
             country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2_point/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2_point/myPage/walletdeposit', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.deposit,
-        //         ether_fee: dbconfig.fee.coin.ether.deposit,
-        //         mach_fee: dbconfig.fee.coin.mach.deposit,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,2],
-        //         country:req.session.country
-        //     });
-        // }  
         res.render('v2_point/myPage/walletdeposit', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -399,37 +427,28 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
             arrDepth:[4,2],
             country:req.session.country
         });      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/walletdeposit', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            bitberry_token: req.session.bitberry_token,
+            btc_fee: dbconfig.fee.coin.btc.deposit,
+            ether_fee: dbconfig.fee.coin.ether.deposit,
+            mach_fee: dbconfig.fee.coin.mach.deposit,
+            ont_fee: dbconfig.fee.coin.ont.deposit,
+            ong_fee: dbconfig.fee.coin.ong.deposit,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
+            fromAddress: req.session.ontId == undefined ? "" : req.session.ontId.replace('did:ont:',''),
+            toAddress:dbconfig.ontology.address,
+            arrDepth:[4,2],
+            country:req.session.country
+        });      
     } else {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2_en/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2_en/myPage/walletdeposit', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.deposit,
-        //         ether_fee: dbconfig.fee.coin.ether.deposit,
-        //         mach_fee: dbconfig.fee.coin.mach.deposit,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         arrDepth:[4,2],
-        //         country:req.session.country
-        //     });
-        // }
         res.render('v2_en/myPage/walletdeposit', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -455,40 +474,6 @@ router.get('/wallet/deposit', token.checkLoginToken, function (req, res, next) {
 
 router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2/myPage/walletwithdraw', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.withdraw,
-        //         ether_fee: dbconfig.fee.coin.ether.withdraw,
-        //         mach_fee: dbconfig.fee.coin.mach.withdraw,
-        //         ont_fee: dbconfig.fee.coin.ont.withdraw,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         token:dbconfig.APIToken,
-        //         arrDepth:[4,3],
-        //         country:req.session.country
-        //     });
-        // }
         res.render('v2/myPage/walletwithdraw', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -509,41 +494,6 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
             country:req.session.country
         });
     } else if(dbconfig.country == "POINT") {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2_point/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         token:dbconfig.APIToken,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2_point/myPage/walletwithdraw', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.withdraw,
-        //         ether_fee: dbconfig.fee.coin.ether.withdraw,
-        //         mach_fee: dbconfig.fee.coin.mach.withdraw,
-        //         ont_fee: dbconfig.fee.coin.ont.withdraw,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         token:dbconfig.APIToken,
-        //         arrDepth:[4,3],
-        //         country:req.session.country
-        //     });
-        // }       
         res.render('v2_point/myPage/walletwithdraw', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -563,40 +513,27 @@ router.get('/wallet/withdraw', token.checkLoginToken, function (req, res, next) 
             arrDepth:[4,3],
             country:req.session.country
         });
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/walletwithdraw', {
+            title: 'Bitweb Wallet Info',
+            userId: req.session.userId,userTag:req.session.userTag,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            bitberry_token: req.session.bitberry_token,
+            btc_fee: dbconfig.fee.coin.btc.withdraw,
+            ether_fee: dbconfig.fee.coin.ether.withdraw,
+            mach_fee: dbconfig.fee.coin.mach.withdraw,
+            ont_fee: dbconfig.fee.coin.ont.withdraw,
+            ong_fee: dbconfig.fee.coin.ong.withdraw,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            kyc: req.session.kyc,
+            token:dbconfig.APIToken,
+            arrDepth:[4,3],
+            country:req.session.country
+        });
     } else {
-        // if(req.session.bitberry_token == "") {
-        //     res.render('v2_en/myPage/walletconnect', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         arrDepth:[4,4],
-        //         country:req.session.country
-        //     });
-        // } else {
-        //     res.render('v2_en/myPage/walletwithdraw', {
-        //         title: 'Bitweb Wallet Info',
-        //         userId: req.session.userId,userTag:req.session.userTag,
-        //         coinId: req.session.coinId,
-        //         pointId: req.session.pointId,
-        //         authPhone: req.session.authPhone,
-        //         bitberry_token: req.session.bitberry_token,
-        //         btc_fee: dbconfig.fee.coin.btc.withdraw,
-        //         ether_fee: dbconfig.fee.coin.ether.withdraw,
-        //         mach_fee: dbconfig.fee.coin.mach.withdraw,
-        //         ont_fee: dbconfig.fee.coin.ont.withdraw,
-        //         usePoint:dbconfig.usePoint,
-        //         useBlockchain:dbconfig.useBlockchain,
-        //         kyc: req.session.kyc,
-        //         arrDepth:[4,3],
-        //         country:req.session.country
-        //     });
-        // }
         res.render('v2_en/myPage/walletwithdraw', {
             title: 'Bitweb Wallet Info',
             userId: req.session.userId,userTag:req.session.userTag,
@@ -751,87 +688,6 @@ router.get('/point/withdraw', token.checkLoginToken, function (req, res, next) {
     }
 });
 
-
-// router.get('/point/exchange/deposit', sessionChecker.sessionChecker2, function (req, res, next) {
-//     if(dbconfig.country == "KR") {
-//         res.render('v2/myPage/point/exchange_deposit', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,4]
-//         }); 
-//     } else if(dbconfig.country == "POINT") {
-//         res.render('v2_point/myPage/point/exchange_deposit', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,4]
-//         });         
-//     } else {
-//         res.render('v2_en/myPage/point/exchange_deposit', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,4]
-//         }); 
-//     }
-// });
-
-// router.get('/point/exchange/withdraw', sessionChecker.sessionChecker2, function (req, res, next) {
-//     if(dbconfig.country == "KR") {
-//         res.render('v2/myPage/point/exchange_withdraw', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,5]
-//         }); 
-//     } else if(dbconfig.country == "POINT") {
-//         res.render('v2_point/myPage/point/exchange_withdraw', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,5]
-//         });      
-//     } else {
-//         res.render('v2_en/myPage/point/exchange_withdraw', {
-//             title: 'Bitweb Point Exchange',
-//             userId: req.session.userId,userTag:req.session.userTag,
-//             coinId: req.session.coinId,
-//             pointId: req.session.pointId,
-//             fee: dbconfig.fee.exchange.point.deposit,
-//             authPhone: req.session.authPhone,
-//             usePoint:dbconfig.usePoint,
-//             useBlockchain:dbconfig.useBlockchain,
-//             arrDepth:[5,5]
-//         }); 
-//     }
-// });
-
 router.get('/user/checkPassword', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/myPage/mycheckPassword', {
@@ -848,6 +704,19 @@ router.get('/user/checkPassword', token.checkLoginToken, function (req, res, nex
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/mycheckPassword', {
+            title: 'Bitweb user info',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            userTag: req.session.userTag,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,1],
+            country:req.session.country
+        });      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/mycheckPassword', {
             title: 'Bitweb user info',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -892,6 +761,20 @@ router.get('/user/info', token.checkLoginToken, function (req, res, next) {
         });
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/myPage/myinfo', {
+            title: 'Bitweb user info',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            authPhone: req.session.authPhone,
+            userTag: req.session.userTag,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            token:dbconfig.APIToken,
+            arrDepth:[6,1],
+            country:req.session.country
+        });        
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/myinfo', {
             title: 'Bitweb user info',
             userId: req.session.userId,
             coinId: req.session.coinId,
@@ -991,6 +874,19 @@ router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
             arrDepth:[6,3],
             country:req.session.country
         });     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/auth_phone', {
+            title: 'Bitweb user grade',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,3],
+            country:req.session.country
+        });     
     } else {
         res.render('v2_en/myPage/checkKyc', {
             title: 'Bitweb user grade',
@@ -1008,18 +904,33 @@ router.get('/user/authPhone',token.checkLoginToken, function (req, res, next) {
 });
 
 router.get('/user/kyc',token.checkLoginToken, function (req, res, next) {
-    res.render('v2_en/myPage/auth_phone', {
-        title: 'Bitweb user grade',
-        userId: req.session.userId,
-        coinId: req.session.coinId,
-        pointId: req.session.pointId,
-        userTag: req.session.userTag,
-        authPhone: req.session.authPhone,
-        usePoint:dbconfig.usePoint,
-        useBlockchain:dbconfig.useBlockchain,
-        arrDepth:[6,3],
-        country:req.session.country
-    });
+    if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/myPage/auth_phone', {
+            title: 'Bitweb user grade',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,3],
+            country:req.session.country
+        });
+    } else {
+        res.render('v2_en/myPage/auth_phone', {
+            title: 'Bitweb user grade',
+            userId: req.session.userId,
+            coinId: req.session.coinId,
+            pointId: req.session.pointId,
+            userTag: req.session.userTag,
+            authPhone: req.session.authPhone,
+            usePoint:dbconfig.usePoint,
+            useBlockchain:dbconfig.useBlockchain,
+            arrDepth:[6,3],
+            country:req.session.country
+        });
+    }
 });
 
 router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
@@ -1062,34 +973,6 @@ router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
             arrDepth:[6,4],
             country:req.session.country
         });
-    }
-});
-
-router.get('/product/list', token.checkLoginToken, function (req, res, next) {
-    if(dbconfig.country == "KR") {
-        res.render('v2/myPage/product/buyer_list', {
-            title: 'Bitweb Wallet Info',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[7,0],
-            country:req.session.country
-        });
-    } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/myPage/product/buyer_list', {
-            title: 'Bitweb Wallet Info',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            arrDepth:[7,0],
-            country:req.session.country
-        });      
     }
 });
 

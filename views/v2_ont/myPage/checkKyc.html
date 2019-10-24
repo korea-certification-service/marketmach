@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+    $(document).ready(function(){
+        $.ajax({
+            method: "GET",
+            url: "/v1/users/" + userId
+        }).done(function (success) {
+            if(success.data.agreement.kyc == "" || success.data.agreement.kyc == undefined) {
+                $("#authPhone").text('KYC Verification');
+                $("#authPhone").prop('disabled', false);
+            }
+        });
+
+        $("#authPhone").on('click', function() {
+            location.replace('/myPages/user/kyc');
+        });
+    });
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Account<span> Authentication</span></h1>
+                        <hr class="hr_mypage">
+                        <h2 class="tit_mypage dot_tit">KYC Verification</h2>
+                        <div class="coin_certification">
+                            <dl class="cf">
+                                <dd>
+                                    <button class="btn btn_in_view1" id="authPhone" disabled>Completed KYC Verification</button>
+                                </dd>
+                            </dl>
+                        </div>                   
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>                
