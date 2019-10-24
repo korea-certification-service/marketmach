@@ -172,7 +172,7 @@
                 // $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
                 // $("#total_amount").html(numberWithCommas(total_mach) + " MACH");
 
-                total_price = total_ong;
+                total_price = total_ont;
             }).fail(function (fail) {
                 console.log(fail);
             });
@@ -305,7 +305,7 @@
                 } 
 
                 var data = {
-                    "mach": amount,
+                    "mach": parseFloat($('#amount').val()),
                     "cryptoCurrencyCode":coin,
                     "fromAddress": fromAddress,
                     "txHash": res.result
@@ -322,10 +322,11 @@
                     $("#confirmDeposit").attr("disabled", false);
                     //To-do : 모달창으로 결과 띄우기
                     //$('#result').html(JSON.stringify(res));
-                    //location.reload();
+                    location.reload();
                     // _PopupUI.showWithDim(function() {
                     //     // callback
                     // });
+                    // location.replace('/mypages/wallet/deposit');
                 }).fail(function (fail) {
                     console.log(fail);                    
                     alert('There was a problem during the process. \n If the problem persists, please contact administrators.')
