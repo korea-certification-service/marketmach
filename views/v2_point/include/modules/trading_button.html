@@ -1,44 +1,18 @@
 <%# include('페이지경로', {pageName: 'etc-buys', category: 'etc', tradeType: 'buy'}) %>
 <% if(pageName === "buys" || pageName === "etc-buys" || pageName === "otc-buys") {%>
-    <button class="btn item_view btn_in_view0" id="openVTR">Enter VTR</button>
-    <button class="btn item_view btn_in_view1" id="regVTR">VTR Transaction</button>
-    <button class="btn item_view btn_in_view3" id="modify">Edit</button>
-    <button class="btn item_view btn_in_view4" id="remove">Delete</button>
-    <button class="btn item_view btn_in_view5" id="buyComplete">Pay(Escrow)</button>
-    <button class="btn item_view btn_in_view6" id="showPhone">View Contact</button>
-    <button class="btn item_view btn_in_view7" id="sellComplete">Deliver</button>
-    <button class="btn item_view btn_in_view8" id="cancel">Cancel</button>
-    <button class="btn item_view btn_in_view9" id="confirm">Completed</button>
-    <button class="btn item_view btn_in_view10" id="opposition">Disputes</button>
+    <button class="btn item_view btn_in_view3" id="modify">수정</button>
+    <button class="btn item_view btn_in_view4" id="remove">삭제</button>
 <% } else if(pageName === "sells" || pageName === "etc-sells") {%>
-    <button class="btn item_view btn_in_view0" id="openVTR">Enter VTR</button>
-    <button class="btn item_view btn_in_view1" id="regVTR">Transaction VTR</button>
-    <button class="btn item_view btn_in_view2" id="buynow">Buy now</button>
-    <button class="btn item_view btn_in_view3" id="modify">Edit</button>
-    <button class="btn item_view btn_in_view4" id="remove">Delete</button>
-    <button class="btn item_view btn_in_view5" id="buyComplete">Purchase Confirm</button>
-    <button class="btn item_view btn_in_view6" id="showPhone">View Contact</button>
-    <button class="btn item_view btn_in_view7" id="sellComplete">Deliver</button>
-    <button class="btn item_view btn_in_view8" id="cancel">Transaction Cancel</button>
-    <button class="btn item_view btn_in_view9" id="confirm">Completed</button>
-    <button class="btn item_view btn_in_view10" id="opposition">Dispute</button>
+    <button class="btn item_view btn_in_view2" id="pointBuynow">바로구매</button>
+    <button class="btn item_view btn_in_view7" id="pointSellComplete">판매완료</button>
+    <button class="btn item_view btn_in_view8" id="pointCancel">거래취소</button>
+    <button class="btn item_view btn_in_view9" id="pointConfirm">거래완료</button>
+    <button class="btn item_view btn_in_view6" id="pointShowPhone">연락처 표시</button>
+    <button class="btn item_view btn_in_view3" id="modify">수정</button>
+    <button class="btn item_view btn_in_view4" id="remove">삭제</button>
+    <button class="btn item_view btn_in_view10" id="opposition">이의신청</button>
 <% } else if(pageName === "otc-sells") {%>
-    <button class="btn item_view btn_in_view0" id="openVTR">Enter VTR</button>
-    <button class="btn item_view btn_in_view1" id="regVTR">VTR Transaction</button>
-    <button class="btn item_view btn_in_view2" id="buynow">Buy now(COIN)</button>
-    <!-- <button class="btn item_view btn_in_view2_1" id="pointBuynow">Buy now(POINT)</button> -->
-    <button class="btn item_view btn_in_view3" id="modify">Edit</button>
-    <button class="btn item_view btn_in_view4" id="remove">Delete</button>
-    <button class="btn item_view btn_in_view5" id="buyComplete">Pay(Escrow)</button>
-    <button class="btn item_view btn_in_view6" id="showPhone">View Contact</button>
-    <button class="btn item_view btn_in_view6" id="pointShowPhone">View Contact</button>
-    <button class="btn item_view btn_in_view7" id="sellComplete">Deliver</button>
-    <button class="btn item_view btn_in_view7" id="pointSellComplete">Deliver</button>
-    <button class="btn item_view btn_in_view8" id="cancel">Cancel</button>
-    <button class="btn item_view btn_in_view8" id="pointCancel">Cancel</button>
-    <button class="btn item_view btn_in_view9" id="confirm">Completed</button>
-    <button class="btn item_view btn_in_view9" id="pointConfirm">Completed</button>
-    <button class="btn item_view btn_in_view10" id="opposition">Disputes</button>        
+
 <% } else {%>
 
 <% } %>
@@ -131,7 +105,7 @@ $(document).ready(function() {
 }); // end of $(document).ready
 
 function cancelItem() {
-    var confirms = confirm('Do you want to cancel a transaction?');
+    var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
     if(confirms) {
         $.ajax({
             method: "DELETE",
@@ -154,7 +128,7 @@ function cancelItem() {
 }
 
 function confirmItem() {
-    var confirms = confirm('Do you want to complete a transaction?');
+    var confirms = confirm('거래 완료 하시겠습니까?');
     if(confirms) {
         var data = {
             "status": true
@@ -174,11 +148,13 @@ function confirmItem() {
 }
 
 function oppositionItem() {
+    // console.log('준비중');
+    // alert('준비중입니다.');
     location.href = '/supports/opposition/register?itemId=' + itemId;
 }
 
 function removeItem() {
-    var confirms = confirm('Do you want to delete?');
+    var confirms = confirm('정말로 삭제하시겠습니까?');
     if(confirms) {
         $.ajax({
             method: "DELETE",
@@ -192,7 +168,7 @@ function removeItem() {
 }
 
 function buyComplete() {
-    var confirms = confirm('Do you want to Pay(Escrow)?');
+    var confirms = confirm('구매 확인 하시겠습니까?');
     if(confirms) {
         var data = {
             "status": true
@@ -205,7 +181,7 @@ function buyComplete() {
             dataType: "json",
             data: JSON.stringify(data)
         }).done(function (success) {
-            alert('Buyer confirmed purchase. \n Please wait for the seller to complete the sale.');
+            alert('구매자가 구매 확인하였습니다.\r판매자의 판매 완료를 기다려 주세요.');
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
@@ -214,7 +190,7 @@ function buyComplete() {
 }
 
 function sellComplete() {
-    var confirms = confirm('Do you want to complete sales?');
+    var confirms = confirm('판매 완료 하시겠습니까?');
     if(confirms) {
         var data = {
             "status": true
@@ -227,7 +203,7 @@ function sellComplete() {
             dataType: "json",
             data: JSON.stringify(data)
         }).done(function (success) {
-            alert("The seller finished the sale.\n Once the buyer's purchase is finalized, the transaction is complete.");
+            alert('판매자가 판매 완료하였습니다.\r구매자의 거래 완료 버튼을 누르면 거래가 완료됩니다.');
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
@@ -259,7 +235,8 @@ function buynow() {
 }
 
 function pointCancelItem() {
-    var confirms = confirm('Do you want to cancel a transaction?');
+    var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
+    console.log('준비중');
     if(confirms) {
         $.ajax({
             method: "DELETE",
@@ -273,7 +250,7 @@ function pointCancelItem() {
 }
 
 function pointConfirmItem() {
-    var confirms = confirm('Do you want to complete a transaction?');
+    var confirms = confirm('거래 완료 하시겠습니까?');
     if(confirms) {
         var data = {
             "status": true
@@ -293,7 +270,7 @@ function pointConfirmItem() {
 }
 
 function pointSellComplete() {
-    var confirms = confirm('Do you want to complete sales?');
+    var confirms = confirm('판매 완료 하시겠습니까?');
     if(confirms) {
         var data = {
             "status": true
@@ -306,7 +283,7 @@ function pointSellComplete() {
             dataType: "json",
             data: JSON.stringify(data)
         }).done(function (success) {
-            alert("The seller finished the sale.\n Once the buyer's purchase is finalized, the transaction is complete.");
+            alert('판매자가 판매 완료하였습니다.\r구매자의 거래 완료 버튼을 누르면 거래가 완료됩니다.');
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
@@ -570,7 +547,7 @@ function getData() {
                 } else if(_pageName === "buys") {
                     var item_game_server = success.data.game_name + '>' + success.data.game_server;
                     var item_type = getItemType(success.data.type);
-                    var game_character = success.data.game_character;                    
+                    var game_character = success.data.game_character;                 
                 } else { // "otc-sells"
                 }
 

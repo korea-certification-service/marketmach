@@ -571,6 +571,9 @@ function getData() {
                     var item_game_server = success.data.category1 == "" ? '기타' : success.data.category1;
                     var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type, "buy");
                 } else if(_pageName === "buys") {
+                    var item_game_server = success.data.game_name + '>' + success.data.game_server;
+                    var item_type = getItemType(success.data.type);
+                    var game_character = success.data.game_character;    
                 } else { // "otc-sells"
                 }
 
