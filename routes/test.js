@@ -40,13 +40,22 @@ router.get('/4', function (req, res, next) {
     });
 });
 router.get('/5', function (req, res, next) {
-    res.render('v2/login/signupSuccess', {title: 'Bitweb Main'});
+    if(dbconfig.country == "KR") {
+        res.render('v2/login/signupSuccess', {title: 'Bitweb Main'});
+    } else if(dbconfig.country == "EN") {
+        res.render('v2_en/login/signupSuccess', {title: 'Bitweb Main'});
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/login/signupSuccess', {title: 'Bitweb Main'});
+    }
 });
 router.get('/6', function (req, res, next) {
     res.render('v2/login/auth_mail', {title: 'Bitweb Main'});
 });
 router.get('/7', function (req, res, next) {
     res.render('v2/login/certification');
+});
+router.get('/temp', function (req, res, next) {
+    res.render('v2/temp/temp1');
 });
 /** 끝: 회원 가입 페이지 퍼블 수정용 라우팅 **/
 

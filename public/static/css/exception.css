@@ -123,6 +123,11 @@
 .set_margin > .form-control { width: 31%; margin-right: 1%; }
 .w100p-120px { margin-right: 1%; }
 
+/* 버튼이 존재하는 이벤트 상세페이지 */
+.event_exist_btn{text-align: center;}
+.event_exist_btn .eeb_btn_wrap{margin: 50px;}
+.event_exist_btn button{border: none; background: transparent;}
+
 /********** Mobile MarkUp CSS **********/
 @media (max-width: 1199px){
 
