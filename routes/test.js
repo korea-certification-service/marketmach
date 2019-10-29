@@ -55,7 +55,13 @@ router.get('/7', function (req, res, next) {
     res.render('v2/login/certification');
 });
 router.get('/temp', function (req, res, next) {
-    res.render('v2/temp/temp1');
+    res.render('v2/temp/temp1',{
+        coinId: "",
+        userId: "",
+        pointId: "",
+        userTag: "",
+        authPhone: ""
+    });
 });
 /** 끝: 회원 가입 페이지 퍼블 수정용 라우팅 **/
 

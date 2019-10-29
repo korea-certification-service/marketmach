@@ -465,6 +465,76 @@ var _PopupUI = {
     }
 }
 
+/*
+var _ModalUI = {
+    confirm: false,
+    createAndShow : function(obj) {
+        var dom = '';
+        dom += '<div class="dim_all_area">'
+        dom +=     '<article class="modal_smile '+obj.class+'">'
+        dom +=         '<div class="smile_area"></div>'
+        dom +=         '<h1>'+obj.title+'</h1>'
+        dom +=         '<h2>'+obj.subTitle+'</h2>'
+        dom +=         '<p>'+obj.p+'</p>'
+        if(obj.confirm) dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
+        if(obj.cancle)  dom +=         '<button id="btnSmileNo" class="btn_cancle">cancle</button>'
+        dom +=     '</article>'
+        dom += '</div>'
+        document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
+    },
+    clickBtnCallback: function(callback) {
+        document.addEventListener("click", function(e) {
+            if(e.target.id === "btnSmileOk") {
+                _ModalUI.confirm = true;
+                // return true;
+            }
+            if(e.target.id === "btnSmileNo") {
+                _ModalUI.confirm = false;
+                // return false;
+            }
+
+            callback();
+        }); 
+    }
+}
+*/
+
+function _ModalUI(param) {
+    this.btnSmileOk = param.btnSmileOk;
+    this.btnSmileNo = param.btnSmileNo;
+    this.isTrue = false;
+}
+_ModalUI.prototype.createAndShow = function(obj) {
+    var dom = '';
+    dom += '<div class="dim_all_area">'
+    dom +=     '<article class="modal_smile '+obj.class+'">'
+    dom +=         '<div class="smile_area"></div>'
+    dom +=         '<h1>'+obj.title+'</h1>'
+    dom +=         '<h2>'+obj.subTitle+'</h2>'
+    dom +=         '<p>'+obj.p+'</p>'
+    if(obj.confirm) dom +=         '<button id="'+this.btnSmileOk+'" class="btn_confirm">confirm</button>'
+    if(obj.cancle)  dom +=         '<button id="'+this.btnSmileNo+'" class="btn_cancle">cancle</button>'
+    dom +=     '</article>'
+    dom += '</div>'
+    document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
+}
+_ModalUI.prototype.clickBtnCallback = function(callback) {
+    var that = this;
+    document.addEventListener("click", function(e){
+        // console.log(e.target.id,that.btnSmileOk )
+        if(e.target.id === that.btnSmileOk) {
+            // alert(that.btnSmileOk)
+            that.isTrue = true;
+        }
+        if(e.target.id === that.btnSmileNo) {
+            // alert(that.btnSmileNo)
+            that.isTrue = false;
+        }
+
+        callback();
+    })
+}
+
 var _BtoCUI = {
     actSelectBox: function(opt, callback){
         var btn = document.querySelector("#"+opt.btn);
