@@ -240,9 +240,18 @@ function pointCancelItem() {
     if(confirms) {
         $.ajax({
             method: "DELETE",
-            url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+            url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                "roomToken":buyerTag+"|"+sellerTag+"|"+itemId
+            })   
         }).done(function (success) {
-            location.href = '/<%= pageName %>/detail/' + itemId;
+            if(success.data.successYn == "Y") {
+                location.href = '/<%= pageName %>/detail/' + itemId;
+            } else {
+                alert(success.data.msg);
+            }
         }).fail(function (fail) {
             console.log(fail);
         });
@@ -257,7 +266,7 @@ function pointConfirmItem() {
         }
         $.ajax({
             method: "PUT",
-            url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+            url: "/v1/tradePoints/"+itemId+"/trade/confirm",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(data)
@@ -278,7 +287,7 @@ function pointSellComplete() {
         
         $.ajax({
             method: "PUT",
-            url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+            url: "/v1/tradePoints/"+itemId+"/trade/sell",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(data)

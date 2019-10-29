@@ -216,11 +216,11 @@
                                         }
                                     } else if(buyList[i].status ==102) {
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {
-                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="pointSellComplete(\''+pointTradeId+'\');">판매완료</button>';
+                                            result +=   '<button class="btn btn_in_view7" id="sellComplete" onclick="pointSellComplete(\''+itemId+'\');">판매완료</button>';
                                         }
                                     } else if(buyList[i].status ==103){
                                         if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
-                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+pointTradeId+'\');">거래완료</button>';
+                                            result +=   '<button class="btn btn_in_view9" id="tradeComplete" onclick="pointTradeComplete(\''+itemId+'\');">거래완료</button>';
                                         } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) { 
                                             result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                         }
@@ -357,7 +357,7 @@
                 if(confirms) {
                     $.ajax({
                         method: "DELETE",
-                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
                     }).done(function (success) {
                         if(success.data.successYn == "Y") {
                             alert("거래 취소가 완료되었습니다.");
@@ -406,9 +406,14 @@
                 if(confirms) {
                     $.ajax({
                         method: "DELETE",
-                        url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
+                        url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag,
                     }).done(function (success) {
-                        getItemList();
+                        if(success.data.successYn == "Y") {
+                            alert("거래 취소가 완료되었습니다.");
+                            getItemList();
+                        } else {
+                            alert(success.data.msg);
+                        }
                     }).fail(function (fail) {
                         console.log(fail);
                     });
@@ -416,7 +421,7 @@
             });
         }
 
-        function pointSellComplete(tradePointId) {
+        function pointSellComplete(itemId) {
             event.stopPropagation();
             ajaxLoginYnCheck(function() {
                 var confirms = confirm('판매 완료 하시겠습니까?');
@@ -427,7 +432,7 @@
                     
                     $.ajax({
                         method: "PUT",
-                        url: "/v1/tradePoints/"+tradePointId+"/trade/sell",
+                        url: "/v1/tradePoints/"+itemId+"/trade/sell",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         data: JSON.stringify(data)
@@ -441,7 +446,7 @@
             });
         }
 
-        function pointTradeComplete(tradePointId) {
+        function pointTradeComplete(itemId) {
             event.stopPropagation();
             ajaxLoginYnCheck(function() {
                 var confirms = confirm('거래 완료 하시겠습니까?');
@@ -451,7 +456,7 @@
                     }
                     $.ajax({
                         method: "PUT",
-                        url: "/v1/tradePoints/"+tradePointId+"/trade/confirm",
+                        url: "/v1/tradePoints/"+itemId+"/trade/confirm",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         data: JSON.stringify(data)
