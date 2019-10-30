@@ -191,12 +191,21 @@
             <section class="btc_product_sec">
                 <div class="dfb product_detail">
                     <div class="lft_img">
-                        <img id="productImg" src="" alt="">
+                        <ul class="product_tab dfb">
+                            <!-- 개발 붙이고 텍스트 지울것 -->
+                            <li class="on"><button class="tab_btn">시그니처 엠보싱</button></li>
+                            <li><button class="tab_btn">위베베 제로네이처 엠보싱</button></li>
+                        </ul>
+                        <div class="img_sec">
+                            <img id="productImg" src="" alt="">
+                        </div>
                     </div>
                     <div class="rgh_txt">
                         <dl>
                             <dt>
                                 <h1 id="productName"></h1>
+                                <!-- 개발 붙이고 텍스트 지울것 -->
+                                <p id="desc">자연에 생분해되는 순한 물티슈</p>
                             </dt>
                             <dd>
                                 <ul>
@@ -212,7 +221,7 @@
                                         <em class="l_tit">배송구분</em>
                                         <div class="r_col"><span id="deliveryType"></span></div>
                                     </li>
-                                    <li class="cf">
+                                    <!-- <li class="cf">
                                         <em class="l_tit">구매옵션</em>
                                         <div class="r_col buy_opt_wrap">
                                             <ul id="selectedList">
@@ -225,16 +234,26 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </dd>
                         </dl>
-                        <div class="total_calc">
+                        <!-- <div class="total_calc">
                             <em>총 합계금액 </em>
                             <strong class="calc_price" id="resultPrice"></strong>
                             <span class="currencyCode"></span>
                             <input type="hidden" id="currencyType">
                             <input type="hidden" id="priceForSend">
+                        </div> -->
+                        <div class="btm_fix_wrap">
+                            <dl class="my_cash_view dfb">
+                                <dt>나의 포인트 잔액</dt>
+                                <dd>90,000 <span>Point</span></dd>
+                            </dl>
+                            <div class="order_btn_sec dfb">
+                                <button>포인트 충전하기</button>
+                                <button>주문하기</button>
+                            </div>
                         </div>
                     </div>
                 </div>

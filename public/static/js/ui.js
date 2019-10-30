@@ -635,18 +635,20 @@ var _BtoCUI = {
             resultPrice.innerText = numberWithCommas(itemLength.value * price);
             priceForSend.value = itemLength.value * price;
         }
-        // 직접 숫자 입력한 경우
-        itemLength.addEventListener("input", function(e) {
-            fnCommonCallback();
-        });
+        if(itemLength) {
+            // 직접 숫자 입력한 경우
+            itemLength.addEventListener("input", function(e) {
+                fnCommonCallback();
+            });
 
-        // 버튼 누른 경우
-        document.querySelector(".btnPlus").addEventListener("click", function(e) {
-            fnCommonCallback();
-        });
-        document.querySelector(".btnMinus").addEventListener("click", function(e) {
-            fnCommonCallback();
-        });
+            // 버튼 누른 경우
+            document.querySelector(".btnPlus").addEventListener("click", function(e) {
+                fnCommonCallback();
+            });
+            document.querySelector(".btnMinus").addEventListener("click", function(e) {
+                fnCommonCallback();
+            });
+        }
     },
     numberUtil: function(obj) {
         var itemLength = document.querySelectorAll(".itemLength");
