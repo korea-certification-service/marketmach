@@ -464,41 +464,92 @@ var _PopupUI = {
         }
     }
 }
+/**
+********** alert창 ********** 
+var obj = { title: '제목', subTitle: '부제'};
+    obj.p = '본문';
 
-/*
+_ModalUI.init(obj, "alert");
+
+********** confirm창 ********** 
+* class default 값: 'positive'
+var obj1 = {class: 'negative', title: '제목', subTitle: '부제'};
+    obj1.p = '본문';
+
+_ModalUI.init(obj1, "confirm", function() {
+    if(_ModalUI.isConfirm) {
+        alert("확인")
+    } else {
+        alert("취소")
+    }
+});
+ */
 var _ModalUI = {
-    confirm: false,
-    createAndShow : function(obj) {
+    init: function(obj, type, callback){
+        this.createAndShow(obj, type);
+        switch (type) {
+            case "alert":   // 확인버튼만 있는 단순 알림창
+                this.alert();
+                break;
+            case "confirm": // 확인과 취소 버튼이 존재하는 분기창
+                this.confirmCallback(callback);
+                break;
+            default:
+                break;
+        }
+
+    },
+    createAndShow : function(obj, type) {
+        var posY = window.scrollY+50;
         var dom = '';
-        dom += '<div class="dim_all_area">'
-        dom +=     '<article class="modal_smile '+obj.class+'">'
+        var articleClass = (obj.class === undefined) ? "positive" : obj.class;
+        
+        dom += '<div class="dim_smile_area">'
+        if(type === "alert")   dom +=     '<article class="modal_smile effective" style="top: '+posY+'px">'
+        if(type === "confirm") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
         dom +=         '<div class="smile_area"></div>'
         dom +=         '<h1>'+obj.title+'</h1>'
         dom +=         '<h2>'+obj.subTitle+'</h2>'
         dom +=         '<p>'+obj.p+'</p>'
-        if(obj.confirm) dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
-        if(obj.cancle)  dom +=         '<button id="btnSmileNo" class="btn_cancle">cancle</button>'
+        dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
+        if(type === "confirm") dom +=         '<button id="btnSmileNo" class="btn_cancle">cancle</button>'
         dom +=     '</article>'
         dom += '</div>'
+
         document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
     },
-    clickBtnCallback: function(callback) {
+    alert: function(callback) {
+        var that = this;
         document.addEventListener("click", function(e) {
-            if(e.target.id === "btnSmileOk") {
-                _ModalUI.confirm = true;
-                // return true;
+            if(e.target.nodeName === "BUTTON") {
+                if(e.target.id === "btnSmileOk") {
+                    that.closeModal();
+                }
             }
-            if(e.target.id === "btnSmileNo") {
-                _ModalUI.confirm = false;
-                // return false;
-            }
-
-            callback();
         }); 
+    },
+    confirmCallback: function(callback) {
+        var that = this;
+        document.addEventListener("click", function(e) {
+            if(e.target.nodeName === "BUTTON") {
+                if(e.target.id === "btnSmileOk") {
+                    _ModalUI.isConfirm = true;
+                } else if(e.target.id === "btnSmileNo") {
+                    _ModalUI.isConfirm = false;
+                }
+                that.closeModal();
+                callback();
+            }
+        }); 
+    },
+    closeModal: function() {
+        // 돔 삭제
+        var child = document.querySelector(".dim_smile_area");
+        child.parentNode.removeChild(child);
     }
 }
-*/
-
+/*
+var isTrue = false;
 function _ModalUI(param) {
     this.btnSmileOk = param.btnSmileOk;
     this.btnSmileNo = param.btnSmileNo;
@@ -521,19 +572,17 @@ _ModalUI.prototype.createAndShow = function(obj) {
 _ModalUI.prototype.clickBtnCallback = function(callback) {
     var that = this;
     document.addEventListener("click", function(e){
-        // console.log(e.target.id,that.btnSmileOk )
         if(e.target.id === that.btnSmileOk) {
-            // alert(that.btnSmileOk)
-            that.isTrue = true;
+            isTrue = true;
         }
         if(e.target.id === that.btnSmileNo) {
-            // alert(that.btnSmileNo)
-            that.isTrue = false;
+            isTrue = false;
         }
 
         callback();
     })
 }
+*/
 
 var _BtoCUI = {
     actSelectBox: function(opt, callback){
