@@ -75,35 +75,61 @@ router.put('/:pointId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
     let pointId = req.params.pointId;
-    let body = req.body;
-    
-    controllerPoints.updateById(country, pointId, body)
-        .then((result) => {
-            body['userTag'] = req.session.userTag;
-            body['name'] = req.session.userName;
+    let reqData = req.body;
+
+    let url = dbconfig.APIServer + "/v2/point/" + pointId + "/" + reqData.type;
+    let header = {
+        'loginToken': req.cookies.loginToken,
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:reqData,
+        json: true
+    }
+
+    //API 서버로 내부 call요청한다.(deposit)
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+
+            reqData['userTag'] = req.session.userTag;
+            reqData['name'] = req.session.userName;
             //관리자 sms전송 기능 추가
             let url = dbconfig.APIServer + "/v2/sms/notification/point";
-            let header = {
-                'token': dbconfig.APIToken
-            };
             let reqs = {uri: url, 
                 method:'POST',
                 headers: header,
-                body:body,
+                body:reqData,
                 json: true
             }
 
-            //API 서버로 내부 call요청한다.
+            //API 서버로 내부 call요청한다.(sms)
             request(reqs, function (error, response, body) {  
                 console.log(error, response, body);
+                let message = "포인트 입금 요청이 완료 되었습니다.\n 9-18시 사이에 요청한 포인트는 당일 처리가 되며, 18시 이후에 요청한 포인트는 영업일 기준 다음날 처리가 됩니다.";
+                if(body.type == "withdraw") {
+                    message = "포인트 출금 요청이 완료 되었습니다.\n 13시까지 출금 요청한 포인트는 당일 15시에 일괄 처리가 되며, 13시 이후에 요청한 포인트는 영업일 기준 다음날 15시에 일괄 처리가 됩니다.";
+                } 
+                let resData = {
+                    "code":"Success",
+                    "msg": message,
+                    "data": result
+                }
+                
                 if (!error && response.statusCode == 200) {
-                    //let result = body.data;
+                    let result1 = body.data;
                     if(typeof(body) == "string") {
-                        result = JSON.parse(body).data;
-                    }
+                        result1 = JSON.parse(body).data;
+                    }                    
                     
                     bitwebResponse.code = 200;
-                    bitwebResponse.data = result;
+                    bitwebResponse.data = resData;
                     res.status(200).send(bitwebResponse.create())
                 } else {
                     console.error('err=>', error)
@@ -112,12 +138,55 @@ router.put('/:pointId', function (req, res, next) {
                     res.status(200).send(bitwebResponse.create())
                 }
             });
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+    
+    // controllerPoints.updateById(country, pointId, body)
+    //     .then((result) => {
+    //         body['userTag'] = req.session.userTag;
+    //         body['name'] = req.session.userName;
+    //         //관리자 sms전송 기능 추가
+    //         let url = dbconfig.APIServer + "/v2/sms/notification/point";
+    //         let header = {
+    //             'token': dbconfig.APIToken
+    //         };
+    //         let reqs = {uri: url, 
+    //             method:'POST',
+    //             headers: header,
+    //             body:body,
+    //             json: true
+    //         }
+
+    //         //API 서버로 내부 call요청한다.
+    //         request(reqs, function (error, response, body) {  
+    //             console.log(error, response, body);
+    //             if (!error && response.statusCode == 200) {
+    //                 //let result = body.data;
+    //                 if(typeof(body) == "string") {
+    //                     result = JSON.parse(body).data;
+    //                 }
+                    
+    //                 bitwebResponse.code = 200;
+    //                 bitwebResponse.data = result;
+    //                 res.status(200).send(bitwebResponse.create())
+    //             } else {
+    //                 console.error('err=>', error)
+    //                 bitwebResponse.code = 200;
+    //                 bitwebResponse.data = result;
+    //                 res.status(200).send(bitwebResponse.create())
+    //             }
+    //         });
+    //     }).catch((err) => {
+    //     console.error('err=>', err)
+    //     bitwebResponse.code = 500;
+    //     bitwebResponse.message = err;
+    //     res.status(500).send(bitwebResponse.create())
+    // })
 })
 
 router.put('/user/:userId', function (req, res, next) {
