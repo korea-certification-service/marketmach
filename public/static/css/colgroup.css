@@ -166,7 +166,7 @@
 .colgroup_buyerlist .col5_4{width: 95px;}
 .colgroup_buyerlist .col5_5{}
 /*** btoc ***/
-.table_btoc .col2_1{width: 158px;}
+.table_btoc .colgroup_btoc .col2_1{width: 158px;}
 /********** otc **********/
 .table .colgroup_otc-sells .col4_1{}
 .table .colgroup_otc-sells .col4_2{width: 110px;}
@@ -184,7 +184,7 @@
 
 @media (max-width: 767px){
     .table .colgroup_mypage .col3_1{width: 80px;}
-
+    .table_btoc .colgroup_btoc .col2_1{width: 80px;}
 }
 
 @media (max-width: 576px){

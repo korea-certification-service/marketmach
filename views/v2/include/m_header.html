@@ -58,8 +58,12 @@
         }).done(function (success) {
             if (success.data.total_mach != null) {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
+                $("#btocMyBalance").text(numberWithCommas(success.data.total_mach));
+                $("#hdBtocNumBalance").val(success.data.total_mach);              
             } else {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
+                $("#btocMyBalance").text(0);
+                $("#hdBtocNumBalance").val(0);
             }
         }).fail(function (fail) {
             console.log(fail);

@@ -466,7 +466,9 @@
 .support_sec .support_main_info > div{float: left; width: 50%; height: 150px; text-align: center;}
 .support_sec .support_main_info > div h2{margin-top: 30px; font-size: 16px; color: #1e2560; font-weight: bold;}
 .support_sec .support_main_info > div p{margin-bottom: 15px;}
-.support_sec .support_main_info > div .btn{width: 120px;}
+.support_sec .support_main_info > div .btn{width: 120px; padding: 6px;}
+.support_sec .support_main_info > div .btn:nth-of-type(1){background-color: #2c2c2c;}
+.support_sec .support_main_info > div .btn:nth-of-type(2){background-color: #ffffff; color: #2c2c2c; border: 1px solid #ddd;}
 .support_sec .support_main_info .inner_area{text-align: left; display: inline-block;}
 .support_sec .support_main_info .lft_area{}
 .support_sec .support_main_info .rgh_area{}
@@ -631,17 +633,21 @@
 .btc_product_sec .rgh_content .product_list li dd .price{float: left; line-height: 1; font-size: 22px; color: #333333;}
 .btc_product_sec .rgh_content .product_list li dd .price span{margin-left: 5px; font-size: 16px; font-weight: 400;}
 .btc_product_sec .rgh_content .product_list li dd .percent{float: right; line-height: 1; font-size: 24px; color: #ea4335; font-weight: 400;}
-.btc_product_sec .rgh_content .product_list li.soldout{}
-.btc_product_sec .rgh_content .product_list li.soldout *{color: #999 !important; text-decoration: line-through;}
-.btc_product_sec .rgh_content .product_list li.soldout .img_sec{position: relative;}
-.btc_product_sec .rgh_content .product_list li.soldout .img_sec::after{position: absolute; top: 0; background: rgba(105, 105, 105, 0.7) url(/static/img/symbol/ico_soldout.png) center no-repeat; background-size: 167px 108px; width: 100%; height: 100%; display: block; content:''; clear: both;}
+.btc_product_sec .soldout *{color: #999 !important; text-decoration: line-through;}
+.btc_product_sec .soldout .img_sec{position: relative;}
+.btc_product_sec .soldout .img_sec::after{position: absolute; top: 0; background: rgba(105, 105, 105, 0.7) url(/static/img/symbol/ico_soldout.png) center no-repeat; background-size: 167px 108px; width: 100%; height: 100%; display: block; content:''; clear: both;}
+.btc_product_sec button[disabled="disabled"]{background-color: #dddddd !important;}
 /* BtoC 상세 물품 리뉴얼 */
 .btc_product_sec .product_detail{padding-bottom: 30px; margin-bottom: 35px; border-bottom: 1px solid #eee;}
-.btc_product_sec .product_detail .lft_img{padding-right: 25px; max-width: 450px; width: 50%; height: 465px; overflow: hidden;}
+.btc_product_sec .product_detail .lft_img{padding-right: 25px; max-width: 450px; width: 50%; height: 525px; overflow: hidden;}
 .btc_product_sec .product_detail .lft_img .product_tab{margin-bottom: 40px;}
 .btc_product_sec .product_detail .lft_img .product_tab li{width: 50%; height: 60px; box-sizing: border-box; border: solid 1px #dddddd; border-bottom:2px solid #000; background-color: #fafafa;}
 .btc_product_sec .product_detail .lft_img .product_tab li.on{border: 2px solid #000; border-bottom: none; background-color: #ffffff;}
 .btc_product_sec .product_detail .lft_img .product_tab li .tab_btn{width: 100%; height: 100%; border: none; background-color: transparent;}
+.btc_product_sec .product_detail .lft_img .img_sec_wrap{height: 425px;}
+.btc_product_sec .product_detail .lft_img .img_sec{position: relative; height: 100%; text-align: center;}
+.btc_product_sec .product_detail .lft_img .img_sec:before{content: '마감임박'; position: absolute; top: 20px; left: 25px;  padding: 32px 0 0 0; text-align: center; font-size: 13px; font-weight: 600; width: 75px; height: 60px; display: block; clear: both; color: #ffffff; background: url("/static/img/symbol/ani_siren.gif") 0 0 no-repeat; background-size: 75px 60px;}
+.btc_product_sec .product_detail .lft_img .soldout .img_sec::after{background-size: 250px 162px;}
 .btc_product_sec .product_detail .rgh_txt{position: relative; max-width: 555px; width: 50%;}
 .btc_product_sec .product_detail .rgh_txt > dl > dt{margin-bottom: 40px;}
 .btc_product_sec .product_detail .rgh_txt > dl > dt h1{margin: 17px 0 14px 0; line-height: 1; font-size: 22px;}
@@ -662,10 +668,13 @@
 .btc_product_sec .product_detail .rgh_txt .btm_fix_wrap{position: absolute; bottom: 0; width: 100%;}
 .btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .my_cash_view{margin-bottom: 20px; height: 60px; line-height: 60px; text-align: center; border: solid 1px #dddddd; background-color: #fafafa;}
 .btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .my_cash_view dt{width: 40%;}
-.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .my_cash_view dd{width: 60%;}
+.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .my_cash_view dd{width: 60%; font-size: 18px; font-weight: 600;}
+.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .my_cash_view dd span{font-size: 10px;}
 .btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .order_btn_sec{}
-.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .order_btn_sec button{height: 48px;}
-.item_select_area{}
+.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .order_btn_sec > *{padding: 11px 0; border-radius: 22.5px; text-align: center; font-size: 16px;}
+.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .order_btn_sec .btn_bk_line{width: 39%; margin-right: 2%; border: solid 1px #000000; background-color: #ffffff; color: #000000;}
+.btc_product_sec .product_detail .rgh_txt .btm_fix_wrap .order_btn_sec .btn_bk_color{width: 59%; background-color: #000000; color: #ffffff; border: none;}
+.item_select_area#deliveryInfo{display: none;}
 .item_select_area .btoc_data_tit{margin-bottom: 10px; font-size: 16px;}
 .item_select_area .selected_item{margin-bottom: 60px;}
 .item_select_area .selected_item > ul{padding: 15px 10px; border:2px solid #ececec;}
@@ -677,7 +686,7 @@
 .item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 12px; background-color: transparent; font-weight: bold; border: 1px solid #dcdcdc;}
 .item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px; font-size: 16px; text-align: center; border: none; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc;}
 .item_select_area .btn_buy_sec{margin-top: 30px; text-align: right; max-width: 980px;}
-.item_select_area .btn_buy_sec .btn{width: 120px; height: 40px; border-radius: 20px; font-size: 16px; background-color: #000; color: #ffffff; font-weight: bold;}
+.item_select_area .btn_buy_sec .btn{padding: 11px 0; width: 39%; border-radius: 30px; font-size: 16px; background-color: #000; color: #ffffff; font-weight: bold;}
 .item_select_area .tit_delivery{padding-bottom: 18px; margin-bottom: 35px; border-bottom: 2px solid #000; font-size: 20px;}
 .item_select_area .table_btoc {width: 100%; max-width: 800px;}
 .item_select_area .table_btoc th{height: 50px; color: #202020;}
@@ -784,10 +793,12 @@
     .community_sec .community_icon_menu li a h2{margin-left: 0; padding-top: 65px; line-height: 1; text-align: center; font-size: 16px;}
     .community_sec .community_icon_menu li a h2:before{display: none;}
     /* BtoC 리뉴얼 */
-    .btc_product_sec .product_detail{padding-bottom: 10px;}
-    .btc_product_sec .product_detail .lft_img{margin: 0 auto 30px; width: 100%; height: auto;}
-    .btc_product_sec .product_detail .rgh_txt{width: 100%; max-width: 100%; padding-bottom: 70px;}
+    .btc_product_sec .product_detail{margin-bottom: 70px; padding-bottom: 30px;}
+    .btc_product_sec .product_detail .lft_img{margin: 0 auto 30px; padding: 0; width: 100%; height: auto;}
+    .btc_product_sec .product_detail .lft_img .product_tab li .tab_btn{font-size: 12px;}
+    .btc_product_sec .product_detail .rgh_txt{width: 100%; max-width: 100%; padding-bottom: 180px;}
     .btc_product_sec .product_detail .rgh_txt dl{padding: 0;}
+    .item_select_area .table_btoc .w100{width: 30%;}
 }
 @media (max-width: 576px){
     .mypage_sec .mypage_main_info .lft_area{background-position: 14px 50%;}

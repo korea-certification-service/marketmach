@@ -230,6 +230,21 @@ router.get('/user/kyc',token.checkLoginToken, function (req, res, next) {
     }
 });
 
+// btoc?? ????
+router.get('/product/list',token.checkLoginToken, function (req, res, next) {
+    let params = util.initParam(req, dbconfig);
+    params['arrDepth'] = [7,1];
+    if(dbconfig.country == "KR") {
+        res.render('v2/myPage/product/buyer_list', params);
+    } else if(dbconfig.country == "POINT") {
+        res.render('v2_point/myPage/product/buyer_list', params);
+    } else if(dbconfig.country == "ONTOLOGY") {
+  
+    } else {
+
+    }
+});
+
 //사용안함
 router.get('/user/grade', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
