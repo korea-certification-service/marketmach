@@ -193,6 +193,7 @@ function initParam(req, dbconfig) {
         eventId: req.params.eventId,
         oppositionId: req.params.oppositionId,
         personalId: req.params.personalId,
+        productId: req.params.productId,
     }
     return param;
 }

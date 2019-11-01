@@ -534,11 +534,13 @@ var _ModalUI = {
             if(e.target.nodeName === "BUTTON") {
                 if(e.target.id === "btnSmileOk") {
                     _ModalUI.isConfirm = true;
+                    that.closeModal();
+                    callback();
                 } else if(e.target.id === "btnSmileNo") {
                     _ModalUI.isConfirm = false;
+                    that.closeModal();
+                    callback();
                 }
-                that.closeModal();
-                callback();
             }
         }); 
     },
@@ -694,6 +696,28 @@ var _BtoCUI = {
         }
     }    
 }
+
+var _UtilUI ={
+    checkLogin: function(callback) { // 로그인 여부 체크
+        var cookie_data = document.cookie;
+        var loginToken = cookie_data.indexOf("loginToken");
+
+        if(loginToken > -1) {
+            if(callback === undefined || null || "") {
+                return true;
+            } else if(typeof callback == 'function') {
+                callback();
+            }
+        } else {
+            if(callback === undefined || null || "") {
+                return false;
+            } else if(typeof callback == 'function') {
+                callback();
+                location.href = "/login";
+            }
+        }
+    }
+} 
 
 /** deprecated: 방탄소년단 핸드크림 로직 */
 var _SelectUI = {

@@ -8,6 +8,9 @@ var token = require('../utils/token');
 const BitwebResponse = require('../utils/BitwebResponse');
 const util = require('../utils/util');
 
+// 로그인 권한 필요한 경우 = token.checkLoginToken 추가
+// ex) router.get('/경로', token.checkLoginToken, callback)
+
 // btoc shopping
 router.get('/list', function (req, res, next) {
     if(dbconfig.country == "KR") {
@@ -27,7 +30,7 @@ router.get('/view/:productId', function (req, res, next) {
 
 
 /*** API CALL ***/
-// 상품리스트
+// 상품 리스트
 router.post('/product/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/shops/product/list";
@@ -63,7 +66,38 @@ router.post('/product/list', function (req, res, next) {
     });
 });
 
-// 상품 상세/구매 페이지
+// 상품 구매 여부 조회
+router.get('/product/buyYn', function (req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    let productId = req.params.productId;
+    let userTag = req.session.userTag == "" ? undefined : req.session.userTag;
+
+    let url = dbconfig.APIServer + "/v2/shops/product/" + productId + "/buyYn/" + userTag;
+    let header = { 
+        'token': dbconfig.APIToken
+    };
+    
+    request({uri: url, 
+            method:'GET',
+            headers: header}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            bitwebResponse.code = 200;
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.log('error = ' + response.statusCode);
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create());
+        }
+    });
+});
+
+// 상세/구매 페이지의 상품정보 조회
 router.get('/product/detail/:productId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let productId = req.params.productId;
