@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+    <script>
+        var userId = "<%=userId%>";
+        var userName = "<%=userName%>";
+        var coinId = "<%=coinId%>";
+
+        $(document).ready(function() {
+            getCoin();
+            getUesrGameInfo();
+
+            //교환내역 스크립트
+            getExchangeHistory("all");
+            $(".tab_board.ul_li3n.cf").on("click", function(e){
+                $(e.currentTarget).children("li").removeClass('on');
+                console.log($(e.target));
+                $(e.target).parent("li").addClass("on");
+            });
+
+            $('#username').val(userName);
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                total_mach = success.data.total_mach;
+                $("#mach").html(total_mach + " <span>MACH</span>");
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+        function getUesrGameInfo() {
+           $.ajax({
+               method: "GET",
+               url: "/v1/gameCenter/"+userId+"/info"
+           }).done(function (success) {
+               if(success.data != null) {
+                   $("#mcs1_coin").text(success.data.total_mcs1_coin);
+                   console.log(success);
+               }
+           }).fail(function (fail) {
+               console.log(fail);
+           })
+        }
+        
+        //교환내역에 쓰일 함수
+        function getExchangeHistory(category) {
+            if(category == "all") {
+                req = { "category": category }
+            } else if(category == "exchange-mach") {
+                req = { "category": category }
+            } else if(category == "exchange-gamecoin") {
+                req = { "category": category }
+            }
+            console.log(userId);
+            $.ajax({
+               method: "POST",
+               url: "/v1/gameCenter/"+userId+"/exchange/history",
+               data: req
+            }).done(function (success) {
+                var count = success.data.count;
+                var list = success.data.list;
+                var rows = "";
+
+                console.log(list);
+
+                $("#wallet_historys").empty();
+                if(list.length === 0) { //내역이 없을때
+                    $("#wallet_historys").append("<tr><td colspan='4'>No Exist.</td></tr>");
+                } else { //내역이 있을때
+                    list.forEach(function (el) {
+                        if(el.game == "mcs1"){ //몽키코인에 관한 내역일때
+                            appendHistoryRow(el,"MC", "fcor");
+                        }
+                    });
+                }
+           }).fail(function (fail) {
+               console.log(fail);
+           });
+
+            /**
+             * 교환내역을 추가하는 로컬 함수
+             * @param {object} el forEach가 참조중인 요소 
+             * @param {string} currencyType 게임코인종류에 따라 붙을 접미사 대문자
+             * @param {string} color 게임코인 폰트색깔 common.css에 있는 font color에 클래스명을 사용
+            */
+           function appendHistoryRow(el, currencyType, color) { 
+                var from;
+                var to;
+                var tr = '';
+                if(el.category == "exchange-mach") {
+                    from = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                    to = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                } else if(el.category == "exchange-gamecoin" ) {
+                    from = '<em class="fc2">'+el.price+' MACH'+'</em>';
+                    to = '<em class='+color+'>'+el.gamecoin+currencyType+'</em>';
+                }
+                tr = '<tr>'+
+                        '<td>'+from+'</td>'+
+                        '<td>'+to+'</td>'+
+                        '<td>'+el.regDate+'</td>'+
+                    '</tr>';
+                rows = tr;
+                $("#wallet_historys").append(rows);
+           }
+        }
+   </script>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/gameStation_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- gameStation -->
+                    <section class="gameStation_sec mypage_sec">
+                        <h1 class="tit_mypage">Game coin Exchange<span> Exchange History</span></h1>
+                        <div class="mypage_main_info cf">
+                            <div class="lft_area">
+                                <p>
+                                    <span id="username"></span>Member grade<br>
+                                    is <em id="" class="grade_color1">Normal</em>.
+                                </p>
+                                <!-- <a class="btn btn-success" href="/myPages/user/grade">등급별 혜택보기</a> -->
+                            </div>
+                            <div class="rgh_area">
+                                <a href="/myPages/wallet/info">
+                                    <em>My Wallet Balance</em>
+                                    <p id="mach"><span>MACH</span></p>
+                                </a>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/deposit';">Deposit Coin</button>
+                                <button class="btn btn_blln" onclick="location.href='/myPages/wallet/withdraw';">Withdraw Coin</button>
+                            </div>
+                        </div>
+                        <h1 class="tit_mypage">MarketMACH Games</h1>
+                        <dl class="gst_gametable cf">
+                            <dd>
+                                <a href="/gameStation/machAdventure/info">
+                                    <div class="gst_gametemplet">
+                                        <img src="/static/img/symbol/symbol_monkey.png" alt="마하 어드벤처" title="마하 어드벤처">
+                                        <div class="coin_value">
+                                            <em>My Monkey coin</em>
+                                            <div>
+                                                <img src="/static/img/symbol/Img_GameCoin1.png" alt=""> 
+                                                <p>
+                                                    <span id="mcs1_coin">0</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </dd>
+                            <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                            <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                        </dl>
+                        <div class="btn_align_c mb50">
+                            <a href="/gameStation/trade/assets" class="btn bgc1">Game coin &#8594; MACH</a>
+                            <a href="/gameStation/trade/mach" class="btn bgc3">MACH &#8594; Game coin</a>
+                            <!-- <button class="btn bgc1" id="deposit">게임자산 -> MACH</button>
+                            <button class="btn bgc3" id="withdraw">MACH -> 게임자산</button> -->
+                        </div>
+                        <div>
+                            <div class="board_tit cf">
+                                <h1 class="tit_mypage">History<span><span id="category1"></h1>
+                            </div>
+                            <ul class="tab_board ul_li3n cf">
+                                <li id="his_all" class="on"><a href="javascript:getExchangeHistory('all');">All</a></li>
+                                <li id="his_game"><a href="javascript:getExchangeHistory('exchange-mach');">Game coin</a></li>
+                                <li id="his_mach"><a href="javascript:getExchangeHistory('exchange-gamecoin');">MACH</a></li>  
+                            </ul>
+                            <div class="table_wrap table-responsive">
+                                <table class="table_wallet table">
+                                    <colgroup class="colgroup_walletinfo">
+                                        <!-- <col class="col5_1">
+                                        <col class="col5_2">
+                                        <col class="col5_3">
+                                        <col class="col5_4">
+                                        <col class="col5_5"> -->
+                                    </colgroup>
+                                    <thead id="wallet_historys_column">
+                                        <tr>
+                                            <th>Sent Amount</th>
+                                            <th>Received Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="wallet_historys">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>                         
+                        </div> 
+                    </section>
+                    <!--// gameStation -->
+                </div>
+                <!--// sub content -->
+            </div>
+        </div>
+    </div>
+
+    <% include ../include/footer.html %>
+</div>
+</body>

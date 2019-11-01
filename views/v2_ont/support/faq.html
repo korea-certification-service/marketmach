@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        $(document).ready(function() {
+            $('.board_detail').css('display','none');
+            getFaq();
+        });
+
+        function getFaq() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/faq/list",
+            }).done(function (success) {
+                //console.log(success.data);
+                setFaq(success.data.list);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setFaq(data) {
+            var result="";
+            if(data.length == 0) {
+                result = '<li>' + 
+                            '<dl>' + 
+                                '<dt class="cf">' + 
+                                    '<div class="tgtTit b_tit">No exist.</div>' + 
+                                '</dt>' + 
+                            '</dl>' + 
+                        '</li>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var category = data[i].category;
+                var title = data[i].title;
+                var content = data[i].content;
+                var regDate = data[i].regDate.substr(2)
+
+                content = content.replace(/(\n|\r\n)/g, '<br>');
+
+                result+= '<li>' + 
+                            '<dl>' + 
+                                '<dt class="cf">' + 
+                                    '<div class="tgtTit b_num">'+(i+1)+'</div>' + 
+                                    '<div class="tgtTit b_fld">'+category+'</div>' + 
+                                    '<div class="tgtTit b_tit">'+title+'</div>' + 
+                                '</dt>' + 
+                                '<dd class="faqContent">' + content +
+                                '</dd>' + 
+                            '</dl>' + 
+                        '</li>';
+            }
+            $('#faq_list').html(result);
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/supports/notice?pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+
+        function showDetail(id) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/notices/detail/" + id,
+            }).done(function (success) {
+                console.log(success.data);
+
+                $("#regDate").text(success.data.regDate);
+                $("#title").text(success.data.title);
+                $("#content").text(success.data.content);
+                
+                $('.board_detail').css('display','block');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">FAQ</h1>
+                        <div class="slide_board" id="supportFaq">
+                            <ul class="table_ul" id="faq_list">
+                                
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

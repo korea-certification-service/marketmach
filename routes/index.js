@@ -54,101 +54,25 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     console.log('connection IP : ', ip);
 
     if(dbconfig.country == "KR") {
-        res.render('v2/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
+        res.render('v2_point/main/index', util.initParam(req, dbconfig));         
     } else if(dbconfig.country == "ONTOLOGY") {
-        //ontology dapp(임시 경로 - 추후 변경)
-        res.render('v2_ont/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country,
-            callbackUrl: dbconfig.ontology.callbackUrl
-        });         
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
     } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_en/main/index', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/nodev_index', function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/nodev_index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
+        res.render('v2_point/main/nodev_index', util.initParam(req, dbconfig));         
     } else if(dbconfig.country == "ONTOLOGY") {
-        //ontology dapp(임시 경로 - 추후 변경)
-        res.render('v2_ont/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country,
-            callbackUrl: dbconfig.ontology.callbackUrl
-        });         
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
     }else {
-        res.render('v2_en/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_en/main/nodev_index', util.initParam(req, dbconfig));
     }
 });
 
@@ -161,51 +85,13 @@ router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
      console.log('connection IP : ', ip);
 
      if(dbconfig.country == "KR") {
-        res.render('v2/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
+        res.render('v2_point/main/index', util.initParam(req, dbconfig));         
     } else if(dbconfig.country == "ONTOLOGY") {
-        //ontology dapp(임시 경로 - 추후 변경)
-        res.render('v2_ont/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country,
-            callbackUrl: dbconfig.ontology.callbackUrl
-        });         
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
     }else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_en/main/index', util.initParam(req, dbconfig));
     }
 });
 
@@ -611,75 +497,27 @@ router.get("/google2def744eaae3698d.html", function (req, res, next) {
 
 router.get('/room', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });
+        res.render('v2/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });      
+        res.render('v2_point/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));    
     } else {
-        res.render('v2_en/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });
+        res.render('v2_en/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));
     }
 });
 
 router.get('/sms/room', function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });
+        res.render('v2/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });       
+        res.render('v2_point/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));     
     } else {
-        res.render('v2_en/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });
+        res.render('v2_en/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));
     }
 });
 

@@ -2,115 +2,41 @@ var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
+var util = require('../utils/util');
 
 router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/howto/tradevtr', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });
+        res.render('v2/howto/tradevtr', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/howto/tradevtr', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });         
+        res.render('v2_point/howto/tradevtr', util.initParam(req, dbconfig));         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/howto/tradevtr', util.initParam(req, dbconfig));         
     } else {
-        res.render('v2_en/howto/tradevtr', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });
+        res.render('v2_en/howto/tradevtr', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/howto/vtr_chatbot', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });
+        res.render('v2/howto/vtr_chatbot', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/howto/vtr_chatbot', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });         
+        res.render('v2_point/howto/vtr_chatbot', util.initParam(req, dbconfig));         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/howto/vtr_chatbot', util.initParam(req, dbconfig));         
     } else {
-        res.render('v2_en/howto/vtr_chatbot', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });
+        res.render('v2_en/howto/vtr_chatbot', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/happymoney_to_point', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/howto/happymoney_to_point', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });
+        res.render('v2/howto/happymoney_to_point', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/howto/happymoney_to_point', {
-            title: 'Bitweb Main', 
-            userTag:req.session.userTag,
-            userId: req.session.userId, 
-            coinId: req.session.coinId, 
-            authPhone: req.session.authPhone, 
-            pointId: req.session.pointId,
-            useBlockchain:dbconfig.useBlockchain, 
-            usePoint:dbconfig.usePoint,
-            country:req.session.country
-        });         
+        res.render('v2_point/howto/happymoney_to_point', util.initParam(req, dbconfig));         
     }
 });
 
+//사용안함
 router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safty_trade', {
@@ -151,6 +77,7 @@ router.get('/safty_trade', token.checkLoginTokenNoSignIn, function (req, res, ne
     }
 });
 
+//사용안함
 router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/tradebuynow', {
@@ -191,6 +118,7 @@ router.get('/trade/buynow', token.checkLoginTokenNoSignIn, function (req, res, n
     }
 });
 
+//사용안함
 router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachwallet', {
@@ -231,6 +159,7 @@ router.get('/buymach/wallet', token.checkLoginTokenNoSignIn, function (req, res,
     }
 });
 
+//사용안함
 router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachbuy', {
@@ -271,6 +200,7 @@ router.get('/buymach/buy', token.checkLoginTokenNoSignIn, function (req, res, ne
     }
 });
 
+//사용안함
 router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachdeposit', {
@@ -311,6 +241,7 @@ router.get('/buymach/deposit', token.checkLoginTokenNoSignIn, function (req, res
     }
 });
 
+//사용안함
 router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/buymachwithdraw', {
@@ -351,6 +282,7 @@ router.get('/buymach/withdraw', token.checkLoginTokenNoSignIn, function (req, re
     }
 });
 
+//사용안함
 router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safeTradeescrow', {
@@ -391,6 +323,7 @@ router.get('/safeTrade/escrow', token.checkLoginTokenNoSignIn, function (req, re
     }
 });
 
+//사용안함
 router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/safeTradecuation', {
@@ -431,6 +364,7 @@ router.get('/safeTrade/cuation', token.checkLoginTokenNoSignIn, function (req, r
     }
 });
 
+//사용안함
 router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/etccsbot', {
@@ -468,6 +402,7 @@ router.get('/etc/csbot', token.checkLoginTokenNoSignIn, function (req, res, next
     }
 });
 
+//사용안함
 router.get('/etc/fee', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/etcfee', {

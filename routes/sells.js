@@ -3,157 +3,81 @@ var router = express.Router();
 var controllerUsers = require('../controllers/users');
 const dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
+var util = require('../utils/util');
 
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/list', {
-            userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
-            pointId: req.session.pointId,
-            category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
-            , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/sell/list', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/list', {
-            userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
-            pointId: req.session.pointId,
-            category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
-            , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_point/sell/list', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/list', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/list', {
-            userId: req.session.userId, coinId: req.session.coinId,userTag:req.session.userTag,
-            pointId: req.session.pointId,
-            category: req.query.category, game_name: req.query.game_name, game_server: req.query.game_server
-            , trade_type: req.query.trade_type, type: req.query.type, title: req.query.title, status:req.query.status,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_en/sell/list', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/detail/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
-
+        res.render('v2/sell/view', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
-
+        res.render('v2_point/sell/view', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/view', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/view', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        authPhone: req.session.authPhone,
-        useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_en/sell/view', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/buynow/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2/sell/buynow', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_point/sell/buynow', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/buynow', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/buynow', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_en/sell/buynow', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/register', token.checkLoginAndAdultToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2/sell/register', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_point/sell/register', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/register', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/register', {title: 'Bitweb Main', userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        authPhone: req.session.authPhone,
-        useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_en/sell/register', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/modify/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2/sell/modify', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_point/sell/modify', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/modify', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/modify', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        authPhone: req.session.authPhone,
-        useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_en/sell/modify', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/vtr/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
-        res.render('v2/sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2/sell/vtr', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-            userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-            usePoint:dbconfig.usePoint,
-            authPhone: req.session.authPhone,
-            useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_point/sell/vtr', util.initParam(req, dbconfig));
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/sell/vtr', util.initParam(req, dbconfig));
     } else {
-        res.render('v2_en/sell/vtr', {title: 'Bitweb Main', id: id, userId: req.session.userId, coinId: req.session.coinId,
-        userTag: req.session.userTag, country:req.session.country,pointId: req.session.pointId,
-        usePoint:dbconfig.usePoint,
-        authPhone: req.session.authPhone,
-        useBlockchain:dbconfig.useBlockchain});
+        res.render('v2_en/sell/vtr', util.initParam(req, dbconfig));
     }
 });
 

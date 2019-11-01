@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var communityId = "<%= communityId %>";
+        var userTag = "<%= userTag %>";
+        var replyCount = 0;
+        var recommanded = false;
+
+        $(document).ready(function() {
+            getDetail();
+
+            $('#addReply').on('click',function(){
+                ajaxLoginYnCheck(addReply);
+            });
+
+            $('#add_reply').on('click', function() {
+                if(userTag == "") { 
+                    alert("Please login for comment."); // 댓글 작성을 위해 로그인이 필요합니다.
+                    location.href = "/login";
+                }
+            });
+
+            $('.btn_recommendation').on('click', function() {
+                if(userTag == "") {
+                    alert("Please login for recommendation."); // 추천 클릭을 위해 로그인이 필요합니다.
+                    location.href = "/login";
+                } else {
+                    ajaxLoginYnCheck(callRecommand);
+                }
+            })
+
+            $('#modify').on('click', function() {
+                location.replace('/community/modify/' + communityId);
+            })
+
+            $('#delete').on('click', function() {
+                ajaxLoginYnCheck(deleteCommunity);
+            })
+
+
+            // $('#content iframe').attr({"width":"100%", "":""})
+        });
+
+        function getDetail() {
+            $.ajax({
+                method: "GET",
+                url: "/community/detail/" + communityId,
+            }).done(function (success) {
+                console.log(success.data);
+                addClassCommunityLeftMenu(success.data.type);
+                var type = getCommunityType(success.data.type);
+                var title = success.data.title;
+                var reporter = success.data.reporter;
+                var regDate = success.data.regDate.substring(2);
+                var content = "<div>" + replaceDesc(success.data.content == undefined ? "" : success.data.content) + "</div>";                
+                var replys = success.data.reply;
+                replyCount = success.data.replyCount;
+                recommanded = success.data.recommandedUser;
+                var recommandCount = success.data.recommandCount;
+                var image = "";
+                var movieUrl = "";
+                if(success.data.movieUrl != undefined && success.data.movieUrl != "") {                    
+                    if(success.data.movieUrl.indexOf('iframe') == -1) {      
+                        var tmpUrl = success.data.movieUrl.replace("youtu.be","www.youtube.com/embed");      
+                        movieUrl = "<iframe width='100%' height='500px;' src=\'" + tmpUrl + "\' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>";
+                    } else {
+                        movieUrl = "<div class='hasYoutube'>"+success.data.movieUrl+"</div>";
+                    }
+                }
+                for(var i=0;i<success.data.images.length; i++) {
+                    image += "<div style='text-align: center; margin-bottom:10px;'><img style='align: center;' src='" + success.data.images[i].path + "'></div>";
+                }
+
+                $('#title').text(title);
+                $('#writer').text(reporter);   
+                $('#date').text(regDate);    
+                $('#content').html(image + movieUrl + content);   
+                $('#recommandCount').text(recommandCount);
+                if(userTag == reporter) {
+                    $('#modify').show();
+                    $('#delete').show();  
+                }
+                getReply(replys);
+                ToggleRecommandIcon(recommanded);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function getReply(replys) {
+            var strDOM = "";
+            if(replys.length == 0) {
+                $('.reply_list').html("<li>No exist comments.</li>");
+                return;
+            }
+
+            for(var i=0;i<replys.length;i++) {
+                strDOM += '<li>' + 
+                                '<dl class="rep_origin rep_common">' + 
+                                    '<dt>' + 
+                                        '<div class="item_txt">' + 
+                                            '<i class="material-icons">account_circle</i>' + 
+                                            '<span class="rep_name">'+replys[i].reporter+'</span>' + 
+                                            '<span class="rep_date">'+replys[i].regDate+'</span>' + 
+                                        '</div>';
+                if(replys[i].reporter == userTag) {
+                    strDOM +=   '<div class="item_btn" id="item_btn_'+replys[i]._id+'">' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+replys[i]._id+'\')">Modify</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+replys[i]._id+'\')">Delete</button>' + 
+                                '</div>'; 
+                }
+                strDOM +=        '</dt>' +
+                                    '<input type="hidden" id="hid_content'+replys[i]._id+'" value="'+replys[i].content+'">' + 
+                                    '<dd id="modify_area'+replys[i]._id+'">' + 
+                                        replaceDesc(replys[i].content) + 
+                                    '</dd>' + 
+                                '</dl>' + 
+                            '</li>';
+            }
+            $('.reply_list').html(strDOM);
+        }
+
+        function addReply() {
+            if($('#add_reply').val() == "") {
+                alert('내용을 입력하세요.');
+                return;
+            }
+
+            var data = {
+                "communityId": communityId,
+                "content": $('#add_reply').val().replace(/\"/g,"&quot;"),
+                "count": 0,
+                "reporter": userTag,
+                "recommandCount": 0,
+                "nottobeCount": 0
+            }
+
+            console.log(data);
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/community/reply",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#addReply").attr('disabled', true);
+                }
+            }).done(function (success) {
+                console.log(success);
+                //location.href = '/community/board/detail/' + success.data._id;
+                var reply = success.data;
+                var strDOM = "";
+                strDOM += '<li>' + 
+                                '<dl class="rep_origin rep_common">' + 
+                                    '<dt>' + 
+                                        '<div class="item_txt">' + 
+                                            '<i class="material-icons">account_circle</i>' + 
+                                            '<span class="rep_name">'+reply.reporter+'</span>' + 
+                                            '<span class="rep_date">'+reply.regDate+'</span>' + 
+                                        '</div>';
+                strDOM +=   '<div class="item_btn" id="item_btn_'+reply._id+'">' + 
+                                    '<button class="fc3" onclick="modifyReply(\''+reply._id+'\')">Modify</button>' + 
+                                    '<button class="fcrd" onclick="deleteReply(\''+reply._id+'\')">Delete</button>' + 
+                                '</div>'; 
+                strDOM +=        '</dt>' +
+                                    '<input type="hidden" id="hid_content'+reply._id+'" value="'+reply.content+'">' + 
+                                    '<dd id="modify_area'+reply._id+'">' + 
+                                        replaceDesc(reply.content) + 
+                                    '</dd>' + 
+                                '</dl>' + 
+                            '</li>';
+            
+                if(replyCount == 0) {
+                    $('.reply_list').html('');    
+                }
+                $('.reply_list').prepend(strDOM);
+                $('#add_reply').val('');
+                $('#addReply').attr('disabled', false);
+            }).fail(function (fail) {
+                $('#addReply').attr('disabled', false);
+            })
+        }
+
+        function modifyReply(id) {
+            $('#modify_area' +id).html('<textarea id="modify_reply" class="form-control" maxlength="300" style="height: 80px">'+$('#hid_content'+id).val()+'</textarea>');
+            $('#modify_area' +id).append('<div class="item_btn"><button class="fc3" onclick="update(\''+id+'\')">save</button><button class="fcrd" onclick="initContent(\''+id+'\')">cancel</button></div>');
+            $('#item_btn_'+id).hide();
+        }
+
+        function update(id) {
+            ajaxLoginYnCheck(function() {
+                var data = {
+                    "content": $('#modify_reply').val().replace(/\"/g,"&quot;"),
+                }
+
+                console.log(id, data);
+
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/community/reply/" + id,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    beforeSend: function (xhr) {
+                        $(".item_btn button").attr('disabled', true);
+                    }
+                }).done(function (success) {
+                    console.log(success);
+                    initContent(id, success.data.content)
+                    $(".item_btn button").attr('disabled', false);
+                }).fail(function (fail) {
+                    $(".item_btn button").attr('disabled', false);
+                })
+            });
+        }
+
+        function initContent(id,content) {
+            if(content != undefined) {
+                $('#hid_content'+id).val(content);
+            }
+            
+            $('#modify_area' +id).html(replaceDesc($('#hid_content' + id).val()));
+            $('#item_btn_'+id).show();
+        }
+
+        function deleteReply(id) {
+            ajaxLoginYnCheck(function(){
+                var confirmYn = confirm('Do you want to delete this reply?');
+                if(confirmYn) {
+                    console.log(id);
+
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/community/reply/" + id,
+                        beforeSend: function (xhr) {
+                            $(".item_btn button").attr('disabled', true);
+                        }
+                    }).done(function (success) {
+                        console.log(success);
+                        location.href = '/community/board/detail/' + communityId;
+                        $(".item_btn button").attr('disabled', false);
+                    }).fail(function (fail) {
+                        $(".item_btn button").attr('disabled', false);
+                    })
+                }
+            })
+        }
+
+        function callRecommand() {
+            var recommandYn = "N";
+            if(!recommanded) {
+                recommandYn = "Y";
+            }
+            var data = {
+                "reqUser":userTag
+            }
+
+            $.ajax({
+                method: "PUT",
+                url: "/v1/community/detail/" + communityId + "/" + recommandYn,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $(".btn_recommendation").attr('disabled', true);
+                }
+            }).done(function (success) {
+                console.log(success);
+                recommanded = success.data.recommandedUser;
+                var recommandCount = success.data.recommandCount;
+                $('#recommandCount').text(recommandCount);
+                $(".btn_recommendation").attr('disabled', false);
+                ToggleRecommandIcon(recommanded);
+            }).fail(function (fail) {
+                $(".btn_recommendation").attr('disabled', false);
+            })
+        }
+
+        function ToggleRecommandIcon(recommanded) {
+            if(recommanded) {
+                $("#recommandIcon").text("favorite");
+            } else {
+                $("#recommandIcon").text("favorite_border");
+            }
+        }
+
+        function deleteCommunity() {
+            var confirmYn = confirm('Do you want to delete?');
+            if(confirmYn) {
+                $.ajax({
+                    method: "DELETE",
+                    url: "/v1/community/" + communityId,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        $("#delete").attr('disabled', true);
+                        $("#ajaxSpiner").show(); // spinner
+                        var pos = $("#spinnerTarget").offset().top - 100;
+                        $("html, body").animate({
+                            "scrollTop":pos
+                        },0);
+                    }
+                }).done(function (success) {
+                    // console.log(success);
+                    location.href = '/community/board/free';
+
+                }).fail(function (fail) {
+                    $('#delete').attr('disabled', false);
+                })
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/community_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <section class="community_sec">
+                        <div class="community_tit cf">
+                            <h1 class="tit_community">Community</h1>    
+                            <button class="btn btn_nvln item_view" id="delete">Delete</button> 
+                            <button class="btn btn_nvln item_view" id="modify">Modify</button>                
+                        </div>
+                        
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col1_1">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <td id="title" class="post_title"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td_writer_date">
+                                            <span id="writer" class="cmnt_writer"></span>
+                                            <span class="cmnt_bdr"></span>
+                                            <span id="date" class="cmnt_date"></span>
+                                        </td>
+                                    </tr>                                    
+                                    <tr>
+                                        <td>
+                                            <div id="content" class="cmnt_content">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tac">
+                            <button class="btn_recommendation">
+                                <dl>
+                                    <dt><i id="recommandIcon" class="material-icons">favorite_border</i></dt>
+                                    <dd id="recommandCount">0</dd>
+                                </dl>
+                            </button>
+                        </div>
+                            
+                        <div class="tar">
+                            <button class="btn btn_go_list" onclick="history.back();">list</button>
+                        </div>
+                        
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- EN.MarketMACH_Communuty_Banner1 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-8915981150380469"
+                             data-ad-slot="3903868648"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                        
+                        <div class="module_comment">
+                            <!-- 댓글 입력란 -->
+                            <div class="reply_write">
+                                <div class="item_txt">
+                                    <textarea name="" id="add_reply" class="form-control" maxlength="300" style="height: 80px"></textarea>
+                                </div>
+                                <div class="item_btn">
+                                    <button class="btn btn_nv" id="addReply">Add</button>
+                                </div>
+                            </div>
+
+                            <!-- 댓글 리스트 -->
+                            <div class="reply_list">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>            
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>
+</html>

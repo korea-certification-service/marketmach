@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">회원정보관리 <span>회원정보수정</span></h1>
+                        <hr class="hr_mypage">
+                        <h2 class="tit_mypage">본인확인</h2>
+                        <div class="coin_certification">
+                            <dl class="cf">
+                                <dt class="fc2">비밀번호</dt>
+                                <dd>
+                                    <input type="text" class="form-control">
+                                </dd>
+                            </dl>
+                        </div> 
+                        <ul class="highligh_list fcrd">
+                            <li>※ 회원정보를 안전하게 보호하기 위해 비밀번호 입력 후 회원정보 수정하실 수 있습니다.</li>
+                        </ul>                 
+                        <div class="btn_align_c">
+                            <a class="btn btn_in_view1" href="">회원정보 수정</a>
+                        </div>                   
+                    </section>
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">회원정보관리 <span>회원정보수정</span></h1>
+                        <hr class="hr_mypage">
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th class="fc2">이름</th>
+                                        <td><em>김마하</em></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">아이디</th>
+                                        <td><em>aaaasssss</em></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">비밀번호</th>
+                                        <td><input type="text" class="form-control" placeholder="새로운 비밀번호 입력 *6~20자의 영문+숫자 or 특수문자 사용"></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">비밀번호 확인</th>
+                                        <td><input type="text" class="form-control" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">연락처(휴대폰)</th>
+                                        <td>
+                                            <em class="w100p-120px">010-1234-5678</em>
+                                            <br class="mob_br">
+                                            <button class="btn btn-default">연락처 변경</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">이메일</th>
+                                        <td>
+                                            <div class="w100p-120px">
+                                                <input type="text" class="form-control" placeholder="example@mymach.asia">
+                                            </div>
+                                            <br class="mob_br">
+                                            <button class="btn btn-default">중복확인</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1">변경하기</button>
+                        </div>
+
+                        <div class="deactivate_member">
+                            <hr class="hr_mypage">
+                            <h3 class="fc2">회원탈퇴 </h3>
+                            <div class="tar">
+                                <button class="btn btn-default">회원탈퇴</button>
+                            </div>
+                            <ul class="highligh_list fcrd">
+                                <li>※ 회원탈퇴 시 마켓마하의 회원정보 / 거래내역 / VTR기록이 삭제되고 모든 혜택이 소멸합니다.</li>
+                                <li>※ 회원탈퇴 후 재가입시 기존 회원정보는 복구되지 않습니다.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">회원정보관리 <span>회원등급 정보</span></h1>
+                        <hr class="hr_mypage">
+
+                        <div class="prepare_service">
+                            서비스 준비 중입니다.
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>                

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">Disputes <span>List</span>
+                            <div class="tar">
+                                <a href="/supports/opposition/register" class="btn btn-success">Register</a>
+                            </div>
+                        </h1>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_dispute">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>Title</th>
+                                        <th>Staus</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="opposition_list">
+                                    <tr>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                
+                                            </div>
+                                        </td>
+                                        <!-- 클래스명 A인경우 : ico_a -->
+                                        <td class="ico_q">Q</td>
+                                        <td></td>
+                                    </tr>        
+                                </tbody>
+                            </table>
+                        </div> 
+                        <div class="paging_wrap">
+                            <!-- <button class="arw_prev">&lt;</button>
+                            <ol class="cf">
+                                <li><a class="on" href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                            </ol>
+                            <button class="arw_next">&gt;</button> -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var userTag = "<%=userTag%>";
+
+        $(document).ready(function() {
+            loadOppositeList();
+        });
+
+        function loadOppositeList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/opposition/list/" + userTag
+            }).done(function (success) {
+                // console.log(success.data);
+                var oppositeList = success.data.list;
+                var result = "";
+                if(oppositeList.length > 0) {
+                    for(var i=0; i<oppositeList.length; i++) {
+                        result += '<tr onclick="location.href=\'/supports/opposition/detail/'+oppositeList[i]._id+'\';">' +
+                                        '<td class="tal">' +
+                                            '<div class="ellipse">' +
+                                                oppositeList[i].title + 
+                                            '</div>' +
+                                        '</td>' +
+                                        '<td class="ico_q">'+(oppositeList[i].reply == undefined ? 'Q' : 'A')+'</td>' +
+                                        '<td>'+oppositeList[i].regDate.substring(2, 10)+'</td>' +
+                                    '</tr>';
+                    }
+                } else {
+                    result += '<tr>'
+                            + '<td colspan="3">No exist.</td>'
+                            + '<tr>';
+                }
+                $('#opposition_list').html(result);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/supports/opposition/list?pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+    </script>
+        
+    <% include ../../include/footer.html %>
+</div>
+</body>

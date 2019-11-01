@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <section class="board_sec c_style_sell">
+                <div class="board_tit cf">
+                    <h1>Sell Game Items<span>Buy now</span></h1>
+                </div>
+
+                <!-- 상품정보 : 이미지 업로드 UI 포함 -->
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_sell_buynow">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    <span class="dot_tit">Listing Details</span>
+                                    <span class="posting_date"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>     
+                            <tr>
+                                <th>Transaction No.</th>
+                                <td><span class="item_id"></span></td>
+                            </tr>                      
+                            <tr>
+                                <th>Game>Server</th>
+                                <td><span class="item_game_server"></span><span class="item_type"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td>
+                                    <div class="ellipse item_title">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><span class="item_status"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Character's Name</th>
+                                <td><span class="item_character"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td><p class="txt_price"><span></span></p></td>
+                            </tr>
+                            <tr class="mrg_cell trForDel">
+                                <td colspan="2">
+                                    <div id="fullImg"></div>
+                                </td>
+                            </tr>
+                            <tr class="trForDel">
+                                <th>Images</th>
+                                <td>
+                                    <div class="product_img_list">
+                                        <div class="imgs_wrap">
+                                            <!--
+                                            <div class="thumbnail_box">
+                                                <div class="img_view_area">
+                                                    <img src="/static/img/main/main_visual02.jpg">
+                                                </div>
+                                                <a href="javascript:void(0);" onclick="deleteImageAction('img_id_0')" id="img_id_0"></a>
+                                            </div>
+                                            -->
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>
+                                    <span class="item_desc">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--// 상품정보 : 이미지 업로드 UI 포함 -->
+
+                <!-- 내 정보 입력 -->
+                <div class="table_wrap table-responsive preparation_dim">
+                    <!-- 서비스준비중입니다 : 부모클래스 preparation_dim 필요 -->
+                    <table class="table_view table">
+                        <colgroup class="colgroup_sell_buynow">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><span class="dot_tit">My Contacts</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>Phone</th>
+                                <td><span class="item_phone"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Character's Name(Buyer)</th>
+                                <td><input type="text" class="form-control" id="buyer_game_character" placeholder="Please enter your game character's name to trade the item."></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--// 내 정보 입력 -->
+                <ul class="highligh_list fcrd">
+                    <li>※ The information you enter will be passed on to the buyer after escrow payment.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
+                </ul>              
+
+                <!-- 결제정보 -->
+                <div class="table_wrap">
+                    <table class="table_payment_info table">
+                        <colgroup class="colgroup_etc-sell_buynow">
+                            <col class="col50p">
+                            <col class="col50p">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><span class="dot_tit">Billing information</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>My Wallet Balance</th>
+                                <td><span class="item_user_price"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td><span class="item_price"></span></td>
+                            </tr>
+                            <tr>
+                                <th>My Wallet Estimated Balance after Payment</th>
+                                <td><span class="user_price_balance"></span></td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                </div>
+                <!--// 결제정보 -->
+                <ul class="highligh_list fcrd">
+                    <li>※ You can not pay if your wallet balance is less than the transaction price.</li>
+                    <li>※ [You can deposit Coin from [Deposit Coin] or [My Page - My Wallet].</li>
+                </ul>   
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="buynow">Make a Payment</button>
+                </div>  
+            </section>
+            <!--// view page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+
+        // 이미지 정보들을 담을 배열
+        var sel_files = [];
+        var userId = "<%= userId %>";
+        var userTag = "<%= userTag %>";
+        var country = "<%= country %>";
+        var itemId = "<%= id %>";
+        var from_userTag;
+        var mach;
+        var point;
+        var cryptoCurrencyCode = "MACH";
+    
+        $(document).ready(function() {
+            //$("#input_imgs").on("change", handleImgFileSelect);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $("#buynow").on('click', function() {
+                if($('#buyer_game_character').val() == "") {
+                    alert("Please enter your game character's name to trade the item.");
+                    return;
+                }
+
+                ajaxLoginYnCheck(buynow);
+            });
+
+            $("#pointBuynow").on('click', function() {
+                if($('#buyer_game_character').val() == "") {
+                    alert("Please enter your game character's name to trade the item.");
+                    return;
+                }
+
+                ajaxLoginYnCheck(pointBuynow);
+            });
+
+            getData();
+        });
+
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/service/" + itemId
+            }).done(function (success) {
+                //console.log(success);
+                
+                itemId = success.data._id;
+                var regDate = success.data.regDate;
+                var item_game_server = success.data.game_name + ' > ' + success.data.game_server;
+                var title = success.data.title;
+                mach = success.data.price;
+                point = success.data.point;
+                var total_point = success.data.total_point;
+                var price = numberWithCommas(mach);
+                var item_user_price = numberWithCommas(total_mach);
+                var item_user_price_point = numberWithCommas(total_point);
+                var point_txt = numberWithCommas(success.data.point);
+                var status = getStatus(success.data.status);
+                var item_type = getItemType(success.data.type);
+                var trade_type = replaceType(success.data.trade_type);
+                var desc = replaceDesc(success.data.desc);
+                var game_character = success.data.game_character;
+                var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                var item_phone = success.data.phone;
+                from_userTag = success.data.userTag;
+                cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                var item_user_price = numberWithCommas(success.data.total_coins.total_mach);
+                var total_mach = success.data.total_coins.total_mach;
+                if(cryptoCurrencyCode == "BTC") {
+                    var coin_price = success.data.total_coins.total_btc == undefined ? 0 : success.data.total_coins.total_btc;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ETH") {
+                    var coin_price = success.data.total_coins.total_ether == undefined ? 0 : success.data.total_coins.total_ether;
+                    item_user_price = numberWithCommas(success.data.total_coins.total_ether);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ONT") {
+                    var coin_price = success.data.total_coins.total_ont == undefined ? 0 : success.data.total_coins.total_ont;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                } else if(cryptoCurrencyCode == "ONG") {
+                    var coin_price = success.data.total_coins.total_ong == undefined ? 0 : success.data.total_coins.total_ong;
+                    item_user_price = numberWithCommas(coin_price);
+                    total_mach = coin_price;
+                }
+
+                
+                if(success.data.images.length === 0) {
+                    $(".trForDel").remove();
+                }
+
+                for(var i=0;i<success.data.images.length; i++) {
+                    var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                                html += '<div class="img_view_area">';
+                                html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                                html += '</div>';
+                                html += '</div>';
+                                                    
+                    $(".imgs_wrap").append(html);
+                }
+                
+                $(".view_emphasis").text(item_type.text);
+                $(".posting_date").text("Date : " + regDate);
+                $(".item_title").text(title);
+                $(".item_game_server").text(item_game_server);
+                $(".item_type").addClass(item_type.className);
+                $(".item_id").text(itemId);
+                if("<%=useBlockchain%>" == 'Y') {
+                    $(".txt_price").html(price + "<span>"+cryptoCurrencyCode+"</span>");
+                }
+                if("<%=usePoint%>" == 'Y') { 
+                    $(".txt_point").html(point + "<span>Point</span>");
+                }
+                $(".item_desc").html(desc);
+                $("#fullImg").html(img1th);
+                $(".item_phone").text(item_phone);
+                $(".item_user_price").html(item_user_price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".item_price").html("<em class='em_calc_ico minus'>-</em>" + price + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".user_price_balance").html(numberWithCommas(parseFloat((total_mach - mach).toFixed(8))) + "<span class='fzsm'>"+cryptoCurrencyCode+"</span>");
+                $(".item_user_price_point").html(item_user_price_point + "<span class='fzsm'>Point</span>");
+                $(".item_price_point").html("<em class='em_calc_ico minus'>-</em>" + point_txt + "<span class='fzsm'>Point</span>");
+                $(".user_price_balance_point").html(numberWithCommas(total_point - point) + "<span class='fzsm'>Point</span>");
+                $(".item_status").addClass(status.className).text(status.text);
+                $(".item_character").text(game_character);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function buynow() {
+            var confirmYn = confirm("Are you start trading?");
+            if(confirmYn) {
+                var params = {
+                    "itemId": itemId,
+                    "from_userId": from_userTag,
+                    "to_userId": userTag,
+                    "cryptoCurrencyCode": cryptoCurrencyCode,
+                    "price": mach,
+                    "target_game_character": $("#buyer_game_character").val()
+                };
+                console.log(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/vtrs/buynow",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(params),
+                }).done(function (success) {
+                    if(success.data.code == undefined) {
+                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
+                        location.href = "/sells/detail/"+itemId
+                    } else {
+                        alert(success.data.msg);
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                })
+            }
+        }
+
+        function pointBuynow() {
+            var confirmYn = confirm("Are you start trading?");
+            if(confirmYn) {
+                var params = {
+                    "itemId": itemId,
+                    "from_userId": from_userTag,
+                    "to_userId": userTag,
+                    "point": point
+                };
+                //console.log(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/tradePoints/buynow",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(params),
+                }).done(function (success) {
+                    if(success.data.code == undefined) {
+                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
+                        location.href = "/sells/detail/"+itemId
+                    } else {
+                        alert(success.data.msg);
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                })
+            }
+        }
+    </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

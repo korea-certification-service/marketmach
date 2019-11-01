@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <section class="board_sec c_style_buy">
+                <div class="board_tit cf">
+                    <h1>Register to Buy Assets</span></h1>
+                </div>
+
+                <!-- 거래정보 -->
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_etc-buy_register">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2">Listing Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <th>Category</th>
+                                <td>
+                                    <div id="virture_h" class="virture_h">
+                                        <select class="selectpicker" id="game-name" data-live-search="true">
+                                        </select>
+                                        <!-- <select class="selectpicker" id="game-server" data-live-search="true">
+                                        </select> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Delivery Type</th>
+                                <td>
+                                    <div class="form-inline radio_wrap">
+                                        <div class="form-group">
+                                            <input type="radio" name="item_type" id="direct" value="direct" checked><label for="direct">Direct Deal</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Courier Transaction</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td><input type="text" class="form-control" id="title" placeholder="Enter a title." maxlength="50"></td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                            <option value="BTC">BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="ONT">ONT</option>
+                                            <option value="ONG">ONG</option>
+                                            <option value="MACH" selected>MACH</option>
+                                        </select>
+                                        <input type="text" class="form-control w60p" id="price" min="0" placeholder="Please enter a transaction price." onkeypress="return checkDecimal(event)">
+                                    </div>
+                                    <p class="fcrd"><!-- ※ 1MACH = 1$ --></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>
+                                    <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>              
+                <!--// 거래정보 -->
+
+                <ul class="fcrd mb50">
+                    <li>※ The information you enter will be passed on to your trading partner after escrow payment.</li>
+                    <li>※ You are responsible for the problems due to misrepresentation of information you enter.</li>
+                    <li>※ If it is written in a form that does not fit the post, it may be moved and deleted by the administrator.</li>
+                </ul>
+
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="btnSubmit">save</button>
+                </div>
+            </section>
+            <!--// view page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+
+        // 이미지 정보들을 담을 배열
+        var sel_files = [];
+    
+        $(document).ready(function() {
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $("#btnSubmit").on('click', function(){
+                ajaxLoginYnCheck(submit);
+            });
+
+            // $("#game-name").on('change', function() {
+            //     selectServer();
+            // })
+
+            loadGameList();
+        });
+
+        function loadGameList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].category1_en + '">' + success.data[i].category1_en + '</option>'
+                }
+
+                $("#game-name").append(strDOM);
+
+                $("#game-name").selectpicker('refresh');
+                selectServer();
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function selectServer() {
+            var gameName;
+            if ($("#game-name option").val() != null) {
+                $("#game-server option").remove();
+            }
+            gameName = $("#game-name option:selected").val();
+
+            if (gameName == "") {
+                renderServerSelect({"category2":[]});
+                return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories/" + gameName
+            }).done(function (success) {
+                renderServerSelect(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function renderServerSelect(data) {
+            var strDOM = '<option value="">Choice</option>';
+
+            for (var i = 0; i < data.category2.length; i++) {
+                strDOM += '<option value="' + data.category2[i] + '">' + data.category2[i] + '</option>'
+            }
+            $("#game-server").append(strDOM);
+            $("#game-server").selectpicker('refresh');
+        }
+
+        function fileUploadAction() {
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+        }
+
+        function submit() {
+            var country = "<%= country %>";
+            if ($("#game-name option:selected").val() == "") {
+                alert('Please select a category.');
+                return false;
+            } else if ($("[name=item_type]:checked").val() == "") {
+                alert('Please select a delivery type.');
+                return false;
+            } else if ($("#title").val() == "") {
+                alert('Please enter a title.');
+                return false;
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
+                alert('Please enter a price.');
+                return false;
+            } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                // alert('거래 가격(Point)을 입력하세요.');
+                // return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                alert('Please enter only numbers in a price.');
+                return false;
+            } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
+                // alert('거래 가격(Point)을 숫자로 입력하세요.');
+                // return false;
+            } else if ($("#desc").val() == "") {
+                alert('Please enter a description.');
+                return false;
+            } else if (country == "CN" && $("#region1").val() == "") {
+                // alert('지역 1 입력');
+                // return false;
+            } 
+            
+            var data = {
+                "userTag": "<%= userTag %>",
+                "delivery_type": $("[name=item_type]:checked").val(),
+                "trade_type": "buy",
+                "category": "etc",
+                "category1": $("#game-name option:selected").val(),
+                //"category2": $("#game-server option:selected").val(),
+                "category2": "기타",
+                "name": "",
+                "title": $("#title").val(),
+                "desc": $("#desc").val(),
+                "count": 1,
+                "status": 0,
+                // "item_tag": $("#keywords").val(),
+                "clicked": 0
+            };
+            if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
+                data["price"] = $("#price").val();
+            } else {
+                data["cryptoCurrencyCode"] = "MACH";
+                data["price"] = 0;
+            }
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                data["currency"]="POINT";
+                data["point"]=0;
+            }
+
+            if(country=="CN"){
+                data["china_region1"]=$("#region1").val();
+                //data["china_region2"]=$("#region2").val();
+            }
+
+            console.log(data);
+            // console.log($("#ex_filename")[0].files[0]);
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/items",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                location.href = '/etc-buys?category=etc&trade_type=buy';
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+            })
+        }
+    </script>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

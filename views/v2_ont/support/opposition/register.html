@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>  
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">Disputes <span>Post</span></h1>                    
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th class="fc2">Transaction</th>
+                                        <td>
+                                            <select class="selectpicker" id="opposition_item_name" data-live-search="true">
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">Transaction No.</th>
+                                        <td id="itemId"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">Subject</th>
+                                        <td id="itemTitle"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">Title</th>
+                                        <td><input type="text" id="title" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">Content</th>
+                                        <td>
+                                            <textarea name="" id="content" class="form-control" style="height: 200px"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr class="mrg_cell trForDel">
+                                        <td colspan="2">
+                                            <div class="input_wrap">
+                                                <span>It takes a long time to upload a high-quality image.</span>
+        
+                                                <input type="file" class="input_imgs" id="input_imgs0" index="0" accept="image/*"/>
+                                                <input type="file" class="input_imgs" id="input_imgs1" index="1" accept="image/*"/>
+                                                <input type="file" class="input_imgs" id="input_imgs2" index="2" accept="image/*"/>
+                                                <input type="file" class="input_imgs" id="input_imgs3" index="3" accept="image/*"/>
+                                                <input type="file" class="input_imgs" id="input_imgs4" index="4" accept="image/*"/>
+                                            </div>
+                                            <div id="fullImg"></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="trForDel">
+                                        <th class="fc2">Image</th>
+                                        <td>
+                                            <div class="product_img_list">
+                                                <div class="imgs_wrap">
+                                                    <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                    </ul>
+                                                    <ul class="thumbnail_btn_list cf">
+                                                        <li><label for="input_imgs0" class="label_input_imgs">Browse</label></li>
+                                                        <li><label for="input_imgs1" class="label_input_imgs">Browse</label></li>
+                                                        <li><label for="input_imgs2" class="label_input_imgs">Browse</label></li>
+                                                        <li><label for="input_imgs3" class="label_input_imgs">Browse</label></li>
+                                                        <li><label for="input_imgs4" class="label_input_imgs">Browse</label></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="addOpposition">Save</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var userTag = "<%=userTag%>";
+        var itemId = "<%=itemId%>";
+        var sel_files = []; // 이미지 정보들을 담을 배열
+        var items;
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            loadItemList();
+
+            $('#opposition_item_name').on('change', function() {
+                for (var i = 0; i < items.length; ++i) {
+                    if(items[i]._id == $('#opposition_item_name').val()) {
+                        $('#itemId').text(items[i]._id);
+                        $('#itemTitle').text(items[i].title);
+                    }
+                }
+            });
+
+            $('#addOpposition').on('click', function() {
+                ajaxLoginYnCheck(addOpposition);
+            });
+        });
+
+        function loadItemList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/vtrs/user/" + userTag
+            }).done(function (success) {
+                //console.log(success.data);
+                items = success.data; 
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < items.length; i++) {
+                    strDOM += '<option value="' + items[i]._id + '">' + items[i].title + ' - ' + items[i]._id + '</option>'
+                }
+
+                $("#opposition_item_name").append(strDOM);
+                $("#opposition_item_name").selectpicker('refresh');
+                if(itemId != "") {
+                    $("#opposition_item_name").val(itemId).attr("selected", "selected");
+                    $("#opposition_item_name").selectpicker('refresh');
+                    $('#opposition_item_name').trigger('change');
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function addOpposition() {
+            var title = $('#title').val();
+            var content = $('#content').val();
+            
+            if ($("#opposition_item_name option:selected").val() == "") {
+                alert('Please select a transaction.');
+                return;
+            }
+
+            if(title == "") {
+                alert('Please enter a title.');
+                return;
+            }
+
+            if(content == "") {
+                alert('Please enter a content.');
+                return;
+            }
+
+            var data = {
+                "itemId": $('#itemId').text(),
+                "title": $('#title').val(),
+                "content": $('#content').val(),
+                "reporter": userTag
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/opposition",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);                    
+                }
+            }).done(function (success) {
+                console.log(success);
+                if(sel_files.length == 0) {
+                    location.href = '/supports/opposition/list';
+                } else {
+                    submitAction(success.data._id);
+                }
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner                
+            })
+        }
+
+        function submitAction(id) {
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
+            var images = new FormData();
+    
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image";
+                if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/opposition/"+id+"/images",
+                processData: false,
+                contentType: false,
+                data: images
+            }).done(function (success) {
+                //console.log(success);
+                $("#ajaxSpiner").hide(); // spinner
+                location.href = '/supports/opposition/list';
+            }).fail(function (fail) {
+                console.log('실패',fail);
+                $("#ajaxSpiner").hide(); // spinner
+            })
+        }
+    </script>
+    <%- include('../../include/modules/img_upload.html', {pageName: 'register'}) %>    
+    <% include ../../include/footer.html %>
+</div>
+</body>
