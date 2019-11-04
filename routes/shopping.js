@@ -67,7 +67,7 @@ router.post('/product/list', function (req, res, next) {
 });
 
 // 상품 구매 여부 조회
-router.get('/product/buyYn', function (req, res, next) {
+router.get('/product/buyYn/:productId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let productId = req.params.productId;
     let userTag = req.session.userTag == "" ? undefined : req.session.userTag;
