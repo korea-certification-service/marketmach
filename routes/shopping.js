@@ -12,7 +12,7 @@ const util = require('../utils/util');
 // ex) router.get('/경로', token.checkLoginToken, callback)
 
 // btoc shopping
-router.get('/list', function (req, res, next) {
+router.get('/list', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/shopping/btoc_list', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
@@ -20,7 +20,7 @@ router.get('/list', function (req, res, next) {
     }
 });
 
-router.get('/view/:productId', function (req, res, next) {
+router.get('/view/:productId', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/shopping/btoc_view', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {

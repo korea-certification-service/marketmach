@@ -97,6 +97,7 @@ function checkLoginTokenNoSignIn(req, res, next) {
     } else {
         console.error('login token error => No exist.');
         // logger.addLog(country, req.originalUrl, value, "No exist.");
+        req.session.originalUrl = req.originalUrl;
         next();
     }
 }
