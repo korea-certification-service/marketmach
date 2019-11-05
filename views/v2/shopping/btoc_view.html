@@ -8,11 +8,15 @@
     var userTag = "<%= userTag %>"; 
     var reqData = {};
     var buyYn = "";
+    var productType = "";
 
     $(document).ready(function() {
         // resetSearchFilter(".btc_product_sec");
         // $(".itemLength").val("1");
-        
+
+        // 새로고침시 로딩 아이콘이 보이게 스크롤 이동
+        window.scrollTo(0, (document.querySelector("#nowLoading h1").offsetTop - 100)); 
+
         if(!_UtilUI.checkLogin()) {
             $("#btocMyBalance").text("로그인이 필요합니다.");
             $("#crcEN").hide();
@@ -20,8 +24,7 @@
             $("#crcEN").show();
         }
 
-        getBuyYn();
-        getProductDetail();
+        getProductDetail(); // 상품 상세 정보 가져오기
 
         $("#orderItem").on("click", orderAction);
         $("#purchaseItem").on("click", purchaseItem);
@@ -29,34 +32,34 @@
 
     function orderAction() {
         // 로그인 했을 경우
-        if(_UtilUI.checkLogin()) {
-            /* 수량 체크 -> 선착순 마감되었습니다. */
-            // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
-            // => 버튼이 안눌리게 변경
-            
-            /* 이전 참여여부 -> "". */
+        if(_UtilUI.checkLogin()) {           
+            /* 구매가능 여부 */
             if(buyYn === "Y") {
-                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
-                // 우주대특가 주문내역으로 이동
-                if(confirm("이벤트에 이미 참여하셨습니다. 주문내역 확인하시겠습니까?")){
-                    window.location.href = "/myPages/product/list";
-                }
-            } else if(buyYn){
-                /* [판매가+배송비]와 포인트 잔액 비교 -> "포인트가 부족합니다. 포인트 입금하러 가기" */
-                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
-                // 포인트 입금으로 이동
+                // 2번째 로직으로 이전
                 var prdPrice = $("#hdProductPrice").val(); // 상품가격
                 var dlvPrice = $("#hdDeliveryPrice").val(); // 배송비
                 var addPrice = parseInt(prdPrice) + parseInt(dlvPrice); // 총합가격
                 var myBalance = parseInt($("#hdBtocNumBalance").val()); // 보유 금액
 
+                /* [판매가+배송비]와 포인트 잔액 비교 -> "포인트가 부족합니다. 포인트 입금하러 가기" */
+                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
+                // 포인트 입금으로 이동
                 if(myBalance < addPrice) {
                     if(confirm("금액이 부족합니다. 입금하러 가시겠습니까?")){
                         window.location.href = "/mypages/wallet/deposit";
                     }
+                }else {
+                    $("#deliveryInfo").show();
+                    $("#receiver").focus();
+                }
+            } else if(buyYn){
+                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
+                // 우주대특가 주문내역으로 이동
+                if(confirm("이벤트에 이미 참여하셨습니다. 주문내역 확인하시겠습니까?")){
+                    window.location.href = "/myPages/product/list";
                 }
             } else {
-                $("#deliveryInfo").show();
+
             }
 
         } else {
@@ -79,13 +82,52 @@
     function getBuyYn() {
         $.ajax({
             method: "GET",
-            url: "/shopping/product/buyYn",
+            url: "/shopping/product/buyYn/" + productType,
         }).done(function (success) {
-            console.log("getBuyYn", success.data.buyYn);
+            // console.log("getBuyYn", success.data.buyYn);
             buyYn = success.data.buyYn;
+
+            makeBtocTabList(); // 이벤트 중 상품으로 탭 만들기
         }).fail(function (fail) {
             console.log(fail);
         });
+    }
+
+    function makeBtocTabList() {
+        var reqData = {
+            // "param":{"country":"POINT"},
+            "option": {"pageIdx":0, "perPage":20 }
+        };
+        $.ajax({
+            method: "POST",
+            url: "/shopping/product/list",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(reqData),
+        }).done(function (success) {
+            var res = success.data.list;
+            var dom='';
+            // console.log(res);
+            res.forEach(function(v, i){                
+                if(!v.eventEnd && i < 2) {
+                    var arrUrl = document.location.href.split('/');
+                    var prdId = arrUrl[5];
+                    if(v._id === prdId) {
+                        // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
+                        dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                    } else {
+                        dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                    }
+                }
+            });
+            dom+='';
+            $("#productTab").append(dom);
+        }).always(function() {
+            // 딤처리 없애기
+            setTimeout(function(){
+                $("#nowLoading").hide();
+            }, 600)
+        })
     }
 
     function getProductDetail() {
@@ -101,6 +143,15 @@
             var deliveryType = "";
             var eventEnd = res.eventEnd;
 
+            // console.log(res)
+
+            if(res.detailUrl){
+                $("#moreInfo a").attr("href", res.detailUrl);
+            } else {
+                $("#moreInfo").hide();
+            }
+
+            productType = res.productType;
             $("#hdProductPrice").val(res.price); // set 상품가격
             $("#hdDeliveryPrice").val(res.deliveryPrice); // set 배송비
             $("#hdProductAmount").val(res.leftAmount); // set 재고량
@@ -125,9 +176,8 @@
                 default:
                     break;
             }
-            // console.log(res);
 
-            $("#productImg").attr("src", res.thumnail)
+            $("#productImg").attr("src", res.thumnail);
             $("#productName").text(res.productName);
             $("#productDesc").text(res.productDesc);
             $("#originalPrice").text(numberWithCommas(res.originalPrice));
@@ -135,24 +185,21 @@
             $("#price").text(numberWithCommas(res.price));
             $("#deliveryType").text(deliveryType);
             $(".currencyCode").text(currency);
-            $("#currencyType").val(currency);
+            $("#hdCurrencyType").val(currency);
             $("#crcEN").text(currency);
             $("#crcKR").text(transCurrency);
-            $("#imageDetail").attr("src", res.imageDetail[0]);
-            if(res.options.length > 1) {
-                res.options.forEach(function(v, i) {
-                    // var li = '<li><span class="productName">'+v.name+'</span> <span class="priceMach">'+ v.price+currency+'</span></li>';
-                    // $("#sltList").append(li);
-                    
-                });
-            }
+            if(res.imageDetail) $("#imageDetail").attr("src", res.imageDetail[0]);
 
+            getBuyYn();
+
+            /* 구매수량 지정가능하던 기존 로직
             var optCalcAndView = {price: res.price, itemLength: ".itemLength", resultPrice: "#resultPrice", priceForSend:"#priceForSend"};
             $(optCalcAndView.resultPrice).text(numberWithCommas(res.price));
 
             _BtoCUI.numberUtil({maxLen: res.leftAmount}); // 구매 가능 갯수 넣기
             _BtoCUI.calcAndView(optCalcAndView); 
             $("#priceForSend").val(res.price);
+            */
         });        
     }
 
@@ -166,6 +213,8 @@
             alert("수령인 성함을 입력하세요.");
         } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
             alert("수령인 연락처를 입력하세요.");
+        } else if (isNaN($("#phoneNum1").val()) || isNaN($("#phoneNum2").val()) || isNaN($("#phoneNum3").val())) {
+            alert("연락처는 숫자로 입력하세요.");
         } else if ($("#zipNo").val() === "" ) {
             alert("제품을 받으실 주소를 입력하세요."); 
         } else {
@@ -178,11 +227,15 @@
     // API call
     function purchaseItem(e) {    
        if(validateInfo()) {
+            var prdPrice = $("#hdProductPrice").val(); // 상품가격
+            var dlvPrice = $("#hdDeliveryPrice").val(); // 배송비
+            var addPrice = parseInt(prdPrice) + parseInt(dlvPrice); // 총합가격
+
             reqData.userTag = userTag;
             reqData.eventShopId = productId;
             reqData.country = country;
             reqData.productName = $("#productName").text();
-            reqData.currencyType = $("#currencyType").val().toUpperCase();
+            reqData.currencyType = $("#hdCurrencyType").val().toUpperCase();
             reqData.selectedOptions = [];
             reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
             reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
@@ -190,7 +243,8 @@
             // reqData.totalAmount = parseInt($(".itemLength").val());
             // reqData.totalPrice = parseInt($("#priceForSend").val());
             reqData.totalAmount = 1;
-            reqData.totalPrice = 1;
+            reqData.totalPrice =  addPrice;
+
             // console.log(reqData);
            
             //return;
@@ -266,10 +320,10 @@
             <section class="btc_product_sec">
                 <div class="dfb product_detail">
                     <div class="lft_img">
-                        <ul class="product_tab dfb">
+                        <ul id="productTab" class="product_tab dfb">
                             <!-- 개발 붙이고 텍스트 지울것 -->
-                            <li class="on"><button class="tab_btn">시그니처 엠보싱</button></li>
-                            <li><button class="tab_btn">위베베 제로네이처 엠보싱</button></li>
+                            <!-- <li class="on"><a href="" class="tab_btn">시그니처 엠보싱</a></li>
+                            <li><a href="" class="tab_btn">위베베 제로네이처 엠보싱</a></li> -->
                         </ul>
                         <div class="img_sec_wrap">
                             <div class="img_sec">
@@ -296,6 +350,7 @@
                                             <!--<span class="txt_percentage" id="percentage"></span>-->
                                             <input type="hidden" id="hdProductPrice">
                                             <input type="hidden" id="hdProductAmount">
+                                            <input type="hidden" id="hdCurrencyType">
                                         </div>
                                     </li>
                                     <li class="cf">
@@ -303,6 +358,12 @@
                                         <div class="r_col">
                                             <span id="deliveryType"></span>
                                             <input type="hidden" id="hdDeliveryPrice">
+                                        </div>
+                                    </li>
+                                    <li class="cf" id="moreInfo">
+                                        <em class="l_tit">상품정보</em>
+                                        <div class="r_col">
+                                            <a href="" target="_blank">더보기</a>
                                         </div>
                                     </li>
                                     <!-- <li class="cf">
@@ -401,6 +462,20 @@
                     <div class="btn_buy_sec">
                         <button class="btn" id="purchaseItem">구매하기</button>
                     </div>
+                    <dl class="order_noti">
+                        <dt>유의사항</dt>
+                        <dd>
+                            <ul>
+                                <li>·ID당 1회 참여 가능합니다.</li>
+                                <li>·정가 대비 100% 우주대특가 상품으로, 주문 취소 및 환불이 불가합니다. </li>
+                                <li>·주문하신 상품은 주문하신 다음 날(영업일 기준) 일괄 발송됩니다. </li>
+                                <li>·잘못된 회원정보 및 배송지 정보로 미수령한 경우 재발송되지 않습니다.</li>
+                                <li>·한정된 수량으로 이벤트가 조기에 마감될 수 있습니다.</li>
+                                <li>·부정한 방법으로 이벤트 참여시 당첨 대상에서 제외될 수 있습니다. </li>
+                                <li>·이벤트 운영상황에 따라 일부 내용이 변경될 수 있습니다</li>
+                            </ul>
+                        </dd>
+                    </dl>
                     <div class="item_detail_area">
                         <img id="imageDetail" src="" alt="상품설명">
                     </div>
@@ -410,7 +485,13 @@
         </div>
     </div>
     <!--// content_wrap -->
-
+    <!-- 로딩 화면 -->
+    <article id="nowLoading" class="now_loading">
+        <div class="lds-circle">
+            <div></div>
+            <h1>Now Loading</h1>
+        </div>
+    </article>
     <% include ../include/footer.html %>
 </div>
 </body>        
