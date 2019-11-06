@@ -57,10 +57,11 @@
             method: "GET",
             url: "/v1/coins/" + coinId
         }).done(function (success) {
-            if (success.data.total_mach != null) {
-                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
+            if (success.data.total_ont != null) {
+                var total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;
+                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(total_ont) + "<span>MACH</span></a>");
             } else {
-                $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
+                $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>ONT</span></a>");
             }
         }).fail(function (fail) {
             console.log(fail);
@@ -303,7 +304,7 @@
                                     </li>
                                     <li class="mdl_area">                                        
                                         <em>My Wallet Balance</em>
-                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
+                                        <p class="fc2 total_mach">0 <span>ONT</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Deposit</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Withdraw</button>
                                     </li>
