@@ -12,7 +12,8 @@
 
             $('#authPhone').on('click',function(){
                 if (!$("input:checkbox[id=cbk1]").is(":checked") || !$("input:checkbox[id=cbk2]").is(":checked") || !$("input:checkbox[id=cbk3]").is(":checked")) {
-                    alert('Please check Agree to Terms & Conditions of Use.');
+                    var obj = { subTitle: 'Please check Agree to Terms & Conditions of Use.'};
+                    _ModalUI.init(obj, "alert"); 
                     return;
                 }
 

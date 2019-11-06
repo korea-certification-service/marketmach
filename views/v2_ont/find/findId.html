@@ -33,7 +33,8 @@
 
             $("#sendAuthNo").on('click', function() {
                 if($(this).text() == "Resend" ) {
-                    alert("The authentication code has been resent.");
+                    var obj = { subTitle: "The authentication code has been resent."};
+                    _ModalUI.init(obj, "alert");  
                 }
                 sendAuthNo();
             });
@@ -89,10 +90,12 @@
 
         function sendAuthNo() {
             if($("#currencyType").val() == "") {
-                alert("Please select the country.");
+                var obj = { subTitle: "Please select the country."};
+                _ModalUI.init(obj, "alert");  
                 return;
             } else if($("#phone").val() == "") {
-                alert("Please input the phone number.");
+                var obj = { subTitle: "Please input the phone number."};
+                _ModalUI.init(obj, "alert");  
                 return;
             }
             
@@ -121,7 +124,8 @@
 
         function checkAuthNo() {
             if($("#authNo").val() == "") {
-                alert("Please input the authentication code.");
+                var obj = { subTitle: "Please input the authentication code."};
+                _ModalUI.init(obj, "alert");  
                 return;
             } 
 
@@ -140,7 +144,8 @@
             }).done(function (success) {
                 console.log(success);
                 if(success.data.successYn == "fail") {
-                    alert("The authentication code is invalid. Please check it.");
+                    var obj = { subTitle: 'The authentication code is invalid. Please check it.'};
+                    _ModalUI.init(obj, "alert");  
                     return;
                 } else {
                     location.href = '/findResult?type=findId';
@@ -160,7 +165,8 @@
             // }
 
             if(email == "") {
-                alert("Please input the e-mail.");
+                var obj = { subTitle: 'Please input the e-mail.'};
+                _ModalUI.init(obj, "alert");  
                 return;
             }
 
@@ -170,7 +176,8 @@
             }).done(function (success) {
                 console.log(success);
                 //location.href = "/existUser?id=" + success.data._id;
-                alert('You have successfully sent mail.\nPlease check and sign in.');
+                var obj = { subTitle: 'You have successfully sent mail.\nPlease check and sign in.'};
+                _ModalUI.init(obj, "alert");  
                 location.href="/login";
             }).fail(function (fail) {
                 if (fail.status == 403) {

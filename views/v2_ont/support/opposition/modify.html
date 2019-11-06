@@ -157,17 +157,20 @@
             var content = $('#content').val();
             
             if ($("#opposition_item_name option:selected").val() == "") {
-                alert('Please select transaction.');
+                var obj = { subTitle: 'Please select transaction.'};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
             if(title == "") {
-                alert('Please enter a title.');
+                var obj = { subTitle: 'Please enter a title.'};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
             if(content == "") {
-                alert('Please enter a content.');
+                var obj = { subTitle: 'Please enter a content.'};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 

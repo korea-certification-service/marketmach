@@ -134,7 +134,8 @@
 
             var ontClipboard = new ClipboardJS('#btnOntCopy');
             ontClipboard.on('success', function(e) {
-                alert("It is successfully to copy address.");
+                var obj = { subTitle:"It is successfully to copy address."};
+                _ModalUI.init(obj, "alert");
                 e.clearSelection();
             });
         });
@@ -278,7 +279,9 @@
             var amount = parseFloat($('#amount').val());
             
             if(amount == "" || amount <= 0) {
-                alert("Please enter Coin amount.");
+                //alert("Please enter Coin amount.");
+                var obj = { subTitle: 'Please enter Coin amount.'};
+                _ModalUI.init(obj, "alert");
                 $("#confirmDeposit").attr("disabled", false);
                 return;
             }
@@ -296,48 +299,50 @@
                 gasLimit: 20000
             }
             
-            try {
-                const res = await client.api.asset.transfer(params); 
-                $('#result').html(JSON.stringify(res));              
-                if(res.desc == "ERROR") {
-                    $("#confirmDeposit").attr("disabled", false);
-                    return;
-                } 
+            var obj1 = { subTitle: 'Do you want to deposit?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {
+                    try {
+                        const res = await client.api.asset.transfer(params); 
+                        $('#result').html(JSON.stringify(res));              
+                        if(res.desc == "ERROR") {
+                            $("#confirmDeposit").attr("disabled", false);
+                            return;
+                        } 
 
-                var data = {
-                    "mach": parseFloat($('#amount').val()),
-                    "cryptoCurrencyCode":coin,
-                    "fromAddress": fromAddress,
-                    "txHash": res.result
-                };
+                        var data = {
+                            "mach": parseFloat($('#amount').val()),
+                            "cryptoCurrencyCode":coin,
+                            "fromAddress": fromAddress,
+                            "txHash": res.result
+                        };
 
-                $.ajax({
-                    method: "POST",
-                    url: "/v1/coins/ontwallet/deposit/onto",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    console.log(success.data);
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/coins/ontwallet/deposit/onto",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(data)
+                        }).done(function (success) {
+                            console.log(success.data);
+                            $("#confirmDeposit").attr("disabled", false);
+                            location.reload();
+                        }).fail(function (fail) {
+                            console.log(fail);      
+                            var obj = { subTitle: 'There was a problem during the process. <br> If the problem persists, please contact administrators.'};
+                            _ModalUI.init(obj, "alert");              
+                            $("#confirmDeposit").attr("disabled", false);
+                        });
+                    } catch(err) {
+                        console.log(err);
+                        //To-do : 모달창으로 에러 메시지 띄우기
+                        $('#result').html(JSON.stringify(err));
+                        return;
+                    }
+                } else {
                     $("#confirmDeposit").attr("disabled", false);
-                    //To-do : 모달창으로 결과 띄우기
-                    //$('#result').html(JSON.stringify(res));
-                    location.reload();
-                    // _PopupUI.showWithDim(function() {
-                    //     // callback
-                    // });
-                    // location.replace('/mypages/wallet/deposit');
-                }).fail(function (fail) {
-                    console.log(fail);                    
-                    alert('There was a problem during the process. \n If the problem persists, please contact administrators.')
-                    $("#confirmDeposit").attr("disabled", false);
-                });
-            } catch(err) {
-                console.log(err);
-                //To-do : 모달창으로 에러 메시지 띄우기
-                $('#result').html(JSON.stringify(err));
-                return;
-            }
+                }
+            });
         }
 
         function resultDeposit() {
@@ -346,7 +351,8 @@
             var $dim = $(".dim_all_area");
             */
             if(walletId == undefined) {
-                alert('It is in progress. Please wait a moment.');
+                var obj = { subTitle:"It is in progress. Please wait a moment."};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
@@ -364,7 +370,8 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == "success") {
-                    alert('Coin deposit has been processed successfully.');
+                    var obj = { subTitle:"Coin deposit has been processed successfully."};
+                    _ModalUI.init(obj, "alert");
                     // getCoin();
                     // getCoinHistory('deposit');
                     /*
@@ -375,7 +382,8 @@
 
                     location.href = "/myPages/wallet/deposit";
                 } else {
-                    alert(success.data.msg);
+                    var obj = { subTitle:success.data.msg};
+                    _ModalUI.init(obj, "alert");
                     $("#confirmDeposit").attr("disabled", false);
                 }
             }).fail(function (fail) {

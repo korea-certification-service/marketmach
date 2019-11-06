@@ -63,9 +63,11 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code != undefined) {
-                    alert(success.data.msg);
+                    var obj = { subTitle:success.data.msg};
+                    _ModalUI.init(obj, "alert");
                 } else {
-                    alert('Bitberry has connected successfully.');
+                    var obj = { subTitle:'Bitberry has connected successfully.'};
+                    _ModalUI.init(obj, "alert");
                     $('.not_connected').hide();
                     $('.connected').show();
                     _PopupUI.hideWithDim();
@@ -81,7 +83,8 @@
                 url: "/v1/coins/disconnect"
             }).done(function (success) {
                 //console.log(success.data);
-                alert('Bitberry has disconnected.');
+                var obj = { subTitle:'Bitberry has disconnected.'};
+                _ModalUI.init(obj, "alert");
                 $('.not_connected').show();
                 $('.connected').hide();
             }).fail(function (fail) {

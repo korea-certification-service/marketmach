@@ -136,19 +136,24 @@
         function submit() {
             var country = "<%= country %>";
             if ($("#title").val() == "") {
-                alert('Please enter a title.');
+                var obj = { subTitle:'Please enter a title.'};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-                alert('Please enter a Price(MACH).');
+                var obj = { subTitle:'Please enter a Price(MACH).'};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0) {
-                alert('Please enter a Price(Point).');
+                var obj = { subTitle:'Please enter a Price(Point).'};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if(!checkValidDecimal($("#price").val())) {
-                alert('Please enter only numbers in a price.');
+                var obj = { subTitle:'Please enter only numbers in a price.'};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if ($("#desc").val() == "") {
-                alert('Please enter a Description.');
+                var obj = { subTitle:'Please enter a Description.'};
+                _ModalUI.init(obj, "alert");
                 return false;
             } 
 

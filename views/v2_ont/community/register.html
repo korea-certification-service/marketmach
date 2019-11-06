@@ -131,10 +131,12 @@
 
         function submit() {
             if ($("#title").val() == "") {
-                alert('Please enter a title.');
+                var obj = { subTitle: 'Please enter a title.'};
+                _ModalUI.init(obj, "alert");  
                 return false;
             } else if ($("#content").val() == "") {
-                alert('Please enter a content.');
+                var obj = { subTitle: 'Please enter a content.'};
+                _ModalUI.init(obj, "alert");  
                 return false;
             } 
 

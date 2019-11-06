@@ -186,7 +186,8 @@
 
             $("#buynow").on('click', function() {
                 if($('#buyer_game_character').val() == "") {
-                    alert("Please enter Buyer character name.");
+                    var obj = { subTitle: "Please enter Buyer character name."};
+                    _ModalUI.init(obj, "alert");     
                     return;
                 }
 
@@ -195,7 +196,8 @@
 
             $("#pointBuynow").on('click', function() {
                 if($('#buyer_game_character').val() == "") {
-                    alert("Please enter Buyer character name.");
+                    var obj = { subTitle: "Please enter Buyer character name."};
+                    _ModalUI.init(obj, "alert");    
                     return;
                 }
 
@@ -294,62 +296,70 @@
         }
 
         function buynow() {
-            var confirmYn = confirm("Do you want to start a transaction?");
-            if(confirmYn) {
-                var params = {
-                    "itemId": itemId,
-                    "from_userId": from_userTag,
-                    "to_userId": userTag,
-                    "cryptoCurrencyCode": cryptoCurrencyCode,
-                    "price": mach
-                };
-                //console.log(params);
-                $.ajax({
-                    method: "POST",
-                    url: "/v1/vtrs/buynow",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(params),
-                }).done(function (success) {
-                    if(success.data.code == undefined) {
-                        alert('The transaction has started.\n You can contact by clicking the contact display button.');
-                        location.href = "/etc-sells/detail/"+itemId
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                })
-            }
+            var obj1 = { subTitle: "Do you want to start a transaction?"};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) { 
+                    var params = {
+                        "itemId": itemId,
+                        "from_userId": from_userTag,
+                        "to_userId": userTag,
+                        "cryptoCurrencyCode": cryptoCurrencyCode,
+                        "price": mach
+                    };
+                    //console.log(params);
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/vtrs/buynow",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(params),
+                    }).done(function (success) {
+                        if(success.data.code == undefined) {
+                            var obj = { subTitle: 'The transaction has started.\n You can contact by clicking the contact display button.'};
+                            _ModalUI.init(obj, "alert");     
+                            location.href = "/etc-sells/detail/"+itemId
+                        } else {
+                            alert(success.data.msg);
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    })
+                }
+            })
         }
 
         function pointBuynow() {
-            var confirmYn = confirm("Do you want to start a transaction?");
-            if(confirmYn) {
-                var params = {
-                    "itemId": itemId,
-                    "from_userId": from_userTag,
-                    "to_userId": userTag,
-                    "point": point
-                };
-                //console.log(params);
-                $.ajax({
-                    method: "POST",
-                    url: "/v1/tradePoints/buynow",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(params),
-                }).done(function (success) {
-                    if(success.data.code == undefined) {
-                        alert('The transaction has started.\n You can contact by clicking the contact display button.');
-                        location.href = "/etc-sells/detail/"+itemId
-                    } else {
-                        alert(success.data.msg);
+            var obj1 = { subTitle: 'Do you want to start a transaction?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {  
+                    if(confirmYn) {
+                        var params = {
+                            "itemId": itemId,
+                            "from_userId": from_userTag,
+                            "to_userId": userTag,
+                            "point": point
+                        };
+                        //console.log(params);
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/tradePoints/buynow",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(params),
+                        }).done(function (success) {
+                            if(success.data.code == undefined) {
+                                var obj = { subTitle: 'The transaction has started.\n You can contact by clicking the contact display button.'};
+                                _ModalUI.init(obj, "alert"); 
+                                location.href = "/etc-sells/detail/"+itemId
+                            } else {
+                                alert(success.data.msg);
+                            }
+                        }).fail(function (fail) {
+                            console.log(fail);
+                        })
                     }
-                }).fail(function (fail) {
-                    console.log(fail);
-                })
-            }
+                }
+            })
         }
     </script>
 

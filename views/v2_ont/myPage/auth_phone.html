@@ -34,22 +34,34 @@ $(document).ready(function() {
     $("#btnSubmit").on("click", function(){
         ajaxLoginYnCheck(function(){
             if($firstName.val() == "") {
-                return alert("Please input your first name.");
+                var obj = { subTitle: "Please input your first name."};
+                _ModalUI.init(obj, "alert");                
+                return false;
             }
             if($surname.val() == "") {
-                return alert("Please input your surname.");
+                var obj = { subTitle: "Please input your surname."};
+                _ModalUI.init(obj, "alert");
+                return false;
             }
             if($dataOfBirth.val() == "") {
-                return alert("Please input your date of birth.");
+                var obj = { subTitle: "Please input your date of birth."};
+                _ModalUI.init(obj, "alert");
+                return false;
             }
             if($authImage.val() == "" && newKyc == true) {
-                return alert("Please upload your image.");
+                var obj = { subTitle: "Please upload your image."};
+                _ModalUI.init(obj, "alert");
+                return false;
             }
             if($uniqueNo.val() == "") {
-                return alert("Please input the No.");
+                var obj = { subTitle: "Please input the No."};
+                _ModalUI.init(obj, "alert");
+                return false;
             }
             if($issueDate.val() == "") {
-                return alert("Please input the issue date.");
+                var obj = { subTitle: "Please input the issue date."};
+                _ModalUI.init(obj, "alert");
+                return false;
             }
 
             //////////////////submit code 작성 라인////////////////////
@@ -150,7 +162,8 @@ $(document).ready(function() {
         }
 
         if(sel_files.length == 0) {
-            alert('Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. ');
+            var obj = { subTitle: 'Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. '};
+            _ModalUI.init(obj, "alert");
             location.href = '/myPages/user/authPhone';
             return;
         }
@@ -165,7 +178,8 @@ $(document).ready(function() {
         }).done(function (success) {
             //console.log(success);
             $("#ajaxSpiner").hide(); // spinner
-            alert('Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. ');
+            var obj = { subTitle: 'Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. '};
+            _ModalUI.init(obj, "alert");
             location.href = '/myPages/user/authPhone';
         }).fail(function (fail) {
             console.log('실패',fail);

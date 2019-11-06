@@ -173,7 +173,8 @@
 
             $("#pointBuynow").on('click', function() {
                 if($('#buyer_game_character').val() == "") {
-                    alert("Please enter your game character's name.");
+                    var obj = { subTitle:"Please enter your game character's name."};
+                    _ModalUI.init(obj, "alert");    
                     return;
                 }
 
@@ -240,32 +241,36 @@
         }
 
         function pointBuynow() {
-            var confirmYn = confirm("Are you start trading?");
-            if(confirmYn) {
-                var params = {
-                    "itemId": itemId,
-                    "from_userId": from_userTag,
-                    "to_userId": userTag,
-                    "point": point
-                };
-                //console.log(params);
-                $.ajax({
-                    method: "POST",
-                    url: "/v1/tradePoints/buynow",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(params),
-                }).done(function (success) {
-                    if(success.data.code == undefined) {
-                        alert('The transaction has started.\n Please contact directly by clicking [View Contact] button.');
-                        location.href = "/otc-sells/detail/"+itemId
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                })
-            }
+            var obj1 = { subTitle: "Are you start trading?"};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {  
+                    var params = {
+                        "itemId": itemId,
+                        "from_userId": from_userTag,
+                        "to_userId": userTag,
+                        "point": point
+                    };
+                    //console.log(params);
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/tradePoints/buynow",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(params),
+                    }).done(function (success) {
+                        if(success.data.code == undefined) {
+                            var obj = { subTitle:'The transaction has started.\n Please contact directly by clicking [View Contact] button.'};
+                            _ModalUI.init(obj, "alert");   
+                            location.href = "/otc-sells/detail/"+itemId
+                        } else {
+                            var obj = { subTitle:success.data.msg};
+                            _ModalUI.init(obj, "alert");   
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    })
+                }
+            })
         }
     </script>
 

@@ -229,22 +229,28 @@
     function submit() {
         var country = "<%= country %>";
         if ($("#game-name option:selected").val() == "") {
-            alert('Please select a Game');
+            var obj = { subTitle: 'Please select a Game'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ($("#game-server option:selected").val() == "") {
-            alert('Please select a Server');
+            var obj = { subTitle: 'Please select a Server'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ($("[name=item_type]:checked").val() == "") {
-            alert('Please select a Category');
+            var obj = { subTitle: 'Please select a Category'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ($("#title").val() == "") {
-            alert('Please enter a Title.');
+            var obj = { subTitle: 'Please enter a Title.'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ($("#game_character").val() == "") {
-            alert('Please enter a character\'s name.');
+            var obj = { subTitle: 'Please enter a character\'s name.'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
-            alert('Please enter a price.');
+            var obj = { subTitle: 'Please enter a price.'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
             // alert('거래 가격(Point)을 입력하세요.');
@@ -255,13 +261,15 @@
         //         return false;
         //     }
         } else if(!checkValidDecimal($("#price").val())) {
-            alert('Please enter only numbers in a price.');
-                return false;
+            var obj = { subTitle: 'Please enter only numbers in a price.'};
+            _ModalUI.init(obj, "alert");
+            return false;
         } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
             // alert('거래 가격(Point)을 숫자로 입력하세요.');
             // return false;
         } else if ($("#desc").val() == "") {
-            alert('Please enter a description.');
+            var obj = { subTitle: 'Please enter a description.'};
+            _ModalUI.init(obj, "alert");
             return false;
         } else if (country == "CN" && $("#region1").val() == "") {
             // alert('지역 1 입력');

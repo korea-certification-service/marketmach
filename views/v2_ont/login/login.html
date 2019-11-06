@@ -50,7 +50,8 @@
                 location.href=success.data.originalUrl;
             }).fail(function (fail) {
                 if (fail.status == 403) {
-                    alert('ID or Password is incorrect. Please enter again.');
+                    var obj = { subTitle: 'ID or Password is incorrect. Please enter again.'};
+                    _ModalUI.init(obj, "alert");
                 } else {
                     console.log(fail);
                 }

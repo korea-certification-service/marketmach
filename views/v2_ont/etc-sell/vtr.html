@@ -276,94 +276,59 @@
             var popup;
 
             if(n_status == "0" && mach == 0) {
-                alert('You can not apply for a transaction with a amount of 0.');
+                var obj = { subTitle: 'You can not apply for a transaction with a amount of 0.'};
+                _ModalUI.init(obj, "alert");   
                 return;
             }
 
             if(n_status == "0" && total_mach == 0) {
-                alert("You can not apply for a transaction where the buyer's amount is 0.");
+                var obj = { subTitle: "You can not apply for a transaction where the buyer's amount is 0."};
+                _ModalUI.init(obj, "alert");   
                 return;
             }
 
-            var confirmYn = confirm('Do you want to connect to VTR?');
+            var obj1 = { subTitle: 'Do you want to connect to VTR?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {   
+                    if(buyerTag == "") {
+                        var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
 
-            if(confirmYn) {
-                // roomToken = makeToken1();
-                // if (isMobile()) {
-                //     popup = window.open('about:blank', "room" + roomToken);
-                // }
-
-                // var body = {
-                //     "user_id": userTag,
-                //     "roomToken": roomToken,
-                //     "buyer_id": userTag,
-                //     "seller_id": from_userTag,
-                //     "status": 50,
-                //     "cmod": "deal"
-                // };
-
-                // $.ajax({
-                //     method: "PUT",
-                //     url: "/v1/items/updateStatus/" + itemId,
-                //     contentType: "application/json; charset=utf-8",
-                //     dataType: "json",
-                //     data: JSON.stringify(body),
-                // }).done(function (data) {
-                //     console.log(data);
-                //     if(isMobile()) {
-                //         popup.location.href = data.data;
-                //     } else {
-                //         window.open(data.data, "room" + roomToken, 'toolbar=no,\n' +
-                //             '                                    location=no,\n' +
-                //             '                                    status=no,\n' +
-                //             '                                    menubar=no,\n' +
-                //             '                                    scrollbars=yes,\n' +
-                //             '                                    resizable=yes,\n' +
-                //             '                                    width=550,\n' +
-                //             '                                    height=750');
-                //     }
-                //     location.href = "/etc-sells/detail/" + itemId;
-                // }).fail(function (fail) {
-                //     console.log(fail);
-                // });
-                if(buyerTag == "") {
-                    var body = "itemId="+itemId+"&buyerTag="+userTag+"&sellerTag="+from_userTag;
-
-                    if(isMobile()) {
-                        popup = window.open('about:blank', "room" + userTag+"|"+from_userTag+"|"+itemId);
-                        popup.location.href = '/room?' + body;
+                        if(isMobile()) {
+                            popup = window.open('about:blank', "room" + userTag+"|"+from_userTag+"|"+itemId);
+                            popup.location.href = '/room?' + body;
+                        } else {
+                            window.open('/room?' + body, "room" + userTag+"|"+from_userTag+"|"+itemId, 'toolbar=no,\n' +
+                                '                                    location=no,\n' +
+                                '                                    status=no,\n' +
+                                '                                    menubar=no,\n' +
+                                '                                    scrollbars=yes,\n' +
+                                '                                    resizable=yes,\n' +
+                                '                                    width=550,\n' +
+                                '                                    height=750');
+                        }   
                     } else {
-                        window.open('/room?' + body, "room" + userTag+"|"+from_userTag+"|"+itemId, 'toolbar=no,\n' +
-                            '                                    location=no,\n' +
-                            '                                    status=no,\n' +
-                            '                                    menubar=no,\n' +
-                            '                                    scrollbars=yes,\n' +
-                            '                                    resizable=yes,\n' +
-                            '                                    width=550,\n' +
-                            '                                    height=750');
-                    }   
-                } else {
-                    var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
+                        var body = "itemId="+itemId+"&buyerTag="+buyerTag+"&sellerTag="+sellerTag;
 
-                    if(isMobile()) {
-                        popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
-                        popup.location.href = '/room?' + body;
-                    } else {
-                        window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
-                            '                                    location=no,\n' +
-                            '                                    status=no,\n' +
-                            '                                    menubar=no,\n' +
-                            '                                    scrollbars=yes,\n' +
-                            '                                    resizable=yes,\n' +
-                            '                                    width=550,\n' +
-                            '                                    height=750');
+                        if(isMobile()) {
+                            popup = window.open('about:blank', "room" + buyerTag+"|"+sellerTag+"|"+itemId);
+                            popup.location.href = '/room?' + body;
+                        } else {
+                            window.open('/room?' + body, "room" + buyerTag+"|"+sellerTag+"|"+itemId, 'toolbar=no,\n' +
+                                '                                    location=no,\n' +
+                                '                                    status=no,\n' +
+                                '                                    menubar=no,\n' +
+                                '                                    scrollbars=yes,\n' +
+                                '                                    resizable=yes,\n' +
+                                '                                    width=550,\n' +
+                                '                                    height=750');
+                        }
+                    }
+
+                    if(!isExplorer()) {
+                        location.replace("/etc-sells/detail/" + itemId);
                     }
                 }
-
-                if(!isExplorer()) {
-                    location.replace("/etc-sells/detail/" + itemId);
-                }
-            }
+            })
         }
     </script>
 

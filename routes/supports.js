@@ -69,6 +69,8 @@ router.get('/event/past', token.checkLoginTokenNoSignIn, function (req, res, nex
         res.render('v2/support/event/past', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/past', params);      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/event/past', params);       
     } else {
         res.render('v2_en/support/event/past', params);
     }
@@ -81,6 +83,8 @@ router.get('/event/detail/:eventId', token.checkLoginTokenNoSignIn, function (re
         res.render('v2/support/event/detail', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/event/detail', params);      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/event/detail', params);       
     } else {
         res.render('v2_en/support/event/detail', params);
     }
@@ -93,6 +97,8 @@ router.get('/faq', token.checkLoginTokenNoSignIn, function (req, res, next) {
         res.render('v2/support/faq', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/faq', params);        
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/faq', params);       
     } else {
         res.render('v2_en/support/faq', params);
     }
@@ -105,6 +111,8 @@ router.get('/opposition/register', token.checkLoginToken, function (req, res, ne
         res.render('v2/support/opposition/register', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/register', params);      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/opposition/register', params);       
     } else {
         res.render('v2_en/support/opposition/register', params);
     }
@@ -117,6 +125,8 @@ router.get('/opposition/list', token.checkLoginToken, function (req, res, next) 
         res.render('v2/support/opposition/list',params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/list', params);      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/opposition/list', params);       
     } else {
         res.render('v2_en/support/opposition/list', params);
     }
@@ -129,6 +139,8 @@ router.get('/opposition/detail/:oppositionId', token.checkLoginToken, function (
         res.render('v2/support/opposition/view', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/view', params);        
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/opposition/view', params);       
     } else {
         res.render('v2_en/support/opposition/view', params);
     }
@@ -141,6 +153,8 @@ router.get('/opposition/modify/:oppositionId', token.checkLoginToken, function (
         res.render('v2/support/opposition/modify', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/opposition/modify', params);       
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/opposition/modify', params);       
     } else {
         res.render('v2_en/support/opposition/modify', params);
     }
@@ -153,6 +167,8 @@ router.get('/private/register', token.checkLoginToken, function (req, res, next)
         res.render('v2/support/private/register', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/register', params);      
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/private/register', params);       
     } else {
         res.render('v2_en/support/private/register', params);
     }
@@ -165,6 +181,8 @@ router.get('/private/list', token.checkLoginToken, function (req, res, next) {
         res.render('v2/support/private/list', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/list', params);       
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/private/list', params);       
     } else {
         res.render('v2_en/support/private/list', params);
     }
@@ -177,6 +195,8 @@ router.get('/private/detail/:personalId', token.checkLoginToken, function (req, 
         res.render('v2/support/private/view', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/view', params);     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/private/view', params);       
     } else {
         res.render('v2_en/support/private/view', params);
     }
@@ -189,6 +209,8 @@ router.get('/private/modify/:personalId', token.checkLoginToken, function (req, 
         res.render('v2/support/private/modify', params);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/support/private/modify', params);        
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/support/private/modify', params);       
     } else {
         res.render('v2_en/support/private/modify', params);
     }

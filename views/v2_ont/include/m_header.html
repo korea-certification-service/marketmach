@@ -47,7 +47,8 @@
 
         var m_voucherCopy = new ClipboardJS('#m_voucherCopy');
         m_voucherCopy.on('success', function(e) {
-            alert("It is successfully copied recommand URL.");
+            var obj = { subTitle: "It is successfully copied recommand URL."};
+            _ModalUI.init(obj, "alert"); 
         });        
     });
 
@@ -107,7 +108,8 @@
         t.select();
         document.execCommand('copy');
         document.body.removeChild(t);
-        alert("copied");
+        var obj = { subTitle: "copied"};
+        _ModalUI.init(obj, "alert"); 
     }
 
     function checkTeenager(url) {

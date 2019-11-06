@@ -63,7 +63,8 @@
             $("#sendAuthNo").on('click', function() {
                 checkAuthNoYn = false;
                 if($(this).text() == "Resent" ) {
-                    alert("The certification code is resent.");
+                    var obj = { subTitle:"The certification code is resent."};
+                    _ModalUI.init(obj, "alert");
                 }
                 sendAuthNo();
             });
@@ -153,7 +154,8 @@
 
         function checkEmail() {
             if($("#email").val() == "") {
-                alert("Please input a e-mail.");
+                var obj = { subTitle:"Please input a e-mail."};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
@@ -163,10 +165,12 @@
             }).done(function (success) {                
                 //console.log("success : ", success);
                 checkEmailYn = true;
-                alert('Email available.');
+                var obj = { subTitle:'Email available.'};
+                _ModalUI.init(obj, "alert");
             }).fail(function (fail) {
                 if (fail.status == 403) {
-                    alert('This email is already in use.');
+                    var obj = { subTitle:'This email is already in use.'};
+                    _ModalUI.init(obj, "alert");
                 } else {
                     console.log(fail);
                 }
@@ -220,7 +224,8 @@
                     console.log(fail);
                 })
             } else {
-                alert("Nothing to change.");
+                var obj = { subTitle:"Nothing to change."};
+                _ModalUI.init(obj, "alert");
             }
         }
 
@@ -228,22 +233,28 @@
             var emailChk = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
             if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
-                alert("Please enter the password again.");
+                var obj = { subTitle:"Please enter the password again."};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if($("#password").val() != "" && ($("#password").val().length <= 5 || checkPassword($("#password").val()) == false)) {
-                alert("Please enter 6~20 characters in english+numeric or special characters.");
+                var obj = { subTitle:"Please enter 6~20 characters in english+numeric or special characters."};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if($("#password").val() != $("#passwordConfirm").val()) {
-                alert("Your password is incorrect.\nPlease enter a password.");
+                var obj = { subTitle:"Your password is incorrect.\nPlease enter a password."};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if(!checkEmailYn) {
-                alert("Please confirm your e-mail duplication.");
+                var obj = { subTitle:"Please confirm your e-mail duplication."};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if (emailChk.test($("#email").val()) == false) {
-                alert("Please confirm your e-mail.");
+                var obj = { subTitle:"Please confirm your e-mail."};
+                _ModalUI.init(obj, "alert");
                 return false;
             } else if(checkAuthNoYn == false) {
-                alert("Please certificate your phone.");
+                var obj = { subTitle:"Please certificate your phone."};
+                _ModalUI.init(obj, "alert");
                 return false;
             }
 
@@ -265,22 +276,24 @@
             //     return;
             // }
         
-            var confirmYn = confirm('if you withdraw your account, all information including your wallet balance and points balance will be deleted and will not be recovered. \nDo you really want to close your account?');
-            if(confirmYn) {
-                if(bitberry_token != undefined && bitberry_token != "") {
-                    $.ajax({
-                        method: "POST",
-                        url: "/v1/coins/disconnect"
-                    }).done(function (success) {
-                        //console.log(success.data);
+            var obj1 = { class: 'negative', subTitle: 'if you withdraw your account, all information including your wallet balance and points balance will be deleted and will not be recovered. \nDo you really want to close your account?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {  
+                    if(bitberry_token != undefined && bitberry_token != "") {
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/coins/disconnect"
+                        }).done(function (success) {
+                            //console.log(success.data);
+                            deleteUser();
+                        }).fail(function (fail) {
+                            console.log(fail)
+                        });
+                    } else {
                         deleteUser();
-                    }).fail(function (fail) {
-                        console.log(fail)
-                    });
-                } else {
-                    deleteUser();
+                    }
                 }
-            }
+            })
         }
         
         function deleteUser() {
@@ -315,13 +328,16 @@
 
         function sendAuthNo() {
             if($("#currencyType").val() == "") {
-                alert("Please select country code.");
+                var obj = { subTitle:"Please select country code."};
+                _ModalUI.init(obj, "alert");
                 return;
             } else if($("#phone").val() == "") {
-                alert("Please input your phone number.");
+                var obj = { subTitle:"Please input your phone number."};
+                _ModalUI.init(obj, "alert");
                 return;
             } else if($("#phone").val() == phone) {
-                alert("Nothing change your number.");
+                var obj = { subTitle:"Nothing change your number."};
+                _ModalUI.init(obj, "alert");
                 return;
             }
             $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
@@ -344,13 +360,15 @@
                 $('#currencyType').prop('readonly', true);
             }).fail(function (fail) {
                 console.log(fail);
-                alert("There was a problem sending. Please make sure your phone number is entered correctly.\n If you continue to experience difficulties, please contact your administrator.");
+                var obj = { subTitle:"There was a problem sending. Please make sure your phone number is entered correctly.\n If you continue to experience difficulties, please contact your administrator."};
+                _ModalUI.init(obj, "alert");
             })
         }
 
         function checkAuthNo() {
             if($("#authNo").val() == "") {
-                alert("Please input a certification number.");
+                var obj = { subTitle:"Please input a certification number."};
+                _ModalUI.init(obj, "alert");
                 return;
             } 
 
@@ -369,10 +387,12 @@
             }).done(function (success) {
                 console.log(success);
                 if(success.data.successYn == "fail") {
-                    alert("The verification number is invalid. Please verify your verification number.");
+                    var obj = { subTitle:"The verification number is invalid. Please verify your verification number."};
+                    _ModalUI.init(obj, "alert");
                     return;
                 } else {
-                    alert("It is completely your phone certification.");
+                    var obj = { subTitle:"It is completely your phone certification."};
+                    _ModalUI.init(obj, "alert");
                     checkAuthNoYn = true;
                     $("#checkAuthNo").hide();
                     $("#sendAuthNo").attr("disabled", "disabled");

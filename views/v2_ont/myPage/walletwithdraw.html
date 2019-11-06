@@ -22,7 +22,8 @@
             // $("#confirmWithdraw").attr("disabled", true);
             $("#coin").val("ONT");
             if("<%=kyc%>" == "false") {
-                alert('Identity verification(KYC) is required for withdrawal.');
+                var obj = { subTitle:'Identity verification(KYC) is required for withdrawal.'};
+                _ModalUI.init(obj, "alert");
                 //location.replace('/myPages/user/authPhone');
                 location.replace('/myPages/user/kyc');
             }
@@ -231,18 +232,21 @@
             $("#confirmWithdraw").attr("disabled", true);
             var coin = $("#coin").val();
             if((coin != "ONT" && coin != "ONG") && bitberry_token == "") {
-                alert("Connection with Bitberry is required.");
+                var obj = { subTitle:"Connection with Bitberry is required."};
+                _ModalUI.init(obj, "alert");
                 location.href = '/myPages/wallet/connect';
                 return;
             } 
 
             if($('[name=amount]').val() == "" || $('[name=amount]').val() == "0" || parseFloat($('[name=amount]').val()) <= 0) {
-                alert("Please enter Coin amount.");
+                var obj = { subTitle:"Please enter Coin amount."};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
             if(parseFloat($('#total_amount').text()) < 0) {
-                alert("The withdrawal request amount can not be greater than the withdrawable amount.");
+                var obj = { subTitle:"The withdrawal request amount can not be greater than the withdrawable amount."};
+                _ModalUI.init(obj, "alert");
                 return;
             }
 
@@ -259,7 +263,8 @@
             var url = "/v1/coins/wallets/"+coin+"/withdraw";
             if(coin == "ONT" || coin == "ONG") {
                 if($('#address').val() == "") {
-                    alert("Please input your wallet address.");
+                    var obj = { subTitle:"Please input your wallet address."};
+                    _ModalUI.init(obj, "alert");
                     return;
                 }
 
@@ -282,17 +287,20 @@
             }).done(function (success) {
                 //console.log(success.data);
                 if(success.data.code == undefined) {
-                    alert('Coin withdraw has been processed successfully.');
+                    var obj = { subTitle:'Coin withdraw has been processed successfully.'};
+                    _ModalUI.init(obj, "alert");
                     // getCoin();
                     // getCoinHistory('withdraw');
                     location.href = "/myPages/wallet/withdraw";
                 } else {
-                    alert(success.data.msg);
+                    var obj = { subTitle:success.data.msg};
+                    _ModalUI.init(obj, "alert");
                     $("#confirmWithdraw").attr("disabled", false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
-                alert('There was a problem during the process. \n If the problem persists, please contact administrators')
+                var obj = { subTitle:'There was a problem during the process. \n If the problem persists, please contact administrators.'};
+                _ModalUI.init(obj, "alert");
                 $("#confirmWithdraw").attr("disabled", false);
             });
         }

@@ -169,12 +169,14 @@
             var content = $('#content').val();
             
             if(title == "") {
-                alert('Please enter a title.');
+                var obj = { subTitle: 'Please enter a title.'};
+                _ModalUI.init(obj, "alert");  
                 return;
             }
 
             if(content == "") {
-                alert('Please enter a content.');
+                var obj = { subTitle: 'Please enter a content.'};
+                _ModalUI.init(obj, "alert");  
                 return;
             }
 

@@ -50,7 +50,8 @@
             t.select();
             document.execCommand('copy');
             document.body.removeChild(t);
-            alert("copied");
+            var obj = { subTitle:"copied"};
+            _ModalUI.init(obj, "alert");
         }
     </script>
 </head>
