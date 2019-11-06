@@ -489,7 +489,7 @@ var _ModalUI = {
         this.createAndShow(obj, type);
         switch (type) {
             case "alert":   // 확인버튼만 있는 단순 알림창
-                this.alert();
+                this.alert(callback);
                 break;
             case "confirm": // 확인과 취소 버튼이 존재하는 분기창
                 this.confirmCallback(callback);
@@ -503,16 +503,20 @@ var _ModalUI = {
         var posY = window.scrollY+50;
         var dom = '';
         var articleClass = (obj.class === undefined) ? "positive" : obj.class;
-        
+        var title = (obj.title===undefined) ? "" : obj.title;
+        var subTitle = (obj.subTitle===undefined) ? "" : obj.subTitle;
+        var p = (obj.p===undefined) ? "" : obj.p;
+
         dom += '<div class="dim_smile_area">'
         if(type === "alert")   dom +=     '<article class="modal_smile effective" style="top: '+posY+'px">'
         if(type === "confirm") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
         dom +=         '<div class="smile_area"></div>'
-        dom +=         '<h1>'+obj.title+'</h1>'
-        dom +=         '<h2>'+obj.subTitle+'</h2>'
-        dom +=         '<p>'+obj.p+'</p>'
-        dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
-        if(type === "confirm") dom +=         '<button id="btnSmileNo" class="btn_cancle">cancle</button>'
+        dom +=         '<h1>'+title+'</h1>'
+        dom +=         '<h2>'+subTitle+'</h2>'
+        dom +=         '<p>'+p+'</p>'
+        if(type === "alert")   dom +=         '<button id="btnAlertOk" class="btn_confirm">confirm</button>'
+        if(type === "confirm") dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
+        if(type === "confirm") dom +=         '<button id="btnSmileNo" class="btn_cancle">cancel</button>'
         dom +=     '</article>'
         dom += '</div>'
 
@@ -522,8 +526,9 @@ var _ModalUI = {
         var that = this;
         document.addEventListener("click", function(e) {
             if(e.target.nodeName === "BUTTON") {
-                if(e.target.id === "btnSmileOk") {
+                if(e.target.id === "btnAlertOk") {
                     that.closeModal();
+                    if(callback) callback();
                 }
             }
         }); 
