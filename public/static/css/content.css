@@ -646,6 +646,8 @@
 .btc_product_sec .product_detail .lft_img .product_tab li .tab_btn{display: block; width: 100%; height: 100%; line-height: 58px; color: #333333; text-align: center; border: none; background-color: transparent;}
 .btc_product_sec .product_detail .lft_img .img_sec_wrap{height: 425px;}
 .btc_product_sec .product_detail .lft_img .img_sec{position: relative; height: 100%; text-align: center;}
+.btc_product_sec .product_detail .lft_img .img_sec .more_info{position: absolute;bottom: 20px;left: 50%;margin-left: -100px;display: block;width: 200px;height: 35px;line-height: 35px;color: #fff;background: rgba(0, 0, 0, 0.8);}
+.btc_product_sec .product_detail .lft_img .img_sec .more_info:hover{font-weight: 600; transition: all 3s ease-in;}
 .btc_product_sec .product_detail .lft_img .img_sec:before{content: '마감임박'; position: absolute; top: 10px; left: 25px;  padding: 32px 0 0 0; text-align: center; font-size: 13px; font-weight: 600; width: 75px; height: 60px; display: block; clear: both; color: #ffffff; background: url("/static/img/symbol/ani_siren.gif") 0 0 no-repeat; background-size: 75px 60px;}
 .btc_product_sec .product_detail .lft_img .soldout .img_sec::after{background-size: 250px 162px;}
 .btc_product_sec .product_detail .rgh_txt{position: relative; max-width: 555px; width: 50%;}
@@ -655,7 +657,7 @@
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li{padding: 16px 0 8px 0; border-bottom: 1px solid #eee;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .l_tit{float: left; display: block; width: 130px; font-size: 13px; font-weight: 400; color: #777777;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .r_col{float: left; width: calc(100% - 130px); font-size: 14px;}
-.btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .before_price{color: #777777;}
+.btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .before_price{color: #777777; text-decoration: line-through;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .after_price{font-weight: 600;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .buy_opt_wrap .item_calc{display: inline-block; font-size: 0; border: 1px solid #bfbfbf;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .buy_opt_wrap .item_calc .item_length{width: 50px; font-size: 14px; text-align: center; vertical-align: top; border: none;}

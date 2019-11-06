@@ -23,7 +23,6 @@
             $('.beforeLoginBox').css('display','none');
             $('.afterLoginBox').css('display','block');
 
-            getCoinMain();
             getPointMain();
             getItemCountMain();
 
@@ -54,25 +53,6 @@
         });        
     });
 
-    function getCoinMain() {
-        $.ajax({
-            method: "GET",
-            url: "/v1/coins/" + coinId
-        }).done(function (success) {
-            if (success.data.total_mach != null) {
-                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
-                $("#btocMyBalance").text(numberWithCommas(success.data.total_mach));
-                $("#hdBtocNumBalance").val(success.data.total_mach);  
-            } else {
-                $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
-                $("#btocMyBalance").text(0);
-                $("#hdBtocNumBalance").val(0);
-            }
-        }).fail(function (fail) {
-            console.log(fail);
-        });
-    }
-
     function getPointMain() {
         $.ajax({
             method: "GET",
@@ -80,8 +60,12 @@
         }).done(function (success) {
             if (success.data.total_point != null) {
                 $(".total_point").html("<a href='/myPages/point/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
+                $("#btocMyBalance").text(numberWithCommas(success.data.total_point));
+                $("#hdBtocNumBalance").val(success.data.total_point);  
             } else {
                 $(".total_point").html("<a href='/myPages/point/info'>0<span>Point</span></a>");
+                $("#btocMyBalance").text(0);
+                $("#hdBtocNumBalance").val(0);
             }
         }).fail(function (fail) {
             console.log(fail);
