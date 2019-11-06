@@ -59,7 +59,7 @@
         }).done(function (success) {
             if (success.data.total_ont != null) {
                 var total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;
-                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(total_ont) + "<span>MACH</span></a>");
+                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(total_ont) + "<span>ONT</span></a>");
             } else {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>ONT</span></a>");
             }
