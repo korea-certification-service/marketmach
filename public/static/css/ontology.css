@@ -1,0 +1,25 @@
+@charset "utf-8";
+/*
+* KCS: http://www.onlykcs.com/
+* since: 20191107 
+* Author: Jongmin Kim
+*/
+
+/* header */
+.ont_m_header.mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 33px);}
+.ont_m_header.mob_header .mob_sch_sec li:nth-child(2) h1{margin-left: 33px;}
+
+/* 로그인 */
+.ont_m_signin{padding: 0 15px;}
+.ont_m_signin .signin_logo{text-align: center;}
+.ont_m_signin .signin_logo a{display: block; width: 140px; margin: 50px auto;}
+.ont_m_signin .ipt_signin{padding-left: 38px; width: 100%; height: 39px; box-sizing: border-box; font-size: 13px; border: none; border-bottom: 1px solid #ddd;}
+.ont_m_signin .login_id{margin-bottom: 22px; background: url("/static/img/symbol/ont_login_id.png") 8px 50% no-repeat; background-size: 15px 17.5px;}
+.ont_m_signin .login_pw{margin-bottom: 50px; background: url("/static/img/symbol/ont_login_pw.png") 8px 50% no-repeat;background-size: 16.5px 20px;}
+.ont_m_signin .forgot_id{display: inline-block; margin-bottom: 20px; color: #4444f2; font-size: 12px; font-style: italic;}
+.ont_m_signin .btn_cmn{display: inline-block; width: 100%; height: 47px; line-height: 47px; box-sizing: border-box; font-size: 17px; border-radius: 5px;}
+.ont_m_signin .btn_signin{margin-bottom: 24px; background-color: #4444f2; border: none; color: #ffffff;}
+.ont_m_signin .btn_signup{margin-bottom: 25px; background-color: #ffffff; border: solid 1px #4444f2; color: #4444f2}
+.ont_m_signin .btn_signin_ont{margin-top: 7px; background-color: #ececfe; border: none; color: #4444f2}
+.ont_m_signin .btn_signin_ont span{display: inline-block; padding-left: 38px; background: url("/static/img/symbol/ont_login_logo.png") 0 50% no-repeat; background-size: 29px 29px;}
+.ont_m_signin .txt_or{position: relative; top: -12px; background-color: #ffffff;}

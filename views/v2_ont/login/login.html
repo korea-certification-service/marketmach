@@ -123,48 +123,40 @@
     </script>
 </head>
 <body>
-<div class="login_wrap col-sm-12" id="wrap">
-    <div class="login_head">
-        <h1 class="">
+<div class="ont_m_signin" id="wrap">
+    <div class="signin_head">
+        <h1 class="signin_logo">
             <a href="/main">
                 <img src="/static/img/h_logo.png" alt="MACH">
             </a>
         </h1>
     </div>
-    <div class="login_body">
+    <div class="signin_body">
         <!--remove autocomplete-->
         <input style="display:none" aria-hidden="true">
         <input type="password" style="display:none" aria-hidden="true">
         <!--remove autocomplete end-->
 
-        <input class="login_ipt" type="text" name="id" id="userId" placeholder="ID">
-        <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
+        <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
+        <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
 
         <!--
             <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
         -->
-        <div class="text-center">
-            <button class="btn_login" onclick="login()">Sign in</button>
+        <div class="tac">
+            <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
+            <button class="btn_signin btn_cmn" onclick="login()">Sign in</button>
+            <a class="btn_signup btn_cmn" href="/agreement" class="">Sign Up</a>
+            <hr>
+            <em class="txt_or">OR</em>
         </div>
-        <div class="login_btn_sec">
-            <div class="col-lg-12 col-md-12 col-sm-12 form-inline text-center">
-                <a href="/findId" class="col-lg-4 col-md-4 col-sm-12">Find ID</a>
-                <a href="/findPassword" class="col-lg-4 col-md-4 col-sm-12">Find Password</a>
-                <a href="/agreement" class="col-lg-4 col-md-4 col-sm-12">Sign Up</a>
-            </div>            
-        </div>
+
+        <button class="btn_signin_ont btn_cmn" onclick='ontLogin();'>
+            <span>Sign in with ONT</span>
+        </button>
     </div>
-    <div class="login_foot">
-        <div><button onclick='ontLogin();'>ONT ID Login</button></div>
+    <div class="signin_foot">
         <div id="result"></div>
-        <!--
-            <div class="kakao-login btn_auth" onclick="loginWithKakao();">
-                <img src="/image/btn_kakao_login.png" alt="" />
-            </div>
-        -->
-        <!-- <div id="naver_id_login" onclick="loginWithNaver();" class="btn_auth">
-            <img src="/image/btn_naver_login.png" alt="" />
-        </div> -->
     </div>
 </div>
 </body>
