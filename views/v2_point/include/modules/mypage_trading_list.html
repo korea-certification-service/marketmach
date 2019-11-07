@@ -1,7 +1,7 @@
-<%# include('페이지경로', {pageType: 'sell', buyListStatus:[4, 5]}) %>
-<%# include('페이지경로', {pageType: 'buy', buyListStatus:[104, 105]}) %>
+<%# 주석표시 #지우기: include('페이지경로', {pageType: 'sell'}) %>
+<%# 주석표시 #지우기: include('페이지경로', {pageType: 'buy'}) %>
 
-<!-- 나의 페이지 > 판매관리 -->
+<!-- 나의 페이지 > 판매관리 / 구매 관리-->
 <script>
     var userId = "<%=userId%>";
     var userTag = "<%=userTag%>";
@@ -109,7 +109,7 @@
 
     function getItemList() {
         var param = "?category=" + category;
-        if(pageIdx != "") {
+        if(pageIdx != "" && pageIdx !=  undefined) {
             param += "&pageIdx=" + pageIdx;
         }
 
@@ -208,7 +208,7 @@
                                     } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) {    
                                         result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="cancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                     }
-                                } else if(buyList[i].status == parseInt("<%= buyListStatus[0] %>") || buyList[i].status == parseInt("<%= buyListStatus[1] %>")) {
+                                } else if(buyList[i].status == 4 || buyList[i].status == 5) {
                                     result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="showPhone(\''+itemId+'\');">연락처 표시</button>';
                                 } else if(buyList[i].status ==101) {
                                     if((buyList[i].trade_type == "sell" && buyList[i].userTag != userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag == userTag)) {
@@ -224,7 +224,7 @@
                                     } else if((buyList[i].trade_type == "sell" && buyList[i].userTag == userTag) || (buyList[i].trade_type == "buy" && buyList[i].userTag != userTag)) { 
                                         result +=   '<button class="btn btn_in_view8" id="cancelItem" onclick="pointCancelItem(\''+itemId+'\');">거래취소(환불)</button>';
                                     }
-                                } else if(buyList[i].status == 4 || buyList[i].status == 5) {
+                                } else if(buyList[i].status == 104 || buyList[i].status == 105) {
                                     result +=   '<button class="btn btn_in_view6" id="pointShowPhone" onclick="pointShowPhone(\''+itemId+'\');">연락처 표시</button>';
                                 } 
                             result +=  '</div>' + 
@@ -483,7 +483,3 @@
         });
     }
 </script>
-<% } else { %>
-<!---------- 나의 페이지 > 구매관리 ---------->
-
-<% } %>
