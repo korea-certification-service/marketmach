@@ -3,6 +3,7 @@
 <head>
     <% include ../include/head.html %>
     <script>
+        /*
         var userId = "<%=userId%>";
         var userTag = "<%=userTag%>";
         var pageIdx = "<%=pageIdx%>";
@@ -486,7 +487,9 @@
                 console.log(fail);
             });
         }
+        */
     </script>
+    <%- include('../include/modules/mypage_trading_list.html', {pageType: 'buy'}) %>
 </head>
 <body>
 <div id="wrap" class="wrap">
