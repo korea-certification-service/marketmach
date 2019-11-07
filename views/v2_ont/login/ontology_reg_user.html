@@ -51,41 +51,29 @@
     </script>
 </head>
 <body>
-<div id="wrap" class="wrap">
-    <!-- header -->
-    <% include ../include/member_header.html %>
-    <!--// header -->
-    <!-- content_wrap -->
-    <div class="member_content">
-        <div class="sub_container container">
+    <div class="ont_m_signin" id="wrap">
+        <!-- join_sec page-->
+        <section class="integration_sec">
+            <h1>Integration User</h1>
+            <p>
+                If you have MarketMACH ID, input your ID and password, then Click "Integration".
+                Or if you don't have it, Click "Sign up".
+            </p>           
+            <div class="login_body">
+                <!--remove autocomplete-->
+                <input style="display:none" aria-hidden="true">
+                <input type="password" style="display:none" aria-hidden="true">
+                <!--remove autocomplete end-->
+                <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
+                <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
 
-            <!-- join_sec page-->
-            <section class="join_sec">
-                <h1>Integration User</h1>
-                <dl class="join_box agreeBox">
-                    <dd>
-                        If you have MarketMACH ID, input your ID and password, then Click "Integration User".
-                        Or if you don't have it, Click "Sign up".
-                    </dd>
-                </dl>                
-                <div class="login_body">
-                    <!--remove autocomplete-->
-                    <input style="display:none" aria-hidden="true">
-                    <input type="password" style="display:none" aria-hidden="true">
-                    <!--remove autocomplete end-->
-                    <input class="login_ipt" type="text" name="id" id="userId" placeholder="ID">
-                    <input class="login_ipt" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
-                    <div class="text-center">
-                        <button class="btn btn_in_view1" onclick="login()">Sign in</button>
-                        <button class="btn btn_in_view1" id="agreement">Sign up</button>
-                    </div>
+                <div class="text-center">
+                    <button class="btn_signin btn_cmn" onclick="login()">Integration</button>
+                    <button class="btn_signup btn_cmn" id="agreement">Sign up</button>
                 </div>
-            </section>
-            <!--// join_sec page-->
-        </div>
+            </div>
+        </section>
+        <!--// join_sec page-->
     </div>
-    <!--// content_wrap -->
-
-    <% include ../include/footer.html %>
 </div>
 </body> 
