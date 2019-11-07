@@ -57,7 +57,7 @@
             } else if(buyYn){
                 // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
                 // 우주대특가 주문내역으로 이동
-                if(confirm("이벤트에 이미 참여하셨습니다. 주문내역 확인하시겠습니까?")){
+                if(confirm("이미 구매하신 내역이 있습니다. 주문내역을 확인하시겠습니까?")){
                     window.location.href = "/myPages/product/list";
                 }
             } else {
@@ -170,7 +170,7 @@
                     deliveryType = "무료배송";
                     break;
                 default:
-                    deliveryType = res.deliveryPrice + currency;
+                    deliveryType = res.deliveryPrice + " " + currency;
                     break;
             }
 
@@ -185,8 +185,11 @@
             $("#hdCurrencyType").val(currency);
             $("#crcEN").text(currency);
             $("#crcKR").text(transCurrency);
-            if(res.imageDetail) $("#imageDetail").attr("src", res.imageDetail[0]);
-
+            if(res.imageDetail.length === 0) {
+                $("#imageDetail").remove()
+            } else {
+                $("#imageDetail").attr("src", res.imageDetail[0]);
+            }
             getBuyYn();
 
             /* 구매수량 지정가능하던 기존 로직
@@ -241,6 +244,7 @@
             // reqData.totalPrice = parseInt($("#priceForSend").val());
             reqData.totalAmount = 1;
             reqData.totalPrice =  addPrice;
+            reqData.memo = $("#deliveryMemo").val();
 
             // console.log(reqData);
            
@@ -318,9 +322,6 @@
                 <div class="dfb product_detail">
                     <div class="lft_img">
                         <ul id="productTab" class="product_tab dfb">
-                            <!-- 개발 붙이고 텍스트 지울것 -->
-                            <!-- <li class="on"><a href="" class="tab_btn">시그니처 엠보싱</a></li>
-                            <li><a href="" class="tab_btn">위베베 제로네이처 엠보싱</a></li> -->
                         </ul>
                         <div class="img_sec_wrap">
                             <div class="img_sec">
@@ -361,7 +362,7 @@
                                     <li class="cf">
                                         <em class="l_tit">수량</em>
                                         <div class="r_col">
-                                            <p>ID당 1회만 참여 가능합니다.</p>
+                                            <p>1개 (ID당 1회만 주문 가능)</p>
                                         </div>
                                     </li>
                                     <!-- <li class="cf" id="">
@@ -419,7 +420,7 @@
                         <tbody>
                             <tr>
                                 <th>수령인</th>
-                                <td><input type="text" id="receiver" class="form-control" maxlength="10"></td>
+                                <td><input type="text" id="receiver" class="w100 form-control" maxlength="10"></td>
                             </tr>
                             <tr>
                                 <th>연락처</th>
@@ -457,6 +458,12 @@
                                     <td>
                                         <input type="text" id="addrDetail" class="addr_detail form-control" value="">
                                         <input type="text" id="roadAddrPart2" class="form-control" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="align_top">배송요청사항</th>
+                                    <td>
+                                        <input type="text" id="deliveryMemo" class="form-control" value="" maxlength="40">
                                     </td>
                                 </tr>
                             </tbody>
