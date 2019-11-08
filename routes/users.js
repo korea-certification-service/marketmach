@@ -391,6 +391,8 @@ router.post('/', function (req, res, next) {
                                                         if(req.session.ontId != undefined) {
                                                             req.body['ontId'] = req.session.ontId;
                                                         }
+                                                        let loginToken = util.makeToken();
+                                                        req.body['loginToken'] = loginToken; 
                                                         controllerUsers.createWithIds(req, coinId, agreementId, pointId)
                                                             .then(result => {
 
@@ -416,7 +418,16 @@ router.post('/', function (req, res, next) {
                                                                 req.session.teenager = agreement.teenager;
                                                                 req.session.authPhone = agreement.authPhone;
                                                                 req.session.coinId = result._doc.coinId;
-                                                                req.session.pointId = result._doc.pointId;                                                                
+                                                                req.session.pointId = result._doc.pointId;                                                                    
+                                                                let tokenValue = loginToken;
+                                                                res.cookie("loginToken", tokenValue, {
+                                                                    domain: 'marketmach.com',
+                                                                    expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                                                                });
+
+                                                                res.cookie("loginToken", tokenValue, {
+                                                                    expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                                                                });                                                           
                                                                 
                                                                 if(req.body.recommander != undefined) {
                                                                     controllerUsers.getRecommanderCount(country,req.body.recommander)
