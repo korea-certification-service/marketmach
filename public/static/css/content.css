@@ -699,10 +699,10 @@
 .item_select_area .table_btoc td{}
 .item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
 .item_select_area .table_btoc .w100{width: 100px;}
-.item_select_area .item_detail_area{max-width: 980px; margin-top: 30px; text-align: center;}
-.item_select_area .order_noti dt{margin-bottom: 40px; padding: 5px 0 15px; line-height: 1;font-size: 20px;font-weight: 600;border-bottom: 2px solid #000; background: url("/static/img/symbol/ico_h_exclaim.png") 80px 3px no-repeat; background-size: 25px 25px;}
-.item_select_area .order_noti dd{padding: 20px 0 20px 60px; border: solid 2px #dddddd; background-color: #fafafa;}
-.item_select_area .order_noti dd li{line-height: 1; margin-bottom: 14px; font-size: 16px;}
+.btc_product_sec .item_detail_area{max-width: 980px; margin-top: 30px; text-align: center;}
+.btc_product_sec .order_noti dt{margin-bottom: 40px; padding: 5px 0 15px; line-height: 1;font-size: 20px;font-weight: 600;border-bottom: 2px solid #000; background: url("/static/img/symbol/ico_h_exclaim.png") 80px 3px no-repeat; background-size: 25px 25px;}
+.btc_product_sec .order_noti dd{padding: 20px 0 20px 60px; border: solid 2px #dddddd; background-color: #fafafa;}
+.btc_product_sec .order_noti dd li{line-height: 1; margin-bottom: 14px; font-size: 16px;}
 
 /* BtoC 상세 물품 기존 */
 .item_images_area{margin: 30px 0;}
@@ -799,7 +799,7 @@ background-size: 65px 65px;
     .sub_lft_menu > .depth1 > li:nth-child(3n+1){border: 1px solid #666;}
     .sub_lft_menu > .depth1 > li:nth-child(n+4){border-top: none;}
     .sub_lft_menu > .depth1 > li > .depth2{display: none;}
-    .sub_lft_menu > .depth1 > li > a{padding: 10px 0; border: none; text-align: center;}
+    .sub_lft_menu > .depth1 > li > a{padding: 10px 0; border: none; text-align: center; font-size: 12px;}
     .sub_lft_menu > .depth1 > li.on > a:after{display: none;}
     .mob_depth2_menu{display: block;}
     /* 고객센터 사이드 메뉴 비노출 메뉴 = 신규게임/서버추가 */
