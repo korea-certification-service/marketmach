@@ -503,11 +503,11 @@
             if(_ModalUI.isTransaction) { 
                 if(fromAddress != "") {
                     const scriptHash = contractAddress_finalTransaction;
-                    const operation = 'finalTransaction';
+                    const operation = 'FinalTransaction';
                     let buyer = data.vtr.roomToken.split('|')[0];
                     let seller = data.vtr.roomToken.split('|')[1];    
                     let price = data.price + ' ' + data.cryptoCurrencyCode; 
-                    let message = convertDate(data.regDate) + " " + seller + " to " + buyer + 'of deal is completed deal ' + price + '.';
+                    let message = convertDate(data.regDate) + " " + seller + " to " + buyer + ' of deal is completed deal ' + price + '.';
                     //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
                     const args = [
                         {

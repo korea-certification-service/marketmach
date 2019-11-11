@@ -693,17 +693,17 @@ function getData() {
     })
 }
 
-async function finalTransaction(itemId, data) {
+function finalTransaction(itemId, data) {
     var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
     _ModalUI.init(obj2, "finalTransaction", async function() {
         if(_ModalUI.isTransaction) { 
             if(fromAddress != "") {
                 const scriptHash = contractAddress_finalTransaction;
-                const operation = 'finalTransaction';
+                const operation = 'FinalTransaction';
                 let buyer = data.vtr.roomToken.split('|')[0];
                 let seller = data.vtr.roomToken.split('|')[1];    
                 let price = data.price + ' ' + data.cryptoCurrencyCode; 
-                let message = convertDate(data.regDate) + " " + seller + " to " + buyer + 'of deal is completed deal ' + price + '.';
+                let message = convertDate(data.regDate) + " " + seller + " to " + buyer + ' of deal is completed deal ' + price + '.';
                 //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
                 const args = [
                     {
