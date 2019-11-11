@@ -72,7 +72,7 @@ router.get('/product/buyYn/:productType', function (req, res, next) {
     let productType = req.params.productType;
     let userTag = req.session.userTag == "" ? undefined : req.session.userTag;
 
-    let url = dbconfig.APIServer + "/v2/shops/product/" + productType + "/buyYn/" + userTag;
+    let url = dbconfig.APIServer + "/v2/shops/product/" + productType + "/buyYn/" + dbconfig.country + "/" + userTag;
     let header = { 
         'token': dbconfig.APIToken
     };
