@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+        var auth_code;
+
+        $(document).ready(function() {
+            if(bitberry_token == undefined || bitberry_token == "") {
+                $('.not_connected').show();
+                $('.connected').hide();
+            } else {
+                $('.not_connected').hide();
+                $('.connected').show();
+            }
+
+            $('#set_auth_code').on('click',function() {
+                setAuthCode();
+            });
+
+            $('#connect').on('click',function() {
+                ajaxLoginYnCheck(connect);
+            });
+
+            $('#disconnect').on('click',function() {
+                ajaxLoginYnCheck(disconnect);
+            });
+
+            _PopupUI.closeAfterClick();
+        });
+
+        function setAuthCode() {
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/connect"
+            }).done(function (success) {
+                //console.log(success.data);
+                auth_code = success.data.code;
+                $('#view_auth_code').html('<em class="fcrd">'+auth_code+'</em>');
+                $('#connect').show();
+                _PopupUI.showWithDim(function() {
+                    // callback
+                });
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function connect() {
+            var data = {
+                "code": auth_code.replace(/-/g,'')
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/connected",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+            }).done(function (success) {
+                //console.log(success.data);
+                if(success.data.code != undefined) {
+                    var obj = { subTitle:success.data.msg};
+                    _ModalUI.init(obj, "alert");
+                } else {
+                    var obj = { subTitle:'Bitberry has connected successfully.'};
+                    _ModalUI.init(obj, "alert");
+                    $('.not_connected').hide();
+                    $('.connected').show();
+                    _PopupUI.hideWithDim();
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function disconnect() {
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/disconnect"
+            }).done(function (success) {
+                //console.log(success.data);
+                var obj = { subTitle:'Bitberry has disconnected.'};
+                _ModalUI.init(obj, "alert");
+                $('.not_connected').show();
+                $('.connected').hide();
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Wallet <span>connect bitnerry</span></h1>
+                        <hr class="hr_mypage">
+                        
+                        <h2 class="tit_mypage dot_tit">Connect Bitnerry</h2>
+                        
+                        <%# 인증 전 %>
+                        <div class="connected_box not_connected">
+                            <div class="coin_certification">
+                                <dl class="cf">
+                                    <dt class="fc2">Verification No.</dt>
+                                    <dd id="view_auth_code">
+                                        <!-- <em class="fcrd">1234-1234</em> -->
+                                        <button class="btn btn_in_view2" id="set_auth_code">View Verification No.</button>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <ul class="highligh_list fcrd">
+                                <li>※ Please enter verification number on screen into Bitberry App and connect with MarketMACH.</li>
+                                <li>※ After registering the verification number in the Bitberry APP, please click the [Bitberry Connected].</li>
+                            </ul>
+                            <!-- <div class="btn_align_c">
+                                <button class="btn item_view btn_in_view1" id="connect">Bitberry Connected</button>
+                            </div>  -->
+                        </div>
+
+                        <%# 인증 후 %>
+                        <div class="connected_box connected">
+                            <div class="coin_certification mb50">
+                                <dl class="cf">
+                                    <dt class=""><img src="/static/img/sub/logo_bitberry.png" alt=""></dt>
+                                    <dd>
+                                        <strong class="fc2">My wallet<br>connected to<br>Bitberry</strong>
+                                    </dd>
+                                </dl>
+                            </div> 
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="disconnect">Bitberry<br class="mob_br"> Disconnected</button>
+                            </div>  
+                        </div>
+
+                         <!-- 모달창 -->
+                         <div class="dim_all_area" style="display: none">
+                            <article class="modal_bitberry_deposit">
+                                <button id="btnmCloseModal" class="btn">X</button>
+                                <h1>Connect Bitberry</h1>
+                                <p>After you proceed connection request<br>on Bitberry App, click the Confirm</p> <!-- 비트베리 앱에서 연결승인후 아래의 확인 버튼을 눌러주세요. -->
+                                <button id="connect" class="btn btn-danger">Confirm</button>
+                            </article>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">About Bitberry</h2>
+                        <ul class="bitberry_info cf">
+                            <li><img src="/static/img/sub/logo_bitberry.png" alt=""></li>
+                            <li><a href="https://bitberry.app/" target="_blank" class="btn btn-success">More Information</a></li>
+                        </ul>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

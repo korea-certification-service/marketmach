@@ -56,9 +56,6 @@ function dateDiff(_date1, _date2) {
     return diff;
 }
 
-
-출처: https://webinformation.tistory.com/84 [끄적끄적]
-
 function checkAdult (start_date, to_date) {
     var s_d = new Date(start_date);
     var e_d = new Date(to_date);
@@ -154,6 +151,67 @@ function checkEmail(value) {
     return true;
 }
 
+function initParam(req, dbconfig) {
+    let param = {
+        itemId: req.query.itemId,
+        userId: req.session.userId,
+        userTag:req.session.userTag,
+        coinId: req.session.coinId,
+        pointId: req.session.pointId,
+        userName: req.session.userName,
+        authPhone: req.session.authPhone,
+        kyc: req.session.kyc,
+        usePoint:dbconfig.usePoint,
+        useBlockchain:dbconfig.useBlockchain,
+        country:req.session.country,
+        callbackUrl: dbconfig.ontology.callbackUrl,
+        category: req.query.category,
+        game_name: req.query.game_name, 
+        game_server: req.query.game_server,
+        trade_type: req.query.trade_type, 
+        type: req.query.type == undefined ? req.params.type : req.query.type, 
+        title: req.query.title, 
+        status: req.query.status,
+        id: req.params.id,
+        pageIdx: req.query.pageIdx,
+        communityId: req.params.communityId,
+        category: req.query.category,
+        category1: req.query.category1, 
+        category2: req.query.category2,
+        item_title: req.query.item_title,
+        bitberry_token: req.session.bitberry_token,
+        btc_fee: dbconfig.fee.coin.btc.deposit,
+        ether_fee: dbconfig.fee.coin.ether.deposit,
+        mach_fee: dbconfig.fee.coin.mach.deposit,
+        ont_fee: dbconfig.fee.coin.ont.deposit,
+        ong_fee: dbconfig.fee.coin.ong.deposit,
+        toAddress:dbconfig.ontology.address,
+        fromAddress: req.session.ontId == undefined ? "" : req.session.ontId.replace('did:ont:',''),
+        fee: dbconfig.fee.point.deposit,
+        happyMoneyFee: dbconfig.fee.happymoney.deposit,
+        noticeId: req.query.noticeId,
+        eventId: req.params.eventId,
+        oppositionId: req.params.oppositionId,
+        personalId: req.params.personalId,
+        productId: req.params.productId,
+        contractAddress_finalTransaction: dbconfig.ontology.contractAddress_finalTransaction
+    }
+    return param;
+}
+
+function initVtrRoomParam(country, itemId, userTag, buyerTag, sellerTag, chatbot_vtr_url, roomToken) {
+    let param = {
+        country: country,
+        itemId: itemId,
+        userTag: userTag,
+        buyerTag: buyerTag,
+        sellerTag: sellerTag,
+        chatbot_vtr_url: chatbot_vtr_url,
+        roomToken: roomToken
+    }
+    return param;
+}
+
 exports.formatDate = formatDate;
 exports.formatDate2 = formatDate2;
 exports.getEnvLocale = getEnvLocale;
@@ -168,3 +226,5 @@ exports.checkAdult = checkAdult;
 exports.makeNumber = makeNumber;
 exports.dateDiff = dateDiff;
 exports.getUnixTime = getUnixTime;
+exports.initParam = initParam;
+exports.initVtrRoomParam = initVtrRoomParam;

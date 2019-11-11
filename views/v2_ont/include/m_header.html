@@ -1,0 +1,363 @@
+<script>
+    var coinId = "<%=coinId%>";
+    var pointId = "<%=pointId%>";
+    var userId = "<%=userId%>";   
+    var userTag = "<%=userTag%>"
+    var authPhone = "<%=authPhone%>";
+    var game_name;
+    
+    $(document).ready(function(){
+        var agent = navigator.userAgent.toLowerCase();
+        //console.log(agent);
+        if("<%=userId%>"=="") {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+            $('.beforeLoginBox').css('display','block');
+            $('.afterLoginBox').css('display','none');
+        } else {
+            $('.menu_login').css('display', 'none');
+            $('.menu_logout').css('display', 'inline-block');
+            $('.beforeLoginBox').css('display','none');
+            $('.afterLoginBox').css('display','block');
+
+            getCoinMain();
+            getPointMain();
+            getItemCountMain();
+
+        }
+
+        $("#gotoUserInfo").on('click', function(){
+            location.href = '/myPages/user/checkPassword';
+        });
+
+        /*모바일 네비게이션의 추천URL로직*/
+        if(userId == ""){
+            $(".recommendUrl").css({display: "none"});
+        } else {
+            $(".recommendUrl").css({display: "block"});
+        }
+        
+        $('#btnRecomandation').on('click', function(){
+            $('#m_voucherCopy').click(); 
+        }); 
+
+        //var str = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n회원추천하고 또 1마하 득! \n친구 추천을 받으시면 최대 100MACH까지 드립니다.\n\n';
+        var str = 'https://www.marketmach.com/agreement?recommander=' + userTag;
+        $('#m_copyTxt').val(str);
+
+        var m_voucherCopy = new ClipboardJS('#m_voucherCopy');
+        m_voucherCopy.on('success', function(e) {
+            var obj = { subTitle: "It is successfully copied recommand URL."};
+            _ModalUI.init(obj, "alert"); 
+        });        
+    });
+
+    function getCoinMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/coins/" + coinId
+        }).done(function (success) {
+            if (success.data.total_ont != null) {
+                var total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;
+                $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(total_ont) + "<span>ONT</span></a>");
+            } else {
+                $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>ONT</span></a>");
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function getPointMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/points/" + pointId
+        }).done(function (success) {
+            if (success.data.total_point != null) {
+                $(".total_point").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_point) + "<span>Point</span></a>");
+            } else {
+                $(".total_point").html("<a href='/myPages/wallet/info'>0<span>Point</span></a>");
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function getItemCountMain() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/vtrs/count/user/" + userId
+        }).done(function (success) {
+            //console.log(success.data);
+            var total_sell = success.data.game_sell + success.data.etc_sell + success.data.otc_sell;
+            var total_buy = success.data.game_buy + success.data.etc_buy + success.data.otc_buy;
+
+            $(".total_sell").html("<a href='/myPages/sell/list'>" + total_sell + "<span></span></a>");
+            $(".total_buy").html("<a href='/myPages/buy/list'>" + total_buy + "<span></span></a>");
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    /*모바일 네비게이션의 추천URL로직*/
+    function copyUrl() {
+        //var preStr = '마켓마하(www.marketmach.com) 오픈베타 기념 회원가입 이벤트. \n 아래 URL을 클릭하여 회원가입 하시고 1마하 득!\n 회원추천하고 또 1마하 득! \n 친구 추천을 받으시면 최대 100MACH까지 드립니다.\n';
+        var str = $('#m_voucherUrl').val();
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = str;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        var obj = { subTitle: "copied"};
+        _ModalUI.init(obj, "alert"); 
+    }
+
+    function checkTeenager(url) {
+        if(userId == "") {
+            location.href = '/login';
+        } else {
+            // $.ajax({
+            //     method: "GET",
+            //     url: "/v1/users/" + userId
+            // }).done(function (success) {
+            //     if(success.data.agreement.teenager == false) {
+            //         if(success.data.birth == "") {
+            //             alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.\n 미성년자 유무 확인을 위한 휴대폰 본인 인증을 진행합니다.');
+            //             location.href = '/myPages/user/authPhone';
+            //         } else {
+            //             alert('청소년 보호법에 의거하여 미성년자는 게임 아이템 거래가 불가능 합니다.');
+            //         }
+            //     } else {
+            //         location.href = url;
+            //     }
+            // }).fail(function (fail) {
+            //     console.log(fail);
+            // });
+            location.href = url;
+        }
+    }
+</script>
+    <header class="mob_header ont_m_header">
+        <!-- 모바일 검색영역 -->
+        <section class="mob_sch_sec">
+            <ul class="mob_top_menu cf">
+                <li>
+                    <!-- <a href="javascript:loginChecker()"><img src="/static/img/main/chatbot_mac.png" alt="MACH bot"></a> -->
+                </li>
+                <li><h1 class="h_logo"><a href="/main"><img src="/static/img/h_logo.png" alt="MACH"></a></h1></li>
+                <li>
+                    <button id="btnHamburger" class="menu-trigger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </li>
+            </ul>
+            <div class="srch_module">
+                <div class="srch_topWrap">
+                    <select class="srch_select m_srch_select">
+                        <option value="assets">Asset</option>
+                        <option value="otc">OTC</option>
+                    </select>
+                    <input class="srch_input ipt_search_bar" id="m_search_item_name" type="text" placeholder="" autocomplete="off"/>
+                    <input type="button" class="btn_search bgc1 .btn_search" id="m_main_search" value="검색" autocomplete=off>
+                    <div class="srch_del m_srch_del"></div>
+                </div>
+                <div class="srch_bottomWrap m_srch_bottomWrap">
+                    <div class="srch_box_left m_srch_box_left">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                    <div class="srch_box_right m_srch_box_right">
+                        <ul>
+                            <!--동적으로 추가-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- <script src="/static/js/modules/m_search_guide_en.js"></script> -->
+            <!-- <div class="search_bar cf">
+                <input type="text" class="ipt_search_bar" id="m_search_item_name">
+                <input type="button" class="btn_search bgc1" id="m_main_search" value="검색">
+            </div>               -->
+        </section>
+        <!-- 모바일 네비게이션 -->
+        <nav class="mob_nav">
+            <div class="mob_fixiable">
+                <button class="btnMobMenu btn_mob_menu bgc1">Add</button>
+            </div>
+            <div class="mob_dep1_menu">
+                <div class="scroll_area">
+                    <table class="tb_menu">
+                        <tbody>
+                            <tr>
+                                <!-- <th><button class="btnMobMenu btn_mob_menu">Game Item</button></th> -->
+                                <th><button class="btnMobMenu btn_mob_menu">Asset</button></th>                                
+                                <th><button class="btnMobMenu btn_mob_menu">OTC</button></th>
+                                <th><a href="/community/board" class="fcbk">Community</a></th>
+                                <th><a href="/gameStation" class="fcbk">Game Station</a></th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mob_dep2_menu"> 
+                <dl class="lft_menu">
+                    <dt class="fc2">Add Sales</dt>
+                    <dd>
+                        <!-- <a href="javascript:checkTeenager('/sells/register');" class="bgc2 mob_rnd_btn">Game Item</a> -->
+                        <a href="/etc-sells/register" class="bgc2 mob_rnd_btn">Asset</a>
+                        <a href="/otc-sells/register" class="bgc2 mob_rnd_btn">OTC</a>
+                    </dd>
+                    <dt class="fc2">Add Purchase</dt>
+                    <dd>
+                        <!-- <a href="javascript:checkTeenager('/buys/register');" class="bgc2 mob_rnd_btn">Game Item</a> -->
+                        <a href="/etc-buys/register" class="bgc2 mob_rnd_btn">Asset</a>
+                        <a href="/otc-buys/register" class="bgc2 mob_rnd_btn">OTC</a>
+                    </dd>
+                </dl>
+                <!-- <dl class="rgh_menu">
+                    <dd>
+                        <a href="/sells?category=game&trade_type=sell" class="bgc2 mob_rnd_btn">Sales</a>
+                        <a href="/buys?category=game&trade_type=buy" class="bgc2 mob_rnd_btn">Purchase</a>
+                    </dd>
+                </dl>                 -->
+                <dl class="rgh_menu">
+                    <dd>
+                        <a href="/etc-sells?category=etc&trade_type=sell" class="bgc2 mob_rnd_btn">Sales</a>
+                        <a href="/etc-buys?category=etc&trade_type=buy" class="bgc2 mob_rnd_btn">Purchase</a>
+                    </dd>
+                </dl>
+                <dl class="rgh_menu">
+                    <dd>
+                        <a href="/otc-sells?category=otc&trade_type=sell" class="bgc2 mob_rnd_btn">Sales</a>
+                        <a href="/otc-buys?category=otc&trade_type=buy" class="bgc2 mob_rnd_btn">Purchase</a>
+                    </dd>
+                </dl>               
+                <!-- <dl class="rgh_menu">
+                    <dd>
+                        <a href="https://t.me/marketmachcom" target="_blank" class="bgc2 mob_rnd_btn">Telegram</a>
+                    </dd>
+                </dl> -->
+            </div>
+        </nav>
+
+        <div id="bgDim" class="bg_dim">
+            <!-- 햄버거 세부메뉴 -->
+            <nav class="hamburger_menu">            
+                <div class="m_nav_head cf">
+                    <ul class="cf">
+                        <!-- <li><img src="/static/img/symbol/flag_korea.png" alt="한국"></li>
+                        <li><button class="btn_lang">KR</button></li> -->
+                        <!-- <li><a href="https://ko.marketmach.com" class="lang"><img src="/static/img/symbol/flag_korea.png" alt="KR"><span>KR</span></a></li>
+                        <li><a href="https://en.marketmach.com" class="lang"><img src="/static/img/symbol/flag_usa.png" alt="EN"><span>EN</span></a></li> -->
+                        <li class="recommendUrl">
+                            <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
+                            <!-- <button type="button" class="btn btn-success recomandation" id="btnRecomandation">Recommand URL</button> -->
+                        </li>
+                        <li>
+                            <button id="btnCloseMobSideMenu" class="menu-trigger on">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="m_nav_body">
+                    <ul class="ul_dep1">
+                        <li>
+                            <a href="/mypages/list" class="btn_1depth">My Page</a>
+                            <!-- 로그인 전 -->
+                            <div class="dep2 beforeLoginBox">
+                                <ul class="mob_mypage">
+                                    <li class="top_area cf">
+                                        <ul class="cf link_login_info">
+                                            <li>
+                                                <a href="/login" class="btn">Sign In</a>
+                                            </li>
+                                            <li class="cf">
+                                                <a href="/findId" class="fll">Find ID/Find Password</a>
+                                                <a href="/agreement" class="flr">Sign Up</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- <li class="mdl_area">
+                                        <em>Curious about MarketMACH?</em>
+                                        <a href="https://mymach.io" target="_blank" class="btn">About MarketMACH</a>
+                                    </li> -->
+                                </ul>
+                            </div> 
+                            <!-- 로그인 후 -->
+                            <div style="display: none" class="dep2 afterLoginBox">
+                                <ul class="mob_mypage">
+                                    <li class="top_area cf">
+                                        <div>
+                                            <em>On Sales</em>
+                                            <p class="fc2 total_sell">0<span></span></p>
+                                        </div>
+                                        <div>
+                                            <em>Puchasing</em>
+                                            <p class="fc2 total_buy">0<span></span></p>
+                                        </div>
+                                    </li>
+                                    <li class="mdl_area">                                        
+                                        <em>My Wallet Balance</em>
+                                        <p class="fc2 total_mach">0 <span>ONT</span></p>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Deposit</button>
+                                        <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Withdraw</button>
+                                    </li>
+                                </ul>
+                                <!-- <dl class="block_menu cf">
+                                    <dt>게임아이템</dt>
+                                    <dd><a href="/sells/register">판매등록</a></dd>
+                                    <dd><a href="/buys/register">구매등록</a></dd>
+                                    <dd><a href="/sells?category=game&trade_type=sell">팝니다</a></dd>
+                                    <dd><a href="/buys?category=game&trade_type=buy">삽니다</a></dd>
+                                </dl>                    
+                                <dl class="block_menu cf">
+                                    <dt>자산거래</dt>
+                                    <dd><a href="/etc-sells/register">판매등록</a></dd>
+                                    <dd><a href="/etc-buys/register">구매등록</a></dd>
+                                    <dd><a href="/etc-sells?category=etc&trade_type=sell">팝니다</a></dd>
+                                    <dd><a href="/etc-buys?category=etc&trade_type=buy">삽니다</a></dd>
+                                </dl>                     -->
+                            </div>
+                        </li>
+                        <li>
+                            <dl class="available_coin cf">
+                                <dt>MarketMACH Coins</dt>
+                                <dd><a href="https://mymach.io/" target="_blank"><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></a></dd>
+                                <dd><a href="https://www.bitcoin.com/" target="_blank"><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></a></dd>
+                                <dd><a href="https://www.ethereum.org/" target="_blank"><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></a></dd>
+                                <dd><a href="https://ont.io/" target="_blank"><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></a></dd>
+                            </dl>
+                            <dl class="available_coin cf">
+                                <dt>MarketMACH Games</dt>
+                                <dd><a href="/gameStation/machAdventure/info/"><img src="/static/img/symbol/symbol_monkey.png" alt="MACH Adventure" title="MACH Adventure"></a></dd>
+                                <dd><a href="/gameStation/superlanding/info/"><img src="/static/img/symbol/symbol_coingame.png" alt="Superlanding" title="Superlanding"></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                                <dd><a class="noCursor" href="javascript:return false"><i class="material-icons">add_circle</i></a></dd>
+                            </dl>
+                        </li>
+                        <li><a href="/gameStation" class="btn_1depth">Game Station</a></li>
+                        <li><a href="/supports/info" class="btn_1depth">Support</a></li>
+                        <li><a href="/howto/trade/vtr" class="btn_1depth">User Guide</a></li>
+                        <li class="li_logout"><a href="/logout" class="menu_logout btn bggr1">Sign Out</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <script>
+    var userId = "<%=userId%>";  
+    if("<%=userId%>"!="") {
+        $('.menu_logout').show();
+    } else {
+        $('.menu_logout').hide();
+    }
+    </script>

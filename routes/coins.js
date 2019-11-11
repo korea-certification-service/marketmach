@@ -14,6 +14,7 @@ let dbconfig = require('../config/dbconfig');
 var Ont = require('ontology-ts-sdk');
 let scheduler = require('../utils/scheduler');
 
+//관리자로 이동 필요
 router.get('/airdrop', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.bitberry.url + "/v2/wallets/pzmza7r3je/airdrop_by_user_id";
@@ -48,6 +49,7 @@ router.get('/airdrop', function (req, res, next) {
     });
 });
 
+//개선 필요(APIServer - /:coinId)
 router.get('/:coinId', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -68,6 +70,7 @@ router.get('/:coinId', function (req, res, next) {
 
 });
 
+//사용안함
 router.get('/:coinId/deposit/historys', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -176,6 +179,7 @@ router.get('/:coinId/deposit/historys', function (req, res, next) {
 
 });
 
+//사용안함
 router.get('/:coinId/withdraw/historys', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -310,6 +314,7 @@ function Swap(historys, first, second) {
     historys[second] = tmp;
 }
 
+//사용안함
 router.post('/', function (req, res, next) {
 
     let sampleJson =
@@ -340,6 +345,8 @@ router.post('/', function (req, res, next) {
 
     }
 });
+
+//사용안함
 router.put('/:coinId', function (req, res, next) {
 
     // "coinId": "5bc9a10b8f8b950ffe068df9"
@@ -377,6 +384,7 @@ router.put('/:coinId', function (req, res, next) {
     }
 })
 
+//사용안함
 router.put('/:coinId/deposit/coinTypes/:coinType', function (req, res, next) {
 
     /**
@@ -481,6 +489,7 @@ router.put('/:coinId/deposit/coinTypes/:coinType', function (req, res, next) {
     }
 });
 
+//사용안함
 router.put('/:coinId/withdraw/coinTypes/:coinType', function (req, res, next) {
 
     /**
@@ -620,6 +629,7 @@ router.put('/:coinId/withdraw/coinTypes/:coinType', function (req, res, next) {
     }
 });
 
+//사용안함
 router.delete('/:coinId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -1015,6 +1025,53 @@ router.post('/ontwallet/deposit', function(req, res, next) {
     });
 });
 
+//ONT wallet 입금 요청 처리(온톨로지 전용)
+router.post('/ontwallet/deposit/onto', function(req, res, next) {
+    var bitwebResponse = new BitwebResponse();
+    if(req.session.userId == undefined) {
+        bitwebResponse.code = 500;
+        bitwebResponse.message = "이상 사용자 요청";
+        res.status(500).send(bitwebResponse.create());
+        return;
+    }
+
+    let body = req.body;
+    body['country'] = dbconfig.country;
+    req.body['coinType'] = req.body.cryptoCurrencyCode;
+    req.body['userTag'] = req.session.userTag == undefined ? req.body.userTag : req.session.userTag;
+
+    let url = dbconfig.APIServer + "/v2/coin/ontwallet/deposit/onto";
+    let header = {
+        'token': dbconfig.APIToken
+    };
+    let reqs = {uri: url, 
+        method:'POST',
+        headers: header,
+        body:body,
+        json: true
+    }
+
+    //API 서버로 내부 call요청한다.
+    request(reqs, function (error, response, body) {  
+        console.log(error, response, body);
+        if (!error && response.statusCode == 200) {
+            let result = body.data;
+            if(typeof(body) == "string") {
+                result = JSON.parse(body).data;
+            }
+            
+            bitwebResponse.code = 200;
+            bitwebResponse.data = result;
+            res.status(200).send(bitwebResponse.create())
+        } else {
+            console.error('err=>', error)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = error;
+            res.status(500).send(bitwebResponse.create())
+        }
+    });
+});
+
 //ONT wallet 입금 재요청 처리
 router.post('/ontwallet/retry/deposit', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
@@ -1107,6 +1164,7 @@ router.post('/wallets/:coinType/withdraw/ontwallet', function (req, res, next) {
     });
 });
 
+//비트베리 입금 확인
 router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let transfer_request_id = req.body.transfer_request_id;
@@ -1160,6 +1218,7 @@ router.post('/bitberry/result/:walletId/:category', function(req, res, next) {
     });
 });
 
+//비트베리 입금 callback
 router.post('/bitberry/deposit/callback', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;

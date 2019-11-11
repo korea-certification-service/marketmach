@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../../include/head.html %>
+    <script>
+        var pageIdx = "<%=pageIdx%>"
+        $(document).ready(function() {
+            $('.board_detail').css('display','none');
+            getNotices();
+        });
+
+        function getNotices() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/notices/list?pageIdx="+(pageIdx == "" ? 0 : pageIdx)+"&perPage=20",
+            }).done(function (success) {
+                console.log(success.data);
+                setNotices(success.data.list);
+                getPaging(success.data.count);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setNotices(data) {
+            var result="";
+            if(data.length == 0) {
+                result = '<tr><td colspan="3">No exist notices.</td></tr>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var type = data[i].type;
+                var title = data[i].title;
+                var regDate = data[i].regDate.substring(2, 10);
+
+                result+= '<tr>' +
+                            '<td>'+type+'</td>' +
+                            '<td class="tal">' +
+                                '<div class="ellipse" style="width: 100%"><a href="javascript:showDetail(\''+id+'\')">' + title +
+                                '</a></div>' +
+                            '</td>' +
+                            '<td>'+ regDate +'</td>' +
+                        '</tr>';
+            }
+            $('#notice_list').html(result);
+        }
+
+        function getPaging(dataCount) {            
+            var count = dataCount < 20 ? 1 : Math.ceil(dataCount / 20);
+            var result = '<ol class="cf">';
+            for(var i=0;i<count;i++) {
+                result += '<li><a class="on" href="/supports/notice?pageIdx='+i+'">'+(i+1)+'</a></li>';
+            }
+
+            result+='</ol>';
+            $('.paging_wrap').html(result);
+        }
+
+        function showDetail(id) {
+            location.href="/supports/notice/detail?noticeId=" + id;
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../../include/header.html %>
+        <% include ../../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">Notice</h1>
+                        <!-- <div class="search_filter">
+                            <ul class="">
+                                <li class="row">
+                                    <h2 class="col-sm-2 col-xs-12">유 형</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <input type="radio" name="" id=""><label for="">전체</label>
+                                        <input type="radio" name="" id=""><label for="">안내</label>
+                                        <br class="mob_br">
+                                        <input type="radio" name="" id=""><label for="">점검</label>
+                                        <input type="radio" name="" id=""><label for="">이벤트</label>
+                                    </div>
+                                </li>
+                                <li class="row" style="display: none">
+                                    <h2 class="col-sm-2 col-xs-12">검 색</h2>
+                                    <div class="check_filter col-sm-10 col-xs-12">
+                                        <div class="w100p-120px">
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                        <br class="mob_br">
+                                        <button class="btn btn-primary">검색</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div> -->
+
+                        <div class="table_wrap table-responsive">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="notice_list">
+                                           
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="paging_wrap">
+                            
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../../include/footer.html %>
+</div>
+</body>

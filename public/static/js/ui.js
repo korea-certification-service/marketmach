@@ -445,9 +445,304 @@ var _PopupUI = {
 
         if(fnCallback !== undefined && typeof fnCallback === "function") fnCallback();   
     },
+    toggleSpiner: function(obj) {
+        /**
+         * 켤 때 : _PopupUI.toggleSpiner({isActive: true, target: e.currentTarget});
+         * 끌 때 : _PopupUI.toggleSpiner({isActive: false});
+         */
+        if (obj.target) {
+            obj.target.setAttribute("disabled", "disabled"); 
+        }
+
+        var ajaxSpiner = document.getElementById("ajaxSpiner");
+        if(obj.isActive) {
+            ajaxSpiner.style.display = "block";
+            var lastY = document.querySelector(".ajax_spinner_wrap").offsetTop;
+            window.scrollTo(0, lastY-250); 
+        } else {
+            ajaxSpiner.style.display = "none";
+        }
+    }
+}
+/**
+********** alert창 ********** 
+var obj = { title: '제목', subTitle: '부제'};
+    obj.p = '본문';
+
+_ModalUI.init(obj, "alert");
+
+********** confirm창 ********** 
+* class default 값: 'positive'
+var obj1 = {class: 'negative', title: '제목', subTitle: '부제'};
+    obj1.p = '본문';
+
+_ModalUI.init(obj1, "confirm", function() {
+    if(_ModalUI.isConfirm) {
+        alert("확인")
+    } else {
+        alert("취소")
+    }
+});
+ */
+var _ModalUI = {
+    init: function(obj, type, callback){
+        this.createAndShow(obj, type);
+        switch (type) {
+            case "alert":   // 확인버튼만 있는 단순 알림창
+                this.alert(callback);
+                break;
+            case "confirm": // 확인과 취소 버튼이 존재하는 분기창
+                this.confirmCallback(callback);
+                break;
+            case "finalTransaction": // 확인과 취소 버튼이 존재하는 분기창
+                this.confirmCallback(callback);
+                break;
+            default:
+                break;
+        }
+
+    },
+    createAndShow : function(obj, type) {
+        var posY = window.scrollY+50;
+        var dom = '';
+        var articleClass = (obj.class === undefined) ? "positive" : obj.class;
+        var title = (obj.title===undefined) ? "" : obj.title;
+        var subTitle = (obj.subTitle===undefined) ? "" : obj.subTitle;
+        var p = (obj.p===undefined) ? "" : obj.p;
+
+        dom += '<div class="dim_smile_area">'
+        if(type === "alert")   dom +=     '<article class="modal_smile effective" style="top: '+posY+'px">'
+        if(type === "confirm") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
+        if(type === "finalTransaction") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
+        dom +=         '<div class="smile_area"></div>'
+        dom +=         '<h1>'+title+'</h1>'
+        dom +=         '<h2>'+subTitle+'</h2>'
+        dom +=         '<p>'+p+'</p>'
+        if(type === "alert")   dom +=         '<button id="btnAlertOk" class="btn_confirm">confirm</button>'
+        if(type === "confirm") dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
+        if(type === "confirm") dom +=         '<button id="btnSmileNo" class="btn_cancle">cancel</button>'
+        if(type === "finalTransaction") dom +=         '<button id="btnTransactionOk" class="btn_confirm">confirm</button>'
+        if(type === "finalTransaction") dom +=         '<button id="btnTransactionNo" class="btn_cancle">denied</button>'
+        dom +=     '</article>'
+        dom += '</div>'
+
+        document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
+    },
+    alert: function(callback) {
+        var that = this;
+        document.addEventListener("click", function(e) {
+            if(e.target.nodeName === "BUTTON") {
+                if(e.target.id === "btnAlertOk") {
+                    that.closeModal();
+                    if(callback) callback();
+                }
+            }
+        }); 
+    },
+    confirmCallback: function(callback) {
+        var that = this;
+        document.addEventListener("click", function(e) {
+            if(e.target.nodeName === "BUTTON") {
+                if(e.target.id === "btnSmileOk") {
+                    _ModalUI.isConfirm = true;
+                    _ModalUI.isTransaction = false;
+                    that.closeModal();
+                    callback();
+                } else if(e.target.id === "btnSmileNo") {
+                    _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = false;
+                    that.closeModal();
+                    callback();
+                } else if(e.target.id === "btnTransactionOk") {
+                    _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = true;
+                    that.closeModal();
+                    callback();
+                } else if(e.target.id === "btnTransactionNo") {
+                    _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = false;
+                    that.closeModal();
+                    callback();
+                }
+            }
+        }); 
+    },
+    closeModal: function() {
+        // 돔 삭제
+        var child = document.querySelector(".dim_smile_area");
+        if(child) child.parentNode.removeChild(child);
+    }
+}
+/*
+var isTrue = false;
+function _ModalUI(param) {
+    this.btnSmileOk = param.btnSmileOk;
+    this.btnSmileNo = param.btnSmileNo;
+    this.isTrue = false;
+}
+_ModalUI.prototype.createAndShow = function(obj) {
+    var dom = '';
+    dom += '<div class="dim_all_area">'
+    dom +=     '<article class="modal_smile '+obj.class+'">'
+    dom +=         '<div class="smile_area"></div>'
+    dom +=         '<h1>'+obj.title+'</h1>'
+    dom +=         '<h2>'+obj.subTitle+'</h2>'
+    dom +=         '<p>'+obj.p+'</p>'
+    if(obj.confirm) dom +=         '<button id="'+this.btnSmileOk+'" class="btn_confirm">confirm</button>'
+    if(obj.cancle)  dom +=         '<button id="'+this.btnSmileNo+'" class="btn_cancle">cancle</button>'
+    dom +=     '</article>'
+    dom += '</div>'
+    document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
+}
+_ModalUI.prototype.clickBtnCallback = function(callback) {
+    var that = this;
+    document.addEventListener("click", function(e){
+        if(e.target.id === that.btnSmileOk) {
+            isTrue = true;
+        }
+        if(e.target.id === that.btnSmileNo) {
+            isTrue = false;
+        }
+
+        callback();
+    })
+}
+*/
+
+var _BtoCUI = {
+    actSelectBox: function(opt, callback){
+        var btn = document.querySelector("#"+opt.btn);
+        var ul = document.querySelector("#"+opt.ul);
+        var selectedList = document.querySelector("#"+opt.selectedList);
+        var isOpen = false;
+
+
+        btn.addEventListener("click", function() {
+            
+            // css
+            if (!isOpen) {
+                ul.style.display="block";
+            } else {
+                ul.style.display="none";
+            }
+            isOpen = !isOpen;
+            
+            // logic
+            if (isOpen) {
+                var li = ul.querySelectorAll("li");
+                for (var i = 0; i < li.length; i++) {
+                    li[i].addEventListener("click", function(e) {
+                        
+                        selectedList.firstElementChild.querySelector(".itemTitle").innerText = this.querySelector(".productName").innerText;
+                        selectedList.firstElementChild.querySelector(".item_calc").style.display = "block";
+
+                        closeList();
+                    });
+                }
+            }
+
+            // callback
+            if(callback) callback();
+        });
+
+        function closeList() {
+            isOpen = false;
+            ul.style.display="none";
+        }
+    },
+    calcAndView: function(obj) {
+        var itemLength = document.querySelector(obj.itemLength);
+        var price = parseInt(obj.price);
+        var resultPrice = document.querySelector(obj.resultPrice);
+        var priceForSend = document.querySelector(obj.priceForSend);
+        function fnCommonCallback() {
+            // console.log(itemLength.value * price);
+            resultPrice.innerText = numberWithCommas(itemLength.value * price);
+            priceForSend.value = itemLength.value * price;
+        }
+        if(itemLength) {
+            // 직접 숫자 입력한 경우
+            itemLength.addEventListener("input", function(e) {
+                fnCommonCallback();
+            });
+
+            // 버튼 누른 경우
+            document.querySelector(".btnPlus").addEventListener("click", function(e) {
+                fnCommonCallback();
+            });
+            document.querySelector(".btnMinus").addEventListener("click", function(e) {
+                fnCommonCallback();
+            });
+        }
+    },
+    numberUtil: function(obj) {
+        var itemLength = document.querySelectorAll(".itemLength");
+        var btnMinus = document.querySelectorAll(".btnMinus");
+        var btnPlus = document.querySelectorAll(".btnPlus");
+        for (var i = 0; i < itemLength.length; i++) {
+            itemLength[i].addEventListener("input", function() {
+                if(this.value === "0"){
+                    this.value = "1";
+                }
+                if(!numCheck(this.value)){
+                    this.value = "1";
+                    alert("주문 수량은 숫자만 가능합니다");
+                }
+                if(this.value > parseInt(obj.maxLen)) {
+                    alert("최대 주문 수량은 "+obj.maxLen+"개 입니다");
+                    this.value = "1";
+                }
+            });
+
+            var num;
+            btnMinus[i].addEventListener("click", function(e) {
+                //console.log(e.target.nextSibling.nextSibling.value);
+                //e.target.nextSibling.nextSibling.value -= 1;
+                num = parseInt(e.target.nextSibling.nextSibling.value);
+                if(num > 1) {
+                    num -= 1;
+                    e.target.nextSibling.nextSibling.value = num;
+                }
+            });
+            
+            btnPlus[i].addEventListener("click", function(e) {
+                //console.log(e.target.previousSibling.previousSibling.value);
+                //e.target.previousSibling.previousSibling.value += 1;
+                num = parseInt(e.target.previousSibling.previousSibling.value);
+                if(num < parseInt(obj.maxLen)) {
+                    num += 1;
+                    e.target.previousSibling.previousSibling.value = num;
+                } else {
+                    alert(obj.maxLen+"개이상 구매가 불가능한 상품입니다.");
+                }
+            });
+        }
+    }    
 }
 
+var _UtilUI ={
+    checkLogin: function(callback) { // 로그인 여부 체크
+        var cookie_data = document.cookie;
+        var loginToken = cookie_data.indexOf("loginToken");
 
+        if(loginToken > -1) {
+            if(callback === undefined || null || "") {
+                return true;
+            } else if(typeof callback == 'function') {
+                callback();
+            }
+        } else {
+            if(callback === undefined || null || "") {
+                return false;
+            } else if(typeof callback == 'function') {
+                callback();
+                location.href = "/login";
+            }
+        }
+    }
+} 
+
+/** deprecated: 방탄소년단 핸드크림 로직 */
 var _SelectUI = {
     actSelectBox: function(opt, callback){
         var btn = document.querySelector("#"+opt.btn);

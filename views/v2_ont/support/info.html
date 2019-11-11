@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        $(document).ready(function() {
+            getNotices();
+            getEvents();
+        });
+
+        function getNotices() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/notices/list?perPage=5",
+            }).done(function (success) {
+                console.log(success.data);
+                if (success.data.count != 0) {
+                    setNotices(success.data.list);
+                } else {
+                    var strDOM = '<div class="text-center text-white card-panel" id="hasNoItem">' + "<%= __('page.faq.list.info1') %>" + '</div>';
+                    $("#list-container").append(strDOM);
+                    $(".page").css("display", "none");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setNotices(data) {
+            var result="";
+            if(data.length == 0) {
+                result = '<tr><td colspan="3">No exist.</td></tr>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var type = data[i].type;
+                var title = data[i].title;
+                var regDate = data[i].regDate.substring(2, 10);
+
+                result+= '<tr>' +
+                            '<td>'+type+'</td>' +
+                            '<td class="tal">' +
+                                '<div class="ellipse" style="width: 100%"><a href="javascript:showDetail(\''+id+'\')">' + title +
+                                '</a></div>' +
+                            '</td>' +
+                            '<td>'+ regDate +'</td>' +
+                        '</tr>';
+            }
+            $('#notice_list').html(result);
+        }
+
+        function showDetail(id) {
+            location.href="/supports/notice/detail?noticeId=" + id;
+        }
+
+        function getEvents() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/events/list/now",
+            }).done(function (success) {
+                console.log(success.data);
+                setEvents(success.data.list);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setEvents(data) {
+            var strDOM="";
+            if(data.length == 0) {
+                strDOM = '<li class="fcrd tac">No exist.</li>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                strDOM += '<li class="cf">';
+                strDOM += '<a href="/supports/event/detail/'+ data[i]._id +'">'+data[i].title+'</a>';
+                strDOM += '<span>' + data[i].regDate.substring(2, 10) + '</span>';
+                strDOM += '</li>';
+            }
+
+            $('#eventList').append(strDOM);
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/support_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+
+                    <!-- support -->
+                    <section class="support_sec">
+                        <h1 class="tit_support">Support <span>information</span></h1>
+                        <div class="support_main_info cf">
+                            <div class="lft_area">
+                                <div class="inner_area">
+                                    <h2>Disputes</h2>
+                                    <p>If you have any problems with your transaction.</p>
+                                    <a class="btn bgc1" href="/supports/opposition/register">Post</a>
+                                    <a class="btn bgc2" href="/supports/opposition/list">List</a>
+                                </div>
+                            </div>
+                            <div class="rgh_area">
+                                <div class="inner_area">
+                                    <h2>1:1 Inquiry</h2>
+                                    <p>If you have any questions?</p>
+                                    <a class="btn bgc4" href="/supports/private/register">Post</a>
+                                    <a class="btn bgc3" href="/supports/private/list">List</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="tit_support dot_tit">Notice <a class="add_circle_outline" href="/supports/notice"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <div class="table_wrap table-responsive mb_lrg">
+                            <table class="table_list table">
+                                <colgroup class="colgroup_support_notice">
+                                    <col class="col3_1">
+                                    <col class="col3_2">
+                                    <col class="col3_3">
+                                </colgroup>
+                                <thead>
+                                    <tr>  
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="notice_list">
+                                    <!-- <tr>
+                                        <td>안내</td>
+                                        <td class="tal">
+                                            <div class="ellipse">
+                                                일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.일본도+9 팝니다.
+                                            </div>
+                                        </td>
+                                        <td>2015.03.12</td>
+                                    </tr>          -->
+                                </tbody>
+                            </table>
+                        </div>                        
+                        
+                        <h2 class="tit_support dot_tit">Current Events<a class="add_circle_outline" href="/supports/event"><i class="material-icons">add_circle_outline</i></a></h2>
+                        <div class="event_list_area">
+                            <!-- <p><a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a></p> -->
+                            <ul id="eventList">
+                                <!-- <li class="cf">
+                                    <a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a>
+                                    <span>19/05/24</span>
+                                </li>
+                                <li class="cf">
+                                    <a href="/supports/event">마하 오픈베타 테스트 기념 이벤트</a>
+                                    <span>19/05/24</span>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </section>
+                    <!--// support -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

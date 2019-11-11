@@ -3,13 +3,14 @@
 <head>
     <% include ../include/head.html %>
     <script>
+ /* 
         var userId = "<%=userId%>";
         var userTag = "<%=userTag%>";
         var pageIdx = "<%=pageIdx%>";
         var category = "<%=category%>";
         var status = "<%=status%>";
         var item_title =  "<%=item_title%>";
-        
+      
         $(document).ready(function(){
             //resetSearchFilter(".search_filter");
             $('#check_otc').hide();
@@ -20,8 +21,7 @@
             if(category == "") {
                 category = $("input[name='category']:checked").val();
             }
-            //status = $("[name=status]:checked").val();
-            
+
             if(category == "game") {
                 $('#myItemTitle').text("게임 아이템");
                 $('#table_category').text('게임>서버')
@@ -33,6 +33,7 @@
                 $('#table_category').text('카테고리')
             }
             //$("#"+category).prop('checked', true);
+
             setItemStatus(status);
             $('#title').val(item_title);
 
@@ -106,7 +107,6 @@
             getItemList();
         }
         function getItemList() {
-            console.log("call ajax");
             var param = "?category=" + category;
             if(pageIdx != undefined) {
                 param += "&pageIdx=" + pageIdx;
@@ -124,7 +124,7 @@
                 method: "GET",
                 url: "/v1/vtrs/user/" + userId + "/buy" + param
             }).done(function (success) {
-                console.log(success.data);
+                // console.log(success.data);
                 var buyList = success.data.list;
                 var result = "";
                 if(buyList.length == 0) {
@@ -164,12 +164,12 @@
                     var cryptoCurrencyCode = buyList[i].cryptoCurrencyCode == undefined ? "MACH" : buyList[i].cryptoCurrencyCode;
                     var price = numberWithCommas(buyList[i].price);
                     var point = numberWithCommas(buyList[i].point);
+                    var status = getStatus(buyList[i].status);
+                    var trade_type = replaceType(buyList[i].trade_type);
                     var money = point + ' Point';
                     if("<%=useBlockchain%>" =='Y' && buyList[i].status < 100) {
                         money = price + ' ' + cryptoCurrencyCode;
                     }
-                    var status = getStatus(buyList[i].status);
-                    var trade_type = replaceType(buyList[i].trade_type);
                     
                     result += '<tr onclick="location.href=\''+url+'\'">' + 
                                 '<td>'+category+'</td>' + 
@@ -359,7 +359,6 @@
                         method: "DELETE",
                         url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                     }).done(function (success) {
-                        //alert("거래가 취소되었습니다.");
                         if(success.data.successYn == "Y") {
                             alert("거래 취소가 완료되었습니다.");
                             getItemList();
@@ -483,7 +482,9 @@
                 console.log(fail);
             });
         }
+        */
     </script>
+    <%- include('../include/modules/mypage_trading_list.html', {pageType: 'buy'}) %>
 </head>
 <body>
 <div id="wrap" class="wrap">

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        var popup;
+        var currencyCode="";
+        
+        $(document).ready(function() {
+            $('#authPhone').on('click',function(){
+                authPhone();
+            });
+
+            $('#email').keypress(function(){
+                if(window.event.keyCode==13){
+                    findId();
+                }
+            });
+
+            $('#findId').on('click',function(){
+                findId();
+            });
+
+            $("#currencyType").on('change', function() {
+                $("#currencyName").text($("#currencyType").val());
+            });
+
+            $("#phone").on('keyup', function() {
+                if(window.event.keyCode==13){
+                    sendAuthNo();
+                }
+            })
+
+            $("#sendAuthNo").on('click', function() {
+                if($(this).text() == "Resend" ) {
+                    var obj = { subTitle: "The authentication code has been resent."};
+                    _ModalUI.init(obj, "alert");  
+                }
+                sendAuthNo();
+            });
+
+            // $("#reSendAuthNo").on('click', function() {
+            //     sendAuthNo();
+            //     alert("인증번호를 재발송 하였습니다.");
+            // });
+
+            $("#checkAuthNo").on('click', function() {
+                checkAuthNo();
+            });
+
+            loadCurrencyList();
+            $('.auth_no_class').hide();
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+        });
+
+        function authPhone(){
+            popup = window.open("/reg/auth/start","PAY_WIN","width=480,height=570,toolbar=no,menubar=no,scrollbars=no,resizable=yes");
+            var interval = window.setInterval(function() {
+                try {
+                    //console.log("popup : ", popup);
+                    if (popup == null || popup.closed) {
+                        window.clearInterval(interval);
+                        location.href = '/findResult?type=findId';
+                    }
+                }
+                catch (e) {
+                }
+            }, 2000);
+        }
+
+        function loadCurrencyList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/countryCodes"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_en + '('+ success.data[i].country_code +')' + '</option>'
+                }
+
+                $("#currencyType").html(strDOM);
+                $("#currencyType").selectpicker('refresh');
+                $("#currencyType").val(currencyCode).attr("selected", "selected");
+                $("#currencyType").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function sendAuthNo() {
+            if($("#currencyType").val() == "") {
+                var obj = { subTitle: "Please select the country."};
+                _ModalUI.init(obj, "alert");  
+                return;
+            } else if($("#phone").val() == "") {
+                var obj = { subTitle: "Please input the phone number."};
+                _ModalUI.init(obj, "alert");  
+                return;
+            }
+            
+            $(".submit_ctc_code_top .btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkMobile",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                $('.auth_no_class').show();
+                $('#sendAuthNo').text("Resend");
+                $('#phone').prop('readonly', true);
+                $('#currencyType').prop('readonly', true);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function checkAuthNo() {
+            if($("#authNo").val() == "") {
+                var obj = { subTitle: "Please input the authentication code."};
+                _ModalUI.init(obj, "alert");  
+                return;
+            } 
+
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val(),
+                'authNo': $("#authNo").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkAuthNo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                if(success.data.successYn == "fail") {
+                    var obj = { subTitle: 'The authentication code is invalid. Please check it.'};
+                    _ModalUI.init(obj, "alert");  
+                    return;
+                } else {
+                    location.href = '/findResult?type=findId';
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function findId() {
+            // var name = $("#name").val();
+            var email = $("#email").val();
+
+            // if(name == "") {
+            //     alert("Please input the name.");
+            //     return;
+            // }
+
+            if(email == "") {
+                var obj = { subTitle: 'Please input the e-mail.'};
+                _ModalUI.init(obj, "alert");  
+                return;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/notifications/email/findId/" + email
+            }).done(function (success) {
+                console.log(success);
+                //location.href = "/existUser?id=" + success.data._id;
+                var obj = { subTitle: 'You have successfully sent mail.\nPlease check and sign in.'};
+                _ModalUI.init(obj, "alert");  
+                location.href="/login";
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    location.href="/noResult";
+                } else {
+                    console.log(fail);
+                }
+
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+
+            <!-- page-->
+            <section class="find_info_sec">
+               <ul class="tab_find_info cf">
+                   <li class="on"><a href="findId"><h1>Find ID</h1></a></li>
+                   <li><a href="/findPassword">Find password</a></li>
+               </ul>
+               <div class="find_info_box">
+                    <h2>by phone number</h2>
+                    <div class="align_c">
+                        <div class="submit_ctc_code">
+                            <div class="submit_ctc_code_top no_w100p_wrap">
+                                <select id="currencyType" class="selectpicker" data-size="5" data-live-search="true"></select>
+                                <input type="text" class="form-control w80p" id="phone" placeholder="your phone number. ex)01012345678" maxlength="24"> 
+                            </div>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1 send_auth_class" id="sendAuthNo">Send</button>
+                            </div>
+                        </div>
+                        <div class="confirm_ctc_code auth_no_class">
+                            <input type="text" class="form-control" id="authNo" placeholder="Authentication Code." maxlength="24">
+                            <br>
+                            <button class="btn btn_in_view1" id="checkAuthNo">Next</button>
+                        </div>
+                    </div>
+                    <!-- <div class="btn_align_c">
+                        <button class="btn btn_in_view3" id="authPhone">휴대폰 인증</button>
+                    </div> -->
+                    <div class="align_c">
+                        <hr>
+                        <h2>by email</h2>
+                        <p>
+                            You need to enter the same email address as your account information.<br>
+                            ※ Your ID will be sent to your email address. "
+                        </p>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>
+                                    <!-- <tr>
+                                        <th class="fc2">Name</th>
+                                        <td><input type="text" class="form-control" id="name" placeholder=""></td>
+                                    </tr>          -->
+                                    <tr>
+                                        <th class="fc2">Email</th>
+                                        <td><input type="text" class="form-control" id="email" placeholder=""></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view2" id="findId">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--//  page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

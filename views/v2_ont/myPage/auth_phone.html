@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<% include ../include/head.html %>
+<script>
+/* 각 인풋태그와 셀렉태그의 id값
+firstName
+surname
+selectSex
+dataOfBirth
+selectType
+authImage
+uniqueNo
+issueDate
+submit
+*/
+var sel_files = [];
+var userId = "<%=userId%>";
+var userTag = "<%=userTag%>";
+var newKyc = true;
+
+$(document).ready(function() {
+    var $firstName = $("#firstName");
+    var $surname = $("#surname");
+    var $dataOfBirth = $("#dataOfBirth");
+    var $authImage = $("#authImage");
+    var $uniqueNo = $("#uniqueNo");
+    var $issueDate = $("#issueDate");
+
+    $(".input_imgs").on("change", singleUpload);
+
+    getKyc();
+
+    $("#btnSubmit").on("click", function(){
+        ajaxLoginYnCheck(function(){
+            if($firstName.val() == "") {
+                var obj = { subTitle: "Please input your first name."};
+                _ModalUI.init(obj, "alert");                
+                return false;
+            }
+            if($surname.val() == "") {
+                var obj = { subTitle: "Please input your surname."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+            if($dataOfBirth.val() == "") {
+                var obj = { subTitle: "Please input your date of birth."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+            if($authImage.val() == "" && newKyc == true) {
+                var obj = { subTitle: "Please upload your image."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+            if($uniqueNo.val() == "") {
+                var obj = { subTitle: "Please input the No."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+            if($issueDate.val() == "") {
+                var obj = { subTitle: "Please input the issue date."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+
+            //////////////////submit code 작성 라인////////////////////
+            var reqData = {
+                'firstName': $('#surname').val(),
+                'lastName': $('#firstName').val(),
+                'middleName': $('#middleName').val(),
+                'gender': $('#selectSex').val(),
+                'birth': $('#dataOfBirth').val(),
+                'type': $('#selectType').val(),
+                'idNo': $('#uniqueNo').val(),
+                'issueDate':$('#issueDate').val(),
+                'userTag': userTag,
+                'userId': userId
+            }
+            
+            var method = "POST";
+            var url = "/v1/kycs";
+            if(!newKyc) {
+                method = "PUT";
+                url = "/v1/kycs/" + userId;
+            }
+
+            $.ajax({
+                method: method,
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                    $("#ajaxSpiner").show(); // spinner
+                    var pos = $("#spinnerTarget").offset().top - 100;
+                    $("html, body").animate({
+                        "scrollTop":pos
+                    },0);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                submitAction(success.data._id);
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+                $("#ajaxSpiner").hide(); // spinner
+            })
+        });
+    });
+
+    function getKyc() {
+        $.ajax({
+            method: "GET",
+            url: "/v1/kycs/" + userId
+        }).done(function (success) {
+            if(success.data != null) {
+                var firstName = success.data.firstName;
+                var lastName = success.data.lastName;
+                var birth = success.data.birth;
+                var gender = success.data.gender;
+                var idNo = success.data.idNo;
+                var issueDate = success.data.issueDate;
+                var type = success.data.type;
+                var middleName = success.data.middleName;
+                newKyc = false;
+                if(success.data.images[0] !== null) {
+                    var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                    for(var i=0;i<success.data.images.length; i++) {
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                            html += '</div>';
+                            html += '</div>';
+                                                        
+                        $("#listOfThumbnail li").eq(i).html(html);
+                    }
+                    $("#fullImg").html(img1th);
+                }
+
+                $('#firstName').val(lastName);
+                $('#surname').val(firstName);
+                $('#middleName').val(middleName);
+                $('#selectSex').val(gender);
+                $('#dataOfBirth').val(birth);
+                $('#selectType').val(type);
+                $('#uniqueNo').val(idNo);
+                $('#issueDate').val(issueDate);
+            } 
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function submitAction(id) {
+        //console.log("업로드 파일 갯수 : "+sel_files.length);
+        var images = new FormData();
+
+        for(var i=0, len=sel_files.length; i<len; i++) {
+            var name = "image";
+            if(sel_files[i] !== undefined) images.append(name, sel_files[i].value);
+        }
+
+        if(sel_files.length == 0) {
+            var obj = { subTitle: 'Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. '};
+            _ModalUI.init(obj, "alert");
+            location.href = '/myPages/user/authPhone';
+            return;
+        }
+        //console.log(images);
+        //ajax 처리
+        $.ajax({
+            method: "POST",
+            url: "/v1/kycs/"+id+"/images",
+            processData: false,
+            contentType: false,
+            data: images
+        }).done(function (success) {
+            //console.log(success);
+            $("#ajaxSpiner").hide(); // spinner
+            var obj = { subTitle: 'Your Identity verification(KYC) request has been submitted successfully and will be reviewed within 3 business days. '};
+            _ModalUI.init(obj, "alert");
+            location.href = '/myPages/user/authPhone';
+        }).fail(function (fail) {
+            console.log('실패',fail);
+            $("#ajaxSpiner").hide(); // spinner
+        })
+    }
+});
+</script>
+</head>
+<style>
+.auth_phone_sec {
+    max-width: 840px;
+}
+.auth_phone_sec .thumbnail_btn_list {
+    margin: 20px 0 20px 0;
+}
+.auth_phone_sec .imgs_wrap .list_of_thumbnail li {
+    height: auto;
+}
+.auth_phone_sec .imgs_wrap .thumbnail_box {
+    margin: 0;
+}
+.auth_phone_sec .imgs_wrap .thumbnail_btn_list li {
+    width: auto;
+}
+.auth_phone_sec .notice_text {
+    color: red;
+}
+@media (max-width: 769px){
+    .auth_phone_sec .notice_text {
+        font-size: 12px;
+    }  
+    .auth_phone_sec .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+        width: 100%;
+    }
+}
+@media (max-width: 576px){
+    .auth_phone_sec .imgs_wrap .thumbnail_btn_list {
+        position: static
+    }   
+}
+
+</style>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec auth_phone_sec">
+                        <h1 class="tit_mypage">My Account <span>Verification KYC</span></h1>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table auth_phone">
+                                <colgroup class="colgroup_signup">
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>First name</th>
+                                        <td>
+                                            <input type="text" class="form-control w80p name" id="firstName" max="50" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Surname</th>
+                                        <td>
+                                            <input type="text" class="form-control w80p name" id="surname" max="50" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Middle name</th>
+                                        <td>
+                                            <input type="text" class="form-control w80p name" id="middleName" max="50" placeholder="Optional">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sex</th>
+                                        <td>
+                                            <select id="selectSex" class="form-control" data-size="2" data-live-search="true">
+                                                <option value="M" selected>Male</option>
+                                                <option value="F">Female</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date of birth</th>
+                                        <td><input type="text" class="form-control" id="dataOfBirth" name="dataOfBirth" max="8" placeholder="YYYYMMDD"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Type</th>
+                                        <td>
+                                            <select id="selectType" class="form-control" data-size="5" data-live-search="true">
+                                                <option value="card" selected>ID Card</option>
+                                                <option value="license">Driver's license</option>
+                                                <option value="passport">Passport</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Image</th>
+                                        <td>
+                                            <div class="product_img_list">
+                                                <div class="imgs_wrap">
+                                                    <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                        <li></li>
+                                                    </ul>
+        
+                                                    <ul class="thumbnail_btn_list cf">
+                                                        <li><label for="authImage" class="label_input_imgs">Browse</label></li>
+                                                        <input type="file" class="input_imgs" id="authImage" index="0" accept="image/*" style="width: 0; height:0;"/> 
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div id="fullImg"></div>
+                                            <p class="notice_text">※ upload an image that includes your face.</p>
+                                            <p class="notice_text">※ If you upload image without your face, it should be a reason for reject.</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>No.</th>
+                                        <td>
+                                            <input type="text" class="form-control" id="uniqueNo" name="uniqueNo" max="24" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Issue date</th>
+                                        <td><input type="text" class="form-control" id="issueDate" name="issueDate" max="8" placeholder="YYYYMMDD"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> 
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="btnSubmit">Save</button>
+                        </div>              
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../include/footer.html %>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'register'}) %>
+</div>
+</body>                

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type='text/javascript'>
+        //<![CDATA[
+        var client_id = 'N190vIFvGWb_8YJWKoLJ';
+        var redirectURI = "http://localhost:3000/naverLoginCallback";
+        var state;
+        var callbackUrl = "<%=callbackUrl%>";
+        var client = CyanoMobile.client;     
+        client.registerClient();
+
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('b1df4eec5132836f4c9ea5311dfd80fa');
+        var naver_id_login = new naver_id_login(client_id, redirectURI);
+
+        function enterkey(){
+            if(window.event.keyCode==13){
+                login();
+            }
+        }
+
+        function login() {
+            var id = $("#userId").val();
+            var password = $("#password").val();
+            var data = {
+                "userTag": id,
+                "password": password
+                // "country": $('[name=country]').val()
+            };
+
+            // if($("input:checkbox[name='remember-me']").is(":checked")==true){
+            //     data["remember"]=true;
+            // }else{
+            //     data["remember"]=false;
+            // }
+
+            console.log("data : ",data);
+            $.ajax({
+                method: "POST",
+                url: "/v1/users/login",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+
+            }).done(function (success) {
+                location.href=success.data.originalUrl;
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    var obj = { subTitle: 'ID or Password is incorrect. Please enter again.'};
+                    _ModalUI.init(obj, "alert");
+                } else {
+                    console.log(fail);
+                }
+            })
+        }
+    
+        async function ontLogin() {
+            const params = {
+                type: 'account',// account or identity that will sign the message
+                dappName: 'MarketMACH', // dapp's name
+                dappIcon: 'https://www.marketmach.com/static/img/h_logo.png', // some url that points to the dapp's icon
+                message: 'MarketMACH Login.', // message sent from dapp that will be signed by native client
+                expired: new Date().getTime() * 10 * 60 * 60, // expired date of login
+            }
+            try {
+                let res = await client.api.message.login(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/ontology/callback/login",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(res)
+                }).done(function (success) {
+                    if(success.data.exist) {
+                        location.replace('/main');
+                    } else {
+                        location.replace('/ontology_reg_user');
+                        //$('#result').html('ont Id no exist.');   
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                    $('#result').html('System Error.');
+                })
+            }catch(err) {
+                console.log(err);
+                $('#result').html('System Error.');
+                //$('#result').html(JSON.stringify(err));
+            }
+        }
+
+        // 카카오 로그인 버튼을 생성합니다.
+        function loginWithKakao() {
+            // 로그인 창을 띄웁니다.
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    //to-do : 비동기 처리로 user 데이터를 조회 후 저장한다.
+                    console.log(authObj)
+                    location.href="/";
+                },
+                fail: function(err) {
+                    //에러처리한다.
+                    console.log(err);
+                }
+            });
+        };
+
+        function loginWithNaver() {
+            // 로그인 창을 띄웁니다.
+            state = naver_id_login.getUniqState();
+            // naver_id_login.setButton("white", 2,40);
+            naver_id_login.setDomain("http://localhost:3000");
+            naver_id_login.setState(state);
+            naver_id_login.setPopup();
+            //naver_id_login.init_naver_id_login();
+            var url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirectURI + '&state=' + state;
+            window.open(url, 'naverloginpop', 'titlebar=1, resizable=1, scrollbars=yes, width=600, height=550');
+        };
+        //]]>
+    </script>
+</head>
+<body>
+<div class="ont_m_signin" id="wrap">
+    <div class="signin_head">
+        <h1 class="signin_logo">
+            <a href="/main">
+                <img src="/static/img/h_logo.png" alt="MACH">
+            </a>
+        </h1>
+    </div>
+    <div class="signin_body">
+        <!--remove autocomplete-->
+        <input style="display:none" aria-hidden="true">
+        <input type="password" style="display:none" aria-hidden="true">
+        <!--remove autocomplete end-->
+
+        <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
+        <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
+
+        <!--
+            <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
+        -->
+        <div class="tac">
+            <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
+            <button class="btn_signin btn_cmn" onclick="login()">Sign in</button>
+            <a class="btn_signup btn_cmn" href="/agreement" class="">Sign Up</a>
+            <hr>
+            <em class="txt_or">OR</em>
+        </div>
+
+        <button class="btn_signin_ont btn_cmn" onclick='ontLogin();'>
+            <span>Sign in with ONT</span>
+        </button>
+    </div>
+    <div class="signin_foot">
+        <div id="result"></div>
+    </div>
+</div>
+</body>
+</html>

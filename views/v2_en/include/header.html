@@ -5,14 +5,7 @@
     var selecValue;
 
     $(document).ready(function(){
-        
-        if(location.pathname == "/" || location.pathname == "/main" || location.pathname == "/etc-sells") {
-            selecValue = "assets";
-        } else if(location.pathname == "/otc-sells") {
-            selecValue = "otc";
-        } else if(location.pathname == "/sells") {
-            selecValue = "games";
-        }
+        selecValue = $(".srch_select").val(); // 검색 할 대상값 설정
 
         $(".srch_select, .m_srch_select").on("change", function(){
             selecValue = $(this).val();

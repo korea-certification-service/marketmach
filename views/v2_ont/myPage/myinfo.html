@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%= userId %>";
+        var authPhone = "<%= authPhone %>";
+        var username;
+        var userTag;
+        var phone;
+        var birth;
+        var sex;
+        var commId;
+        var foreigner;
+        var email;
+        var coinId;
+        var checkEmailYn = true;
+        var bitberry_token;
+        var total_mach = 0;
+        var currencyCode="";
+        var checkAuthNoYn = true;
+        
+        $(document).ready(function() {
+            loadData();
+
+            $('#email').on('keyup',function(){
+                if(email == $('#email').val()) {
+                    checkEmailYn = true;
+                } else {
+                    checkEmailYn = false;
+                }
+            });
+
+            $("#authPhone").on('click', function() {
+                //fnAuthPhone();
+            });
+
+            $("#checkEmail").on('click', function() {
+                checkEmail();
+            });
+
+            $("#modifyUser").on('click', function() {
+                ajaxLoginYnCheck(modifyUser);
+            });
+
+            $("#withdraw").on('click', function() {
+                //alert("1:1문의에 회원탈퇴희망 게시글을 작성해주세요.")
+                //location.href="/supports/private/register";
+                withdraw();
+            });
+
+            $("#phone").on('keyup', function() {
+                if(phone != $("#phone").val()) {
+                    checkAuthNoYn = false;
+                } else {
+                    checkAuthNoYn = true;
+                }
+                if(window.event.keyCode==13){
+                    sendAuthNo();
+                }
+            })
+
+            $("#sendAuthNo").on('click', function() {
+                checkAuthNoYn = false;
+                if($(this).text() == "Resent" ) {
+                    var obj = { subTitle:"The certification code is resent."};
+                    _ModalUI.init(obj, "alert");
+                }
+                sendAuthNo();
+            });
+
+            // $("#reSendAuthNo").on('click', function() {
+            //     sendAuthNo();
+            //     alert("인증번호를 재발송 하였습니다.");
+            // });
+
+            $("#checkAuthNo").on('click', function() {
+                checkAuthNo();
+            });
+
+            $('.auth_no_class').hide();
+        });
+
+        function loadData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/users/" + userId
+            }).done(function (success) {
+                //console.log(success);
+                username = success.data.userName;
+                userTag = success.data.userTag;
+                phone = success.data.phone;
+                email = success.data.email;
+                coinId = success.data.coinId;
+                bitberry_token = success.data.bitberry_token;
+                currencyCode = success.data.countryCode;
+
+                $("#username").text(username);
+                $("#userTag").text(userTag);
+                $("#phone").val(phone);
+                $("#email").val(email);
+                
+                getCoin();
+                loadCurrencyList();
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                //console.log(success);
+                total_mach = success.data.total_mach;
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function fnAuthPhone(){
+            popup = window.open("/modify/auth/start","PAY_WIN","width=480,height=570,toolbar=no,menubar=no,scrollbars=no,resizable=yes");
+            var interval = window.setInterval(function() {
+                try {
+                    //console.log("popup : ", popup);
+                    if (popup == null || popup.closed) {
+                        window.clearInterval(interval);
+                        
+                        $.ajax({
+                            type: 'GET',
+                            url: '/getPhone',
+                        }).done(function (success) {                
+                            //console.log("success : ", success);
+                            if(success.data.authPhone) {
+                                authPhone = success.data.authPhone;
+                                username = success.data.userName;
+                                birth = success.data.birth;
+                                sex = success.data.sex;
+                                commId = success.data.commId;
+                                foreigner = success.data.foreigner;
+                                $("#username").text(username);
+                                $("#phone").text(success.data.phone);
+                            }
+                        }).fail(function (fail) {
+                            console.log(fail);
+                        });
+                    }
+                }
+                catch (e) {
+                }
+            }, 2000);
+        }
+
+        function checkEmail() {
+            if($("#email").val() == "") {
+                var obj = { subTitle:"Please input a e-mail."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/v1/users/email/' + $("#email").val(),
+            }).done(function (success) {                
+                //console.log("success : ", success);
+                checkEmailYn = true;
+                var obj = { subTitle:'Email available.'};
+                _ModalUI.init(obj, "alert");
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    var obj = { subTitle:'This email is already in use.'};
+                    _ModalUI.init(obj, "alert");
+                } else {
+                    console.log(fail);
+                }
+            });
+        }
+
+        function modifyUser() {
+            
+            var result = validUser();
+            if(!result) {
+                return;
+            }
+
+            var userReq = {};
+
+            if(authPhone != "<%= authPhone %>") {
+                userReq = {
+                    "agreements": {"authPhone": authPhone}
+                };               
+                userReq["phone"] = $("#phone").val();
+                userReq["userName"] = username;
+                userReq["birth"] = birth;
+                userReq["sex"] = sex;
+                userReq["commId"] = commId;
+                userReq["foreigner"] = foreigner;                
+            }
+            
+            if (email != $("#email").val()) {
+                userReq["email"] = $("#email").val();                
+            }
+
+            if ($("#password").val().length > 5) {
+                userReq["password"] = $("#password").val();
+            }
+
+            if (phone != $("#phone").val()) {
+                userReq["phone"] = $("#phone").val();              
+            }
+
+            if (Object.keys(userReq).length > 0) {
+                $.ajax({
+                    method: "PUT",
+                    url: "/v1/users/" + userId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(userReq)
+                }).done(function (success) {
+                    //console.log("user change : ", success);
+                    location.href = '/myPages/user/checkPassword';
+                }).fail(function (fail) {
+                    console.log(fail);
+                })
+            } else {
+                var obj = { subTitle:"Nothing to change."};
+                _ModalUI.init(obj, "alert");
+            }
+        }
+
+        function validUser() {
+            var emailChk = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+            if($("#password").val() != "" && $("#passwordConfirm").val() == "") {
+                var obj = { subTitle:"Please enter the password again."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if($("#password").val() != "" && ($("#password").val().length <= 5 || checkPassword($("#password").val()) == false)) {
+                var obj = { subTitle:"Please enter 6~20 characters in english+numeric or special characters."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if($("#password").val() != $("#passwordConfirm").val()) {
+                var obj = { subTitle:"Your password is incorrect.\nPlease enter a password."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if(!checkEmailYn) {
+                var obj = { subTitle:"Please confirm your e-mail duplication."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if (emailChk.test($("#email").val()) == false) {
+                var obj = { subTitle:"Please confirm your e-mail."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if(checkAuthNoYn == false) {
+                var obj = { subTitle:"Please certificate your phone."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            }
+
+            return true;
+        }
+
+        function checkPassword(value) {
+            let idReg = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+            if( !idReg.test( value ) ) {
+                return false;
+            }
+            return true;
+        }
+        
+        function withdraw() {
+            // if(total_mach > 0) {
+            //     alert('보유 중인 MACH코인이 존재합니다. MACH 코인을 출금하세요.');
+            //     location.href = '/myPages/wallet/withdraw';
+            //     return;
+            // }
+        
+            var obj1 = { class: 'negative', subTitle: 'if you withdraw your account, all information including your wallet balance and points balance will be deleted and will not be recovered. \nDo you really want to close your account?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {  
+                    if(bitberry_token != undefined && bitberry_token != "") {
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/coins/disconnect"
+                        }).done(function (success) {
+                            //console.log(success.data);
+                            deleteUser();
+                        }).fail(function (fail) {
+                            console.log(fail)
+                        });
+                    } else {
+                        deleteUser();
+                    }
+                }
+            })
+        }
+        
+        function deleteUser() {
+            $.ajax({
+                method: "DELETE",
+                url: "/v1/users/" + userId
+            }).done(function (success) {
+                location.href = "/logout"
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function loadCurrencyList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/countryCodes"
+            }).done(function (success) {
+                var strDOM = '<option value="">Choice</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].country_code + '">' + success.data[i].country_en + '('+ success.data[i].country_code +')' + '</option>'
+                }
+
+                $("#currencyType").html(strDOM);
+                $("#currencyType").selectpicker('refresh');
+                $("#currencyType").val(currencyCode).attr("selected", "selected");
+                $("#currencyType").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function sendAuthNo() {
+            if($("#currencyType").val() == "") {
+                var obj = { subTitle:"Please select country code."};
+                _ModalUI.init(obj, "alert");
+                return;
+            } else if($("#phone").val() == "") {
+                var obj = { subTitle:"Please input your phone number."};
+                _ModalUI.init(obj, "alert");
+                return;
+            } else if($("#phone").val() == phone) {
+                var obj = { subTitle:"Nothing change your number."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+            $(".btn.dropdown-toggle.btn-light").attr("disabled", "disabled");
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkMobile",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                $('.auth_no_class').show();
+                $('#sendAuthNo').text("Resent");
+                $('#phone').prop('readonly', true);
+                $('#currencyType').prop('readonly', true);
+            }).fail(function (fail) {
+                console.log(fail);
+                var obj = { subTitle:"There was a problem sending. Please make sure your phone number is entered correctly.\n If you continue to experience difficulties, please contact your administrator."};
+                _ModalUI.init(obj, "alert");
+            })
+        }
+
+        function checkAuthNo() {
+            if($("#authNo").val() == "") {
+                var obj = { subTitle:"Please input a certification number."};
+                _ModalUI.init(obj, "alert");
+                return;
+            } 
+
+            var reqData = {
+                'countryCode':$("#currencyType").val(),
+                'phone': $("#phone").val(),
+                'authNo': $("#authNo").val()
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/sms/user/checkAuthNo",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(reqData),
+            }).done(function (success) {
+                console.log(success);
+                if(success.data.successYn == "fail") {
+                    var obj = { subTitle:"The verification number is invalid. Please verify your verification number."};
+                    _ModalUI.init(obj, "alert");
+                    return;
+                } else {
+                    var obj = { subTitle:"It is completely your phone certification."};
+                    _ModalUI.init(obj, "alert");
+                    checkAuthNoYn = true;
+                    $("#checkAuthNo").hide();
+                    $("#sendAuthNo").attr("disabled", "disabled");
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+    </script>
+
+  
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Account <span>Edit Account Information</span></h1>
+                        <hr class="hr_mypage">
+                        <div class="table_wrap table-responsive">
+                            <table class="table_view table">
+                                <colgroup class="colgroup_myinfo">
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th class="fc2">name</th>
+                                        <td><em id="username"></em></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">ID</th>
+                                        <td><em id="userTag"></em></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">Password</th>
+                                        <td><input type="password" autocomplete="new-password" class="form-control" id="password" placeholder="6~20 characters english + number or special character."></td>
+                                    </tr>         
+                                    <tr>
+                                        <th class="fc2">Password Confirm</th>
+                                        <td><input type="password" autocomplete="new-password" class="form-control" id="passwordConfirm" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">Contact (Mobile Phone)</th>
+                                        <!-- <td>
+                                            <em class="w100p-120px" id="phone"></em>
+                                            <br class="mob_br">
+                                            <button class="btn btn-default" id="authPhone">연락처 변경</button>
+                                        </td> -->
+                                        <td class="set_margin">
+                                            <select id="currencyType" class="selectpicker" data-size="5" ata-live-search="true"></select>
+                                            <input type="text" class="form-control w60p" id="phone" placeholder="Your phone number." maxlength="24"> 
+                                            <br class="mob_br">
+                                            <button class="btn btn-default" id="sendAuthNo">Send</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2"></th>
+                                        <td class="auth_no_class">
+                                            <input type="text" class="form-control" id="authNo" placeholder="Authentication Code." maxlength="24">
+                                            <br class="mob_br">
+                                            <button class="btn btn_in_view1" id="checkAuthNo">Confirm</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="fc2">E-mail</th>
+                                        <td class="set_margin">
+                                            <div class="w100p-120px">
+                                                <input type="text" class="form-control" id="email" placeholder="example@mymach.asia">
+                                            </div>
+                                            <br class="mob_br">
+                                            <button class="btn btn-default" id="checkEmail">Confirm Duplication</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn_align_c">
+                            <button class="btn btn_in_view1" id="modifyUser">Save</button>
+                        </div>
+
+                        <div class="deactivate_member">
+                            <hr class="hr_mypage">
+                            <h3 class="fcgr1">Close Account </h3>
+                            <div class="tar">
+                                <button class="btn btn-default" id="withdraw">Close Account</button>
+                            </div>
+                            <ul class="fcgr1">
+                                <li>※ Once you close your account, all your information including MarketMACH account information, transaction statement, VTR record and your balance will be deleted and all the benefits will be expired.</li>
+                                <li>※ Any your infomation cannot be restored though you sign up again after closing your account.</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>                

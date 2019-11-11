@@ -159,9 +159,14 @@
 /* 회원정보수정: .table_view .col2_1 */
 .table .colgroup_myinfo .col2_1{}
 
+/** **/
+.colgroup_buyerlist .col5_1{width: 150px;}
+.colgroup_buyerlist .col5_2{width: 120px;}
+.colgroup_buyerlist .col5_3{width: 70px;}
+.colgroup_buyerlist .col5_4{width: 95px;}
+.colgroup_buyerlist .col5_5{}
 /*** btoc ***/
-.table_btoc .col2_1{width: 158px;}
-
+.table_btoc .colgroup_btoc .col2_1{width: 158px;}
 /********** otc **********/
 .table .colgroup_otc-sells .col4_1{}
 .table .colgroup_otc-sells .col4_2{width: 110px;}
@@ -174,11 +179,12 @@
 }
 
 @media (max-width: 992px){
-
+    .colgroup_buyerlist .col5_5{width: 180px;}
 }
 
 @media (max-width: 767px){
     .table .colgroup_mypage .col3_1{width: 80px;}
+    .table_btoc .colgroup_btoc .col2_1{width: 80px;}
 }
 
 @media (max-width: 576px){

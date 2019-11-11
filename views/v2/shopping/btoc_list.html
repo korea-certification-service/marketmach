@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+    $(document).ready(function() {
+        takeBtocList();
+    });   
+    function takeBtocList() {
+        var reqData = {
+            // "param":{"country":"POINT"},
+            "option": {"pageIdx":0, "perPage":20 }
+        };
+        $.ajax({
+            method: "POST",
+            url: "/shopping/product/list",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(reqData),
+        }).done(function (success) {
+            var res = success.data.list;
+            console.log(res);
+            var html = "";
+            for (var i = 0; i < res.length; i++) {
+                if(!res[i].eventEnd){
+                    html +=  '<li>'
+                            +   '<a href="/shopping/view/'+res[i]._id+'">'
+                            +       '<div class="img_sec">'
+                            +           '<img src="'+res[i].thumnail[0]+'" alt="">'
+                            +       '</div>'
+                } else {
+                    html +=  '<li class="soldout">'
+                        // +   '<a href="/shopping/view/'+res[i]._id+'">'
+                        +   '<a href="javascript:alert(\'품절된 상품입니다.\')">'
+                        +       '<div class="img_sec">'
+                        +           '<img class="img_grey" src="'+res[i].thumnail[0]+'" alt="">'
+                        +       '</div>'
+                }
+
+                    html +=       '<dl>'
+                        +           '<dt>'+res[i].productName+' <em class="tit_new">NEW</em></dt>'
+                        +           '<dd>'
+                        +               '<div class="origin_price">'+numberWithCommas(res[i].originalPrice)+'</div>'
+                        +               '<strong class="price">'+numberWithCommas(res[i].price)+'<span>'+res[i].currencyType+'</span></strong>'
+                        +               '<em class="percent">'+res[i].percentage+'%</em>'
+                        +           '</dd>'
+                        +       '</dl>'
+                        +    '</a>'
+                        +'</li>'
+            }
+
+            $("#productList").append(html);
+        }).fail(function (fail) {
+            console.log(fail);
+        }); 
+    }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- list page-->
+            <section class="btc_product_sec">
+                <div class="btc_product_top">
+                    
+                </div>
+                <div class="cf">
+                    <div class="lft_introduce">
+                        <h1 class="lft_tit"><em>HOT</em> <span>Deal</span></h1>
+                        <p>
+                            마켓마하의<br class="hide_1100">
+                            파격가 아이템을<br class="hide_1100">
+                            바로 확인하세요!
+                        </p>
+                        <ul class="hashtag cf">
+                            <li class="c1"><span># 핫딜</span></li>
+                            <li class="c3"><span># 파격가</span></li>
+                            <li class="c5"><span># 마켓마하</span></li>
+                        </ul> 
+                    </div>
+                    <div class="rgh_content">
+                        <ul id="productList" class="product_list cf">
+
+                        </ul>
+                        <!-- <ul class="product_list cf">
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어 <em class="tit_new">NEW</em></dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어</dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어</dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어</dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어</dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="img_sec">
+                                    <img src="https://via.placeholder.com/260.png/09f/fff" alt="">
+                                </div>
+                                <dl>
+                                    <dt>문정아 중국어</dt>
+                                    <dd>
+                                        <div class="origin_price">19000</div>
+                                        <strong class="price">90000<span>point</span></strong>
+                                        <em class="percent">44%</em>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </section>
+            <!--// list page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

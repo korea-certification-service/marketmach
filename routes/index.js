@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var datetime = require('node-datetime');
 var sessionChecker = require('../utils/session');
 var util = require('../utils/util')
 const dbconfig = require('../config/dbconfig')
@@ -9,7 +8,6 @@ var request = require('request');
 
 let controllerUsers = require('../controllers/users');
 var controllerAgreements = require('../controllers/agreements');
-let controllerBusinessContacts = require('../controllers/businessContacts');
 let controllerAuthPhone = require('../controllers/authPhones');
 let client_id = 'N190vIFvGWb_8YJWKoLJ';
 let client_secret = 'Q352gLIubZ';
@@ -24,6 +22,8 @@ router.get('/ontology', function (req, res, next) {
     } else if(dbconfig.country == "POINT") {
         res.render('v2/common/ontology', {title: 'Bitweb Main'});
         // res.render('v2_point/login/login',  {title: 'Bitweb Main'});         
+    } if(dbconfig.country =="ONTOLOGY") {
+        res.render('v2/common/ontology_mobile', {title: 'Bitweb Main'});
     } else {
         res.render('v2/common/ontology', {title: 'Bitweb Main'});
         // res.render('v2_en/login/login', {title: 'Bitweb Main'});
@@ -39,6 +39,11 @@ router.get('/ontology/sdk', function (req, res, next) {
     }
 });
 
+router.get('/ontology_reg_user', function (req, res, next) {
+    res.render('v2_ont/login/ontology_reg_user', {title: 'Bitweb Main'});
+});
+
+
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
     var ip = req.headers['x-forwarded-for'] ||
@@ -49,75 +54,25 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     console.log('connection IP : ', ip);
 
     if(dbconfig.country == "KR") {
-        res.render('v2/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
+        res.render('v2_point/main/index', util.initParam(req, dbconfig));         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
     } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_en/main/index', util.initParam(req, dbconfig));
     }
 });
 
 router.get('/nodev_index', function (req, res, next) {
     if(dbconfig.country == "KR") {
-        res.render('v2/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/nodev_index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
-    } else {
-        res.render('v2_en/main/nodev_index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_point/main/nodev_index', util.initParam(req, dbconfig));         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
+    }else {
+        res.render('v2_en/main/nodev_index', util.initParam(req, dbconfig));
     }
 });
 
@@ -130,75 +85,13 @@ router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
      console.log('connection IP : ', ip);
 
      if(dbconfig.country == "KR") {
-        res.render('v2/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2/main/index', util.initParam(req, dbconfig));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
-    } else {
-        res.render('v2_en/main/index', {
-            title: 'Bitweb Main',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
-    }
-});
-
-router.get('/currency', function (req, res, next) {
-    if(dbconfig.country =="KR") {
-        res.render('v2/main/currency', {
-            title: 'Currency',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
-    } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/main/currency', {
-            title: 'Currency',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });         
-    } else {
-        res.render('v2_en/main/currency', {
-            title: 'Currency',
-            userId: req.session.userId,userTag:req.session.userTag,
-            coinId: req.session.coinId,
-            pointId: req.session.pointId,
-            authPhone: req.session.authPhone,
-            usePoint:dbconfig.usePoint,
-            useBlockchain:dbconfig.useBlockchain,
-            country:req.session.country
-        });
+        res.render('v2_point/main/index', util.initParam(req, dbconfig));         
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/main/index', util.initParam(req, dbconfig));         
+    }else {
+        res.render('v2_en/main/index', util.initParam(req, dbconfig));
     }
 });
 
@@ -215,7 +108,17 @@ router.get('/login', function (req, res, next) {
         } else {
             res.redirect("/main");
         }
-    } else {
+    } else if(dbconfig.country == "ONTOLOGY") {
+        if(req.session.userTag == undefined || req.session.userTag == "") {
+            //ontology dapp(임시 경로 - 추후 변경)
+            res.render('v2_ont/login/login', {
+                title: 'Bitweb Main',
+                callbackUrl: dbconfig.ontology.callbackUrl
+            });    
+        } else {
+            res.redirect("/main");
+        }     
+    }else {
         if(req.session.userTag == undefined || req.session.userTag == "") {
             res.render('v2_en/login/login', {title: 'Bitweb Main'});
         } else {
@@ -245,6 +148,8 @@ router.get('/findId', function (req, res, next) {
         res.render('v2/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     } else {
         res.render('v2_en/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
     }
@@ -255,6 +160,8 @@ router.get('/findPassword', function (req, res, next) {
         res.render('v2/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     } else {
         res.render('v2_en/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
     }
@@ -282,6 +189,8 @@ router.get('/agreement', function (req, res, next) {
         res.render('v2/login/agreement', data);
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/login/agreement', data);
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/login/agreement', data);
     } else {
         res.render('v2_en/login/agreement', data);
     }
@@ -292,6 +201,8 @@ router.get('/certification', function (req, res, next) {
         res.render('v2/login/certification', {"token":dbconfig.APIToken});
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/login/certification', {"token":dbconfig.APIToken});
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/login/certification', {"token":dbconfig.APIToken});
     } else {
         res.render('v2_en/login/certification', {"token":dbconfig.APIToken});
     }
@@ -313,6 +224,7 @@ router.get('/signup', function (req, res, next) {
         total_mach: dbconfig.bonus.signup,
         countryCode: req.session.countryCode,
         recommander: req.session.recommander,
+        ontId: req.session.ontId,
         pushMarketing: false
     };
 
@@ -347,6 +259,8 @@ router.get('/signup', function (req, res, next) {
                                     res.render('v2/login/signup', data);
                                 } else if(dbconfig.country == "POINT") {
                                     res.render('v2_point/login/signup',data);
+                                } else if(dbconfig.country == "ONTOLOGY") {
+                                    res.render('v2_ont/login/signup',data);
                                 } else {
                                     res.render('v2_en/login/signup', data);
                                 }
@@ -358,6 +272,8 @@ router.get('/signup', function (req, res, next) {
                                         res.render('v2/login/withdraw', data);
                                     } else if(dbconfig.country == "POINT") {
                                         res.render('v2_point/login/withdraw',data);
+                                    } else if(dbconfig.country == "ONTOLOGY") {
+                                        res.render('v2_ont/login/withdraw',data);
                                     } else {
                                         res.render('v2_en/login/withdraw', data);
                                     }
@@ -366,6 +282,8 @@ router.get('/signup', function (req, res, next) {
                                         res.render('v2/login/signup', data);
                                     } else if(dbconfig.country == "POINT") {
                                         res.render('v2_point/login/signup',data);
+                                    } else if(dbconfig.country == "ONTOLOGY") {
+                                        res.render('v2_ont/login/signup',data);
                                     } else {
                                         res.render('v2_en/login/signup', data);
                                     }
@@ -388,6 +306,11 @@ router.get('/signup', function (req, res, next) {
                             data['phone'] = blacklist[0]._doc.phone;
                             data['regDate'] = blacklist[0]._doc.regDate;
                             res.render('v2_point/login/blacklist', data);
+                        } else if(dbconfig.country == "ONTOLOGY") {
+                            data['id'] = blacklist[0]._doc._id;
+                            data['phone'] = blacklist[0]._doc.phone;
+                            data['regDate'] = blacklist[0]._doc.regDate;
+                            res.render('v2_ont/login/blacklist', data);
                         } else {
                             data['id'] = blacklist[0]._doc._id;
                             data['email'] = blacklist[0]._doc.email;
@@ -409,6 +332,8 @@ router.get('/signup', function (req, res, next) {
                     res.render('v2/login/existUser', data);
                 } else if(dbconfig.country == "POINT") {
                     res.render('v2_point/login/existUser', data);  
+                } else if(dbconfig.country == "ONTOLOGY") {
+                    res.render('v2_ont/login/existUser', data);  
                 } else {
                     res.render('v2_en/login/existUser', data);
                 }
@@ -452,6 +377,8 @@ router.get('/findResult', function (req, res, next) {
                         res.render('v2/login/existUser', data);
                     } else if(dbconfig.country == "POINT") {
                         res.render('v2_point/login/existUser',data);
+                    } else if(dbconfig.country == "ONTOLOGY") {
+                        res.render('v2_ont/login/existUser',data);
                     } else {
                         res.render('v2_en/login/existUser', data);
                     }
@@ -460,6 +387,8 @@ router.get('/findResult', function (req, res, next) {
                         res.render('v2/find/changePassword', data);
                     } else if(dbconfig.country == "POINT") {
                         res.render('v2_point/find/changePassword', data);     
+                    } else if(dbconfig.country == "ONTOLOGY") {
+                        res.render('v2_ont/find/changePassword', data);     
                     } else {
                         res.render('v2_en/find/changePassword', data);
                     }
@@ -489,6 +418,8 @@ router.get('/existUser', function (req, res, next) {
                 res.render('v2/login/existUser', data);
             } else if(dbconfig.country == "POINT") {
                 res.render('v2_point/login/existUser', data);     
+            } else if(dbconfig.country == "ONTOLOGY") {
+                res.render('v2_ont/login/existUser', data);     
             } else {
                 res.render('v2_en/login/existUser', data);
             }
@@ -515,6 +446,8 @@ router.get('/changePassword', function (req, res, next) {
                 res.render('v2/login/existUser', data);
             } else if(dbconfig.country == "POINT") {
                 res.render('v2_point/login/existUser', data);   
+            } else if(dbconfig.country == "ONTOLOGY") {
+                res.render('v2_ont/login/existUser', data);   
             } else {
                 res.render('v2_en/login/existUser', data);
             }
@@ -531,6 +464,8 @@ router.get('/noResult', function (req, res, next) {
         res.render('v2/find/noResult', {title: 'Bitweb find no result'});
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/find/noResult', {title: 'Bitweb find no result'});    
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/find/noResult', {title: 'Bitweb find no result'});    
     } else{
         res.render('v2_en/find/noResult', {title: 'Bitweb find no result'});
     }
@@ -541,6 +476,8 @@ router.get("/signupSuccess", function (req, res, next) {
         res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
     } else if(dbconfig.country == "POINT") {
         res.render('v2_point/login/signupSuccess', {title: 'Bitweb sign up success'});     
+    } else if(dbconfig.country == "ONTOLOGY") {
+        res.render('v2_ont/login/signupSuccess', {title: 'Bitweb sign up success'});     
     } else {
         res.render('v2_en/login/signupSuccess', {title: 'Bitweb sign up success'});
     }
@@ -560,75 +497,27 @@ router.get("/google2def744eaae3698d.html", function (req, res, next) {
 
 router.get('/room', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });
+        res.render('v2/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });      
+        res.render('v2_point/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));    
     } else {
-        res.render('v2_en/common/vtr', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            itemId: req.query.itemId,
-            userTag: req.session.userTag,
-            buyerTag: req.query.buyerTag,
-            sellerTag: req.query.sellerTag,
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url,
-            roomToken: req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId
-        });
+        res.render('v2_en/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
+            req.query.buyerTag, req.query.sellerTag, dbconfig.chatbot_vtr_url,req.query.buyerTag + "|" + req.query.sellerTag + "|" + req.query.itemId));
     }
 });
 
 router.get('/sms/room', function (req, res, next) {
     if(dbconfig.country =="KR") {
-        res.render('v2/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });
+        res.render('v2/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));
     } else if(dbconfig.country == "POINT") {
-        res.render('v2_point/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });       
+        res.render('v2_point/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));     
     } else {
-        res.render('v2_en/common/vtr_for_sms', {
-            title: 'Bitweb VTR',
-            country: dbconfig.country,
-            roomToken: req.query.roomToken,
-            itemId: req.query.itemId,
-            userTag: req.query.user_id,
-            buyerTag: req.query.roomToken.split('|')[0],
-            sellerTag: req.query.roomToken.split('|')[1],
-            chatbot_vtr_url: dbconfig.chatbot_vtr_url
-        });
+        res.render('v2_en/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
+            req.query.roomToken.split('|')[0], req.query.roomToken.split('|')[1], dbconfig.chatbot_vtr_url, req.query.roomToken));
     }
 });
 
@@ -645,11 +534,6 @@ router.get("/checkUrl", token.checkLoginToken, function (req, res, next) {
     } else {
         res.redirect("/chatbot/login");
     }
-});
-
-router.get('/users/info/:trader', function (req, res, next) {
-    let trader = req.params.trader;
-    res.end(trader);
 });
 
 router.get('/naverLoginCallback', function (req, res, next) {
@@ -708,22 +592,6 @@ router.get('/naverLoginCallback', function (req, res, next) {
             console.log('error = ' + response.statusCode);
         }
     });
-});
-
-router.post('/v1/businessContact', function (req, res, next) {
-    let bitwebResponse = new BitwebResponse();
-
-    controllerBusinessContacts.add(req)
-        .then(result => {
-            bitwebResponse.code = 200;
-            bitwebResponse.data = result;
-            res.status(200).send(bitwebResponse.create())
-        }).catch((err) => {
-        console.error('err=>', err)
-        bitwebResponse.code = 500;
-        bitwebResponse.message = err;
-        res.status(500).send(bitwebResponse.create())
-    })
 });
 
 router.get('/reg/auth/start', function (req, res, next) {
@@ -933,65 +801,5 @@ router.post('/fileuploads',  function (req, res, next) {
 router.get('/v1/ajaxLoginYnCheck', function (req, res, next) {
     token.checkLoginTokenAjax(req, res, next);
 });
-
-function eventDay(req, res, next) {
-
-    let currentTime = createCurrentUnixTime();
-    let firstStartDay = '2018-10-31 00:00:00'
-    let firstEndDay = '2018-11-07 23:59:59'
-
-    let secondStartDay = '2018-11-21 00:00:00'
-    let secondEndDay = '2018-11-28 23:59:59'
-
-    let thirdStartDay = '2018-12-12 00:00:00'
-    let thirdEndDay = '2018-12-19 23:59:59'
-
-    console.log('currentTime        =>', currentTime)
-    console.log('firstStartDay      =>', createUnixTime(firstStartDay))
-    console.log('firstEndDay        =>', createUnixTime(firstEndDay))
-
-    switch (true) {
-        case ((createUnixTime(firstStartDay) <= currentTime) &&
-            (createUnixTime(firstEndDay) >= currentTime)):
-            console.log('event term!')
-            req.session.preSalesYN = 'Y';
-            next();
-            break;
-
-        case ((createUnixTime(secondStartDay) <= currentTime) &&
-            (createUnixTime(secondEndDay) >= currentTime)):
-            console.log('event term!')
-            req.session.preSalesYN = 'Y';
-            next();
-            break;
-
-        case ((createUnixTime(thirdStartDay) <= currentTime) &&
-            (createUnixTime(thirdEndDay) >= currentTime)):
-            console.log('event term!')
-            req.session.preSalesYN = 'Y';
-            next();
-            break;
-
-        default:
-            req.session.preSalesYN = 'N';
-            res.redirect('/notsales');
-            break;
-    }
-
-}
-
-var createCurrentUnixTime = function () {
-    let koTime = util.formatDate(new Date().toLocaleString('ko-KR'))
-    let pastDateTime = datetime.create(koTime);
-    // console.log('koTime=>', koTime)
-    // console.log('pastDateTime getTime=>', pastDateTime.getTime())
-
-    return pastDateTime.getTime();
-}
-
-var createUnixTime = function (day) {
-    let pastDateTime = datetime.create(day);
-    return pastDateTime.getTime();
-}
 
 module.exports = router;

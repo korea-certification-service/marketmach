@@ -2,6 +2,308 @@
 <html>
 <head>
     <% include ../include/head.html %>
+<script>
+    var productId = "<%= productId %>";
+    var country = "<%= country %>";
+    var userTag = "<%= userTag %>"; 
+    var reqData = {};
+    var buyYn = "";
+    var productType = "";
+
+    $(document).ready(function() {
+        // resetSearchFilter(".btc_product_sec");
+        // $(".itemLength").val("1");
+
+        // 새로고침시 로딩 아이콘이 보이게 스크롤 이동
+        // window.scrollTo(0, (document.querySelector("#productTab").offsetTop - 300)); 
+
+        if(!_UtilUI.checkLogin()) {
+            // $("#btocMyBalance").text("로그인이 필요합니다.");
+            $("#btocMyBalance").html("<a href='/login'>로그인이 필요합니다.</a>");
+            $("#crcEN").hide();
+        } else {
+            $("#linkDeposit").show();
+            $("#crcEN").show();
+        }
+
+        getProductDetail(); // 상품 상세 정보 가져오기
+
+        $("#orderItem").on("click", orderAction);
+        $("#purchaseItem").on("click", purchaseItem);
+    });
+
+    function orderAction() {
+        // 로그인 했을 경우
+        if(_UtilUI.checkLogin()) {           
+            /* 구매가능 여부 */
+            if(buyYn === "Y") {
+                // 2번째 로직으로 이전
+                var prdPrice = $("#hdProductPrice").val(); // 상품가격
+                var dlvPrice = $("#hdDeliveryPrice").val(); // 배송비
+                var addPrice = parseInt(prdPrice) + parseInt(dlvPrice); // 총합가격
+                var myBalance = parseInt($("#hdBtocNumBalance").val()); // 보유 금액
+
+                /* [판매가+배송비]와 포인트 잔액 비교 -> "포인트가 부족합니다. 포인트 입금하러 가기" */
+                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
+                // 포인트 입금으로 이동
+                if(myBalance < addPrice) {
+                    if(confirm("금액이 부족합니다. 입금하러 가시겠습니까?")){
+                        window.location.href = "/mypages/wallet/deposit";
+                    }
+                }else {
+                    $("#deliveryInfo").show();
+                    $("#receiver").focus();
+                }
+            } else if(buyYn){
+                // -> 구매하기 버튼 비활성화 -> 팝업창 닫음
+                // 우주대특가 주문내역으로 이동
+                if(confirm("이미 구매하신 내역이 있습니다. 주문내역을 확인하시겠습니까?")){
+                    window.location.href = "/myPages/product/list";
+                }
+            } else {
+
+            }
+
+        } else {
+            alert("로그인 후 이벤트 참여 가능합니다");
+            location.href = "/login";
+        }
+    }
+
+    function convertDeliveryType(num){
+        switch (num) {
+            case 0:
+                return "무료배송";
+            case 1:
+                return "택배배송";
+            default:
+                break;
+        }
+    }
+
+    function getBuyYn() {
+        $.ajax({
+            method: "GET",
+            url: "/shopping/product/buyYn/" + productType,
+        }).done(function (success) {
+            // console.log("getBuyYn", success.data.buyYn);
+            buyYn = success.data.buyYn;
+
+            makeBtocTabList(); // 이벤트 중 상품으로 탭 만들기
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    }
+
+    function makeBtocTabList() {
+        var reqData = {
+            // "param":{"country":"POINT"},
+            "option": {"pageIdx":0, "perPage":20 }
+        };
+        $.ajax({
+            method: "POST",
+            url: "/shopping/product/list",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(reqData),
+        }).done(function (success) {
+            var res = success.data.list;
+            var dom='';
+            // console.log(res);
+            res.forEach(function(v, i){                
+                if(!v.eventEnd && i < 2) {
+                    var arrUrl = document.location.href.split('/');
+                    var prdId = arrUrl[5];
+                    if(v._id === prdId) {
+                        // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
+                        dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                    } else {
+                        dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                    }
+                }
+            });
+            dom+='';
+            $("#productTab").append(dom);
+        }).always(function() {
+            // 딤처리 없애기
+            setTimeout(function(){
+                $("#nowLoading").hide();
+            }, 600)
+        })
+    }
+
+    function getProductDetail() {
+        $.ajax({
+            method: "GET",
+            url: "/shopping/product/detail/"+productId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function (success) {
+            var res = success.data;
+            var currency = (res.currencyType === "POINT") ? "point" : res.currencyType;
+            var transCurrency = (res.currencyType === "POINT") ? "포인트" : "마하"; 
+            var deliveryType = "";
+            var eventEnd = res.eventEnd;
+
+            // console.log(res)
+
+            // 더보기
+            if(res.detailUrl){
+                $("#moreInfo").attr("href", res.detailUrl);
+            } else {
+                $("#moreInfo").hide();
+            }
+
+            productType = res.productType;
+            $("#hdProductPrice").val(res.price); // set 상품가격
+            $("#hdDeliveryPrice").val(res.deliveryPrice); // set 배송비
+            $("#hdProductAmount").val(res.leftAmount); // set 재고량
+
+            if(eventEnd || res.leftAmount < 1) {
+                $("#orderItem").attr("disabled","disabled").text("선착순 마감");
+                $("#purchaseItem").attr("disabled","disabled").text("선착순 마감");
+                $(".img_sec_wrap").addClass("soldout");
+            }
+
+            switch (res.deliveryPrice ) {
+                case 0: // 배송 할 필요 없는 물건 ex) 수강권, 기프트콘
+                    deliveryType = "무료배송";
+                    break;
+                default:
+                    deliveryType = numberWithCommas(res.deliveryPrice) + " " + currency;
+                    break;
+            }
+
+            $("#productImg").attr("src", res.thumnail);
+            $("#productName").text(res.productName);
+            $("#productDesc").text(res.productDesc);
+            $("#originalPrice").text(numberWithCommas(res.originalPrice));
+            $("#percentage").text(res.percentage+"%");
+            $("#price").text(numberWithCommas(res.price));
+            $("#deliveryType").text(deliveryType);
+            $(".currencyCode").text(currency);
+            $("#hdCurrencyType").val(currency);
+            $("#crcEN").text(currency);
+            $("#crcKR").text(transCurrency);
+            if(res.imageDetail.length === 0) {
+                $("#imageDetail").remove()
+            } else {
+                $("#imageDetail").attr("src", res.imageDetail[0]);
+            }
+            getBuyYn();
+
+            /* 구매수량 지정가능하던 기존 로직
+            var optCalcAndView = {price: res.price, itemLength: ".itemLength", resultPrice: "#resultPrice", priceForSend:"#priceForSend"};
+            $(optCalcAndView.resultPrice).text(numberWithCommas(res.price));
+
+            _BtoCUI.numberUtil({maxLen: res.leftAmount}); // 구매 가능 갯수 넣기
+            _BtoCUI.calcAndView(optCalcAndView); 
+            $("#priceForSend").val(res.price);
+            */
+        });        
+    }
+
+    function validateInfo() {
+        var state = false;
+        // if($(".itemLength").val() === "") {
+        //     alert("주문 수량을 설정하세요");
+        // }
+        
+        if ($("#receiver").val() === "") {
+            alert("수령인 성함을 입력하세요.");
+        } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
+            alert("수령인 연락처를 입력하세요.");
+        } else if (isNaN($("#phoneNum1").val()) || isNaN($("#phoneNum2").val()) || isNaN($("#phoneNum3").val())) {
+            alert("연락처는 숫자로 입력하세요.");
+        } else if ($("#zipNo").val() === "" ) {
+            alert("제품을 받으실 주소를 입력하세요."); 
+        } else {
+            state = true;
+        }
+
+        return state;
+    }
+    
+    // API call
+    function purchaseItem(e) {    
+       if(validateInfo()) {
+            var prdPrice = $("#hdProductPrice").val(); // 상품가격
+            var dlvPrice = $("#hdDeliveryPrice").val(); // 배송비
+            var addPrice = parseInt(prdPrice) + parseInt(dlvPrice); // 총합가격
+
+            reqData.userTag = userTag;
+            reqData.eventShopId = productId;
+            reqData.country = country;
+            reqData.productName = $("#productName").text();
+            reqData.currencyType = $("#hdCurrencyType").val().toUpperCase();
+            reqData.selectedOptions = [];
+            reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
+            reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
+            reqData.receiver     = $("#receiver").val();
+            // reqData.totalAmount = parseInt($(".itemLength").val());
+            // reqData.totalPrice = parseInt($("#priceForSend").val());
+            reqData.totalAmount = 1;
+            reqData.totalPrice =  addPrice;
+            reqData.memo = $("#deliveryMemo").val();
+
+            // console.log(reqData);
+           
+            //return;
+            var txt = "";
+            txt += "제품명: " + reqData.productName + "\n";
+            txt += "수량: " + reqData.totalAmount + "\n";
+            txt += "받으실분 성함: " + reqData.receiver + "\n";
+            txt += "받으실분 연락처: " + reqData.phone + "\n";
+            txt += "받으실분 주소: " + reqData.address + "\n\n";
+            txt += "입력하신 정보를 확인해주시고 주문하시려면 확인을 눌러주세요. ";
+
+            if(confirm(txt)){
+                _PopupUI.toggleSpiner({isActive: true, target: e.currentTarget});
+                $.ajax({
+                    method: "POST",
+                    url: "/shopping/product/buy",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(reqData)
+                }).done(function (success) {
+                    console.log(success)
+                    if(success.data.successYn === "Y"){
+                        var msg = "정상적으로 구매가 완료되었습니다.";
+                        alert(msg);
+                        window.location.href = "/myPages/product/list";
+                    } else {
+                        alert(success.data.msg);
+                        window.location.reload();
+                    }
+                }).fail(function (fail) {
+                    console.log(fail);
+                }).always(function(){
+                    _PopupUI.toggleSpiner({isActive: false});
+                });            
+            }
+        }
+
+    }  
+    
+    // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
+    //document.domain = "http://192.168.1.200:3000";
+    function goPopup(){
+        // 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+        var pop = window.open("/v2/popup/address_popup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+        
+        // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+        //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+    }
+    /** API 서비스 제공항목 확대 (2017.02) **/
+    function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+                            , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+        // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+        document.form.roadAddrPart1.value = roadAddrPart1;
+        document.form.roadAddrPart2.value = roadAddrPart2;
+        document.form.addrDetail.value = addrDetail;
+        document.form.zipNo.value = zipNo;
+    }    
+</script>
 </head>
 <body>
 <div id="wrap" class="wrap">
@@ -11,70 +313,104 @@
         <% include ../include/m_header.html %>
     </div>
     <!--// header -->
-    <script>
-    //document.querySelector("#btnInfoBox").click();
-    </script>
+
     <!-- content_wrap -->
     <div class="content_wrap">
         <div class="sub_container container">
             <!-- list page-->
-            <section class="board_sec">
-                <div class="board_tit cf">
-                    <h1>한정 이벤트<span>상세 물품</span></h1>
-                    <!-- <button class="btn btn-success">판매등록</button> -->
-                </div>
-
-                <div class="item_images_area cf">
+            <section class="btc_product_sec">
+                <div class="dfb product_detail">
                     <div class="lft_img">
-                        <img src="/static/img/event/bts_img.jpg" alt="">
+                        <ul id="productTab" class="product_tab dfb">
+                        </ul>
+                        <div class="img_sec_wrap">
+                            <div class="img_sec">
+                                <img id="productImg" src="" alt="">
+                                <a id="moreInfo" class="more_info" href="" target="_blank">상품정보 자세히 보기</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="rgh_txt">
-                        <h2 class="iia_title">BTS 핸드크림</h2>
-                        <em class="iia_delivery">무료배송</em>
-                        <span class="iia_money">45000원</span> <span class="iia_percent">22%</span>
-                        <em class="iia_price">30MACH / 35000Point</em>
-                        <div class="choice_method">
-                            <h3 class="iia_option dib">결제 수단</h3>
-                            <select id="paymentMethod">
-                                <option value="">선택</option>
-                                <option value="mach">MACH</option>
-                                <option value="point">Point</option>
-                            </select>
-                        </div>
-                        <h3 class="iia_option">구매옵션</h3>
-                        <div class="like_select_box">
-                            <button id="btnSelected" class="btn_slt"><em>선택</em><span>▼</span></button>
-                            <div class="slt_sec">
-                                <ul id="sltList">
-                                    <li><span class="productName">BTS핸드크림</span> <span class="priceMach">30MACH</span><span class="pricePoint">35000point</span></li>
-                                    <!-- <li><span class="productName">가영크림</span> <span class="priceMach">1MACH</span><span class="pricePoint">11point</span></li>
-                                    <li><span class="productName">나영크림</span> <span class="priceMach">2MACH</span><span class="pricePoint">22point</span></li>
-                                    <li><span class="productName">다영크림</span> <span class="priceMach">3MACH</span><span class="pricePoint">33point</span></li>
-                                    <li><span class="productName">마영크림</span> <span class="priceMach">4MACH</span><span class="pricePoint">44point</span></li>
-                                    <li><span class="productName">바영크림</span> <span class="priceMach">5MACH</span><span class="pricePoint">55point</span></li>
-                                    <li><span class="productName">사영크림</span> <span class="priceMach">6MACH</span><span class="pricePoint">66point</span></li> -->
+                        <dl>
+                            <dt>
+                                <h1 id="productName"></h1>
+                                <p id="productDesc"></p>
+                            </dt>
+                            <dd>
+                                <ul>
+                                    <li class="cf">
+                                        <em class="l_tit">소비자가</em>
+                                        <div class="r_col before_price"><span id="originalPrice"></span><span class="currencyCode"></span></div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">판매가</em>
+                                        <div class="r_col after_price">
+                                            <span id="price"></span><span class="currencyCode"></span> 
+                                            <!--<span class="txt_percentage" id="percentage"></span>-->
+                                            <input type="hidden" id="hdProductPrice">
+                                            <input type="hidden" id="hdProductAmount">
+                                            <input type="hidden" id="hdCurrencyType">
+                                        </div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">배송</em>
+                                        <div class="r_col">
+                                            <span id="deliveryType"></span>
+                                            <input type="hidden" id="hdDeliveryPrice">
+                                        </div>
+                                    </li>
+                                    <li class="cf">
+                                        <em class="l_tit">수량</em>
+                                        <div class="r_col">
+                                            <p>1개 (ID당 1회만 주문 가능)</p>
+                                        </div>
+                                    </li>
+                                    <!-- <li class="cf" id="">
+                                        <em class="l_tit">상품정보</em>
+                                        <div class="r_col">
+                                            <a href="" target="_blank">더보기</a>
+                                        </div>
+                                    </li> -->
+                                    <!-- <li class="cf">
+                                        <em class="l_tit">구매옵션</em>
+                                        <div class="r_col buy_opt_wrap">
+                                            <ul id="selectedList">
+                                                <li class="cf">
+                                                    <span class="item_calc">
+                                                        <button class="btnMinus btn_calc">－</button>
+                                                        <input type="text" class="itemLength item_length" maxlength="3" value="1">
+                                                        <button class="btnPlus btn_calc">＋</button>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li> -->
                                 </ul>
+                            </dd>
+                        </dl>
+                        <!-- <div class="total_calc">
+                            <em>총 합계금액 </em>
+                            <strong class="calc_price" id="resultPrice"></strong>
+                            <span class="currencyCode"></span>
+                            <input type="hidden" id="currencyType">
+                            <input type="hidden" id="priceForSend">
+                        </div> -->
+                        <div class="btm_fix_wrap">
+                            <dl class="my_cash_view dfb">
+                                <dt>나의 <span id="crcKR"></span> 잔액</dt>
+                                <dd>
+                                    <em id="btocMyBalance"></em> <span id="crcEN"></span>
+                                    <input type="hidden" id="hdBtocNumBalance">
+                                </dd>
+                            </dl>
+                            <div class="order_btn_sec dfb">
+                                <a id="linkDeposit" class="btn_bk_line" href="/mypages/wallet/deposit">Coin 입금하기</a>
+                                <button class="btn_bk_color" id="orderItem">주문하기</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="item_select_area">
-                    <h2 class="btoc_data_tit">선택한 항목</h2>
-                    <div class="selected_item">
-                        <ul id="selectedList">
-                            <li class="cf">
-                                <span class="itemTitle item_title"></span>
-                                &nbsp;
-                                <span class="itemPrice item_price"></span>
-                                <span class="item_calc">
-                                    <button class="btnMinus btn_calc">－</button>
-                                    <input type="text" class="itemLength item_length" maxlength="3" value="1">
-                                    <button class="btnPlus btn_calc">＋</button>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
+                <div class="item_select_area" id="deliveryInfo">
                     <h2 class="tit_delivery">배송정보</h2>
                     <table class="table_btoc">
                         <colgroup class="colgroup_btoc">
@@ -84,7 +420,7 @@
                         <tbody>
                             <tr>
                                 <th>수령인</th>
-                                <td><input type="text" id="receiver" class="form-control" maxlength="10"></td>
+                                <td><input type="text" id="receiver" class="w100 form-control" maxlength="10"></td>
                             </tr>
                             <tr>
                                 <th>연락처</th>
@@ -110,7 +446,7 @@
                                     <td>
                                         <input type="hidden" id="confmKey" name="confmKey" value=""  >
                                         <input type="text" id="zipNo" name="zipNo" class="w100 form-control" readonly >
-                                        <input type="button"  value="주소검색" onclick="goPopup();" class="btn btn-default">
+                                        <input type="button"  value="주소검색" onclick="goPopup();" class="btn btn-line">
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,123 +460,48 @@
                                         <input type="text" id="roadAddrPart2" class="form-control" value="">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th class="align_top">배송요청사항</th>
+                                    <td>
+                                        <input type="text" id="deliveryMemo" class="form-control" value="" maxlength="40">
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </form>
                     <div class="btn_buy_sec">
-                        <button class="btn" onclick="purchaseItem();">구매하기</button>
+                        <button class="btn" id="purchaseItem">구매하기</button>
                     </div>
-                    <div class="item_detail_area">
-                        <img src="/static/img/event/bts_detail.jpg" alt="상품설명">
-                    </div>
+                </div>
+                <dl class="order_noti">
+                    <dt>유의사항</dt>
+                    <dd>
+                        <ul>
+                            <li>·ID당 1회 참여 가능합니다.</li>
+                            <li>·정가 대비 100% 우주대특가 상품으로, 주문 취소 및 환불이 불가합니다. </li>
+                            <li>·주문하신 상품은 주문하신 다음 날(영업일 기준) 일괄 발송됩니다. </li>
+                            <li>·잘못된 회원정보 및 배송지 정보로 미수령한 경우 재발송되지 않습니다.</li>
+                            <li>·한정된 수량으로 이벤트가 조기에 마감될 수 있습니다.</li>
+                            <li>·부정한 방법으로 이벤트 참여시 당첨 대상에서 제외될 수 있습니다. </li>
+                            <li>·이벤트 운영상황에 따라 일부 내용이 변경될 수 있습니다</li>
+                        </ul>
+                    </dd>
+                </dl>
+                <div class="item_detail_area">
+                    <img id="imageDetail" src="" alt="상품설명">
                 </div>
             </section>
             <!--// list page-->
         </div>
     </div>
     <!--// content_wrap -->
-
-    <script>
-    var opt = {btn:"btnSelected", ul:"sltList", selectedList: "selectedList"}
-    _SelectUI.actSelectBox(opt, function(){
-        // callback
-    });
-    _SelectUI.numberUtil();
-
-    getUserInfo();
-
-    // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
-    //document.domain = "http://192.168.0.10:3000";
-    
-    function goPopup(){
-        // 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-        var pop = window.open("/v2/popup/address_popup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-        
-        // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-        //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
-    }
-    /** API 서비스 제공항목 확대 (2017.02) **/
-    function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
-                            , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
-        // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-        document.form.roadAddrPart1.value = roadAddrPart1;
-        document.form.roadAddrPart2.value = roadAddrPart2;
-        document.form.addrDetail.value = addrDetail;
-        document.form.zipNo.value = zipNo;
-    }
-
-    var reqData = {};
-
-    function getUserInfo() {
-        $.ajax({
-            method: "GET",
-            url: "/v1/users/" + "<%= userId %>"
-        }).done(function (success) {
-            //console.log(success.data);
-            reqData.userTag = success.data.userTag;
-        }).fail(function (fail) {
-            console.log(fail);
-        });
-    }
-
-    function validateInfo() {
-        var state = false;
-
-        if ($(".itemTitle").text() === "") {
-            alert("구매하실 제품을 선택하세요.");
-        } else if ($("#receiver").val() === "") {
-            alert("수령인 성함을 입력하세요.");
-        } else if ($("#phoneNum1").val() === "" || $("#phoneNum2").val() === "" || $("#phoneNum3").val() === "") {
-            alert("수령인 연락처를 입력하세요.");
-        } else if ($("#zipNo").val() === "" ) {
-            alert("제품을 받으실 주소를 입력하세요."); 
-        } else {
-            state = true;
-        }
-
-        return state;
-    }
-    
-    // API call
-    function purchaseItem() {
-        if(validateInfo()) {
-            reqData.product      = $(".itemTitle").text();
-            reqData.currencyType = $("#paymentMethod").val().toUpperCase();
-            reqData.amount       = parseInt($(".itemLength").val());
-            reqData.price        = parseInt($(".itemPrice").text().replace(/[^0-9]/g,""));
-            reqData.address      = $("#roadAddrPart1").val() + " " + $("#addrDetail").val() + $("#roadAddrPart2").val();
-            reqData.phone        = $("#phoneNum1").val() + $("#phoneNum2").val() + $("#phoneNum3").val();
-            reqData.receiver     = $("#receiver").val();
-            //console.log("reqData: ", reqData);
-
-            $.ajax({
-                method: "POST",
-                url: "/v1/events/buy",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(reqData)
-            }).done(function (success) {
-                if(success.data.successYn){
-                    var msg = "정상적으로 구매가 완료되었습니다.\n\n";
-                        msg += "구매하신 제품명: " + reqData.product + "\n";
-                        msg += "구매하신 수량: " + reqData.amount + "\n";
-                        msg += "받으실분 성함: " + reqData.receiver + "\n";
-                        msg += "받으실분 연락처: " + reqData.phone + "\n";
-                        msg += "받으실분 주소: " + reqData.address + "\n\n";
-                        msg += "입력하신 정보가 잘못되었다면 1:1문의하기를 이용해주세요.";
-                    alert(msg);
-                    window.location.href = "/main"
-                } else {
-                    alert(success.data.msg);
-                }
-            }).fail(function (fail) {
-                console.log(fail);
-            });
-        }
-
-    }
-    </script>
-
+    <!-- 로딩 화면 -->
+    <article id="nowLoading" class="now_loading">
+        <div class="lds-circle">
+            <div></div>
+            <h1>Now Loading</h1>
+        </div>
+    </article>
     <% include ../include/footer.html %>
 </div>
 </body>        

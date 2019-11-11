@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        var checkUserTagYn = false;
+        var checkEmailYn = false;
+        var total_mach = "<%=total_mach%>";
+        var countryCode = "<%=countryCode%>";
+        var ontId = "<%=ontId%>";
+        var client = CyanoMobile.client;     
+        client.registerClient();
+
+        $(document).ready(function() {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+            $("#username").text("<%=username%>");
+            $("#phone").text("<%=phone%>");
+            $("#birth").val("<%=birth%>");
+            if("<%=recommander%>" != "") {
+                $("#recommander").val("<%=recommander%>");
+                $("#recommander").prop("readonly", true)
+            }
+            
+            $('#checkUserTag').on('click',function(){
+                checkUserTag();
+            });
+            $('#checkEmail').on('click',function(){
+                checkEmail();
+            });
+            $('#signup').on('click',function(){
+                signup();
+            });
+        });
+
+        function checkUserTag() {
+            if($("input[name=id]").val() == "") {
+                var obj = { subTitle: 'Please input the ID.'};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            var valid = checkStrNum($("input[name=id]").val());
+            if(!valid) {
+                var obj = { subTitle: "The ID have to be 6 ~ 20 lowercase letters or numbers."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/v1/users/userTag/' + $("input[name=id]").val(),
+            }).done(function (success) {
+                //console.log("success : ", success);
+                checkUserTagYn = true;
+                var obj = { subTitle: 'This ID is available.'};
+                _ModalUI.init(obj, "alert");
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    var obj = { subTitle: 'This ID is already in use.'};
+                    _ModalUI.init(obj, "alert");
+                }
+            });
+        }
+
+        function checkEmail() {
+            if($("input[name=email]").val() == "") {
+                var obj = { subTitle: "Please enter your email."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/v1/users/email/' + $("input[name=email]").val(),
+            }).done(function (success) {                
+                console.log("success : ", success);
+                checkEmailYn = true;
+                var obj = { subTitle: 'Email address is available.'};
+                _ModalUI.init(obj, "alert");
+            }).fail(function (fail) {
+                if (fail.status == 403) {
+                    var obj = { subTitle: 'Email address is already in use.'};
+                    _ModalUI.init(obj, "alert");
+                }
+            });
+        }
+
+        function signup() {
+            if($("#username").val() == "") {
+                var obj = { subTitle: "Enter Name."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if($("input[name=password]").val() == "") {
+                var obj = { subTitle: "Enter Password."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if($("input[name=passwordConfirm]").val() == "") {
+                var obj = { subTitle: "Enter Password again."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if($("input[name=password]").val() != $("input[name=passwordConfirm]").val()) {
+                var obj = { subTitle: "Password is incorrect. \n Please enter again."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if(!checkUserTagYn) {
+                var obj = { subTitle: "Password is incorrect. \n Please enter again."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if(!checkEmailYn) {
+                var obj = { subTitle: "Check your email."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            if($('#recommander').val() != "" && $('#recommander').val() == $("input[name=id]").val()) {
+                var obj = { subTitle: "You can not input ID which you are making it."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            var birth = "<%=birth%>";
+            var year = birth.substr(0,4);
+            var month = birth.substr(4,2);
+            var day = birth.substr(6,2);
+            var diffAge = checkAdult(new Date(year,month,day).toString(), new Date().toString());
+            //console.log(diffAge);
+            var signUpForm = {
+                "userTag": $("input[name=id]").val(),
+                "password": $('input[name=password]').val(),
+                "email": $("input[name=email]").val(),
+                "userName": $("#username").val(),
+                "countryCode" :countryCode,
+                "phone": $("#phone").text(),
+                "birth": $("#birth").val(),
+                "sex": "<%=sex%>",
+                "commId": "<%=commId%>",
+                "foreigner": "<%=foreigner%>",
+                "agreements": {
+                    "use": "true",
+                    "teenager": "false",
+                    "privacy": "true",
+                    "pushTrade":"true",
+                    "pushMarketing": "false",
+                    "authPhone": "true"
+                },
+                "coins": {
+                    "total_mach": total_mach,
+                    "total_ether": 0,
+                    "total_btc": 0
+                }
+            };
+
+            // if(diffAge < 19) {
+            //     signUpForm.agreements.teenager = "false";
+            // }
+
+            if("<%=pushMarketing%>" == "true") {
+                signUpForm.agreements.pushMarketing = "true";
+            }
+
+            if($('#recommander').val() != "") {
+                signUpForm['recommander'] = $('#recommander').val();
+            }
+
+            $('#signup').prop('disabled', true);
+
+            //console.log(signUpForm);
+
+            if(ontId == "") {
+                ontLogin(signUpForm);
+            } else {
+                addUser(signUpForm);
+            }
+        }
+
+        async function ontLogin(signUpForm) {
+            const params = {
+                type: 'account',// account or identity that will sign the message
+                dappName: 'MarketMACH', // dapp's name
+                dappIcon: 'https://www.marketmach.com/static/img/h_logo.png', // some url that points to the dapp's icon
+                message: 'MarketMACH Login.', // message sent from dapp that will be signed by native client
+                expired: new Date().getTime() * 10 * 60 * 60, // expired date of login
+            }
+            try {
+                let res = await client.api.message.login(params);
+                $.ajax({
+                    method: "POST",
+                    url: "/v1/ontology/callback/login",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(res)
+                }).done(function (success) {
+                    addUser(signUpForm);
+                }).fail(function (fail) {
+                    console.log(fail);
+                    $('#result').html(JSON.stringify(fail));
+                    // $('#result').html('System Error.');
+                    $('#signup').prop('disabled', false);
+                })
+            }catch(err) {
+                console.log(err);
+                //$('#result').html('System Error.');
+                $('#result').html(JSON.stringify(err));
+                $('#signup').prop('disabled', false);
+            }
+        }
+
+        function addUser(signUpForm) {
+            $.ajax({
+                method: "POST",
+                url: "/v1/users/validation",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(signUpForm)
+            })
+            .done(function (success) {
+                if(success.data.result) {
+                    var signUpForm = {
+                        "userTag": $("input[name=id]").val(),
+                        "password": $('input[name=password]').val(),
+                        "email": $("input[name=email]").val(),
+                        "userName": $("#username").val(),
+                        "countryCode" :countryCode,
+                        "phone": $("#phone").text(),
+                        "birth": $("#birth").val(),
+                        "sex": "<%=sex%>",
+                        "commId": "<%=commId%>",
+                        "foreigner": "<%=foreigner%>",
+                        "agreements": {
+                            "use": "true",
+                            "teenager": "false",
+                            "privacy": "true",
+                            "pushTrade":"true",
+                            "pushMarketing": "false",
+                            "authPhone": "true"
+                        },
+                        "coins": {
+                            "total_mach": total_mach,
+                            "total_ether": 0,
+                            "total_btc": 0
+                        }
+                    };
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/v1/users",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(signUpForm)
+                    })
+                    .done(function (success) {
+                        var data = {
+                            "userId": success["data"]["_id"],
+                            "to": success["data"]["email"]
+                        };
+                        // $.ajax({
+                        //     method: "POST",
+                        //     url: "/v1/notifications/email/auth",
+                        //     contentType: "application/json; charset=utf-8",
+                        //     dataType: "json",
+                        //     data: JSON.stringify(data)
+                        // }).done(function (success) {
+                        //     location.href = '/signupSuccess';
+                        // }).fail(function (fail) {
+                        //     console.log(fail);
+                        //     $('#signup').prop('disabled', false);
+                        // })
+                        location.replace('/signupSuccess');
+                    })
+                    .fail(function (fail) {
+                        console.log(fail);
+                        var obj = { subTitle: "It is already use ID, Email or Phone."};
+                        _ModalUI.init(obj, "alert");
+                        $('#signup').prop('disabled', false);
+                    });
+                } else {
+                    var obj = { subTitle: success.data.msg};
+                    _ModalUI.init(obj, "alert");
+                    $('#signup').prop('disabled', false);
+                }
+            })
+            .fail(function (fail) {
+                console.log(fail);
+                $('#signup').prop('disabled', false);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>Member Infomation <em class="fcor">(Required)</em></h1>
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_signup">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>
+                                    <input type="hidden" id="birth"/>
+                                    <span><input type="text" class="form-control w80p" id="username" placeholder="First & Last Name. ex)Smith Sam."></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" name="id" placeholder="6 ~ 20 characters english or english + number combination.">
+                                        <button class="btn btn-info" id="checkUserTag">Check</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Password</th>
+                                <td><input type="password" autocomplete="new-password" class="form-control" name="password" placeholder="6~20 characters english + number or special character."></td>
+                            </tr>
+                            <tr>
+                                <th>Password(confirm)</th>
+                                <td><input type="password" autocomplete="new-password" class="form-control" placeholder="" name="passwordConfirm"></td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>
+                                    <em id="phone">010-1234-1234</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" name="email" placeholder="example@mymach.asia">
+                                        <button class="btn btn-info" id="checkEmail">Check</button>
+                                    </div>                                
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <h1>Member Infomation <em class="fcor">(Optional)</em></h1>
+                <div class="table_wrap table-responsive">
+                    <table class="table_view table">
+                        <colgroup class="colgroup_signup">
+                            <col class="col2_1">
+                            <col class="col2_2">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th class="fcgr1" colspan="2"><br>Optional</th>
+                            </tr>
+                            <tr>
+                                <th>Recomander</th>
+                                <td>
+                                    <div class="no_w100p_wrap">
+                                        <input type="text" class="form-control w80p" id="recommander" placeholder="user ID. ex)mymachUser">
+                                    </div> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <div id="result"></div>
+                <div class="btn_align_c">
+                    <button class="btn btn_in_view1" id="signup">Sign Up</button>
+                </div>                    
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body> 

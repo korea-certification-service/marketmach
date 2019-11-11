@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.menu_login').css('display', 'inline-block');
+            $('.menu_logout').css('display', 'none');
+        });
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <% include ../include/member_header.html %>
+    <!--// header -->
+    <!-- content_wrap -->
+    <div class="member_content">
+        <div class="sub_container container">
+            <!-- join_sec page-->
+            <section class="join_sec">
+                <h1>Forbidden user</h1>
+                <p class="p_join">※ This number is requested to re-sign within 30 days after withdraw of user.</p>
+                <p class="p_join">※ This number can be re-signed after 30 days.</p>
+                <p class="p_join">※ If you do not sign up or suspect that your personal information is stolen, please contact us by email <em class="fcrd">[io@onlykcs.com]</em>.</p>
+                <div class="btn_align_c">
+                    <a href="/main" class="btn btn_in_view2">Home</a>
+                </div> 
+            </section>
+            <!--// join_sec page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <% include ../include/footer.html %>
+</div>
+</body> 

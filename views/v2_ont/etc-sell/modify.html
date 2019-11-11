@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <!-- view page-->
+            <section class="board_sec c_style_sell">
+                <div class="board_tit cf">
+                    <h1>Sell Assets<span>edit</span></h1>
+                </div>
+
+                <!-- 상품정보 : 이미지 업로드 UI 포함 -->
+                <div class="table_wrap table-responsive">
+                    <!-- 거래정보 -->
+                    <div class="table_wrap table-responsive">
+                        <table class="table_view table">
+                            <colgroup class="colgroup_etc-sell_modify">
+                                <col class="col2_1">
+                                <col class="col2_2">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Listing Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>                           
+                                <tr>
+                                    <th>Category</th>
+                                    <td>
+                                        <div id="virture_h" class="virture_h">
+                                            <select class="selectpicker" id="item-game-name" data-live-search="true">
+                                            </select>
+                                            <!-- <select class="selectpicker" id="game-server" data-live-search="true">
+                                            </select> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Delivery Type</th>
+                                    <td>
+                                        <div class="form-inline radio_wrap">
+                                            <div class="form-group">
+                                                    <input type="radio" name="item_type" id="direct" value="direct" checked><label for="direct">Direct Deal</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="radio" name="item_type" id="free_delivery" value="free_delivery"><label for="free_delivery">Prepaid</label>
+                                            </div>  
+                                            <div class="form-group">
+                                                <input type="radio" name="item_type" id="delivery" value="delivery"><label for="delivery">Collect</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Title</th>
+                                    <td><input type="text" class="form-control" id="title" maxlength="50" placeholder="거래 제목 입력"></td>
+                                </tr>
+                                <tr>
+                                    <th>Price</th>
+                                    <td>
+                                        <div class="no_w100p_wrap">
+                                            <select class="custom-select w30p" id="cryptoCurrencyCode">
+                                                <!-- <option value="BTC">BTC</option>
+                                                <option value="ETH">ETH</option> -->
+                                                <option value="ONT" selected>ONT</option>
+                                                <option value="ONG">ONG</option>
+                                                <!-- <option value="MACH" selected>MACH</option> -->
+                                            </select>
+                                            <input type="text" class="form-control w60p" id="price" min="0" placeholder="거래 가격 입력." onkeypress="return checkDecimal(event)">
+                                        </div>
+                                        <p class="fcrd"><!-- ※ 1MACH = 1$ --></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Images</th>
+                                    <td>
+                                        <div class="product_img_list">
+                                            <div class="imgs_wrap">
+                                                <ul id="listOfThumbnail" class="list_of_thumbnail cf">
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                                <ul class="thumbnail_btn_list cf">
+                                                    <li><label for="input_imgs0" class="label_input_imgs">Browse</label></li>
+                                                    <li><label for="input_imgs1" class="label_input_imgs">Browse</label></li>
+                                                    <li><label for="input_imgs2" class="label_input_imgs">Browse</label></li>
+                                                    <li><label for="input_imgs3" class="label_input_imgs">Browse</label></li>
+                                                    <li><label for="input_imgs4" class="label_input_imgs">Browse</label></li>
+                                                </ul>                                                
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="mrg_cell">
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="file" class="input_imgs" id="input_imgs0" index="0" accept="image/*"/>
+                                            <input type="file" class="input_imgs" id="input_imgs1" index="1" accept="image/*"/>
+                                            <input type="file" class="input_imgs" id="input_imgs2" index="2" accept="image/*"/>
+                                            <input type="file" class="input_imgs" id="input_imgs3" index="3" accept="image/*"/>
+                                            <input type="file" class="input_imgs" id="input_imgs4" index="4" accept="image/*"/>
+                                        </div>
+                                        <ul class="highligh_list fcrd">
+                                            <li>※ </li>
+                                        </ul>
+                                        <div id="fullImg"></div>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <th>Description</th>
+                                    <td>
+                                        <textarea class="form-control" style="height: 200px;" id="desc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr class="mrg_cell">
+                                    <td colspan="2">
+                                        <div class="btn_align_c">
+                                            <button class="btn btn_in_view1" id="btnSubmit">save</button>
+                                        </div>
+                                    </td>
+                                </tr>  
+                            </tbody>
+                        </table>
+                    </div>              
+                    <!--// 거래정보 -->
+                </div>
+                <!--// 상품정보 : 이미지 업로드 UI 포함 -->
+            </section>
+            <!--// view page-->
+        </div>
+    </div>
+    <!--// content_wrap -->
+
+    <script type="text/javascript">
+        var itemId;
+        var sel_files = [];  // 이미지 정보들을 담을 배열
+        var itemGameName;
+        var itemGameServer;
+        var beforeImgs = []; // 수정될 이미지 정보 배열
+    
+        $(document).ready(function() {
+            $(".input_imgs").on("change", singleUpload);
+
+            $(document).on("click", ".thumbnail_box .img_view_area",function(e) {
+                var src = $(this).children("img").attr("src");
+                $("#fullImg > img").attr("src", src);
+            });
+
+            $('.selectpicker').selectpicker({
+                size: 4
+            });
+
+            $("#btnSubmit").on('click', function(){
+                var listOfThumbnail = $("#listOfThumbnail li");
+                var count = 0;
+                for(var i=0; i<listOfThumbnail.length; i++) {
+                    if($("#listOfThumbnail li").eq(i).find(".img_view_area").length == 0) {
+                        count++;
+                    }
+                }
+                if(listOfThumbnail.length == count) {
+                    var obj = { subTitle: "Please upload image at least 1."};
+                    _ModalUI.init(obj, "alert");                         
+                    return;
+                }
+                ajaxLoginYnCheck(submitAction); // 수정은 이미지 업로드 먼저 실행
+            });
+
+            // $("#item-game-name").on('change', function() {
+            //     itemGameName = $("#item-game-name").val();
+            //     itemGameServer = "";
+            //     selectServer();
+            // })
+
+            loadGameList();
+            getData();
+        });
+
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/items/" + "<%= id%>"
+            }).done(function (success) {
+                console.log(success);
+                
+                itemId = success.data._id;
+                var regDate = success.data.regDate;
+                var item_game_server = success.data.category1 == undefined ? '기타' : success.data.category1;
+                itemGameName = success.data.category1;
+                //itemGameServer = success.data.category2;
+                var title = success.data.title;
+                var price = success.data.price;
+                var point = success.data.point;
+                var status = getStatus(success.data.status);
+                var delivery_type = getDelivery(success.data.delivery_type == undefined ? "direct" : success.data.delivery_type);
+                var trade_type = replaceType(success.data.trade_type);
+                var desc = success.data.desc;
+                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                
+                beforeImgs = success.data.images;
+                // 이미지 모두 지운 상황이 아닌 경우
+                if(success.data.images[0] !== null) {
+                    var img1th = success.data.images.length == 0 ? '' : "<img src=\"" + success.data.images[0].path + "\" data-file='"+success.data.images[0].origin_name+"'>"
+                    for(var i=0;i<success.data.images.length; i++) {
+                        var index = i;
+                        var html = "<div class=\"thumbnail_box\" id=\"img_id_"+i+"\">";
+                            html += '<div class="img_view_area">';
+                            html += "<img src=\"" + success.data.images[i].path + "\" data-file='"+success.data.images[0].origin_name+"'>";
+                            html += '</div>';
+                            html += "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(\'img_id_"+i+"\',"+i+")\"></a>";
+                            html += '</div>';
+                            //html += '<button class="btnModifyImg btn btn_modify_img" index="'+i+'">submitAction</button>';
+
+                        $("#listOfThumbnail li").eq(index).html(html);
+                    }
+                    $("#fullImg").html(img1th);
+                }
+
+                $("[name=item_type]").filter('[value='+success.data.delivery_type+']').prop('checked', true);
+                $("#title").val(title);
+                $("#item-game-name").val(success.data.category1);
+                $("#cryptoCurrencyCode").val(cryptoCurrencyCode);
+                if("<%=useBlockchain%>" == 'Y') {
+                    $("#price").val(price);
+                } 
+                if("<%=usePoint%>" == 'Y') {
+                    $("#point").val(point);
+                }
+                $("#desc").text(desc);
+                
+                loadGameList();
+                // setTimeout(function(){
+                //     selectServer();
+                // });
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function loadGameList() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories"
+            }).done(function (success) {
+                var strDOM = '<option value="">Please select</option>';
+                for (var i = 0; i < success.data.length; i++) {
+                    strDOM += '<option value="' + success.data[i].category1_en + '">' + success.data[i].category1_en + '</option>'
+                }
+
+                $("#item-game-name").append(strDOM);
+                $("#item-game-name").selectpicker('refresh');
+                //selectServer();
+                $("#item-game-name").val(itemGameName).attr("selected", "selected");
+                $("#item-game-name").selectpicker('refresh');
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function selectServer() {
+            if ($("#item-game-name option").val() != null) {
+                $("#game-server option").remove();
+            }
+            itemGameName = $("#item-game-name option:selected").val();
+
+            if (itemGameName == "") {
+                renderServerSelect({"category2":[]});
+                return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "/v1/categories/" + itemGameName
+            }).done(function (success) {
+                //renderServerSelect(success.data);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function renderServerSelect(data) {
+            var strDOM = '<option value="">Please select</option>';
+
+            for (var i = 0; i < data.category2.length; i++) {
+                strDOM += '<option value="' + data.category2[i] + '">' + data.category2[i] + '</option>'
+            }
+            $("#game-server").append(strDOM);
+            $("#game-server").selectpicker('refresh');
+        }
+
+        function submit(arrImages) {
+            var country = "<%= country %>";
+            if ($("#item-game-name option:selected").val() == "") {
+                var obj = { subTitle: "Please select a category."};
+                _ModalUI.init(obj, "alert");   
+                return false;
+            } else if ($("[name=item_type]:checked").val() == "") {
+                var obj = { subTitle: "Please select delivery type."};
+                _ModalUI.init(obj, "alert");   
+                return false;
+            } else if ($("#title").val() == "") {
+                var obj = { subTitle: "Please enter a title."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if ($("#price").val() == "" || $("#price").val() == "0" || parseFloat($("#price").val()) <= 0) {
+                var obj = { subTitle: "Please enter a price."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if ("<%=usePoint%>" == 'Y' && ($("#point").val() == "" || $("#point").val() == "0" || parseFloat($("#point").val()) <= 0)) {
+                var obj = { subTitle: "Please enter a price."};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if(!checkValidDecimal($("#price").val())) {
+                var obj = { subTitle: 'Please enter only numbers in a price.'};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if("<%=usePoint%>" == 'Y' && !checkValidDecimal($("#point").val())) {
+                // alert('거래 가격(Point)을 숫자로 입력하세요.');
+                // return false;
+            } else if ($("#desc").val() == "") {
+                var obj = { subTitle: 'Please enter a Description.'};
+                _ModalUI.init(obj, "alert");
+                return false;
+            } else if (country == "CN" && $("#region1").val() == "") {
+                // alert('지역 1 입력');
+                // return false;
+            } 
+
+            var data = {
+                "userTag": "<%= userTag %>",
+                "delivery_type": $("[name=item_type]:checked").val(),
+                "category1": $("#item-game-name option:selected").val(),
+                //"category2": $("#game-server option:selected").val(),
+                "category2": "기타",
+                "title": $("#title").val(),
+                "desc": $("#desc").val(),
+                "count": 1
+                // "item_tag": $("#keywords").val(),
+            };
+
+            // console.log("before arrImages: ", arrImages);
+            // 이미지 수정 있는 경우
+            if(arrImages.length > 0) {
+                // 삭제된 이미지는 배열에서 삭제
+                for (var i = 0; i < arrImages.length; i++) {
+                    if(arrImages[i] === null) {
+                        arrImages.splice(i, 1);
+                        i--;
+                    }
+                }
+                data.images = arrImages;
+            }
+            // console.log("after arrImages: ", arrImages);
+
+            if ("<%= useBlockchain %>" == "Y") {
+                data["cryptoCurrencyCode"] = $("#cryptoCurrencyCode").val();
+                data["price"] = $("#price").val();
+            } else {
+                //data["price"] = 0;
+            }
+            
+            if ("<%= usePoint %>" == "Y") {
+                data["currency"]="POINT";
+                data["point"]=$("#point").val();
+            }else{
+                // data["currency"]="POINT";
+                // data["point"]=0;
+            }
+
+            if(country=="CN"){
+                data["china_region1"]=$("#region1").val();
+                //data["china_region2"]=$("#region2").val();
+            }
+
+            console.log(data);
+            // console.log($("#ex_filename")[0].files[0]);
+
+            $.ajax({
+                method: "PUT",
+                url: "/v1/items/" + itemId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    $("#btnSubmit").attr('disabled', true);
+                }
+            }).done(function (success) {
+                // console.log(success);
+                // 이미지 업로드를 먼저 하는 로직으로 변경
+                location.replace('/etc-sells/detail/' + itemId);
+            }).fail(function (fail) {
+                $('#btnSubmit').attr('disabled', false);
+            })
+        }
+    
+        function submitAction() {
+            //console.log("업로드 파일 갯수 : "+sel_files.length);
+            var images = new FormData();
+    
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image";
+                images.append(name, sel_files[i].value);
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/v1/items/"+itemId+"/images",
+                processData: false,
+                contentType: false,
+                data: images
+            }).done(function (success) {
+                console.log(success);
+                //location.href = '/etc-sells/detail/' + itemId;
+
+                if(sel_files.length > 0) {
+                    // sel_files[i].index는 수정이 일어난 이미지의 인덱스
+                    for (var i = 0; i < sel_files.length; i++) {
+                        beforeImgs.splice(sel_files[i].index, 1, success.data[i]);
+                    }
+                }
+                submit(beforeImgs);
+            }).fail(function (fail) {
+                console.log('실패',fail);
+            })
+        }
+    </script>
+    <%# pageName에 현재 파일이 modify 인지 register 인지 적을 것 %>
+    <%- include('../include/modules/img_upload.html', {pageName: 'modify'}) %>
+
+    <% include ../include/footer.html %>
+</div>
+</body>        

@@ -58,8 +58,12 @@
         }).done(function (success) {
             if (success.data.total_mach != null) {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>" + numberWithCommas(success.data.total_mach) + "<span>MACH</span></a>");
+                $("#btocMyBalance").text(numberWithCommas(success.data.total_mach));
+                $("#hdBtocNumBalance").val(success.data.total_mach);              
             } else {
                 $(".total_mach").html("<a href='/myPages/wallet/info'>0<span>MACH</span></a>");
+                $("#btocMyBalance").text(0);
+                $("#hdBtocNumBalance").val(0);
             }
         }).fail(function (fail) {
             console.log(fail);
@@ -252,9 +256,10 @@
                     <ul class="cf">
                         <li onclick="location.href='https://ko.marketmach.com'"><img src="/static/img/symbol/flag_korea.png" alt="KR"><span><a class="lang">한국</a></span></li>
                         <li onclick="location.href='https://en.marketmach.com'"><img src="/static/img/symbol/flag_usa.png" alt="EN"><span><a class="lang">영어</a></span></li>
-                        <li class="recommendUrl">
+                        <li class="li_go_pointmall recommendUrl">
                             <input type="hidden" id="m_voucherUrl" class="form-control" readonly style="width: calc(100% - 70px);">
-                            <button type="button" class="btn btn-success recomandation" id="btnRecomandation">추천URL</button>
+                            <!-- <button type="button" class="btn btn-success recomandation" id="btnRecomandation">추천URL</button> -->
+                            <a class="m_go_pointmall" href="https://point.marketmach.com/" target="_blank">포인트몰</a>
                         </li>
                         <li>
                             <button id="btnCloseMobSideMenu" class="menu-trigger on">
@@ -304,7 +309,7 @@
                                     </li>
                                     <li class="mdl_area">                                        
                                         <em>나의지갑 잔액</em>
-                                        <p class="fc2 total_mach">100 <span>MACH</span></p>
+                                        <p class="fc2 total_mach">0 <span>MACH</span></p>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/deposit';">Coin입금</button>
                                         <button class="btn bgc1" onclick="location.href='/myPages/wallet/withdraw';">Coin출금</button>
                                     </li>

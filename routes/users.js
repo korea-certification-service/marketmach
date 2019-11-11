@@ -387,6 +387,12 @@ router.post('/', function (req, res, next) {
                                                 .then(result => {
                                                     if (result._id != null) {
                                                         let pointId = result._id;
+                                                        //ONT ID 추가
+                                                        if(req.session.ontId != undefined) {
+                                                            req.body['ontId'] = req.session.ontId;
+                                                        }
+                                                        let loginToken = util.makeToken();
+                                                        req.body['loginToken'] = loginToken; 
                                                         controllerUsers.createWithIds(req, coinId, agreementId, pointId)
                                                             .then(result => {
 
@@ -412,7 +418,16 @@ router.post('/', function (req, res, next) {
                                                                 req.session.teenager = agreement.teenager;
                                                                 req.session.authPhone = agreement.authPhone;
                                                                 req.session.coinId = result._doc.coinId;
-                                                                req.session.pointId = result._doc.pointId;
+                                                                req.session.pointId = result._doc.pointId;                                                                    
+                                                                let tokenValue = loginToken;
+                                                                res.cookie("loginToken", tokenValue, {
+                                                                    domain: 'marketmach.com',
+                                                                    expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                                                                });
+
+                                                                res.cookie("loginToken", tokenValue, {
+                                                                    expires: new Date(Date.now() + (60 * 60 * 1000)), //1시간
+                                                                });                                                           
                                                                 
                                                                 if(req.body.recommander != undefined) {
                                                                     controllerUsers.getRecommanderCount(country,req.body.recommander)
@@ -575,6 +590,11 @@ router.post('/login', function (req, res, next) {
                 let loginToken = util.makeToken();
                 let data1 = {};
                 data1['loginToken'] = loginToken;
+                //ONT ID가 DB 상에 존재하지 않으면 해당 값을 Update
+                if(result._doc['ontId'] == undefined && req.session.ontId != undefined) {
+                    data1['ontId'] = req.session.ontId;
+                }
+
                 controllerUsers.updateLoginToken(country, result._doc._id, data1)
                     .then(() => {
                         controllerAgreements.getById(country, result._doc.agreementId.toString())
@@ -590,6 +610,7 @@ router.post('/login', function (req, res, next) {
                                 req.session.authPhone = agreement.authPhone;
                                 req.session.bitberry_token = result.bitberry_token;
                                 req.session.kyc = agreement._doc.kyc == undefined ? false : agreement._doc.kyc;
+                                req.session.ontId = result.ontId;
 
                                 // chatbot에서 로그인 확인을 위한 쿠키 생성
                                 let key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef"); // key 값 > 변경가능

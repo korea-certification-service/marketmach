@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../include/head.html %>
+    <script>
+        var userId = "<%=userId%>";
+        var coinId = "<%=coinId%>";
+        var bitberry_token = "<%=bitberry_token%>";
+        var total_price = 0;
+        var total_btc = 0;
+        var total_ether = 0;
+        var total_mach = 0;
+        var total_ont = 0;
+        var total_ong = 0;
+        var walletId;
+        var transfer_request_id;
+        var btc_fee = parseFloat("<%=btc_fee%>");
+        var ether_fee = parseFloat("<%=ether_fee%>");
+        var mach_fee = parseFloat("<%=mach_fee%>");
+        var ont_fee = parseFloat("<%=ont_fee%>");
+        var ong_fee = parseFloat("<%=ong_fee%>");
+        var rate;
+        var fromAddress = "<%=fromAddress%>";
+        var toAddress = "<%=toAddress%>";
+        var client = CyanoMobile.client;     
+        client.registerClient();
+        
+        $(document).ready(function() {
+            //입출금 제한 기능
+            // $("#confirmDeposit").attr("disabled", true);
+            $("#coin").val("ONT");
+            if(bitberry_token != undefined && bitberry_token != "") {
+                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
+                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
+            }
+
+            $('[name=amount]').on('keyup',function(e) {
+                if($('[name=amount]').val() != "") {
+                    $('#total_amount').text(total_price + parseFloat($('[name=amount]').val()));
+                    calculate();
+                }
+            })
+
+            $('[name=amount]').on("keydown", function(e){
+                /* e(지수), .(소수점) -(마이너스) 예외처리 */
+                if(e.keyCode == 69 || e.keyCode == 189){
+                    return false;
+                }
+            });
+
+            // $('[name=amount]').on("keypress", function(e){
+            //     var amount = $('[name=amount]').val();
+            //     //소수점 자리수 체크
+            //     if(amount.indexOf('.') != -1) {
+            //         var amount_length = amount.substring(amount.indexOf('.') + 1);
+            //         if(amount_length.length >= 8) {
+            //             return false;
+            //         }
+            //     }
+            // });
+
+            /*
+            var $body = $("body");
+            var $dim = $(".dim_all_area");
+            */
+            $("#confirmDeposit").on("click", function() {
+                reqDeposit();
+            });
+            
+            /*
+            $("#btnmCloseModal").on("click", function() {
+                $dim.hide();
+                $body.css("position", "static");
+            });
+            */
+            _PopupUI.closeAfterClick();
+
+            $("#resultDeposit").on("click", function() {
+                ajaxLoginYnCheck(resultDeposit);
+            });
+
+            $("#coin").on('change', function() {
+                //getCoin();
+                if($("#coin").val() == "BTC") {
+                    // $('#showOntAddress').hide();
+                    // $('#showAmount').show();
+                    // $('#bitberryArea').show();
+                    // $('#ontWalletArea').hide();
+                    // total_price = total_btc;
+                } else if($("#coin").val() == "ETH") {
+                    // $('#showOntAddress').hide();
+                    // $('#showAmount').show();
+                    // $('#bitberryArea').show();
+                    // $('#ontWalletArea').hide();
+                    // total_price = total_ether;
+                } else if($("#coin").val() == "ONT") {
+                    // $('#showOntAddress').hide();
+                    // $('#showAmount').show();
+                    $('#bitberryArea').hide();
+                    $('#ontWalletArea').show();
+                    total_price = total_ont;
+                    $('#coinName').text("ONT");
+                } else if($("#coin").val() == "ONG") {
+                    // $('#showOntAddress').hide();
+                    // $('#showAmount').show();
+                    $('#bitberryArea').hide();
+                    $('#ontWalletArea').show();
+                    total_price = total_ong;
+                    $('#coinName').text("ONG");
+                } else {
+                    // $('#showOntAddress').hide();
+                    // $('#showAmount').show();
+                    // $('#bitberryArea').show();
+                    // $('#ontWalletArea').hide();
+                    total_price = total_mach;
+                }
+                $('[name=amount]').val("0");
+                calculate();
+            })
+
+            $('#showOntAddress').hide();
+            //받는주소 QR코드 생성
+            $('#toAddress').val(toAddress);
+            var typeNumber = 8;
+            var errorCorrectionLevel = 'L';
+            var qr = qrcode(typeNumber, errorCorrectionLevel);
+            qr.addData(toAddress);
+            qr.make();
+            $('#qrcodeValue').html(qr.createImgTag());
+            $('#ontWalletArea').hide();
+
+            getCoin();
+            getCoinHistory('bitberry_deposit','all');
+
+            var ontClipboard = new ClipboardJS('#btnOntCopy');
+            ontClipboard.on('success', function(e) {
+                var obj = { subTitle:"It is successfully to copy address."};
+                _ModalUI.init(obj, "alert");
+                e.clearSelection();
+            });
+        });
+
+        function getCoin() {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/" + coinId
+            }).done(function (success) {
+                var ont_address = success.data.ont_address == undefined ? "" : success.data.ont_address;
+                $('#address').val(ont_address);
+                var coin = $("#coin").val();
+                total_btc = success.data.total_btc == undefined ? 0 : success.data.total_btc;
+                $("#btcTotal").html(numberWithCommas(total_btc));                        
+                $("#my_amount").html(numberWithCommas(total_btc)  + "<span>BTC</span>");
+                $("#total_amount").html(numberWithCommas(total_btc) + " BTC");
+
+                total_ether = success.data.total_ether == undefined ? 0 : success.data.total_ether;
+                $("#ethTotal").html(numberWithCommas(total_ether));                        
+                $("#my_amount").html(numberWithCommas(total_ether)  + "<span>ETH</span>");
+                $("#total_amount").html(numberWithCommas(total_ether) + " ETH");
+
+                total_ont = success.data.total_ont == undefined ? 0 : success.data.total_ont;    
+                $("#ontTotal").html(numberWithCommas(total_ont));
+                $("#my_amount").html(numberWithCommas(total_ont)  + "<span>ONT</span>");
+                $("#total_amount").html(numberWithCommas(total_ont) + " ONT");
+
+                total_ong = success.data.total_ong == undefined ? 0 : success.data.total_ong;    
+                $("#ongTotal").html(numberWithCommas(total_ong));
+                // $("#my_amount").html(numberWithCommas(success.data.total_ong)  + "<span>ONG</span>");
+                // $("#total_amount").html(numberWithCommas(total_ong) + " ONG");
+                
+                total_mach = success.data.total_mach;                        
+                $("#machTotal").html(numberWithCommas(total_mach));
+                // $("#my_amount").html(numberWithCommas(success.data.total_mach)  + "<span>MACH</span>");
+                // $("#total_amount").html(numberWithCommas(total_mach) + " MACH");
+
+                total_price = total_ont;
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function getCoinHistory(trade_type, extType) {
+            $.ajax({
+                method: "GET",
+                url: "/v1/coins/historys/" + coinId + "/list?trade_type=" + trade_type + '&extType=' + extType
+            }).done(function (success) {
+                console.log(success.data);
+                var coinHistorys = success.data;
+                var result = ""
+                if(coinHistorys.length == 0) {
+                    result = "<tr><td colspan='3'>No exist.</td></tr>";
+                }
+
+                for(var i=0;i<coinHistorys.length;i++) {
+                    var amount = numberWithCommas(coinHistorys[i].amount);
+                    var currencyCode = coinHistorys[i].currencyCode;
+                    var mach = numberWithCommas(coinHistorys[i].mach);
+                    var status = coinHistorys[i].status == "true" ? "success" : coinHistorys[i].status;
+                    var regDate = coinHistorys[i].regDate.substr(2);
+
+                    var styleStr = "display:none;";
+                    var btnStr = "";
+                    if(coinHistorys[i].status == "false" && coinHistorys[i].reqDate != undefined) {
+                        var startDate = new Date(coinHistorys[i].reqDate);
+                        var endDate = new Date();
+                        var tmpMin = (endDate.getTime() - startDate.getTime()) / 60000;
+                        if(tmpMin >= 3) {
+                            styleStr = "display:inline-block;"
+                        }
+                        // btnStr = '<button class="btn btn_in_view1" id="'+coinHistorys[i]._id+'" style="'+styleStr+'" onclick="retry(\''+coinHistorys[i]._id+'\');">Retry</button>';
+                    }
+
+                    result += '<tr>' + 
+                                    '<td class="td_exchange_coin">' + 
+                                        '<em class="fc3">'+amount+'<span>'+currencyCode+'</span></em>' + 
+                                    '</td>' + 
+                                    '<td>'+status+'</td>' + 
+                                    '<td>'+regDate.replace(' ','<br>')+'</td>' + 
+                                    '<td>'+btnStr+'</td>'
+                                '</tr>';
+                }
+
+                $('#wallet_historys').html(result);
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function calculate() {
+            var mach = Number($("input[name=amount]").val());
+            var coin = $("#coin").val();
+            var price = 0;
+            var data;
+            if (coin == "BTC") {
+                price = parseFloat((mach - (mach * btc_fee)).toFixed(8));
+                $("#my_amount").html(numberWithCommas(total_btc)  + "<span>BTC</span>");
+                $("#deposit_amount").html(price+'<span>'+coin+'</span>');
+                $("#exchange_amount").html(price+'<span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " BTC");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " BTC");
+            } else if (coin == "ETH") {
+                price = parseFloat((mach - (mach * ether_fee)).toFixed(8));
+                $("#my_amount").html(numberWithCommas(total_ether)  + "<span>ETH</span>");
+                $("#deposit_amount").html(price+'<span>'+coin+'</span>');
+                $("#exchange_amount").html(price+'<span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ETH");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " ETH");
+            } else if(coin == "ONT") {
+                price = parseFloat((mach - (mach * ont_fee)).toFixed(8));
+                $("#my_amount").html(numberWithCommas(total_ont)  + "<span>ONT</span>");
+                $("#calculate").html(data);
+                $("#deposit_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ONT");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " ONT");
+            } else if(coin == "ONG") {
+                price = parseFloat((mach - (mach * ong_fee)).toFixed(8));
+                $("#my_amount").html(numberWithCommas(total_ong)  + "<span>ONG</span>");
+                $("#calculate").html(data);
+                $("#deposit_amount").html(price+' <span>'+coin+'</span>');
+                $("#exchange_amount").html(price+' <span>'+coin+'</span>');
+                $("#plus_amount").html(mach + " ONG");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " ONG");
+            } else if (coin == "MACH") {
+                price = parseFloat(mach.toFixed(8));
+                data = mach + " MACH = " + price + " MACH";
+                $("#my_amount").html(numberWithCommas(total_mach)  + "<span>MACH</span>");
+                $("#calculate").text(data);
+                $("#deposit_amount").html(mach+"<span>MACH</span>");
+                $("#exchange_amount").html(mach+"<span>MACH</span>");
+                $("#plus_amount").html(mach + " MACH");
+                $("#total_amount").html(numberWithCommas(parseFloat((total_price + price).toFixed(8))) + " MACH");
+            }
+        }
+
+        async function reqDeposit() {
+            $("#confirmDeposit").attr("disabled", true);
+            var coin = $("#coin").val();
+            var amount = parseFloat($('#amount').val());
+            
+            if(amount == "" || amount <= 0) {
+                //alert("Please enter Coin amount.");
+                var obj = { subTitle: 'Please enter Coin amount.'};
+                _ModalUI.init(obj, "alert");
+                $("#confirmDeposit").attr("disabled", false);
+                return;
+            }
+            
+            if(coin == "ONG") {
+                amount = amount * 1e9;
+            }
+
+            const params = {
+                from: fromAddress,// Sender's address
+                to: toAddress, // Receiver's address
+                asset: coin, // Asset type. ONT or ONG
+                amount: amount,// Amount to send.The value can be 'number' or 'string'
+                gasPrice: 500,
+                gasLimit: 20000
+            }
+            
+            var obj1 = { subTitle: 'Do you want to deposit?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) {
+                    try {
+                        const res = await client.api.asset.transfer(params); 
+                        $('#result').html(JSON.stringify(res));              
+                        if(res.desc == "ERROR") {
+                            $("#confirmDeposit").attr("disabled", false);
+                            return;
+                        } 
+
+                        var data = {
+                            "mach": parseFloat($('#amount').val()),
+                            "cryptoCurrencyCode":coin,
+                            "fromAddress": fromAddress,
+                            "txHash": res.result
+                        };
+
+                        $.ajax({
+                            method: "POST",
+                            url: "/v1/coins/ontwallet/deposit/onto",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(data)
+                        }).done(function (success) {
+                            console.log(success.data);
+                            $("#confirmDeposit").attr("disabled", false);
+                            location.reload();
+                        }).fail(function (fail) {
+                            console.log(fail);      
+                            var obj = { subTitle: 'There was a problem during the process. <br> If the problem persists, please contact administrators.'};
+                            _ModalUI.init(obj, "alert");              
+                            $("#confirmDeposit").attr("disabled", false);
+                        });
+                    } catch(err) {
+                        console.log(err);
+                        //To-do : 모달창으로 에러 메시지 띄우기
+                        $('#result').html(JSON.stringify(err));
+                        return;
+                    }
+                } else {
+                    $("#confirmDeposit").attr("disabled", false);
+                }
+            });
+        }
+
+        function resultDeposit() {
+            /*
+            var $body = $("body");
+            var $dim = $(".dim_all_area");
+            */
+            if(walletId == undefined) {
+                var obj = { subTitle:"It is in progress. Please wait a moment."};
+                _ModalUI.init(obj, "alert");
+                return;
+            }
+
+            var data = {
+                "transfer_request_id": transfer_request_id,
+                "mach": Number($("input[name=amount]").val())
+            };
+            
+            $.ajax({
+                method: "POST",
+                url: "/v1/coins/bitberry/result/"+walletId+"/deposit",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data)
+            }).done(function (success) {
+                //console.log(success.data);
+                if(success.data.code == "success") {
+                    var obj = { subTitle:"Coin deposit has been processed successfully."};
+                    _ModalUI.init(obj, "alert");
+                    // getCoin();
+                    // getCoinHistory('deposit');
+                    /*
+                    $dim.hide();
+                    $body.css("position", "static");
+                    */
+                    _PopupUI.hideWithDim();
+
+                    location.href = "/myPages/wallet/deposit";
+                } else {
+                    var obj = { subTitle:success.data.msg};
+                    _ModalUI.init(obj, "alert");
+                    $("#confirmDeposit").attr("disabled", false);
+                }
+            }).fail(function (fail) {
+                console.log(fail);
+                $("#confirmDeposit").attr("disabled", false);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+    <!-- header -->
+    <div class="header_wrap">
+        <% include ../include/header.html %>
+        <% include ../include/m_header.html %>
+    </div>
+    <!--// header -->
+
+    <!-- content_wrap -->
+    <div class="content_wrap">
+        <div class="sub_container container">
+            <div class="has_left_menu cf">
+                <!-- 레프트 메뉴 -->
+                <% include ../include/mypage_leftmenu.html %>
+                <!-- sub content -->
+                <div class="sub_content">
+                    <!-- mypage -->
+                    <section class="mypage_sec">
+                        <h1 class="tit_mypage">My Wallet <span>deposit Coin</span></h1>
+
+                        <div class="bitberry_grey_box">
+                            <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
+                        </div>
+                        <h2 class="tit_mypage dot_tit">MY Wallet Status</h2>
+                        <div class="table_wrap table_total_escrow_wrap">
+                            <table class="table_total_escrow">
+                                <colgroup class="colgroup_total_escorw">
+                                    <col class="col6_1">
+                                    <col class="col6_2">
+                                    <col class="col6_3">
+                                    <!-- <col class="col6_4">
+                                    <col class="col6_5">
+                                    <col class="col6_6"> -->
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Coin</th>
+                                        <!-- <th><img src="/static/img/symbol/symbol_mach.png" alt="MACH" title="마하코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_bitcoin.png" alt="비트코인" title="비트코인"></th>
+                                        <th><img src="/static/img/symbol/symbol_ethereum.png" alt="이더리움" title="이더리움"></th> -->
+                                        <th><img src="/static/img/symbol/symbol_ont.png" alt="ONT" title="ONT"></th>
+                                        <th><img src="/static/img/symbol/symbol_ong.png" alt="ONG" title="ONG"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="first_tr">
+                                        <th>Balance</th>
+                                        <!-- <td id="machTotal"></td>
+                                        <td id="btcTotal"></td>
+                                        <td id="ethTotal"></td> -->
+                                        <td id="ontTotal"></td>
+                                        <td id="ongTotal"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2 class="tit_mypage dot_tit">Deposit</h2>
+                        <div class="table_wrap table-responsive mb50">
+                            <table class="table_account">
+                                <colgroup>
+                                    <col class="col2_1">
+                                    <col class="col2_2">
+                                </colgroup>
+                                <tfoot>
+                                    <tr>
+                                        <td class="td_exchange_coin" colspan="2">
+                                            <em class="fc3" id="deposit_amount">0<span>ONT</span></em><span class="arw_txt">>>></span><em class="fc2" id="exchange_amount">0<span>ONT</span></em>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <th>Coin</th>
+                                        <td>
+                                            <div class="dib_220">
+                                                <select class="custom-select" name="coin" id="coin">
+                                                    <!-- <option value="BTC">BTC</option>
+                                                    <option value="ETH">ETH</option> -->
+                                                    <option value="ONT" selected>ONT</option>
+                                                    <option value="ONG">ONG</option>
+                                                    <!-- <option value="MACH" selected>MACH</option> -->
+                                                </select>
+                                            </div>
+                                            <br class="mob_br"><span class="fcrd">※ Please select coin to deposit</span>
+                                        </td>
+                                    </tr>  
+                                    <!-- <tr id="showOntAddress">
+                                        <th>Address</th>
+                                        <td>
+                                            <input type="text" class="form-control" name="address" id="address" min="" value="" placeholder="Input ONT Address.">
+                                            <br class="mob_br"><span class="fcrd">※Please enter your ONT address to check the coin which has been deposited.</span>
+                                        </td>
+                                    </tr>  -->
+                                    <tr id="showAmount">
+                                        <th>Amount</th>
+                                        <td>
+                                            <input type="text" class="form-control" name="amount" id="amount" min="0" value="0" placeholder="Input amount" onkeypress="return checkDecimal(event)">
+                                            <br class="mob_br"><span class="fcrd">※ Please enter amount you want to deposit.</span>
+                                        </td>
+                                    </tr>                  
+                                    <!-- <tr>
+                                        <th>자동계산</th>
+                                        <td><em id="calculate">0 MACH = 0.00000000 MACH</em></td>
+                                    </tr>     -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_wrap mb50">
+                            <h2 class="tit_mypage dot_tit">Billing information</h2>
+                            <table class="table_payment_info table">
+                                <colgroup>
+                                    <col class="col50p">
+                                    <col class="col50p">
+                                </colgroup>
+                                <tbody>                           
+                                    <tr>
+                                        <th>My Wallet Balance</th>
+                                        <td><span id="my_amount">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Deposit Amount</th>
+                                        <td><!-- 클래스명 => 플러스기호: plus 마이너스: minus -->
+                                            <em class="em_calc_ico plus">+</em> <span id="plus_amount">0 ONT</span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Balance after Depositing</th>
+                                        <td><span id="total_amount">0</span></td>
+                                    </tr>                        
+                                </tbody>
+                            </table>
+                            <div class="btn_align_c">
+                                <button class="btn btn_in_view1" id="confirmDeposit">Deposit Request</button>
+                            </div>                   
+                            <div id="result"></div>         
+                        </div>
+                        <!-- 모달창 -->
+                        <div class="dim_all_area" style="display: none">
+                            <article class="modal_bitberry_deposit">
+                                <button id="btnmCloseModal" class="btn">X</button>
+                                <div id="bitberryArea">
+                                    <h1>Bitberry Deposit Request</h1>
+                                    <p>Please click the [Confirm] after approving the deposit in the BitBerry app.</p>
+                                    <button id="resultDeposit" class="btn btn-danger">Confirm</button>
+                                </div>
+                                <div id="ontWalletArea">
+                                    <h1><span id="coinName">ONT</span> Deposit Request</h1>
+                                    <p>
+                                        Please check your deposit coin again and copy to below address or scan QR Code.<br>
+                                        <span class="fcrd">※ You have to deposit the same coin as you request MarketMACH.</span>
+                                    </p>
+                                    <div id="qrcodeValue" class="ont_qrcode_wrap"></div>
+                                    <div class="cf ont_addr_sec">
+                                        <input type="text" id="toAddress" class="ipt_ont_addr" readonly>
+                                        <button class="btn_ont_copy" id="btnOntCopy" data-clipboard-target="#toAddress">copy</button>
+                                    </div>
+                                    <!-- <button id="resultDeposit" class="btn btn-danger">확인</button> -->
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <ul class="highligh_list fcrd">
+                            <li>※ You have to deposit the same coin as you request MarketMACH. Please check your deposit coin again.</li>
+                        </ul>
+
+                        <h2 class="tit_mypage dot_tit">Deposit Statement</h2>
+                        <div class="table_wrap table-responsive">
+                            <table class="table_wallet table">
+                                <colgroup>
+                                    <col class="col4_1">
+                                    <col class="col4_2">
+                                    <col class="col4_3">
+                                    <col class="col4_4">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wallet_historys">
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!--// sub content -->
+            </div>    
+        </div>
+    </div>
+    
+    <% include ../include/footer.html %>
+</div>
+</body>

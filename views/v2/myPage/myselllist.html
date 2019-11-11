@@ -3,6 +3,7 @@
 <head>
     <% include ../include/head.html %>
     <script>
+        /*
         var userId = "<%=userId%>";
         var userTag = "<%=userTag%>";
         var pageIdx = "<%=pageIdx%>";
@@ -20,8 +21,6 @@
             if(category == "") {
                 category = $("input[name='category']:checked").val();
             }
-
-            getItemList();
 
             if(category == "game") {
                 $('#myItemTitle').text("게임 아이템");
@@ -484,7 +483,9 @@
                 console.log(fail);
             });
         }
+        */
     </script>
+    <%- include('../include/modules/mypage_trading_list.html', {pageType: 'sell'}) %>
 </head>
 <body>
 <div id="wrap" class="wrap">

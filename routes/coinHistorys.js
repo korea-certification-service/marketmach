@@ -4,6 +4,7 @@ var controllerCoinHistorys = require('../controllers/coinHistorys')
 var BitwebResponse = require('../utils/BitwebResponse')
 let dbconfig = require('../config/dbconfig');
 
+//사용안함
 router.get('/:historyId/deposit/coinTypes/:coinType', function (req, res, next) {
 
     console.log('test')
@@ -24,6 +25,7 @@ router.get('/:historyId/deposit/coinTypes/:coinType', function (req, res, next) 
 
 });
 
+//사용안함
 router.get('/:historyId/withdraw/coinTypes/:coinType', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
