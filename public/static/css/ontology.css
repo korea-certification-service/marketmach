@@ -22,7 +22,7 @@
 .ont_m_signin .btn_signup{margin-bottom: 25px; background-color: #ffffff; border: solid 1px #4444f2; color: #4444f2}
 .ont_m_signin .btn_signin_ont{margin-top: 7px; background-color: #ececfe; border: none; color: #4444f2}
 .ont_m_signin .btn_signin_ont span{display: inline-block; padding-left: 38px; background: url("/static/img/symbol/ont_login_logo.png") 0 50% no-repeat; background-size: 29px 29px;}
-.ont_m_signin .txt_or{position: relative; top: -12px; background-color: #ffffff;}
+.ont_m_signin .txt_or{display: inline-block; width: 40px; text-align: center; position: relative; top: -12px; background-color: #ffffff; color: #666;}
 
 /* Integration User<: ont 인증 */
 .integration_sec{}

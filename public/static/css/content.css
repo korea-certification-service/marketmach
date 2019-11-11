@@ -834,6 +834,7 @@ background-size: 65px 65px;
     .btc_product_sec .product_detail .rgh_txt{width: 100%; max-width: 100%; padding-bottom: 180px;}
     .btc_product_sec .product_detail .rgh_txt dl{padding: 0;}
     .item_select_area .table_btoc .w100{width: 30%;}
+    .btc_product_sec .order_noti dd{padding: 20px 20px 20px 20px;}
 }
 @media (max-width: 576px){
     .mypage_sec .mypage_main_info .lft_area{background-position: 14px 50%;}
