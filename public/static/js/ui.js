@@ -494,6 +494,9 @@ var _ModalUI = {
             case "confirm": // 확인과 취소 버튼이 존재하는 분기창
                 this.confirmCallback(callback);
                 break;
+            case "finalTransaction": // 확인과 취소 버튼이 존재하는 분기창
+                this.confirmCallback(callback);
+                break;
             default:
                 break;
         }
@@ -510,6 +513,7 @@ var _ModalUI = {
         dom += '<div class="dim_smile_area">'
         if(type === "alert")   dom +=     '<article class="modal_smile effective" style="top: '+posY+'px">'
         if(type === "confirm") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
+        if(type === "finalTransaction") dom +=     '<article class="modal_smile '+articleClass+'" style="top: '+posY+'px">'     
         dom +=         '<div class="smile_area"></div>'
         dom +=         '<h1>'+title+'</h1>'
         dom +=         '<h2>'+subTitle+'</h2>'
@@ -517,6 +521,8 @@ var _ModalUI = {
         if(type === "alert")   dom +=         '<button id="btnAlertOk" class="btn_confirm">confirm</button>'
         if(type === "confirm") dom +=         '<button id="btnSmileOk" class="btn_confirm">confirm</button>'
         if(type === "confirm") dom +=         '<button id="btnSmileNo" class="btn_cancle">cancel</button>'
+        if(type === "finalTransaction") dom +=         '<button id="btnTransactionOk" class="btn_confirm">confirm</button>'
+        if(type === "finalTransaction") dom +=         '<button id="btnTransactionNo" class="btn_cancle">denied</button>'
         dom +=     '</article>'
         dom += '</div>'
 
@@ -539,10 +545,22 @@ var _ModalUI = {
             if(e.target.nodeName === "BUTTON") {
                 if(e.target.id === "btnSmileOk") {
                     _ModalUI.isConfirm = true;
+                    _ModalUI.isTransaction = false;
                     that.closeModal();
                     callback();
                 } else if(e.target.id === "btnSmileNo") {
                     _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = false;
+                    that.closeModal();
+                    callback();
+                } else if(e.target.id === "btnTransactionOk") {
+                    _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = true;
+                    that.closeModal();
+                    callback();
+                } else if(e.target.id === "btnTransactionNo") {
+                    _ModalUI.isConfirm = false;
+                    _ModalUI.isTransaction = false;
                     that.closeModal();
                     callback();
                 }
@@ -552,7 +570,7 @@ var _ModalUI = {
     closeModal: function() {
         // 돔 삭제
         var child = document.querySelector(".dim_smile_area");
-        child.parentNode.removeChild(child);
+        if(child) child.parentNode.removeChild(child);
     }
 }
 /*

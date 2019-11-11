@@ -131,19 +131,19 @@
         //     $('#result1').html(JSON.stringify(err));
         // }
 
-        const scriptHash = '0c7c3432440429fefb744e6d9e25342f692dc704';
+        const scriptHash = '167d94d81b37cfd9b635e021300e8224e2d627b7';
         // const scriptHash = '102f7aee9acd9961e38f6fa5ac46d1c19b3b9306';
-        const operation = 'finalTransaction'
+        const operation = 'FinalTransaction'
         //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
         const args = [
             {
                 "type": "String",
-                "value": "20191016100000 macbook is done deal 1000ONT."
+                "value": "20191111123445 skypentum to sellposion of deal is completed deal 2 ONG."
             }
         ]
         const gasPrice = 500;
-        const gasLimit = 20000;
-        const payer = $('#toAddress').val();
+        const gasLimit = 10000;
+        const payer = 'AG3yJhW7zPoTtF4PvHq7TexUsCunAh4V2n';
         const config = {
             "login": true,
             "message": "invoke smart contract test"

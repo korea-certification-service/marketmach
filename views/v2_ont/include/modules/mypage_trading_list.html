@@ -3,6 +3,10 @@
 
 <!-- 영문 나의 페이지 > 판매관리 / 구매 관리-->
 <script>
+    var client = CyanoMobile.client;        
+    client.registerClient();
+    var contractAddress_finalTransaction = "<%=contractAddress_finalTransaction%>";
+    var fromAddress = "<%=fromAddress%>";
     var userId = "<%=userId%>";
     var userTag = "<%=userTag%>";
     var pageIdx = "<%=pageIdx%>";
@@ -280,97 +284,104 @@
     function buyComplete(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var confirms = confirm('Do you want to Pay(Escrow)?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            var obj1 = { subTitle: 'Do you want to Pay(Escrow)?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) { 
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/buy",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/buy",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            })
         });
     }
 
     function sellComplete(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var confirms = confirm('Do you want to complete sales?');
-            if(confirms) {
-                var data = {
-                    "status": true
+            var obj1 = { subTitle: 'Do you want to complete sales?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) { 
+                    var data = {
+                        "status": true
+                    }
+                    
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/sell",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        getItemList();
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
                 }
-                
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/sell",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            })
         });
     }
 
     function tradeComplete(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var confirms = confirm('Do you want to complete a transaction?');
-            if(confirms) {
-                var data = {
-                    "status": true
-                }
+            var obj1 = { subTitle: 'Do you want to complete a trading?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) { 
+                    var data = {
+                        "status": true
+                    }
 
-                $.ajax({
-                    method: "PUT",
-                    url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(data)
-                }).done(function (success) {
-                    alert('The transaction is complete.');
-                    getItemList();
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+                    $.ajax({
+                        method: "PUT",
+                        url: "/v1/vtrs/"+itemId+"/trade/confirm",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(data)
+                    }).done(function (success) {
+                        finalTransaction(itemId, success.data._doc);
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            })
         });
     }
 
     function cancelItem(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var confirms = confirm('Do you want to cancel a transaction?');
-            if(confirms) {
-                $.ajax({
-                    method: "DELETE",
-                    url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
-                }).done(function (success) {
-                    if(success.data.successYn == "Y") {
-                        alert("Transaction canceled.");
-                        getItemList();
-                    } else {
-                        alert(success.data.msg);
-                    }
-                }).fail(function (fail) {
-                    console.log(fail);
-                });
-            }
+            var obj1 = { subTitle: 'Do you want to cancel a trading?'};
+            _ModalUI.init(obj1, "confirm", async function() {
+                if(_ModalUI.isConfirm) { 
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
+                    }).done(function (success) {
+                        if(success.data.successYn == "Y") {
+                            alert("Transaction canceled.");
+                            getItemList();
+                        } else {
+                            alert(success.data.msg);
+                        }
+                    }).fail(function (fail) {
+                        console.log(fail);
+                    });
+                }
+            })
         });
     }
 
@@ -483,6 +494,55 @@
             $("#toPhone").text(success.data.buyer_phone);
         }).fail(function (fail) {
             console.log(fail);
+        });
+    }
+
+    async function finalTransaction(itemId, data) {
+        var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
+        _ModalUI.init(obj2, "finalTransaction", async function() {
+            if(_ModalUI.isTransaction) { 
+                if(fromAddress != "") {
+                    const scriptHash = contractAddress_finalTransaction;
+                    const operation = 'FinalTransaction';
+                    let buyer = data.vtr.roomToken.split('|')[0];
+                    let seller = data.vtr.roomToken.split('|')[1];    
+                    let price = data.price + ' ' + data.cryptoCurrencyCode; 
+                    let message = convertDate(data.regDate) + " " + seller + " to " + buyer + ' of deal is completed deal ' + price + '.';
+                    //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+                    const args = [
+                        {
+                            "type": "String",
+                            "value": message
+                        }
+                    ]
+                    const gasPrice = 500;
+                    const gasLimit = 20000;
+                    const payer = fromAddress;
+                    const config = {
+                        "login": true,
+                        "message": "invoke smart contract."
+                    }
+                    const params = {
+                            scriptHash,
+                            operation,
+                            args,
+                            gasPrice,
+                            gasLimit,
+                            payer,
+                            config
+                            }
+                    try {
+                        const res = await client.api.smartContract.invoke(params);
+                        getItemList();
+                    } catch(err) {
+                        console.log(err);
+                    }
+                } else {
+                    getItemList();
+                }
+            } else {
+                getItemList();
+            }                    
         });
     }
 </script>

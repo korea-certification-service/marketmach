@@ -44,6 +44,10 @@
 <% } %>
     
 <script>
+var client = CyanoMobile.client;        
+client.registerClient();
+var contractAddress_finalTransaction = "<%=contractAddress_finalTransaction%>";
+var fromAddress = "<%=fromAddress%>";
 var userTag = "<%= userTag %>";
 var country = "<%= country %>";
 var itemId = "<%= id %>";
@@ -53,6 +57,8 @@ var tradePointId;
 var buyerTag;
 var sellerTag;
 var vtrTempStatus;
+var price = 0;
+var cryptoCurrencyCode;
 
 $(document).ready(function() {
     getData();
@@ -157,25 +163,37 @@ function cancelItem() {
 }
 
 function confirmItem() {
-    var obj1 = { subTitle: 'Do you want to complete a transaction?'};
+    // var obj1 = { subTitle: 'Do you want to complete a trading?'};
+    var obj1 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
-            var data = {
-                "status": true
-            }
-            $.ajax({
-                method: "PUT",
-                url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(data)
-            }).done(function (success) {
-                location.href = '/<%= pageName %>/detail/' + itemId;
-            }).fail(function (fail) {
-                console.log(fail);
-            });
+            finalTransaction();
+        } else {
+            confirmCall('');
         }
     })
+}
+
+function confirmCall(txId) {
+    var data = {
+        "status": true
+    }
+
+    if(txId != "") {
+        
+    }
+    
+    $.ajax({
+        method: "PUT",
+        url: "/v1/vtrs/"+itemId+"/trade/confirm",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(data)
+    }).done(function (success) {
+        location.href = '/<%= pageName %>/detail/' + itemId;
+    }).fail(function (fail) {
+        console.log(fail);
+    });
 }
 
 function oppositionItem() {
@@ -416,12 +434,12 @@ function getData() {
                 tradePointId = success.data.tradePointId;
                 var regDate = success.data.regDate;
                 var title = success.data.title;
-                var price = numberWithCommas(success.data.price);
+                price = numberWithCommas(success.data.price);
                 var point = numberWithCommas(success.data.point);
                 var status = getStatus(success.data.status);
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
-                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
                 sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 vtrTempStatus = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.item.status;
@@ -573,12 +591,12 @@ function getData() {
                 vtrTempId = success.data.vtrTempId;
                 var regDate = success.data.regDate;
                 var title = success.data.title;
-                var price = numberWithCommas(success.data.price);
+                price = numberWithCommas(success.data.price);
                 var point = numberWithCommas(success.data.point);
                 var status = getStatus(success.data.status);
                 var trade_type = replaceType(success.data.trade_type);
                 var desc = replaceDesc(success.data.desc);
-                var cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
+                cryptoCurrencyCode = success.data.cryptoCurrencyCode == undefined ? "MACH" : success.data.cryptoCurrencyCode;
                 buyerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.buyer_id;
                 sellerTag = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.seller_id;
                 vtrTempStatus = success.data.vtrTemp == undefined ? "" : success.data.vtrTemp.item.status;
@@ -687,5 +705,54 @@ function getData() {
     }).fail(function (fail) {
         console.log(fail);
     })
+}
+
+function finalTransaction() {
+    var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
+    _ModalUI.init(obj2, "finalTransaction", async function() {
+        if(_ModalUI.isTransaction) { 
+            if(fromAddress != "") {
+                const scriptHash = contractAddress_finalTransaction;
+                const operation = 'FinalTransaction';
+                let buyer = buyerTag;
+                let seller = sellerTag;    
+                let strPrice = price + ' ' + cryptoCurrencyCode; 
+                let message = convertDate(new Date().toString()) + " " + seller + " to " + buyer + ' of deal is completed deal ' + strPrice + '.';
+                //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+                const args = [
+                    {
+                        "type": "String",
+                        "value": message
+                    }
+                ]
+                const gasPrice = 500;
+                const gasLimit = 20000;
+                const payer = fromAddress;
+                const config = {
+                    "login": true,
+                    "message": "invoke smart contract."
+                }
+                const params = {
+                        scriptHash,
+                        operation,
+                        args,
+                        gasPrice,
+                        gasLimit,
+                        payer,
+                        config
+                        }
+                try {
+                    const res = await client.api.smartContract.invoke(params);
+                    confirmCall(res.result);
+                } catch(err) {
+                    console.log(err);
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }                    
+    });
 }
 </script>
