@@ -44,6 +44,10 @@
 <% } %>
     
 <script>
+var client = CyanoMobile.client;        
+client.registerClient();
+var contractAddress_finalTransaction = "<%=contractAddress_finalTransaction%>";
+var fromAddress = "<%=fromAddress%>";
 var userTag = "<%= userTag %>";
 var country = "<%= country %>";
 var itemId = "<%= id %>";
@@ -157,7 +161,7 @@ function cancelItem() {
 }
 
 function confirmItem() {
-    var obj1 = { subTitle: 'Do you want to complete a transaction?'};
+    var obj1 = { subTitle: 'Do you want to complete a trading?'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
             var data = {
@@ -170,11 +174,11 @@ function confirmItem() {
                 dataType: "json",
                 data: JSON.stringify(data)
             }).done(function (success) {
-                location.href = '/<%= pageName %>/detail/' + itemId;
+                finalTransaction(itemId, success.data._doc);
             }).fail(function (fail) {
                 console.log(fail);
             });
-        }
+        } 
     })
 }
 
@@ -687,5 +691,54 @@ function getData() {
     }).fail(function (fail) {
         console.log(fail);
     })
+}
+
+async function finalTransaction(itemId, data) {
+    var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
+    _ModalUI.init(obj2, "finalTransaction", async function() {
+        if(_ModalUI.isTransaction) { 
+            if(fromAddress != "") {
+                const scriptHash = contractAddress_finalTransaction;
+                const operation = 'finalTransaction';
+                let buyer = data.vtr.roomToken.split('|')[0];
+                let seller = data.vtr.roomToken.split('|')[1];    
+                let price = data.price + ' ' + data.cryptoCurrencyCode; 
+                let message = convertDate(data.regDate) + " " + seller + " to " + buyer + 'of deal is completed deal ' + price + '.';
+                //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+                const args = [
+                    {
+                        "type": "String",
+                        "value": message
+                    }
+                ]
+                const gasPrice = 500;
+                const gasLimit = 20000;
+                const payer = fromAddress;
+                const config = {
+                    "login": true,
+                    "message": "invoke smart contract."
+                }
+                const params = {
+                        scriptHash,
+                        operation,
+                        args,
+                        gasPrice,
+                        gasLimit,
+                        payer,
+                        config
+                        }
+                try {
+                    const res = await client.api.smartContract.invoke(params);
+                    location.href = '/<%= pageName %>/detail/' + itemId;
+                } catch(err) {
+                    console.log(err);
+                }
+            } else {
+                location.href = '/<%= pageName %>/detail/' + itemId;
+            }
+        } else {
+            location.href = '/<%= pageName %>/detail/' + itemId;
+        }                    
+    });
 }
 </script>

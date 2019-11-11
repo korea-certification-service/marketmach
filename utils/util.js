@@ -194,6 +194,7 @@ function initParam(req, dbconfig) {
         oppositionId: req.params.oppositionId,
         personalId: req.params.personalId,
         productId: req.params.productId,
+        contractAddress_finalTransaction: dbconfig.ontology.contractAddress_finalTransaction
     }
     return param;
 }
