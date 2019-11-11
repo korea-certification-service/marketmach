@@ -180,7 +180,7 @@ function confirmCall(txId) {
     }
 
     if(txId != "") {
-        
+        data['txId'] = txId;
     }
     
     $.ajax({
@@ -707,52 +707,45 @@ function getData() {
     })
 }
 
-function finalTransaction() {
-    var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
-    _ModalUI.init(obj2, "finalTransaction", async function() {
-        if(_ModalUI.isTransaction) { 
-            if(fromAddress != "") {
-                const scriptHash = contractAddress_finalTransaction;
-                const operation = 'FinalTransaction';
-                let buyer = buyerTag;
-                let seller = sellerTag;    
-                let strPrice = price + ' ' + cryptoCurrencyCode; 
-                let message = convertDate(new Date().toString()) + " " + seller + " to " + buyer + ' of deal is completed deal ' + strPrice + '.';
-                //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
-                const args = [
-                    {
-                        "type": "String",
-                        "value": message
-                    }
-                ]
-                const gasPrice = 500;
-                const gasLimit = 20000;
-                const payer = fromAddress;
-                const config = {
-                    "login": true,
-                    "message": "invoke smart contract."
-                }
-                const params = {
-                        scriptHash,
-                        operation,
-                        args,
-                        gasPrice,
-                        gasLimit,
-                        payer,
-                        config
-                        }
-                try {
-                    const res = await client.api.smartContract.invoke(params);
-                    confirmCall(res.result);
-                } catch(err) {
-                    console.log(err);
-                }
-            } else {
-                return false;
+async function finalTransaction() {
+    if(fromAddress != "") {
+        const scriptHash = contractAddress_finalTransaction;
+        const operation = 'FinalTransaction';
+        let buyer = buyerTag;
+        let seller = sellerTag;    
+        let strPrice = price + ' ' + cryptoCurrencyCode; 
+        let message = convertDate(new Date().toString()) + " " + seller + " to " + buyer + ' of deal is completed deal ' + strPrice + '.';
+        //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+        const args = [
+            {
+                "type": "String",
+                "value": message
             }
-        } else {
-            return false;
-        }                    
-    });
+        ]
+        const gasPrice = 500;
+        const gasLimit = 20000;
+        const payer = fromAddress;
+        const config = {
+            "login": true,
+            "message": "invoke smart contract."
+        }
+        const params = {
+                scriptHash,
+                operation,
+                args,
+                gasPrice,
+                gasLimit,
+                payer,
+                config
+                }
+        try {
+            const res = await client.api.smartContract.invoke(params);
+            confirmCall(res.result);
+        } catch(err) {
+            console.log(err);
+        }
+    } else {
+        confirmCall('');
+    }
 }
 </script>

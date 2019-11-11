@@ -338,26 +338,36 @@
     function tradeComplete(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var obj1 = { subTitle: 'Do you want to complete a trading?'};
+            var obj1 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
             _ModalUI.init(obj1, "confirm", async function() {
                 if(_ModalUI.isConfirm) { 
-                    var data = {
-                        "status": true
-                    }
-
-                    $.ajax({
-                        method: "PUT",
-                        url: "/v1/vtrs/"+itemId+"/trade/confirm",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        data: JSON.stringify(data)
-                    }).done(function (success) {
-                        finalTransaction(itemId, success.data._doc);
-                    }).fail(function (fail) {
-                        console.log(fail);
-                    });
+                    finalTransaction(itemId);
+                } else {
+                    confirmCall(itemId, '');
                 }
             })
+        });
+    }
+
+    function confirmCall(itemId, txId) {
+        var data = {
+            "status": true
+        }
+
+        if(txId != "") {
+            data['txId'] = txId;
+        }
+        
+        $.ajax({
+            method: "PUT",
+            url: "/v1/vtrs/"+itemId+"/trade/confirm",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data)
+        }).done(function (success) {
+            getItemList();
+        }).fail(function (fail) {
+            console.log(fail);
         });
     }
 
@@ -497,52 +507,53 @@
         });
     }
 
-    async function finalTransaction(itemId, data) {
-        var obj2 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
-        _ModalUI.init(obj2, "finalTransaction", async function() {
-            if(_ModalUI.isTransaction) { 
-                if(fromAddress != "") {
-                    const scriptHash = contractAddress_finalTransaction;
-                    const operation = 'FinalTransaction';
-                    let buyer = data.vtr.roomToken.split('|')[0];
-                    let seller = data.vtr.roomToken.split('|')[1];    
-                    let price = data.price + ' ' + data.cryptoCurrencyCode; 
-                    let message = convertDate(data.regDate) + " " + seller + " to " + buyer + ' of deal is completed deal ' + price + '.';
-                    //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
-                    const args = [
-                        {
-                            "type": "String",
-                            "value": message
+    function finalTransaction(itemId) {
+        $.ajax({
+            method: "GET",
+            url: "/v1/items/service/" + itemId
+        }).done(async function (success) {
+            if(fromAddress != "") {
+                const scriptHash = contractAddress_finalTransaction;
+                const operation = 'FinalTransaction';
+                let buyer = success.data.vtrTemp.buyer_id;
+                let seller = success.data.vtrTemp.seller_id;    
+                let strPrice = success.data.price + ' ' + success.data.cryptoCurrencyCode; 
+                let message = convertDate(new Date().toString()) + " " + seller + " to " + buyer + ' of deal is completed deal ' + strPrice + '.';
+                //SC 등록시 특수기호 입력 하면 에러 발생함(42002: invaild Error.)
+                const args = [
+                    {
+                        "type": "String",
+                        "value": message
+                    }
+                ]
+                const gasPrice = 500;
+                const gasLimit = 20000;
+                const payer = fromAddress;
+                const config = {
+                    "login": true,
+                    "message": "invoke smart contract."
+                }
+                const params = {
+                        scriptHash,
+                        operation,
+                        args,
+                        gasPrice,
+                        gasLimit,
+                        payer,
+                        config
                         }
-                    ]
-                    const gasPrice = 500;
-                    const gasLimit = 20000;
-                    const payer = fromAddress;
-                    const config = {
-                        "login": true,
-                        "message": "invoke smart contract."
-                    }
-                    const params = {
-                            scriptHash,
-                            operation,
-                            args,
-                            gasPrice,
-                            gasLimit,
-                            payer,
-                            config
-                            }
-                    try {
-                        const res = await client.api.smartContract.invoke(params);
-                        getItemList();
-                    } catch(err) {
-                        console.log(err);
-                    }
-                } else {
-                    getItemList();
+                try {
+                    const res = await client.api.smartContract.invoke(params);
+                    confirmCall(itemId, res.result);
+                } catch(err) {
+                    console.log(err);
+                    confirmCall('');
                 }
             } else {
-                getItemList();
-            }                    
-        });
+                confirmCall('');
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        })
     }
 </script>

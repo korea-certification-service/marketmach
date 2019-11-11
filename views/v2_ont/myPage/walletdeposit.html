@@ -304,7 +304,7 @@
                 if(_ModalUI.isConfirm) {
                     try {
                         const res = await client.api.asset.transfer(params); 
-                        $('#result').html(JSON.stringify(res));              
+                        //$('#result').html(JSON.stringify(res));              
                         if(res.desc == "ERROR") {
                             $("#confirmDeposit").attr("disabled", false);
                             return;

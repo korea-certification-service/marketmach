@@ -880,9 +880,12 @@ router.put('/:itemId/trade/:tradeType', function (req, res, next) {
         'loginToken': req.cookies.loginToken,
         'token': dbconfig.APIToken
     };
+    let body = req.body;
     let reqs = {uri: url, 
         method:'POST',
-        headers: header
+        headers: header,
+        body:body,
+        json: true
     }
 
     //채팅 서버에서 API 서버로 내부 call요청한다.
