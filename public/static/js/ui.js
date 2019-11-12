@@ -564,6 +564,8 @@ var _ModalUI = {
                     that.closeModal();
                     callback();
                 }
+
+                this.removeEventListener("click",arguments.callee);
             }
         }); 
     },
