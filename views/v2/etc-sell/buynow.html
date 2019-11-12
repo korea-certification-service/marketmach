@@ -284,9 +284,10 @@
             })
         }
 
-        function buynow() {
+        function buynow() {            
             var confirmYn = confirm("거래를 시작하시겠습니까?");
             if(confirmYn) {
+                $("#buynow").prop('disabled', true);
                 var params = {
                     "itemId": itemId,
                     "from_userId": from_userTag,
@@ -307,9 +308,11 @@
                         location.href = "/etc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }

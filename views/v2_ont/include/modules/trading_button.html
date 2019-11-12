@@ -136,10 +136,11 @@ $(document).ready(function() {
     });
 }); // end of $(document).ready
 
-function cancelItem() {
+function cancelItem() {    
     var obj1 = {class: 'negative', subTitle: 'Do you want to cancel a transaction?'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
+            $("#cancel").prop('disabled', true);
             $.ajax({
                 method: "DELETE",
                 url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
@@ -154,19 +155,22 @@ function cancelItem() {
                 } else {
                     var obj = { subTitle: success.data.msg};
                     _ModalUI.init(obj, "alert");
+                    $("#cancel").prop('disabled', false);
                 }
             }).fail(function (fail) {
                 console.log(fail);
+                $("#cancel").prop('disabled', false);
             });
         }
     })
 }
 
-function confirmItem() {
+function confirmItem() {    
     // var obj1 = { subTitle: 'Do you want to complete a trading?'};
     var obj1 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
+            $("#confirm").prop('disabled', true);
             finalTransaction();
         } else {
             confirmCall('');
@@ -193,6 +197,7 @@ function confirmCall(txId) {
         location.href = '/<%= pageName %>/detail/' + itemId;
     }).fail(function (fail) {
         console.log(fail);
+        $("#confirm").prop('disabled', false);
     });
 }
 
@@ -216,10 +221,11 @@ function removeItem() {
     })
 }
 
-function buyComplete() {
+function buyComplete() {    
     var obj1 = { subTitle: 'Do you want to Pay(Escrow)?'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
+            $("#buyComplete").prop('disabled', true);
             var data = {
                 "status": true
             }
@@ -231,20 +237,22 @@ function buyComplete() {
                 dataType: "json",
                 data: JSON.stringify(data)
             }).done(function (success) {
-                var obj = { subTitle: 'Buyer confirmed purchase. \n Please wait for the seller to complete the sale.'};
-                _ModalUI.init(obj, "alert");
+                // var obj = { subTitle: 'Buyer confirmed purchase. \n Please wait for the seller to complete the sale.'};
+                // _ModalUI.init(obj, "alert");
                 location.href = '/<%= pageName %>/detail/' + itemId;
             }).fail(function (fail) {
                 console.log(fail);
+                $("#buyComplete").prop('disabled', false);
             });
         }
     })
 }
 
-function sellComplete() {
+function sellComplete() {    
     var obj1 = { subTitle: 'Do you want to complete sales?'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
+            $("#sellComplete").prop('disabled', true);
             var data = {
                 "status": true
             }
@@ -256,11 +264,12 @@ function sellComplete() {
                 dataType: "json",
                 data: JSON.stringify(data)
             }).done(function (success) {
-                var obj = { subTitle: "The seller finished the sale.\n Once the buyer's purchase is finalized, the transaction is complete."};
-                _ModalUI.init(obj, "alert");
+                // var obj = { subTitle: "The seller finished the sale.\n Once the buyer's purchase is finalized, the transaction is complete."};
+                // _ModalUI.init(obj, "alert");
                 location.href = '/<%= pageName %>/detail/' + itemId;
             }).fail(function (fail) {
                 console.log(fail);
+                $("#sellComplete").prop('disabled', false);
             });
         }
     })
@@ -740,9 +749,14 @@ async function finalTransaction() {
                 }
         try {
             const res = await client.api.smartContract.invoke(params);
+            if(res.desc != "ERROR") {
+                $("#confirm").attr("disabled", false);
+                return;
+            }
             confirmCall(res.result);
         } catch(err) {
             console.log(err);
+            $("#confirm").prop('disabled', false);
         }
     } else {
         confirmCall('');

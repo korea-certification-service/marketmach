@@ -277,6 +277,7 @@
         }
 
         function buynow() {
+            $("#buynow").prop('disabled', true);
             var confirmYn = confirm("거래를 시작하시겠습니까?");
             if(confirmYn) {
                 var params = {
@@ -299,14 +300,17 @@
                         location.href = "/etc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }
 
         function pointBuynow() {
+            $("#buynow").prop('disabled', true);
             var confirmYn = confirm("거래를 시작하시겠습니까?");
             if(confirmYn) {
                 var params = {
@@ -328,9 +332,11 @@
                         location.href = "/etc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }

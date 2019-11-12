@@ -235,6 +235,7 @@ function buynow() {
 }
 
 function pointCancelItem() {
+    $("#pointCancel").prop('disabled', true);
     var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
     console.log('준비중');
     if(confirms) {
@@ -251,14 +252,17 @@ function pointCancelItem() {
                 location.href = '/<%= pageName %>/detail/' + itemId;
             } else {
                 alert(success.data.msg);
+                $("#pointCancel").prop('disabled', false);
             }
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointCancel").prop('disabled', false);
         });
     }
 }
 
 function pointConfirmItem() {
+    $("#pointConfirm").prop('disabled', true);
     var confirms = confirm('거래 완료 하시겠습니까?');
     if(confirms) {
         var data = {
@@ -274,11 +278,13 @@ function pointConfirmItem() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointConfirm").prop('disabled', false);
         });
     }
 }
 
 function pointSellComplete() {
+    $("#pointSellComplete").prop('disabled', true);
     var confirms = confirm('판매 완료 하시겠습니까?');
     if(confirms) {
         var data = {
@@ -296,6 +302,7 @@ function pointSellComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointSellComplete").prop('disabled', false);
         });
     }
 }

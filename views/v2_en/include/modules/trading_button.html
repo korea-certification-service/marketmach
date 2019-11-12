@@ -100,7 +100,7 @@ $(document).ready(function() {
     });
 
     /** 판매와 포인트용 스크립트**/
-    $('#buynow, #pointBuynow').on('click', function() {
+    $('#buynow').on('click', function() {
         buynow();
     });
     $('#pointCancel').on('click', function() {
@@ -130,9 +130,10 @@ $(document).ready(function() {
     });
 }); // end of $(document).ready
 
-function cancelItem() {
+function cancelItem() {    
     var confirms = confirm('Do you want to cancel a transaction?');
     if(confirms) {
+        $("#cancel").prop('disabled', true);
         $.ajax({
             method: "DELETE",
             url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
@@ -146,16 +147,19 @@ function cancelItem() {
                 location.href = '/<%= pageName %>/detail/' + itemId;
             } else {
                 alert(success.data.msg);
+                $("#cancel").prop('disabled', false);
             }
         }).fail(function (fail) {
             console.log(fail);
+            $("#cancel").prop('disabled', false);
         });
     }
 }
 
-function confirmItem() {
+function confirmItem() {    
     var confirms = confirm('Do you want to complete a transaction?');
     if(confirms) {
+        $("#confirm").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -169,6 +173,7 @@ function confirmItem() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#confirm").prop('disabled', false);
         });
     }
 }
@@ -191,9 +196,10 @@ function removeItem() {
     }
 }
 
-function buyComplete() {
+function buyComplete() {    
     var confirms = confirm('Do you want to Pay(Escrow)?');
     if(confirms) {
+        $("#buyComplete").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -209,6 +215,7 @@ function buyComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#buyComplete").prop('disabled', false);
         });
     }
 }
@@ -216,6 +223,7 @@ function buyComplete() {
 function sellComplete() {
     var confirms = confirm('Do you want to complete sales?');
     if(confirms) {
+        $("#sellComplete").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -231,6 +239,7 @@ function sellComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#sellComplete").prop('disabled', false);
         });
     }
 }

@@ -335,9 +335,10 @@
             }
         }
 
-        function pointBuynow() {
+        function pointBuynow() {            
             var confirmYn = confirm("Are you start trading?");
             if(confirmYn) {
+                $("#buynow").prop('disabled', true);
                 var params = {
                     "itemId": itemId,
                     "from_userId": from_userTag,
@@ -357,9 +358,11 @@
                         location.href = "/sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }
