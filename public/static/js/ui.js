@@ -546,26 +546,29 @@ var _ModalUI = {
                 if(e.target.id === "btnSmileOk") {
                     _ModalUI.isConfirm = true;
                     _ModalUI.isTransaction = false;
-                    that.closeModal();
-                    callback();
                 } else if(e.target.id === "btnSmileNo") {
                     _ModalUI.isConfirm = false;
                     _ModalUI.isTransaction = false;
-                    that.closeModal();
-                    callback();
                 } else if(e.target.id === "btnTransactionOk") {
                     _ModalUI.isConfirm = false;
                     _ModalUI.isTransaction = true;
-                    that.closeModal();
-                    callback();
                 } else if(e.target.id === "btnTransactionNo") {
                     _ModalUI.isConfirm = false;
                     _ModalUI.isTransaction = false;
-                    that.closeModal();
-                    callback();
                 }
-
-                this.removeEventListener("click",arguments.callee);
+                switch (e.target.id) {
+                    case "btnSmileOk" :
+                    case "btnSmileNo" :
+                    case "btnTransactionOk" :
+                    case "btnTransactionNo":
+                        that.closeModal();
+                        // 이벤트 리스너가 계속 추가되서 클릭한 횟수만큼 이벤트 발생하는 것을 막기위해
+                        callback(); // 콜백 실행
+                        this.removeEventListener("click",arguments.callee); // 그 후 현재 이벤트 리스너 제거
+                        break;
+                    default:
+                        break;
+                }
             }
         }); 
     },
