@@ -260,10 +260,11 @@
             })
         }
 
-        function buynow() {
+        function buynow() {            
             var obj1 = { subTitle: "Are you start trading?"};
             _ModalUI.init(obj1, "confirm", async function() {
                 if(_ModalUI.isConfirm) { 
+                    $("#buynow").prop('disabled', true);
                     var params = {
                         "itemId": itemId,
                         "from_userId": from_userTag,
@@ -280,15 +281,17 @@
                         data: JSON.stringify(params),
                     }).done(function (success) {
                         if(success.data.code == undefined) {
-                            var obj = { subTitle:'The transaction has started.\n Please contact directly by clicking [View Contact] button.'};
-                            _ModalUI.init(obj, "alert");   
+                            // var obj = { subTitle:'The transaction has started.\n Please contact directly by clicking [View Contact] button.'};
+                            // _ModalUI.init(obj, "alert");   
                             location.href = "/otc-sells/detail/"+itemId
                         } else {
                             var obj = { subTitle:success.data.msg};
                             _ModalUI.init(obj, "alert");   
+                            $("#buynow").prop('disabled', false);
                         }
                     }).fail(function (fail) {
                         console.log(fail);
+                        $("#buynow").prop('disabled', false);
                     })
                 }
             })

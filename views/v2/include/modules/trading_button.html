@@ -100,9 +100,14 @@ $(document).ready(function() {
     });
 
     /** 판매와 포인트용 스크립트**/
-    $('#buynow, #pointBuynow').on('click', function() {
+    $('#buynow').on('click', function() {
         buynow();
     });
+
+    $('#pointBuynow').on('click', function() {
+        buynowPoint();
+    });
+
     $('#pointCancel').on('click', function() {
         ajaxLoginYnCheck(pointCancelItem);
     });
@@ -130,9 +135,10 @@ $(document).ready(function() {
     });
 }); // end of $(document).ready
 
-function cancelItem() {
+function cancelItem() {    
     var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
     if(confirms) {
+        $("#cancel").prop('disabled', true);
         $.ajax({
             method: "DELETE",
             url: "/v1/vtrs/cancel/"+itemId+"/" + userTag,
@@ -146,16 +152,19 @@ function cancelItem() {
                 location.href = '/<%= pageName %>/detail/' + itemId;
             } else {
                 alert(success.data.msg);
+                $("#cancel").prop('disabled', false);
             }
         }).fail(function (fail) {
             console.log(fail);
+            $("#cancel").prop('disabled', false);
         });
     }
 }
 
-function confirmItem() {
+function confirmItem() {    
     var confirms = confirm('거래 완료 하시겠습니까?');
     if(confirms) {
+        $("#confirm").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -169,6 +178,7 @@ function confirmItem() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#confirm").prop('disabled', false);
         });
     }
 }
@@ -193,9 +203,10 @@ function removeItem() {
     }
 }
 
-function buyComplete() {
+function buyComplete() {    
     var confirms = confirm('구매 확인 하시겠습니까?');
     if(confirms) {
+        $("#buyComplete").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -211,13 +222,15 @@ function buyComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#buyComplete").prop('disabled', false);
         });
     }
 }
 
-function sellComplete() {
+function sellComplete() {    
     var confirms = confirm('판매 완료 하시겠습니까?');
     if(confirms) {
+        $("#sellComplete").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -233,6 +246,7 @@ function sellComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#sellComplete").prop('disabled', false);
         });
     }
 }
@@ -260,10 +274,15 @@ function buynow() {
     location.replace('/<%= pageName %>/buynow/' + itemId);
 }
 
-function pointCancelItem() {
+function buynowPoint() {
+    location.replace('/<%= pageName %>/buynow/point/' + itemId);
+}
+
+function pointCancelItem() {    
     var confirms = confirm('정말로 거래를 취소 하시겠습니까?');
     console.log('준비중');
     if(confirms) {
+        $("#pointCancel").prop('disabled', true);
         $.ajax({
             method: "DELETE",
             url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
@@ -271,13 +290,15 @@ function pointCancelItem() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointCancel").prop('disabled', false);
         });
     }
 }
 
-function pointConfirmItem() {
+function pointConfirmItem() {    
     var confirms = confirm('거래 완료 하시겠습니까?');
     if(confirms) {
+        $("#pointConfirm").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -291,13 +312,15 @@ function pointConfirmItem() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointConfirm").prop('disabled', false);
         });
     }
 }
 
 function pointSellComplete() {
-    var confirms = confirm('판매 완료 하시겠습니까?');
+     var confirms = confirm('판매 완료 하시겠습니까?');
     if(confirms) {
+        $("#pointSellComplete").prop('disabled', true);
         var data = {
             "status": true
         }
@@ -313,6 +336,7 @@ function pointSellComplete() {
             location.href = '/<%= pageName %>/detail/' + itemId;
         }).fail(function (fail) {
             console.log(fail);
+            $("#pointSellComplete").prop('disabled', false);
         });
     }
 }

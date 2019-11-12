@@ -293,9 +293,10 @@
             })
         }
 
-        function buynow() {
+        function buynow() {            
             var confirmYn = confirm("Do you want to start a transaction?");
             if(confirmYn) {
+                $("#buynow").prop('disabled', true);
                 var params = {
                     "itemId": itemId,
                     "from_userId": from_userTag,
@@ -316,9 +317,11 @@
                         location.href = "/etc-sells/detail/"+itemId
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }

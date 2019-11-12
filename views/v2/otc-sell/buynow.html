@@ -260,10 +260,10 @@
             })
         }
 
-        function buynow() {
-
+        function buynow() {            
             var confirmYn = confirm("거래를 시작하시겠습니까?");
             if(confirmYn) {
+                $("#buynow").prop('disabled', true);
                 var params = {
                     "itemId": itemId,
                     "from_userId": from_userTag,
@@ -281,12 +281,14 @@
                 }).done(function (success) {
                     if(success.data.code == undefined) {
                         alert('거래가 시작되었습니다.\r 연락처 표시 버튼을 클릭하여 연락하시기 바랍니다.');
-                        location.href = "/otc-sells/detail/"+itemId
+                        location.href = "/otc-sells/detail/"+itemId                        
                     } else {
                         alert(success.data.msg);
+                        $("#buynow").prop('disabled', false);
                     }
                 }).fail(function (fail) {
                     console.log(fail);
+                    $("#buynow").prop('disabled', false);
                 })
             }
         }
