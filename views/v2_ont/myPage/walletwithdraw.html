@@ -28,11 +28,6 @@
                 location.replace('/myPages/user/kyc');
             }
 
-            if(bitberry_token != undefined && bitberry_token != "") {
-                //$('.bitberry_switch').html('<img class="" src="/static/img/sub/logo_bitberry.png" alt=""><p>ON</p>');
-                $('.bitberry_grey_box').html('<img class="" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>ON</em>');           
-            }
-
             $('[name=amount]').on('keyup',function() {
                 if($('[name=amount]').val() != "") {
                     $('#total_amount').text(total_price - parseFloat($('[name=amount]').val()));
@@ -326,21 +321,6 @@
                     <!-- mypage -->
                     <section class="mypage_sec">
                         <h1 class="tit_mypage">My Wallet <span>withdraw Coin</span></h1>
-                        <!-- <div class="bitberry_switch_box">
-                            <div class="bitberry_switch">
-                                <%# 비활성화 상태 이미지(회색)는 img_grey 클래스 필요 %>
-                                <a href="/myPages/wallet/connect">
-                                    <img class="img_grey" src="/static/img/sub/logo_bitberry.png" alt="">
-                                    <p>OFF</p>
-                                </a>
-                            </div>
-                            <em>나의지갑 잔액</em>
-                            <p class="fc3" id="mach"></p>
-                        </div> -->
-                        <div class="bitberry_grey_box">
-                            <img class="img_grey" src="/static/img/symbol/logo_bitberry.png" alt="bitberry"><em>OFF</em>
-                        </div>
-                        <h2 class="tit_mypage dot_tit">MY Wallet Status</h2>
                         <div class="table_wrap table_total_escrow_wrap">
                             <table class="table_total_escrow">
                                 <colgroup class="colgroup_total_escorw">
