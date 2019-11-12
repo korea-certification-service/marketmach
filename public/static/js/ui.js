@@ -526,7 +526,7 @@ var _ModalUI = {
         dom +=     '</article>'
         dom += '</div>'
 
-        document.querySelector(".wrap > .content_wrap").insertAdjacentHTML("afterend", dom);
+        document.querySelector(".wrap .sub_container").insertAdjacentHTML("afterend", dom);
     },
     alert: function(callback) {
         var that = this;
