@@ -31,6 +31,10 @@
                 "password": password
             };
 
+            if(id == "" || password == "") {
+                _ModalUI.init({ subTitle: 'Please enter your User ID and Password.'}, "alert");
+            }
+
             $.ajax({
                 method: "POST",
                 url: "/v1/users/login",
@@ -51,30 +55,30 @@
     </script>
 </head>
 <body>
-    <div class="ont_m_signin" id="wrap">
-        <!-- join_sec page-->
-        <section class="integration_sec">
-            <h1>Integration User</h1>
-            <p>
-                If you have MarketMACH ID, input your ID and password, then Click "Integration".
-                Or if you don't have it, Click "Sign up".
-            </p>           
-            <div class="login_body">
-                <!--remove autocomplete-->
-                <input style="display:none" aria-hidden="true">
-                <input type="password" style="display:none" aria-hidden="true">
-                <!--remove autocomplete end-->
-                <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
-                <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
+    <div class="ont_m_signin wrap" id="wrap">
+        <div class="sub_container">
+            <section class="integration_sec">
+                <h1>Integration User</h1>
+                <p>
+                    If you have MarketMACH ID, input your ID and password, then Click "Integration".
+                    Or if you don't have it, Click "Sign up".
+                </p>           
+                <div class="login_body">
+                    <!--remove autocomplete-->
+                    <input style="display:none" aria-hidden="true">
+                    <input type="password" style="display:none" aria-hidden="true">
+                    <!--remove autocomplete end-->
+                    <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
+                    <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
 
-                <div class="tac">
-                    <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
-                    <button class="btn_signin btn_cmn" onclick="login()">Integration</button>
-                    <button class="btn_signup btn_cmn" id="agreement">Sign up</button>
+                    <div class="tac">
+                        <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
+                        <button class="btn_signin btn_cmn" onclick="login()">Integration</button>
+                        <button class="btn_signup btn_cmn" id="agreement">Sign up</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <!--// join_sec page-->
+            </section>
+        </div>
     </div>
 </div>
 </body> 

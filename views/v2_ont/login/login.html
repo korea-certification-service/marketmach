@@ -32,13 +32,16 @@
                 // "country": $('[name=country]').val()
             };
 
+            if(id == "" || password == "") {
+                _ModalUI.init({ subTitle: 'Please enter your User ID and Password.'}, "alert");
+            }
+
             // if($("input:checkbox[name='remember-me']").is(":checked")==true){
             //     data["remember"]=true;
             // }else{
             //     data["remember"]=false;
             // }
 
-            console.log("data : ",data);
             $.ajax({
                 method: "POST",
                 url: "/v1/users/login",
@@ -123,40 +126,42 @@
     </script>
 </head>
 <body>
-<div class="ont_m_signin" id="wrap">
-    <div class="signin_head">
-        <h1 class="signin_logo">
-            <a href="/main">
-                <img src="/static/img/h_logo.png" alt="MACH">
-            </a>
-        </h1>
-    </div>
-    <div class="signin_body">
-        <!--remove autocomplete-->
-        <input style="display:none" aria-hidden="true">
-        <input type="password" style="display:none" aria-hidden="true">
-        <!--remove autocomplete end-->
-
-        <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
-        <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
-
-        <!--
-            <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
-        -->
-        <div class="tac">
-            <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
-            <button class="btn_signin btn_cmn" onclick="login()">Sign in</button>
-            <a class="btn_signup btn_cmn" href="/agreement" class="">Sign Up</a>
-            <hr>
-            <em class="txt_or">OR</em>
+<div class="ont_m_signin wrap" id="wrap">
+    <div class="sub_container">
+        <div class="signin_head">
+            <h1 class="signin_logo">
+                <a href="/main">
+                    <img src="/static/img/h_logo.png" alt="MACH">
+                </a>
+            </h1>
         </div>
-
-        <button class="btn_signin_ont btn_cmn" onclick='ontLogin();'>
-            <span>Sign in with ONT</span>
-        </button>
-    </div>
-    <div class="signin_foot">
-        <div id="result"></div>
+        <div class="signin_body">
+            <!--remove autocomplete-->
+            <input style="display:none" aria-hidden="true">
+            <input type="password" style="display:none" aria-hidden="true">
+            <!--remove autocomplete end-->
+    
+            <input class="ipt_signin login_id" type="text" name="id" id="userId" placeholder="ID">
+            <input class="ipt_signin login_pw" type="password" autocomplete="new-password" name="password" id="password" onkeyup="enterkey()" placeholder="Password">
+    
+            <!--
+                <input type="checkbox" name="" id="idSave"> <label class="d-inline-block" for="idSave">아이디저장</label>
+            -->
+            <div class="tac">
+                <a href="/findPassword" class="forgot_id">Forgot ID or password?</a>
+                <button class="btn_signin btn_cmn" onclick="login()">Sign in</button>
+                <a class="btn_signup btn_cmn" href="/agreement" class="">Sign Up</a>
+                <hr>
+                <em class="txt_or">OR</em>
+            </div>
+    
+            <button class="btn_signin_ont btn_cmn" onclick='ontLogin();'>
+                <span>Sign in with ONT</span>
+            </button>
+        </div>
+        <div class="signin_foot">
+            <div id="result"></div>
+        </div>
     </div>
 </div>
 </body>
