@@ -544,6 +544,10 @@
                         }
                 try {
                     const res = await client.api.smartContract.invoke(params);
+                    if(res.desc == "ERROR") {
+                        $("#confirm").attr("disabled", false);
+                        return;
+                    }
                     confirmCall(itemId, res.result);
                 } catch(err) {
                     console.log(err);
