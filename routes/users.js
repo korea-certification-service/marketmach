@@ -373,6 +373,9 @@ router.post('/', function (req, res, next) {
                                 coins['total_mach'] = 0;
                             }
                         }
+                        if(req.session.ontId != undefined) {
+                            coins['ont_address'] = req.session.ontId.replace('did:ont:','');
+                        }
                         
                         controllerCoins.createByCoin(country, coins)
                         .then(result => {
@@ -593,6 +596,8 @@ router.post('/login', function (req, res, next) {
                 //ONT ID가 DB 상에 존재하지 않으면 해당 값을 Update
                 if(result._doc['ontId'] == undefined && req.session.ontId != undefined) {
                     data1['ontId'] = req.session.ontId;
+                    let coin = {'ont_address': req.session.ontId.replace('did:ont:','')};
+                    controllerCoins.updateById(country, result._doc.coinId, coin);
                 }
 
                 controllerUsers.updateLoginToken(country, result._doc._id, data1)
@@ -610,7 +615,7 @@ router.post('/login', function (req, res, next) {
                                 req.session.authPhone = agreement.authPhone;
                                 req.session.bitberry_token = result.bitberry_token;
                                 req.session.kyc = agreement._doc.kyc == undefined ? false : agreement._doc.kyc;
-                                req.session.ontId = result.ontId;
+                                req.session.ontId = result._doc.ontId;
 
                                 // chatbot에서 로그인 확인을 위한 쿠키 생성
                                 let key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef"); // key 값 > 변경가능
