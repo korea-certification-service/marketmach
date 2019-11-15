@@ -140,7 +140,7 @@
 }
 @media (max-width: 767px) {
     .gamestation_lft_menu > .depth1 > li { overflow: hidden; }
-    .gamestation_lft_menu > .depth1 > li > a { padding: 14px 0; border: none; text-align: center; }
+    .gamestation_lft_menu > .depth1 > .icon_align > a { padding: 14px 0; border: none; text-align: center; }
     .gamestation_lft_menu .depth1 .icon_align a > .material-icons { font-size: 16px; }
     .gamestation_lft_menu .depth1 > li {height: 52px;}
 }

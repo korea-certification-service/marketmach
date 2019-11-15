@@ -298,7 +298,8 @@
                         dataType: "json",
                         data: JSON.stringify(data)
                     }).done(function (success) {
-                        alert('Buyer confirmed purchase.\nPlease wait for the seller to complete the sale.');
+                        var obj = {subTitle: "Buyer confirmed purchase.\nPlease wait for the seller to complete the sale."};
+                        _ModalUI.init(obj, "alert");
                         getItemList();
                     }).fail(function (fail) {
                         console.log(fail);
@@ -325,7 +326,8 @@
                         dataType: "json",
                         data: JSON.stringify(data)
                     }).done(function (success) {
-                        alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                        var obj = { subTitle: "The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete."};
+                        _ModalUI.init(obj, "alert");
                         getItemList();
                     }).fail(function (fail) {
                         console.log(fail);
@@ -374,7 +376,7 @@
     function cancelItem(itemId) {
         event.stopPropagation();
         ajaxLoginYnCheck(function(){
-            var obj1 = { subTitle: 'Do you want to cancel a trading?'};
+            var obj1 = {class: 'negative', subTitle: 'Do you want to cancel a trading?'};
             _ModalUI.init(obj1, "confirm", async function() {
                 if(_ModalUI.isConfirm) { 
                     $.ajax({
@@ -382,10 +384,12 @@
                         url: "/v1/vtrs/cancel/"+itemId+"/" + userTag
                     }).done(function (success) {
                         if(success.data.successYn == "Y") {
-                            alert("Transaction canceled.");
+                            var obj = { subTitle: "Transaction canceled."};
+                            _ModalUI.init(obj, "alert");
                             getItemList();
                         } else {
-                            alert(success.data.msg);
+                            var obj = { subTitle: success.data.msg};
+                            _ModalUI.init(obj, "alert");
                         }
                     }).fail(function (fail) {
                         console.log(fail);
@@ -409,6 +413,7 @@
             url: "/v1/vtrs/item/" + itemId
         }).done(function (success) {
             //console.log(success.data);
+            /*
             _PopupUI.showWithDim(function() {
                 // callback
             });
@@ -416,6 +421,16 @@
             $("#fromPhone").text(success.data.seller_phone);
             $("#from_userTag").text(success.data.seller_id);
             $("#toPhone").text(success.data.buyer_phone);
+            */
+
+            var obj = { title: 'Contact'};
+            obj.p = 'buyer_id: '+ success.data.buyer_id +"<br>";
+            obj.p += 'buyer_phone: '+ success.data.buyer_phone +"<br><br>";
+            obj.p += 'seller_id: '+ success.data.seller_id +"<br>";
+            obj.p += 'seller_phone '+ success.data.seller_phone +"<br>";
+
+            _ModalUI.init(obj, "alert");
+
         }).fail(function (fail) {
             console.log(fail);
         });
@@ -430,7 +445,8 @@
                     method: "DELETE",
                     url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    alert("Transaction canceled.");
+                    var obj = { subTitle: "Transaction canceled."};
+                    _ModalUI.init(obj, "alert");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -455,7 +471,8 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert("The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete.");
+                    var obj = { subTitle: "The seller finished the sale.\nOnce the buyer's purchase is finalized, the transaction is complete."};
+                    _ModalUI.init(obj, "alert");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);
@@ -479,7 +496,8 @@
                     dataType: "json",
                     data: JSON.stringify(data)
                 }).done(function (success) {
-                    alert('The transaction is complete.');
+                    var obj = { subTitle: "The transaction is complete."};
+                    _ModalUI.init(obj, "alert");
                     getItemList();
                 }).fail(function (fail) {
                     console.log(fail);

@@ -280,6 +280,7 @@ function showPhone(itemId) {
         method: "GET",
         url: "/v1/vtrs/item/" + itemId
     }).done(function (success) {
+        /*
         console.log(success.data);
         _PopupUI.showWithDim(function() {
             // callback
@@ -288,6 +289,14 @@ function showPhone(itemId) {
         $("#fromPhone").text(success.data.seller_phone);
         $("#from_userTag").text(success.data.seller_id);
         $("#toPhone").text(success.data.buyer_phone);
+        */
+        var obj = { title: 'Contact'};
+        obj.p = 'buyer_id: '+ success.data.buyer_id +"<br>";
+        obj.p += 'buyer_phone: '+ success.data.buyer_phone +"<br><br>";
+        obj.p += 'seller_id: '+ success.data.seller_id +"<br>";
+        obj.p += 'seller_phone '+ success.data.seller_phone +"<br>";
+
+        _ModalUI.init(obj, "alert");       
     }).fail(function (fail) {
         console.log(fail);
     });

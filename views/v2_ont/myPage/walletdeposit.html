@@ -318,22 +318,37 @@
                             url: "/v1/coins/ontwallet/deposit/onto",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            data: JSON.stringify(data)
+                            data: JSON.stringify(data),
+                            beforeSend: function (xhr) {
+                                $("#ajaxSpiner").show(); // spinner
+                                var pos = $("#spinnerTarget").offset().top - 100;
+                                $("html, body").animate({
+                                    "scrollTop":pos
+                                },0);              
+                            }                           
                         }).done(function (success) {
                             console.log(success.data);
                             $("#confirmDeposit").attr("disabled", false);
-                            location.reload();
+                            var obj = { subTitle:'Coin deposit has been processed successfully.'};
+                            _ModalUI.init(obj, "alert", function() {
+                                location.reload();
+                            });
                         }).fail(function (fail) {
                             console.log(fail);      
                             var obj = { subTitle: 'There was a problem during the process. <br> If the problem persists, please contact administrators.'};
                             _ModalUI.init(obj, "alert");              
                             $("#confirmDeposit").attr("disabled", false);
-                        });
+                        }).always(function() {
+                            // 딤처리 없애기
+                            setTimeout(function(){
+                                $("#ajaxSpiner").hide(); // spinner
+                            }, 600)
+                        })
                     } catch(err) {
                         console.log(err);
                         //To-do : 모달창으로 에러 메시지 띄우기
                         //$('#result').html(JSON.stringify(err));
-                        var obj = { subTitle: 'There was a problem during the process. <br> If the problem persists, please contact administrators.'};
+                        var obj = { subTitle: 'asdasdq3213123There was a problem during the process. <br> If the problem persists, please contact administrators.'};
                         _ModalUI.init(obj, "alert");                                          
                         $("#confirmDeposit").attr("disabled", false);
                         return;

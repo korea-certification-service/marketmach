@@ -57,7 +57,7 @@ var MainUi = {
         });
 
         function showOnlyNav(_tgt) {
-            if(_tgt !== undefined) {
+            if(_tgt.top !== undefined && _tgt.sch !== undefined) {
                 topMenu = document.querySelector(_tgt.top);
                 schSec = document.querySelector(_tgt.sch);
                 //console.log(lastPos)
