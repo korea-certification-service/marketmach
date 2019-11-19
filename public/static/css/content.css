@@ -661,6 +661,7 @@
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .r_col{float: left; width: calc(100% - 130px); font-size: 14px;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .before_price{color: #777777; text-decoration: line-through;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .after_price{font-weight: 600;}
+.btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .currencyCode{margin-left: 5px;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .buy_opt_wrap .item_calc{display: inline-block; font-size: 0; border: 1px solid #bfbfbf;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .buy_opt_wrap .item_calc .item_length{width: 50px; font-size: 14px; text-align: center; vertical-align: top; border: none;}
 .btc_product_sec .product_detail .rgh_txt > dl > dd > ul > li .buy_opt_wrap .item_calc .btn_calc{width: 25px; height: 25px; text-indent: -9999px; color: #ff9600; font-size: 14px; border: none; }
