@@ -35,7 +35,7 @@ router.post('/product/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/shops/product/list";
     let country = dbconfig.country;
-    if(country != "KR") req.body['country'] = country;
+    // if(country != "KR") req.body['country'] = country;
     let header = { 
         'token': dbconfig.APIToken
     };

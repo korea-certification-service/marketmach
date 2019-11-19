@@ -306,6 +306,8 @@
 .colspan_for_btn{text-align: right;}
 .mypage_sec .table_list tbody tr td{}
 .mypage_sec .table_list tbody tr td.colspan_for_btn{text-align: right;}
+.mypage_sec .btn_link_mja {display: inline-block; padding: 5px 0px 5px 18px; width: 85px; height: 30px; color: #fff; font-weight: 500; border-radius: 10%; letter-spacing: -0.04em; text-align: center; background: #2c2c2c url("/static/img/symbol/ico_mja_btn.png") 5px 50% no-repeat; background-size: 15px 15px;}
+
 /* 페이징 */
 .paging_wrap{text-align: center;}
 .paging_wrap > button{width: 20px; height: 20px; font-size: 16px; color: #218838;cursor: pointer; font-weight: bold; background: none; border: none;}
@@ -609,7 +611,7 @@
 /* BtoC 리스트 */
 .btc_product_sec{margin-top: 100px; padding: 0 20px;}
 .btc_product_sec .btc_product_top{margin-bottom: 80px;}
-.btc_product_sec .lft_introduce{float: left; padding-left: 29px;}
+.btc_product_sec .lft_introduce{float: left; padding: 0 29px;}
 .btc_product_sec .lft_introduce .lft_tit{margin-bottom: 35px; font-size: 36px;}
 .btc_product_sec .lft_introduce .lft_tit span{font-weight: normal;}
 .btc_product_sec .lft_introduce p{margin-bottom: 80px;}
@@ -619,7 +621,7 @@
 .btc_product_sec .lft_introduce .hashtag li.c1 span{border: 1px solid #E94336; color: #E94336;}
 .btc_product_sec .lft_introduce .hashtag li.c3 span{border: 1px solid #34A853; color: #34A853;}
 .btc_product_sec .lft_introduce .hashtag li.c5 span{border: 1px solid #4344F2; color: #4344F2;}
-.btc_product_sec .rgh_content{float: right;}
+.btc_product_sec .rgh_content{float: left;}
 .btc_product_sec .rgh_content .product_list{max-width: 900px;}
 .btc_product_sec .rgh_content .product_list li{margin-left: 40px; margin-bottom: 30px; float: left; width: 260px; height: 370px;}
 .btc_product_sec .rgh_content .product_list li:nth-child(3n+1){margin-left: 0;}
@@ -690,8 +692,8 @@
 .item_select_area .selected_item li .item_calc *{vertical-align: middle;}
 .item_select_area .selected_item li .item_calc .btn_calc{width: 30px; height: 30px; font-size: 12px; background-color: transparent; font-weight: bold; border: 1px solid #dcdcdc;}
 .item_select_area .selected_item li .item_calc .item_length{width: 40px; height: 30px; font-size: 16px; text-align: center; border: none; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc;}
-.item_select_area .btn_buy_sec{margin-top: 30px; text-align: right; max-width: 980px;}
-.item_select_area .btn_buy_sec .btn{padding: 11px 0; width: 39%; border-radius: 30px; font-size: 16px; background-color: #000; color: #ffffff; font-weight: bold;}
+.item_select_area .btn_buy_sec{margin-top: 30px; text-align: right; max-width: 1005px;}
+.item_select_area .btn_buy_sec .btn{padding: 11px 0; width: 18%; min-width: 175px; border-radius: 30px; font-size: 16px; background-color: #000; color: #ffffff; font-weight: bold;}
 .item_select_area .tit_delivery{padding-bottom: 18px; margin-bottom: 35px; border-bottom: 2px solid #000; font-size: 20px;}
 .item_select_area .table_btoc {width: 100%; max-width: 800px;}
 .item_select_area .table_btoc th{height: 50px; color: #202020;}
@@ -699,11 +701,17 @@
 .item_select_area .table_btoc td{}
 .item_select_area .table_btoc .addr_detail{margin-bottom: 10px;}
 .item_select_area .table_btoc .w100{width: 100px;}
-.btc_product_sec .item_detail_area{max-width: 980px; margin-top: 30px; text-align: center;}
+.btc_product_sec .item_detail_area{margin: 30px 0; text-align: center;}
+.btc_product_sec .item_detail_area .btn_show_popup{padding: 10px 20px; font-weight: bold; font-size: 14px; border: none; background-color: red; color: #ffffff;}
 .btc_product_sec .order_noti dt{margin-bottom: 40px; padding: 5px 0 15px; line-height: 1;font-size: 20px;font-weight: 600;border-bottom: 2px solid #000; background: url("/static/img/symbol/ico_h_exclaim.png") 80px 3px no-repeat; background-size: 25px 25px;}
 .btc_product_sec .order_noti dd{padding: 20px 0 20px 60px; border: solid 2px #dddddd; background-color: #fafafa;}
 .btc_product_sec .order_noti dd li{line-height: 1; margin-bottom: 14px; font-size: 16px;}
-
+.popup_mja{display: none; z-index: 3; position: absolute; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9);}
+.popup_mja .inner_pop{position: fixed; margin-top: -200px; top: 50%; width: 100%; }
+.popup_mja .inner_pop .pop_box{margin: auto; max-width: 640px; font-size: 12px; background-color: #fff;}
+.popup_mja .inner_pop .pop_box h1{background-color: #3578a9; padding: 15px 10px 15px 15px; color: #fff;}
+.popup_mja .inner_pop .pop_box ul{padding: 20px;}
+.popup_mja .inner_pop .pop_box .btn_cls_pop{float: right; margin-top: -6px; width: 30px; background: transparent; border: none; font-size: 20px; font-weight: bold; color: #ffffff;}
 /* BtoC 상세 물품 기존 */
 .item_images_area{margin: 30px 0;}
 .item_images_area .lft_img{float: left; width: 45%;}
