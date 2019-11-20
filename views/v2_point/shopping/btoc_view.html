@@ -122,7 +122,7 @@
             var dom='';
             // console.log(res);
             res.forEach(function(v, i){                
-                if(!v.eventEnd && i < 2) {
+                if(!v.eventEnd) {
                     var arrUrl = document.location.href.split('/');
                     var prdId = arrUrl[5];
                     if(v._id === prdId) {
@@ -156,7 +156,7 @@
             var deliveryPrice = "";
             var eventEnd = res.eventEnd;
 
-            console.log("res: ", res)
+            // console.log("res: ", res)
 
             // 더보기
             if(res.detailUrl){
@@ -266,7 +266,7 @@
             // reqData.totalPrice = parseInt($("#priceForSend").val());
             reqData.totalAmount = 1;
             reqData.totalPrice =  addPrice;
-            reqData.memo = $("#deliveryMemo").val();
+            reqData.memo = ($("#deliveryMemo").val() == undefined) ? null : $("#deliveryMemo").val();
 
             // console.log(reqData);
            
@@ -482,7 +482,7 @@
                                         <input type="text" id="roadAddrPart2" class="form-control" value="">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="trForAddr">
                                     <th class="align_top">배송요청사항</th>
                                     <td>
                                         <input type="text" id="deliveryMemo" class="form-control" value="" maxlength="40">
@@ -512,6 +512,7 @@
                     <dd>
                         <ul>
                             <li>·ID당 1회 참여 가능합니다.</li>
+                            <li>·우주대특가 이벤트 상품은 주문 취소 및 환불이 불가합니다.</li>
                             <!-- <li>·정가 대비 100% 우주대특가 상품으로, 주문 취소 및 환불이 불가합니다. </li> -->
                             <!-- <li>·주문하신 상품은 주문하신 다음 날(영업일 기준) 일괄 발송됩니다. </li> -->
                             <!-- <li>·잘못된 회원정보 및 배송지 정보로 미수령한 경우 재발송되지 않습니다.</li> -->
