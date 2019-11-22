@@ -1,3 +1,8 @@
+/**
+ * 에스크로 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 let dbconfig = require('../config/dbconfig');
@@ -7,6 +12,7 @@ let controllerVtrs = require('../controllers/vtrs');
 
 var BitwebResponse = require('../utils/BitwebResponse');
 
+//사용자별 에스크로 내역 조회
 router.get('/:userId/list/:coinType', function (req, res, next) {
     let country = dbconfig.country;
     let condition = {
@@ -49,6 +55,7 @@ router.get('/:userId/list/:coinType', function (req, res, next) {
     })
 })
 
+//사용자별 에스크로 총합 조회
 router.get('/:userId/total_escrow/:coinType', function (req, res, next) {
     let country = dbconfig.country;
     let userId = req.params.userId;

@@ -1,9 +1,15 @@
+/**
+ * 중고 자산 카테고리 
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerCategories = require('../controllers/categories')
 var BitwebResponse = require('../utils/BitwebResponse')
 var dbconfig = require('../config/dbconfig');
 
+//대 카테고리 목록 조회
 router.get('/', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -22,6 +28,7 @@ router.get('/', function (req, res, next) {
     })
 });
 
+//소 카테고리 조회
 router.get('/:category1', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();

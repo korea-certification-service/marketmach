@@ -146,6 +146,8 @@ dbconfig_jp.js
 dbconfig_en.js
 dbconfig_ko.js
 dbconfig_point.js
+dbconfig_real.js
+dbconfig_dev.js
 
 #.iml
 bitweb.iml

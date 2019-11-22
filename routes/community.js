@@ -1,3 +1,8 @@
+/**
+ * 커뮤니티 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 const express = require('express');
 const router = express.Router();
 let request = require('request');
@@ -9,6 +14,7 @@ const BitwebResponse = require('../utils/BitwebResponse');
 const utils = require('../utils/util');
 var util = require('../utils/util');
 
+//커뮤니티 카테고라 페이지
 router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/community', util.initParam(req, dbconfig));
@@ -21,6 +27,7 @@ router.get('/board', token.checkLoginTokenNoSignIn, function (req, res, next) {
     }
 });
 
+//커뮤니티 목록 페이지
 router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/list', util.initParam(req, dbconfig));
@@ -33,6 +40,7 @@ router.get('/board/:type', token.checkLoginTokenNoSignIn, function (req, res, ne
     }
 });
 
+//커뮤니티 상세보기 페이지
 router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/view', util.initParam(req, dbconfig));
@@ -45,6 +53,7 @@ router.get('/board/detail/:communityId', token.checkLoginTokenNoSignIn, function
     }
 });
 
+//커뮤니티 등록 페이지
 router.get('/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/register', util.initParam(req, dbconfig));
@@ -57,6 +66,7 @@ router.get('/register', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//커뮤니티 수정 페이지
 router.get('/modify/:communityId', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/community/modify', util.initParam(req, dbconfig));
@@ -69,6 +79,7 @@ router.get('/modify/:communityId', token.checkLoginToken, function (req, res, ne
     }
 });
 
+//커뮤니티 목록 조회
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let type = req.query.type == undefined ? "" : req.query.type;
@@ -93,7 +104,7 @@ router.get('/list', function (req, res, next) {
     if(req.query.title != undefined) {
         body['param']['$or']= [{'title' : { $regex: req.query.title, $options: 'i' }}, {'content' : { $regex: req.query.title, $options: 'i' }}]
     };
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'POST',
             headers: header,
@@ -116,6 +127,7 @@ router.get('/list', function (req, res, next) {
     });
 });
 
+//커뮤니티 상세 조회
 router.get('/detail/:communityId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -146,6 +158,7 @@ router.get('/detail/:communityId', function (req, res, next) {
     });
 });
 
+//커뮤니티 추천여부
 router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -158,7 +171,7 @@ router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
     let body = {
         "param": {"reqUser": req.session.userTag}
     }
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'PUT',
             headers: header,
@@ -181,6 +194,7 @@ router.put('/detail/:communityId/:recommandYn', function (req, res, next) {
     });
 });
 
+//커뮤니티 등록
 router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/community";
@@ -192,7 +206,7 @@ router.post('/', function (req, res, next) {
     let body = {
         "param":req.body
     }
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'POST',
             headers: header,
@@ -215,6 +229,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
+//커뮤니티 수정
 router.put('/:communityId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -225,7 +240,7 @@ router.put('/:communityId', token.checkLoginToken, function (req, res, next) {
     let body = {
         "param":req.body
     }
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'PUT',
             headers: header,
@@ -248,6 +263,7 @@ router.put('/:communityId', token.checkLoginToken, function (req, res, next) {
     });
 });
 
+//커뮤니티 삭제
 router.delete('/:communityId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -256,7 +272,7 @@ router.delete('/:communityId', token.checkLoginToken, function (req, res, next) 
     let header = { 
         'token': dbconfig.APIToken
     };
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'DELETE',
             headers: header}, function (error, response, body) {
@@ -277,6 +293,7 @@ router.delete('/:communityId', token.checkLoginToken, function (req, res, next) 
     });
 });
 
+//커뮤니티 파일 업로드
 router.post('/:communityId/images', token.checkLoginToken, function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
@@ -323,7 +340,7 @@ router.post('/:communityId/images', token.checkLoginToken, function (req, res, n
             let body = {
                 "param":data
             }
-            
+            //Marketmach-backend 서버 호출
             request({uri: url, 
                     method:'PUT',
                     headers: header,
@@ -367,6 +384,7 @@ router.post('/:communityId/images', token.checkLoginToken, function (req, res, n
 
 });
 
+//커뮤니티 댓글 등록
 router.post('/reply', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/community/reply";
@@ -397,6 +415,7 @@ router.post('/reply', token.checkLoginToken, function (req, res, next) {
     });
 });
 
+//커뮤니티 댓글 수정
 router.put('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId
@@ -408,7 +427,7 @@ router.put('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     let body = {
         "param": req.body
     }
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'PUT',
             headers: header,
@@ -431,6 +450,7 @@ router.put('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     });
 });
 
+//커뮤니티 댓글 삭제
 router.delete('/reply/:replyId', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId;
@@ -439,7 +459,7 @@ router.delete('/reply/:replyId', token.checkLoginToken, function (req, res, next
     let header = { 
         'token': dbconfig.APIToken
     };
-    
+    //Marketmach-backend 서버 호출
     request({uri: url, 
             method:'DELETE',
             headers: header}, function (error, response, body) {
@@ -459,7 +479,7 @@ router.delete('/reply/:replyId', token.checkLoginToken, function (req, res, next
         }
     });
 });
-
+//커뮤니티 댓글 추천 처리(현재 사용 안함)
 router.put('/reply/:replyId/:recommandYn', token.checkLoginToken, function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let replyId = req.params.replyId;

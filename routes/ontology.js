@@ -1,3 +1,8 @@
+/**
+ * Ontology 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var BitwebResponse = require('../utils/BitwebResponse')
@@ -5,6 +10,7 @@ var util = require('../utils/util');
 var request = require('request');
 let dbconfig = require('../config/dbconfig');
 
+//ONT ID 조회
 router.post('/callback/login', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;

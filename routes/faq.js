@@ -1,9 +1,15 @@
+/**
+ * FAQ 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var faqController = require('../controllers/faq');
 var BitwebResponse = require('../utils/BitwebResponse')
 
+//FAQ 목록 조회
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     faqController.count(req)
@@ -31,10 +37,12 @@ router.get('/list', function (req, res, next) {
     });
 });
 
+//현재 사용 안함
 router.get('/detail', function (req, res, next) {
     res.render('faq/detail', {title: 'Bitweb Main'});
 });
 
+//FAQ 상세보기
 router.get('/detail/:faqId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     if (req.params.faqId != null) {
@@ -52,6 +60,7 @@ router.get('/detail/:faqId', function (req, res, next) {
     }
 });
 
+//현재 사용 안함
 router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     faqController.add(req)

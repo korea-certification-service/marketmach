@@ -1,3 +1,8 @@
+/**
+ * kyc 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -5,6 +10,7 @@ var BitwebResponse = require('../utils/BitwebResponse');
 var util = require('../utils/util');
 var dbconfig = require('../config/dbconfig');
 
+//KYC 등록
 router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let body = req.body;
@@ -43,6 +49,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
+//사용자 KYC 조회 
 router.get('/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let userId = req.params.userId;
@@ -78,6 +85,7 @@ router.get('/:userId', function (req, res, next) {
     });
 });
 
+//KYC 수정
 router.put('/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let userId = req.params.userId;
@@ -116,6 +124,7 @@ router.put('/:userId', function (req, res, next) {
     });
 });
 
+//KYC 등록/수정 시 이미지 업로드
 router.post('/:kycId/images', function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();

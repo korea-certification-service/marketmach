@@ -1,3 +1,8 @@
+/**
+ * 암호화폐 입출금 및 내역 관련 
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerCoins = require('../controllers/coins')
@@ -14,7 +19,7 @@ let dbconfig = require('../config/dbconfig');
 var Ont = require('ontology-ts-sdk');
 let scheduler = require('../utils/scheduler');
 
-//관리자로 이동 필요
+//airdrop(현재 사용 안함)
 router.get('/airdrop', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.bitberry.url + "/v2/wallets/pzmza7r3je/airdrop_by_user_id";
@@ -49,7 +54,7 @@ router.get('/airdrop', function (req, res, next) {
     });
 });
 
-//개선 필요(APIServer - /:coinId)
+//사용자별 암호화폐 상세 조회
 router.get('/:coinId', function (req, res, next) {
     // res.send('respond with a resource');
 

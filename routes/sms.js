@@ -1,3 +1,8 @@
+/**
+ * SMS 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 let express = require('express');
 let router = express.Router();
 let request = require('request');
@@ -11,6 +16,7 @@ const dbconfig = require('../config/dbconfig');
 const util = require('../utils/util');
 const smsContent = require('../config/sms');
 
+//안씀
 router.get('/vtr/:country/:userId/:itemId', function(req, res, next) {
     let userId = req.params.userId;
     let itemId = req.params.itemId;
@@ -119,6 +125,7 @@ router.get('/vtr/:country/:userId/:itemId', function(req, res, next) {
     })
 });
 
+//안씀
 router.post('/url_test', function(req, res, next) {
     let shortUrl = require('node-url-shortener');
     let url = req.body.url;
@@ -187,6 +194,7 @@ router.get('/vtr/notification/:country/:itemId/:userTag', function(req, res, nex
     })
 });
 
+//휴대폰 점유인증
 router.post('/user/checkMobile', function(req,res,next) {
     // var bitwebResponse = new BitwebResponse();
     // let country = dbconfig.country;
@@ -273,6 +281,7 @@ router.post('/user/checkMobile', function(req,res,next) {
     });
 })
 
+//SMS 유효번호 채크
 router.post('/user/checkAuthNo', function(req,res,next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;

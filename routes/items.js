@@ -1,3 +1,8 @@
+/**
+ * 자산 거래 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerItems = require('../controllers/items')
@@ -16,6 +21,7 @@ var dbconfig = require('../config/dbconfig');
 const request = require('request-promise-native');
 var controllerNotices = require('../controllers/notices');
 
+//등록된 자산 목록 조회
 router.get('/', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -128,6 +134,7 @@ router.get('/', function (req, res, next) {
     })
 });
 
+//메인에 표시할 모든 자산 및 공지사항/커뮤니티 목록 조회
 router.get('/all', function (req, res, next) {
     //game - buy
     var bitwebResponse = new BitwebResponse();
@@ -278,6 +285,7 @@ router.get('/all', function (req, res, next) {
     //etc - sell
 });
 
+//사용자별 등록된 자산 목록 조회
 router.get('/users/:userTag', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -341,6 +349,7 @@ router.get('/users/:userTag', function (req, res, next) {
 
 });
 
+//삽니다/팝니다에 따른 거래 내역 조회
 router.get('/tradeType/:tradeType', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -398,6 +407,7 @@ router.get('/tradeType/:tradeType', function (req, res, next) {
     }
 });
 
+//사용자별 거래 내역 조회
 router.get('/trade/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -481,6 +491,7 @@ router.get('/trade/:userId', function (req, res, next) {
     }
 })
 
+//등록된 자산 상세조회
 router.get('/:itemId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -506,6 +517,7 @@ router.get('/:itemId', function (req, res, next) {
     }
 });
 
+//등록된 자산의 거래 내역 상세조회
 router.get('/service/:itemId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -577,6 +589,7 @@ router.get('/service/:itemId', function (req, res, next) {
     }
 });
 
+//암호화폐/포인트별 자산 거래 가능 여부 조회
 router.get('/check/:coinType/:itemId', function(req, res, next){
     var bitwebResponse = new BitwebResponse();
 
@@ -614,6 +627,7 @@ router.get('/check/:coinType/:itemId', function(req, res, next){
     }
 })
 
+//자산 등록
 router.post('/', function (req, res, next) {
 
     let sampleJson =
@@ -838,6 +852,7 @@ router.post('/', function (req, res, next) {
     }
 });
 
+//자산 정보 등록/수정 시 이미지 업로드
 router.post('/:itemId/images', function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
@@ -900,6 +915,7 @@ router.post('/:itemId/images', function (req, res, next) {
 
 });
 
+//자산 수정
 router.put('/:itemId', function (req, res, next) {
 
     // "itemId": "5bcd8ed68e05c3e3707291a8"
@@ -953,6 +969,7 @@ router.put('/:itemId', function (req, res, next) {
     }
 });
 
+//현재 사용 안함
 router.put('/:itemId/total_mach', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     if (req.params.itemId != null) {
@@ -986,6 +1003,7 @@ router.put('/:itemId/total_mach', function (req, res, next) {
     }
 });
 
+//VTR  생성
 router.put('/updateStatus/:itemId', function (req, res, next) {
     let country = dbconfig.country;
     req.body['country'] = country;
@@ -1088,6 +1106,7 @@ router.put('/updateStatus/:itemId', function (req, res, next) {
         })
 });
 
+//현재 사용 안함
 router.post('/getVtrStatus/:itemId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -1131,6 +1150,7 @@ router.post('/getVtrStatus/:itemId', function (req, res, next) {
         })
 })
 
+//현재 사용 안함
 router.put('/status/:country/:itemId/:status', function (req, res, next) {
     let country = req.params.country;
     let itemId = req.params.itemId;
@@ -1152,6 +1172,7 @@ router.put('/status/:country/:itemId/:status', function (req, res, next) {
     })
 });
 
+//자산 정보 삭제
 router.delete('/:itemId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -1170,6 +1191,7 @@ router.delete('/:itemId', function (req, res, next) {
     }
 })
 
+//자산 클릭 시 조회 수 증가
 router.put("/:itemId/clicked", function(req, res, next) {
     let country = dbconfig.country;
     let itemId = req.params.itemId;
@@ -1203,6 +1225,7 @@ router.put("/:itemId/clicked", function(req, res, next) {
     })
 });
 
+//등록된 자산별 댓글 목록 조회
 router.get('/:itemId/replys', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -1225,6 +1248,7 @@ router.get('/:itemId/replys', function (req, res, next) {
     });
 });
 
+//등록된 자산에 댓글 등록
 router.post('/reply', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -1242,6 +1266,7 @@ router.post('/reply', function (req, res, next) {
     })
 });
 
+//등록된 자산에 댓글 수정
 router.put('/reply/:replyId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -1259,6 +1284,7 @@ router.put('/reply/:replyId', function (req, res, next) {
     })
 });
 
+//등록된 자산에 댓글 삭제
 router.delete('/reply/:replyId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;

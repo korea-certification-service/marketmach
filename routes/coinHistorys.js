@@ -1,3 +1,8 @@
+/**
+ * 암호화폐 내역 관련 
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerCoinHistorys = require('../controllers/coinHistorys')
@@ -45,6 +50,7 @@ router.get('/:historyId/withdraw/coinTypes/:coinType', function (req, res, next)
 
 });
 
+//사용자별 암호화폐 내역 목록 조회
 router.get('/:coinId/list', function (req, res, next) {
     let country = dbconfig.country;
     let coinId = req.params.coinId;

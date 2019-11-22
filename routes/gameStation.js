@@ -1,3 +1,8 @@
+/**
+ * 게임 스테이션 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
@@ -5,6 +10,7 @@ var sessionChecker = require('../utils/session');
 var token = require('../utils/token');
 var util = require('../utils/util');
 
+//게임 스테이션 메인 페이지 
 router.get('/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [0,0];
@@ -19,6 +25,7 @@ router.get('/', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//게임 스테이션 거래 목록 페이지 
 router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [1,1];
@@ -33,6 +40,7 @@ router.get('/trade/list/', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//게임 스테이션 마하로 교환하려는 게임 목록 선택 페이지 
 router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [1,2];
@@ -47,6 +55,7 @@ router.get('/trade/assets/', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//게임 스테이션 게임코인->마하 교환 페이지
 router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [1,2];
@@ -61,6 +70,7 @@ router.get('/trade/exchange_assets/', token.checkLoginToken, function (req, res,
     }
 });
 
+//게임 스테이션 게임코인으로 교환하려는 게임 목록 선택 페이지 
 router.get('/trade/mach/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [1,3];
@@ -75,6 +85,7 @@ router.get('/trade/mach/', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//게임 스테이션 마하->게임코인 교환 페이지
 router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [1,3];
@@ -89,6 +100,7 @@ router.get('/trade/exchange_mach/', token.checkLoginToken, function (req, res, n
     }
 });
 
+//게임 스테이션 마하->게임코인 교환 페이지
 router.get('/machAdventure/info/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [2,1];
@@ -147,6 +159,7 @@ router.get('/superlanding/info/', token.checkLoginTokenNoSignIn, function (req, 
     }
 });
 
+//마하어드벤처 소개 페이지
 router.get('/machAdventure/myGame/',token.checkLoginToken, function (req, res, next) {
     let params = util.initParam(req, dbconfig);
     params['arrDepth'] = [2,2];

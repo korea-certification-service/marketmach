@@ -1,3 +1,8 @@
+/**
+ * 이의제기 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var BitwebResponse = require('../utils/BitwebResponse');
@@ -8,6 +13,7 @@ var controllerItem = require('../controllers/items');
 const dbconfig = require('../config/dbconfig');
 var util = require('../utils/util');
 
+//이의 제기 등록
 router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -64,6 +70,7 @@ router.post('/', function (req, res, next) {
     })
 });
 
+//사용자별 이의 제기 목록 조회
 router.get('/list/:userTag', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     controllerOpposition.count(req)
@@ -91,6 +98,7 @@ router.get('/list/:userTag', function (req, res, next) {
     });
 });
 
+//이의 제기 상세조회
 router.get('/:oppositionId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -107,6 +115,7 @@ router.get('/:oppositionId', function (req, res, next) {
     })
 });
 
+//이의 제기 수정
 router.put('/:oppositionId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -126,6 +135,7 @@ router.put('/:oppositionId', function (req, res, next) {
     })
 });
 
+//이의 제기 등록/수정 시 이미지 업로드
 router.post('/:oppositionId/images', function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();

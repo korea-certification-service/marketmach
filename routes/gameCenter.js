@@ -1,3 +1,8 @@
+/**
+ * 게임 스테이션 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 let crypto = require('crypto');
@@ -12,6 +17,7 @@ var controllerCoinHistorys = require('../controllers/coinHistorys');
 var dbconfig = require('../config/dbconfig');
 var BitwebResponse = require('../utils/BitwebResponse');
 
+//게임에서 게임 스테이션으로 로그인 시 호출하는 API 
 router.post('/login', function (req, res, next) {
     let head = JSON.parse(req.body.head);
     let body = JSON.parse(req.body.body);
@@ -153,6 +159,7 @@ router.post('/login', function (req, res, next) {
     }
 });
 
+//게임에서 게임 스테이션으로 게임코인 전송 시 호출 API
 router.post('/:service/send', function (req, res, next) {
     let body = JSON.parse(req.body.body);
 
@@ -253,6 +260,7 @@ router.post('/:service/send', function (req, res, next) {
         });
 });
 
+//게임 스테이션에서 게임으로 게임코인 전송 시 호출 API
 router.post('/:service/receive', function (req, res, next) {
     let body = JSON.parse(req.body.body);
     let service = req.params.service;
@@ -369,6 +377,7 @@ router.post('/:service/receive', function (req, res, next) {
         });
 });
 
+//게임 스테이션 게임 리스트
 router.post('/games/list', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -399,6 +408,7 @@ router.post('/games/list', function(req, res, next) {
     })
 })
 
+//게임 스테이션 게임 상세보기
 router.get('/games/:machGameId', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -417,6 +427,7 @@ router.get('/games/:machGameId', function(req, res, next) {
     })
 })
 
+//게임 스테이션 플레이 정보
 router.get('/:userId/info', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -732,7 +743,7 @@ router.post('/:userId/exchange/gamecoin', function(req, res, next) {
     })
 })
 
-
+//사용자별 게임 스테이션 내 게임 코인 입출금 내역 조회
 router.get('/:userId/gameCoinHistory', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
