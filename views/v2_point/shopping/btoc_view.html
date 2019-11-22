@@ -59,7 +59,7 @@
                 // 포인트 입금으로 이동
                 if(myBalance < addPrice) {
                     if(confirm("금액이 부족합니다. 입금하러 가시겠습니까?")){
-                        window.location.href = "/mypages/wallet/deposit";
+                        window.location.href = "/mypages/point/deposit";
                     }
                 }else {
                     $("#deliveryInfo").show();
@@ -426,7 +426,7 @@
                                 </dd>
                             </dl>
                             <div class="order_btn_sec dfb">
-                                <a id="linkDeposit" class="btn_bk_line" href="/mypages/wallet/deposit">Coin 입금하기</a>
+                                <a id="linkDeposit" class="btn_bk_line" href="/mypages/point/deposit">Point 입금하기</a>
                                 <button class="btn_bk_color" id="orderItem">주문하기</button>
                             </div>
                         </div>
