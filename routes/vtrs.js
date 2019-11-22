@@ -1,3 +1,8 @@
+/**
+ * VTR 거래 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerVtrs = require('../controllers/vtrs')
@@ -11,6 +16,7 @@ const smsController = require('../controllers/sms')
 var util = require('../utils/util')
 var request = require('request');
 
+//사용자별 VTR 목록 조회
 router.get('/:userId', function (req, res, next) {
     let country = dbconfig.country;
     let mongoose = require('mongoose');

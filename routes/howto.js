@@ -1,9 +1,15 @@
+/**
+ * 이용안내 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
 var util = require('../utils/util');
 
+//이용안내 페이지
 router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/tradevtr', util.initParam(req, dbconfig));
@@ -16,6 +22,7 @@ router.get('/trade/vtr', token.checkLoginTokenNoSignIn, function (req, res, next
     }
 });
 
+//VTR & Chatbot 안내 페이지
 router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/vtr_chatbot', util.initParam(req, dbconfig));
@@ -28,6 +35,7 @@ router.get('/vtr_chatbot', token.checkLoginTokenNoSignIn, function (req, res, ne
     }
 });
 
+//해피머니에서 포인트로 전환 방법 안내 페이지
 router.get('/happymoney_to_point', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/howto/happymoney_to_point', util.initParam(req, dbconfig));

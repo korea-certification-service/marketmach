@@ -1,3 +1,8 @@
+/**
+ * 1:1 문의 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var BitwebResponse = require('../utils/BitwebResponse');
@@ -5,6 +10,7 @@ var controllerPersonal = require('../controllers/personals');
 const dbconfig = require('../config/dbconfig');
 var util = require('../utils/util');
 
+//1:1 문의 등록
 router.post('/', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -26,6 +32,7 @@ router.post('/', function (req, res, next) {
     })
 });
 
+//사용자 별 1:1 문의 목록 조회
 router.get('/list/:userTag', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     controllerPersonal.count(req)
@@ -53,6 +60,7 @@ router.get('/list/:userTag', function (req, res, next) {
     });
 });
 
+//1:1문의 상세조회
 router.get('/:personalId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -69,6 +77,7 @@ router.get('/:personalId', function (req, res, next) {
     })
 });
 
+//1:1문의 상세조회
 router.put('/:personalId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -88,6 +97,7 @@ router.put('/:personalId', function (req, res, next) {
     })
 });
 
+//1:1문의 시 파일 업로드
 router.post('/:personalId/images', function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();

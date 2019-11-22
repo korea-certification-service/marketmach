@@ -1,3 +1,8 @@
+/**
+ * 게임 정보 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerGames = require('../controllers/games')
@@ -8,6 +13,7 @@ var controllerPoints = require('../controllers/points');
 var dbconfig = require('../config/dbconfig');
 const fs = require('fs');
 
+//게임 목록 조회
 router.get('/', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -26,6 +32,7 @@ router.get('/', function (req, res, next) {
     })
 });
 
+//개임내 서버 목록 조회
 router.get('/:gameName', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -62,6 +69,7 @@ router.get('/:gameName', function (req, res, next) {
 
 });
 
+//현재 사용 안함
 router.post('/servers', function (req, res, next) {
 
     let file = fs.readFileSync('../config/game_list.json', "utf8");
@@ -93,6 +101,7 @@ router.post('/servers', function (req, res, next) {
     })
 })
 
+//현재 사용 안함
 router.get('/:gameName/cn', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -128,6 +137,8 @@ router.get('/:gameName/cn', function (req, res, next) {
     }
 
 });
+
+//현재 사용 안함
 router.post('/servers/cn', function (req, res, next) {
 
     let file = fs.readFileSync('../config/game_list_cn.json', "utf8");
@@ -152,7 +163,7 @@ router.post('/servers/cn', function (req, res, next) {
         res.status(500).send(bitwebResponse.create())
     })
 })
-
+//현재 사용 안함
 router.put('/:gameId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -195,6 +206,7 @@ router.put('/:gameId', function (req, res, next) {
     }
 })
 
+//현재 사용 안함
 router.delete('/:gameId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();

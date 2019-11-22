@@ -1,9 +1,15 @@
+/**
+ * 공지사항 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var noticeController = require('../controllers/notices');
 var BitwebResponse = require('../utils/BitwebResponse')
 
+//공지사항 목록 조회
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     noticeController.count(req)
@@ -31,10 +37,12 @@ router.get('/list', function (req, res, next) {
     });
 });
 
+//공지사항 상세보기 페이지 호출
 router.get('/detail', function (req, res, next) {
     res.render('notices/detail', {title: 'Bitweb Main'});
 });
 
+//공지사항 상세보기
 router.get('/detail/:noticeId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 

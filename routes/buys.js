@@ -1,3 +1,8 @@
+/**
+ * 게임아이템 삽니다. 
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerUsers = require('../controllers/users');
@@ -5,6 +10,7 @@ const dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
 var util = require('../utils/util');
 
+//목록 페이지
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/buy/list', util.initParam(req, dbconfig));
@@ -17,6 +23,7 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     }
 });
 
+//상세보기 페이지
 router.get('/detail/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -30,6 +37,7 @@ router.get('/detail/:id', token.checkLoginAndAdultToken, function (req, res, nex
     }
 });
 
+//등록 페이지
 router.get('/register', token.checkLoginAndAdultToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/buy/register', util.initParam(req, dbconfig));
@@ -42,6 +50,7 @@ router.get('/register', token.checkLoginAndAdultToken, function (req, res, next)
     }
 });
 
+//수정 페이지
 router.get('/modify/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -55,6 +64,7 @@ router.get('/modify/:id', token.checkLoginAndAdultToken, function (req, res, nex
     }
 });
 
+//vtr 요청 페이지
 router.get('/vtr/:id', token.checkLoginAndAdultToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {

@@ -1,3 +1,8 @@
+/**
+ * OTC 팝니다 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var sessionChecker = require('../utils/session');
@@ -6,6 +11,7 @@ const dbconfig = require('../config/dbconfig');
 var token = require('../utils/token');
 const util = require('../utils/util');
 
+//OTC 팝니다 목록 페이지
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     var util = require('../utils/util');
     if(dbconfig.country == "KR") {
@@ -19,6 +25,7 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     }
 });
 
+//OTC 팝니다 상세보기 페이지
 router.get('/detail/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -32,6 +39,7 @@ router.get('/detail/:id', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//OTC 팝니다 등록 페이지
 router.get('/register', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/otc-sell/register', util.initParam(req, dbconfig));
@@ -44,6 +52,7 @@ router.get('/register', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//OTC 팝니다 수정 페이지
 router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -57,6 +66,7 @@ router.get('/modify/:id', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//OTC 팝니다 바로구매(암호화폐) 시작 페이지
 router.get('/buynow/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -70,6 +80,7 @@ router.get('/buynow/:id', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//OTC 팝니다 바로구매(포인트) 시작 페이지
 router.get('/buynow/point/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {
@@ -83,6 +94,7 @@ router.get('/buynow/point/:id', token.checkLoginToken, function (req, res, next)
     }
 });
 
+//OTC 팝니다 VTR 시작 페이지
 router.get('/vtr/:id', token.checkLoginToken, function (req, res, next) {
     let id = req.params.id;
     if(dbconfig.country == "KR") {

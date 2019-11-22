@@ -1,3 +1,8 @@
+/**
+ * 사용자 notification 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var BitwebResponse = require('../utils/BitwebResponse')
@@ -6,6 +11,7 @@ var mqtt = require('../utils/mqtt');
 const crypto = require("crypto");
 const config = require('../config/dbconfig');
 
+//사용 안함
 router.post('/auth', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -82,6 +88,7 @@ router.post('/auth', function (req, res, next) {
     }
 })
 
+//사용 안함
 router.put('/auth', function (req, res, next) {
 
     let testJson = {
@@ -127,6 +134,7 @@ router.put('/auth', function (req, res, next) {
     }
 });
 
+//이메일로 아이디 찾기 결과 송부
 router.get("/findId/:email", function(req, res, next){
     let email = req.params.email;
     let country = config.country;
@@ -180,6 +188,7 @@ router.get("/findId/:email", function(req, res, next){
     });
 })
 
+//이메일로 패스워드 찾기 결과 송부
 router.get("/findPassword/:userTag/:email", function(req, res, next){
     let userTag = req.params.userTag;
     let email = req.params.email;

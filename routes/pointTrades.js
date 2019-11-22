@@ -1,3 +1,8 @@
+/**
+ * 포인트 거래 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerVtrs = require('../controllers/vtrs')
@@ -10,6 +15,7 @@ var util = require('../utils/util');
 const smsController = require('../controllers/sms');
 var request = require('request');
 
+//포인트 거래 상세 조회
 router.get('/:tradePointId', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -29,6 +35,7 @@ router.get('/:tradePointId', function (req, res, next) {
     }
 });
 
+//사용자 별 포인트 거래 목록 조회
 router.get('/user/:userId', function(req, res, next) {
     let pageIdx = req.query.pageIdx;
     let perPage = req.query.perPage;
@@ -72,6 +79,7 @@ router.get('/user/:userId', function(req, res, next) {
    }
 });
 
+//사용안함
 router.post('/', function (req, res, next) {
 
     //from_userId = 5bd29ff159ceaf6c52424fef
@@ -182,6 +190,7 @@ router.post('/', function (req, res, next) {
     }
 });
 
+//포인트 바로구매 
 router.post('/buynow', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let body = {
@@ -430,6 +439,7 @@ router.post('/buynow', function (req, res, next) {
     // }
 })
 
+//포인트 거래 상세정보 조회 
 router.get('/item/:itemId', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -460,6 +470,7 @@ router.get('/item/:itemId', function (req, res, next) {
     })
 });
 
+//포인트 거래 취소
 router.delete('/cancel/:itemId/:userId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
@@ -520,6 +531,7 @@ router.delete('/cancel/:itemId/:userId', function (req, res, next) {
     // })
 });
 
+//단계별 포인트 거래 진행 
 router.put('/:itemId/trade/:tradeType', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
@@ -586,7 +598,7 @@ router.put('/:itemId/trade/:tradeType', function (req, res, next) {
     // }
 })
 
-
+//사용안함
 router.delete('/:tradePointId/:tradeType', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();

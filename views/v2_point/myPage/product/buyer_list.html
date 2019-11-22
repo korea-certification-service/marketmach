@@ -27,13 +27,19 @@
             var dom = "";
             //  제품명 가격 갯수 받는이 주소 연락처
             success.data.list.forEach(function(v, i){
-                dom += "<tr>"
-                dom += "<td>" + v.productName + "</td>"
-                dom += "<td>" + numberWithCommas(v.totalPrice) + " " +v.currencyType+ "<br>(" + v.totalAmount +"개)</td>"
-                dom += "<td>" + v.receiver + "</td>"
-                dom += "<td>" + v.phone + "</td>"
-                dom += "<td>" + v.address + "</td>"
-                dom += "</tr>"
+                dom += "<tr>";
+                dom += "<td>" + v.productName + "</td>";
+                dom += "<td>" + numberWithCommas(v.totalPrice) + " " +v.currencyType+ "<br>(" + v.totalAmount +"개)</td>";
+                dom += "<td>" + v.receiver + "</td>";
+                dom += "<td>" + v.phone + "</td>";
+                if(v.productType === "1") {
+                    dom += "<td><a class='btn_link_mja' href='http://www.no1hsk.co.kr' target='_blank'>바로가기</a></td>";
+                } else if(v.address === null){
+                    dom += "<td></td>";
+                } else {
+                    dom += "<td>" + v.address + "</td>";
+                }
+                dom += "</tr>";
             });
 
             $("#buy_list").append(dom);

@@ -1,3 +1,8 @@
+/**
+ * 우주대특가 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 const express = require('express');
 const router = express.Router();
 let request = require('request');
@@ -35,7 +40,7 @@ router.post('/product/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     let url = dbconfig.APIServer + "/v2/shops/product/list";
     let country = dbconfig.country;
-    if(country != "KR") req.body['country'] = country;
+    // if(country != "KR") req.body['country'] = country;
     let header = { 
         'token': dbconfig.APIToken
     };

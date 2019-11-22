@@ -1,3 +1,8 @@
+/**
+ * 포인트 정보 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 const express = require('express');
 const net = require('net');
 const cryptojs = require('crypto-js');
@@ -11,6 +16,7 @@ const request = require('request');
 const dbconfig = require('../config/dbconfig');
 const smsController = require('../controllers/sms');
 
+//사용자 포인트 정보 조회
 router.get('/:pointId', function (req, res, next) {
     // res.send('respond with a resource');
 
@@ -31,6 +37,7 @@ router.get('/:pointId', function (req, res, next) {
 
 });
 
+//사용자 포인트 생성
 router.post('/', function (req, res, next) {
 
     let sampleJson =
@@ -61,7 +68,7 @@ router.post('/', function (req, res, next) {
     }
 });
 
-
+//사용자 포인트 수정
 router.put('/:pointId', function (req, res, next) {
 
     // "pointId": "5bc9a10c8f8b950ffe068dfa"
@@ -189,6 +196,7 @@ router.put('/:pointId', function (req, res, next) {
     // })
 })
 
+//사용안함
 router.put('/user/:userId', function (req, res, next) {
 
     // "pointId": "5bc9a10c8f8b950ffe068dfa"
@@ -264,6 +272,7 @@ router.put('/user/:userId', function (req, res, next) {
     }
 })
 
+//사용안함
 router.post('/:pointId/bank', function (req, res, next) {
 
     let sampleJson =
@@ -384,6 +393,7 @@ router.post('/:pointId/bank', function (req, res, next) {
     }
 })
 
+//사용안함
 router.post('/:pointId/trade', function (req, res, next) {
 
     let sampleJson =
@@ -438,6 +448,7 @@ router.post('/:pointId/trade', function (req, res, next) {
     }
 });
 
+//사용안함
 router.delete('/:pointId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -569,6 +580,7 @@ router.post('/happymoney/payment', function(req, res, next) {
     });
 });
 
+//사용안함
 router.post('/happymoney/pin/payment', function(req, res, next) {
     var bitwebResponse = new BitwebResponse();
     //전문 test

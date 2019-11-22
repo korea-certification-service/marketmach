@@ -1,3 +1,8 @@
+/**
+ * 이벤트 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
@@ -5,6 +10,7 @@ var eventsController = require('../controllers/events');
 var BitwebResponse = require('../utils/BitwebResponse');
 var util = require('../utils/util')
 
+//진행중/종료된 이벤트 목록 조회
 router.get('/list/:eventEnd', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     eventsController.count(req)
@@ -32,6 +38,7 @@ router.get('/list/:eventEnd', function (req, res, next) {
     });
 });
 
+//이벤트 상세 조회
 router.get('/detail/:eventId', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     eventsController.get(dbconfig.country, req.params.eventId)
@@ -47,6 +54,7 @@ router.get('/detail/:eventId', function (req, res, next) {
     })
 });
 
+//현재 사용 안함
 router.post('/buy', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let data = {}

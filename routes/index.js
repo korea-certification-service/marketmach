@@ -1,3 +1,8 @@
+/**
+ * 회원 가입 및 메인 페이지 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var sessionChecker = require('../utils/session');
@@ -16,6 +21,7 @@ let redirectURI = encodeURI(dbconfig.naver_login_url);
 let api_url = "";
 var token = require('../utils/token');
 
+//사용 안함
 router.get('/ontology', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/ontology_mobile', {title: 'Bitweb Main'});
@@ -29,6 +35,8 @@ router.get('/ontology', function (req, res, next) {
         // res.render('v2_en/login/login', {title: 'Bitweb Main'});
     }
 });
+
+//사용 안함
 router.get('/ontology/sdk', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/ontology_sdk', {title: 'Bitweb Main'});
@@ -39,11 +47,12 @@ router.get('/ontology/sdk', function (req, res, next) {
     }
 });
 
+//사용 안함
 router.get('/ontology_reg_user', function (req, res, next) {
     res.render('v2_ont/login/ontology_reg_user', {title: 'Bitweb Main'});
 });
 
-
+//시작 페이지
 router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
 
     var ip = req.headers['x-forwarded-for'] ||
@@ -64,6 +73,7 @@ router.get('/', token.checkLoginTokenNoSignIn, function (req, res, next) {
     }
 });
 
+//사용 안함
 router.get('/nodev_index', function (req, res, next) {
     if(dbconfig.country == "KR") {
         res.render('v2/main/nodev_index', util.initParam(req, dbconfig));
@@ -76,6 +86,7 @@ router.get('/nodev_index', function (req, res, next) {
     }
 });
 
+//시작 페이지
 router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
     var ip = req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
@@ -95,6 +106,7 @@ router.get('/main', token.checkLoginTokenNoSignIn, function (req, res, next) {
     }
 });
 
+//로그인 페이지
 router.get('/login', function (req, res, next) {
     if(dbconfig.country =="KR") {
         if(req.session.userTag == undefined || req.session.userTag == "") {
@@ -127,6 +139,7 @@ router.get('/login', function (req, res, next) {
     }
 });
 
+//로그아웃
 router.get('/logout', function (req, res, next) {    
     req.params['userId'] = req.session.userId;
     req.body['loginToken'] = "";
@@ -143,6 +156,7 @@ router.get('/logout', function (req, res, next) {
     });
 });
 
+//아이디 찾기 페이지
 router.get('/findId', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findId', {title: 'Bitweb Find ID', token:dbconfig.APIToken});
@@ -155,6 +169,7 @@ router.get('/findId', function (req, res, next) {
     }
 });
 
+//패스워드 찾기 페이지
 router.get('/findPassword', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/findPassword', {title: 'Bitweb Find Password', token:dbconfig.APIToken});
@@ -167,6 +182,7 @@ router.get('/findPassword', function (req, res, next) {
     }
 });
 
+//회원가입 동의 페이지
 router.get('/agreement', function (req, res, next) {
     if(req.query.tid != undefined) {
         req.session.tid = req.query.tid;
@@ -196,6 +212,7 @@ router.get('/agreement', function (req, res, next) {
     }
 });
 
+//휴대폰 점유 인증 페이지
 router.get('/certification', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/certification', {"token":dbconfig.APIToken});
@@ -208,6 +225,7 @@ router.get('/certification', function (req, res, next) {
     }
 });
 
+//회원가입 페이지
 router.get('/signup', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -347,6 +365,7 @@ router.get('/signup', function (req, res, next) {
     }
 });
 
+//아이디/패스워드 찾기 결과
 router.get('/findResult', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -403,6 +422,7 @@ router.get('/findResult', function (req, res, next) {
     }
 });
 
+//존재하는 사용자인지 확인
 router.get('/existUser', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
 
@@ -431,6 +451,7 @@ router.get('/existUser', function (req, res, next) {
         });
 });
 
+//패스워드 변경 페이지
 router.get('/changePassword', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     
@@ -459,6 +480,7 @@ router.get('/changePassword', function (req, res, next) {
         });
 });
 
+//존재하지 않는 사용자인 경우 호출하는 페이지
 router.get('/noResult', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/find/noResult', {title: 'Bitweb find no result'});
@@ -471,6 +493,7 @@ router.get('/noResult', function (req, res, next) {
     }
 });
 
+//회원가입 성공 체이지
 router.get("/signupSuccess", function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/login/signupSuccess', {title: 'Bitweb sign up success'});
@@ -483,18 +506,22 @@ router.get("/signupSuccess", function (req, res, next) {
     }
 });
 
+//사용 안함
 router.get("/emailAuth", sessionChecker.emailAuthChecker, function (req, res, next) {
     res.render('login/emailAuth', {title: 'Bitweb sign up success', userId: req.session.userId});
 });
 
+//사용 안함
 router.get("/naveraf72822281097f80bf131c58b3c9abdb.html", function (req, res, next) {
     res.render('naveraf72822281097f80bf131c58b3c9abdb', {title: 'private'});
 });
 
+//사용 안함
 router.get("/google2def744eaae3698d.html", function (req, res, next) {
     res.render('google2def744eaae3698d', {title: 'private'});
 });
 
+//VTR 페이지
 router.get('/room', token.checkLoginToken, function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.userTag, 
@@ -508,6 +535,7 @@ router.get('/room', token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//SMS에서 링크 클릭시 VTR 페이지
 router.get('/sms/room', function (req, res, next) {
     if(dbconfig.country =="KR") {
         res.render('v2/common/vtr_for_sms', util.initVtrRoomParam(dbconfig.country, req.query.itemId, req.session.user_id, 
@@ -521,6 +549,7 @@ router.get('/sms/room', function (req, res, next) {
     }
 });
 
+//사용 안함
 router.get("/checkUrl", token.checkLoginToken, function (req, res, next) {
     let cookie_data = req.cookies.key;
     let start = cookie_data.indexOf("orange__F");
@@ -536,6 +565,7 @@ router.get("/checkUrl", token.checkLoginToken, function (req, res, next) {
     }
 });
 
+//사용 안함
 router.get('/naverLoginCallback', function (req, res, next) {
     code = req.query.code;
     state = req.query.state;
@@ -594,6 +624,7 @@ router.get('/naverLoginCallback', function (req, res, next) {
     });
 });
 
+//휴대폰 본인 인증 시작 페이지
 router.get('/reg/auth/start', function (req, res, next) {
     if(dbconfig.country =="KR") {
         //이니시스 휴대폰 인증 요청 카운트 저장
@@ -607,6 +638,7 @@ router.get('/reg/auth/start', function (req, res, next) {
     res.render('v2/auth/start', {title: 'Bitweb Main', "okurl":dbconfig.inicis.url + dbconfig.inicis.auth.reg_auth_ok_url, "closeUrl":dbconfig.inicis.url + dbconfig.inicis.auth.closeUrl});
 });
 
+//사용 안함
 router.get('/reg/auth/find_password_start', function (req, res, next) {
     if(dbconfig.country =="KR") {
         //이니시스 휴대폰 인증 요청 카운트 저장
@@ -620,6 +652,7 @@ router.get('/reg/auth/find_password_start', function (req, res, next) {
     res.render('v2/auth/findPasswordStart', {title: 'Bitweb Main', "okurl":dbconfig.inicis.url + dbconfig.inicis.auth.findPasswordUrl, "closeUrl":dbconfig.inicis.url + dbconfig.inicis.auth.closeUrl});
 });
 
+//사용 안함
 router.get('/modify/auth/start', function (req, res, next) {
     if(dbconfig.country =="KR") {
         //이니시스 휴대폰 인증 요청 카운트 저장
@@ -633,6 +666,7 @@ router.get('/modify/auth/start', function (req, res, next) {
     res.render('v2/auth/start_modify', {title: 'Bitweb Main', "okurl":dbconfig.inicis.url + dbconfig.inicis.auth.modify_auth_ok_url});
 });
 
+//휴대폰 본인 인증 완료 페이지
 router.post('/reg/auth/okurl', function (req, res, next) {
     request({uri: "https://payment.marketmach.com/inicis/decode.php", 
             method:'POST',
@@ -699,6 +733,7 @@ router.post('/reg/auth/okurl', function (req, res, next) {
     });
 });
 
+//사용 안함
 router.post('/reg/auth/findPasswordOkurl', function (req, res, next) {
     request({uri: "https://payment.marketmach.com/inicis/decode.php", 
             method:'POST',
@@ -723,6 +758,7 @@ router.post('/reg/auth/findPasswordOkurl', function (req, res, next) {
     });
 });
 
+//사용 안함
 router.post('/modify/auth/okurl', function (req, res, next) {
     request({uri: "https://payment.marketmach.com/inicis/decode.php", 
             method:'POST',
@@ -747,6 +783,7 @@ router.post('/modify/auth/okurl', function (req, res, next) {
     });
 });
 
+//휴대폰 본인 인증 결과 조회
 router.get('/getPhone', function (req, res, next) {
     let bitwebResponse = new BitwebResponse();
     bitwebResponse.code = 200;
@@ -762,6 +799,7 @@ router.get('/getPhone', function (req, res, next) {
     res.status(200).send(bitwebResponse.create())
 })
 
+//사용 안함
 router.post('/fileuploads',  function (req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let country = dbconfig.country;
@@ -798,6 +836,7 @@ router.post('/fileuploads',  function (req, res, next) {
     });
 });
 
+//login token 존재 여부 체크
 router.get('/v1/ajaxLoginYnCheck', function (req, res, next) {
     token.checkLoginTokenAjax(req, res, next);
 });

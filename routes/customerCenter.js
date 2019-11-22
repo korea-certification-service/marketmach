@@ -1,9 +1,15 @@
+/**
+ * 현재 사용 안함
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var dbconfig = require('../config/dbconfig');
 var customerCenterController = require('../controllers/customerCenter');
 var BitwebResponse = require('../utils/BitwebResponse')
 
+//고객센터 목록
 router.get('/list', function (req, res, next) {
     var bitwebResponse = new BitwebResponse();
     customerCenterController.count(req)

@@ -1,11 +1,16 @@
-/***************************************************************************
+/***********************************************************************
 * KCS: http://www.onlykcs.com/
 * since: 20190311 
+* end: 20191120
 * Author: Jongmin Kim
-******** Notice ********
-*
-*
-***************************************************************************/
+******************************** Notice ********************************
+* 퍼포먼스 이슈때문에 slick을 쓰는 부분을 제외한 모든 부분 vanilla.js로 해결
+* 현재 사용중인 클래스형 객체 설명
+* MainUi : 메인화면 및 include 영역에 공통적으로 적용되는 로직 메서드화
+* SubUI : 서브페이지에서 쓰이는 로직 메서드화
+* _PopupUI : 공통적으로 쓰이는 모달창
+* _ModalUI : ontology DAPP에서 사용하는 confirm, alert창 모달창으로 구현
+************************************************************************/
 document.addEventListener("DOMContentLoaded", function () { 
 
 var MainUi = {
@@ -391,12 +396,6 @@ var SubUI = {
 }
 SubUI.init();
 
-// 임시로 VTR 거래신청 기능 막음
-$("#regVTR").click(function(){
-    // alert("Comming soon.")
-    // throw new Error('VTR 거래신청 기능 막음');
-});
-
 }, false); // end of DOMContentLoaded
 
 var _PopupUI = {
@@ -464,15 +463,23 @@ var _PopupUI = {
         }
     }
 }
+
 /**
+* ontology DAPP 전용 모달창 
+* 하이브리의앱에서 alert, confirm이 안되기 때문에 직접 구현함
+* 사용 방법은 아래 주석 참고
+*
 ********** alert창 ********** 
 var obj = { title: '제목', subTitle: '부제'};
     obj.p = '본문';
 
 _ModalUI.init(obj, "alert");
 
+* alert도 callback 함수 실행 가능하게 추가 개발함
+
 ********** confirm창 ********** 
-* class default 값: 'positive'
+* class default 값: 'positive' (초록색 스마일 아이콘)
+* negative는 빨간색 스마일 아이콘: 하면 안좋은 행동에 표시 ex) 회원탈퇴
 var obj1 = {class: 'negative', title: '제목', subTitle: '부제'};
     obj1.p = '본문';
 
@@ -614,6 +621,7 @@ _ModalUI.prototype.clickBtnCallback = function(callback) {
 }
 */
 
+/** deprecated: 우주대특가 초창기때 여러개 갯수 구매 가능할 때 로직 */
 var _BtoCUI = {
     actSelectBox: function(opt, callback){
         var btn = document.querySelector("#"+opt.btn);

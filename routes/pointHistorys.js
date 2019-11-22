@@ -1,3 +1,8 @@
+/**
+ * 포인트 내역 관련
+ * 작성자 : Chef Kim
+ * 작성일 : 2019-11-20
+ */
 var express = require('express');
 var router = express.Router();
 var controllerPointHistorys = require('../controllers/pointHistorys')
@@ -5,6 +10,7 @@ var controllerPointBankHistorys = require('../controllers/pointBankHistorys')
 var BitwebResponse = require('../utils/BitwebResponse');
 var dbconfig = require("../config/dbconfig");
 
+//포인트 입출금 내역 목록 조회
 router.get('/:pointId/:accountType', function (req, res, next) {
     let country = dbconfig.country;
     let pointId = req.params.pointId;
@@ -32,6 +38,7 @@ router.get('/:pointId/:accountType', function (req, res, next) {
     })
 });
 
+//포인트 입출금 내역 상세 조회
 router.get('/:historyId', function (req, res, next) {
 
     var bitwebResponse = new BitwebResponse();
@@ -51,6 +58,7 @@ router.get('/:historyId', function (req, res, next) {
 
 });
 
+//사용 안함
 router.get('/search/:userId/:type', function(req, res, next) {
     let bitwebResponse = new BitwebResponse();
 
