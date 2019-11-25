@@ -408,7 +408,12 @@
                     method: "DELETE",
                     url: "/v1/tradePoints/cancel/"+itemId+"/" + userTag
                 }).done(function (success) {
-                    getItemList();
+                    if(success.data.successYn == "Y") {
+                        alert("거래 취소가 완료되었습니다.");
+                        getItemList();
+                    } else {
+                        alert(success.data.msg);
+                    }
                 }).fail(function (fail) {
                     console.log(fail);
                 });
