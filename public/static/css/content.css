@@ -747,6 +747,23 @@
 .sch_sec .search_bar .textSearchBox_ctr { float: left; border-left: 1px solid #000039; display: none; }
 .sch_sec .search_bar .ctr01 { width: 100%; display: block; border: none; } */
 
+/** 안전거래 꿀팁 **/
+section.gui_sec {margin: 0 auto; max-width: 910px; font-weight: 300; font-size: 18px; color: #2c2c2c; word-spacing: -0.12em; line-height: 1.4em;}
+.gui_header {height: 350px; background-image: url("/static/img/sub/bg_title.png"); background-repeat: no-repeat; background-position: 50% 100%;}
+.gui_mti {padding-top: 70px; text-align: center; font-size: 36px; line-height: 1.2em;}
+.gui_mti p {font-size: 18px; color: #777777;}
+.gui_tit {font-size: 22px; font-weight: 400; word-break: keep-all;}
+hr.gui_hr {display: inline-block;  margin: 35px 0 15px 0px; border: 1px solid #2c2c2c; width: 15px;}
+ul.gui_box li::after {content: ""; display: block; clear: both;}
+ul.gui_total > li:hover {color: #fff; background-color: #0a73b8;}
+ul.gui_total > li:hover p {color: #fff;}
+ul.gui_total > li:hover hr.gui_hr{border: 1px solid #fff;}
+ul.gui_total > li {margin-bottom: 50px; padding: 35px ; height: 160px; border-radius: 0 80px ; background-color: #f1f2f6; line-height: 1.4em; box-sizing: content-box;}
+ul.gui_total > li::after {content: ""; display: block;clear: both;}
+div.gui_icon {float: left; margin-right: 35px; height: 170px; width: 170px; border-radius: 100px; background-color: white;}
+.gui_txt{float: left; width: calc(100% - 220px); text-align: left;}
+.gui_txt > p {font-size: 16px; font-weight: 400; color: #777;}
+
 /* OTC거래 */
 .otc_table td .ellipse{width: calc(100% - 30px)}
 .otc_table tbody td:first-child{text-align: left;}
@@ -794,6 +811,15 @@ background-size: 65px 65px;
     .btc_product_sec .rgh_content .product_list{max-width: 560px; margin: auto;}
     .btc_product_sec .rgh_content .product_list li{margin: 0;}
     .btc_product_sec .rgh_content .product_list li:nth-child(2n){margin-left: 40px;}
+}
+@media (max-width: 930px){ /* 화면 줄인 피씨 */
+    /** 안전거래 꿀팁 **/
+    section.gui_sec {margin: 0 15px;}
+    ul.gui_total > li {height: auto; padding: 30px 50px; border-radius: 0 60px;}
+    .gui_tit {line-height: 1.2em;}
+    hr.gui_hr {margin: 35px 0 15px 0px;}  
+    div.gui_icon {float: right; margin-top: 5px; margin-right: -10px; height: 80px; width: 80px;}     
+    .gui_txt{float: left; width: calc(100% - 100px);}
 }
 @media (max-width: 767px){
     .table_list .col5_2{width: 300px;}
@@ -890,6 +916,14 @@ background-size: 65px 65px;
     /* BtoC 리뉴얼 */
     .btc_product_sec{padding: 0;}
     .btc_product_sec .rgh_content .product_list li:nth-child(n){width: 100%; margin-left: 0; margin-bottom: 40px;}
+    
+    /** 안전거래 꿀팁 **/
+    ul.gui_total > li {height: auto;}
+    .gui_tit {font-size: 22px; line-height: 1.4em;}
+    hr.gui_hr {display: none;}
+    div.gui_icon {display: none;}  
+    .gui_txt{ width : 100%;}
+    .gui_txt > p {margin-top: 35px; font-size: 16px; color: #777;}
 }
 @media (max-width: 321px){
     .imgs_wrap .thumbnail_btn_list{width: 70px; right: -10px;}
