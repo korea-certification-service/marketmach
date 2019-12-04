@@ -41,6 +41,7 @@
 
         // 올패스 1개월 경우만 "수강권 이용안내" 버튼 보임
         if(prdId !== "5dd1f2a8936f1e88ce21ba41" && prdId !== "5dd250e2936f1e88ce227df2") $("#mjaBtnArea").hide();
+
     });
 
     function orderAction() {
@@ -123,13 +124,21 @@
             // console.log(res);
             res.forEach(function(v, i){                
                 if(!v.eventEnd) {
-                    var arrUrl = document.location.href.split('/');
-                    var prdId = arrUrl[5];
-                    if(v._id === prdId) {
-                        // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
-                        dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
-                    } else {
-                        dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+
+                    /*
+                    ** 20191203
+                    ** productType 이 같은 상품들만 노출
+                    ** 동일 카테고리만 탭으로 노출한다.
+                    */
+                    if(productType === v.productType){
+                        var arrUrl = document.location.href.split('/');
+                        var prdId = arrUrl[5];
+                        if(v._id === prdId) {
+                            // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
+                            dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                        } else {
+                            dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                        }
                     }
                 }
             });
@@ -219,6 +228,17 @@
             _BtoCUI.calcAndView(optCalcAndView); 
             $("#priceForSend").val(res.price);
             */
+
+            /*
+            ** 20191203
+            ** 문정아 중국어 / 바노바기 이벤트 유의사항 노출 분기
+            */
+            if(productType === "1"){
+                $('#order_noti_type2').remove();
+            }
+            else if(productType === "2"){
+                $('#order_noti_type1').remove();
+            }
         });        
     }
 
@@ -507,7 +527,7 @@
                         <button id="showPopup" class="btn_show_popup">수강권 이용안내</button>
                     </div>
                 </div>
-                <dl class="order_noti">
+                <dl class="order_noti" id="order_noti_type1">
                     <dt>유의사항</dt>
                     <dd>
                         <ul>
@@ -521,6 +541,20 @@
                             <!-- <li>·부정한 방법으로 이벤트 참여시 당첨 대상에서 제외될 수 있습니다. </li> -->
                             <!-- <li>·이벤트 운영상황에 따라 일부 내용이 변경될 수 있습니다</li> -->
                             <li>·상품에 대한 운영 정책은 문정아 중국어 본사 사정에 의하여 일부 변경될 수 있습니다.</li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl class="order_noti" id="order_noti_type2">
+                    <dt>유의사항</dt>
+                    <dd>
+                        <ul>
+                            <li>·ID당 1회 참여 가능합니다.</li>
+                            <li>·정가 대비 60% 할인된 우주대특가 상품으로, 주문 취소 및 환불이 불가합니다.</li>
+                            <li>·주문하신 상품은 주문하신 다음 날(영업일 기준) 일괄 발송됩니다.</li>
+                            <li>·잘못된 회원정보 및 배송지 정보로 미수령한 경우 재발송되지 않습니다.</li>
+                            <li>·한정된 수량으로 이벤트가 조기에 마감될 수 있습니다.</li>
+                            <li>·부정한 방법으로 이벤트 참여시 당첨 대상에서 제외될 수 있습니다.</li>
+                            <li>·이벤트 운영상황에 따라 일부 내용이 변경될 수 있습니다.</li>
                         </ul>
                     </dd>
                 </dl>
