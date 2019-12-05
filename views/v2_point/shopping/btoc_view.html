@@ -122,25 +122,23 @@
             var res = success.data.list;
             var dom='';
             // console.log(res);
-            res.forEach(function(v, i){                
-                if(!v.eventEnd) {
-
-                    /*
-                    ** 20191203
-                    ** productType 이 같은 상품들만 노출
-                    ** 동일 카테고리만 탭으로 노출한다.
-                    */
-                    if(productType === v.productType){
-                        var arrUrl = document.location.href.split('/');
-                        var prdId = arrUrl[5];
-                        if(v._id === prdId) {
-                            // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
-                            dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
-                        } else {
-                            dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
-                        }
+            res.forEach(function(v, i){
+                /*
+                ** 20191203
+                ** productType 이 같은 상품들만 노출
+                ** 동일 카테고리만 탭으로 노출한다.
+                */
+                if(productType === v.productType){
+                    var arrUrl = document.location.href.split('/');
+                    var prdId = arrUrl[5];
+                    if(v._id === prdId) {
+                        // url 뒤로 추출해서 프로덕트 아이디하고 지금 아이디 하고 같으면 class on
+                        dom+='<li class="on"><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
+                    } else {
+                        dom+='<li><a href="/shopping/view/'+v._id+'" class="tab_btn">'+v.productName+'</a></li>';
                     }
                 }
+                
             });
             dom+='';
             $("#productTab").append(dom);
@@ -232,12 +230,14 @@
             /*
             ** 20191203
             ** 문정아 중국어 / 바노바기 이벤트 유의사항 노출 분기
+            ** 상품 수량을 바노바기는 4매 1세트로 고정
             */
             if(productType === "1"){
                 $('#order_noti_type2').remove();
             }
             else if(productType === "2"){
                 $('#order_noti_type1').remove();
+                $('#prodCnt').html("<p>4매 1세트 (ID당 1회만 주문 가능)</p>");
             }
         });        
     }
@@ -403,7 +403,7 @@
                                     </li>
                                     <li class="cf">
                                         <em class="l_tit">수량</em>
-                                        <div class="r_col">
+                                        <div class="r_col" id="prodCnt">
                                             <p>1개 (ID당 1회만 주문 가능)</p>
                                         </div>
                                     </li>
