@@ -121,7 +121,7 @@ router.put('/:pointId', function (req, res, next) {
                 console.log(error, response, body);
                 let message = "포인트 입금 요청이 완료 되었습니다.\n 9-18시 사이에 요청한 포인트는 당일 처리가 되며, 18시 이후에 요청한 포인트는 영업일 기준 다음날 처리가 됩니다.";
                 if(body.type == "withdraw") {
-                    message = "포인트 출금 요청이 완료 되었습니다.\n 13시까지 출금 요청한 포인트는 당일 15시에 일괄 처리가 되며, 13시 이후에 요청한 포인트는 영업일 기준 다음날 15시에 일괄 처리가 됩니다.";
+                    message = "포인트 출금 요청이 완료 되었습니다.\n 포인트 출금은 출금요청하신 다음 날 일괄 처리됩니다.";
                 } 
                 let resData = {
                     "code":"Success",
