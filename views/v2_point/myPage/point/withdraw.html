@@ -63,15 +63,15 @@
                 }
 
                 for(var i=0;i<pointHistorys.length;i++) {
-                    var amount = numberWithCommas(pointHistorys[i].amount);
+                    var amount = pointHistorys[i].amount;
                     var currencyCode = pointHistorys[i].amountCurrency;
                     var point = numberWithCommas(pointHistorys[i].point);
-                    var fee = numberWithCommas(pointHistorys[i].fee);
+                    var fee = pointHistorys[i].fee;
                     var status = pointHistorys[i].status == true ? '출금 완료' : '출금 대기';
                     var regDate = pointHistorys[i].regDate.substr(2);
 
                     // 수수료 제외금액으로 노출
-                    amount = amount - parseInt((amount * fee).toFixed());
+                    amount = numberWithCommas(pointHistorys[i].amount - parseInt((pointHistorys[i].amount * fee).toFixed()));
 
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
