@@ -188,6 +188,7 @@ function initParam(req, dbconfig) {
         toAddress:dbconfig.ontology.address,
         fromAddress: req.session.ontId == undefined ? "" : req.session.ontId.replace('did:ont:',''),
         fee: dbconfig.fee.point.deposit,
+        fee_withdraw: dbconfig.fee.point.withdraw,
         happyMoneyFee: dbconfig.fee.happymoney.deposit,
         noticeId: req.query.noticeId,
         eventId: req.params.eventId,
