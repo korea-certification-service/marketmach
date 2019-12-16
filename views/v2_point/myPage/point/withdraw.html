@@ -71,7 +71,7 @@
                     var regDate = pointHistorys[i].regDate.substr(2);
 
                     // 수수료 제외금액으로 노출
-                    amount = amount - (amount * fee);
+                    amount = amount - parseInt((amount * fee).toFixed());
 
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
