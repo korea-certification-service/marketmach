@@ -66,8 +66,12 @@
                     var amount = numberWithCommas(pointHistorys[i].amount);
                     var currencyCode = pointHistorys[i].amountCurrency;
                     var point = numberWithCommas(pointHistorys[i].point);
+                    var fee = numberWithCommas(pointHistorys[i].fee);
                     var status = pointHistorys[i].status == true ? '출금 완료' : '출금 대기';
                     var regDate = pointHistorys[i].regDate.substr(2);
+
+                    // 수수료 제외금액으로 노출
+                    amount = amount - (amount * fee);
 
                     result += '<tr>' + 
                                     '<td class="td_exchange_coin">' + 
@@ -89,10 +93,10 @@
             var fee_amount = parseInt((point * fee).toFixed());            
             var data;
             price = point - fee_amount;
-            data = point + " Point = " + price + " KRW ("+(fee * 100)+"% 수수료 차감)";
+            data = numberWithCommas(point) + " Point = " + numberWithCommas(price) + " KRW ("+(fee * 100)+"% 수수료 차감)";
             $("#calculate").text(data);
-            $("#withdraw_amount").html(point+"<span>Point</span>");
-            $("#exchange_amount").html(price+"<span>KRW</span>");
+            $("#withdraw_amount").html(numberWithCommas(point)+"<span>Point</span>");
+            $("#exchange_amount").html(numberWithCommas(price)+"<span>KRW</span>");
             $("#minus_amount").text(numberWithCommas(point));
             $("#total_amount").text(numberWithCommas(total_point - point));
         }
