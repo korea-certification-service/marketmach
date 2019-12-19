@@ -30,17 +30,6 @@
 
         $("#orderItem").on("click", orderAction);
         $("#purchaseItem").on("click", purchaseItem);
-        $("#showPopup").on("click", function() {
-            $("#popupMja").show();
-        });
-        $("#clsPopupMja").on("click", function() {
-            $("#popupMja").hide();
-        });
-
-        var prdId = document.location.href.split('/')[5];
-
-        // 올패스 1개월 경우만 "수강권 이용안내" 버튼 보임
-        if(prdId !== "5dd1f2a8936f1e88ce21ba41" && prdId !== "5dd250e2936f1e88ce227df2") $("#mjaBtnArea").hide();
     });
 
     function orderAction() {
@@ -502,10 +491,6 @@
                     <div class="mob_show">
                         <img id="imageDetailMo" src="" alt="상품설명">
                     </div>
-                    
-                    <div id="mjaBtnArea" class="detail_btn">
-                        <button id="showPopup" class="btn_show_popup">수강권 이용안내</button>
-                    </div>
                 </div>
                 <dl class="order_noti">
                     <dt>유의사항</dt>
@@ -534,27 +519,6 @@
         <div class="lds-circle">
             <div></div>
             <h1>Now Loading</h1>
-        </div>
-    </article>
-    <!-- 문정아 상품상세보기 -->
-    <article class="popup_mja" id="popupMja">
-        <div class="inner_pop">
-            <div class="pop_box">
-                <h1>유의 사항 <button id="clsPopupMja" class="btn_cls_pop">X</button></h1>
-                <ul>
-                    <li>- 한 ID 당 PC 스트리밍 2대, 모바일 기기 2대로 이용이 제한됩니다.(PC와 모바일 기기 동시 수강 가능)</li>
-                    <li>* PC : 데스크탑, 노트북, 윈도우태블릿PC</li>
-                    <li>* 모바일 기기 : 스마트폰, 태블릿PC (G패드, 아이패드, 갤럭시 탭 등)</li>
-                    <li>- 타인에게 양도, 매매 등의 불법 공유 행위 적발 시 회원자격이 박탈되며, 환불이 불가함을 원칙으로 합니다.</li>
-                    <li>- 수강하는 PC를 구분하기 위한 식별 코드인 MAC address 수집에 동의해주셔야 상품 구매 및 이용이 가능합니다.<br>(MAC address 란 유무선 인터넷이 가능한 기기에 붙는 고유 식별 번호입니다.)</li>
-                    <li>- PC에서 MAC address 변경은 수강기간 내 최대 6회에 한하며 ‘마이페이지 > 내 PC정보‘ 에서 수정이 가능합니다.</li>
-                    <li>- 모바일 기기에서 MAC address 변경은 수강기간 내 최대 3회에 한하며 ‘앱 > 환경설정  > 내기기변경’ 에서 수정이 가능합니다.</li>
-                    <li>- 단, MAC address 변경 횟수 초과 시 새 기기 구매 영수증, A/S 확인서 등 증빙서류 제출 및 고객센터 확인 후 초기화가 가능합니다.</li>
-                    <li>- PC 다운로드는 1대의 PC에서만 가능합니다. (MAC address 초기화 불가)</li>
-                    <li>- 스마트폰 수강 시 데이터 비용이 발생할 수 있으니 wifi 환경에서 수강을 권장합니다.</li>
-                    <li>- 수강 이용에 관련된 기타 문의는 고객센터로 연락 주시기 바랍니다. (02-725-2771)</li>
-                </ul>
-            </div>
         </div>
     </article>
     <% include ../include/footer.html %>
