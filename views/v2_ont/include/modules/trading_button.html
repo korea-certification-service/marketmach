@@ -167,7 +167,7 @@ function cancelItem() {
 
 function confirmItem() {    
     // var obj1 = { subTitle: 'Do you want to complete a trading?'};
-    var obj1 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click denied.'};
+    var obj1 = { subTitle: 'Do you want to record a transaction for your trading? <br>It is occureded ONG Gas fee(0.01 ONG).<br>It you don\'t want to record it, please click cancel.'};
     _ModalUI.init(obj1, "confirm", async function() {
         if(_ModalUI.isConfirm) { 
             $("#confirm").prop('disabled', true);
