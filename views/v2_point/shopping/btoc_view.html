@@ -172,7 +172,7 @@
             $("#hdProductAmount").val(res.leftAmount); // set 재고량
 
             if(eventEnd || res.leftAmount < 1) {
-                if(res.productType == 4){
+                if(res.productType === "4"){
                     $("#orderItem").attr("disabled","disabled").text("2차 입고 예정");
                     $("#purchaseItem").attr("disabled","disabled").text("2차 입고 예정");
                 }
