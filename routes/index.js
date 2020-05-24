@@ -668,7 +668,7 @@ router.get('/modify/auth/start', function (req, res, next) {
 
 //휴대폰 본인 인증 완료 페이지
 router.post('/reg/auth/okurl', function (req, res, next) {
-    request({uri: "https://payment.marketmach.com/inicis/decode.php", 
+    request({uri: "https://www.marketmach.com:8080/inicis/decode.php", 
             method:'POST',
             form: req.body, 
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, function (error, response, body) {
@@ -735,7 +735,7 @@ router.post('/reg/auth/okurl', function (req, res, next) {
 
 //사용 안함
 router.post('/reg/auth/findPasswordOkurl', function (req, res, next) {
-    request({uri: "https://payment.marketmach.com/inicis/decode.php", 
+    request({uri: "https://www.marketmach.com:8080/inicis/decode.php", 
             method:'POST',
             form: req.body, 
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, function (error, response, body) {
@@ -760,7 +760,7 @@ router.post('/reg/auth/findPasswordOkurl', function (req, res, next) {
 
 //사용 안함
 router.post('/modify/auth/okurl', function (req, res, next) {
-    request({uri: "https://payment.marketmach.com/inicis/decode.php", 
+    request({uri: "https://www.marketmach.com:8080/inicis/decode.php", 
             method:'POST',
             form: req.body, 
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, function (error, response, body) {
