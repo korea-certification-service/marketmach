@@ -864,7 +864,7 @@ router.post('/:itemId/images', function (req, res, next) {
 
     if (itemId != null) {
 
-        let upload = multer({ dest: '/data/resource/img/items', limits: {  } });
+        let upload = multer({ dest: '/data/resources/img/items' });
         upload.array('image'), (req, res) => {
             // if (err) {
             //     res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
