@@ -858,17 +858,20 @@ router.post('/:itemId/images', function (req, res, next) {
     let bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
     let country = dbconfig.country;
-    let awsS3 = require('../utils/awsS3');
-    let multiUpload = awsS3.multiUpload();
+    // let awsS3 = require('../utils/awsS3');
+    let multer = require('multer');
+    // let multiUpload = awsS3.multiUpload();
 
     if (itemId != null) {
-        multiUpload(req, res, function (err, result) {
-            if (err) {
-                res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-                return;
-            }
 
-            console.log('req.file=>', JSON.stringify(req.files))
+        let upload = multer({ dest: '/data/resource/img/items', limits: {  } });
+        upload.array('image'), (req, res) => {
+            // if (err) {
+            //     res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
+            //     return;
+            // }
+
+            console.log('req.files=>', JSON.stringify(req.files))
             let data = {
                 "images": []
             }
@@ -905,7 +908,7 @@ router.post('/:itemId/images', function (req, res, next) {
                 bitwebResponse.message = err;
                 res.status(500).send(bitwebResponse.create())
             })
-        });
+        };
     } else {
         let err = "Need itemId in path parameter"
         bitwebResponse.code = 400;
