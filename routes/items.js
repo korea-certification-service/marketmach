@@ -853,62 +853,59 @@ router.post('/', function (req, res, next) {
 });
 
 //자산 정보 등록/수정 시 이미지 업로드
-router.post('/:itemId/images', function (req, res, next) {
+let multer = require('multer');
+let upload = multer({ dest: '/data/resources/img/items' });
+router.post('/:itemId/images', upload.array('image'), function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
     let itemId = req.params.itemId;
     let country = dbconfig.country;
     // let awsS3 = require('../utils/awsS3');
-    let multer = require('multer');
     // let multiUpload = awsS3.multiUpload();
 
     if (itemId != null) {
+        // if (err) {
+        //     res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
+        //     return;
+        // }
 
-        let upload = multer({ dest: '/data/resources/img/items' });
-        upload.array('image'), (req, res) => {
-            // if (err) {
-            //     res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-            //     return;
-            // }
-
-            console.log('req.files=>', JSON.stringify(req.files))
-            let data = {
-                "images": []
-            }
-            for(var i =0; i< req.files.length; i++) {
-                let image = {
-                    "path": req.files[i].location,
-                    "bucket": req.files[i].bucket,
-                    "key": req.files[i].key,
-                    "origin_name": req.files[i].originalname,
-                    "size": req.files[i].size,
-                    "mimetype": req.files[i].mimetype,
-                    "regDate": util.formatDate(new Date().toLocaleString('ko-KR'))
-                }
-
-                data['images'].push(image);
+        console.log('req.files=>', JSON.stringify(req.files))
+        let data = {
+            "images": []
+        }
+        for(var i =0; i< req.files.length; i++) {
+            let image = {
+                "path": req.files[i].location,
+                "bucket": req.files[i].bucket,
+                "key": req.files[i].key,
+                "origin_name": req.files[i].originalname,
+                "size": req.files[i].size,
+                "mimetype": req.files[i].mimetype,
+                "regDate": util.formatDate(new Date().toLocaleString('ko-KR'))
             }
 
-            for(var i=0; i<data['images'].length; i++) {
-                if(data['images'][i] == null) {
-                    data['images'].splice(i,1);
-                    i--;
-                }
+            data['images'].push(image);
+        }
+
+        for(var i=0; i<data['images'].length; i++) {
+            if(data['images'][i] == null) {
+                data['images'].splice(i,1);
+                i--;
             }
+        }
 
-            controllerItems.updateById(country, itemId, data)
-                .then((result) => {
+        controllerItems.updateById(country, itemId, data)
+            .then((result) => {
 
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = result.images;
-                    res.status(200).send(bitwebResponse.create())
-                }).catch((err) => {
-                console.error('err=>', err)
-                bitwebResponse.code = 500;
-                bitwebResponse.message = err;
-                res.status(500).send(bitwebResponse.create())
-            })
-        };
+                bitwebResponse.code = 200;
+                bitwebResponse.data = result.images;
+                res.status(200).send(bitwebResponse.create())
+            }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
     } else {
         let err = "Need itemId in path parameter"
         bitwebResponse.code = 400;
