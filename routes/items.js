@@ -875,7 +875,7 @@ router.post('/:itemId/images', upload.array('image'), function (req, res, next) 
         }
         for(var i =0; i< req.files.length; i++) {
             let image = {
-                "path": req.files[i].location,
+                "path": dbconfig.resources_path + "items/" + req.files[i].filename,
                 "bucket": req.files[i].bucket,
                 "key": req.files[i].key,
                 "origin_name": req.files[i].originalname,
