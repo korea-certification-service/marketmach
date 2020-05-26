@@ -136,59 +136,60 @@ router.put('/:oppositionId', function (req, res, next) {
 });
 
 //이의 제기 등록/수정 시 이미지 업로드
-router.post('/:oppositionId/images', function (req, res, next) {
+let multer = require('multer');
+let upload = multer({ dest: '/data/resources/img/other' });
+router.post('/:oppositionId/images', upload.array('image'), function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
     let oppositionId = req.params.oppositionId;
     let country = dbconfig.country;
-    let awsS3 = require('../utils/awsS3');
-    let multiUpload = awsS3.multiUpload();
+    // let awsS3 = require('../utils/awsS3');
+    // let multiUpload = awsS3.multiUpload();
 
     if (oppositionId != null) {
-        multiUpload(req, res, function (err, result) {
-            if (err) {
-                res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-                return;
+        // multiUpload(req, res, function (err, result) {
+        //     if (err) {
+        //         res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
+        //         return;
+        //     }
+
+        console.log('req.file=>', JSON.stringify(req.files))
+        let data = {
+            "images": []
+        }
+        for(var i =0; i< req.files.length; i++) {
+            let image = {
+                "path": dbconfig.resources_path + "other/" + req.files[i].location,
+                "bucket": req.files[i].bucket,
+                "key": req.files[i].key,
+                "origin_name": req.files[i].originalname,
+                "size": req.files[i].size,
+                "mimetype": req.files[i].mimetype,
+                "regDate": util.formatDate(new Date().toLocaleString('ko-KR'))
             }
 
-            console.log('req.file=>', JSON.stringify(req.files))
-            let data = {
-                "images": []
+            data['images'].push(image);
+        }
+
+        for(var i=0; i<data['images'].length; i++) {
+            if(data['images'][i] == null) {
+                data['images'].splice(i,1);
+                i--;
             }
-            for(var i =0; i< req.files.length; i++) {
-                let image = {
-                    "path": req.files[i].location,
-                    "bucket": req.files[i].bucket,
-                    "key": req.files[i].key,
-                    "origin_name": req.files[i].originalname,
-                    "size": req.files[i].size,
-                    "mimetype": req.files[i].mimetype,
-                    "regDate": util.formatDate(new Date().toLocaleString('ko-KR'))
-                }
+        }
 
-                data['images'].push(image);
-            }
+        controllerOpposition.update(country, oppositionId, data)
+            .then((result) => {
 
-            for(var i=0; i<data['images'].length; i++) {
-                if(data['images'][i] == null) {
-                    data['images'].splice(i,1);
-                    i--;
-                }
-            }
-
-            controllerOpposition.update(country, oppositionId, data)
-                .then((result) => {
-
-                    bitwebResponse.code = 200;
-                    bitwebResponse.data = result.images;
-                    res.status(200).send(bitwebResponse.create())
-                }).catch((err) => {
-                console.error('err=>', err)
-                bitwebResponse.code = 500;
-                bitwebResponse.message = err;
-                res.status(500).send(bitwebResponse.create())
-            })
-        });
+                bitwebResponse.code = 200;
+                bitwebResponse.data = result.images;
+                res.status(200).send(bitwebResponse.create())
+            }).catch((err) => {
+            console.error('err=>', err)
+            bitwebResponse.code = 500;
+            bitwebResponse.message = err;
+            res.status(500).send(bitwebResponse.create())
+        })
     } else {
         let err = "Need oppositionId in path parameter"
         bitwebResponse.code = 400;

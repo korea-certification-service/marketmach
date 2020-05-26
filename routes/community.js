@@ -294,87 +294,88 @@ router.delete('/:communityId', token.checkLoginToken, function (req, res, next) 
 });
 
 //커뮤니티 파일 업로드
-router.post('/:communityId/images', token.checkLoginToken, function (req, res, next) {
+let multer = require('multer');
+let upload = multer({ dest: '/data/resources/img/community' });
+router.post('/:communityId/images', token.checkLoginToken, upload.array('image'), function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
-    let awsS3 = require('../utils/awsS3');
-    let multiUpload = awsS3.multiUpload();
+    // let awsS3 = require('../utils/awsS3');
+    // let multiUpload = awsS3.multiUpload();
 
     if (communityId != null) {
-        multiUpload(req, res, function (err, result) {
-            if (err) {
-                res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-                return;
+        // multiUpload(req, res, function (err, result) {
+        //     if (err) {
+        //         res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
+        //         return;
+        //     }
+
+        console.log('req.file=>', JSON.stringify(req.files))
+        let data = {
+            "images": []
+        }
+        for(var i =0; i< req.files.length; i++) {
+            let image = {
+                "path": dbconfig.resources_path + "community/" + req.files[i].location,
+                "bucket": req.files[i].bucket,
+                "key": req.files[i].key,
+                "origin_name": req.files[i].originalname,
+                "size": req.files[i].size,
+                "mimetype": req.files[i].mimetype,
+                "regDate": utils.formatDate(new Date().toLocaleString('ko-KR'))
             }
 
-            console.log('req.file=>', JSON.stringify(req.files))
-            let data = {
-                "images": []
+            data['images'].push(image);
+        }
+
+        for(var i=0; i<data['images'].length; i++) {
+            if(data['images'][i] == null) {
+                data['images'].splice(i,1);
+                i--;
             }
-            for(var i =0; i< req.files.length; i++) {
-                let image = {
-                    "path": req.files[i].location,
-                    "bucket": req.files[i].bucket,
-                    "key": req.files[i].key,
-                    "origin_name": req.files[i].originalname,
-                    "size": req.files[i].size,
-                    "mimetype": req.files[i].mimetype,
-                    "regDate": utils.formatDate(new Date().toLocaleString('ko-KR'))
+        }
+
+        let url = dbconfig.APIServer + "/v2/community/" + communityId;
+        let header = { 
+            'token': dbconfig.APIToken
+        };
+        let body = {
+            "param":data
+        }
+        //Marketmach-backend 서버 호출
+        request({uri: url, 
+                method:'PUT',
+                headers: header,
+                body:body,
+                json:true}, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                bitwebResponse.code = 200;
+                let result = body.data;
+                if(typeof(body) == "string") {
+                    result = JSON.parse(body).data;
                 }
-
-                data['images'].push(image);
+                bitwebResponse.data = result.images;
+                res.status(200).send(bitwebResponse.create())
+            } else {
+                console.log('error = ' + response.statusCode);
+                bitwebResponse.code = 500;
+                bitwebResponse.message = error;
+                res.status(500).send(bitwebResponse.create());
             }
-
-            for(var i=0; i<data['images'].length; i++) {
-                if(data['images'][i] == null) {
-                    data['images'].splice(i,1);
-                    i--;
-                }
-            }
-
-            let url = dbconfig.APIServer + "/v2/community/" + communityId;
-            let header = { 
-                'token': dbconfig.APIToken
-            };
-            let body = {
-                "param":data
-            }
-            //Marketmach-backend 서버 호출
-            request({uri: url, 
-                    method:'PUT',
-                    headers: header,
-                    body:body,
-                    json:true}, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    bitwebResponse.code = 200;
-                    let result = body.data;
-                    if(typeof(body) == "string") {
-                        result = JSON.parse(body).data;
-                    }
-                    bitwebResponse.data = result.images;
-                    res.status(200).send(bitwebResponse.create())
-                } else {
-                    console.log('error = ' + response.statusCode);
-                    bitwebResponse.code = 500;
-                    bitwebResponse.message = error;
-                    res.status(500).send(bitwebResponse.create());
-                }
-            });
-
-            // controllerItems.updateById(country, itemId, data)
-            //     .then((result) => {
-
-            //         bitwebResponse.code = 200;
-            //         bitwebResponse.data = result.images;
-            //         res.status(200).send(bitwebResponse.create())
-            //     }).catch((err) => {
-            //     console.error('err=>', err)
-            //     bitwebResponse.code = 500;
-            //     bitwebResponse.message = err;
-            //     res.status(500).send(bitwebResponse.create())
-            // })
         });
+
+        // controllerItems.updateById(country, itemId, data)
+        //     .then((result) => {
+
+        //         bitwebResponse.code = 200;
+        //         bitwebResponse.data = result.images;
+        //         res.status(200).send(bitwebResponse.create())
+        //     }).catch((err) => {
+        //     console.error('err=>', err)
+        //     bitwebResponse.code = 500;
+        //     bitwebResponse.message = err;
+        //     res.status(500).send(bitwebResponse.create())
+        // })
     } else {
         let err = "Need itemId in path parameter"
         bitwebResponse.code = 400;
