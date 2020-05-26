@@ -146,7 +146,7 @@
             if(end == -1) end = cookie_data.length;
             cValue = cookie_data.substring(start, end);
 
-            var req_url = __config["str"]["chatbot_url"] + "?cmod=cs&loginToken" + cValue +"&userId="+userId;
+            var req_url = __config["str"]["chatbot_url"] + "?country_code=ONT&cmod=cs&loginToken" + cValue +"&userId="+userId;
             if (isMobile()) {
                 window.open(req_url, "CSChatBot");
             } else {
