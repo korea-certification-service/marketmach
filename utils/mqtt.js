@@ -1,6 +1,6 @@
 let config = require('../config/dbconfig')
 let mqtt = require('mqtt');
-//let mqtt_url = config.mqtt.url;
+let mqtt_url = config.mqtt.url;
 let controllerCoins = require('../controllers/coins')
 let controllerCoinHistorys = require('../controllers/coinHistorys');
 var schedule = require('node-schedule');
