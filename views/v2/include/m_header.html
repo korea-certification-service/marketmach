@@ -49,6 +49,12 @@
         m_voucherCopy.on('success', function(e) {
             alert("추천 URL이 복사되었습니다.");
         });        
+
+        // 메뉴 누를경우 언더라인 css 추가
+        $('#btnMobMenu').bind('click', function(){
+            $('#btnMobMenu').removeClass('mob_menu_underline');
+            $(this).addClass('mob_menu_underline');
+        });
     });
 
     function getCoinMain() {
