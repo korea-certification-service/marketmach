@@ -206,8 +206,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_dep2_menu{position: absolute; top: 40px; width: 100%; z-index: 4; text-align: center;}
 .mob_header .mob_dep2_menu dl{display: none; padding: 15px; background-color: #fff;}
 .mob_header .mob_dep2_menu dl.lft_menu{float: left;}
-.mob_header .mob_dep2_menu dl.rgh_menu{float: right;}
-.mob_header .mob_dep2_menu dl.show{display: inline-block; border: 2px solid #FCB5E9; border-radius: 6px;}
+.mob_header .mob_dep2_menu dl.rgh_menu{float: left;}
+.mob_header .mob_dep2_menu dl.show{display: inline-block; /*border: 2px solid #FCB5E9; border-radius: 6px;*/ box-shadow: 4px 3px 5px 0px grey;}
 .mob_header .mob_dep2_menu dt{text-align: left;}
 .mob_header .mob_dep2_menu dd{padding-top: 5px;}
 .mob_header .mob_dep2_menu dt:nth-of-type(1n+2){margin-top: 10px; padding-top: 10px; border-top: 3px solid #000039;}
