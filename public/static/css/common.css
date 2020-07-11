@@ -347,7 +347,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 }
 
 .table_hashtag {width: calc(100% - 40px); margin: 0px 20px 0px 20px;}
-.table_hashtag td {border: 1 solid lightgray; line-height: 40px;height: 40px;font-size: 15px;font-weight: 500;}
+.table_hashtag td {border: 1px solid lightgray; line-height: 40px;height: 40px;font-size: 15px;font-weight: 500;}
 
 /* horizen image 100% banner*/
 .w100p_banner{max-width: 1200px; margin: 30px auto 30px;}
