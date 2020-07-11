@@ -347,7 +347,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 }
 
 .table_hashtag {width: calc(100% - 40px); margin: 0px 20px 0px 20px;}
-.table_hashtag td {border: 1px solid lightgray; line-height: 40px;height: 40px;font-size: 15px;font-weight: 500;}
+.table_hashtag td {border: 1px solid lightgray; line-height: 30px;height: 30px;font-size: 13px;font-weight: 500;}
+.table_hashtag i {margin-right: 5px;}
 
 /* horizen image 100% banner*/
 .w100p_banner{max-width: 1200px; margin: 30px auto 30px;}
@@ -587,7 +588,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .renewer_container{padding: 0px;}
     .renewer_container .photo_list{padding-top: 0px;}
     .hashtag_category_wrap{padding-bottom: 20px; background-size: 240px 4px; padding-bottom: 20px; padding-top:20px;}
-    .section_hashtag{background-size: 50px 25px; margin: -25px 0 30px 0; padding-top: 0px; background:url();}
+    .section_hashtag{background-size: 50px 25px; margin: -25px 0 30px 0; padding-top: 0px; background-image:white;}
     .section_community .media_img_wrap .media_img{margin-left: 2%; margin-right: 2%; margin-bottom: 20px; width: 46%;display: inline-block;}
     .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
     .noti_hot_section_wrap .section_notice{margin-bottom: 80px; width: 100%;}
