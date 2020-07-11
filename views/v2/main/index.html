@@ -369,7 +369,7 @@
                 var arrResult = success.data;
                 var $hashtagCategory = $("#hashtagCategory");
                 // hashtagCategory
-                var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>전체</span></a></li>';
+                // var li = '<li class="hash_all"><a href="/etc-sells?category=etc&trade_type=sell"><span>전체</span></a></li>';
                 for (var i = 0; i < arrResult.length; i++) {
                     var idx = i % 5 + 1;
                     li += '<li class="c'+idx+'"><a href="/etc-sells?category=etc&trade_type=sell&category1='+encodeURIComponent(arrResult[i].category1)+'"><span>'+arrResult[i].category1+'</span></a></li>';
