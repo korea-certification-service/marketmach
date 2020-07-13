@@ -485,6 +485,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .img_vac3{transform: translateY(27%);}
 
 .partners_layer {width:100%; display: inline-block; height: 80px;overflow: auto;}
+.partners_layer img {width: 100px;}
 
 /* 파트너 */
 .partners_ci{padding: 20px 0; width: 100%; text-align: center; background-color: #ececec;}
