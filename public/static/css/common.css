@@ -469,7 +469,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .noti_hot_section_wrap .section_hotmenu a{display: inline-block; width: 47.2%; max-height: 200px; margin-left: 2.8%;}
 
 /* 상장매체 */
-.company_sec{margin-bottom: 70px;}
+.company_sec{padding-bottom: 40px; padding-top: 20px; background: white;}
 .company_sec .main_tit_partners{margin-bottom: 18px; text-align: center; font-size: 20px;}
 .company_sec .cpn_box_wrap{padding: 30px 20px;}
 .company_sec .cpn_box{float: left; margin-left: 1%; width: 15.833%;  height: 60px; text-align: center; background-color: #ffffff;}
@@ -483,6 +483,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .img_vac1{transform: translateY(10%);}
 .img_vac2{transform: translateY(20%);}
 .img_vac3{transform: translateY(27%);}
+
+.partners_layer {width:100%; display: inline-block; height: 80px;overflow: auto;}
 
 /* 파트너 */
 .partners_ci{padding: 20px 0; width: 100%; text-align: center; background-color: #ececec;}
