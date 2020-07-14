@@ -245,7 +245,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* hamberger menu */
 .bg_dim{display: none; position: fixed; overflow: hidden; z-index: 10;  left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);}
 .hamburger_menu{display: none; position: absolute; /*position: fixed; z-index: 4;*/ right: 0;top: 0px; width: 90%; max-width: 414px; height: 100%; overflow-y: scroll;  background-color: #fff; -webkit-overflow-scrolling: touch;}
-.hamburger_menu a.btn{padding: 0 0.75rem; border-radius: 20px;}
+.hamburger_menu a.btn{padding: 0 0.75rem; border-radius: 10px;}
 .hamburger_menu .m_nav_head{height: 40px;}
 .hamburger_menu .m_nav_head > ul{padding-top: 6px;}
 .hamburger_menu .m_nav_head li{margin: 0 0 0 10px; float: left;}
@@ -274,14 +274,14 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info{}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li{margin: 0 0 8px 0;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a{height: 40px; line-height: 40px; font-size: 12px; }
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a.btn{width: 150px; background-color: #1e2560; color: #ffffff; font-weight: bold;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area .link_login_info li a.btn{width: 150px; background-color: #3172F6; color: #ffffff; font-weight: bold;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div{float: left; width: 50%; text-align: center;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > em{font-weight: bold;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p{font-weight: bold; font-size: 24px; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p > span{font-size: 14px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area{padding: 20px 0;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area .btn{height: 40px; }
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area a.btn{width: 150px; line-height: 40px; border: 2px solid #ffac44; color: #ffac44; background-color: #ffffff; font-weight: bold;}
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area a.btn{width: 150px; line-height: 40px; border: 2px solid #ffac44; color: #ffffff; background-color: #ffac44; font-weight: bold;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > em{display: block; margin: 0 0 5px 0; font-weight: normal; font-size: 12px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > p{margin-bottom: 8px; font-weight: bold; font-size: 20px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > p > span{font-size: 14px;}
