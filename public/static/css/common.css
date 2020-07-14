@@ -216,7 +216,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_dep2_menu dd{padding-top: 5px;}
 .mob_header .mob_dep2_menu dt:nth-of-type(1n+2){margin-top: 10px; padding-top: 10px; /*border-top: 3px solid #000039;*/}
 .mob_header .mob_dep2_menu dd > a{}
-.mob_header .mob_dep2_menu dd .mob_rnd_btn{display: block; margin-bottom: 6px; width: 75px; height: 28px; line-height: 28px; font-size: 13px; text-align: center; border-radius: 6px;}
+.mob_header .mob_dep2_menu dd .mob_rnd_btn{display: block; margin-bottom: 6px; width: 75px; height: 28px; line-height: 28px; font-size: 13px; text-align: center; border-radius: 6px;color: white;}
 /* mobile search  */
 .mob_header .mob_sch_sec{padding: 10px 15px 8px 15px;}
 .mob_header .mob_sch_sec .mob_top_menu{margin-bottom: 8px; height: 30px; }
@@ -264,7 +264,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1{}
 .hamburger_menu .m_nav_body > .ul_dep1 >li{}
 .hamburger_menu .m_nav_body > .ul_dep1 >.li_logout{text-align: center; border-bottom: 1px solid #000039}
-.hamburger_menu .m_nav_body > .ul_dep1 >.li_logout a.btn{display: inline-block; margin: 15px 0; height: 30px; line-height: 30px;}
+.hamburger_menu .m_nav_body > .ul_dep1 >.li_logout a.btn{display: inline-block; margin: 15px 0; height: 30px; line-height: 30px;background: #9ABBFB; color: white}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .beforeLoginBox .top_area{padding-top: 20px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .afterLoginBox .top_area{padding: 20px 0 10px 0;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .btn_1depth{display: block; padding-left: 10px; height: 45px; line-height: 45px; font-size: 14px; font-weight: bold; color: #000000; border-bottom: 1px solid #000039; background-color: #eeeeee;}
