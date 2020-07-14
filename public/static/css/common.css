@@ -22,7 +22,7 @@ textarea{overflow:auto; resize: none;}
 table{border-collapse:collapse; border-spacing:0;}
 input, select, textarea{vertical-align:middle;}
 strong, em{font-weight: bold;}
-a, a:link, a:visited{text-decoration:none;}
+a, a:link, a:visited{text-decoration:none; color : #476DF6}
 a:active, a:hover{text-decoration:none;}
 /* input box reset */
 input::placeholder {font-size: 13px;}

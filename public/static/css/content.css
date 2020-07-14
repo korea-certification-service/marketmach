@@ -200,9 +200,9 @@
 /* 버튼: VTR 입장, VTR 거래신청, 바로구매, 수정, 삭제, 연락처 표시, 판매완료, 거래취소, 구매확정, 이의제기 */
 .btn.item_view{display: none;}
 /* .btn#regVTR{background-color: #d9ddff} */
-.btn.btn_in_view0{background-color: #1e2560; color: #ffffff; font-weight: bold; }
-.btn.btn_in_view1{background-color: #1e2560; color: #ffffff; font-weight: bold; }
-.btn.btn_in_view2{background-color: #28a745; color: #ffffff; font-weight: bold; }
+.btn.btn_in_view0{background-color: #476DF6; color: #ffffff; font-weight: bold; }
+.btn.btn_in_view1{background-color: #476DF6; color: #ffffff; font-weight: bold; }
+.btn.btn_in_view2{background-color: #476DF6; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view2_1{background-color: #9cdc51; color: #ffffff; font-weight: bold; }
 .btn.btn_in_view3{background-color: #ffc107; color: #333333; font-weight: bold; }
 .btn.btn_in_view4{background-color: #666166; color: #ffffff; font-weight: bold; }
@@ -252,7 +252,7 @@
 .sub_lft_menu > h2 > a{font-weight: bold; color: #ffffff;}
 .sub_lft_menu > .depth1{padding-bottom: 20px; border-top: 3px solid #ea4335; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.0), 0px 1px 5px 0px rgba(0, 0, 0, 0.1);}
 .sub_lft_menu > .depth1 > li{}
-.sub_lft_menu > .depth1 > li.on > a{position: relative; font-weight: 500; color: #393939; background-color: rgba(234, 67, 53, 0.3);}
+.sub_lft_menu > .depth1 > li.on > a{position: relative; font-weight: 600; color: #ffffff; background-color: #9ABBFB;}
 .sub_lft_menu > .depth1 > li.on > a:after{position: absolute; right: -10px; top: 50%; margin-top: -5px; display: block; content: ''; clear: both; border: 5px solid transparent; border-left: 5px solid #ea4335; }
 .sub_lft_menu > .depth1 > li > a{display: block; padding: 8px 0 8px 25px; font-size: 14px; color: #393939;}
 .sub_lft_menu > .depth1 > li > .dept h2{border-bottom: 1px solid #666;}
@@ -260,6 +260,7 @@
 .sub_lft_menu > .depth1 > li > .depth2 > li > a{display: block; padding: 8px 0 8px 45px; color: #666666; font-size: 13px;}
 .sub_lft_menu > .depth1 > li > .depth2 > li.on{background: url("/static/img/symbol/ico_leftmenu_dot_on.png") 34px 50% no-repeat;}
 .sub_lft_menu > .depth1 > li > .depth2 > li.on > a{font-weight: bold;  color: #ea4335;} 
+
 .mob_depth2_menu{display: none; margin: 30px 0;}
 .mob_depth2_menu ul{border: 1px solid #000;}
 .mob_depth2_menu li{float: left; padding: 8px 0; width: 50%; box-sizing: border-box; text-align: center;}
@@ -830,11 +831,11 @@ background-size: 65px 65px;
     .sub_lft_menu{width: 100%; float: none;}   
     .sub_lft_menu > .depth1{border: none; box-shadow: none;}
     .sub_lft_menu > .depth1:after{display: block; content: ''; clear: both;}
-    .sub_lft_menu > .depth1 > li{float: left; width: 33.33%; border: 1px solid #666; border-left: none;}    
+    .sub_lft_menu > .depth1 > li{float: left; width: calc(33.33% - 6px); border: 1px solid #476DF6 !important; border-left: none;background: #476DF6;margin-right: 2px;margin-top: 2px;}    
     .sub_lft_menu > .depth1 > li:nth-child(3n+1){border: 1px solid #666;}
     .sub_lft_menu > .depth1 > li:nth-child(n+4){border-top: none;}
     .sub_lft_menu > .depth1 > li > .depth2{display: none;}
-    .sub_lft_menu > .depth1 > li > a{padding: 10px 0; border: none; text-align: center; font-size: 12px;}
+    .sub_lft_menu > .depth1 > li > a{padding: 10px 0; border: none; text-align: center; font-size: 13px;color: #ffffff;font-weight: 600;}
     .sub_lft_menu > .depth1 > li.on > a:after{display: none;}
     .mob_depth2_menu{display: block;}
     /* 고객센터 사이드 메뉴 비노출 메뉴 = 신규게임/서버추가 */
