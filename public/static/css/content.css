@@ -294,7 +294,7 @@
 .mypage_sec .mypage_main_info .lft_area > p{margin-top: 50px; font-size: 16px;}
 .mypage_sec .mypage_main_info .lft_area .grade_color1{color: #ffc107;}
 .mypage_sec .mypage_main_info .rgh_area{background: url(/static/img/symbol/ico_mywallet.png) 14px 50% no-repeat; background-size: 54px 61px;}
-.mypage_sec .mypage_main_info .rgh_area a{display: block; margin-top: 20px;}
+.mypage_sec .mypage_main_info .rgh_area a{display: block; margin-top: 20px; margin-bottom: 20px;}
 .mypage_sec .mypage_main_info .rgh_area a em{font-size: 16px; color: #333333;}
 .mypage_sec .mypage_main_info .rgh_area a p{margin-bottom: 15px; font-size: 20px; font-weight: bold; color: #1e2660;}
 .mypage_sec .mypage_main_info .rgh_area a p > span{font-size: 14px;}
@@ -470,7 +470,7 @@
 .support_sec .support_main_info > div h2{margin-top: 30px; font-size: 16px; color: #1e2560; font-weight: bold;}
 .support_sec .support_main_info > div p{margin-bottom: 15px;}
 .support_sec .support_main_info > div .btn{width: 120px; padding: 6px;}
-.support_sec .support_main_info > div .btn:nth-of-type(1){background-color: #2c2c2c;}
+.support_sec .support_main_info > div .btn:nth-of-type(1){background-color: #2c2c2c; color:white;}
 .support_sec .support_main_info > div .btn:nth-of-type(2){background-color: #ffffff; color: #2c2c2c; border: 1px solid #ddd;}
 .support_sec .support_main_info .inner_area{text-align: left; display: inline-block;}
 .support_sec .support_main_info .lft_area{}
