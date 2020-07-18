@@ -143,8 +143,8 @@ var MainUi = {
                         // Animation effact
                         $('.mob_dep2_menu > dl').css({'right':'-100px'});
                         setInterval(function(){
-                            alert($('.mob_dep2_menu > dl').css('right'));
-                            if($('.mob_dep2_menu > dl').css('right') > '10px'){
+                            
+                            if($('.mob_dep2_menu > dl').css('right') != '10px'){
                                 $('.mob_dep2_menu > dl').css({'right' : calc($('.mob_dep2_menu > dl').css('right') + '10px')});
                             }
                             else{
