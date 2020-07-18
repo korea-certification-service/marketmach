@@ -145,7 +145,7 @@ var MainUi = {
                         setInterval(function(){
                             
                             if($('.mob_dep2_menu > dl').css('right') != '10px'){
-                                $('.mob_dep2_menu > dl').css({'right' : "calc(" + $('.mob_dep2_menu > dl').css('right') + " + '10px')"});
+                                $('.mob_dep2_menu > dl').css({'right' : "calc(" + $('.mob_dep2_menu > dl').css('right') + " + 10px)"});
                             }
                             else{
                                 clearInterval();
