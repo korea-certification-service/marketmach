@@ -43,7 +43,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .table th{vertical-align: middle;}
 .table td{vertical-align: middle;}
 .btn{padding: 0.313rem 0.5rem;}
-.btn:hover{color: #ffffff;}
+.btn:hover{color: #000000;}
 .btn.btn-default{background-color: #ededed; border: 1px solid #ccc;}
 .btn.btn_go_detail:hover{color: #333;}
 .btn.btn_more_list:hover{color: rgb(56, 45, 45);}
@@ -594,7 +594,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .section_hashtag{background-size: 50px 25px; margin: -25px 0 30px 0; padding-top: 0px; background-image:white;}
     .section_community .media_img_wrap .media_img{margin-left: 2%; margin-right: 2%; margin-bottom: 20px; width: 46%;display: inline-block;}
     .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
-    .noti_hot_section_wrap .section_notice{margin-bottom: 80px; width: 100%;}
+    .noti_hot_section_wrap .section_notice{margin-bottom: 50px; width: 100%;}
     .noti_hot_section_wrap .section_hotmenu{width: 100%;}
     .noti_hot_section_wrap .section_hotmenu h1{padding-left: 0;}
     .noti_hot_section_wrap .section_hotmenu a{margin-left: 0; width: 49%;}
