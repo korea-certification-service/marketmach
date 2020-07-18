@@ -34,15 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
     switch(location.pathname) {
         case '/sells':
         case '/buys' :
-            srchInput.setAttribute("placeholder", "게임검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "게임자산 검색이 가능합니다");
             break;
         case '/etc-sells':
         case '/etc-buys' :
-            srchInput.setAttribute("placeholder", "자산검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "중고자산 검색이 가능합니다");
             break;
         case '/otc-sells':
         case '/otc-buys' :
-            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "코인자산 검색이 가능합니다");
             break;
     }
 
@@ -214,11 +214,11 @@ document.addEventListener("DOMContentLoaded", function () {
         srchBoxWrap.style.display = "none";
 
         if(srchSelect.value == "games"){
-            srchInput.setAttribute("placeholder", "게임검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "게임자산 검색이 가능합니다");
         } else if(srchSelect.value == "assets"){
-            srchInput.setAttribute("placeholder", "자산검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "중고자산 검색이 가능합니다");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "OTC검색이 가능합니다");
+            srchInput.setAttribute("placeholder", "코인자산 검색이 가능합니다");
         }
         
     });

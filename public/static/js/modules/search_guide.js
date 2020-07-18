@@ -220,9 +220,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if(srchSelect.value == "games"){
             srchInput.setAttribute("placeholder", "게임명과 서버명 입력  ex)로스트아크 이그하람");
         } else if(srchSelect.value == "assets"){
-            srchInput.setAttribute("placeholder", "자산거래에 관한 제목 입력 ex)맥북 프로 15년식");
+            srchInput.setAttribute("placeholder", "중고자산에 관한 제목 입력 ex)맥북 프로 15년식");
         } else if(srchSelect.value == "otc"){
-            srchInput.setAttribute("placeholder", "OTC거래에 관한 제목 입력 ex)100마하");
+            srchInput.setAttribute("placeholder", "코인자산에 관한 제목 입력 ex)100마하");
         }
         
     });

@@ -139,6 +139,17 @@ var MainUi = {
                             depth2[j].classList.remove("show");
                         }
                         depth2[idx].classList.add("show");
+
+                        // Animation effact
+                        depth2[idx].classList.css({'right':'-100px'});
+                        setInterval(function(){
+                            if(depth2[idx].classList.css('right') > '10px'){
+                                depth2[idx].classList.css({'right' : calc(depth2[idx].classList.css('right') - '10px')});
+                            }
+                            else{
+                                clearInterval();
+                            }
+                        }, 100);
                     }
                 }(i));
             }
