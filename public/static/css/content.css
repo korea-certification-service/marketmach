@@ -252,7 +252,7 @@
 .sub_lft_menu > h2 > a{font-weight: bold; color: #ffffff;}
 .sub_lft_menu > .depth1{padding-bottom: 20px; border-top: 3px solid #ea4335; box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.0), 0px 1px 5px 0px rgba(0, 0, 0, 0.1);}
 .sub_lft_menu > .depth1 > li{}
-.sub_lft_menu > .depth1 > li.on > a{position: relative; font-weight: 600; color: #ffffff; background-color: #9ABBFB;height: 52px;}
+.sub_lft_menu > .depth1 > li.on > a{position: relative; font-weight: 600; color: #ffffff; background-color: #9ABBFB;}
 .sub_lft_menu > .depth1 > li.on > a:after{position: absolute; right: -10px; top: 50%; margin-top: -5px; display: block; content: ''; clear: both; border: 5px solid transparent; border-left: 5px solid #ea4335; }
 .sub_lft_menu > .depth1 > li > a{display: block; padding: 8px 0 8px 25px; font-size: 14px; color: #393939;}
 .sub_lft_menu > .depth1 > li > .dept h2{border-bottom: 1px solid #666;}
@@ -574,11 +574,11 @@
 .community_sec .post_title{font-size: 18px; font-weight: 600;}
 .community_sec .td_writer_date{border-top: none; padding-top: 0;}
 .community_sec .td_writer_date .cmnt_writer{margin-right: 8px;}
-.community_sec .td_writer_date .cmnt_bdr{display: inline-block; height: 16px; vertical-align: middle; border-right: 2px solid #9a9a9a;}
+.community_sec .td_writer_date .cmnt_bdr{display: inline-block; height: 16px; vertical-align: middle; border-right: 2px solid #9ABBFB;}
 .community_sec .td_writer_date .cmnt_date{margin-left: 8px;}
 .community_sec td .cmnt_content{padding: 25px 0;}
 .community_sec .community_icon_menu{}
-.community_sec .community_icon_menu li{float: left; margin-left: 2%; margin-bottom: 16px; max-width: 269px; width: 32%; height: 100px; border: solid 1px #c3c3c3; border-radius: 15px; }
+.community_sec .community_icon_menu li{float: left; margin-left: 2%; margin-bottom: 16px; max-width: 269px; width: 32%; height: 100px; border: solid 2px #c3c3c3; border-radius: 15px; }
 .community_sec .community_icon_menu li:nth-child(3n+1){margin-left: 0;}
 .community_sec .community_icon_menu li:nth-child(1){background: url(/static/img/symbol/ico_cmnt_free.png) 30px 50% no-repeat;}
 .community_sec .community_icon_menu li:nth-child(2){background: url(/static/img/symbol/ico_cmnt_tabloid.png) 30px 50% no-repeat;}

@@ -49,8 +49,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_more_list:hover{color: rgb(56, 45, 45);}
 .btn.btn_go_list{background-color: #17a2b8; color: #ffffff;}
 .btn.btn_blln{border: 2px solid #3072F6; background-color: #ffffff; font-weight: 600;}
-.btn.btn_nvln{border: 2px solid #0d0943; background-color: #ffffff; font-weight: 600;}
-.btn.btn_nv{background-color: #0d0943; color: #ffffff; font-weight: 600;}
+.btn.btn_nvln{border: 2px solid #3072F6; background-color: #ffffff; font-weight: 600;}
+.btn.btn_nv{background-color: #3072F6; color: #ffffff; font-weight: 600;}
 .btn.btn_nv:hover, .btn_blln:hover, .btn_nvln:hover{color: inherit;}
 .btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 .btn.btn-line{border: 1px solid #2c2c2c;}
