@@ -142,15 +142,15 @@ var MainUi = {
 
                         // Animation effact
                         $('.mob_dep2_menu > dl').css({'right':'-100px'});
-                        setInterval(function(){
+                        var ani = setInterval(function(){
                             
                             if($('.mob_dep2_menu > dl').css('right') != '10px'){
                                 $('.mob_dep2_menu > dl').css({'right' : "calc(" + $('.mob_dep2_menu > dl').css('right') + " + 10px)"});
                             }
                             else{
-                                clearInterval();
+                                clearInterval(ani);
                             }
-                        }, 100);
+                        }, 80);
                     }
                 }(i));
             }
