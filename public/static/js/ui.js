@@ -150,7 +150,7 @@ var MainUi = {
                             else{
                                 clearInterval(ani);
                             }
-                        }, 80);
+                        }, 10);
                     }
                 }(i));
             }
