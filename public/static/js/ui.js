@@ -141,10 +141,10 @@ var MainUi = {
                         depth2[idx].classList.add("show");
 
                         // Animation effact
-                        depth2[idx].classList.css({'right':'-100px'});
+                        depth2[idx].css({'right':'-100px'});
                         setInterval(function(){
-                            if(depth2[idx].classList.css('right') > '10px'){
-                                depth2[idx].classList.css({'right' : calc(depth2[idx].classList.css('right') - '10px')});
+                            if(depth2[idx].css('right') > '10px'){
+                                depth2[idx].css({'right' : calc(depth2[idx].classList.css('right') - '10px')});
                             }
                             else{
                                 clearInterval();
