@@ -372,18 +372,19 @@
         function setCommunitys(data) {
             var result="";
             var list="";
-            
+
             for(var i=0; i<data.length; i++) {
                 var id = data[i]._id;
                 var type = getCommunityType(data[i].type);
                 var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
                 var reporter = data[i].reporter;
+                var imgSrc = data[i].images.length > 0 ? data[i].images[0].path : "";
                 var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
                 list += '<li onclick="javascript:showDetail(\''+id+'\')">'
-                list += '<div></div>'
+                list += '<div style="height: 110px;width: 100%;padding: 4px 4px;"> <img src="' + imgSrc + '"/> </div>'
                 list += '<div>' + '<span class="ellipse">' + title + '</span>' + '<em>' + replyCount + '</em>' + '</div>'
                 list += '<div>'+ reporter + '</div>'
                 list += '<div>'+ count + '</div>'
@@ -725,7 +726,7 @@
             <section class="section_community">
                 <div class="section_title">
                     <p>이벤트 미션</p>
-                    <a href="/community/board/free" class="board_view_link">전체보기</a>
+                    <a href="/community/board/event" class="board_view_link">전체보기</a>
                 </div>
                 <div class="main_inner_wrap">
                     

@@ -714,3 +714,5 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+#event_list > li {display: inline-block; width:40%; background: white;}
