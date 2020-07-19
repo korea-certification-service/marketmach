@@ -363,7 +363,7 @@
                 url: query,
             }).done(function (success) {
                 // pageIdx = success.pageIdx;
-                setCommunitys(success.data.notice);
+                setCommunitys(success.data.list);
             }).fail(function (fail) {
                 console.log(fail);
             })
@@ -372,10 +372,7 @@
         function setCommunitys(data) {
             var result="";
             var list="";
-            if(data.length == 0) {
-                result = '<tr><td colspan="5">검색 된 글이 없습니다.</td></tr>';
-            }
-
+            
             for(var i=0; i<data.length; i++) {
                 var id = data[i]._id;
                 var type = getCommunityType(data[i].type);
