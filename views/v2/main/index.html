@@ -113,6 +113,7 @@
                 // setOtcSellList(otc_sells);
                 setNoticeList(notices);
                 setCommunityMovie(movies);
+                setEventMissionContents();
                 // setCommunityBoard(boards);
             }).fail(function (fail) {
                 console.log('system error : ', fail);
@@ -349,6 +350,51 @@
             }
 
             $('.media_img_wrap').html(result);
+        }
+
+        // 이벤트 미션 리스트 아이템 조회
+        function setEventMissionContents() {
+            // console.log(data) // type, recommandCount, count
+            var result = "";
+            var query = "/v1/community/list?pageIdx=0&type=event";
+
+            $.ajax({
+                method: "GET",
+                url: query,
+            }).done(function (success) {
+                // pageIdx = success.pageIdx;
+                setCommunitys(success.data.list);
+            }).fail(function (fail) {
+                console.log(fail);
+            })
+        }
+
+        function setCommunitys(data) {
+            var result="";
+            var list="";
+            if(data.length == 0) {
+                result = '<tr><td colspan="5">검색 된 글이 없습니다.</td></tr>';
+            }
+
+            for(var i=0; i<data.length; i++) {
+                var id = data[i]._id;
+                var type = getCommunityType(data[i].type);
+                var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
+                var reporter = data[i].reporter;
+                var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
+                var regDate = data[i].regDate.substring(2, 10);
+                var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
+
+                list += '<li onclick="javascript:showDetail(\''+id+'\')">'
+                list += '<div></div>'
+                list += '<div>' + '<span class="ellipse">' + title + '</span>' + '<em>' + replyCount + '</em>' + '</div>'
+                list += '<div>'+ reporter + '</div>'
+                list += '<div>'+ count + '</div>'
+                list += '<div>'+ regDate + '</div>'
+                list += '</li>'
+            }
+
+            $('#event_list').append(list);
         }
 
         function setCommunityBoard(data) {
@@ -594,6 +640,7 @@
                 <div class="section_title">
                     <p>중고자산</p>
                     <h2>필요없는 물건 팔아 코인 벌어보자!</h2>
+                    <a href="/etc-sells?category=etc&trade_type=sell" class="board_view_link">전체보기</a>
                 </div>
                 <div class="main_inner_wrap">
                     <!-- <h1 class=""><img src="/static/img/main/tit_asset.png" alt="ASSET"></h1> -->
@@ -665,16 +712,39 @@
                 </div>
             </section>
 
-            <!-- 커뮤니티 베스트 -->
+            <!-- 미션 -->
             <section class="section_community">
                 <div class="section_title">
-                    <p>커뮤니티</p>
-                    <h2>베스트</h2>
+                    <p>미션</p>
+                    <a href="/community/board/free" class="board_view_link">전체보기</a>
                 </div>
                 <div class="main_inner_wrap">
                     
                     <div class="media_img_wrap cf">
                     </div>
+                </div>
+            </section>
+
+            <section class="section_community">
+                <div class="section_title">
+                    <p>이벤트 미션</p>
+                    <a href="/community/board/free" class="board_view_link">전체보기</a>
+                </div>
+                <div class="main_inner_wrap">
+                    
+                    <dl class="responsive_table_style">
+                        <dt class="w_wrap">
+                            <div>&nbsp;</div>
+                            <div>제목</div>
+                            <div>작성자</div>
+                            <div>좋아요</div>
+                            <div>등록일</div>
+                        </dt>
+                        <dd>
+                            <ul id="cmnt_list" class="w_wrap">
+                            </ul>
+                        </dd>
+                        </dl>
                 </div>
             </section>
 

@@ -633,6 +633,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .section_title {width:100%;height: 50px;margin-bottom: 5px;background:white;}
     .section_title p{display:inline-block;line-height: 50px;text-align: -webkit-left;padding: 10px 0px 0px 7px;font-weight: 600;font-size: 16px;}
     .section_title h2{display:inline-block;line-height: 50px;text-align: -webkit-left;padding: 10px 0px 0px 7px;font-size: 12px;}
+    .section_title .board_view_link {float :right; margin-top :26px;}
     /* footer */
     /*
     .footer .footer_content .ft_top > div{display: none;}
