@@ -615,7 +615,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .mob_hide{display: none;}
     .mob_show{display: block;}
     /* visual section */
-    .visual_wrap .visual_sec .slick_visual .slick-list .slick-track .slick-slide img{max-width: 100%; width: 100%;}
+    .visual_wrap .visual_sec .slick_visual .slick-list .slick-track .slick-slide img{}
     .visual_wrap .visual_sec .slick_visual .pc_img{display: none;}
     .visual_wrap .visual_sec .slick_visual .mob_img{display: block;}
     .visual_wrap .visual_sec .slick_visual .slick-dots{bottom: 5px;}
