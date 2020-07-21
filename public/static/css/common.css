@@ -195,7 +195,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* mobile nav */
 .mob_header .mob_nav{position: relative; height: 40px;}
 .mob_header .mob_nav .mob_fixiable{position: absolute; left: 0; width: 60px;}
-.mob_header .mob_nav .mob_fixiable .btn_mob_menu{width: 100%; height: 40px; /*border: none;*/}
+.mob_header .mob_nav .mob_fixiable .btn_mob_menu{width: 100%; height: 40px; border: none;}
 .mob_header .mob_nav .mob_dep1_menu{position: absolute; left: 60px; width: 100%; height: 40px; overflow: hidden;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area{height: 60px; overflow-x: scroll;}
 .mob_header .mob_nav .mob_dep1_menu .scroll_area .tb_menu{table-layout: fixed; width: 100%;}
@@ -223,7 +223,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_sch_sec li{float: left;}
 .mob_header .mob_sch_sec li:nth-child(1){}
 .mob_header .mob_sch_sec li:nth-child(1) img{width: 35.5px;}
-.mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 77px);}
+.mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 60px);}
 .mob_header .mob_sch_sec li:nth-child(2) h1{text-align: center;}
 .mob_header .mob_sch_sec li:nth-child(2) h1 img{height: 31px;}
 .mob_header .mob_sch_sec li:nth-child(3){}
@@ -233,10 +233,10 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 /* hamberger button */
 .menu-trigger {}
 .menu-trigger,.menu-trigger span {display: inline-block; transition: all .4s; box-sizing: border-box;}
-.menu-trigger {position: relative; width: 32px; height: 24px; border:none; background-color: #fff;}
-.menu-trigger span { position: absolute; left: 0; width: 100%; height: 4px; background-color: #3172F6; border-radius: 4px;}
+.menu-trigger {position: relative; width: 20px; height: 14px; border:none; background-color: #fff;}
+.menu-trigger span { position: absolute; left: 0; width: 100%; height: 2px; background-color: #3172F6; border-radius: 4px;}
 .menu-trigger span:nth-of-type(1) {top: 0;}
-.menu-trigger span:nth-of-type(2) {top: 10px;}
+.menu-trigger span:nth-of-type(2) {top: 6px;}
 .menu-trigger span:nth-of-type(3) {bottom: 0px;}
 /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
 .menu-trigger.on span:nth-of-type(1) {transform: translateY(10px) rotate(-45deg);}
@@ -439,7 +439,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .section_community{/*background: #8024ED url(/static/img/main/pattern_round.png); */}
 .section_community h1{position: absolute; top:-107px; width: 100%; text-align: center;}
 .section_community .main_inner_wrap{padding: 90px 0 55px 0; }
-.section_community .media_img_wrap{padding: 30px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
+.section_community .media_img_wrap{padding: 10px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
 .section_community .media_img_wrap .media_img{width: 32%; margin-left: 2%; box-shadow: 5px 5px 18px 2px gray;}
 .section_community .media_img_wrap .media_img img{/*transition: all .9s linear;*/}
 .section_community .media_img_wrap .media_img img:hover{transform: scale(1.05); transition: all .12s linear;}
@@ -457,7 +457,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .renewer_container .item_trade_sec{height: 447px;}
 .renewer_container .item_trade_sec .trade_list{width: 100%; top: 157px;}
 /* 공지사항 영역 */
-.noti_hot_section_wrap{margin-bottom: 60px;}
+.noti_hot_section_wrap{margin-bottom: 20px;}
 .noti_hot_section_wrap h1{margin-bottom: 10px; font-size: 20px;}
 .noti_hot_section_wrap .section_notice{width: 32%;}
 .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 51.5%; height: 0; overflow: hidden; box-sizing: border-box; border: 1px solid #d2d2d2;}
@@ -591,15 +591,15 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .renewer_container{padding: 0px;}
     .renewer_container .photo_list{padding-top: 0px;}
     .hashtag_category_wrap{padding-bottom: 0px; background-size: 240px 4px; padding-top:0px;}
-    .section_hashtag{background-size: 50px 25px; margin: -25px 0 30px 0; padding-top: 0px; background-image:white;}
+    .section_hashtag{background-size: 50px 25px; margin: -5px 0 15px 0; padding-top: 0px; background-image:white;}
     .section_community .media_img_wrap .media_img{margin-left: 2%; margin-right: 2%; margin-bottom: 20px; width: 46%;display: inline-block;}
     .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
-    .noti_hot_section_wrap .section_notice{margin-bottom: 50px; width: 100%;}
+    .noti_hot_section_wrap .section_notice{margin-bottom: 20px; width: 100%;}
     .noti_hot_section_wrap .section_hotmenu{width: 100%;}
     .noti_hot_section_wrap .section_hotmenu h1{padding-left: 0;}
     .noti_hot_section_wrap .section_hotmenu a{margin-left: 0; width: 49%;}
     .noti_hot_section_wrap .section_hotmenu a:first-of-type{margin-right: 2%;}
-    .section_community .main_inner_wrap{padding: 0px 0 25px 0;}
+    .section_community .main_inner_wrap{padding: 0px 0 0px 0;}
     /* footer */
     .ft_listing{display: none;}
     .footer .ft_menu .dfb > div{display: none; width: 50%;}
@@ -623,17 +623,17 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .item_trade_sec h2 button{font-size: 14px;}
     .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}
     /* renewer */
-    .renewer_container .w100p_banner{margin: 0px auto 50px;}
+    .renewer_container .w100p_banner{margin: 0px auto 20px;}
     .section_asset h1{top: -82px;}
     .section_asset h1 img{width: 150px;}
-    .section_asset{margin-top: 32px; padding-bottom: 50px; background-size: 50px 20px;}
+    .section_asset{margin-top: 32px; padding-bottom: 10px; background-size: 50px 20px;}
     .section_community h1{top: -60px;}
     .section_community h1 img{width: 150px;}
     .section_community .en_cmnt_tit{top: -75px;}
     .section_title {width:100%;height: 50px;margin-bottom: 5px;background:white;}
     .section_title p{display:inline-block;line-height: 50px;text-align: -webkit-left;padding: 10px 0px 0px 7px;font-weight: 600;font-size: 16px;}
     .section_title h2{display:inline-block;line-height: 50px;text-align: -webkit-left;padding: 10px 0px 0px 7px;font-size: 12px;}
-    .section_title .board_view_link {float :right; margin-top :26px;}
+    .section_title .board_view_link {float :right; margin-top :26px; padding-right: 10px;}
     /* footer */
     /*
     .footer .footer_content .ft_top > div{display: none;}
