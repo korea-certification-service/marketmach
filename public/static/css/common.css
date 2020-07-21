@@ -575,8 +575,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .mob_header{display: block;}
     .content_wrap{padding-top: 132px;}
     /* visual section */
-    .visual_wrap{height: 275px;padding-top: 25px; background: rgb(238, 237, 237);}
-    .visual_wrap .visual_sec{height: 275px;}
+    .visual_wrap{height: 240px;padding-top: 25px; background: rgb(238, 237, 237);}
+    .visual_wrap .visual_sec{height: 240px;}
     /* 게임아이템 판매 & 게임아이템 구매 */
     .item_trade_sec{margin-bottom: 30px;}
     .item_trade_sec .trade_list{overflow-x: scroll;}
