@@ -427,6 +427,75 @@
                 console.log(fail);
             })
         }
+
+        function searchGameMission() {
+            if(category == "") category = "game";
+            if(trade_type == "") trade_type = "sell";
+            if(pageIdx == "") pageIdx = 0;
+
+            var query = "/v1/items?category=" + category + "&trade_type=" + trade_type + "&pageIdx=" + pageIdx;
+
+            $.ajax({
+                method: "GET",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                url: query
+            }).done(function (success) {
+                console.log(success.data);
+                if (success.data.count != 0) {
+                    pageIdx = success.pageIdx;
+                    setGameMission(success.data.list);
+                } else {
+                }
+
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function setGameMission(data) {
+            var strDOM = '';
+            for (var i = 0; i < data.length; i++) {
+
+                var itemId = data[i]._id;
+                var regDate = data[i].regDate.substring(2, 10);
+
+                var item_game_server = data[i].game_name + '<br>' + data[i].game_server;
+
+                var title = data[i].title;
+                var price = numberWithCommas(data[i].price);
+                var point = numberWithCommas(data[i].point);
+                var status = getStatus(data[i].status);
+                var item_type = getItemType(data[i].type);
+                var trade_type = replaceType(data[i].trade_type);
+                var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+
+                var money = point + 'Point';
+                if("<%= useBlockchain %>" == "Y") {
+                    money = price + cryptoCurrencyCode;
+                }
+
+                strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
+                                '<td>'+item_game_server+'</td>' + 
+                                '<td>' + 
+                                    '<span class="btn_cmm_bd '+item_type.className+'">'+ item_type.text +'</span>';
+                if(data[i].images.length != 0) {
+                    strDOM +=          '<span class="ico_photo">사진</span>';
+                }
+                strDOM +=              '<div class="no_ellipse"> ' + title + 
+                                        '<span class="reply_num">('+replyCount+')</span>' + 
+                                    '</div>' + 
+                                '</td>' + 
+                                '<td>'+ money +'</td>' + 
+                                '<td>' + 
+                                    '<span class="'+status.className+'">'+status.text+'</span>' + 
+                                '</td>' + 
+                                '<td>'+regDate+'</td>' + 
+                            '</tr>';
+            }
+
+            $("#game_list").append(strDOM);
+        }
     </script>
     <!--// header -->
 
@@ -740,6 +809,30 @@
                         </dt>
                         <dd>
                             <ul id="event_list" class="w_wrap">
+                            </ul>
+                        </dd>
+                        </dl>
+                </div>
+            </section>
+
+            <!-- 자산거래 -->
+            <section class="section_community">
+                <div class="section_title">
+                    <p>게임자산</p>
+                    <a href="/community/board/event" class="board_view_link">전체보기</a>
+                </div>
+                <div class="main_inner_wrap">
+                    
+                    <dl class="responsive_table_style" style="overflow: scroll;">
+                        <dt class="w_wrap">
+                            <div>&nbsp;</div>
+                            <div>제목</div>
+                            <div>작성자</div>
+                            <div>좋아요</div>
+                            <div>등록일</div>
+                        </dt>
+                        <dd>
+                            <ul id="game_list" class="w_wrap">
                             </ul>
                         </dd>
                         </dl>
