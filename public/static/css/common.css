@@ -724,7 +724,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 #game_list .contents {border-bottom: 1px solid gray;}
 #game_list .game_item {}
 #coin_list {background: white; margin: 5px 5px;}
-#coin_list .no_ellipse{width: 85%; overflow: hidden;vertical-align: middle;}
+#coin_list .no_ellipse{width: 95%; overflow: hidden;vertical-align: middle; text-align: left;}
 #coin_list .money {min-width: 75px;vertical-align: middle;border-bottom: 1px solid gray;}
-#coin_list .contents {border-bottom: 1px solid gray;}
+#coin_list .contents {border-bottom: 1px solid gray;width:60%;}
 
