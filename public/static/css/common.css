@@ -722,4 +722,4 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 #game_list .game_server{vertical-align: middle;border-bottom: 1px solid gray;}
 #game_list .money {min-width: 75px;vertical-align: middle;border-bottom: 1px solid gray;}
 #game_list .contents {border-bottom: 1px solid gray;}
-#game_list .game_item {line-height: 40px;}
+#game_list .game_item {}
