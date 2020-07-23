@@ -467,7 +467,7 @@
                 var itemId = data[i]._id;
                 var regDate = data[i].regDate.substring(2, 10);
 
-                var item_game_server = data[i].game_name + '<br>' + data[i].game_server;
+                var item_game_server = data[i].game_name;
 
                 var title = data[i].title;
                 var price = numberWithCommas(data[i].price);
@@ -486,10 +486,7 @@
                 strDOM += '<tr onclick="detail(\''+itemId+'\');">' + 
                                 '<td>'+item_game_server+'</td>' + 
                                 '<td>' + 
-                                    '<span class="btn_cmm_bd '+item_type.className+'">'+ item_type.text +'</span>';
-                if(data[i].images.length != 0) {
-                    strDOM +=          '<span class="ico_photo">사진</span>';
-                }
+                                    '<span class="btn_cmm_bd '+item_type.className+'"></span>';
                 strDOM +=              '<div class="no_ellipse"> ' + title + 
                                         '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
