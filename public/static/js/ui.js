@@ -136,7 +136,7 @@ var MainUi = {
 
                         var depth2 = document.querySelectorAll(".mob_dep2_menu > dl");
 
-                        if(!depth2[idx].classList.hasClass('show')){
+                        if(!depth2[idx].hasClass('show')){
                             for(var j = 0; j < len; j++){
                                 depth2[j].classList.remove("show");
                             }
