@@ -142,19 +142,7 @@ var MainUi = {
                             }
                             depth2[idx].classList.add("show");
                         }else{
-                            // Animation effact (remove)
-                            $('.mob_dep2_menu > dl').css({'right':'-100px'});
-                            var ani = setInterval(function(){
-                                
-                                if($('.mob_dep2_menu > dl').css('right') != '-110px'){
-                                    $('.mob_dep2_menu > dl').css({'right' : "calc(" + $('.mob_dep2_menu > dl').css('right') + " - 10px)"});
-                                }
-                                else{
-                                    depth2[idx].classList.remove("show");
-                                    clearInterval(ani);
-                                }
-                            }, 10);
-                            
+                            depth2[idx].classList.remove("show");
                         }
 
                         // Animation effact
