@@ -430,9 +430,9 @@
         }
 
         function searchGameMission() {
-            if(category == "") category = "game";
-            if(trade_type == "") trade_type = "sell";
-            if(pageIdx == "") pageIdx = 0;
+            var category = "game";
+            var trade_type = "sell";
+            var pageIdx = 0;
 
             var query = "/v1/items?category=" + category + "&trade_type=" + trade_type + "&pageIdx=" + pageIdx;
 
