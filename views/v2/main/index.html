@@ -497,6 +497,84 @@
 
             $("#game_list").append(strDOM);
         }
+
+
+
+        function searchCoinMission() {
+            var category = "otc";
+            var trade_type = "sell";
+            var pageIdx = 0;
+
+            var query = "/v1/items?category=" + category + "&trade_type=" + trade_type + "&pageIdx=" + pageIdx;
+
+            $.ajax({
+                method: "GET",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                url: query
+            }).done(function (success) {
+                console.log(success.data);
+                if (success.data.count != 0) {
+                    pageIdx = success.pageIdx;
+                    setCoinMission(success.data.list);
+                } else {
+                }
+
+            }).fail(function (fail) {
+                console.log(fail);
+            });
+        }
+
+        function setCoinMission(data) {
+            var strDOM = '';
+            var view_count = 0;
+            if(data.length > 5){
+                view_count = 5;
+            }else{
+                view_count = data.length;
+            }
+
+            for (var i = 0; i < view_count; i++) {
+
+                var itemId = data[i]._id;
+                var regDate = data[i].regDate.substring(2, 10);
+                var title = data[i].title;
+                var price = numberWithCommas(data[i].price);
+                var point = numberWithCommas(data[i].point);
+                var status = getStatus(data[i].status);
+                var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
+                var item_type = getItemType(data[i].type);
+                var trade_type = replaceType(data[i].trade_type);
+                //var image_url = data[i].images.length == 0 ? '/image/no-image.png' : data[i].images[0].path;
+                var userTag = data[i].userTag;
+                var tradingFlag = "";
+                var replyCount = data[i].replyCount;
+                var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+
+                if(userTag === "machprime") {
+                    tradingFlag = '<div class="ico_special ico_timekill"></div>';
+                    // prime 상품의 경우: <div class="ico_special ico_prime"></div>
+                } else {
+                    tradingFlag = '<em class="ico_trade state_step '+delivery_type.className+'"></em>';
+                }
+                
+                var money = point + '<span>Point</span>';
+                if("<%= useBlockchain %>" == "Y") {
+                    money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                }
+
+                strDOM += '<tr onclick="javascript:location.href=\'/sells/detail/'+itemId+'\';">' + 
+                                '<td class="contents">';
+                strDOM +=              '<div class="no_ellipse"> ' + title + 
+                                            '<span class="reply_num">('+replyCount+')</span>' + 
+                                    '</div>' + 
+                                '</td>' + 
+                                '<td class="money">'+ money +'</td>' +
+                            '</tr>';
+            }
+            
+
+            $("#game_list").append(strDOM);
+        }
     </script>
     <!--// header -->
 
@@ -825,15 +903,24 @@
                 <div class="main_inner_wrap">
                     
                     <dl class="responsive_table_style" style="overflow: scroll;">
-                        <dt class="w_wrap">
-                            <div>&nbsp;</div>
-                            <div>제목</div>
-                            <div>작성자</div>
-                            <div>좋아요</div>
-                            <div>등록일</div>
-                        </dt>
                         <dd>
                             <ul id="game_list" class="w_wrap">
+                            </ul>
+                        </dd>
+                        </dl>
+                </div>
+            </section>
+
+            <section class="section_community">
+                <div class="section_title">
+                    <p>코인자산</p>
+                    <a href="/otc-sells?category=otc&trade_type=sell" class="board_view_link">전체보기</a>
+                </div>
+                <div class="main_inner_wrap">
+                    
+                    <dl class="responsive_table_style" style="overflow: scroll;">
+                        <dd>
+                            <ul id="coin_list" class="w_wrap">
                             </ul>
                         </dd>
                         </dl>
