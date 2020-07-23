@@ -150,10 +150,11 @@ var MainUi = {
                                     $('.mob_dep2_menu > dl').css({'right' : "calc(" + $('.mob_dep2_menu > dl').css('right') + " - 10px)"});
                                 }
                                 else{
+                                    depth2[idx].classList.remove("show");
                                     clearInterval(ani);
                                 }
                             }, 10);
-                            depth2[idx].classList.remove("show");
+                            
                         }
 
                         // Animation effact
