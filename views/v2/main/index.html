@@ -456,8 +456,8 @@
         function setGameMission(data) {
             var strDOM = '';
             var view_count = 0;
-            if(data.length > 10){
-                view_count = 10;
+            if(data.length > 5){
+                view_count = 5;
             }else{
                 view_count = data.length;
             }
@@ -491,7 +491,7 @@
                                         '<span class="reply_num">('+replyCount+')</span>' + 
                                     '</div>' + 
                                 '</td>' + 
-                                '<td>'+ money +'</td>' + 
+                                '<td class="money">'+ money +'</td>' + 
                             '</tr>';
             }
 
