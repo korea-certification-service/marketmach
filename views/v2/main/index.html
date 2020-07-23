@@ -114,6 +114,7 @@
                 setNoticeList(notices);
                 setCommunityMovie(movies);
                 setEventMissionContents();
+                searchGameMission();
                 // setCommunityBoard(boards);
             }).fail(function (fail) {
                 console.log('system error : ', fail);
@@ -383,7 +384,7 @@
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
-                list += '<li onclick="javascript:showDetail(\''+id+'\')">'
+                list += '<li onclick="javascript:location.href=\'community/board/detail/'+id+'\'">'
                 list += '<div style="height: 110px;width: 100%;padding: 4px 4px;"> <img src="' + imgSrc + '"/> </div>'
                 list += '<div>' + '<span class="ellipse">' + title + '</span>' + '<em>' + replyCount + '</em>' + '</div>'
                 list += '<div>'+ reporter + '</div>'
