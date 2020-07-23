@@ -436,7 +436,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hashtag_category li.li_game a:before{content: ''}
 .hashtag_category li a:before{content: '#'}
 /* 커뮤니티 */
-.section_community{/*background: #8024ED url(/static/img/main/pattern_round.png); */}
+.section_community{margin-bottom: 15px;}
 .section_community h1{position: absolute; top:-107px; width: 100%; text-align: center;}
 .section_community .main_inner_wrap{padding: 90px 0 55px 0; }
 .section_community .media_img_wrap{padding: 10px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}

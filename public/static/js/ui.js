@@ -135,10 +135,15 @@ var MainUi = {
                         event.stopPropagation(); // stop bubbling
 
                         var depth2 = document.querySelectorAll(".mob_dep2_menu > dl");
-                        for(var j = 0; j < len; j++){
-                            depth2[j].classList.remove("show");
+
+                        if(!depth2[idx].classList.hasClass('show')){
+                            for(var j = 0; j < len; j++){
+                                depth2[j].classList.remove("show");
+                            }
+                            depth2[idx].classList.add("show");
+                        }else{
+                            depth2[idx].classList.remove("show");
                         }
-                        depth2[idx].classList.add("show");
 
                         // Animation effact
                         $('.mob_dep2_menu > dl').css({'right':'-100px'});
