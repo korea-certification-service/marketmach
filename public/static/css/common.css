@@ -718,3 +718,5 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 #event_list > li {display: inline-block; width:190px; background: white; margin: 10px 10px;box-shadow: 3px 3px 8px 2px gray;}
 #event_list {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 20px;}
 #game_list {background: white; margin: 5px 5px;}
+#game_list .no_ellipse{width: 85%}
+#game_list .game_server{vertical-align: middle;}
