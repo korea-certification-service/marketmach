@@ -296,7 +296,7 @@ router.delete('/:communityId', token.checkLoginToken, function (req, res, next) 
 //커뮤니티 파일 업로드
 let multer = require('multer');
 let upload = multer({ dest: '/data/resources/img/community' });
-router.post('/:communityId/images', upload.array('image'), function (req, res, next) {
+router.post('/:communityId/images', token.checkLoginToken, upload.array('image'), function (req, res, next) {
 
     let bitwebResponse = new BitwebResponse();
     let communityId = req.params.communityId;
@@ -316,7 +316,7 @@ router.post('/:communityId/images', upload.array('image'), function (req, res, n
         }
         for(var i =0; i< req.files.length; i++) {
             let image = {
-                "path": dbconfig.resources_path + "community/" + req.files[i].location,
+                "path": dbconfig.resources_path + "community/" + req.files[i].filename,
                 "bucket": req.files[i].bucket,
                 "key": req.files[i].key,
                 "origin_name": req.files[i].originalname,
