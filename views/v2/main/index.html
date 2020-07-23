@@ -455,7 +455,14 @@
 
         function setGameMission(data) {
             var strDOM = '';
-            for (var i = 0; i < data.length; i++) {
+            var view_count = 0;
+            if(data.length > 10){
+                view_count = 10;
+            }else{
+                view_count = data.length;
+            }
+
+            for (var i = 0; i < view_count; i++) {
 
                 var itemId = data[i]._id;
                 var regDate = data[i].regDate.substring(2, 10);
@@ -488,10 +495,6 @@
                                     '</div>' + 
                                 '</td>' + 
                                 '<td>'+ money +'</td>' + 
-                                '<td>' + 
-                                    '<span class="'+status.className+'">'+status.text+'</span>' + 
-                                '</td>' + 
-                                '<td>'+regDate+'</td>' + 
                             '</tr>';
             }
 
