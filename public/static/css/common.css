@@ -715,4 +715,5 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-#event_list > li {display: inline-block; width:40%; background: white;}
+#event_list > li {display: inline-block; width:190px; background: white; margin: 2px 5px;}
+#event_list {overflow: scroll; display: -webkit-inline-flex;}
