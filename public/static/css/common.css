@@ -55,16 +55,6 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 .btn.btn-line{border: 1px solid #2c2c2c;}
 
-/* lotate block */
-@media (orientation: landscape) {
-	html {
-		transform: rotate(-90deg);
-		transform-origin: top left;
-		position: absolute;
-		top: 100%;
-        left: 0px;
-	}
-}
 
 /********** Common **********/
 .cf:after{display: block; content: ''; clear: both;}
