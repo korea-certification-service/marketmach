@@ -30,6 +30,9 @@ var MainUi = {
         this.mobMenuResizer();
     },
     mobMenuResizer: function(){
+        var bWidth = $("body").width();
+        $(".mob_dep1_menu").width(bWidth - 60);
+        
         window.onresize = function(event) {
             var bWidth = $("body").width();
             $(".mob_dep1_menu").width(bWidth - 60);
