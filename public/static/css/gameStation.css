@@ -84,7 +84,7 @@
 .gameStation_gamestation .gameStation_article > .plus_icon { width: 100%; height: calc( 100% - 45px ); margin:0 auto; position: relative;}
 .gameStation_gamestation .gameStation_article .plus_icon > .material-icons { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: #aaa;}
 
-@media (max-width: 1059px) {
+/* @media (max-width: 1059px) {
     .sub_content .gameStation_sec { padding:40px; }
     .gameStation_gamestation > .gameStation_article { width: 100%; margin-right: 0; }
     .gameStation_gamestation > .exist_game { height: auto; }
@@ -137,7 +137,7 @@
         margin-top: 0px;
         padding-top: 12.5px;
     }
-}
+} */
 @media (max-width: 5000px) { /* 767px */
     .gamestation_lft_menu > .depth1 > li { overflow: hidden; }
     .gamestation_lft_menu > .depth1 > .icon_align > a { padding: 14px 0; border: none; text-align: center; }

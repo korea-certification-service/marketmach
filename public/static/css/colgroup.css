@@ -177,10 +177,10 @@
 @media (max-width: 1199px){
 
 }
-
+/* 
 @media (max-width: 992px){
     .colgroup_buyerlist .col5_5{width: 180px;}
-}
+} */
 
 @media (max-width: 5000px) { /* 767px */
     .table .colgroup_mypage .col3_1{width: 90px;}
