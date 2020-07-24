@@ -92,7 +92,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_show{display: none;}
 
 /********** PC MarkUp CSS **********/
-.wrap{min-height: 100%; position: relative;}
+.wrap{min-height: 100%; position: relative; background: rgb(238, 237, 237);}
 /*** header: PC ***/
 .header_wrap{position: fixed; z-index: 3; width: 100%; background-color: #ffffff;}
 .header{margin: auto; max-width: 1200px;}
@@ -575,7 +575,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     /* header */
     .header{display: none; width: 100%;}
     .mob_header{display: block;width: 100%;background: rgb(238, 237, 237);}
-    .content_wrap{padding-top: 132px;}
+    .content_wrap{padding-top: 132px;margin-right: auto;margin-left: auto;max-width: 567px; background: white;}
     /* visual section */
     .visual_wrap{height: 220px;padding-top: 25px; background: rgb(238, 237, 237);}
     .visual_wrap .visual_sec{height: 220px;}
