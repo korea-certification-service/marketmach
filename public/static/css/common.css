@@ -61,10 +61,9 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 		transform: rotate(-90deg);
 		transform-origin: top left;
 		position: absolute;
-		top: 100%;
+		top: 0;
 		left: 0;
-		width: 100vh;
-		height: 100vw;
+		height: 100%;
 	}
 }
 
