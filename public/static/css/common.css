@@ -54,6 +54,20 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_nv:hover, .btn_blln:hover, .btn_nvln:hover{color: inherit;}
 .btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 .btn.btn-line{border: 1px solid #2c2c2c;}
+
+/* lotate block */
+@media (orientation: portrait) {
+	html {
+		transform: rotate(-90deg);
+		transform-origin: top left;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100vh;
+		height: 100vw;
+	}
+}
+
 /********** Common **********/
 .cf:after{display: block; content: ''; clear: both;}
 .fll{float: left;}
