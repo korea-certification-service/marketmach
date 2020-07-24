@@ -241,7 +241,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .menu-trigger span:nth-of-type(2) {top: 6px;}
 .menu-trigger span:nth-of-type(3) {bottom: 0px;}
 /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
-.menu-trigger.on span:nth-of-type(1) {transform: translateY(10px) rotate(-45deg);}
+.menu-trigger.on span:nth-of-type(1) {transform: translateY(2px) rotate(-45deg);}
 .menu-trigger.on span:nth-of-type(2) {opacity: 0;}
 .menu-trigger.on span:nth-of-type(3) {transform: translateY(-10px) rotate(45deg);bottom: -3px;}
 /* hamberger menu */
