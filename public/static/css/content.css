@@ -822,7 +822,7 @@ background-size: 65px 65px;
     div.gui_icon {float: right; margin-top: 5px; margin-right: -10px; height: 80px; width: 80px;}     
     .gui_txt{float: left; width: calc(100% - 100px);}
 }
-@media (max-width: 1200px){ /* 767px */
+@media (max-width: 5000px){ /* 767px */
     .table_list .col5_2{width: 300px;}
     .table_view .col2_1{width: 80px;}
     .support_sec .table_view .col2_1{width: 80px;}
@@ -872,7 +872,7 @@ background-size: 65px 65px;
     .item_select_area .table_btoc .w100{width: 30%;}
     .btc_product_sec .order_noti dd{padding: 20px 20px 20px 20px;}
 }
-@media (max-width: 1200px){ /* 576px */
+@media (max-width: 5000px){ /* 576px */
     .mypage_sec .mypage_main_info .lft_area{background-position: 14px 50%;}
     .mypage_sec .mypage_main_info .rgh_area{background-position: 14px 20px;}
     .point_box .pb_inner .inner_box em{font-size: 14px;}

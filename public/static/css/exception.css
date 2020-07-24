@@ -135,14 +135,14 @@
 @media (max-width: 992px){
 
 }
-@media (max-width: 1199px){ /* 767px */
+@media (max-width: 5000px){ /* 767px */
     .header.member_header{display: block;}
     
     .find_info_sec .tab_find_info li a{font-size: 12px;}
     .find_info_sec .tab_find_info li a h1{font-size: 12px;}
     .find_info_sec .find_info_box{padding: 30px 15px;}
 }
-@media (max-width: 1199px){ /* 576px */
+@media (max-width: 5000px){ /* 576px */
     .header.member_header h1{width: 100%;}
     .join_sec .join_box > dd li .flt_box:nth-child(1){margin-bottom: 5px; width: 100%;}
     .set_margin > .dropdown.bootstrap-select { width: 48% !important; }
