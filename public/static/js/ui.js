@@ -31,10 +31,16 @@ var MainUi = {
     },
     mobMenuResizer: function(){
         var bWidth = $("body").width();
+        if(bWidth > 567){
+            bWidth = 567;
+        }
         $(".mob_dep1_menu").width(bWidth - 60);
-        
+
         window.onresize = function(event) {
             var bWidth = $("body").width();
+            if(bWidth > 567){
+                bWidth = 567;
+            }
             $(".mob_dep1_menu").width(bWidth - 60);
         }
     },
