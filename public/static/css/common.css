@@ -56,7 +56,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn-line{border: 1px solid #2c2c2c;}
 
 /* lotate block */
-@media (orientation: portrait) {
+@media (orientation: landscape) {
 	html {
 		transform: rotate(-90deg);
 		transform-origin: top left;
