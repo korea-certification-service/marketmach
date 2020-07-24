@@ -571,7 +571,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .renewer_container .photo_list .li_asset .asset_once{width: 50%; padding: 0 10px;}
     .renewer_container .photo_list li .img_list_box dd .money_txt{width: 100%;}
 }
-@media (max-width: 767px){
+@media (max-width: 1200px){ /* 767px */
     /* header */
     .header{display: none; width: 100%;}
     .mob_header{display: block;}
@@ -613,7 +613,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .footer .ft_addr .ft_text p{padding-left: 0; padding: 0 20px}
 
 }
-@media (max-width: 576px){
+@media (max-width: 1200px){ /* 576px */
     .mob_hide{display: none;}
     .mob_show{display: block;}
     /* visual section */

@@ -138,13 +138,13 @@
         padding-top: 12.5px;
     }
 }
-@media (max-width: 767px) {
+@media (max-width: 1200px) { /* 767px */
     .gamestation_lft_menu > .depth1 > li { overflow: hidden; }
     .gamestation_lft_menu > .depth1 > .icon_align > a { padding: 14px 0; border: none; text-align: center; }
     .gamestation_lft_menu .depth1 .icon_align a > .material-icons { font-size: 16px; }
     .gamestation_lft_menu .depth1 > li {height: 52px;}
 }
-@media (max-width: 576px) {
+@media (max-width: 1200px) { /* 567px */
     .sub_content .gameStation_sec .gameStation_store a{width: 40%;}
     .gameStation_gamestation .gameStation_article .gameStation_store > a { width: 40%; }
     .gameStation_sec .gameStation_mywallet .lft_area { background-position: 14px 20px; }

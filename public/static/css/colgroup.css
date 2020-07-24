@@ -182,12 +182,12 @@
     .colgroup_buyerlist .col5_5{width: 180px;}
 }
 
-@media (max-width: 767px){
+@media (max-width: 1200px) { /* 767px */
     .table .colgroup_mypage .col3_1{width: 90px;}
     .table_btoc .colgroup_btoc .col2_1{width: 80px;}
 }
 
-@media (max-width: 576px){
+@media (max-width: 1200px) { /* 567px */
     .table .colgroup_otc-sells .col4_1{width: 200px;}
     .table .colgroup_walletinfo .col5_3{width: 200px;}
     .table .colgroup_walletinfo .col4_2{width: 200px;}
