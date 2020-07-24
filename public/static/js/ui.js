@@ -238,7 +238,7 @@ var MainUi = {
             pauseOnHover: false,
             responsive: [
                 {
-                    breakpoint: 993,
+                    breakpoint: 5000,
                     settings: { 
                         dots: true,
                     }
