@@ -7,6 +7,9 @@
     var game_name;
     
     $(document).ready(function(){
+        // 스크린 회전 방지
+        window.screen.orientation.lock();
+
         var agent = navigator.userAgent.toLowerCase();
         //console.log(agent);
         if("<%=userId%>"=="") {
