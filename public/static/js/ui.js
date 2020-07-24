@@ -27,6 +27,13 @@ var MainUi = {
         // this.showSiblingNode({btn: ".btnNoti2", sec: ".secNoti2"}); // Notice
         this.linkMACHAdventure();
         this.hoverChatbotImg();
+        this.mobMenuResizer();
+    },
+    mobMenuResizer: function(){
+        window.onresize = function(event) {
+            var bWidth = $("body").width();
+            $(".mob_dep1_menu").width(bWidth - 60);
+        }
     },
     floatHeader: function() {
         var lastPos = 0;
@@ -376,6 +383,9 @@ var MainUi = {
             });
         }
     }
+
+    
+
 };
 MainUi.init();
 
