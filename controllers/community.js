@@ -89,7 +89,7 @@ function listMain(country) {
         let country = dbconfig.country;
         let data = {};
         let option = {
-            "perPage": 3,
+            "perPage": 4,
             "pageIdx": 0
         };
 
