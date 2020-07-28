@@ -114,7 +114,7 @@ function listMain(country) {
                     for(var i in communityResult) {
                         communityResult[i]._doc['replyCount'] = 0;
                         for(var j in replys) {
-                            if(communityResult[i]._doc._id.toString() == replys[j]._doc.communityId) {
+                            if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
                                 communityResult[i]._doc['replyCount']++;
                             }
                         }
