@@ -1,7 +1,8 @@
 var db = require('../utils/db');
 var bitwebCommunity = require('../services/community');
 var dbconfig = require('../config/dbconfig');
-var util = require('../utils/util')
+var util = require('../utils/util');
+const replies = require('../libs/replies');
 
 function count(req) {
     return new Promise((resolve, reject) => {
@@ -105,27 +106,31 @@ function listMain(country) {
             .then((communitys) => {
                 let communityIds = [];
                 for(var i in communitys) {
-                    communityIds.push(communitys[i]._doc._id);
+                    bitwebCommunity.getReplies(communitys[i]._doc._id)
+                    .then((replies) => {
+                        communitys[i]._doc.replyCount = replies.length;
+                    }).catch((err) => {
+                        reject(err);
+                    });
                 }
-                communityResult = communitys;
 
-                bitwebCommunity.searchReply({"communityId":communityIds})
-                .then((replys) => {
-                    for(var i in communityResult) {
-                        communityResult[i]._doc['replyCount'] = 0;
-                        console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
-                        for(var j in replys) {
-                            console.log(communityResult[i]._doc._id + " replys_id : " + replys[j]._doc.communityId);
-                            if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
-                                communityResult[i]._doc['replyCount']++;
-                            }
-                        }
-                        console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
-                    }
-                    resolve(communityResult);
-                }).catch((err) => {
-                    reject(err)
-                })
+                // bitwebCommunity.searchReply({"communityId":communityIds})
+                // .then((replys) => {
+                //     for(var i in communityResult) {
+                //         communityResult[i]._doc['replyCount'] = 0;
+                //         console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
+                //         for(var j in replys) {
+                //             console.log(communityResult[i]._doc._id + " replys_id : " + replys[j]._doc.communityId);
+                //             if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
+                //                 communityResult[i]._doc['replyCount']++;
+                //             }
+                //         }
+                //         console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
+                //     }
+                //     resolve(communityResult);
+                // }).catch((err) => {
+                //     reject(err)
+                // })
             }).catch((err) => {
             reject(err)
         })
