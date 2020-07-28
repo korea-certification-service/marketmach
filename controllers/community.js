@@ -107,7 +107,7 @@ function listMain(country) {
                 for(var i in communitys) {
                     communityIds.push(communitys[i]._doc._id);
                 }
-                communityResult = community;
+                communityResult = communitys;
 
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
