@@ -1,8 +1,7 @@
 var db = require('../utils/db');
 var bitwebCommunity = require('../services/community');
 var dbconfig = require('../config/dbconfig');
-var util = require('../utils/util');
-const replies = require('../libs/replies');
+var util = require('../utils/util')
 
 function count(req) {
     return new Promise((resolve, reject) => {
@@ -93,6 +92,7 @@ function listMain(country) {
             "perPage": 4,
             "pageIdx": 0
         };
+        let communityResult;
 
         if(country == "KR") {
             data['country'] = {$exists: false};
@@ -101,40 +101,32 @@ function listMain(country) {
         }
 
         db.connectDB(country)
-        .then(() => bitwebCommunity.searchMain(data, option))
-        .then((communitys) => {
-            for(var i in communitys) {
-                bitwebCommunity.searchReply({"communityId":communitys[i]._doc._id.toString()})
+            .then(() => bitwebCommunity.searchMain(data, option))
+            .then((communitys) => {
+                let communityIds = [];
+                for(var i in communitys) {
+                    communityIds.push(communitys[i]._doc._id);
+                }
+                communityResult = communitys;
+
+                bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
-                    communitys[i]._doc['replyCount'] = 0;
-                    for(var i in replys) {
-                        communitys[i]._doc['replyCount']++;
+                    for(var i in communityResult) {
+                        communityResult[i]._doc['replyCount'] = 0;
+                        console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
+                        for(var j in replys) {
+                            console.log(communityResult[i]._doc._id + " replys_id : " + replys[j]._doc.communityId);
+                            if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
+                                communityResult[i]._doc['replyCount']++;
+                            }
+                        }
+                        console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
                     }
-
-                    resolve(communitys);
+                    resolve(communityResult);
                 }).catch((err) => {
-                    reject(err);
-                });
-            }
-
-            // bitwebCommunity.searchReply({"communityId":communityIds})
-            // .then((replys) => {
-            //     for(var i in communityResult) {
-            //         communityResult[i]._doc['replyCount'] = 0;
-            //         console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
-            //         for(var j in replys) {
-            //             console.log(communityResult[i]._doc._id + " replys_id : " + replys[j]._doc.communityId);
-            //             if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
-            //                 communityResult[i]._doc['replyCount']++;
-            //             }
-            //         }
-            //         console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
-            //     }
-            //     resolve(communityResult);
-            // }).catch((err) => {
-            //     reject(err)
-            // })
-        }).catch((err) => {
+                    reject(err)
+                })
+            }).catch((err) => {
             reject(err)
         })
     })
