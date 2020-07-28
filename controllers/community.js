@@ -115,6 +115,7 @@ function listMain(country) {
                         communityResult[i]._doc['replyCount'] = 0;
                         console.log(communityResult[i]._doc._id + " replyCount : " + communityResult[i]._doc['replyCount']);
                         for(var j in replys) {
+                            console.log(communityResult[i]._doc._id + " replys_id : " + replys[j]._doc.communityId);
                             if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
                                 communityResult[i]._doc['replyCount']++;
                             }
