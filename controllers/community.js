@@ -111,11 +111,11 @@ function listMain(country) {
 
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
-                    for(var i = 0 ; i < communityResult.length ; i++) {
-                        communityResult[i]['replyCount'] = 0;
+                    for(var i in communityResult) {
+                        communityResult[i]._doc['replyCount'] = 0;
                         for(var j in replys) {
-                            if(communityResult[i]._id.toString() == replys[j]._doc.communityId) {
-                                communityResult[i]['replyCount']++;
+                            if(communityResult[i]._doc._id.toString() == replys[j]._doc.communityId) {
+                                communityResult[i]._doc['replyCount']++;
                             }
                         }
                     }
