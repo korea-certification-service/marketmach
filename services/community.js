@@ -48,9 +48,8 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .limit(option.perPage)
-        .skip(option.pageIdx * option.perPage)
         .sort({recommandCount:'desc', regDate:'desc'})
+        .limit(1)
         .exec(function (err, list) {
             if (err) {
                 // console.error(err)
@@ -66,9 +65,8 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .limit(option.perPage)
-        .skip(option.pageIdx * option.perPage)
         .sort({recommandCount:'desc', regDate:'desc'})
+        .limit(1)
         .exec(function (err, list) {
             if (err) {
                 // console.error(err)
@@ -84,9 +82,8 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .limit(option.perPage)
-        .skip(option.pageIdx * option.perPage)
         .sort({recommandCount:'desc', regDate:'desc'})
+        .limit(1)
         .exec(function (err, list) {
             if (err) {
                 // console.error(err)
@@ -102,9 +99,8 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .limit(option.perPage)
-        .skip(option.pageIdx * option.perPage)
         .sort({recommandCount:'desc', regDate:'desc'})
+        .limit(1)
         .exec(function (err, list) {
             if (err) {
                 // console.error(err)
@@ -115,8 +111,8 @@ function searchMain (data, option) {
             }
         });
 
-        console.log('search done: ' + resultList)
-        resolve(resultList)
+        console.log('search done: ' + resultList);
+        resolve(resultList);
     })
 }
 
