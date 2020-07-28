@@ -383,7 +383,7 @@
                 var imgSrc = data[i].images.length > 0 ? data[i].images[0].path : "";
                 var count = data[i].recommandCount == undefined ? 0 : data[i].recommandCount;
                 var regDate = data[i].regDate.substring(2, 10);
-                var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
+                var replyCount = data[i].replyCount != undefined? data[i].replyCount : "0";
 
                 list += '<li onclick="javascript:location.href=\'community/board/detail/'+id+'\'">'
                 list += '<div style="height: 110px;width: 100%;padding: 4px 4px;overflow: hidden;"> <img src="' + imgSrc + '"/> </div>'
