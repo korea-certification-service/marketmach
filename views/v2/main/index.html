@@ -381,7 +381,7 @@
                 var title = data[i].type == 'movie' ? '<i class="ico_media material-icons">live_tv</i>' + data[i].title : data[i].title;
                 var reporter = data[i].reporter;
                 var imgSrc = data[i].images.length > 0 ? data[i].images[0].path : "";
-                var count = data[i].recommand == undefined ? 0 : data[i].recommand.length;
+                var count = data[i].recommandCount == undefined ? 0 : data[i].recommandCount;
                 var regDate = data[i].regDate.substring(2, 10);
                 var replyCount = data[i].replyCount != 0 ? "(" + data[i].replyCount + ")" : "";
 
