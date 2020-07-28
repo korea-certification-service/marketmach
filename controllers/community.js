@@ -106,9 +106,9 @@ function listMain(country) {
             .then((communitys) => {
                 let communityIds = [];
                 for(var i in communitys) {
-                    bitwebCommunity.getReplies(communitys[i]._doc._id)
+                    bitwebCommunity.getReplies(communitys[i]._doc._id.toString())
                     .then((replies) => {
-                        communitys[i]._doc.replyCount = replies.length;
+                        communitys[i]._doc['replyCount'] = replies.length;
                     }).catch((err) => {
                         reject(err);
                     });
