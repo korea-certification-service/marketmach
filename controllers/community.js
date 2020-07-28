@@ -92,6 +92,7 @@ function listMain(country) {
             "perPage": 4,
             "pageIdx": 0
         };
+        let communityResult;
 
         if(country == "KR") {
             data['country'] = {$exists: false};
@@ -104,19 +105,21 @@ function listMain(country) {
             .then((communitys) => {
                 let communityIds = [];
                 for(var i in communitys) {
-                    communitys[i]._doc.replyCount = 0;
                     communityIds.push(communitys[i]._doc._id);
                 }
+                communityResult = community;
+
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
-                    for(var i in communitys) {
+                    for(var i in communityResult) {
+                        communityResult[i]._doc.replyCount = 0;
                         for(var j in replys) {
-                            if(communitys[i]._doc._id.toString() == replys[j]._doc.communityId) {
-                                communitys[i]._doc.replyCount++;
+                            if(communityResult[i]._doc._id.toString() == replys[j]._doc.communityId) {
+                                communityResult[i]._doc.replyCount++;
                             }
                         }
                     }
-                    resolve(communitys)
+                    resolve(communityResult);
                 }).catch((err) => {
                     reject(err)
                 })
