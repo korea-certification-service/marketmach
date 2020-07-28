@@ -104,10 +104,10 @@ function listMain(country) {
         .then(() => bitwebCommunity.searchMain(data, option))
         .then((communitys) => {
             for(var i in communitys) {
-                bitwebCommunity.getReplies(communitys[i]._doc._id.toString())
-                .then((replies) => {
+                bitwebCommunity.searchReply({"communityId":communitys[i]._doc._id.toString()})
+                .then((replys) => {
                     communitys[i]._doc['replyCount'] = 0;
-                    for(var i in replies) {
+                    for(var i in replys) {
                         communitys[i]._doc['replyCount']++;
                     }
 
