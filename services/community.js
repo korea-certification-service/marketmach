@@ -42,7 +42,7 @@ function search (data, option) {
 
 function searchMain (data, option) {
     return new Promise((resolve, reject) => {
-        var resultList = new Array();c
+        var resultList = new Array();
         // 퀴즈미션
         data['type'] = 'free';
         Community.find(
