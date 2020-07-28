@@ -112,10 +112,10 @@ function listMain(country) {
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
                     for(var i in communityResult) {
-                        communityResult[i]._doc.replyCount = 0;
+                        communityResult[i].replyCount = 0;
                         for(var j in replys) {
-                            if(communityResult[i]._doc._id.toString() == replys[j]._doc.communityId) {
-                                communityResult[i]._doc.replyCount++;
+                            if(communityResult[i]._id.toString() == replys[j]._doc.communityId) {
+                                communityResult[i].replyCount++;
                             }
                         }
                     }
