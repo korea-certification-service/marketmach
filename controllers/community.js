@@ -113,6 +113,7 @@ function listMain(country) {
                 .then((replys) => {
                     for(var i in communityResult) {
                         communityResult[i]._doc['replyCount'] = 0;
+                        console.log(communityResult[i]._doc._id);
                         for(var j in replys) {
                             if(communityResult[i]._doc._id == replys[j]._doc.communityId) {
                                 communityResult[i]._doc['replyCount']++;
