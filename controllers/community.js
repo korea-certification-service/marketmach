@@ -104,15 +104,15 @@ function listMain(country) {
             .then((communitys) => {
                 let communityIds = [];
                 for(var i = 0 ; i < 4 ; i ++) {
-                    communityIds.push(communitys[i]._doc._id);
+                    communityIds.push(communitys[i]._id);
                 }
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
                     for(var i = 0 ; i < 4 ; i ++) {
-                        communitys[i]._doc['replyCount'] = 0;
+                        communitys[i].replyCount = 0;
                         for(var j in replys) {
-                            if(communitys[i]._doc._id.toString() == replys[j]._doc.communityId) {
-                                communitys[i]._doc['replyCount']++;
+                            if(communitys[i]._id.toString() == replys[j]._doc.communityId) {
+                                communitys[i].replyCount++;
                             }
                         }
                     }
