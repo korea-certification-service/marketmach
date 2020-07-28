@@ -111,7 +111,7 @@ function listMain(country) {
 
                 bitwebCommunity.searchReply({"communityId":communityIds})
                 .then((replys) => {
-                    for(var i in communityResult) {
+                    for(var i = 0 ; i < communityResult.length ; i++) {
                         communityResult[i].replyCount = 0;
                         for(var j in replys) {
                             if(communityResult[i]._id.toString() == replys[j]._doc.communityId) {
