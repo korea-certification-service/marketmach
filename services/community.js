@@ -42,6 +42,9 @@ function search (data, option) {
 
 function searchMain (data, option) {
     return new Promise((resolve, reject) => {
+        var resultList = new Array();c
+        // 퀴즈미션
+        data['type'] = 'free';
         Community.find(
             data
         )
@@ -53,9 +56,67 @@ function searchMain (data, option) {
                 // console.error(err)
                 reject(err)
             }
-            console.log('search done: ' + list)
-            resolve(list)
-        })
+            if(list != null && list.length > 0){
+                resultList.push(list[0]);
+            }
+        });
+
+        // 홍보 미션
+        data['type'] = 'tabloid';
+        Community.find(
+            data
+        )
+        .limit(option.perPage)
+        .skip(option.pageIdx * option.perPage)
+        .sort({recommandCount:'desc', regDate:'desc'})
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            if(list != null && list.length > 0){
+                resultList.push(list[0]);
+            }
+        });
+
+        // 게임 미션
+        data['type'] = 'game';
+        Community.find(
+            data
+        )
+        .limit(option.perPage)
+        .skip(option.pageIdx * option.perPage)
+        .sort({recommandCount:'desc', regDate:'desc'})
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            if(list != null && list.length > 0){
+                resultList.push(list[0]);
+            }
+        });
+
+        // 코인 미션
+        data['type'] = 'cryptocurrency';
+        Community.find(
+            data
+        )
+        .limit(option.perPage)
+        .skip(option.pageIdx * option.perPage)
+        .sort({recommandCount:'desc', regDate:'desc'})
+        .exec(function (err, list) {
+            if (err) {
+                // console.error(err)
+                reject(err)
+            }
+            if(list != null && list.length > 0){
+                resultList.push(list[0]);
+            }
+        });
+
+        console.log('search done: ' + resultList)
+        resolve(resultList)
     })
 }
 
