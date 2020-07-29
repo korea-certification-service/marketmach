@@ -66,7 +66,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .dif{display: inline-flex; flex-wrap: wrap; display: -ms-inline-flexbox; -ms-flex-wrap: wrap;}
 .blind{z-index:-1px;overflow:hidden;position:absolute;height:1px; width:1px;text-indent:-9999em;}
 .ellipse{overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: normal}
-.bgc1{background-color: #ffffff; color: #1e2560;border-bottom: 3px solid #3172F6; border-right: 0px; border-top:0px; border-left:0px; font-weight: 600;}
+.bgc1{background-color: #ffffff; color: #1e2560; border-right: 0px; border-top:0px; border-left:0px; font-weight: 600;}
 .bgc2{background-color: #3172F6; color: #ffffff;}
 .bgc3{background-color: #0a73b8; color: #ffffff;}
 .bgc4{background-color: #ffc107; color: #ffffff;}
@@ -282,7 +282,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p{font-weight: bold; font-size: 24px; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .top_area > div > p > span{font-size: 14px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area{padding: 20px 0;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area .btn{height: 40px; }
+.hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area .btn{height: 40px; border:1px solid;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area a.btn{width: 150px; line-height: 40px; border: 2px solid #ffac44; color: #ffffff; background-color: #ffac44; font-weight: bold;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > em{display: block; margin: 0 0 5px 0; font-weight: normal; font-size: 12px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .mob_mypage .mdl_area > p{margin-bottom: 8px; font-weight: bold; font-size: 20px;}
@@ -293,7 +293,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .block_menu dd:nth-of-type(n+3){border-top: none;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .block_menu dd:nth-of-type(2n){border-left: none;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li > .dep2 .block_menu dd a {padding: 8px 0; display: block; color: #000000;}
-.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin{}
+.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin{margin-bottom: 5px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dt{padding: 6px 0; color: #1e2560;   text-align: center;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd{float: left; width: calc(25% - 8px); height: 37px; line-height: 35px; border: 1px solid #3072F6; border-radius: 5px; text-align: center; box-sizing: border-box;margin-right: 4px;margin-left: 4px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(1){}
