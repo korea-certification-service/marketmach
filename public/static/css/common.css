@@ -224,7 +224,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_sch_sec .mob_top_menu{margin-bottom: 8px; height: 30px; }
 .mob_header .mob_sch_sec li{float: left;}
 .mob_header .mob_sch_sec li:nth-child(1){}
-.mob_header .mob_sch_sec li:nth-child(1) img{width: 35.5px;}
+.mob_header .mob_sch_sec li:nth-child(1) img{width: 28px;}
 .mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 60px);}
 .mob_header .mob_sch_sec li:nth-child(2) h1{text-align: center;}
 .mob_header .mob_sch_sec li:nth-child(2) h1 img{height: 31px;}
@@ -542,7 +542,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .footer .ft_addr .ft_link{margin: 40px 0;}
 .footer .ft_addr .ft_link li{margin-left: 23px;}
 .footer .ft_addr .ft_link li:first-child{margin-left: 0;}
-.footer .ft_addr .ft_link li img{width: 49px;}
+.footer .ft_addr .ft_link li img{width: 25px;}
 .footer .ft_addr .ft_link li img:hover{transform: scale(1.1); transition: all .12s linear;}
 .footer .ft_addr dd{}
 .footer .ft_rec_url{height: 1px; overflow: hidden; background-color: #424244;}
