@@ -55,9 +55,9 @@
 .header.member_header .mb_top_menu .menu_list > li:first-child > a{border-left: none;}
 
 /*** content common ***/
-.member_content{min-height: calc(100% - 353px);}
+.member_content{min-height: calc(100% - 353px);background: white;max-width: 567px;margin: 0px auto;}
 /*** 회원가입 ***/
-.join_sec{margin: auto; padding-top: 50px; max-width: 700px;}
+.join_sec{margin: auto; padding-top: 50px; max-width: 567px;padding-right: 20px;padding-left: 20px;}
 .join_sec > h1{margin-bottom: 8px; font-size: 18px; font-weight: bold; color: #000039;}
 .join_sec > h1:before{margin: 0 10px 4px 0; display: inline-block; content: ''; clear: both; width: 10px; height: 3px; background-color: #ffc107;}
 .join_sec .join_box{margin-bottom: 5px; border: 1px solid #000;}
