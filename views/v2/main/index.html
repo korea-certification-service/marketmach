@@ -331,13 +331,14 @@
         }
 
         function setCommunityMovie(data) {
-            // console.log(data) // type, recommandCount, count
+            console.log(data) // type, recommandCount, count
             var result = "";
             for(var i=0; i<data.length; i++) {
                 var movie_img = data[i].images.length == 0 ? "/static/img/main/community_noimage2.jpg" : data[i].images[0].path;
                 var title = data[i].title;
                 var movieUrl = data[i].movieUrl;
                 var recommandCount = data[i].recommandCount ? data[i].recommandCount : 0;
+                var replyCount = data[i].replyCount ? data[i].replyCount : 0;
                 result +=   '<div class="media_img">' +
                                 '<a class="cf" href="community/board/detail/'+data[i]._id+'">' +
                                     '<div class="cmnt_photo">' +
@@ -345,7 +346,7 @@
                                     '</div>' +
                                     '<div class="cmnt_title">' +
                                         '<h2 class="ellipse">'+title+'</h2>' +
-                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+data[i].replyCount+'</span></p>' +
+                                        '<p class="cmnt_info"><span>♥ '+recommandCount+'</span><span>'+replyCount+'</span></p>' +
                                     '</div>' +
                                 '</a>' +
                             '</div>';

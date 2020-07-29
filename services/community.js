@@ -48,7 +48,7 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .sort({recommandCount:'desc', regDate:'desc'})
+        .sort({regDate:'desc'})
         .limit(1)
         .exec(function (err, list) {
             if (err) {
@@ -65,7 +65,7 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .sort({recommandCount:'desc', regDate:'desc'})
+        .sort({regDate:'desc'})
         .limit(1)
         .exec(function (err, list) {
             if (err) {
@@ -82,7 +82,7 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .sort({recommandCount:'desc', regDate:'desc'})
+        .sort({regDate:'desc'})
         .limit(1)
         .exec(function (err, list) {
             if (err) {
@@ -99,7 +99,7 @@ function searchMain (data, option) {
         Community.find(
             data
         )
-        .sort({recommandCount:'desc', regDate:'desc'})
+        .sort({regDate:'desc'})
         .limit(1)
         .exec(function (err, list) {
             if (err) {
