@@ -224,7 +224,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .mob_header .mob_sch_sec .mob_top_menu{margin-bottom: 8px; height: 30px; }
 .mob_header .mob_sch_sec li{float: left;}
 .mob_header .mob_sch_sec li:nth-child(1){}
-.mob_header .mob_sch_sec li:nth-child(1) img{width: 28px;}
+.mob_header .mob_sch_sec li:nth-child(1) img{width: 28px;margin-top: 3px;}
 .mob_header .mob_sch_sec li:nth-child(2){width: calc(100% - 60px);}
 .mob_header .mob_sch_sec li:nth-child(2) h1{text-align: center;}
 .mob_header .mob_sch_sec li:nth-child(2) h1 img{height: 31px;}
