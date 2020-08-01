@@ -30,11 +30,10 @@
 
             // 플로팅 버튼 이벤트
             $(document).bind('scroll', function(){
-                alert('dd');
-                $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - ' + $( window ).height() * 0.9 + ')'});
+                $('#floating_btn').css({'bottom' : 'calc(' + $( document ).height() + ' - ' + $( document ).height() * 0.9 + ')'});
             });
             $(document).bind('resize', function(){
-                $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - ' + $( window ).height() * 0.9 + ')'});
+                $('#floating_btn').css({'bottom' : 'calc(' + $( document ).height() + ' - ' + $( document ).height() * 0.9 + ')'});
             });
         });
         
