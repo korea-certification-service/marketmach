@@ -300,7 +300,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(5n){border-left: 1px solid #dbdbdb; }
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd:nth-of-type(n+5){border-bottom: 1px solid #dbdbdb}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd a{display: block; }
-.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd img{height: 28px}
+.hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd img{height: 23px;margin-top: 3px;margin-bottom: 6px;}
 .hamburger_menu .m_nav_body > .ul_dep1 >li .available_coin > dd a i{margin-top: 6px; color: #dcdcdc; font-size: 24px;}
 
 /*** content_wrap ***/
