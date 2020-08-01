@@ -29,10 +29,11 @@
             //makeHasetCategoryList();
 
             // 플로팅 버튼 이벤트
-            $(window).bind('scroll', function(){
+            $(document).bind('scroll', function(){
+                alert('dd');
                 $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - ' + $( window ).height() * 0.9 + ')'});
             });
-            $(window).bind('resize', function(){
+            $(document).bind('resize', function(){
                 $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - ' + $( window ).height() * 0.9 + ')'});
             });
         });
