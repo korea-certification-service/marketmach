@@ -30,10 +30,10 @@
 
             // 플로팅 버튼 이벤트
             $(document).bind('scroll', function(){
-                $('#floating_btn').css({'top' : $(document).scrollTop() - 40 + 'px'});
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 40 + 'px'});
             });
             $(document).bind('resize', function(){
-                $('#floating_btn').css({'top' : $(document).scrollTop() - 40 + 'px'});
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 40 + 'px'});
             });
         });
         
