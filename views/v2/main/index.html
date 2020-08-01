@@ -27,6 +27,14 @@
             }
 
             //makeHasetCategoryList();
+
+            // 플로팅 버튼 이벤트
+            $('.body').bind('scroll', function(){
+                $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - 10%)'});
+            });
+            $(window).bind('resize', function(){
+                $('#floating_btn').css({'bottom' : 'calc(' + $( window ).height() + ' - 10%)'});
+            });
         });
         
         function loadCurrencyData() {
