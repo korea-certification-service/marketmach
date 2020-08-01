@@ -64,7 +64,7 @@
 
 .gameStation_gamestation .gameStation_article > .gameStation_title { width: 94%; height: 45px; text-align: center; line-height: 45px; color: white; font-weight: bold; font-size: 18px; background-color: #476DF6; margin: 5px auto 5px auto;} 
 
-.gameStation_gamestation .gameStation_article > .gameStation_contents { padding-top: 40px; padding-bottom: 40px; text-align: center;}
+.gameStation_gamestation .gameStation_article > .gameStation_contents { text-align: center;}
 .gameStation_gamestation .gameStation_article .gameStation_contents > em { font-size: 18px; }
 .gameStation_gamestation .gameStation_article .gameStation_contents > p { margin-top: 5px; }
 .gameStation_gamestation .gameStation_article .gameStation_contents p > span { color: #2F5597; font-weight: bold; font-size: 26px; vertical-align: middle; margin-left: 5px; }
