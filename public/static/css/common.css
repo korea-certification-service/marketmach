@@ -438,10 +438,10 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .hashtag_category li.li_game a:before{content: ''}
 .hashtag_category li a:before{content: '#'}
 /* 커뮤니티 */
-.section_community{margin-bottom: 15px;max-width: 567px;margin-left: auto;margin-right: auto;}
+.section_community{max-width: 567px;margin-left: auto;margin-right: auto;}
 .section_community h1{position: absolute; top:-107px; width: 100%; text-align: center;}
 .section_community .main_inner_wrap{padding: 90px 0 55px 0; }
-.section_community .media_img_wrap{padding: 10px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
+.section_community .media_img_wrap{padding: 0px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
 .section_community .media_img_wrap .media_img{width: 32%; margin-left: 2%; box-shadow: 5px 5px 18px 2px gray;}
 .section_community .media_img_wrap .media_img img{/*transition: all .9s linear;*/}
 .section_community .media_img_wrap .media_img img:hover{transform: scale(1.05); transition: all .12s linear;}
@@ -718,7 +718,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 #event_list > li {display: inline-block; width:190px; background: white; margin: 10px 10px;box-shadow: 3px 3px 8px 2px gray;}
-#event_list {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 20px;}
+#event_list {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 10px;}
 #game_list {background: white; margin: 5px 5px;}
 #game_list .no_ellipse{width: 85%; overflow: hidden;vertical-align: middle;}
 #game_list .game_server{vertical-align: middle;border-bottom: 1px solid gray;}
