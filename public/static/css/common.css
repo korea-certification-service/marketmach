@@ -55,7 +55,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 .btn.btn-line{border: 1px solid #2c2c2c;}
 button {
-   outline: 0;
+   outline: 0 !important;
  }
 
 /********** Common **********/
