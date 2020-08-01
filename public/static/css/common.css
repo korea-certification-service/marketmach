@@ -55,11 +55,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .btn.btn_ivory{background-color: #ffc107; color: #ffffff; font-weight: 600;}
 .btn.btn-line{border: 1px solid #2c2c2c;}
 button {
-    -ms-user-select: none; 
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
+   outline: 0;
  }
 
 /********** Common **********/
