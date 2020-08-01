@@ -459,7 +459,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .renewer_container .item_trade_sec{height: 447px;}
 .renewer_container .item_trade_sec .trade_list{width: 100%; top: 157px;}
 /* 공지사항 영역 */
-.noti_hot_section_wrap{margin-bottom: 20px; margin-left: auto;margin-right: auto;max-width: 567px;}
+.noti_hot_section_wrap{margin-bottom: 10px; margin-left: auto;margin-right: auto;max-width: 567px;}
 .noti_hot_section_wrap h1{margin-bottom: 10px; font-size: 20px;}
 .noti_hot_section_wrap .section_notice{width: 32%;}
 .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 51.5%; height: 0; overflow: hidden; box-sizing: border-box; border: 1px solid #d2d2d2;}
@@ -596,7 +596,7 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
     .section_hashtag{background-size: 50px 25px; margin: -5px auto 15px auto; padding-top: 0px; max-width: 567px;}
     .section_community .media_img_wrap .media_img{margin-left: 2%; margin-right: 2%; margin-bottom: 20px; width: 46%;display: inline-block;}
     .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
-    .noti_hot_section_wrap .section_notice{margin-bottom: 20px; width: 100%;}
+    .noti_hot_section_wrap .section_notice{margin-bottom: 10px; width: 100%;}
     .noti_hot_section_wrap .section_hotmenu{width: 100%;}
     .noti_hot_section_wrap .section_hotmenu h1{padding-left: 0;}
     .noti_hot_section_wrap .section_hotmenu a{margin-left: 0; width: 49%;}
@@ -717,8 +717,8 @@ select{-webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: no
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-#event_list > li {display: inline-block; width:190px; background: white; margin: 10px 10px;box-shadow: 3px 3px 8px 2px gray;}
-#event_list {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 10px;}
+#event_list2 > li {display: inline-block; width:190px; background: white; margin: 10px 10px;box-shadow: 3px 3px 8px 2px gray;}
+#event_list2 {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 10px;}
 #game_list {background: white; margin: 5px 5px;}
 #game_list .no_ellipse{width: 85%; overflow: hidden;vertical-align: middle;}
 #game_list .game_server{vertical-align: middle;border-bottom: 1px solid gray;}
