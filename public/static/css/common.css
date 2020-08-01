@@ -488,7 +488,7 @@ button {
 .img_vac2{transform: translateY(20%);}
 .img_vac3{transform: translateY(27%);}
 
-.partners_layer {width:100%; display: inline-block; height: 30px;overflow: auto;}
+.partners_layer {width:100%; display: inline-block; height: 30px;}
 .partners_layer img {width: 100px;}
 
 /* 파트너 */
