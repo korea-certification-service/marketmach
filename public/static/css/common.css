@@ -350,7 +350,7 @@ button {
     to {width: 100%;}
 }
 
-.table_hashtag {width: 100%; margin: 0px 0px 0px 0px;}
+.table_hashtag {width: 100%; margin: -15px 0px 0px 0px;}
 .table_hashtag td {border: 1px solid lightgray; line-height: 30px;height: 30px;font-size: 13px;font-weight: 500;padding-left: 20px;}
 .table_hashtag img {width:18px !important;}
 
@@ -732,4 +732,4 @@ button {
 #coin_list .money {min-width: 75px;vertical-align: middle;border-bottom: 1px solid gray;}
 #coin_list .contents {border-bottom: 1px solid gray;width:60%;}
 
-#floating_btn {position: absolute;width: 40px;right: 5%;z-index: 10;}
+#floating_btn {position: absolute;width: 60px;right: 5%;z-index: 10;text-align: center;}
