@@ -627,7 +627,7 @@ button {
     .item_trade_sec h2 button{font-size: 14px;}
     .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}
     /* renewer */
-    .renewer_container .w100p_banner{margin: 0px auto 20px auto; max-width: 567px;}
+    .renewer_container .w100p_banner{margin: 0px auto 10px auto; max-width: 567px;}
     .section_asset h1{top: -82px;}
     .section_asset h1 img{width: 150px;}
     .section_asset{margin-top: 32px; padding-bottom: 10px; background-size: 50px 20px;max-width: 567px;margin-left: auto;margin-right: auto;}
