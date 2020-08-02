@@ -301,7 +301,7 @@
                     } else {
                         image_src = data[i].images[0].path;
                     }
-                    var title = .title;
+                    var title = data[i].title;
                     var regDate = data[i].regDate.substring(2, 10);
                     var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                     var money = point + '<span>Point</span>';
@@ -309,8 +309,8 @@
                         money = price + '<span>'+cryptoCurrencyCode+'</span>';
                     }
                     
-                    if(i % 4 === 0) result += '<li class="li_asset cf">'
-                    if(i % 4 === 0) result2 += '<li class="li_asset cf">'
+                    if(i % 4 === 0) result += '<li class="li_asset cf">';
+                    if(i % 4 === 0) result2 += '<li class="li_asset cf">';
                     
                     /*
                             <tr>
@@ -375,8 +375,8 @@
                                 + '</div>';
                     }
 
-                    if(i % 4 === 3) result += '</li>'
-                    if(i % 4 === 3) result2 += '</li>'
+                    if(i % 4 === 3) result += '</li>';
+                    if(i % 4 === 3) result2 += '</li>';
                 }
             }
             $('#assetsTrade').html(result);
