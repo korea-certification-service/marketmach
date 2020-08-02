@@ -27,14 +27,14 @@
             }
 
             //makeHasetCategoryList();
-            $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 200 + 'px'});
+            $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 180 + 'px'});
 
             // 플로팅 버튼 이벤트
             $(document).bind('scroll', function(){
-                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 200 + 'px'});
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 180 + 'px'});
             });
             $(document).bind('resize', function(){
-                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 200 + 'px'});
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 180 + 'px'});
             });
         });
         
@@ -285,6 +285,7 @@
 
         function setEtcSellList(data) {
             var result = "";
+            var result2 = "";
 
             if(data.length > 0) {
                 for(var i=0; i<data.length; i++) {
@@ -300,7 +301,7 @@
                     } else {
                         image_src = data[i].images[0].path;
                     }
-                    var title = data[i].title;
+                    var title = .title;
                     var regDate = data[i].regDate.substring(2, 10);
                     var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
                     var money = point + '<span>Point</span>';
@@ -309,31 +310,73 @@
                     }
                     
                     if(i % 4 === 0) result += '<li class="li_asset cf">'
+                    if(i % 4 === 0) result2 += '<li class="li_asset cf">'
                     
-                    result += '<div class="asset_once">'
-                            +     '<div class="img_list_box">'
-                            +        '<div class="photo_frame">'
-                            +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
-                            +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+data[i].category1 +'</em>'
-                            +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
-                            +        '</div>'
-                            +        '<dl>'
-                            +            '<dt>'
-                            +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
-                            +             '<dd class="cf">'
-                            +                '<div class="money_txt">'+money+'</div>'
-                            +                '<div class="time_txt">'+regDate+'</div>'
-                            +            '</dd>'
-                            +        '</dl>'
-                            +    '</div>'
-                            + '</div>'
-                    // VIEW MORE 버튼 빼버림
-                    // if(i===data.length -1) {
-                    //     result += '<div class="asset_once"><div class="img_list_box"><div class="view_more">'
-                    //             + '<a href="/etc-sells?category=etc&trade_type=sell"><em>+</em><span>VIEW<br>MORE</span></a>'
-                    //             + '</div></div></div>'
-                    // }
+                    /*
+                            <tr>
+                                <td><img src="/static/img/hash_1.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=여성의류"><span><font style="color:black">여성의류</font></span></a></td>
+                                <td><img src="/static/img/hash_2.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=남성의류"><span><font style="color:black">남성의류</font></span></a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/static/img/hash_3.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=패션잡화"><span><font style="color:black">패션잡화</font></span></a></td>
+                                <td><img src="/static/img/hash_4.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=뷰티/미용"><span><font style="color:black">뷰티/미용</font></span></a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/static/img/hash_5.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=유아동/출산"><span><font style="color:black">유아동/출산</font></span></a></td>
+                                <td><img src="/static/img/hash_6.png"></img>
+                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=스포츠/레저"><span><font style="color:black">스포츠/레저</font></span></a></td>
+                            </tr>
+                    */
+                    if(data[i].category1 == '여성의류'
+                    || data[i].category1 == '남성의류'
+                    || data[i].category1 == '패션잡화'
+                    || data[i].category1 == '뷰티/미용'
+                    || data[i].category1 == '유아동/출산'
+                    || data[i].category1 == '스포츠/레저'){
+                        result += '<div class="asset_once">'
+                                +     '<div class="img_list_box">'
+                                +        '<div class="photo_frame">'
+                                +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                                +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                                +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                                +        '</div>'
+                                +        '<dl>'
+                                +            '<dt>'
+                                +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                                +             '<dd class="cf">'
+                                +                '<div class="money_txt">'+money+'</div>'
+                                +                '<div class="time_txt">'+regDate+'</div>'
+                                +            '</dd>'
+                                +        '</dl>'
+                                +    '</div>'
+                                + '</div>';
+                    }else{
+                        result2 += '<div class="asset_once">'
+                                +     '<div class="img_list_box">'
+                                +        '<div class="photo_frame">'
+                                +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                                +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                                +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                                +        '</div>'
+                                +        '<dl>'
+                                +            '<dt>'
+                                +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                                +             '<dd class="cf">'
+                                +                '<div class="money_txt">'+money+'</div>'
+                                +                '<div class="time_txt">'+regDate+'</div>'
+                                +            '</dd>'
+                                +        '</dl>'
+                                +    '</div>'
+                                + '</div>';
+                    }
+
                     if(i % 4 === 3) result += '</li>'
+                    if(i % 4 === 3) result2 += '</li>'
                 }
             }
             $('#assetsTrade').html(result);
@@ -840,6 +883,21 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <section class="section_asset">
+                <div class="section_title">
+                    <p>중고자산</p>
+                    <h2>필요없는 물건 팔아 코인 벌어보자!</h2>
+                    <a href="/etc-sells?category=etc&trade_type=sell" class="board_view_link">전체보기</a>
+                </div>
+                <div class="main_inner_wrap">
+                    <!-- <h1 class=""><img src="/static/img/main/tit_asset.png" alt="ASSET"></h1> -->
+                    <div class="photo_list">
+                        <ul id="assetsTrade2">
+                        </ul>
+                    </div>
                 </div>
             </section>
 
