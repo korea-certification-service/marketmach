@@ -104,6 +104,7 @@
                 var game_sells = success.data.game_sells;
                 var etc_buys = success.data.etc_buys;
                 var etc_sells = success.data.etc_sells;
+                var etc_sells2 = success.data.etc_sells2;
                 var prime_services = success.data.primes;
                 var cms = success.data.cms;
                 var movies = success.data.movies;
@@ -118,6 +119,7 @@
                 // setGameSellList(game_sells);
                 // setGameBuyList(game_buys);
                 setEtcSellList(etc_sells);
+                setEtcSellList2(etc_sells2);
                 // setOtcBuyList(otc_buys);
                 // setOtcSellList(otc_sells);
                 setNoticeList(notices);
@@ -285,7 +287,6 @@
 
         function setEtcSellList(data) {
             var result = "";
-            var result2 = "";
 
             if(data.length > 0) {
                 for(var i=0; i<data.length; i++) {
@@ -310,77 +311,80 @@
                     }
                     
                     if(i % 4 === 0) result += '<li class="li_asset cf">';
-                    if(i % 4 === 0) result2 += '<li class="li_asset cf">';
                     
-                    /*
-                            <tr>
-                                <td><img src="/static/img/hash_1.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=여성의류"><span><font style="color:black">여성의류</font></span></a></td>
-                                <td><img src="/static/img/hash_2.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=남성의류"><span><font style="color:black">남성의류</font></span></a></td>
-                            </tr>
-                            <tr>
-                                <td><img src="/static/img/hash_3.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=패션잡화"><span><font style="color:black">패션잡화</font></span></a></td>
-                                <td><img src="/static/img/hash_4.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=뷰티/미용"><span><font style="color:black">뷰티/미용</font></span></a></td>
-                            </tr>
-                            <tr>
-                                <td><img src="/static/img/hash_5.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=유아동/출산"><span><font style="color:black">유아동/출산</font></span></a></td>
-                                <td><img src="/static/img/hash_6.png"></img>
-                                    <a href="/etc-sells?category=etc&trade_type=sell&category1=스포츠/레저"><span><font style="color:black">스포츠/레저</font></span></a></td>
-                            </tr>
-                    */
-                    if(data[i].category1 == '여성의류'
-                    || data[i].category1 == '남성의류'
-                    || data[i].category1 == '패션잡화'
-                    || data[i].category1 == '뷰티/미용'
-                    || data[i].category1 == '유아동/출산'
-                    || data[i].category1 == '스포츠/레저'){
-                        result += '<div class="asset_once">'
-                                +     '<div class="img_list_box">'
-                                +        '<div class="photo_frame">'
-                                +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
-                                +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
-                                +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
-                                +        '</div>'
-                                +        '<dl>'
-                                +            '<dt>'
-                                +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
-                                +             '<dd class="cf">'
-                                +                '<div class="money_txt">'+money+'</div>'
-                                +                '<div class="time_txt">'+regDate+'</div>'
-                                +            '</dd>'
-                                +        '</dl>'
-                                +    '</div>'
-                                + '</div>';
-                    }else{
-                        result2 += '<div class="asset_once">'
-                                +     '<div class="img_list_box">'
-                                +        '<div class="photo_frame">'
-                                +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
-                                +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
-                                +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
-                                +        '</div>'
-                                +        '<dl>'
-                                +            '<dt>'
-                                +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
-                                +             '<dd class="cf">'
-                                +                '<div class="money_txt">'+money+'</div>'
-                                +                '<div class="time_txt">'+regDate+'</div>'
-                                +            '</dd>'
-                                +        '</dl>'
-                                +    '</div>'
-                                + '</div>';
-                    }
+                    result += '<div class="asset_once">'
+                            +     '<div class="img_list_box">'
+                            +        '<div class="photo_frame">'
+                            +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                            +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                            +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                            +        '</div>'
+                            +        '<dl>'
+                            +            '<dt>'
+                            +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                            +             '<dd class="cf">'
+                            +                '<div class="money_txt">'+money+'</div>'
+                            +                '<div class="time_txt">'+regDate+'</div>'
+                            +            '</dd>'
+                            +        '</dl>'
+                            +    '</div>'
+                            + '</div>';
 
                     if(i % 4 === 3) result += '</li>';
-                    if(i % 4 === 3) result2 += '</li>';
                 }
             }
             $('#assetsTrade').html(result);
-            $('#assetsTrade2').html(result2);
+        }
+
+        function setEtcSellList2(data) {
+            var result = "";
+
+            if(data.length > 0) {
+                for(var i=0; i<data.length; i++) {
+                    var itemId = data[i]._id;
+                    var item_type = getItemType(data[i].type);
+                    var price = numberWithCommas(data[i].total_price);
+                    var point = numberWithCommas(data[i].total_point);
+                    var status = getStatus(data[i].status);
+                    var delivery_type = getDelivery(data[i].delivery_type == undefined ? "direct" : data[i].delivery_type);
+                    var image_src;
+                    if(data[i].images[0] === undefined || data[i].images[0] === "") {
+                        image_src = "/image/no-image.png";
+                    } else {
+                        image_src = data[i].images[0].path;
+                    }
+                    var title = data[i].title;
+                    var regDate = data[i].regDate.substring(2, 10);
+                    var cryptoCurrencyCode = data[i].cryptoCurrencyCode == undefined ? "MACH" : data[i].cryptoCurrencyCode;
+                    var money = point + '<span>Point</span>';
+                    if("<%=useBlockchain%>" =='Y') {
+                        money = price + '<span>'+cryptoCurrencyCode+'</span>';
+                    }
+                    
+                    if(i % 4 === 0) result += '<li class="li_asset cf">';
+                    
+                    result += '<div class="asset_once">'
+                            +     '<div class="img_list_box">'
+                            +        '<div class="photo_frame">'
+                            +        '<em class="ico_trade state_possible step'+status.number+'">'+status.text+'</em>'
+                            +        '<em class="ico_trade state_step '+delivery_type.className+'">'+delivery_type.text+'</em>'
+                            +        '<a href="/etc-sells/detail/'+itemId+'"><img src="'+image_src+'" alt=""></a>'
+                            +        '</div>'
+                            +        '<dl>'
+                            +            '<dt>'
+                            +            '<div class="ellipse"><a href="/etc-sells/detail/'+itemId+'">' + title + '</a><span class="reply_num">(0)</span></div>'
+                            +             '<dd class="cf">'
+                            +                '<div class="money_txt">'+money+'</div>'
+                            +                '<div class="time_txt">'+regDate+'</div>'
+                            +            '</dd>'
+                            +        '</dl>'
+                            +    '</div>'
+                            + '</div>';
+
+                    if(i % 4 === 3) result += '</li>';
+                }
+            }
+            $('#assetsTrade2').html(result);
         }
 
         function setCommunityMovie(data) {
