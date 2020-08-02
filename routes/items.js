@@ -164,13 +164,13 @@ router.get('/all', function (req, res, next) {
             controllerItems.getItemByRequired(country, data)
                 .then(game_sells => {
                     data['category'] = "etc";
-                    data['category1'] = "{$in:['여성의류','남성의류','패션잡화','뷰티/미용','유아동/출산','스포츠/레저']}";
+                    data['category1'] = {$in:['여성의류','남성의류','패션잡화','뷰티/미용','유아동/출산','스포츠/레저']};
                     data['trade_type'] = "sell";
                     data['perPage'] = 8;
                     controllerItems.getItemByRequired(country, data)
                         .then(etc_sells => {
                             data['trade_type'] = "sell";
-                            data['category1'] = "{$nin:['여성의류','남성의류','패션잡화','뷰티/미용','유아동/출산','스포츠/레저']}";
+                            data['category1'] = {$nin:['여성의류','남성의류','패션잡화','뷰티/미용','유아동/출산','스포츠/레저']};
                             data['perPage'] = 8;
                             controllerItems.getItemByRequired(country, data)
                                 .then(etc_sells2 => {
