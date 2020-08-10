@@ -12,6 +12,7 @@
     </div>
     <script>
         var myCurrency;
+        var timer;
         document.querySelector("#floatingInfoBox").setAttribute("ismain", "true");
 
         $(document).ready(function () {
@@ -30,8 +31,17 @@
             $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 220 + 'px'});
 
             // 플로팅 버튼 이벤트
+            var floatingViewYn = true;
             $(document).bind('scroll', function(){
                 $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 220 + 'px'});
+                $('#floating_btn').show();
+                
+                if(timer == null){
+                    timer = setTimeout(function(){
+                        $('#floating_btn').hide();
+                        timer = null;
+                    }, 5000);
+                }
             });
             $(document).bind('resize', function(){
                 $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 220 + 'px'});
