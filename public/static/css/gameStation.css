@@ -16,8 +16,8 @@
 
 /*[모듈] 게임템플릿*/
 .gst_gametemplet::after { content:""; display: block; clear: both; }
-.gst_gametemplet > img { float: left; margin-right: 30px; height: 55px; }
-.gst_gametemplet > .coin_value { float: left; }
+.gst_gametemplet > img { float: left; height: 30px; }
+.gst_gametemplet > .coin_value { float: right; }
 .gst_gametemplet .coin_value > em { color: #000; }
 .gst_gametemplet .coin_value > div { margin-top: 4px; }
 .gst_gametemplet .coin_value div::after { content:""; display: block; clear: both; }
@@ -62,7 +62,7 @@
 .gameStation_gamestation > .gameStation_article { width: 405px; height: 364px; margin-left: auto; margin-right: auto; margin-bottom: 20px;box-shadow: 0px 0px 10px gray;}
 .gameStation_gamestation > .gameStation_article:nth-of-type(odd) {  }
 
-.gameStation_gamestation .gameStation_article > .gameStation_title { width: 94%; height: 45px; text-align: center; line-height: 45px; color: white; font-weight: bold; font-size: 18px; background-color: #476DF6; margin: 5px auto 5px auto;} 
+.gameStation_gamestation .gameStation_article > .gameStation_title { width: 94%; height: 45px; text-align: center; line-height: 45px; color: white; font-weight: bold; font-size: 15px; background-color: #476DF6; margin: 5px auto 5px auto;} 
 
 .gameStation_gamestation .gameStation_article > .gameStation_contents { text-align: center;}
 .gameStation_gamestation .gameStation_article .gameStation_contents > em { font-size: 18px; }

@@ -733,3 +733,6 @@ button {
 #coin_list .contents {border-bottom: 1px solid gray;width:60%;}
 
 #floating_btn {position: absolute;width: 60px;right: 5%;z-index: 10;text-align: center;}
+
+.mhead_div {height: 100%;display: inline-block;float: right;}
+.mhead_div .mhead_span {width: 40px;text-align: center;height: 30px;border: 1px solid black;margin-right: 40px;padding: 4px;border-radius: 5px;background: white;}
