@@ -85,6 +85,23 @@
                 checkTeenager('/buys/register');
                 //location.href = '/buys/register';
             });
+            
+            // 플로팅 버튼 이벤트
+            var floatingViewYn = true;
+            $(document).bind('scroll', function(){
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 220 + 'px'});
+                $('#floating_btn').show();
+                
+                if(timer == null){
+                    timer = setTimeout(function(){
+                        $('#floating_btn').hide();
+                        timer = null;
+                    }, 2000);
+                }
+            });
+            $(document).bind('resize', function(){
+                $('#floating_btn').css({'top' : $(document).scrollTop() + window.innerHeight - 220 + 'px'});
+            });
         });
 
         function loadGameList() {
@@ -237,6 +254,11 @@
     </script>
     <!-- content_wrap -->
     <div class="content_wrap">
+        <div id="floating_btn">
+            <a href="http://www.probit.kr/app"><img style="margin-bottom:20px;" src="/static/img/floating_mach_btn.png"></a>
+            <a href="/myPages/wallet/deposit"><img style="margin-bottom:20px; max-width: 50px;" src="/static/img/floating_charge_btn.png"></a>
+            <a href="#"><img style="max-width: 40px;" src="/static/img/floating_top_btn.png"></a>
+        </div>
         <div class="sub_container container">
             <!-- list page-->
             <section class="board_sec c_style_buy">
