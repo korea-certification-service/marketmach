@@ -247,7 +247,7 @@ var MainUi = {
             dots: false,
             speed: 600,
             autoplay: true,
-            autoplaySpeed: 6000,
+            autoplaySpeed: 1000,
             fade: true,
             cssEase: 'linear',
             //asNavFor: '#navSlcikVisual',
