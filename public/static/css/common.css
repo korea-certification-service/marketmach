@@ -197,7 +197,7 @@ button {
 /*** header: Mobile ***/
 .mob_header{display: none;}
 /* mobile nav */
-.mob_header .mob_nav{position: relative; height: 40px;width: 567px;margin: auto;background: white;}
+.mob_header .mob_nav{position: relative; height: 40px;width: 700px;margin: auto;background: white;}
 .mob_header .mob_nav .mob_fixiable{position: absolute; left: 0; width: 60px;}
 .mob_header .mob_nav .mob_fixiable .btn_mob_menu{width: 100%; height: 40px; border: none;}
 .mob_header .mob_nav .mob_dep1_menu{position: absolute; left: 60px; width: 100%; height: 40px; overflow: hidden;}
