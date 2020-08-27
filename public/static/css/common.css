@@ -723,9 +723,9 @@ button {
 #event_list2 {overflow: scroll; display: -webkit-inline-flex;margin-bottom: 10px;}
 #game_list {background: white; margin: 5px 5px;}
 #game_list .no_ellipse{width: 85%; overflow: hidden;vertical-align: middle;}
-#game_list .game_server{vertical-align: middle;border-bottom: 1px solid gray;}
-#game_list .money {min-width: 75px;vertical-align: middle;border-bottom: 1px solid gray;}
-#game_list .contents {border-bottom: 1px solid gray;}
+#game_list .game_server{vertical-align: middle;border-bottom: 1px solid gray;min-width: 80px;}
+#game_list .money {min-width: 100px;vertical-align: middle;border-bottom: 1px solid gray;}
+#game_list .contents {border-bottom: 1px solid gray; width: 75%;}
 #game_list .game_item {}
 #coin_list {background: white; margin: 5px 5px;}
 #coin_list .no_ellipse{width: 95%; overflow: hidden;vertical-align: middle; text-align: left;}
