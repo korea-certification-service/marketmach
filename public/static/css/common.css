@@ -579,7 +579,7 @@ button {
     .mob_header{display: block;width: 100%;background: rgb(238, 237, 237);}
     .content_wrap{padding-top: 132px;margin-right: auto;margin-left: auto;max-width: 700px; background: white;}
     /* visual section */
-    .visual_wrap{height: 220px;padding-top: 25px; background: rgb(238, 237, 237);}
+    .visual_wrap{height: 220px;padding-top: 25px; background: white;}
     .visual_wrap .visual_sec{height: 220px;}
     /* 게임아이템 판매 & 게임아이템 구매 */
     .item_trade_sec{margin-bottom: 30px;}
