@@ -97,7 +97,7 @@ button {
 .wrap{min-height: 100%; position: relative; background: rgb(238, 237, 237);}
 /*** header: PC ***/
 .header_wrap{position: fixed; z-index: 3; width: 100%; background-color: #ffffff;}
-.header{margin: auto; max-width: 567px;background: white;}
+.header{margin: auto; max-width: 700px;background: white;}
 .header .top_menu{height: 40px; /*border: 1px solid #c1c1c1;*/ box-sizing: border-box;}
 .header .top_menu .lang{display: inline-block; height: 24px; line-height: 24px; margin: 8px 0 0 10px; padding-left: 25px; font-weight: bold; font-size: 12px; color: #666;}
 .header .top_menu .lang_kr{background: url("/static/img/symbol/flag_korea.png") 0 50% no-repeat; background-size: 24px 24px;}
@@ -222,7 +222,7 @@ button {
 .mob_header .mob_dep2_menu dd > a{}
 .mob_header .mob_dep2_menu dd .mob_rnd_btn{display: block; margin-bottom: 6px; width: 75px; height: 28px; line-height: 28px; font-size: 13px; text-align: center; border-radius: 6px;color: white;}
 /* mobile search  */
-.mob_header .mob_sch_sec{padding: 10px 15px 8px 15px; max-width: 567px;background: white; margin: auto;}
+.mob_header .mob_sch_sec{padding: 10px 15px 8px 15px; max-width: 700px;background: white; margin: auto;}
 .mob_header .mob_sch_sec .mob_top_menu{margin-bottom: 8px; height: 30px; }
 .mob_header .mob_sch_sec li{float: left;}
 .mob_header .mob_sch_sec li:nth-child(1){}
@@ -387,7 +387,7 @@ button {
 
 
 /*************** 리뉴얼 메인 ***************/
-.main_inner_wrap{position: relative; margin: auto; max-width: 567px;}
+.main_inner_wrap{position: relative; margin: auto; max-width: 700px;}
 .renewer_container .w100p_banner{margin: 80px auto 100px;}
 /* 자산 */
 .section_asset{margin-top: 230px; padding-bottom: 100px; /*background: #fffC00 url(/static/img/main/pattern_zigzag.png);*/ background-size: 70px 27px;}
@@ -440,7 +440,7 @@ button {
 .hashtag_category li.li_game a:before{content: ''}
 .hashtag_category li a:before{content: '#'}
 /* 커뮤니티 */
-.section_community{max-width: 567px;margin-left: auto;margin-right: auto;}
+.section_community{max-width: 700px;margin-left: auto;margin-right: auto;}
 .section_community h1{position: absolute; top:-107px; width: 100%; text-align: center;}
 .section_community .main_inner_wrap{padding: 90px 0 55px 0; }
 .section_community .media_img_wrap{padding: 0px 20px; display: flex; flex-wrap: wrap; display: -ms-flexbox; -ms-flex-wrap: wrap;}
@@ -461,7 +461,7 @@ button {
 .renewer_container .item_trade_sec{height: 447px;}
 .renewer_container .item_trade_sec .trade_list{width: 100%; top: 157px;}
 /* 공지사항 영역 */
-.noti_hot_section_wrap{margin-bottom: 10px; margin-left: auto;margin-right: auto;max-width: 567px;}
+.noti_hot_section_wrap{margin-bottom: 10px; margin-left: auto;margin-right: auto;max-width: 700px;}
 .noti_hot_section_wrap h1{margin-bottom: 10px; font-size: 20px;}
 .noti_hot_section_wrap .section_notice{width: 32%;}
 .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 51.5%; height: 0; overflow: hidden; box-sizing: border-box; border: 1px solid #d2d2d2;}
@@ -519,7 +519,7 @@ button {
 .footer .footer_content dd{float: left; width: calc(100% - 180px);}
 .footer .footer_content dd p{margin-bottom: 15px; color: #ffffff;}
 */
-.footer{ margin: 0 auto;max-width: 567px;}
+.footer{ margin: 0 auto;max-width: 700px;}
 .footer .ft_listing{height: 55px; line-height: 55px; background-color: #e3e4e6;}
 .footer .ft_listing h1{width: 20%; height: 55px; line-height: 55px; text-align: center; color: #ffffff; background-color: #6d6e70;}
 .footer .ft_listing .listing_coin{width: 45%;}
@@ -577,7 +577,7 @@ button {
     /* header */
     .header{display: none; width: 100%;}
     .mob_header{display: block;width: 100%;background: rgb(238, 237, 237);}
-    .content_wrap{padding-top: 132px;margin-right: auto;margin-left: auto;max-width: 567px; background: white;}
+    .content_wrap{padding-top: 132px;margin-right: auto;margin-left: auto;max-width: 700px; background: white;}
     /* visual section */
     .visual_wrap{height: 220px;padding-top: 25px; background: rgb(238, 237, 237);}
     .visual_wrap .visual_sec{height: 220px;}
@@ -595,7 +595,7 @@ button {
     .renewer_container{padding: 0px;}
     .renewer_container .photo_list{padding-top: 0px;}
     .hashtag_category_wrap{padding-bottom: 0px; background-size: 240px 4px; padding-top:0px;}
-    .section_hashtag{background-size: 50px 25px; margin: -5px auto 15px auto; padding-top: 0px; max-width: 567px;}
+    .section_hashtag{background-size: 50px 25px; margin: -5px auto 15px auto; padding-top: 0px; max-width: 700px;}
     .section_community .media_img_wrap .media_img{margin-left: 2%; margin-right: 2%; margin-bottom: 20px; width: 46%;display: inline-block;}
     .noti_hot_section_wrap .section_notice .line_box{padding-bottom: 0; height: auto;}
     .noti_hot_section_wrap .section_notice{margin-bottom: 10px; width: 100%;}
@@ -627,10 +627,10 @@ button {
     .item_trade_sec h2 button{font-size: 14px;}
     .item_trade_sec .otc_table_wrap .ellipse{width: 300px;}
     /* renewer */
-    .renewer_container .w100p_banner{margin: 0px auto 10px auto; max-width: 567px;}
+    .renewer_container .w100p_banner{margin: 0px auto 10px auto; max-width: 700px;}
     .section_asset h1{top: -82px;}
     .section_asset h1 img{width: 150px;}
-    .section_asset{margin-top: 32px; padding-bottom: 10px; background-size: 50px 20px;max-width: 567px;margin-left: auto;margin-right: auto;}
+    .section_asset{margin-top: 32px; padding-bottom: 10px; background-size: 50px 20px;max-width: 700px;margin-left: auto;margin-right: auto;}
     .section_community h1{top: -60px;}
     .section_community h1 img{width: 150px;}
     .section_community .en_cmnt_tit{top: -75px;}
