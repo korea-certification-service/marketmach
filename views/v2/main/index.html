@@ -142,6 +142,27 @@
             })
         }
 
+        function setVisualImageSlick(data) {
+            // slick_visual
+
+            var result = "";
+
+            for(var i = 0 ; i < data.length ; i++){
+                result += "<div class='visual_img'>";
+                result += "<a href='" + data[i].link + "'>";
+                result += "<div class='pc_img'>";
+                result += "<img src='" + data[i].banner_img_pc + "' alt='" + data[i].banner_desc + "'>";
+                result += "</div>";
+                result += "<div class='mob_img'>";
+                result += "<img src='" + data[i].banner_img_mob + "' alt='" + data[i].banner_desc + "'>";
+                result += "</div>";
+                result += "</a>";
+                result += "</div>";
+            }
+
+            $('.slick_visual').slick('slickAdd', result);
+        }
+
         function setPrimeService(data) {
             var result = "";
 
@@ -658,6 +679,16 @@
             <section class="visual_sec">
                 <h1 class="blind">메인 비주얼 이미지 영역</h1>
                 <div class="slick_visual">
+                    <div class="visual_img">
+                        <a href="/supports/event/detail/5f619e3ac66752e7dfebb856">
+                            <div class="pc_img">
+                                <img src="/static/img/event/event_banner_20200916.png" alt="비트코인으로말해요">
+                            </div>
+                            <div class="mob_img">
+                                <img src="/static/img/event/event_banner_20200916.png" alt="비트코인으로말해요">
+                            </div>
+                        </a>
+                    </div>
                     <div class="visual_img">
                         <a href="/supports/notice/detail?noticeId=5f587ba0ad70be65757de96a">
                             <div class="pc_img">
