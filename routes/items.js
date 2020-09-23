@@ -351,6 +351,33 @@ router.get('/users/:userTag', function (req, res, next) {
 
 });
 
+router.get('/banner', function (req, res, next) {
+
+    var bitwebResponse = new BitwebResponse();
+
+    let country = dbconfig.country;
+    let category = "game";
+    let trade_type = "buy";
+    let pageIdx = 0;
+    let perPage = 7;
+    let data = {};
+
+    if(country != "KR") {
+        data['country'] = country;
+    } else {
+        data['country'] = {$exists: false};
+    }
+
+    controllerItems.getItemByRequired(country, data)
+    .then(result => {
+    }).catch((err) => {
+        console.error('err=>', err)
+        bitwebResponse.code = 500;
+        bitwebResponse.message = err;
+        res.status(500).send(bitwebResponse.create())
+    });
+});
+
 //삽니다/팝니다에 따른 거래 내역 조회
 router.get('/tradeType/:tradeType', function (req, res, next) {
     // res.send('respond with a resource');

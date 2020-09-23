@@ -17,6 +17,8 @@
 
         $(document).ready(function () {
             loadItemsAll();
+
+            loadMainBannerList();
             if("<%=useBlockchain%>"=="Y") {
                 // loadCurrencyData(); => 코인시세 관련 로직 다 지워도 됨
             }
@@ -137,6 +139,21 @@
                 searchGameMission();
                 searchCoinMission();
                 // setCommunityBoard(boards);
+            }).fail(function (fail) {
+                console.log('system error : ', fail);
+            })
+        }
+
+        function loadMainBannerList() {
+            var url = "/v1/items/all";
+            $.ajax({
+                method: "GET",
+                url: url
+            }).done(function (success) {
+                var strDOM = '';
+                var bannerList = success.data;
+
+                setVisualImageSlick(bannerList);
             }).fail(function (fail) {
                 console.log('system error : ', fail);
             })
