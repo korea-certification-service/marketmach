@@ -47,6 +47,7 @@ var gameStationRouter = require('./routes/gameStation');
 var escrowRouter = require('./routes/escrows');
 var kycRouter = require('./routes/kyc');
 var ontologyRouter = require('./routes/ontology');
+var bannerEventRouter = require('./routes/banner_event');
 
 var app = express();
 
@@ -173,6 +174,7 @@ app.use('/howto', howtoRouter);
 app.use('/shopping', shoppingRouter); // btoc shopping
 app.use('/test', testRouter); // only test module
 app.use('/gameStation', gameStationRouter); // only test module
+app.use('/bannerEvent', bannerEventRouter); // only test module
 
 
 //backend API
