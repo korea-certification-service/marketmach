@@ -5,13 +5,13 @@ function getBennerEventList () {
     return new Promise((resolve, reject) => {
         BannerEvent.find(
             {"view_yn": "y"},
-            function(err, agreement) {
+            function(err, banner) {
                 if (err) {
                     // console.error(err)
                     reject(err)
                 }
-                console.log('getEtherById done: ' + agreement)
-                resolve(agreement)
+                console.log('getBennerEventList done: ' + banner)
+                resolve(banner)
             }
         )
     })
